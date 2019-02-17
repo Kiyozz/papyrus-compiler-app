@@ -1,4 +1,5 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import { AppCompiler } from './main-process/compile';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -26,6 +27,23 @@ const createWindow = () => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+
+  ipcMain.on('compile-script', (event, { script, output, imports, flag, gamePath }) => {
+    const appCompiler = new AppCompiler();
+
+    console.log('on compile');
+    console.log(`
+      script = ${script}
+      output = ${output}
+      imports = ${imports}
+      flag = ${flag}
+      gamePath = ${gamePath}
+    `);
+
+    appCompiler.compile({ script, flag, imports, output, gamePath })
+      .then(result => event.sender.send('compile-success', result))
+      .catch(e => event.sender.send('compile-failed', e));
+  });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
