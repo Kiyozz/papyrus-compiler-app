@@ -1,0 +1,3 @@
+[submodule "src/app/papyrus-compiler-app"]
+	path = src/app/papyrus-compiler-app
+	url = git@github.com:Kiyozz/papyrus-compiler-app-angular.git
