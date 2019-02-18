@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { AppCompiler } from './main-process/compile';
+import { AppCompiler } from './main-process/app-compiler';
+import GamePathUtil from './main-process/gamepath-util';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -22,27 +23,32 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  // mainWindow.loadURL(`file://${__dirname}/app/papyrus-compiler-app/dist/index.html`);
-  mainWindow.loadURL('http://localhost:4200');
+  mainWindow.loadURL(`file://${__dirname}/app/papyrus-compiler-app/dist/index.html`);
+  // mainWindow.loadURL('http://localhost:4200');
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
   ipcMain.on('compile-script', (event, { script, output, imports, flag, gamePath }) => {
-    const appCompiler = new AppCompiler();
-
+    const gamePathUtil = new GamePathUtil({
+      imports,
+      output,
+      gamePath,
+      flag,
+    });
+    const appCompiler = new AppCompiler(gamePathUtil);
+    
     console.log('on compile');
-    console.log(`
-      script = ${script}
-      output = ${output}
-      imports = ${imports}
-      flag = ${flag}
-      gamePath = ${gamePath}
-    `);
 
-    appCompiler.compile({ script, flag, imports, output, gamePath })
-      .then(result => event.sender.send('compile-success', result))
-      .catch(e => event.sender.send('compile-failed', e));
+    appCompiler.compile(script)
+      .then(result => {
+        console.log('good ' + script);
+        event.sender.send('compile-success', result)
+      })
+      .catch(e => {
+        console.log('' + e.message);
+        event.sender.send('compile-failed', e.message);
+      });
   });
 
   // Emitted when the window is closed.
