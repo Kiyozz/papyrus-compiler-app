@@ -1,6 +1,5 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
-import { AppCompiler } from './main-process/app-compiler';
-import GamePathUtil from './main-process/gamepath-util';
+import { app, BrowserWindow } from 'electron';
+import { EventHandler } from './main-process/event-handler';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -10,6 +9,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+const eventHandler = new EventHandler();
 
 const createWindow = () => {
   // Create the browser window.
@@ -28,27 +28,7 @@ const createWindow = () => {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
-  ipcMain.on('compile-script', (event, { script, output, imports, flag, gamePath }) => {
-    const gamePathUtil = new GamePathUtil({
-      imports,
-      output,
-      gamePath,
-      flag,
-    });
-    const appCompiler = new AppCompiler(gamePathUtil);
-    
-    console.log('on compile');
-
-    appCompiler.compile(script)
-      .then(result => {
-        console.log('good ' + script);
-        event.sender.send('compile-success', result)
-      })
-      .catch(e => {
-        console.log('' + e.message);
-        event.sender.send('compile-failed', e.message);
-      });
-  });
+  eventHandler.register();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -71,6 +51,8 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+
+  eventHandler.unregister();
 });
 
 app.on('activate', () => {

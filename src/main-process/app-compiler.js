@@ -1,6 +1,4 @@
 import * as childProcess from 'child_process';
-import * as path from 'path';
-import * as fs from 'fs';
 import GamePathUtil from './gamepath-util';
 
 class AppCompiler {
@@ -20,13 +18,15 @@ class AppCompiler {
    */
   compile(script) {
     return new Promise((resolve, reject) => {
-      console.log('go compile start');
+      console.log('go compile register');
       const exe = this.gamePathUtil.getPapyrusCompilerExecutablePath();
 
       const cmd = `"${exe}" ${script} -i="${this.gamePathUtil.imports}" -o="${this.gamePathUtil.output}" -f="${this.gamePathUtil.getFlag()}"`
       childProcess.exec(cmd, { cwd: this.gamePathUtil.getGamePath() }, (err, stdout, stderr) => {
-        if (err) {
-          reject(err);
+        if (stderr) {
+          reject(stderr);
+
+          return;
         }
 
         resolve(stdout);
@@ -35,4 +35,4 @@ class AppCompiler {
   }
 }
 
-exports.AppCompiler = AppCompiler;
+export default AppCompiler;

@@ -2,6 +2,7 @@
     "files": {
         "src/index.js": "out/index.js",
         "src/main-process/app-compiler.js": "out/main-process/app-compiler.js",
-        "src/main-process/gamepath-util.js": "out/main-process/gamepath-util.js"
+        "src/main-process/gamepath-util.js": "out/main-process/gamepath-util.js",
+        "src/main-process/event-handler.js": "out/main-process/event-handler.js"
     }
 }
