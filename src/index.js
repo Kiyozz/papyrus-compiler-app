@@ -23,11 +23,7 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/app/papyrus-compiler-app/dist/index.html`);
-  // mainWindow.loadURL('http://localhost:4200');
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   ipcMain.on('compile-script', (event, { script, output, imports, flag, gamePath }) => {
     const gamePathUtil = new GamePathUtil({
@@ -37,16 +33,12 @@ const createWindow = () => {
       flag,
     });
     const appCompiler = new AppCompiler(gamePathUtil);
-    
-    console.log('on compile');
 
     appCompiler.compile(script)
       .then(result => {
-        console.log('good ' + script);
         event.sender.send('compile-success', result)
       })
       .catch(e => {
-        console.log('' + e.message);
         event.sender.send('compile-failed', e.message);
       });
   });
