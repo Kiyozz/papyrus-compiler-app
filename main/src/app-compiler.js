@@ -14,7 +14,7 @@ class AppCompiler {
    *
    * @param {string} script
    *
-   * @returns {Promise<Buffer[]>}
+   * @returns {Promise<string>}
    */
   compile(script) {
     return new Promise((resolve, reject) => {

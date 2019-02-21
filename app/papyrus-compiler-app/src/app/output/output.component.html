@@ -1,0 +1,37 @@
+<app-container *ngIf="initialized" class="app-output-container">
+  <div *ngIf="noScriptMessage">
+    <p>{{noScriptMessage}}</p>
+
+    <button mat-raised-button color="primary" [routerLink]="['/']">Go to compile</button>
+  </div>
+
+  <div *ngIf="!noScriptMessage">
+    <div *ngIf="!compilationIsConfirmed">
+      <p>Confirm compilation ?</p>
+
+      <button mat-raised-button color="primary" (click)="onClickConfirm($event)">Compile</button>
+    </div>
+
+    <div *ngIf="compilationIsConfirmed">
+      <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+
+      <mat-list class="app-output-scripts-list">
+        <mat-list-item *ngFor="let script of scripts">
+          <div mat-list-icon *ngIf="!isCompiling(script) && !isSuccess(script) && !isError(script)"></div>
+          <div mat-list-icon *ngIf="isCompiling(script)"><mat-spinner mode="indeterminate" color="accent" diameter="30"></mat-spinner></div>
+          <div mat-list-icon *ngIf="isSuccess(script)"><mat-icon color="primary">check_circle_outline</mat-icon></div>
+          <div mat-list-icon *ngIf="isError(script)"><mat-icon color="warn">highlight_off</mat-icon></div>
+          <p mat-line>{{script}}</p>
+        </mat-list-item>
+      </mat-list>
+
+      <div class="app-output-retry">
+        <button mat-raised-button color="primary" [disabled]="(errorScripts && errorScripts.length === 0) || isCompilingAnyScript" (click)="onClickRetryErrors($event)">Retry failed scripts</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-output-logs-button">
+    <app-output-logs></app-output-logs>
+  </div>
+</app-container>

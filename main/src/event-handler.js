@@ -18,12 +18,16 @@ export class EventHandler {
 
             appCompiler.compile(script)
                 .then(result => {
-                    console.log('good ' + script + "\n\n");
-                    console.log(JSON.stringify(result));
-                    event.sender.send('compile-success', result);
+                    const isSuccess = /0 failed/.test(result + '');
+                    if (isSuccess) {
+                        console.log('Script ' + script + ' successfully compiled.');
+                        event.sender.send('compile-success', result);
+                    } else {
+                        throw result
+                    }
                 })
                 .catch((e) => {
-                    console.log('error ' + script + ' ---------- ' + JSON.stringify(e));
+                    console.log('Script ' + script + ' failed to compile. "' + e + '"');
                     event.sender.send('compile-failed', e);
                 });
         });

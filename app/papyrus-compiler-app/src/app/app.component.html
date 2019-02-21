@@ -1,0 +1,13 @@
+<main>
+  <mat-toolbar color="primary" class="app-toolbar">
+    <mat-toolbar-row>
+      <span class="app-toolbar-title">Papyrus Compiler App</span>
+      <button mat-button [routerLink]="['/']">Compile</button>
+      <button mat-button [routerLink]="['/', 'output']">Output</button>
+      <button mat-button [routerLink]="['/', 'preferences']">Preferences</button>
+      <app-window-buttons></app-window-buttons>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <router-outlet></router-outlet>
+</main>

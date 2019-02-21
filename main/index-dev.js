@@ -1,10 +1,5 @@
 import { app, BrowserWindow } from 'electron';
-import { EventHandler } from './main-process/event-handler';
-
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
-  app.quit();
-}
+import { EventHandler } from './src/event-handler';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -19,7 +14,7 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true,
     },
-    titleBarStyle: 'hidden',
+    frame: false,
   });
 
   // and load the index.html of the app.
