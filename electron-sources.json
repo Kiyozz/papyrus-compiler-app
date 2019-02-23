@@ -1,7 +1,7 @@
 {
     "files": {
         "main/index.js": "out/index.js",
-        "main/src/app-compiler.js": "out/src/app-compiler.js",
+        "main/src/app.js": "out/src/app.js",
         "main/src/gamepath-util.js": "out/src/gamepath-util.js",
         "main/src/event-handler.js": "out/src/event-handler.js"
     }
