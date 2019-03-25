@@ -3,8 +3,8 @@ import GamePathUtil from './gamepath-util';
 
 class App {
   /**
-   * 
-   * @param {GamePathUtil} gamePathUtil 
+   *
+   * @param {GamePathUtil} gamePathUtil
    */
   constructor(gamePathUtil) {
     this.gamePathUtil = gamePathUtil;
@@ -31,7 +31,7 @@ class App {
 
         resolve(stdout);
       });
-    })
+    });
   }
 }
 
