@@ -1,0 +1,30 @@
+<app-container *ngIf="initialized">
+  <h1>Choose a group of scripts</h1>
+
+  <div *ngIf="checkPreferencesMessage">
+    <p [innerHTML]="checkPreferencesMessage"></p>
+
+    <button type="button" mat-raised-button color="primary" [routerLink]="['/', 'preferences']">Go to preferences</button>
+  </div>
+
+  <div *ngIf="!checkPreferencesMessage">
+    <div class="app-compile-form">
+      <div *ngIf="groups && groups.length === 0">
+        <p>You need to register a group of scripts.</p>
+
+        <a mat-raised-button [routerLink]="['/', 'groups']">Go to groups section</a>
+      </div>
+
+      <div *ngIf="groups && groups.length > 0">
+        <mat-form-field>
+          <mat-label>Group</mat-label>
+          <mat-select (valueChange)="onSelectGroup($event)" [(value)]="selectedGroup.id">
+            <mat-option *ngFor="let group of groups" [value]="group.id">Group <strong>{{group.name}}</strong> ({{groupScriptsInlined(group)}})</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button [routerLink]="['/', 'output']" mat-raised-button color="primary" [matBadge]="(scripts || []).length || 0" matBadgeColor="accent" matBadgePosition="above before" [disabled]="(scripts || []).length === 0">Compile</button>
+      </div>
+    </div>
+  </div>
+</app-container>

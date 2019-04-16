@@ -1,0 +1,32 @@
+<app-container *ngIf="initialized">
+  <h1>Preferences</h1>
+
+  <form class="app-preferences-form">
+    <mat-form-field class="app-preferences-form-import-field">
+      <input matInput placeholder="Skyrim directory" name="gamePath" [formControl]="gamePathFolder" readonly (click)="onClickGamePathFolderInput($event)">
+      <mat-icon matSuffix>folder</mat-icon>
+      <mat-error *ngIf="!gamePathFolder.valid">Please enter a directory</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="app-preferences-form-import-field">
+      <input matInput placeholder="Imports folder" name="importsFolder" [formControl]="importsFolder" readonly (click)="onClickImportFolderInput($event)">
+      <mat-icon matSuffix>folder</mat-icon>
+      <mat-error *ngIf="!importsFolder.valid">Please enter a directory</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="app-preferences-form-output-field">
+      <input matInput placeholder="Output folder" name="outputFolde" [formControl]="outputFolder" readonly (click)="onClickOutputFolderInput($event)">
+      <mat-icon matSuffix>folder</mat-icon>
+      <mat-error *ngIf="!outputFolder.valid">Please enter a directory</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Flag" [formControl]="selectedFlag" (valueChange)="onChangeFlag($event)">
+        <mat-option *ngFor="let flag of availableFlags" [value]="flag">
+          {{flag}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="!selectedFlag.valid">Please select a flag</mat-error>
+    </mat-form-field>
+  </form>
+</app-container>

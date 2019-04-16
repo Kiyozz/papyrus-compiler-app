@@ -1,0 +1,18 @@
+<!--<div *ngIf="!loaded">
+  <p><mat-progress-spinner mode="indeterminate" diameter="20"></mat-progress-spinner>Loading scripts...</p>
+</div>-->
+
+<mat-form-field>
+  <mat-chip-list #scriptsChipList>
+    <mat-chip *ngFor="let script of scripts" [selectable]="false"
+              [removable]="true" (removed)="remove(script)">
+      {{script}}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <input class="app-input-scripts" id="app-input-scripts" [formControl]="inputScriptFormControl" [placeholder]="label"
+           [matChipInputFor]="scriptsChipList"
+           [matChipInputSeparatorKeyCodes]="separatesKeysCodes"
+           [matChipInputAddOnBlur]="false"
+           (matChipInputTokenEnd)="add($event)">
+  </mat-chip-list>
+</mat-form-field>

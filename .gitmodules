@@ -1,3 +1,3 @@
-[submodule "app/papyrus-compiler-app"]
-	path = app/papyrus-compiler-app
-	url = git@github.com:Kiyozz/papyrus-compiler-app-angular.git
+[submodule "packages/cli"]
+	path = packages/cli
+	url = git@github.com:Kiyozz/electron-angular-cli.git

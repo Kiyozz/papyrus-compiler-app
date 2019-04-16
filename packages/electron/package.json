@@ -1,0 +1,24 @@
+{
+  "name": "@papyrus-compiler-app/electron",
+  "version": "3.0.0",
+  "description": "Electron app for papyrus-compiler-app",
+  "main": "dist/main.app.js",
+  "repository": "git@github.com:Kiyozz/papyrus-compiler-app",
+  "author": "WK <kevinturmel@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p tsconfig.app.json",
+    "start": "electron -r ts-node/register main.ts --enable-logging"
+  },
+  "dependencies": {
+    "child-process-promise": "^2.2.1",
+    "electron-compile": "^6.4.4"
+  },
+  "devDependencies": {
+    "@types/child-process-promise": "^2.2.1",
+    "electron": "^4.0.5",
+    "ts-node": "~7.0.0",
+    "tslint": "~5.11.0",
+    "typescript": "~3.2.2"
+  }
+}
