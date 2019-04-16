@@ -1,3 +1,0 @@
-[submodule "packages/cli"]
-	path = packages/cli
-	url = git@github.com:Kiyozz/electron-angular-cli.git
