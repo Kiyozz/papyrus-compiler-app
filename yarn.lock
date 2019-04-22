@@ -304,10 +304,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@lyrod/electron-angular-cli@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@lyrod/electron-angular-cli/-/electron-angular-cli-1.0.0.tgz#0369c2539f62a92c3ea67f9cbef79ca1f1f9a001"
-  integrity sha512-QdhiqmaUTVdA80UfDVLl+HiFvb1Glkgq30Iv/ZxLbNurpe2woILmzXth49nAF/rGayFXzNcrwvXTARp31P9RbQ==
+"@lyrod/electron-angular-cli@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@lyrod/electron-angular-cli/-/electron-angular-cli-1.1.0.tgz#3461b47ea3657d23cf5c54b212899153187bb416"
+  integrity sha512-LQUAchus/iUDLaiJ2icJ+8v5fBTCddKedqFDxjm/tlZ2b2Lx60GwGHPoRjK6pTd96G4dIrf1/Y7MRM7B6xF0GA==
   dependencies:
     child-process-promise "^2.2.1"
     commander "^2.20.0"

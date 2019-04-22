@@ -27,7 +27,6 @@
     "child-process-promise": "^2.2.1",
     "commander": "^2.20.0",
     "core-js": "^2.5.4",
-    "electron-builder": "^20.39.0",
     "electron-compile": "^6.4.4",
     "electron-packager": "^13.1.1",
     "fs-extra": "^7.0.1",
@@ -51,6 +50,7 @@
     "@types/node": "^11.9.4",
     "codelyzer": "~4.5.0",
     "electron": "^4.0.5",
+    "electron-builder": "^20.39.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.1.1",
@@ -73,8 +73,28 @@
         "make": "./out/make/installer",
         "packaged": "./out/make/package"
       },
-      "assets": {},
-      "icon": "./papyrus-compiler-app.ico",
+      "assets": {
+        "./packages/electron/package.json": "./package.json",
+        "./yarn.lock": "./yarn.lock"
+      },
+      "win32": {
+        "icon": "./packages/electron/papyrus-compiler-app.ico",
+        "requestedExecutionLevel": "requireAdministrator"
+      },
+      "mac": {
+        "icon": "./packages/electron/papyrus-compiler-app.icns",
+        "darkMode": false,
+        "minimumSystemVersion": "10.9",
+        "identity": false,
+        "dmg": {
+          "background": "",
+          "backgroundColor": "#fff",
+          "icon": "./packages/electron/papyrus-compiler-app.icns",
+          "iconSize": 80,
+          "iconTextSize": 12,
+          "title": "Papyrus Compiler App"
+        }
+      },
       "guid": "com.lyrod.papyrus-compiler-app",
       "appId": "com.lyrod.papyrus-compiler-app",
       "productName": "Papyrus Compiler App"

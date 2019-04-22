@@ -2,7 +2,7 @@
   "name": "@papyrus-compiler-app/electron",
   "version": "3.0.0",
   "description": "Electron app for papyrus-compiler-app",
-  "main": "dist/main.app.js",
+  "main": "main.app.js",
   "repository": "git@github.com:Kiyozz/papyrus-compiler-app",
   "author": "WK <kevinturmel@gmail.com>",
   "license": "MIT",
