@@ -11,7 +11,7 @@
     "start:angular": "bolt w @papyrus-compiler-app/angular start",
     "start:electron": "bolt w @papyrus-compiler-app/electron start",
     "build": "bolt ws build",
-    "package": "electron-angular-cli package"
+    "package": "lyrod-cli package"
   },
   "dependencies": {
     "@angular/animations": "^7.2.5",
@@ -41,7 +41,7 @@
     "@angular/cli": "~7.2.1",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
-    "@lyrod/electron-angular-cli": "^1.0.0",
+    "@lyrod-cli/cli": "^2.0.3",
     "@types/child-process-promise": "^2.2.1",
     "@types/electron-packager": "^13.0.0",
     "@types/fs-extra": "^5.0.5",
@@ -64,7 +64,7 @@
     "tslint": "~5.11.0",
     "typescript": "~3.2.2"
   },
-  "electron-angular-cli": {
+  "lyrod-cli": {
     "config": {
       "directories": {
         "angularApp": "./packages/angular",

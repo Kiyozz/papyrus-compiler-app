@@ -3,19 +3,19 @@
 
   <form class="app-preferences-form">
     <mat-form-field class="app-preferences-form-import-field">
-      <input matInput placeholder="Skyrim directory" name="gamePath" [formControl]="gamePathFolder" readonly (click)="onClickGamePathFolderInput($event)">
+      <input matInput placeholder="Skyrim directory" name="gamePath" class="app-dialog-input" [formControl]="gamePathFolder" readonly (click)="onClickGamePathFolderInput($event)">
       <mat-icon matSuffix>folder</mat-icon>
       <mat-error *ngIf="!gamePathFolder.valid">Please enter a directory</mat-error>
     </mat-form-field>
 
     <mat-form-field class="app-preferences-form-import-field">
-      <input matInput placeholder="Imports folder" name="importsFolder" [formControl]="importsFolder" readonly (click)="onClickImportFolderInput($event)">
+      <input matInput placeholder="Imports folder" name="importsFolder" class="app-dialog-input" [formControl]="importsFolder" readonly (click)="onClickImportFolderInput($event)">
       <mat-icon matSuffix>folder</mat-icon>
       <mat-error *ngIf="!importsFolder.valid">Please enter a directory</mat-error>
     </mat-form-field>
 
     <mat-form-field class="app-preferences-form-output-field">
-      <input matInput placeholder="Output folder" name="outputFolde" [formControl]="outputFolder" readonly (click)="onClickOutputFolderInput($event)">
+      <input matInput placeholder="Output folder" name="outputFolder" class="app-dialog-input" [formControl]="outputFolder" readonly (click)="onClickOutputFolderInput($event)">
       <mat-icon matSuffix>folder</mat-icon>
       <mat-error *ngIf="!outputFolder.valid">Please enter a directory</mat-error>
     </mat-form-field>
