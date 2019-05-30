@@ -1,3 +1,5 @@
+@import "../../../../assets/papyrus-compiler-app.palette";
+
 mat-toolbar {
   padding: 0;
 }
@@ -9,7 +11,7 @@ mat-toolbar {
   height: 32px;
   font-size: 12px;
   padding: 0;
-  background: darken(#673ab7, 13);
+  background: mat-color($theme-primary, darker);
 }
 
 .app-toolbar-brand {
@@ -50,4 +52,8 @@ mat-toolbar {
   &#control-close:hover {
     background: #E81123;
   }
+}
+
+.app-toolbar-second-row .app-toolbar-right-section {
+  margin-left: auto;
 }

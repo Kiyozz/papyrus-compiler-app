@@ -34,6 +34,7 @@ export class CompileScriptHandler {
           CompileScriptHandler.catchError(event, script, { stderr: result })
         }
       } catch (err) {
+        console.error(err);
         CompileScriptHandler.catchError(event, script, { stderr: err.message })
       }
     })

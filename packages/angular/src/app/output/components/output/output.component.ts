@@ -63,6 +63,10 @@ export class OutputComponent implements OnInit, OnDestroy {
     return sliced.join(', ') + (sliced.length < length ? ', ...' : '');
   }
 
+  get progressBarColor() {
+    return this.errorScripts.length > 0 ? 'warn' : 'primary'
+  }
+
   ngOnInit() {
     this.preferencesSubscription = this.preferencesSessionService.preferences
       .pipe(
@@ -109,6 +113,7 @@ export class OutputComponent implements OnInit, OnDestroy {
 
   async handleScripts(scripts: string[]) {
     this.logsService.clear();
+
     this.maxNumberOfScripts = scripts.length;
 
     for (const script of scripts) {
@@ -116,6 +121,7 @@ export class OutputComponent implements OnInit, OnDestroy {
 
       try {
         await this.compilationService.compile(script);
+
         this.successScripts = [...this.successScripts, script];
       } catch (e) {
         this.errorScripts = [...this.errorScripts, script];
@@ -131,7 +137,18 @@ export class OutputComponent implements OnInit, OnDestroy {
     e.preventDefault();
 
     this.compilationIsConfirmed = true;
+
     this.handleScripts(this.scripts);
+  }
+
+  onClickRetryAll(e: MouseEvent) {
+    e.preventDefault()
+
+    this.successScripts = []
+    this.errorScripts = []
+    this.numberOfCompiledScripts = 0
+
+    this.handleScripts(this.scripts)
   }
 
   onClickRetryErrors(e: MouseEvent): void {
@@ -140,6 +157,8 @@ export class OutputComponent implements OnInit, OnDestroy {
     if (this.errorScripts && this.errorScripts.length > 0) {
       const scripts = this.errorScripts;
       this.errorScripts = [];
+      this.numberOfCompiledScripts = 0;
+
       this.handleScripts(scripts);
     }
   }
@@ -154,5 +173,9 @@ export class OutputComponent implements OnInit, OnDestroy {
 
   isError(script: string) {
     return this.errorScripts.includes(script);
+  }
+
+  isFinished() {
+    return this.maxNumberOfScripts === this.numberOfCompiledScripts
   }
 }

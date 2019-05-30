@@ -9,8 +9,11 @@
   </mat-toolbar-row>
   <mat-toolbar-row class="app-toolbar-second-row app-background-primary-dark mat-elevation-z3">
     <a class="app-toolbar-link" mat-button [routerLink]="['/']" routerLinkActive="app-toolbar-link-active">Compile</a>
-    <a class="app-toolbar-link" mat-button [routerLink]="['/', 'output']" routerLinkActive="app-toolbar-link-active">Output</a>
     <a class="app-toolbar-link" mat-button [routerLink]="['/', 'groups']" routerLinkActive="app-toolbar-link-active">Groups</a>
     <a class="app-toolbar-link" mat-button [routerLink]="['/', 'preferences']" routerLinkActive="app-toolbar-link-active">Preferences</a>
+
+    <div class="app-toolbar-right-section">
+      <app-theme-switcher></app-theme-switcher>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>

@@ -1,4 +1,4 @@
-import { COMMA, ENTER } from '@angular/cdk/keycodes'
+import { COMMA, ENTER, TAB, SEMICOLON } from '@angular/cdk/keycodes'
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { MatChipInputEvent } from '@angular/material'
@@ -12,12 +12,12 @@ import { uniqueArray } from '../../../utils/utils'
   styleUrls: ['./choose-scripts.component.scss']
 })
 export class ChooseScriptsComponent implements OnInit {
-  @Input('scripts') scripts: string[]
-  @Input('label') label: string
+  @Input() scripts: string[]
+  @Input() label: string
   @Output('save') saveEmitter: EventEmitter<string[]> = new EventEmitter<string[]>()
   inputScriptFormControl = new FormControl()
 
-  readonly separatesKeysCodes = [COMMA, ENTER]
+  readonly separatesKeysCodes = [COMMA, ENTER, TAB, SEMICOLON]
 
   constructor(@Inject(APP_PREFERENCES_LOCAL) private preferencesLocalService: PreferencesService<LocalPreferences>) {
   }

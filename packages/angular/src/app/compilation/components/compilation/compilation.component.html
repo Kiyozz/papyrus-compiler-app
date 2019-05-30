@@ -1,10 +1,10 @@
 <app-container *ngIf="initialized">
-  <h1>Choose a group of scripts</h1>
+  <h1>Compilation</h1>
 
   <div *ngIf="checkPreferencesMessage">
     <p [innerHTML]="checkPreferencesMessage"></p>
 
-    <button type="button" mat-raised-button color="primary" [routerLink]="['/', 'preferences']">Go to preferences</button>
+    <button type="button" mat-button color="primary" [routerLink]="['/', 'preferences']">Go to preferences</button>
   </div>
 
   <div *ngIf="!checkPreferencesMessage">
@@ -12,7 +12,7 @@
       <div *ngIf="groups && groups.length === 0">
         <p>You need to register a group of scripts.</p>
 
-        <a mat-raised-button [routerLink]="['/', 'groups']">Go to groups section</a>
+        <a mat-button color="warn" [routerLink]="['/', 'groups']">Go to groups section</a>
       </div>
 
       <div *ngIf="groups && groups.length > 0">
@@ -23,7 +23,7 @@
           </mat-select>
         </mat-form-field>
 
-        <button [routerLink]="['/', 'output']" mat-raised-button color="primary" [matBadge]="(scripts || []).length || 0" matBadgeColor="accent" matBadgePosition="above before" [disabled]="(scripts || []).length === 0">Compile</button>
+        <button [routerLink]="['/', 'output']" mat-raised-button color="primary" [matBadge]="numberOfScript" matBadgeColor="accent" matBadgePosition="above after" [disabled]="(scripts || []).length === 0"><mat-icon>play_arrow</mat-icon></button>
       </div>
     </div>
   </div>

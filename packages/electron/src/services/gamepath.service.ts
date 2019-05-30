@@ -11,7 +11,7 @@ export class GamepathService {
   constructor(private readonly options: GamepathServiceConstructor) {}
 
   public get importFolder() {
-    return path.join(this.options.gamePath, this.options.imports)
+    return path.join(this.options.imports)
   }
 
   public get gamePath() {

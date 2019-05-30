@@ -63,17 +63,13 @@ export class GroupsService {
         return groups.filter(g => g.name !== group.name);
       }),
       tap(groups => this.groups$.next(groups)),
-      tap(groups => {
+      tap(() => {
         this.preferencesSessionService.preferences
           .subscribe(sessionPreferences => {
             if (sessionPreferences.group) {
-              const groupInList = groups.find(g => g.id === sessionPreferences.group);
+              sessionPreferences.group = null;
 
-              if (groupInList) {
-                sessionPreferences.group = groupInList.id; // TODO: Save group id only instead of object
-
-                this.preferencesSessionService.save(sessionPreferences);
-              }
+              this.preferencesSessionService.save(sessionPreferences)
             }
           })
       })

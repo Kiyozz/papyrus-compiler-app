@@ -12,7 +12,7 @@ import {
   MatIconModule,
   MatInputModule, MatProgressSpinnerModule
 } from '@angular/material';
-import { ChooseScriptsComponent } from '../../components/scripts-autocomplete/choose-scripts.component';
+import { ChooseScriptsComponent } from '../../components/choose-scripts/choose-scripts.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({

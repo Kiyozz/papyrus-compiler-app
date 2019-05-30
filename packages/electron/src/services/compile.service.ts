@@ -1,5 +1,5 @@
-import { GamepathService } from './gamepath.service'
 import { exec } from 'child-process-promise'
+import { GamepathService } from './gamepath.service'
 
 export class CompileService {
   constructor(private readonly gamePathService: GamepathService) {}
@@ -13,7 +13,13 @@ export class CompileService {
 
       return result.stdout
     } catch (err) {
-      throw new Error(err.stderr.replace('<unknown>', 'unknown'))
+      const output = err.stderr.replace('<unknown>', 'unknown')
+
+      if (!output) {
+        throw new Error(err.stdout.replace('<unknown>', 'unknown'));
+      }
+
+      throw new Error(output)
     }
   }
 }

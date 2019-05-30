@@ -8,13 +8,17 @@ import { ToolbarComponent } from './common/components/toolbar/toolbar.component'
 import { PreferencesModule } from './preferences/preferences.module';
 import { OutputModule } from './output/output.module';
 import { AppCommonModule } from './common/modules/app-common/app-common.module';
-import { MatToolbarModule } from '@angular/material';
+import { MatSlideToggleModule, MatToolbarModule } from '@angular/material'
 import { GroupsModule } from './groups/groups.module';
+import { ThemeSwitcherComponent } from './common/components/theme-switcher/theme-switcher.component';
+import { InitializationComponent } from './common/components/initialization/initialization.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    ThemeSwitcherComponent,
+    InitializationComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +30,7 @@ import { GroupsModule } from './groups/groups.module';
     OutputModule,
     GroupsModule,
     AppRoutingModule,
+    MatSlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

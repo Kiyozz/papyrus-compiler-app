@@ -1,0 +1,5 @@
+<div class="app-theme-switcher" *ngIf="show" @enter>
+  <mat-slide-toggle color="accent" aria-label="Change actual theme" (change)="onChangeTheme($event)" [checked]="isDark">
+    <span>{{isDark ? 'Dark' : 'Light'}} theme</span>
+  </mat-slide-toggle>
+</div>

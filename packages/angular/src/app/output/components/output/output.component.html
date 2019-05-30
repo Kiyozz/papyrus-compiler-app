@@ -1,22 +1,21 @@
 <app-container *ngIf="initialized" class="app-output-container">
-  <h1>Compilation output</h1>
-
   <div *ngIf="noScriptMessage">
     <p>{{noScriptMessage}}</p>
 
-    <button mat-raised-button color="primary" [routerLink]="['/']">Go to compile section</button>
+    <button mat-button color="primary" [routerLink]="['/']">Go to compile section</button>
   </div>
 
   <div *ngIf="!noScriptMessage">
-    <div *ngIf="!compilationIsConfirmed">
-      <p>You are about to compile scripts <strong *ngIf="inlinedScripts">{{inlinedScripts}}</strong></p>
-      <p>Continue?</p>
+    <button routerLink="/compilation" class="app-back-button" mat-button mat-icon-button color="primary"><mat-icon>arrow_back</mat-icon></button>
 
-      <button mat-raised-button color="primary" (click)="onClickConfirm($event)">Compile</button>
+    <div *ngIf="!compilationIsConfirmed">
+      <p class="app-output-confirmation-text">You are about to compile scripts <strong *ngIf="inlinedScripts">{{inlinedScripts}}</strong></p>
+
+      <button mat-raised-button color="primary" (click)="onClickConfirm($event)"><mat-icon>arrow_right_alt</mat-icon></button>
     </div>
 
     <div *ngIf="compilationIsConfirmed">
-      <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+      <mat-progress-bar mode="determinate" [value]="progress" [color]="progressBarColor"></mat-progress-bar>
 
       <mat-list class="app-output-scripts-list">
         <mat-list-item *ngFor="let script of scripts">
@@ -29,7 +28,8 @@
       </mat-list>
 
       <div class="app-output-retry">
-        <button mat-raised-button color="primary" [disabled]="(errorScripts && errorScripts.length === 0) || isCompilingAnyScript" (click)="onClickRetryErrors($event)">Retry failed scripts</button>
+        <button mat-button color="primary" [disabled]="isCompilingAnyScript" (click)="onClickRetryAll($event)"><mat-icon>replay</mat-icon> Retry</button>
+        <button mat-button color="warn" [disabled]="(errorScripts && errorScripts.length === 0) || isCompilingAnyScript" (click)="onClickRetryErrors($event)"><mat-icon>replay</mat-icon> Retry failed</button>
       </div>
     </div>
   </div>

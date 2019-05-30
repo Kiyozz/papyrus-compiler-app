@@ -1,15 +1,15 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { APP_PREFERENCES_LOCAL, APP_PREFERENCES_SESSION } from '../../../preferences/preferences-providers';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core'
+import { of, Subscription, zip } from 'rxjs'
+import { first, map, switchMap, tap } from 'rxjs/operators'
+import { GroupNotExistsException } from '../../../groups/exceptions/group-not-exists.exception'
+import { Group } from '../../../groups/models/group'
+import { GroupsService } from '../../../groups/services/groups.service'
+import { APP_PREFERENCES_LOCAL, APP_PREFERENCES_SESSION } from '../../../preferences/preferences-providers'
 import {
   LocalPreferences,
   PreferencesService,
   SessionPreferences
-} from '../../../preferences/services/preferences.service';
-import { of, Subscription, zip } from 'rxjs';
-import { first, map, switchMap, tap } from 'rxjs/operators';
-import { Group } from '../../../groups/models/group';
-import { GroupsService } from '../../../groups/services/groups.service';
-import { GroupNotExistsException } from '../../../groups/exceptions/group-not-exists.exception';
+} from '../../../preferences/services/preferences.service'
 
 @Component({
   selector: 'app-compilation',
@@ -17,22 +17,26 @@ import { GroupNotExistsException } from '../../../groups/exceptions/group-not-ex
   styleUrls: ['./compilation.component.scss']
 })
 export class CompilationComponent implements OnInit, OnDestroy {
-  initialized = false;
-  sessionPreferences: SessionPreferences;
-  checkPreferencesMessage = '';
-  scripts: string[];
-  groups: Group[];
+  initialized = false
+  sessionPreferences: SessionPreferences
+  checkPreferencesMessage = ''
+  scripts: string[]
+  groups: Group[]
   selectedGroup: Group = {
     id: -1,
     scripts: [],
     name: ''
-  };
+  }
 
-  private preferencesSubscription: Subscription;
+  private preferencesSubscription: Subscription
 
   constructor(@Inject(APP_PREFERENCES_SESSION) private preferencesService: PreferencesService<SessionPreferences>,
               @Inject(APP_PREFERENCES_LOCAL) private preferencesLocalService: PreferencesService<LocalPreferences>,
               private groupsService: GroupsService) {
+  }
+
+  get numberOfScript() {
+    return `${(this.scripts || []).length}` || '0'
   }
 
   ngOnInit() {
@@ -42,14 +46,14 @@ export class CompilationComponent implements OnInit, OnDestroy {
         map(groups => groups.filter(g => g.scripts.length > 0))
       )
       .subscribe(groups => {
-        this.groups = groups;
-      });
+        this.groups = groups
+      })
 
     this.preferencesSubscription = zip(this.preferencesLocalService.preferences, this.preferencesService.preferences)
       .pipe(
         first(),
         tap(([localPreferences, sessionPreferences]) => {
-          this.sessionPreferences = sessionPreferences;
+          this.sessionPreferences = sessionPreferences
 
           if (!localPreferences.outputFolder ||
             !localPreferences.gamePathFolder ||
@@ -61,61 +65,61 @@ export class CompilationComponent implements OnInit, OnDestroy {
             ${!localPreferences.outputFolder ? '<strong>— Scripts output folder</strong><br>' : ''}
             ${!localPreferences.importsFolder ? '<strong>— Source scripts import folder</strong><br>' : ''}
             ${!localPreferences.flag ? '<strong>— Papyrus flag</strong><br>' : ''}<br>
-    
+
             In your preferences before you can compile scripts.
-          `;
+          `
           }
         }),
         switchMap(([, sessionPreferences]) => {
           if (!sessionPreferences.group) {
-            return of(null);
+            return of(null)
           }
 
-          return this.groupsService.getGroupById(sessionPreferences.group);
+          return this.groupsService.getGroupById(sessionPreferences.group)
         })
       )
       .subscribe((group) => {
         if (group) {
-          this.scripts = group.scripts;
-          this.selectedGroup = group;
+          this.scripts = group.scripts
+          this.selectedGroup = group
         } else {
-          this.scripts = [];
+          this.scripts = []
         }
 
-        this.initialized = true;
+        this.initialized = true
       }, err => {
         if (err instanceof GroupNotExistsException) {
-          this.scripts = [];
+          this.scripts = []
         }
 
-        this.initialized = true;
-      });
+        this.initialized = true
+      })
   }
 
   ngOnDestroy(): void {
     if (this.preferencesSubscription) {
-      this.preferencesSubscription.unsubscribe();
+      this.preferencesSubscription.unsubscribe()
     }
   }
 
   groupScriptsInlined(group: Group): string {
-    const scripts = group.scripts || [];
+    const scripts = group.scripts || []
 
-    const slice = scripts.slice(0, 6);
+    const slice = scripts.slice(0, 6)
 
-    return scripts.length > 6 ? slice.join(', ') + ', ...' : slice.join(', ');
+    return scripts.length > 6 ? slice.join(', ') + ', ...' : slice.join(', ')
   }
 
   onSelectGroup(groupId: number) {
-    const group = this.groups.find(g => g.id === groupId);
+    const group = this.groups.find(g => g.id === groupId)
 
     if (!group) {
-      throw new GroupNotExistsException();
+      throw new GroupNotExistsException()
     }
 
-    this.scripts = group.scripts;
-    this.selectedGroup = group;
-    this.sessionPreferences.group = groupId;
-    this.preferencesService.save(this.sessionPreferences);
+    this.scripts = group.scripts
+    this.selectedGroup = group
+    this.sessionPreferences.group = groupId
+    this.preferencesService.save(this.sessionPreferences)
   }
 }
