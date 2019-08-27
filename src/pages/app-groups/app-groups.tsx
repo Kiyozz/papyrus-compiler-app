@@ -1,5 +1,6 @@
 import React from 'react'
 import './app-groups.scss'
+import AppTitle from '../../components/app-title/app-title'
 
 export interface StateProps {}
 
@@ -9,7 +10,12 @@ type Props = StateProps & DispatchesProps
 
 const AppGroups: React.FC<Props> = () => {
   return (
-    <div>AppGroups works!</div>
+    <div className="app-groups">
+      <AppTitle>Groups</AppTitle>
+
+      <div className="app-groups-content">
+      </div>
+    </div>
   )
 }
 
