@@ -1,13 +1,11 @@
 import { Dispatch } from 'redux'
-import { RootStore } from '../../redux/stores/root.store'
-import App, { DispatchesProps, StateProps } from '../../components/app/app'
 import { connect } from 'react-redux'
+import App, { DispatchesProps, StateProps } from '../../components/app/app'
 import { actionInitialization } from '../../redux/actions/initialization/initialization.actions'
+import { RootStore } from '../../redux/stores/root.store'
 
 function mapStateToProps(store: RootStore): StateProps {
-  return {
-    initialized: store.initialization
-  }
+  return {}
 }
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchesProps {

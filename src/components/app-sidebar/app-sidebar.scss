@@ -1,0 +1,28 @@
+@import "../../scss/variables";
+
+.app-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 4rem;
+  height: 100%;
+  border-right: 2px solid darken($background-sidebar, 3);
+  background: $background-sidebar;
+}
+
+.app-sidebar-links {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-sidebar-logo {
+  padding: 0.5rem;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+  }
+}

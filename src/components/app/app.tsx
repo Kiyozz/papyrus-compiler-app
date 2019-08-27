@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import './app.scss'
+import AppSidebar from '../app-sidebar/app-sidebar'
+import AppContent from '../app-content/app-content'
+import AppLoading from '../../containers/app-loading/app-loading.container'
 
-export interface StateProps {
-  initialized: boolean
-}
+export interface StateProps {}
 
 export interface DispatchesProps {
   initialization: () => void
@@ -11,22 +12,16 @@ export interface DispatchesProps {
 
 type Props = StateProps & DispatchesProps
 
-const App: React.FC<Props> = ({ initialization, initialized }) => {
+const App: React.FC<Props> = ({ initialization }) => {
   useEffect(() => {
     initialization()
   }, [initialization])
 
-  if (!initialized) {
-    return (
-      <div className="app">
-        <div className="container">Not initialized</div>
-      </div>
-    )
-  }
-
   return (
     <div className="app">
-      <div className="container">to</div>
+      <AppLoading />
+      <AppSidebar />
+      <AppContent />
     </div>
   )
 }

@@ -1,0 +1,33 @@
+@import "../../scss/variables";
+
+.app-loading {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1500;
+  width: 100%;
+  height: 100%;
+  background: $background-loading;
+  color: $color-loading;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  img {
+    width: 125px;
+    animation: app-loading-logo-grow 1.125s ease-in-out infinite;
+  }
+}
+
+@keyframes app-loading-logo-grow {
+  0%, 100% {
+    width: 125px;
+  }
+
+  50% {
+    width: 150px;
+  }
+}

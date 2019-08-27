@@ -9,7 +9,7 @@ export default function* initializationSaga() {
   while (true) {
     try {
       yield take(CONSTANTS.APP_INITIALIZATION)
-      yield delay(200)
+      yield delay(1000)
       yield put(actionInitializationSuccess())
     } catch (e) {
       yield put(actionInitializationFailed(e))

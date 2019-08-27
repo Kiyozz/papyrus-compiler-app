@@ -6,6 +6,10 @@ import './index.scss'
 import App from './containers/app/app.container'
 import * as serviceWorker from './serviceWorker'
 import createRootStore, { history } from './redux/stores/root.store'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas)
 
 const store = createRootStore()
 

@@ -1,0 +1,30 @@
+@import "../../scss/variables";
+
+.app-sidebar-link {
+  height: 5rem;
+  width: 100%;
+  color: $color-sidebar-link;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem 0;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-sidebar-link-active;
+  }
+}
+
+.app-sidebar-link-active {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    height: 65%;
+    width: 2px;
+    background: $background-sidebar-link-active;
+  }
+}
