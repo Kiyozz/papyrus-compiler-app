@@ -11,6 +11,7 @@ import { format } from '../../utils/date/format'
 import AppSubtitle from '../../components/app-subtitle/app-subtitle'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ScriptStatus } from '../../enums/script-status.enum'
+import getIconFromStatus from '../../utils/scripts/get-icon-from-status'
 
 export interface StateProps {
   isCompilationRunning: boolean
@@ -53,7 +54,13 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
         >
           <div className="app-list-group-item-script-name">{script.name}</div>
           <div className="app-list-group-item-script-path ml-2 mt-2">
-            Last edited at {format(script.lastModified, 'PPpp')} {script.status}
+            Last edited at {format(script.lastModified, 'PPpp')}
+            <span className="app-list-group-item-script-status">
+              <FontAwesomeIcon
+                spin={script.status === ScriptStatus.RUNNING}
+                icon={getIconFromStatus(script)}
+              />
+            </span>
           </div>
         </div>
       )

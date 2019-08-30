@@ -3,7 +3,8 @@ import * as CONSTANTS from '../actions/constants'
 import {
   actionStartCompilationFinish,
   actionStartCompilationScriptSuccess,
-  actionStartCompilationScriptStart
+  actionStartCompilationScriptStart,
+  actionStartCompilationScriptFailed
 } from '../actions/compilation/compilation.actions'
 import { AnyAction } from 'redux'
 import { ScriptModel } from '../../models'
@@ -12,10 +13,14 @@ function* startCompilation(action: AnyAction) {
   const scripts: ScriptModel[] = action.payload
 
   for (const script of scripts) {
-    console.log('script', script)
-    yield put(actionStartCompilationScriptStart(script))
-    yield delay(1000)
-    yield put(actionStartCompilationScriptSuccess(script))
+    try {
+      const logs: string = yield put(actionStartCompilationScriptStart(script))
+
+      yield delay(1000)
+      yield put(actionStartCompilationScriptSuccess([script, logs]))
+    } catch (e) {
+      yield put(actionStartCompilationScriptFailed([script, e.message]))
+    }
   }
 
   yield put(actionStartCompilationFinish())

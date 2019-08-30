@@ -19,6 +19,14 @@
   @include font-oxygen;
 }
 
+.app-list-group-item-script-status {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+}
+
 .app-compilation-is-dragging-container {
   position: fixed;
   z-index: 1000;
