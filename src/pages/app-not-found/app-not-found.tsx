@@ -9,7 +9,7 @@ type Props = StateProps & DispatchesProps
 
 const AppNotFound: React.FC<Props> = () => {
   return (
-    <div>AppNotFound works!</div>
+    <div className="app-not-found container">AppNotFound works!</div>
   )
 }
 

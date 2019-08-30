@@ -7,6 +7,10 @@
   height: 100%;
   border-right: 2px solid darken($background-sidebar, 3);
   background: $background-sidebar;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 500;
 }
 
 .app-sidebar-links {

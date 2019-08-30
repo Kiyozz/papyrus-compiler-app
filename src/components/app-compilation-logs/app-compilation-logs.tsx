@@ -22,10 +22,10 @@ const AppCompilationLogs: React.FC<Props> = () => {
   return (
     <div className="app-compilation-logs">
       <button
-        className="app-compilation-logs-button-activate"
+        className="btn btn-outline-secondary app-compilation-logs-button-activate"
         onClick={onClickButtonOpenLogs}
       >
-        <FontAwesomeIcon icon="exclamation-circle" /> Logs
+        <FontAwesomeIcon icon="exclamation-circle" />
       </button>
 
       <div
@@ -34,9 +34,16 @@ const AppCompilationLogs: React.FC<Props> = () => {
           'app-compilation-logs-popup-open': logsOpen
         })}
       >
-        <AppTitle>Logs</AppTitle>
+        <div className="container-fluid">
+          <AppTitle>Logs</AppTitle>
 
-        <button className="app-compilation-logs-button-activate" onClick={onClickButtonCloseLogs}>Close</button>
+          <button
+            className="btn btn-outline-danger app-compilation-logs-button-activate"
+            onClick={onClickButtonCloseLogs}
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   )

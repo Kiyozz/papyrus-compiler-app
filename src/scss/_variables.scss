@@ -8,3 +8,46 @@ $color-loading: white;
 $color-sidebar-link: black;
 $color-sidebar-link-active: #313131;
 $color-title: #ff7049;
+$color-subtitle: #313131;
+
+@mixin font-capriola() {
+  font-family: Capriola, sans-serif;
+}
+
+@mixin font-neuton() {
+  font-family: Neuton, sans-serif;
+}
+
+@mixin font-oxygen() {
+  font-family: Oxygen, sans-serif;
+}
+
+@mixin font-default() {
+  font-family: Capriola, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+@mixin text-large() {
+  font-size: 2rem;
+}
+
+@mixin text-extra-large() {
+  font-size: 3rem;
+}
+
+@mixin text-default() {
+  font-size: 1rem;
+}
+
+@mixin full-height() {
+  height: 100%;
+}
+
+@mixin full-width() {
+  width: 100%;
+}
+
+@mixin padding-content() {
+  padding-bottom: 15px;
+}

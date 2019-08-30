@@ -10,7 +10,7 @@ type Props = StateProps & DispatchesProps
 
 const AppGroups: React.FC<Props> = () => {
   return (
-    <div className="app-groups">
+    <div className="app-groups container">
       <AppTitle>Groups</AppTitle>
 
       <div className="app-groups-content">

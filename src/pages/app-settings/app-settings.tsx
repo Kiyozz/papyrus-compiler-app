@@ -10,7 +10,7 @@ type Props = StateProps & DispatchesProps
 
 const AppSettings: React.FC<Props> = () => {
   return (
-    <div className="app-settings">
+    <div className="app-settings container">
       <AppTitle>Settings</AppTitle>
 
       <div className="app-settings-content">

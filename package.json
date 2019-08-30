@@ -18,16 +18,23 @@
     "child-process-promise": "^2.2.1",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.5.2",
+    "date-fns": "^2.0.1",
     "dotenv": "^8.1.0",
+    "lodash-es": "^4.17.15",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-dropzone": "^10.1.8",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
+    "react-transition-group": "^4.2.2",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-saga": "^1.0.5",
+    "typeface-capriola": "^0.0.72",
+    "typeface-neuton": "^0.0.72",
+    "typeface-oxygen": "^0.0.72",
     "typescript": "3.5.3"
   },
   "devDependencies": {
@@ -35,8 +42,10 @@
     "@types/classnames": "^2.2.9",
     "@types/dotenv": "^6.1.1",
     "@types/history": "^4.7.3",
+    "@types/lodash-es": "^4.17.3",
     "@types/react-redux": "^7.1.2",
     "@types/react-router-dom": "^4.3.5",
+    "@types/react-transition-group": "^4.2.2",
     "@types/redux-actions": "^2.6.1",
     "@typescript-eslint/eslint-plugin": "1.x",
     "@typescript-eslint/parser": "1.x",
@@ -61,6 +70,7 @@
       "comma-spacing": "error",
       "space-infix-ops": "error",
       "space-before-blocks": "error",
+      "switch-colon-spacing": "error",
       "object-curly-spacing": [
         "error",
         "always"
@@ -86,6 +96,7 @@
         "error",
         2,
         {
+          "SwitchCase": 1,
           "ignoredNodes": [
             "JSXElement",
             "JSXElement > *",

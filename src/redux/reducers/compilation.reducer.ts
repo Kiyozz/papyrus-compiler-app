@@ -1,0 +1,83 @@
+import uniqBy from 'lodash-es/uniqBy'
+import find from 'lodash-es/find'
+import { AnyAction } from 'redux'
+import * as CONSTANTS from '../actions/constants'
+import { ScriptModel } from '../../models'
+import { ScriptStatus } from '../../enums/script-status.enum'
+import findScriptInList from '../../utils/scripts/find-script-in-list'
+
+export interface CompilationState {
+  compilationScripts: ScriptModel[]
+  isCompilationRunning: boolean
+}
+
+const initialState: CompilationState = {
+  compilationScripts: [],
+  isCompilationRunning: false
+}
+
+export default function compilationReducer(state = initialState, action: AnyAction): CompilationState {
+  switch (action.type) {
+    case CONSTANTS.APP_COMPILATION_SET_COMPILATION_SCRIPTS:
+      return {
+        ...state,
+        compilationScripts: action.payload || []
+      }
+    case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_START:
+      const script = find(state.compilationScripts, { id: action.payload.id })
+
+      if (!script) {
+        return state
+      }
+
+      script.status = ScriptStatus.RUNNING
+
+      return {
+        ...state,
+        compilationScripts: uniqBy([...state.compilationScripts, script], 'id')
+      }
+    case CONSTANTS.APP_COMPILATION_START_COMPILATION:
+      const scripts = state.compilationScripts.map(script => {
+        script.status = ScriptStatus.IDLE
+
+        return script
+      })
+
+      return {
+        ...state,
+        compilationScripts: scripts,
+        isCompilationRunning: true
+      }
+    case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_SUCCESS:
+      const scriptSuccessAction = findScriptInList(state.compilationScripts, action.payload.id, ScriptStatus.SUCCESS)
+
+      if (!scriptSuccessAction) {
+        return state
+      }
+
+      return {
+        ...state,
+        compilationScripts: uniqBy([...state.compilationScripts, scriptSuccessAction], 'id')
+      }
+    case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_FAILED:
+      const scriptFailedAction = state.compilationScripts.find(script => script.id === action.payload.id)
+
+      if (!scriptFailedAction) {
+        return state
+      }
+
+      scriptFailedAction.status = ScriptStatus.FAILED
+
+      return {
+        ...state,
+        compilationScripts: uniqBy([...state.compilationScripts, scriptFailedAction], 'id')
+      }
+    case CONSTANTS.APP_COMPILATION_START_COMPILATION_FINISH:
+      return {
+        ...state,
+        isCompilationRunning: false
+      }
+    default:
+      return state
+  }
+}

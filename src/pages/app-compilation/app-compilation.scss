@@ -1,7 +1,55 @@
-.app-compilation {
+@import "../../scss/variables";
 
+.app-compilation {
+  @include full-height;
+  @include padding-content;
 }
 
 .app-compilation-content {
 
+}
+
+.app-list-group-item-script-name {
+
+}
+
+.app-list-group-item-script-path {
+  font-size: 0.8rem;
+  font-style: italic;
+  @include font-oxygen;
+}
+
+.app-compilation-is-dragging-container {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $background-loading;
+
+  @include font-neuton;
+  @include text-large;
+}
+
+.app-compilation-actions {
+  margin-left: auto;
+  display: flex;
+  padding: 0.25rem;
+  align-items: center;
+}
+
+.app-compilation-action {
+  font-size: 2rem;
+
+  &.app-compilation-action-disable {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+  }
 }
