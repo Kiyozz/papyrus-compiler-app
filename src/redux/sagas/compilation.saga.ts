@@ -1,4 +1,4 @@
-import { takeLatest, put, delay } from 'redux-saga/effects'
+import { takeLatest, put, delay, call } from 'redux-saga/effects'
 import * as CONSTANTS from '../actions/constants'
 import {
   actionStartCompilationFinish,
@@ -8,13 +8,16 @@ import {
 } from '../actions/compilation/compilation.actions'
 import { AnyAction } from 'redux'
 import { ScriptModel } from '../../models'
+import api from '../api/api'
 
 function* startCompilation(action: AnyAction) {
   const scripts: ScriptModel[] = action.payload
 
   for (const script of scripts) {
     try {
-      const logs: string = yield put(actionStartCompilationScriptStart(script))
+      yield put(actionStartCompilationScriptStart(script))
+
+      const logs = yield call(api.compileScript, script)
 
       yield delay(1000)
       yield put(actionStartCompilationScriptSuccess([script, logs]))

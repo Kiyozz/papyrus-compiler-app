@@ -6,11 +6,13 @@ import initializationReducer, { InitializationState } from '../reducers/initiali
 import rootSaga from '../sagas/root.saga'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import compilationReducer, { CompilationState } from '../reducers/compilation.reducer'
+import compilationLogsReducer, { CompilationLogsState } from '../reducers/compilation-logs.reducer'
 
 export interface RootStore {
   router: RouterState
   initialization: InitializationState
   compilation: CompilationState
+  compilationLogs: CompilationLogsState
 }
 
 export const history = createBrowserHistory()
@@ -21,6 +23,7 @@ export default function createRootStore() {
     combineReducers({
       initialization: initializationReducer,
       compilation: compilationReducer,
+      compilationLogs: compilationLogsReducer,
       router: connectRouter(history)
     }),
     composeWithDevTools(
