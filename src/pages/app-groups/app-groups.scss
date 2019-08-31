@@ -1,7 +1,54 @@
+@import "../../scss/variables";
+
 .app-groups {
 
 }
 
 .app-groups-content {
 
+}
+
+.app-groups-actions {
+  margin-left: auto;
+  display: flex;
+  padding: 0.25rem;
+  align-items: center;
+}
+
+.app-groups-action {
+  font-size: 2rem;
+  color: $color-primary;
+}
+
+.app-groups-list-group-item-name {
+  color: $color-secondary-800;
+}
+
+.app-groups-list-group-item-scripts {
+  font-size: 0.8rem;
+  font-style: italic;
+  @include font-oxygen;
+}
+
+.app-list-group-item-group-hover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $background-loading;
+  color: $color-secondary-200;
+
+  &-remove, &-edit {
+    cursor: pointer;
+  }
+
+  &-action + &-action {
+    margin-left: 1rem;
+  }
 }

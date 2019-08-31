@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import getIconFromStatus from '../../utils/scripts/get-icon-from-status'
 import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
+import pscFilesToPscScripts from '../../utils/scripts/psc-files-to-psc-scripts'
 
 export interface StateProps {
   isCompilationRunning: boolean
@@ -57,15 +58,7 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
   }, [compilationScripts, startCompilation])
 
   const onDrop = useCallback((pscFiles: File[]) => {
-    const pscScripts: ScriptModel[] = pscFiles.map(({ name, path, lastModified }, index) => {
-      return {
-        id: compilationScripts.length + index + 1,
-        name,
-        path,
-        lastModified,
-        status: ScriptStatus.IDLE
-      }
-    })
+    const pscScripts: ScriptModel[] = pscFilesToPscScripts(pscFiles, compilationScripts)
 
     setCompilationScripts(uniqBy([...compilationScripts, ...pscScripts], 'name'))
   }, [setCompilationScripts, compilationScripts])
