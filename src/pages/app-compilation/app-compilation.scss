@@ -64,7 +64,7 @@
 }
 
 .app-compilation-action-group {
-  width: 8rem;
+  width: 10rem;
   font-size: 1rem;
   align-self: center;
   margin-left: 2rem;
@@ -72,9 +72,7 @@
 
 .app-compilation-action-group-loaded {
   font-size: 0.8rem;
-  @include font-harmonia-sans;
-  font-style: italic;
-  font-weight: bold;
+  @include font-capriola;
   color: $color-secondary;
   margin-left: 10px;
   align-self: center;
@@ -90,6 +88,7 @@
 .app-compilation-action {
   font-size: 2rem;
   color: $color-button;
+  cursor: pointer;
 
   &.app-compilation-action-disable {
     opacity: 0.5;

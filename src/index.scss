@@ -49,3 +49,7 @@ code {
 #root {
   height: 100%;
 }
+
+* {
+  user-select: none;
+}

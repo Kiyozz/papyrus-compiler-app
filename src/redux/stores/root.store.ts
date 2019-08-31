@@ -8,6 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import compilationReducer, { CompilationState } from '../reducers/compilation.reducer'
 import compilationLogsReducer, { CompilationLogsState } from '../reducers/compilation-logs.reducer'
 import groupsReducer, { GroupsState } from '../reducers/groups.reducer'
+import settingsReducer, { SettingsState } from '../reducers/settings.reducer'
 
 export interface RootStore {
   router: RouterState
@@ -15,6 +16,7 @@ export interface RootStore {
   compilation: CompilationState
   compilationLogs: CompilationLogsState
   groups: GroupsState
+  settings: SettingsState
 }
 
 export const history = createBrowserHistory()
@@ -27,6 +29,7 @@ export default function createRootStore() {
       compilation: compilationReducer,
       compilationLogs: compilationLogsReducer,
       groups: groupsReducer,
+      settings: settingsReducer,
       router: connectRouter(history)
     }),
     composeWithDevTools(

@@ -119,7 +119,7 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
   const groupSelectOptions = useMemo(() => {
     return groups.filter(group => group.scripts.length > 0).map(group => {
       return {
-        label: group.name,
+        label: `Group ${group.name}`,
         value: group
       }
     })
@@ -159,10 +159,13 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
         Compilation
 
         <div className="app-compilation-action-group">
-          <Select
-            onChange={onChangeGroup}
-            options={groupSelectOptions}
-          />
+          {groups.length > 0 && (
+            <Select
+              placeholder="Load a group"
+              onChange={onChangeGroup}
+              options={groupSelectOptions}
+            />
+          )}
         </div>
 
         <CSSTransition

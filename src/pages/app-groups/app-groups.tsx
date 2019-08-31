@@ -165,7 +165,14 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
         </CSSTransition>
 
         <div className="app-groups-list list-group">
-          {groupsList}
+          {groupsList.length > 0 ? (
+            groupsList
+          ) : (
+            <>
+              <p>You can create a group with the top-right button.</p>
+              <p>A group is a set of scripts that can be easily loaded on the compilation view.</p>
+            </>
+          )}
         </div>
       </div>
     </div>
