@@ -10,7 +10,8 @@ import {
 function mapStateToProps(store: RootStore): StateProps {
   return {
     isCompilationRunning: store.compilation.isCompilationRunning,
-    compilationScripts: store.compilation.compilationScripts
+    compilationScripts: store.compilation.compilationScripts,
+    popupOpen: store.compilationLogs.popupOpen
   }
 }
 

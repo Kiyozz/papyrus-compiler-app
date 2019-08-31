@@ -1,23 +1,42 @@
 import classNames from 'classnames'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import './app-compilation-logs.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AppTitle from '../app-title/app-title'
+import { CompilationLogsModel } from '../../models'
 
-export interface StateProps {}
+export interface StateProps {
+  logs: CompilationLogsModel
+  popupOpen: boolean
+}
 
-export interface DispatchesProps {}
+export interface DispatchesProps {
+  popupToggle: (toggle: boolean) => void
+}
 
 type Props = StateProps & DispatchesProps
 
-const AppCompilationLogs: React.FC<Props> = () => {
-  const [logsOpen, setLogsOpen] = useState(false)
+const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle }) => {
   const onClickButtonOpenLogs = useCallback(() => {
-    setLogsOpen(true)
-  }, [setLogsOpen])
+    popupToggle(true)
+  }, [popupToggle])
   const onClickButtonCloseLogs = useCallback(() => {
-    setLogsOpen(false)
-  }, [setLogsOpen])
+    popupToggle(false)
+  }, [popupToggle])
+
+  const LogsList = useMemo(() => {
+    return logs.map(([script, scriptLogs], index) => {
+      return (
+        <div
+          key={index}
+          className="app-compilation-logs-logs-section"
+        >
+          <h2>{script.name}</h2>
+          <p>{scriptLogs}</p>
+        </div>
+      )
+    })
+  }, [logs])
 
   return (
     <div className="app-compilation-logs">
@@ -31,11 +50,17 @@ const AppCompilationLogs: React.FC<Props> = () => {
       <div
         className={classNames({
           'app-compilation-logs-popup': true,
-          'app-compilation-logs-popup-open': logsOpen
+          'app-compilation-logs-popup-open': popupOpen
         })}
       >
-        <div className="container-fluid">
-          <AppTitle>Logs</AppTitle>
+        <div className="container-fluid d-flex flex-column h-100 overflow-auto">
+          <AppTitle className="app-compilation-logs-title">Logs</AppTitle>
+
+          <div className="app-compilation-logs-logs-container">
+            <div className="app-compilation-logs-logs-section">
+              {LogsList}
+            </div>
+          </div>
 
           <button
             className="btn btn-outline-danger app-compilation-logs-button-activate"

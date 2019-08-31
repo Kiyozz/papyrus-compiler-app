@@ -3,10 +3,16 @@
 .app-compilation-logs {
 }
 
+.app-compilation-logs-title {
+  position: static;
+  background: unset;
+}
+
 .app-compilation-logs-button-activate {
   position: fixed;
   bottom: 0.5rem;
-  left: 0.5rem;
+  left: 0.65rem;
+  z-index: 700;
 }
 
 .app-compilation-logs-popup {
@@ -19,11 +25,21 @@
   height: 100%;
   visibility: hidden;
   opacity: 0;
+  z-index: 750;
   transition: opacity 0.15s linear, visibility 0.15s linear;
   background: $background-compilation-logs-popup;
+  overflow: auto;
+  padding-bottom: 4rem;
 
   &-open {
     visibility: visible;
     opacity: 1;
   }
+}
+
+.app-compilation-logs-logs-container {
+  padding: 0.5rem 0;
+}
+
+.app-compilation-logs-logs-section {
 }

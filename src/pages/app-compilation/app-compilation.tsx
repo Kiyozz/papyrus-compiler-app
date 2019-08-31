@@ -16,6 +16,7 @@ import getClassNameFromStatus from '../../utils/scripts/get-classname-from-statu
 export interface StateProps {
   isCompilationRunning: boolean
   compilationScripts: ScriptModel[]
+  popupOpen: boolean
 }
 
 export interface DispatchesProps {
@@ -25,7 +26,7 @@ export interface DispatchesProps {
 
 type Props = StateProps & DispatchesProps
 
-const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts, setCompilationScripts, isCompilationRunning }) => {
+const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts, setCompilationScripts, isCompilationRunning, popupOpen }) => {
   const onClickRemoveScriptFromScript = useCallback((script: ScriptModel) => {
     return () => {
       const newListOfScripts = compilationScripts.filter(compilationScript => compilationScript !== script)
@@ -37,9 +38,15 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
   const [isHoveringScript, setHoveringScript] = useState<ScriptModel | undefined>(undefined)
   const createOnMouseEvent = useCallback((script?: ScriptModel) => {
     return () => {
-      setHoveringScript(script)
+      if (isCompilationRunning) {
+        return
+      }
+
+      if (isHoveringScript !== script) {
+        setHoveringScript(script)
+      }
     }
-  }, [setHoveringScript])
+  }, [setHoveringScript, isHoveringScript, isCompilationRunning])
 
   const onClickPlayPause = useCallback(() => {
     if (compilationScripts.length === 0) {
@@ -72,6 +79,7 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
     return compilationScripts.map((script) => {
       const onMouseEnterScript = createOnMouseEvent(script)
       const onMouseLeaveScript = createOnMouseEvent(undefined)
+      const onMouseMoveScript = createOnMouseEvent(script)
 
       return (
         <div
@@ -79,6 +87,7 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
           className="list-group-item"
           onMouseEnter={onMouseEnterScript}
           onMouseLeave={onMouseLeaveScript}
+          onMouseMove={onMouseMoveScript}
         >
           <CSSTransition
             timeout={150}
@@ -143,24 +152,28 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
       </AppTitle>
 
       <div className="app-compilation-content">
-        <CSSTransition
-          timeout={150}
-          in={isDragActive}
-          classNames="app-fade"
-          mountOnEnter
-          unmountOnExit
-        >
-          <div className="app-compilation-is-dragging-container">
-            Drop files here...
-          </div>
-        </CSSTransition>
-
-        {scriptsList.length > 0 ? (
+        {!popupOpen && (
           <>
-            {scriptsList}
+            <CSSTransition
+              timeout={150}
+              in={isDragActive}
+              classNames="app-fade"
+              mountOnEnter
+              unmountOnExit
+            >
+              <div className="app-compilation-is-dragging-container">
+                Drop files here...
+              </div>
+            </CSSTransition>
+
+            {scriptsList.length > 0 ? (
+              <>
+                {scriptsList}
+              </>
+            ) : (
+              <p className="text-secondary text-wrap">You can drag and drop psc files to load them into the application.</p>
+            )}
           </>
-        ) : (
-          <p className="text-secondary text-wrap">You can drag and drop psc files to load them into the application.</p>
         )}
 
         <AppContainerLogs />
