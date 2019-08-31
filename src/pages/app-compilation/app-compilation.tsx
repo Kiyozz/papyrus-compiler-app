@@ -26,14 +26,6 @@ export interface DispatchesProps {
 type Props = StateProps & DispatchesProps
 
 const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts, setCompilationScripts, isCompilationRunning }) => {
-  const [isHoveringScript, setHoveringScript] = useState<ScriptModel | undefined>(undefined)
-
-  const createOnMouseEvent = useCallback((script?: ScriptModel) => {
-    return () => {
-      setHoveringScript(script)
-    }
-  }, [setHoveringScript])
-
   const onClickRemoveScriptFromScript = useCallback((script: ScriptModel) => {
     return () => {
       const newListOfScripts = compilationScripts.filter(compilationScript => compilationScript !== script)
@@ -41,6 +33,21 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
       setCompilationScripts(newListOfScripts)
     }
   }, [setCompilationScripts, compilationScripts])
+
+  const [isHoveringScript, setHoveringScript] = useState<ScriptModel | undefined>(undefined)
+  const createOnMouseEvent = useCallback((script?: ScriptModel) => {
+    return () => {
+      setHoveringScript(script)
+    }
+  }, [setHoveringScript])
+
+  const onClickPlayPause = useCallback(() => {
+    if (compilationScripts.length === 0) {
+      return
+    }
+
+    startCompilation(compilationScripts)
+  }, [compilationScripts, startCompilation])
 
   const onDrop = useCallback((pscFiles: File[]) => {
     const pscScripts: ScriptModel[] = pscFiles.map(({ name, path, lastModified }, index) => {
@@ -100,14 +107,6 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
       )
     })
   }, [compilationScripts, createOnMouseEvent, isHoveringScript, onClickRemoveScriptFromScript])
-
-  const onClickPlayPause = useCallback(() => {
-    if (compilationScripts.length === 0) {
-      return
-    }
-
-    startCompilation(compilationScripts)
-  }, [compilationScripts, startCompilation])
 
   return (
     <div

@@ -11,6 +11,6 @@ export default function getIconFromStatus(script: ScriptModel): IconProp {
     case ScriptStatus.SUCCESS:
       return 'check-circle'
     default:
-      return 'times-circle'
+      return 'exclamation-circle'
   }
 }
