@@ -41,7 +41,7 @@ const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle }) =
   return (
     <div className="app-compilation-logs">
       <button
-        className="btn btn-outline-secondary app-compilation-logs-button-activate"
+        className="btn btn-outline-secondary app-compilation-logs-button-activate d-flex justify-content-center align-items-center"
         onClick={onClickButtonOpenLogs}
       >
         <FontAwesomeIcon icon="exclamation-circle" />

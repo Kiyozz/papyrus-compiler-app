@@ -44,3 +44,9 @@
   @include font-harmonia-sans;
   @include text-large;
 }
+
+.app-groups-add-popup-form-actions {
+  button + button {
+    margin-left: 10px;
+  }
+}

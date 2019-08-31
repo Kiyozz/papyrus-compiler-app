@@ -97,16 +97,16 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
           >
             <div className="app-list-group-item-group-hover">
               <span
-                className="app-list-group-item-group-hover-action app-list-group-item-group-hover-remove"
-                onClick={onClickRemoveGroup(group)}
-              >
-                <FontAwesomeIcon icon="trash" />
-              </span>
-              <span
                 className="app-list-group-item-group-hover-action app-list-group-item-group-hover-edit"
                 onClick={onClickEditGroup(group)}
               >
                 <FontAwesomeIcon icon="pen" />
+              </span>
+              <span
+                className="app-list-group-item-group-hover-action app-list-group-item-group-hover-remove"
+                onClick={onClickRemoveGroup(group)}
+              >
+                <FontAwesomeIcon icon="trash" />
               </span>
             </div>
           </CSSTransition>

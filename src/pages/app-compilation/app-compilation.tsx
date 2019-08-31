@@ -3,21 +3,25 @@ import uniqBy from 'lodash-es/uniqBy'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { CSSTransition } from 'react-transition-group'
+import Select from 'react-select'
 import './app-compilation.scss'
 import AppTitle from '../../components/app-title/app-title'
 import AppContainerLogs from '../../containers/app-compilation-logs/app-compilation-logs.container'
-import { ScriptModel } from '../../models'
+import { GroupModel, ScriptModel } from '../../models'
 import { format } from '../../utils/date/format'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import getIconFromStatus from '../../utils/scripts/get-icon-from-status'
 import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
 import pscFilesToPscScripts from '../../utils/scripts/psc-files-to-psc-scripts'
+import { map, max } from 'lodash-es'
+import useTimeout from '../../hooks/use-timeout'
 
 export interface StateProps {
   isCompilationRunning: boolean
   compilationScripts: ScriptModel[]
   popupOpen: boolean
+  groups: GroupModel[]
 }
 
 export interface DispatchesProps {
@@ -27,7 +31,7 @@ export interface DispatchesProps {
 
 type Props = StateProps & DispatchesProps
 
-const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts, setCompilationScripts, isCompilationRunning, popupOpen }) => {
+const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts, setCompilationScripts, isCompilationRunning, popupOpen, groups }) => {
   const onClickRemoveScriptFromScript = useCallback((script: ScriptModel) => {
     return () => {
       const newListOfScripts = compilationScripts.filter(compilationScript => compilationScript !== script)
@@ -35,6 +39,8 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
       setCompilationScripts(newListOfScripts)
     }
   }, [setCompilationScripts, compilationScripts])
+
+  const [justLoadedGroup, setJustLoadedGroup] = useState<GroupModel | undefined>(undefined)
 
   const [isHoveringScript, setHoveringScript] = useState<ScriptModel | undefined>(undefined)
   const createOnMouseEvent = useCallback((script?: ScriptModel) => {
@@ -110,6 +116,37 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
     })
   }, [compilationScripts, createOnMouseEvent, isHoveringScript, onClickRemoveScriptFromScript])
 
+  const groupSelectOptions = useMemo(() => {
+    return groups.filter(group => group.scripts.length > 0).map(group => {
+      return {
+        label: group.name,
+        value: group
+      }
+    })
+  }, [groups])
+
+  const onChangeGroup = useCallback(({ value: group }) => {
+    const lastId = max(map(compilationScripts, 'id'))
+    const scripts: ScriptModel[] = group.scripts.map((script: ScriptModel) => {
+      script.id = (lastId || 0) + script.id
+
+      return script
+    })
+
+    setJustLoadedGroup(group)
+    setCompilationScripts(
+      uniqBy([...compilationScripts, ...scripts], 'name')
+    )
+  }, [compilationScripts, setCompilationScripts])
+
+  useTimeout(() => {
+    if (!justLoadedGroup) {
+      return
+    }
+
+    setJustLoadedGroup(undefined)
+  }, { time: 3000 })
+
   return (
     <div
       className={classNames({
@@ -121,26 +158,49 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
       <AppTitle className="d-flex">
         Compilation
 
+        <div className="app-compilation-action-group">
+          <Select
+            onChange={onChangeGroup}
+            options={groupSelectOptions}
+          />
+        </div>
+
+        <CSSTransition
+          timeout={300}
+          mountOnEnter
+          unmountOnExit
+          classNames="app-fade"
+          in={!!justLoadedGroup}
+        >
+          <>
+            {justLoadedGroup && (
+              <span className="app-compilation-action-group-loaded">{justLoadedGroup.name} loaded!</span>
+            )}
+          </>
+        </CSSTransition>
+
         <CSSTransition
           timeout={300}
           in={compilationScripts.length > 0}
           classNames="app-fade"
           mountOnEnter
         >
-          <div className="app-compilation-actions">
-            <div
-              className={classNames({
-                'app-compilation-action': true,
-                'app-compilation-action-disable': isCompilationRunning || compilationScripts.length === 0
-              })}
-              onClick={onClickPlayPause}
-            >
-              <FontAwesomeIcon
-                spin={isCompilationRunning}
-                icon={isCompilationRunning ? 'circle-notch' : 'play-circle'}
-              />
+          <>
+            <div className="app-compilation-actions">
+              <div
+                className={classNames({
+                  'app-compilation-action': true,
+                  'app-compilation-action-disable': isCompilationRunning || compilationScripts.length === 0
+                })}
+                onClick={onClickPlayPause}
+              >
+                <FontAwesomeIcon
+                  spin={isCompilationRunning}
+                  icon={isCompilationRunning ? 'circle-notch' : 'play-circle'}
+                />
+              </div>
             </div>
-          </div>
+          </>
         </CSSTransition>
       </AppTitle>
 
@@ -148,7 +208,7 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
         {!popupOpen && (
           <>
             <CSSTransition
-              timeout={150}
+              timeout={300}
               in={isDragActive}
               classNames="app-fade"
               mountOnEnter
@@ -164,7 +224,10 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
                 {scriptsList}
               </>
             ) : (
-              <p className="text-secondary text-wrap">You can drag and drop psc files to load them into the application.</p>
+              <p className="text-secondary text-wrap">
+                You can drag and drop psc files to load them into the
+                application.
+              </p>
             )}
           </>
         )}

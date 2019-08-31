@@ -1,13 +1,20 @@
+@import "scss/variables";
+@import "scss/transitions";
+@import "scss/scrollbar";
+@import "scss/utils";
+
+$primary: $color-primary;
+$secondary: $color-secondary;
+$success: $color-success;
+$danger: $color-danger;
+
 @import "~bootstrap/scss/bootstrap";
+
 @import "assets/fonts/proxima-nova/proxima-nova.css";
 @import "assets/fonts/harmonia-sans/harmonia-sans.css";
 @import "~typeface-neuton/index.css";
 @import "~typeface-capriola/index.css";
 @import "~typeface-oxygen/index.css";
-
-@import "scss/variables";
-@import "scss/transitions";
-@import "scss/scrollbar";
 
 html {
   font-size: 16px;

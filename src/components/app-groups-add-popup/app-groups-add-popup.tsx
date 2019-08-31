@@ -106,6 +106,10 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, lastId, o
     onClose()
   }, [onClose])
 
+  const onClickCancel = useCallback(() => {
+    onClose()
+  }, [onClose])
+
   return (
     <div
       className="app-groups-add-popup"
@@ -118,7 +122,7 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, lastId, o
           onSubmit={onSubmitAddGroup}
         >
           <div className="form-group">
-            <label htmlFor="group-name">Group name</label>
+            <label htmlFor="group-name">Name</label>
             <input
               className="form-control"
               name="group-name"
@@ -128,7 +132,8 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, lastId, o
             />
           </div>
           <div
-            className="form-group h-100 overflow-auto"
+            title="Add scripts"
+            className="form-group h-100 overflow-auto cursor-pointer"
             {...getRootProps()}
           >
             <input {...getInputProps()} />
@@ -153,12 +158,19 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, lastId, o
               {scriptsList}
             </div>
           </div>
-          <div>
+          <div className="app-groups-add-popup-form-actions">
             <button
               className="btn btn-primary"
               type="submit"
             >
-              Add
+              {isEdit ? 'Edit' : 'Add'}
+            </button>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={onClickCancel}
+            >
+              Cancel
             </button>
           </div>
         </form>
