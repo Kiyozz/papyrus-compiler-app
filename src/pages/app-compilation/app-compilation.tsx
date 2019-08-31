@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import uniqBy from 'lodash-es/uniqBy'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { CSSTransition } from 'react-transition-group'
 import './app-compilation.scss'
@@ -26,6 +26,22 @@ export interface DispatchesProps {
 type Props = StateProps & DispatchesProps
 
 const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts, setCompilationScripts, isCompilationRunning }) => {
+  const [isHoveringScript, setHoveringScript] = useState<ScriptModel | undefined>(undefined)
+
+  const createOnMouseEvent = useCallback((script?: ScriptModel) => {
+    return () => {
+      setHoveringScript(script)
+    }
+  }, [setHoveringScript])
+
+  const onClickRemoveScriptFromScript = useCallback((script: ScriptModel) => {
+    return () => {
+      const newListOfScripts = compilationScripts.filter(compilationScript => compilationScript !== script)
+
+      setCompilationScripts(newListOfScripts)
+    }
+  }, [setCompilationScripts, compilationScripts])
+
   const onDrop = useCallback((pscFiles: File[]) => {
     const pscScripts: ScriptModel[] = pscFiles.map(({ name, path, lastModified }, index) => {
       return {
@@ -47,11 +63,29 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
 
   const scriptsList = useMemo(() => {
     return compilationScripts.map((script) => {
+      const onMouseEnterScript = createOnMouseEvent(script)
+      const onMouseLeaveScript = createOnMouseEvent(undefined)
+
       return (
         <div
           key={script.id}
           className="list-group-item"
+          onMouseEnter={onMouseEnterScript}
+          onMouseLeave={onMouseLeaveScript}
         >
+          <CSSTransition
+            timeout={150}
+            in={isHoveringScript === script}
+            classNames="app-fade-grow"
+            mountOnEnter
+            unmountOnExit
+          >
+            <div className="app-list-group-item-script-hover">
+              <span onClick={onClickRemoveScriptFromScript(script)}>
+                <FontAwesomeIcon icon="trash" />
+              </span>
+            </div>
+          </CSSTransition>
           <div className="app-list-group-item-script-name">{script.name}</div>
           <div className="app-list-group-item-script-path ml-2 mt-2">
             Last edited at {format(script.lastModified, 'PPpp')}
@@ -65,7 +99,7 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
         </div>
       )
     })
-  }, [compilationScripts])
+  }, [compilationScripts, createOnMouseEvent, isHoveringScript, onClickRemoveScriptFromScript])
 
   const onClickPlayPause = useCallback(() => {
     if (compilationScripts.length === 0) {
@@ -90,6 +124,7 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
           timeout={300}
           in={compilationScripts.length > 0}
           classNames="app-fade"
+          mountOnEnter
         >
           <div className="app-compilation-actions">
             <div
