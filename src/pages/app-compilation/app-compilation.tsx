@@ -8,10 +8,10 @@ import AppTitle from '../../components/app-title/app-title'
 import AppContainerLogs from '../../containers/app-compilation-logs/app-compilation-logs.container'
 import { ScriptModel } from '../../models'
 import { format } from '../../utils/date/format'
-import AppSubtitle from '../../components/app-subtitle/app-subtitle'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import getIconFromStatus from '../../utils/scripts/get-icon-from-status'
+import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
 
 export interface StateProps {
   isCompilationRunning: boolean
@@ -55,7 +55,7 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
           <div className="app-list-group-item-script-name">{script.name}</div>
           <div className="app-list-group-item-script-path ml-2 mt-2">
             Last edited at {format(script.lastModified, 'PPpp')}
-            <span className="app-list-group-item-script-status">
+            <span className={classNames(['app-list-group-item-script-status', getClassNameFromStatus(script)])}>
               <FontAwesomeIcon
                 spin={script.status === ScriptStatus.RUNNING}
                 icon={getIconFromStatus(script)}
@@ -87,7 +87,7 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
         Compilation
 
         <CSSTransition
-          timeout={150}
+          timeout={300}
           in={compilationScripts.length > 0}
           classNames="app-fade"
         >
@@ -123,8 +123,6 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
 
         {scriptsList.length > 0 ? (
           <>
-            <AppSubtitle>Loaded scripts</AppSubtitle>
-
             {scriptsList}
           </>
         ) : (

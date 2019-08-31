@@ -10,7 +10,7 @@
 }
 
 .app-list-group-item-script-name {
-
+  color: $color-secondary-800;
 }
 
 .app-list-group-item-script-path {
@@ -25,6 +25,22 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 1rem;
+
+  &-idle {
+    color: $color-secondary-500;
+  }
+
+  &-running {
+    color: $color-primary-800;
+  }
+
+  &-failed {
+    color: $color-danger-300;
+  }
+
+  &-success {
+    color: $color-success;
+  }
 }
 
 .app-compilation-is-dragging-container {
@@ -33,16 +49,18 @@
   top: 0;
   right: 0;
   bottom: 0;
-  left: 0;
+  left: 4rem;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   background: $background-loading;
+  color: $color-loading;
+  font-weight: bold;
 
-  @include font-neuton;
-  @include text-large;
+  @include font-harmonia-sans;
+  @include text-extra-large;
 }
 
 .app-compilation-actions {
@@ -54,6 +72,7 @@
 
 .app-compilation-action {
   font-size: 2rem;
+  color: $color-button;
 
   &.app-compilation-action-disable {
     opacity: 0.5;

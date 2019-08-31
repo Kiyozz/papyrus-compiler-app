@@ -4,11 +4,10 @@
   height: 5rem;
   width: 100%;
   color: $color-sidebar-link;
-  text-align: center;
+  text-decoration: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.25rem 0;
   cursor: pointer;
 
   &:hover {
@@ -18,11 +17,12 @@
 
 .app-sidebar-link-active {
   position: relative;
+  color: $color-sidebar-link-active;
 
   &::after {
     content: '';
     position: absolute;
-    right: -1px;
+    right: -2px;
     height: 65%;
     width: 2px;
     background: $background-sidebar-link-active;

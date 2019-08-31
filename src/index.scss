@@ -1,4 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
+@import "assets/fonts/proxima-nova/proxima-nova.css";
+@import "assets/fonts/harmonia-sans/harmonia-sans.css";
 @import "~typeface-neuton/index.css";
 @import "~typeface-capriola/index.css";
 @import "~typeface-oxygen/index.css";
@@ -20,10 +22,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 1em;
+  color: $color-secondary-500;
 }
 
 h1 {
-  font-family: Neuton, Capriola, sans-serif;
+  font-family: 'Proxima Nova', Neuton, Capriola, sans-serif;
 }
 
 code {
