@@ -2,6 +2,8 @@ import { routerMiddleware, RouterState, connectRouter } from 'connected-react-ro
 import { createBrowserHistory } from 'history'
 import createSagaMiddleware from 'redux-saga'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
+import versionMiddleware from '../middlewares/changelog/version.middleware'
+import changelogReducer, { ChangelogState } from '../reducers/changelog.reducer'
 import initializationReducer, { InitializationState } from '../reducers/initialization.reducer'
 import rootSaga from '../sagas/root.saga'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -17,6 +19,7 @@ export interface RootStore {
   compilationLogs: CompilationLogsState
   groups: GroupsState
   settings: SettingsState
+  changelog: ChangelogState
 }
 
 export const history = createBrowserHistory()
@@ -30,10 +33,11 @@ export default function createRootStore() {
       compilationLogs: compilationLogsReducer,
       groups: groupsReducer,
       settings: settingsReducer,
+      changelog: changelogReducer,
       router: connectRouter(history)
     }),
     composeWithDevTools(
-      applyMiddleware(routerMiddleware(history), sagaMiddleware)
+      applyMiddleware(routerMiddleware(history), sagaMiddleware, versionMiddleware)
     )
   )
 
