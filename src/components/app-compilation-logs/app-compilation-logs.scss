@@ -50,4 +50,7 @@
 }
 
 .app-compilation-logs-logs-section {
+  * {
+    user-select: text;
+  }
 }

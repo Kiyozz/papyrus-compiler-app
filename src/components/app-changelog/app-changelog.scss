@@ -1,0 +1,61 @@
+@import "../../scss/variables";
+
+.app-changelog-popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1400;
+  display: flex;
+}
+
+.app-changelog-overlay {
+  background: rgba(#000, 0.5);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1100;
+}
+
+.app-changelog {
+  padding: 1.5rem;
+  width: 600px;
+  max-height: 95%;
+  overflow: auto;
+  margin: auto;
+  background: $background-content;
+  position: relative;
+  z-index: 1200;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(#000, 0.3);
+}
+
+.app-changelog-title {
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.app-changelog-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.app-changelog-text {
+  font-size: 1rem;
+
+  ul {
+    margin: 0;
+
+    li {
+      margin: 0.5rem 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
