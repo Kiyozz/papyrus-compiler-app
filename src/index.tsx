@@ -11,6 +11,12 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 
 library.add(fas)
 
+declare global {
+  interface Window {
+    require: any
+  }
+}
+
 const store = createRootStore()
 
 ReactDOM.render((

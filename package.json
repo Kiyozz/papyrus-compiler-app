@@ -1,21 +1,38 @@
 {
   "name": "papyrus-compiler-app",
-  "version": "0.1.0",
-  "description": "Papyrus-compiler-app from WK's",
+  "version": "4.0.0",
+  "description": "Papyrus-compiler-app by WK's",
   "repository": "git@github.com:Kiyozz/papyrus-compiler-app",
   "author": "WK <kevinturmel@gmail.com>",
   "license": "MIT",
   "private": true,
+  "homepage": "./",
+  "main": "main.js",
   "dependencies": {
+    "child-process-promise": "^2.2.1",
+    "typescript": "3.5.3"
+  },
+  "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.22",
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "@types/child-process-promise": "^2.2.1",
+    "@types/classnames": "^2.2.9",
+    "@types/dotenv": "^6.1.1",
+    "@types/electron-packager": "^14.0.0",
+    "@types/gulp": "^4.0.6",
+    "@types/history": "^4.7.3",
     "@types/jest": "24.0.18",
+    "@types/lodash-es": "^4.17.3",
     "@types/node": "^12.7.2",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
+    "@types/react-redux": "^7.1.2",
+    "@types/react-router-dom": "^4.3.5",
+    "@types/react-select": "^3.0.4",
+    "@types/react-transition-group": "^4.2.2",
+    "@types/redux-actions": "^2.6.1",
     "bootstrap": "^4.3.1",
-    "child-process-promise": "^2.2.1",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.5.2",
     "date-fns": "^2.0.1",
@@ -36,152 +53,22 @@
     "typeface-capriola": "^0.0.72",
     "typeface-neuton": "^0.0.72",
     "typeface-oxygen": "^0.0.72",
-    "typescript": "3.5.3"
-  },
-  "devDependencies": {
-    "@types/child-process-promise": "^2.2.1",
-    "@types/classnames": "^2.2.9",
-    "@types/dotenv": "^6.1.1",
-    "@types/history": "^4.7.3",
-    "@types/lodash-es": "^4.17.3",
-    "@types/react-redux": "^7.1.2",
-    "@types/react-router-dom": "^4.3.5",
-    "@types/react-select": "^3.0.4",
-    "@types/react-transition-group": "^4.2.2",
-    "@types/redux-actions": "^2.6.1",
-    "@typescript-eslint/eslint-plugin": "1.x",
-    "@typescript-eslint/parser": "1.x",
+    "cross-env": "^5.2.1",
+    "del": "^5.1.0",
     "electron": "^6.0.4",
+    "electron-packager": "^14.0.6",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.2.0",
     "node-sass": "^4.12.0",
     "ts-node": "^8.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:electron": "cross-env NODE_ENV=production tsc -p tsconfig.electron.json",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:electron": "electron -r dotenv/config -r ts-node/register electron/main.ts --enable-logging",
-    "lint": "eslint src --ext .ts,.tsx --fix"
-  },
-  "eslintConfig": {
-    "extends": "react-app",
-    "plugins": [
-      "react"
-    ],
-    "rules": {
-      "comma-spacing": "error",
-      "space-infix-ops": "error",
-      "space-before-blocks": "error",
-      "switch-colon-spacing": "error",
-      "object-curly-spacing": [
-        "error",
-        "always"
-      ],
-      "semi": [
-        "error",
-        "never"
-      ],
-      "quotes": [
-        "error",
-        "single"
-      ],
-      "no-var": "error",
-      "no-debugger": "error",
-      "eqeqeq": "error",
-      "curly": "error",
-      "guard-for-in": "error",
-      "no-else-return": "warn",
-      "no-empty-pattern": "warn",
-      "no-extra-bind": "error",
-      "no-unused-vars": "error",
-      "indent": [
-        "error",
-        2,
-        {
-          "SwitchCase": 1,
-          "ignoredNodes": [
-            "JSXElement",
-            "JSXElement > *",
-            "JSXAttribute",
-            "JSXIdentifier",
-            "JSXNamespacedName",
-            "JSXMemberExpression",
-            "JSXSpreadAttribute",
-            "JSXExpressionContainer",
-            "JSXOpeningElement",
-            "JSXClosingElement",
-            "JSXText",
-            "JSXEmptyExpression",
-            "JSXSpreadChild"
-          ]
-        }
-      ],
-      "no-trailing-spaces": "error",
-      "react/boolean-prop-naming": "error",
-      "react/prefer-stateless-function": "error",
-      "react/style-prop-object": "error",
-      "react/jsx-boolean-value": "warn",
-      "react/jsx-closing-bracket-location": "error",
-      "react/jsx-closing-tag-location": "error",
-      "react/jsx-curly-spacing": [
-        "error",
-        "never"
-      ],
-      "react/jsx-equals-spacing": [
-        "error",
-        "never"
-      ],
-      "react/jsx-first-prop-new-line": [
-        "error",
-        "multiline"
-      ],
-      "react/jsx-handler-names": "warn",
-      "react/jsx-indent": [
-        "error",
-        2,
-        {
-          "checkAttributes": true
-        }
-      ],
-      "react/jsx-indent-props": [
-        "error",
-        2
-      ],
-      "react/jsx-key": "error",
-      "react/jsx-max-props-per-line": [
-        "error",
-        {
-          "maximum": 1,
-          "when": "always"
-        }
-      ],
-      "react/jsx-one-expression-per-line": "off",
-      "react/jsx-curly-brace-presence": [
-        "error",
-        "never"
-      ],
-      "react/jsx-pascal-case": "error",
-      "react/jsx-props-no-multi-spaces": "error",
-      "react/jsx-tag-spacing": [
-        "error",
-        {
-          "beforeSelfClosing": "always",
-          "closingSlash": "never"
-        }
-      ],
-      "react/jsx-wrap-multilines": [
-        "error",
-        {
-          "declaration": "parens-new-line",
-          "assignment": "parens-new-line",
-          "return": "parens-new-line",
-          "arrow": "parens-new-line",
-          "condition": "parens-new-line",
-          "logical": "parens-new-line",
-          "prop": "parens-new-line"
-        }
-      ]
-    }
+    "start:electron": "cross-env TS_NODE_PROJECT=./tsconfig.electron.json NODE_ENV=development REACT_APP_MAIN=http://localhost:3000 electron -r dotenv/config -r ts-node/register electron/main.ts --enable-logging"
   },
   "browserslist": {
     "production": [

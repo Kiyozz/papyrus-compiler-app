@@ -11,7 +11,6 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true
     },
-    frame: false,
     show: false
   })
 
@@ -20,10 +19,13 @@ function createWindow() {
   if (mainUrl) {
     win.loadURL(mainUrl)
   } else {
-    win.loadFile(path.resolve(__dirname, 'build/index.html'))
+    win.loadFile(path.resolve(__dirname, 'index.html'))
   }
 
-  win.webContents.openDevTools({ mode: 'bottom' })
+  if (mainUrl) {
+    win.webContents.openDevTools({ mode: 'bottom' })
+  }
+
   Initialize.main()
 
   win.on('closed', () => {
