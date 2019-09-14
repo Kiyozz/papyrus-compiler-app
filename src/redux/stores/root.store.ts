@@ -35,7 +35,7 @@ export default function createRootStore() {
       compilationLogs: compilationLogsReducer,
       groups: groupsReducer,
       settings: settingsReducer,
-      changelog: changelogReducer,
+      changelog: changelogReducer('papyrus-compiler-app'),
       router: connectRouter(history)
     }),
     composeWithDevTools(
