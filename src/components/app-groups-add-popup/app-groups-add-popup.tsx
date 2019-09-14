@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone'
 import { CSSTransition } from 'react-transition-group'
 import pscFilesToPscScripts from '../../utils/scripts/psc-files-to-psc-scripts'
 import { uniqBy } from 'lodash-es'
+import useOnEscape from '../../hooks/use-on-escape'
 
 interface Props {
   lastId: number
@@ -19,6 +20,10 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, lastId, o
   const [scripts, setScripts] = useState<ScriptModel[]>([])
   const popupRef = useRef<HTMLDivElement>(null)
   const [isEdit, setEdit] = useState(false)
+
+  useOnEscape(() => {
+    onClose()
+  })
 
   useEffect(() => {
     if (!group) {

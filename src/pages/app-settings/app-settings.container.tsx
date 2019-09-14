@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { RootStore } from '../../redux/stores/root.store'
-import AppSettings, { DispatchesProps, StateProps } from '../../pages/app-settings/app-settings'
+import AppSettings, { DispatchesProps, StateProps } from './app-settings'
 import {
   actionSetGame,
   actionSetGameFolder,

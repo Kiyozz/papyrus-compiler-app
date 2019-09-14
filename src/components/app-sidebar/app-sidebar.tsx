@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import './app-sidebar.scss'
 import AppSidebarLink from '../app-sidebar-link/app-sidebar-link'
-import appLogo from '../../assets/papyrus-compiler-app.png'
+import appLogo from '../../assets/papyrus-compiler-app-@2x.png'
 
 export interface StateProps {}
 

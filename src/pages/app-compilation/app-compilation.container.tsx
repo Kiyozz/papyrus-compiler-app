@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { RootStore } from '../../redux/stores/root.store'
-import AppCompilation, { DispatchesProps, StateProps } from '../../pages/app-compilation/app-compilation'
+import AppCompilation, { DispatchesProps, StateProps } from './app-compilation'
 import {
   actionSetCompilationScripts,
   actionStartCompilation

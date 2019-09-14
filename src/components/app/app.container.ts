@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import App, { DispatchesProps, StateProps } from '../../components/app/app'
+import App, { DispatchesProps, StateProps } from './app'
 import { actionGetLatestNotes } from '../../redux/actions/changelog/changelog.actions'
 import { actionInitialization } from '../../redux/actions/initialization/initialization.actions'
 import { RootStore } from '../../redux/stores/root.store'

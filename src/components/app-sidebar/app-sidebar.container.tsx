@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { RootStore } from '../../redux/stores/root.store'
-import AppSideBar, { DispatchesProps, StateProps } from '../../components/app-sidebar/app-sidebar'
+import AppSideBar, { DispatchesProps, StateProps } from './app-sidebar'
 
 function mapStateToProps(store: RootStore): StateProps {
   return {}

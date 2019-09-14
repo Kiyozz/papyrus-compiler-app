@@ -49,6 +49,8 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, setG
     e.preventDefault()
   }, [])
 
+  console.log(game)
+
   return (
     <div className="app-settings container">
       <AppTitle className="mb-3">Settings</AppTitle>
@@ -68,7 +70,7 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, setG
                 name="game"
                 value={Games.LE}
                 onChange={onClickRadio}
-                defaultChecked={game === Games.LE}
+                checked={game === Games.LE}
               />
               <label
                 className="form-check-label"
@@ -85,7 +87,7 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, setG
                 name="game"
                 value={Games.SE}
                 onChange={onClickRadio}
-                defaultChecked={game === Games.SE}
+                checked={game === Games.SE}
               />
               <label
                 className="form-check-label"
@@ -96,7 +98,7 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, setG
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="gameFolder">{game} folder</label>
+            <label htmlFor="gameFolder">{game} folder (where {game === Games.SE ? 'SkyrimSE.exe' : 'TESV.exe'} is located)</label>
 
             <AppDialogFolderInput
               id="gameFolder"
@@ -115,7 +117,7 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, setG
                 id="mo2"
                 name="mo2"
                 type="checkbox"
-                defaultChecked={mo2}
+                checked={mo2}
                 onChange={onChangeMo2}
               />
               <label

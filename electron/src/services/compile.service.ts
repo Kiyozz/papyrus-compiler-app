@@ -6,7 +6,9 @@ export class CompileService {
 
   public async compile(script: string): Promise<string> {
     const exe = this.gamePathService.papyrusCompilerExecutable
-    const cmd = `"${exe}" ${script} -i="${this.gamePathService.importFolder}" -o="${this.gamePathService.output}" -f="${this.gamePathService.flag}"`
+    const cmd = `"${exe}" "${script}" -i="${this.gamePathService.importFolder}" -o="${this.gamePathService.output}" -f="${this.gamePathService.flag}"`
+
+    console.log(`Executing "${cmd}" command`)
 
     try {
       const result = await exec(cmd, { cwd: this.gamePathService.gamePath })

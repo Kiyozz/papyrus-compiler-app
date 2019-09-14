@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { RootStore } from '../../redux/stores/root.store'
-import AppLoading, { DispatchesProps, StateProps } from '../../components/app-loading/app-loading'
+import AppLoading, { DispatchesProps, StateProps } from './app-loading'
 
 function mapStateToProps(store: RootStore): StateProps {
   return {

@@ -34,7 +34,8 @@ export function packageApp() {
     asar: true,
     arch: 'x64',
     dir: './build',
-    out: './out'
+    out: './out',
+    icon: './src/assets/papyrus-compiler-app.ico'
   })
 }
 

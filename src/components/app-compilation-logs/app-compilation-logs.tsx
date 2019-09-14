@@ -32,7 +32,11 @@ const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle }) =
           className="app-compilation-logs-logs-section"
         >
           <h2>{script.name}</h2>
-          <p>{scriptLogs}</p>
+          <p>
+            {scriptLogs.split('\n').map((log, i) => (
+              <span key={i}>{log} <br /></span>
+            ))}
+          </p>
         </div>
       )
     })

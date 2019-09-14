@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useCallback } from 'react'
 import AppTitle from '../app-title/app-title'
 import './app-changelog.scss'
+import useOnEscape from '../../hooks/use-on-escape'
 
 interface Props {
   version: string
@@ -22,6 +23,10 @@ const AppChangelog: React.FC<Props> = ({ version, notes, onClose }) => {
     e.preventDefault()
     onClose()
   }, [onClose])
+
+  useOnEscape(() => {
+    onClose()
+  })
 
   return (
     <div className="app-changelog-popup">

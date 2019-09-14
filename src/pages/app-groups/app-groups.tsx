@@ -57,6 +57,7 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
   }, [groups])
 
   const onClickAddButton = useCallback(() => {
+    setEditingGroup(undefined)
     setShowPopup(true)
   }, [setShowPopup])
 

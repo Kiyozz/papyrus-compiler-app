@@ -12,6 +12,27 @@ const initialState: GroupsState = {
 
 export default function groupsReducer(state = initialState, action: AnyAction): GroupsState {
   switch (action.type) {
+    case CONSTANTS.APP_GROUPS_SAVE_GROUPS:
+      let groups: GroupModel[] = action.payload || []
+
+      groups = groups.map((group) => {
+        const scripts = group.scripts.map((script, index) => {
+          return {
+            ...script,
+            id: index + 1
+          }
+        })
+
+        return {
+          ...group,
+          scripts
+        }
+      })
+
+      return {
+        ...state,
+        groups
+      }
     case CONSTANTS.APP_GROUPS_ADD_GROUP:
       return {
         ...state,
