@@ -11,6 +11,7 @@ export interface StateProps {
   initialized: boolean
   version: string
   notes: string
+  currentVersion: string
 }
 
 export interface DispatchesProps {
@@ -20,7 +21,7 @@ export interface DispatchesProps {
 
 type Props = StateProps & DispatchesProps
 
-const App: React.FC<Props> = ({ initialization, initialized, version, notes, getLatestNotes }) => {
+const App: React.FC<Props> = ({ initialization, initialized, version, notes, currentVersion, getLatestNotes }) => {
   const [showChangelog, setShowChangelog] = useState(false)
   const twiceRender = useRef<boolean>(false)
 
@@ -58,6 +59,7 @@ const App: React.FC<Props> = ({ initialization, initialized, version, notes, get
       >
         <AppChangelog
           version={version}
+          currentVersion={currentVersion}
           notes={notes}
           onClose={onClickCloseChangelogPopup}
         />

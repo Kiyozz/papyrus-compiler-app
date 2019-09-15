@@ -9,7 +9,8 @@ function mapStateToProps(store: RootStore): StateProps {
   return {
     initialized: store.initialization,
     version: store.changelog.version,
-    notes: store.changelog.notes
+    notes: store.changelog.notes,
+    currentVersion: process.env.REACT_APP_VERSION || ''
   }
 }
 
