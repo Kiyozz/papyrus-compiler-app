@@ -14,7 +14,7 @@ import { SettingsState } from '../reducers/settings.reducer'
 
 function* startCompilation(action: AnyAction) {
   const scripts: ScriptModel[] = action.payload
-  const { game, gameFolder }: SettingsState = yield select((store: RootStore) => store.settings)
+  const { game, gameFolder, mo2Instance, mo2SourcesFolders }: SettingsState = yield select((store: RootStore) => store.settings)
 
   console.log('Starting compilation for', scripts)
 
@@ -22,11 +22,22 @@ function* startCompilation(action: AnyAction) {
     try {
       yield put(actionStartCompilationScriptStart(script))
 
-      const logs: string = yield call(api.compileScript, script, [game, gameFolder])
+      const logs: string = yield call(api.compileScript, script, [
+        game,
+        gameFolder,
+        mo2Instance,
+        mo2SourcesFolders
+      ])
 
       yield put(actionStartCompilationScriptSuccess([script, logs]))
     } catch (e) {
-      yield put(actionStartCompilationScriptFailed([script, e.message]))
+      let err = e
+
+      if (err.hasOwnProperty('message')) {
+        err = err.message
+      }
+
+      yield put(actionStartCompilationScriptFailed([script, err]))
     }
   }
 

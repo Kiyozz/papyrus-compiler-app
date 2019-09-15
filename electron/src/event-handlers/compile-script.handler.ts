@@ -1,13 +1,16 @@
 import { CompileService } from '../services/compile.service'
-import { GamepathService } from '../services/gamepath.service'
+import { UtilsService } from '../services/utils.service'
 import { ipcMain } from 'electron'
 import * as path from 'path'
+import { GameType } from '../types/game.type'
 
 interface CompileScriptParameters {
   script: string
   output: string
   gamePath: string
-  game: 'Skyrim Legendary Edition' | 'Skyrim Special Edition'
+  game: GameType
+  mo2Instance: string
+  mo2SourcesFolders: string[]
 }
 
 export class CompileScriptHandler {
@@ -16,10 +19,18 @@ export class CompileScriptHandler {
   }
 
   private static registerCompile() {
-    ipcMain.on('compile-script', async (event, { script, game, gamePath }: CompileScriptParameters) => {
+    ipcMain.on('compile-script', async (event, { script, game, gamePath, mo2SourcesFolders, mo2Instance }: CompileScriptParameters) => {
       const imports = path.join(gamePath, 'Data', game === 'Skyrim Special Edition' ? 'Source\\Scripts' : 'Scripts\\Source')
       const output = path.join(gamePath, 'Data\\Scripts')
-      const gamePathService = new GamepathService({ gamePath, flag: 'TESV_Papyrus_Flags.flg', output, imports })
+      const gamePathService = new UtilsService({
+        gamePath,
+        flag: 'TESV_Papyrus_Flags.flg',
+        output,
+        imports,
+        mo2SourcesFolders,
+        mo2Instance,
+        game
+      })
       const compileService = new CompileService(gamePathService)
 
       console.log('Compile script', script)
@@ -44,6 +55,6 @@ export class CompileScriptHandler {
 
   private static catchError(event: Electron.IpcMainEvent, script: string, result: { stderr: string }) {
     console.log(`Script ${script} failed to compile`, result.stderr)
-    event.sender.send('compile-script-error', new Error(result.stderr))
+    event.sender.send('compile-script-error', result.stderr)
   }
 }

@@ -5,16 +5,17 @@ import { Initialize } from './src/initialize'
 let win: BrowserWindow | null = null
 
 function createWindow() {
+  const mainUrl = process.env.REACT_APP_MAIN
+
   win = new BrowserWindow({
     width: 800,
     height: 820,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      devTools: !!mainUrl
     },
     show: false
   })
-
-  const mainUrl = process.env.REACT_APP_MAIN
 
   if (mainUrl) {
     win.loadURL(mainUrl)

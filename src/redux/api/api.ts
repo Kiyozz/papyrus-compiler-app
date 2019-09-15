@@ -5,8 +5,8 @@ import { Games } from '../../enums/games.enum'
 class Api {
   private ipc = new IpcRenderer()
 
-  compileScript = (script: ScriptModel, [game, gamePath]: [Games, string]) => {
-    return this.ipc.send('compile-script', { script: script.name, game, gamePath })
+  compileScript = (script: ScriptModel, [game, gamePath, mo2Instance, mo2SourcesFolders]: [Games, string, string, string[]]) => {
+    return this.ipc.send('compile-script', { script: script.name, game, gamePath, mo2Instance, mo2SourcesFolders })
   }
 
   getLatestNotes = async () => {
