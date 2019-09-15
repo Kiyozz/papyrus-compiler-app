@@ -3,6 +3,7 @@ import React, { useCallback } from 'react'
 import AppTitle from '../app-title/app-title'
 import './app-changelog.scss'
 import useOnEscape from '../../hooks/use-on-escape'
+import useStopScroll from '../../hooks/use-stop-scroll'
 
 interface Props {
   version: string
@@ -27,6 +28,8 @@ const AppChangelog: React.FC<Props> = ({ version, notes, onClose }) => {
   useOnEscape(() => {
     onClose()
   })
+
+  useStopScroll()
 
   return (
     <div className="app-changelog-popup">

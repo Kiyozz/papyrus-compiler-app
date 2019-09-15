@@ -1,15 +1,15 @@
 ::-webkit-scrollbar {
   width: 5px;
   background-color: $background-content;
-  -webkit-border-radius: 100px;
+  // -webkit-border-radius: 100px;
 }
 
 ::-webkit-scrollbar-thumb:vertical {
   background: $color-secondary-500;
-  -webkit-border-radius: 100px;
+  // -webkit-border-radius: 100px;
 }
 
 ::-webkit-scrollbar-thumb:vertical:active {
   background: $color-secondary;
-  -webkit-border-radius: 100px;
+  // -webkit-border-radius: 100px;
 }

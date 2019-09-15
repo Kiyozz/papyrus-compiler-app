@@ -3,6 +3,7 @@ import { Middleware } from 'redux'
 import { RootStore } from '../../stores/root.store'
 import { GroupModel } from '../../../models'
 import { actionSaveGroups } from '../../actions/groups/groups.actions'
+import { actionSetDetectedMo2SourcesFolders, actionSetMo2Instance } from '../../actions/settings/settings.actions'
 
 function transformPayload(payload: any) {
   if (payload === false) {
@@ -30,6 +31,12 @@ const storageMiddleware: StorageMiddleware = (prefix: string) => store => next =
     const groups: GroupModel[] = action.payload
 
     localStorage.setItem(`${prefix}/${CONSTANTS.APP_GROUPS_SAVE_GROUPS}`, JSON.stringify(groups || []))
+  }
+
+  if (action.type === CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS) {
+    const files: string[] = action.payload
+
+    localStorage.setItem(`${prefix}/${CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS}`, JSON.stringify(files || []))
   }
 
   if (action.type === CONSTANTS.APP_INITIALIZATION_RESTORE_SETTINGS) {
@@ -71,6 +78,10 @@ const storageMiddleware: StorageMiddleware = (prefix: string) => store => next =
 
   if (action.type === CONSTANTS.APP_SETTINGS_SET_USE_MO2 && !action.payload) {
     localStorage.setItem(`${prefix}/${CONSTANTS.APP_SETTINGS_SET_MO2_INSTANCE}`, '')
+    localStorage.setItem(`${prefix}/${CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS}`, '[]')
+
+    store.dispatch(actionSetMo2Instance(''))
+    store.dispatch(actionSetDetectedMo2SourcesFolders([]))
   }
 
   localStorage.setItem(`${prefix}/${action.type}`, transformPayload(action.payload))

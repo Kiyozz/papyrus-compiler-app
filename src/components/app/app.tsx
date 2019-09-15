@@ -4,7 +4,8 @@ import { CSSTransition } from 'react-transition-group'
 import AppChangelog from '../app-changelog/app-changelog'
 import AppSidebar from '../app-sidebar/app-sidebar'
 import AppContent from '../app-content/app-content'
-import AppLoading from '../app-loading/app-loading.container'
+import AppSplashScreen from '../app-splash-screen/app-splash-screen.container'
+import AppTaskLoading from '../app-task-loading/app-task-loading.container'
 
 export interface StateProps {
   initialized: boolean
@@ -62,7 +63,8 @@ const App: React.FC<Props> = ({ initialization, initialized, version, notes, get
         />
       </CSSTransition>
 
-      <AppLoading />
+      <AppTaskLoading />
+      <AppSplashScreen />
       <AppSidebar />
       <AppContent />
     </div>

@@ -14,6 +14,10 @@ class Api {
 
     return await response.json() as Promise<GithubReleaseModel>
   }
+
+  detectMo2SourcesFolders = ([mo2Instance, game]: [string, string]) => {
+    return this.ipc.send('mo2-sources-folders', { mo2Instance, game })
+  }
 }
 
 const api = new Api()

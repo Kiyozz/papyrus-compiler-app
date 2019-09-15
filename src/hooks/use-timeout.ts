@@ -26,5 +26,9 @@ export default function useTimeout(start: StartCallback, options: Options = { ti
         options.end!()
       }
     }
+
+    return () => {
+      clearTimeout(timer.current)
+    }
   }, [start, options])
 }

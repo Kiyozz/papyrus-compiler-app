@@ -13,6 +13,8 @@ import groupsReducer, { GroupsState } from '../reducers/groups.reducer'
 import settingsReducer, { SettingsState } from '../reducers/settings.reducer'
 import storageMiddleware from '../middlewares/storage/storage.middleware'
 import logMiddleware from '../middlewares/log/log.middleware'
+import taskLoadingReducer, { TaskLoadingState } from '../reducers/task-loading.reducer'
+import errorReducer, { ErrorState } from '../reducers/error.reducer'
 
 export interface RootStore {
   router: RouterState
@@ -22,6 +24,8 @@ export interface RootStore {
   groups: GroupsState
   settings: SettingsState
   changelog: ChangelogState
+  taskLoading: TaskLoadingState
+  error: ErrorState
 }
 
 export const history = createBrowserHistory()
@@ -36,6 +40,8 @@ export default function createRootStore() {
       groups: groupsReducer,
       settings: settingsReducer,
       changelog: changelogReducer('papyrus-compiler-app'),
+      taskLoading: taskLoadingReducer,
+      error: errorReducer,
       router: connectRouter(history)
     }),
     composeWithDevTools(

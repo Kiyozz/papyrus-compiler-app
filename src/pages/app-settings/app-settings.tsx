@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import './app-settings.scss'
 import AppTitle from '../../components/app-title/app-title'
 import { Games } from '../../enums/games.enum'
@@ -11,6 +11,9 @@ export interface StateProps {
   gameFolder: string
   mo2: boolean
   mo2Instance: string
+  detectedMo2SourcesFolders: string[]
+  loading: boolean
+  detectSourcesFoldersError: string | undefined
 }
 
 export interface DispatchesProps {
@@ -18,11 +21,12 @@ export interface DispatchesProps {
   setGameFolder: (gameFolder: string) => void
   setMo2: (mo2: boolean) => void
   setMo2Instance: (mo2Instance: string) => void
+  detectMo2SourcesFolder: (mo2Instance: string, game: string) => void
 }
 
 type Props = StateProps & DispatchesProps
 
-const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, setGame, setGameFolder, setMo2, setMo2Instance }) => {
+const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, detectedMo2SourcesFolders, loading, detectSourcesFoldersError, setGame, setGameFolder, setMo2, setMo2Instance, detectMo2SourcesFolder }) => {
   const onClickRadio = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
 
@@ -39,6 +43,10 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, setG
 
   const onChangeMo2Instance = useCallback(debounce((value: string) => {
     setMo2Instance(value)
+
+    if (value) {
+      detectMo2SourcesFolder(value, game)
+    }
   }, 300), [setMo2Instance])
 
   const onChangeMo2 = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +57,31 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, setG
     e.preventDefault()
   }, [])
 
-  console.log(game)
+  const Mo2SourcesFoldersList = useMemo(() => {
+    if (detectedMo2SourcesFolders && detectedMo2SourcesFolders.length === 0) {
+      return null
+    }
+
+    return detectedMo2SourcesFolders
+      .map((folder) => folder.replace(`${mo2Instance}\\`, ''))
+      .map((folder) => {
+        return (
+          <li
+            className="app-settings-folder"
+            key={folder}
+          >
+            {folder}
+          </li>
+        )
+      })
+  }, [detectedMo2SourcesFolders, mo2Instance])
+
+  const onClickUpdateDetectedSourcesFolders = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    e.currentTarget.blur()
+
+    detectMo2SourcesFolder(mo2Instance, game)
+  }, [detectMo2SourcesFolder, mo2Instance, game])
 
   return (
     <div className="app-settings container">
@@ -136,16 +168,54 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, setG
             mountOnEnter
             unmountOnExit
           >
-            <div className="form-group">
-              <label htmlFor="mo2Instance">Mod Organizer 2 Instance</label>
+            <>
+              <div className="form-group">
+                <label htmlFor="mo2Instance">Mod Organizer 2 Instance</label>
 
-              <AppDialogFolderInput
-                id="mo2Instance"
-                name="mo2Instance"
-                value={mo2Instance}
-                onChange={onChangeMo2Instance}
-              />
-            </div>
+                <AppDialogFolderInput
+                  id="mo2Instance"
+                  name="mo2Instance"
+                  value={mo2Instance}
+                  onChange={onChangeMo2Instance}
+                />
+              </div>
+
+              <CSSTransition
+                timeout={300}
+                classNames="app-fade"
+                in={!!Mo2SourcesFoldersList || !!detectSourcesFoldersError}
+                mountOnEnter
+                unmountOnExit
+              >
+                <>
+                  <h5 className="app-settings-label">
+                    Detected sources folders
+
+                    {Mo2SourcesFoldersList && (
+                      <button
+                        className="btn btn-primary btn-sm app-settings-mo2-sources-folders-update"
+                        onClick={onClickUpdateDetectedSourcesFolders}
+                        disabled={loading}
+                      >
+                        Update
+                      </button>
+                    )}
+                  </h5>
+
+                  {detectSourcesFoldersError && (
+                    <span className="app-error">
+                      {detectSourcesFoldersError}
+                    </span>
+                  )}
+
+                  {Mo2SourcesFoldersList && (
+                    <ul className="app-settings-folders-list">
+                      {Mo2SourcesFoldersList}
+                    </ul>
+                  )}
+                </>
+              </CSSTransition>
+            </>
           </CSSTransition>
         </form>
       </div>

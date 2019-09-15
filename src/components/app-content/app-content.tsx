@@ -13,23 +13,24 @@ export interface DispatchesProps {}
 
 type Props = StateProps & DispatchesProps
 
+const routes = [
+  { path: '/compilation', component: AppCompilation },
+  { path: '/groups', component: AppGroups },
+  { path: '/settings', component: AppSettings }
+]
+
 const AppContent: React.FC<Props> = () => {
   return (
     <div className="app-content">
       <ConnectedRouter history={history}>
         <Switch>
-          <Route
-            path="/compilation"
-            component={AppCompilation}
-          />
-          <Route
-            path="/groups"
-            component={AppGroups}
-          />
-          <Route
-            path="/settings"
-            component={AppSettings}
-          />
+          {routes.map(({ path, component: Component }) => (
+            <Route
+              key={path}
+              path={path}
+              component={Component}
+            />
+          ))}
           <Redirect to="/compilation" />
         </Switch>
       </ConnectedRouter>

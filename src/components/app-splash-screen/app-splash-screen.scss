@@ -1,6 +1,6 @@
 @import "../../scss/variables";
 
-.app-loading {
+.app-splash-screen {
   position: fixed;
   top: 0;
   right: 0;
@@ -18,11 +18,11 @@
 
   img {
     width: 125px;
-    animation: app-loading-logo-grow 1.125s ease-in-out infinite;
+    animation: app-splash-screen-logo-grow 1.125s ease-in-out infinite;
   }
 }
 
-@keyframes app-loading-logo-grow {
+@keyframes app-splash-screen-logo-grow {
   0%, 100% {
     width: 125px;
   }

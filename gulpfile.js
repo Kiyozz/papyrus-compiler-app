@@ -1,7 +1,7 @@
-import { src, dest, series } from 'gulp'
-import del from 'del'
-import { exec } from 'child_process'
-import packager from 'electron-packager'
+const { src, dest, series } = require('gulp')
+const del = require('del')
+const { exec } = require('child_process')
+const packager = require('electron-packager')
 
 function clean() {
   return del(['./build'])
@@ -28,7 +28,7 @@ function buildElectron() {
   return exec('npm run build:electron', { cwd: __dirname })
 }
 
-export function packageApp() {
+function packageApp() {
   return packager({
     prune: true,
     asar: true,
@@ -39,7 +39,17 @@ export function packageApp() {
   })
 }
 
-export const build = series(clean, buildReact, buildElectron, copyAssets, install)
+const build = series(clean, buildReact, buildElectron, copyAssets, install)
 const defaultTask = series(cleanOut, build, packageApp)
 
-export default defaultTask
+module.exports = {
+  build,
+  default: defaultTask,
+  'package-app': packageApp,
+  clean,
+  'clean-out': cleanOut,
+  'build-react': buildReact,
+  'build-electron': buildElectron,
+  'copy-assets': copyAssets,
+  install
+}

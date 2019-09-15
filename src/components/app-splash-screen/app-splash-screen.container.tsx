@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { RootStore } from '../../redux/stores/root.store'
-import AppLoading, { DispatchesProps, StateProps } from './app-loading'
+import AppSplashScreen, { DispatchesProps, StateProps } from './app-splash-screen'
 
 function mapStateToProps(store: RootStore): StateProps {
   return {
@@ -13,6 +13,6 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchesProps {
   return {}
 }
 
-const AppLoadingContainer = connect(mapStateToProps, mapDispatchToProps)(AppLoading)
+const AppSplashScreenContainer = connect(mapStateToProps, mapDispatchToProps)(AppSplashScreen)
 
-export default AppLoadingContainer
+export default AppSplashScreenContainer

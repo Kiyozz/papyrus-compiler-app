@@ -7,13 +7,15 @@ export interface SettingsState {
   game: Games
   gameFolder: string
   mo2Instance: string
+  mo2SourcesFolders: string[]
 }
 
 const initialState: SettingsState = {
   mo2: false,
   game: Games.LE,
   gameFolder: '',
-  mo2Instance: ''
+  mo2Instance: '',
+  mo2SourcesFolders: []
 }
 
 export default function settingsReducer(state = initialState, action: AnyAction): SettingsState {
@@ -37,6 +39,23 @@ export default function settingsReducer(state = initialState, action: AnyAction)
       return {
         ...state,
         mo2Instance: action.payload.trim() || ''
+      }
+    case CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS:
+      return {
+        ...state,
+        mo2SourcesFolders: action.payload || []
+      }
+    case CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_FAILED:
+      console.log('error', action.payload)
+
+      return {
+        ...state,
+        mo2SourcesFolders: []
+      }
+    case CONSTANTS.APP_SETTINGS_SET_DETECTED_SOURCES_FOLDERS:
+      return {
+        ...state,
+        mo2SourcesFolders: action.payload || []
       }
     default:
       return state
