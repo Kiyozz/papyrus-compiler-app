@@ -2,13 +2,17 @@ import { AnyAction } from 'redux'
 import * as CONSTANTS from '../actions/constants'
 
 export interface ChangelogState {
+  startingVersion: string
   version: string
   notes: string
 }
 
 export default function createChangeLogReducer(prefix: string) {
+  const startingVersion = localStorage.getItem(`${prefix}/${CONSTANTS.APP_CHANGELOG_SET_LATEST_VERSION}`) || ''
+
   const initialState: ChangelogState = {
-    version: localStorage.getItem(`${prefix}/${CONSTANTS.APP_CHANGELOG_SET_LATEST_VERSION}`) || '',
+    startingVersion,
+    version: startingVersion,
     notes: ''
   }
 

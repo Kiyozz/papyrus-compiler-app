@@ -9,6 +9,7 @@ import AppTaskLoading from '../app-task-loading/app-task-loading.container'
 
 export interface StateProps {
   initialized: boolean
+  startingVersion: string
   version: string
   notes: string
   currentVersion: string
@@ -21,7 +22,7 @@ export interface DispatchesProps {
 
 type Props = StateProps & DispatchesProps
 
-const App: React.FC<Props> = ({ initialization, initialized, version, notes, currentVersion, getLatestNotes }) => {
+const App: React.FC<Props> = ({ initialization, initialized, version, startingVersion, notes, currentVersion, getLatestNotes }) => {
   const [showChangelog, setShowChangelog] = useState(false)
   const twiceRender = useRef<boolean>(false)
 
@@ -30,19 +31,17 @@ const App: React.FC<Props> = ({ initialization, initialized, version, notes, cur
   }, [initialization])
 
   useEffect(() => {
-    if (version !== process.env.REACT_APP_VERSION) {
-      getLatestNotes()
-    }
+    getLatestNotes()
     // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
-    if (notes && twiceRender.current) {
+    if (notes && twiceRender.current && version !== startingVersion) {
       setShowChangelog(true)
     }
 
     twiceRender.current = true
-  }, [notes])
+  }, [notes, startingVersion, version])
 
   const onClickCloseChangelogPopup = useCallback(() => {
     setShowChangelog(false)

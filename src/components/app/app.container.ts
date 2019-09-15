@@ -8,6 +8,7 @@ import { RootStore } from '../../redux/stores/root.store'
 function mapStateToProps(store: RootStore): StateProps {
   return {
     initialized: store.initialization,
+    startingVersion: store.changelog.startingVersion,
     version: store.changelog.version,
     notes: store.changelog.notes,
     currentVersion: process.env.REACT_APP_VERSION || ''
