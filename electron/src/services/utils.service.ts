@@ -9,6 +9,7 @@ interface GamepathServiceConstructor {
   mo2Instance: string
   mo2SourcesFolders: string[]
   game: GameType
+  sourcesFolderType: string
 }
 
 export class UtilsService {
@@ -20,20 +21,26 @@ export class UtilsService {
   readonly mo2SourcesFolders: string[]
   readonly mo2Instance: string
   readonly game: GameType
+  readonly sourcesFolderType: string
 
   constructor(private readonly options: GamepathServiceConstructor) {
     this.importFolder = path.join(options.imports)
     this.gamePath = path.join(options.gamePath)
     this.output = path.join(options.output)
     this.flag = options.flag
-    this.papyrusCompilerFolder = path.resolve(options.gamePath, 'Papyrus Compiler')
+    this.papyrusCompilerFolder = 'Papyrus Compiler'
     this.mo2SourcesFolders = options.mo2SourcesFolders
     this.mo2Instance = options.mo2Instance
     this.game = options.game
+    this.sourcesFolderType = options.sourcesFolderType
   }
 
-  public getPapyrusCompilerExecutable() {
-    return path.join(this.papyrusCompilerFolder, 'PapyrusCompiler.exe')
+  get papyrusCompilerExecutableRelative() {
+    return `.\\${this.papyrusCompilerFolder}\\PapyrusCompiler.exe`
+  }
+
+  get papyrusCompilerExecutableAbsolute() {
+    return path.join(this.gamePath, this.papyrusCompilerExecutableRelative)
   }
 
   getSourcesFolderType() {

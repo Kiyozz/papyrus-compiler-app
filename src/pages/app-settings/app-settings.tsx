@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useState, useEffect } from 'react'
 import './app-settings.scss'
 import AppTitle from '../../components/app-title/app-title'
 import { Games } from '../../enums/games.enum'
@@ -26,7 +26,46 @@ export interface DispatchesProps {
 
 type Props = StateProps & DispatchesProps
 
+interface CalculateMo2StringLimitationOptions {
+  folders: string[]
+  mo2Instance: string
+  gamePath: string
+  game: Games
+}
+
+const windowsCmdLimitation = 8191
+
+function calculateMo2StringLimitation({ folders, mo2Instance, gamePath, game }: CalculateMo2StringLimitationOptions): number {
+  const sourcesType = game === 'Skyrim Special Edition' ? 'Source\\Scripts' : 'Scripts\\Source'
+  const gameFolderData = gamePath + '\\Data\\' + sourcesType
+  const gameFolderPapyrus = gamePath + '\\Papyrus Compiler\\PapyrusCompiler.exe'
+  const mo2InstanceWithMods = mo2Instance + '\\mods'
+  const flagLength = `-f="TESV_Papyrus_Flags.flg"`.length
+  const output = `-o="${mo2Instance}\\overwrite\\${sourcesType}"`
+  const spacesBetweenArgs = 4
+  const averageScriptLength = 15
+  const foldersSum = folders
+    .map(folder => folder.replace(mo2Instance, ''))
+    .reduce((previous, next) => {
+      previous = next.length + previous
+
+      return previous
+    }, 0)
+
+  return (
+    gameFolderData.length +
+    gameFolderPapyrus.length +
+    mo2InstanceWithMods.length +
+    flagLength +
+    output.length +
+    spacesBetweenArgs +
+    averageScriptLength +
+    foldersSum
+  )
+}
+
 const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, detectedMo2SourcesFolders, loading, detectSourcesFoldersError, setGame, setGameFolder, setMo2, setMo2Instance, detectMo2SourcesFolder }) => {
+  const [actualMo2FolderStringLimitation, setStringLimitation] = useState<number>()
   const onClickRadio = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
 
@@ -57,13 +96,26 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, dete
     e.preventDefault()
   }, [])
 
+  useEffect(() => {
+    if (!mo2) {
+      return
+    }
+
+    setStringLimitation(calculateMo2StringLimitation({
+      folders: detectedMo2SourcesFolders,
+      game,
+      gamePath: gameFolder,
+      mo2Instance
+    }))
+  }, [detectedMo2SourcesFolders, game, gameFolder, mo2Instance, setStringLimitation, mo2])
+
   const Mo2SourcesFoldersList = useMemo(() => {
     if (detectedMo2SourcesFolders && detectedMo2SourcesFolders.length === 0) {
       return null
     }
 
     return detectedMo2SourcesFolders
-      .map((folder) => folder.replace(`${mo2Instance}\\`, ''))
+      .map((folder) => folder.replace(`${mo2Instance}\\mods\\`, ''))
       .map((folder) => {
         return (
           <li
@@ -189,7 +241,7 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, dete
               >
                 <>
                   <h5 className="app-settings-label">
-                    Detected sources folders
+                    Detected sources folders ({actualMo2FolderStringLimitation}/{windowsCmdLimitation})
 
                     {Mo2SourcesFoldersList && (
                       <button

@@ -8,11 +8,11 @@ export interface ChangelogState {
 }
 
 export default function createChangeLogReducer(prefix: string) {
-  const startingVersion = localStorage.getItem(`${prefix}/${CONSTANTS.APP_CHANGELOG_SET_LATEST_VERSION}`) || ''
-
+  const startingVersion = process.env.REACT_APP_VERSION || ''
+  const latestVersionSaved = localStorage.getItem(`${prefix}/${CONSTANTS.APP_CHANGELOG_SET_LATEST_VERSION}`) || ''
   const initialState: ChangelogState = {
     startingVersion,
-    version: startingVersion,
+    version: latestVersionSaved,
     notes: ''
   }
 

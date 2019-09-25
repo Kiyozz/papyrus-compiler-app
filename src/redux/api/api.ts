@@ -10,9 +10,9 @@ class Api {
   }
 
   getLatestNotes = async () => {
-    const response = await fetch('https://api.github.com/repos/Kiyozz/papyrus-compiler-app/releases/latest')
+    const response = await fetch('https://api.github.com/repos/Kiyozz/papyrus-compiler-app/releases')
 
-    return await response.json() as Promise<GithubReleaseModel>
+    return await response.json() as Promise<GithubReleaseModel[]>
   }
 
   detectMo2SourcesFolders = ([mo2Instance, game]: [string, string]) => {

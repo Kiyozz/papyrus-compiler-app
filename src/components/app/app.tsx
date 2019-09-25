@@ -18,11 +18,12 @@ export interface StateProps {
 export interface DispatchesProps {
   initialization: () => void
   getLatestNotes: () => void
+  setLatestVersion: () => void
 }
 
 type Props = StateProps & DispatchesProps
 
-const App: React.FC<Props> = ({ initialization, initialized, version, startingVersion, notes, currentVersion, getLatestNotes }) => {
+const App: React.FC<Props> = ({ initialization, initialized, version, startingVersion, notes, currentVersion, getLatestNotes, setLatestVersion }) => {
   const [showChangelog, setShowChangelog] = useState(false)
   const twiceRender = useRef<boolean>(false)
 
@@ -38,10 +39,11 @@ const App: React.FC<Props> = ({ initialization, initialized, version, startingVe
   useEffect(() => {
     if (notes && twiceRender.current && version !== startingVersion) {
       setShowChangelog(true)
+      setLatestVersion()
     }
 
     twiceRender.current = true
-  }, [notes, startingVersion, version])
+  }, [notes, startingVersion, version, setLatestVersion])
 
   const onClickCloseChangelogPopup = useCallback(() => {
     setShowChangelog(false)

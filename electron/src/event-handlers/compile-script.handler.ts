@@ -20,7 +20,8 @@ export class CompileScriptHandler {
 
   private static registerCompile() {
     ipcMain.on('compile-script', async (event, { script, game, gamePath, mo2SourcesFolders, mo2Instance }: CompileScriptParameters) => {
-      const imports = path.join(gamePath, 'Data', game === 'Skyrim Special Edition' ? 'Source\\Scripts' : 'Scripts\\Source')
+      const sourcesFolderType = game === 'Skyrim Special Edition' ? 'Source\\Scripts' : 'Scripts\\Source'
+      const imports = path.join(gamePath, 'Data', sourcesFolderType)
       const output = path.join(gamePath, 'Data\\Scripts')
       const gamePathService = new UtilsService({
         gamePath,
@@ -29,7 +30,8 @@ export class CompileScriptHandler {
         imports,
         mo2SourcesFolders,
         mo2Instance,
-        game
+        game,
+        sourcesFolderType
       })
       const compileService = new CompileService(gamePathService)
 

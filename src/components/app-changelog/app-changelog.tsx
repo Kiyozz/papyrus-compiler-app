@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useCallback, useMemo } from 'react'
+import ReactMarkdown from 'react-markdown'
 import AppTitle from '../app-title/app-title'
 import './app-changelog.scss'
 import useOnEscape from '../../hooks/use-on-escape'
@@ -13,13 +14,7 @@ interface Props {
 }
 
 const AppChangelog: React.FC<Props> = ({ version, notes, currentVersion, onClose }) => {
-  const Notes = notes
-    .split('\r\n')
-    .map((note, index) => {
-      return (
-        <li key={index}>{note.replace(/-/, '')}</li>
-      )
-    })
+  const Notes = <ReactMarkdown source={notes} />
 
   const onClickClose = useCallback((e: React.MouseEvent) => {
     e.preventDefault()
@@ -54,9 +49,7 @@ const AppChangelog: React.FC<Props> = ({ version, notes, currentVersion, onClose
         </span>
 
         <div className="app-changelog-text">
-          <ul>
-            {Notes}
-          </ul>
+          {Notes}
         </div>
       </div>
     </div>

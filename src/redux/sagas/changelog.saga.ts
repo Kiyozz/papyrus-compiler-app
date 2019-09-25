@@ -2,17 +2,23 @@ import { takeLatest, call, put } from 'redux-saga/effects'
 import { GithubReleaseModel } from '../../models'
 import {
   actionGetLatestNotesFailed,
-  actionGetLatestNotesSuccess,
-  actionSetLatestVersion
+  actionGetLatestNotesSuccess
 } from '../actions/changelog/changelog.actions'
 import * as CONSTANTS from '../actions/constants'
 import api from '../api/api'
 
 function* getLatestRelease() {
   try {
-    const release: GithubReleaseModel = yield call(api.getLatestNotes)
+    const startingVersion = process.env.REACT_APP_VERSION || ''
+    const releases: GithubReleaseModel[] = yield call(api.getLatestNotes)
+    const release = releases.find((release) => release.tag_name === startingVersion)
 
-    yield put(actionSetLatestVersion(release.tag_name))
+    if (!release) {
+      yield put(actionGetLatestNotesFailed(new Error(`Version ${startingVersion} not found.`)))
+
+      return
+    }
+
     yield put(actionGetLatestNotesSuccess(release.body))
   } catch (e) {
     yield put(actionGetLatestNotesFailed(e))

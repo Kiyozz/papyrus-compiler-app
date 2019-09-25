@@ -7,14 +7,24 @@ export class CompileService {
   constructor(private readonly utilsService: UtilsService) {}
 
   public async compile(script: string): Promise<string> {
-    const exe = this.utilsService.getPapyrusCompilerExecutable()
+    let exe = this.utilsService.papyrusCompilerExecutableRelative
     let imports = [this.utilsService.importFolder]
     let output = this.utilsService.output
+    let cwd = this.utilsService.gamePath
     const mo2SourcesFolders = this.utilsService.mo2SourcesFolders
+    const mo2modsPath = path.join(this.utilsService.mo2Instance, 'mods')
 
     if (this.utilsService.hasMo2() && mo2SourcesFolders && mo2SourcesFolders.length > 0) {
-      imports = [...imports, ...mo2SourcesFolders]
+      imports = [
+        ...imports,
+        ...mo2SourcesFolders
+          .map(folder => folder.replace(mo2modsPath, ''))
+          .map(folder => `.\\${folder}`),
+        path.join('..', 'overwrite', this.utilsService.sourcesFolderType)
+      ]
       output = path.join(this.utilsService.mo2Instance, 'overwrite', this.utilsService.getSourcesFolderType())
+      cwd = mo2modsPath
+      exe = this.utilsService.papyrusCompilerExecutableAbsolute
 
       try {
         await fs.ensureDir(output)
@@ -25,10 +35,10 @@ export class CompileService {
 
     const cmd = `"${exe}" "${script}" -i="${imports.join(';')}" -o="${output}" -f="${this.utilsService.flag}"`
 
-    console.log(`Executing "${cmd}" command`)
+    console.log(`Executing in ${cwd} directory: command "${cmd}"`)
 
     try {
-      const result = await exec(cmd, { cwd: this.utilsService.gamePath })
+      const result = await exec(cmd, { cwd })
 
       return result.stdout
     } catch (err) {
