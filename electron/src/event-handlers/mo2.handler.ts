@@ -2,10 +2,11 @@ import { ipcMain } from 'electron'
 import fs from 'fs-extra'
 import glob from 'glob'
 import path from 'path'
+import { GameType } from '../types/game.type'
 
 interface Mo2SourcesFolderParameters {
   mo2Instance: string
-  game: 'Skyrim Special Edition' | 'Skyrim Legendary Edition'
+  game: GameType
 }
 
 export class Mo2Handler {
