@@ -22,7 +22,7 @@ export class CompileService {
           .map(folder => `.\\${folder}`),
         path.join('..', 'overwrite', this.utilsService.sourcesFolderType)
       ]
-      output = path.join(this.utilsService.mo2Instance, 'overwrite', this.utilsService.getSourcesFolderType())
+      output = path.join(this.utilsService.mo2Instance, 'overwrite\\Scripts')
       cwd = mo2modsPath
       exe = this.utilsService.papyrusCompilerExecutableAbsolute
 
