@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import './app.scss'
 import { CSSTransition } from 'react-transition-group'
+import useOnKeyUp from '../../hooks/use-on-key-up'
 import AppChangelog from '../app-changelog/app-changelog'
 import AppSidebar from '../app-sidebar/app-sidebar'
 import AppContent from '../app-content/app-content'
@@ -19,13 +20,20 @@ export interface DispatchesProps {
   initialization: () => void
   getLatestNotes: () => void
   setLatestVersion: () => void
+  openLogFile: () => void
 }
 
 type Props = StateProps & DispatchesProps
 
-const App: React.FC<Props> = ({ initialization, initialized, version, startingVersion, notes, currentVersion, getLatestNotes, setLatestVersion }) => {
+const App: React.FC<Props> = ({ initialization, initialized, version, startingVersion, notes, currentVersion, getLatestNotes, setLatestVersion, openLogFile }) => {
   const [showChangelog, setShowChangelog] = useState(false)
   const twiceRender = useRef<boolean>(false)
+
+  useOnKeyUp('j', () => {
+    console.log('Opening log file')
+
+    openLogFile()
+  }, { ctrl: true, alt: true })
 
   useEffect(() => {
     initialization()

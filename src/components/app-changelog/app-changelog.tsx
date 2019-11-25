@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import AppTitle from '../app-title/app-title'
 import './app-changelog.scss'
-import useOnEscape from '../../hooks/use-on-escape'
+import useOnKeyUp from '../../hooks/use-on-key-up'
 import useStopScroll from '../../hooks/use-stop-scroll'
 
 interface Props {
@@ -21,7 +21,7 @@ const AppChangelog: React.FC<Props> = ({ version, notes, currentVersion, onClose
     onClose()
   }, [onClose])
 
-  useOnEscape(() => {
+  useOnKeyUp('Escape', () => {
     onClose()
   })
 
