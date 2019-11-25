@@ -10,7 +10,7 @@
   "main": "main.js",
   "scripts": {
     "start": "react-scripts start",
-    "start:electron": "cross-env TS_NODE_PROJECT=./tsconfig.electron.json NODE_ENV=development REACT_APP_MAIN=http://localhost:3000 electron -r dotenv/config -r ts-node/register electron/main.ts --enable-logging",
+    "start:electron": "cross-env TS_NODE_PROJECT=./tsconfig.electron.json NODE_ENV=development REACT_APP_MAIN=http://localhost:3000 electron -r dotenv/config -r ts-node/register electron/main.ts",
     "build": "react-scripts build",
     "build:electron": "cross-env NODE_ENV=production tsc -p tsconfig.electron.json",
     "test": "react-scripts test",
@@ -19,8 +19,10 @@
   },
   "dependencies": {
     "child-process-promise": "^2.2.1",
+    "electron-log": "^3.0.9",
+    "fast-glob": "^3.1.0",
     "fs-extra": "^8.1.0",
-    "glob": "^7.1.4"
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.22",
@@ -31,7 +33,6 @@
     "@types/dotenv": "^6.1.1",
     "@types/electron-packager": "^14.0.0",
     "@types/fs-extra": "^8.0.0",
-    "@types/glob": "^7.1.1",
     "@types/gulp": "^4.0.6",
     "@types/history": "^4.7.3",
     "@types/jest": "24.0.18",
@@ -71,10 +72,10 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-saga": "^1.0.5",
     "ts-node": "^8.3.0",
-    "typescript": "3.5.3",
     "typeface-capriola": "^0.0.72",
     "typeface-neuton": "^0.0.72",
-    "typeface-oxygen": "^0.0.72"
+    "typeface-oxygen": "^0.0.72",
+    "typescript": "3.5.3"
   },
   "browserslist": {
     "production": [

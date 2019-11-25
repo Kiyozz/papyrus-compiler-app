@@ -1,5 +1,6 @@
 import { exec } from 'child-process-promise'
 import fs from 'fs-extra'
+import log from 'electron-log'
 import path from 'path'
 import { UtilsService } from './utils.service'
 
@@ -9,6 +10,12 @@ export class CompileService {
   public async compile(script: string): Promise<string> {
     let exe = this.utilsService.papyrusCompilerExecutableRelative
     let imports = [this.utilsService.importFolder]
+    const hasOtherGameSource = await fs.pathExists(this.utilsService.otherGameSourceFolder)
+
+    if (hasOtherGameSource) {
+      imports = [this.utilsService.otherGameSourceFolder, ...imports]
+    }
+
     let output = this.utilsService.output
     let cwd = this.utilsService.gamePath
     const mo2SourcesFolders = this.utilsService.mo2SourcesFolders
@@ -35,7 +42,7 @@ export class CompileService {
 
     const cmd = `"${exe}" "${script}" -i="${imports.join(';')}" -o="${output}" -f="${this.utilsService.flag}"`
 
-    console.log(`Executing in ${cwd} directory: command "${cmd}"`)
+    log.debug(`Executing in "${cwd}" directory. Command ${cmd}`)
 
     try {
       const result = await exec(cmd, { cwd })

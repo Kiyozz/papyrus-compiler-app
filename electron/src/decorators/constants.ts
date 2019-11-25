@@ -1,0 +1,1 @@
+export const ELECTRON_IPC_EVENT = 'ELECTRON_IPC_EVENT'
