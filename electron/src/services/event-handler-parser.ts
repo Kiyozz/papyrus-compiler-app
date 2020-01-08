@@ -12,9 +12,7 @@ export class EventHandlerParser {
   register() {
     this.eventHandlers
       .forEach(eventHandler => {
-        const target = eventHandler.constructor
-
-        const { name } = Reflect.getMetadata(ELECTRON_IPC_EVENT, target)
+        const { name } = Reflect.getMetadata(ELECTRON_IPC_EVENT, eventHandler.constructor)
 
         log.info(`Registering ${name} event.`)
 

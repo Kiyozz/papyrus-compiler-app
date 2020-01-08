@@ -1,4 +1,6 @@
 import * as path from 'path'
+import GameHelper from '../helpers/game.helper'
+import PathHelper from '../helpers/path.helper'
 import { GameType } from '../types/game.type'
 
 interface GamepathServiceConstructor {
@@ -13,7 +15,7 @@ interface GamepathServiceConstructor {
   otherGameSourceFolder: string
 }
 
-export class UtilsService {
+export class ConfigService {
   readonly importFolder: string
   readonly gamePath: string
   readonly output: string
@@ -52,5 +54,25 @@ export class UtilsService {
 
   hasMo2() {
     return !!this.options.mo2Instance
+  }
+
+  static create(pathHelper: PathHelper, gameHelper: GameHelper, { game, gamePath, mo2SourcesFolders, mo2Instance }: { game: GameType, gamePath: string, mo2SourcesFolders: string[], mo2Instance: string }) {
+    const sourcesFolderType = gameHelper.toSource(game)
+    const pathToCheckGameSourceFolder = gameHelper.toOtherSource(game)
+    const imports = pathHelper.join(gamePath, 'Data', sourcesFolderType)
+    const otherGameSourceFolder = pathHelper.join(gamePath, 'Data', pathToCheckGameSourceFolder)
+    const output = pathHelper.join(gamePath, 'Data\\Scripts')
+
+    return new ConfigService({
+      gamePath,
+      flag: 'TESV_Papyrus_Flags.flg',
+      output,
+      imports,
+      mo2SourcesFolders,
+      mo2Instance,
+      game,
+      sourcesFolderType,
+      otherGameSourceFolder
+    })
   }
 }

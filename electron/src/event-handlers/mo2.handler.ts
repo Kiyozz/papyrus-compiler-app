@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common'
 import fs from 'fs-extra'
 import fg from 'fast-glob'
 import path from 'path'
-import { Event } from '../decorators'
+import { Handler } from '../decorators'
+import GameHelper from '../helpers/game.helper'
+import PathHelper from '../helpers/path.helper'
 import { GameType } from '../types/game.type'
 import { HandlerInterface } from '../types/handler.interface'
 
@@ -12,8 +14,12 @@ interface Mo2SourcesFolderParameters {
 }
 
 @Injectable()
-@Event('mo2-sources-folders')
+@Handler('mo2-sources-folders')
 export class Mo2Handler implements HandlerInterface {
+  constructor(
+    private readonly pathHelper: PathHelper,
+    private readonly gameHelper: GameHelper
+  ) {}
 
   async listen(event: Electron.IpcMainEvent, { mo2Instance, game }: Mo2SourcesFolderParameters) {
     const sourcesFolderType = game === 'Skyrim Special Edition' ? 'Source/Scripts' : 'Scripts/Source'
@@ -32,8 +38,8 @@ export class Mo2Handler implements HandlerInterface {
       return
     }
 
-    const otherGameSourceFolder = game === 'Skyrim Special Edition' ? 'Scripts/Source' : 'Source/Scripts'
-    const foldersToCheck = [otherGameSourceFolder, sourcesFolderType].map(f => `${mo2Instance.replace(/\\/g, '/')}/mods/**/${f}`)
+    const otherGameSourceFolder = this.gameHelper.toOtherSource(game)
+    const foldersToCheck = [otherGameSourceFolder, sourcesFolderType].map(f => `${this.pathHelper.toSlash(mo2Instance)}/mods/**/${f}`)
 
     try {
       let files = await fg(foldersToCheck, { absolute: true, deep: 3, onlyDirectories: true })
@@ -72,7 +78,7 @@ export class Mo2Handler implements HandlerInterface {
 
           return doubleSourceFolders.includes(file)
         })
-        .map(file => file.replace(/\//g, '\\'))
+        .map(file => this.pathHelper.toAntiSlash(file))
 
       return files
     } catch (e) {
