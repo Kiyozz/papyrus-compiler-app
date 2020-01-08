@@ -18,11 +18,14 @@
     "package": "gulp"
   },
   "dependencies": {
+    "@nestjs/common": "^6.10.14",
+    "@nestjs/core": "^6.10.14",
     "child-process-promise": "^2.2.1",
     "electron-log": "^3.0.9",
     "fast-glob": "^3.1.0",
     "fs-extra": "^8.1.0",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.4"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.22",
@@ -47,7 +50,7 @@
     "@types/redux-actions": "^2.6.1",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
-    "connected-react-router": "^6.5.2",
+    "connected-react-router": "^6.6.1",
     "cross-env": "^5.2.1",
     "date-fns": "^2.0.1",
     "del": "^5.1.0",
@@ -58,24 +61,24 @@
     "gulp-cli": "^2.2.0",
     "lodash-es": "^4.17.15",
     "node-sass": "^4.12.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-dropzone": "^10.1.8",
-    "react-markdown": "^4.2.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-dropzone": "^10.2.1",
+    "react-markdown": "^4.3.1",
     "react-redux": "^7.1.1",
-    "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1",
-    "react-select": "^3.0.4",
-    "react-transition-group": "^4.2.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.3.0",
+    "react-select": "^3.0.8",
+    "react-transition-group": "^4.3.0",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
     "redux-devtools-extension": "^2.13.8",
-    "redux-saga": "^1.0.5",
-    "ts-node": "^8.3.0",
+    "redux-saga": "^1.1.3",
+    "ts-node": "^8.5.4",
     "typeface-capriola": "^0.0.72",
     "typeface-neuton": "^0.0.72",
     "typeface-oxygen": "^0.0.72",
-    "typescript": "3.5.3"
+    "typescript": "^3.7.4"
   },
   "browserslist": {
     "production": [

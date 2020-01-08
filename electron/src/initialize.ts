@@ -1,21 +1,15 @@
+import { NestFactory } from '@nestjs/core'
 import log from 'electron-log'
 import fs from 'fs-extra'
-import { CompileScriptHandler } from './event-handlers/compile-script.handler'
-import { Mo2Handler } from './event-handlers/mo2.handler'
+import { AppModule } from './app.module'
 import { EventHandlerParser } from './services/event-handler-parser'
 
 export class Initialize {
-  public static main() {
-    Initialize.backupLatestLogFile()
-    Initialize.registerEventHandlers()
-  }
+  public static async main() {
+    await Initialize.backupLatestLogFile()
 
-  private static registerEventHandlers() {
-    const handlers = [
-      CompileScriptHandler,
-      Mo2Handler
-    ]
-    const parser = new EventHandlerParser(handlers)
+    const app = await NestFactory.createApplicationContext(AppModule)
+    const parser = app.get<EventHandlerParser>(EventHandlerParser)
 
     parser.register()
   }

@@ -2,10 +2,14 @@ import { exec } from 'child-process-promise'
 import fs from 'fs-extra'
 import log from 'electron-log'
 import path from 'path'
+import PathHelper from '../helpers/path.helper'
 import { UtilsService } from './utils.service'
 
 export class CompileService {
-  constructor(private readonly utilsService: UtilsService) {}
+  constructor(
+    private readonly utilsService: UtilsService,
+    private readonly pathHelper: PathHelper
+  ) {}
 
   public async compile(script: string): Promise<string> {
     let exe = this.utilsService.papyrusCompilerExecutableRelative
@@ -19,7 +23,7 @@ export class CompileService {
     let output = this.utilsService.output
     let cwd = this.utilsService.gamePath
     const mo2SourcesFolders = this.utilsService.mo2SourcesFolders
-    const mo2modsPath = path.join(this.utilsService.mo2Instance, 'mods')
+    const mo2modsPath = this.pathHelper.join(this.utilsService.mo2Instance, 'mods')
 
     if (this.utilsService.hasMo2() && mo2SourcesFolders && mo2SourcesFolders.length > 0) {
       imports = [
@@ -44,11 +48,17 @@ export class CompileService {
 
     log.debug(`Executing in "${cwd}" directory. Command ${cmd}`)
 
+    const last = imports.map(imp => this.pathHelper.basename(imp) === script).lastIndexOf(true)
+    const lastFileName = imports[last]
+    const backupFile = await fs.readFile(lastFileName)
+
     try {
       const result = await exec(cmd, { cwd })
 
       return result.stdout
     } catch (err) {
+      await fs.writeFile(lastFileName, backupFile)
+
       const output = err.stderr.replace('<unknown>', 'unknown')
 
       if (!output) {

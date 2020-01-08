@@ -1,3 +1,7 @@
+if (typeof window.require === 'undefined') {
+  throw new Error('Run the app through Electron.')
+}
+
 export class IpcRenderer {
   private ipcRenderer = window.require('electron').ipcRenderer
 

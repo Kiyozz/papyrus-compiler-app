@@ -1,18 +1,21 @@
+import { Injectable } from '@nestjs/common'
 import fs from 'fs-extra'
 import fg from 'fast-glob'
 import path from 'path'
 import { Event } from '../decorators'
 import { GameType } from '../types/game.type'
+import { HandlerInterface } from '../types/handler.interface'
 
 interface Mo2SourcesFolderParameters {
   mo2Instance: string
   game: GameType
 }
 
-export class Mo2Handler {
+@Injectable()
+@Event('mo2-sources-folders')
+export class Mo2Handler implements HandlerInterface {
 
-  @Event('mo2-sources-folders')
-  async detectSourceFoldersEvent(event: Electron.IpcMainEvent, { mo2Instance, game }: Mo2SourcesFolderParameters) {
+  async listen(event: Electron.IpcMainEvent, { mo2Instance, game }: Mo2SourcesFolderParameters) {
     const sourcesFolderType = game === 'Skyrim Special Edition' ? 'Source/Scripts' : 'Scripts/Source'
 
     if (!mo2Instance || !game) {

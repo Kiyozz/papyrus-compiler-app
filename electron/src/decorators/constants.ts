@@ -1,1 +1,1 @@
-export const ELECTRON_IPC_EVENT = 'ELECTRON_IPC_EVENT'
+export const ELECTRON_IPC_EVENT = '__electron_ipc_event__'
