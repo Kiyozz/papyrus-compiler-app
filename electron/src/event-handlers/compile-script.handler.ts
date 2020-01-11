@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common'
 import { Handler } from '../decorators'
+import { CompileScriptException } from '../exceptions/compiler/compile-script.exception'
 import GameHelper from '../helpers/game.helper'
 import PathHelper from '../helpers/path.helper'
-import { CompilerService } from '../services/compiler.service'
+import { ScriptCompilerService } from '../services/script-compiler.service'
 import { ConfigService } from '../services/config.service'
-import log from 'electron-log'
+import { LogService } from '../services/log.service'
+import { Mo2Service } from '../services/mo2.service'
+import { PapyrusCompilerService } from '../services/papyrus-compiler.service'
+import { ShellService } from '../services/shell.service'
 import { GameType } from '../types/game.type'
 import { HandlerInterface } from '../types/handler.interface'
 
@@ -21,36 +25,50 @@ interface CompileScriptParameters {
 @Handler('compile-script')
 export class CompileScriptHandler implements HandlerInterface<CompileScriptParameters> {
   constructor(
-    private gameHelper: GameHelper,
-    private pathHelper: PathHelper
+    private readonly gameHelper: GameHelper,
+    private readonly pathHelper: PathHelper,
+    private readonly shellService: ShellService,
+    private readonly papyrusCompilerService: PapyrusCompilerService,
+    private readonly mo2Service: Mo2Service,
+    private readonly logService: LogService
   ) {}
 
   async listen(event: Electron.IpcMainEvent, { script, game, gamePath, mo2SourcesFolders, mo2Instance }: CompileScriptParameters) {
     const configService = ConfigService.create(this.pathHelper, this.gameHelper, { game, gamePath, mo2SourcesFolders, mo2Instance })
-    const compileService = new CompilerService(configService, this.pathHelper)
+    const compileService = new ScriptCompilerService(
+      configService,
+      this.gameHelper,
+      this.pathHelper,
+      this.shellService,
+      this.papyrusCompilerService,
+      this.mo2Service,
+      this.logService
+    )
 
-    log.info('Started compilation for script:', script)
+    this.logService.info('Started compilation for script:', script)
 
     try {
       const result = await compileService.compile(script)
       const isSuccess = /0 failed/.test(result)
 
-      log.log('Compilation result\n\n', result, '\n')
-      log.log('Compilation is success', isSuccess)
+      this.logService.log('Compilation result\n\n', result, '\n')
+      this.logService.log('Compilation is success', isSuccess)
 
       if (isSuccess) {
-        log.info(`Script ${script} sucessfully compiled.`)
+        this.logService.info(`Script ${script} sucessfully compiled.`)
 
         return result
       } else {
         this.throwError(script, { stderr: result })
       }
     } catch (err) {
+      this.logService.debug(err)
+
       this.throwError(script, { stderr: err.message })
     }
   }
 
   private throwError(script: string, result: { stderr: string }) {
-    throw new Error(`Script ${script} failed to compile: ${result.stderr}`)
+    throw new CompileScriptException(script, result.stderr)
   }
 }

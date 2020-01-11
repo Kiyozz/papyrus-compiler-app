@@ -1,0 +1,15 @@
+@import "../../scss/variables";
+
+.app-open-log-file {
+}
+
+.app-open-log-file-button-activate {
+  position: fixed;
+  bottom: 2.9rem;
+  left: 0.65rem;
+  z-index: 700;
+}
+
+.app-open-log-file .app-open-log-file-button-activate svg {
+  width: 16px;
+}

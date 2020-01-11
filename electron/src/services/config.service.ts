@@ -48,12 +48,8 @@ export class ConfigService {
     return path.join(this.gamePath, this.papyrusCompilerExecutableRelative)
   }
 
-  getSourcesFolderType() {
-    return this.game === 'Skyrim Special Edition' ? 'Source\\Scripts' : 'Scripts\\Source'
-  }
-
   hasMo2() {
-    return !!this.options.mo2Instance
+    return !!this.options.mo2Instance && this.mo2SourcesFolders?.length > 0
   }
 
   static create(pathHelper: PathHelper, gameHelper: GameHelper, { game, gamePath, mo2SourcesFolders, mo2Instance }: { game: GameType, gamePath: string, mo2SourcesFolders: string[], mo2Instance: string }) {
@@ -61,7 +57,7 @@ export class ConfigService {
     const pathToCheckGameSourceFolder = gameHelper.toOtherSource(game)
     const imports = pathHelper.join(gamePath, 'Data', sourcesFolderType)
     const otherGameSourceFolder = pathHelper.join(gamePath, 'Data', pathToCheckGameSourceFolder)
-    const output = pathHelper.join(gamePath, 'Data\\Scripts')
+    const output = pathHelper.join(gamePath, 'Data\\Scriptss')
 
     return new ConfigService({
       gamePath,

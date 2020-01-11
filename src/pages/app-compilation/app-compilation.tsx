@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone'
 import { CSSTransition } from 'react-transition-group'
 import Select from 'react-select'
 import './app-compilation.scss'
+import AppOpenLogFile from '../../components/app-open-log-file/app-open-log-file.container'
 import AppTitle from '../../components/app-title/app-title'
 import AppContainerLogs from '../../components/app-compilation-logs/app-compilation-logs.container'
 import { GroupModel, ScriptModel } from '../../models'
@@ -236,6 +237,7 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
         )}
 
         <AppContainerLogs />
+        <AppOpenLogFile />
       </div>
     </div>
   )

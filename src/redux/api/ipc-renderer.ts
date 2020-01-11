@@ -22,9 +22,9 @@ export class IpcRenderer {
         resolve(payload)
       }
 
-      this.ipcRenderer.send(event, ...args)
       this.ipcRenderer.once(eventSuccess, onSuccess)
       this.ipcRenderer.once(eventError, onError)
+      this.ipcRenderer.send(event, ...args)
     })
   }
 }

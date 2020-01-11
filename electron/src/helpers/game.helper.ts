@@ -12,4 +12,8 @@ export default class GameHelper {
   toOtherSource(game: GameType): string {
     return game === 'Skyrim Special Edition' ? 'Scripts/Source' : 'Source/Scripts'
   }
+
+  getExecutable(game: GameType): string {
+    return game === 'Skyrim Special Edition' ? 'SkyrimSE.exe' : 'TESV.exe'
+  }
 }
