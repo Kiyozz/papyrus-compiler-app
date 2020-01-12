@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { Handler } from '../decorators'
-import { CompileScriptException } from '../exceptions/compiler/compile-script.exception'
-import GameHelper from '../helpers/game.helper'
-import PathHelper from '../helpers/path.helper'
+import { CompileScriptException } from '../exceptions'
+import { GameHelper } from '../helpers/game.helper'
+import { PathHelper } from '../helpers/path.helper'
 import { ScriptCompilerService } from '../services/script-compiler.service'
 import { ConfigService } from '../services/config.service'
 import { LogService } from '../services/log.service'
@@ -34,7 +34,7 @@ export class CompileScriptHandler implements HandlerInterface<CompileScriptParam
   ) {}
 
   async listen(event: Electron.IpcMainEvent, { script, game, gamePath, mo2SourcesFolders, mo2Instance }: CompileScriptParameters) {
-    const configService = ConfigService.create(this.pathHelper, this.gameHelper, { game, gamePath, mo2SourcesFolders, mo2Instance })
+    const configService = ConfigService.create(this.pathHelper, this.gameHelper, { game, gamePath, mo2SourcesFolders, mo2InstanceFolder: mo2Instance })
     const compileService = new ScriptCompilerService(
       configService,
       this.gameHelper,
@@ -55,14 +55,16 @@ export class CompileScriptHandler implements HandlerInterface<CompileScriptParam
       this.logService.log('Compilation is success', isSuccess)
 
       if (isSuccess) {
-        this.logService.info(`Script ${script} sucessfully compiled.`)
+        this.logService.info(`Script ${script} successfully compiled.`)
 
         return result
       } else {
         this.throwError(script, { stderr: result })
       }
     } catch (err) {
-      this.logService.debug(err)
+      if (!(err instanceof CompileScriptException)) {
+        this.logService.debug(err)
+      }
 
       this.throwError(script, { stderr: err.message })
     }

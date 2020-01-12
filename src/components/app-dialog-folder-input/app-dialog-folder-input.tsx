@@ -10,9 +10,9 @@ interface Props {
 
 const AppDialogFolderInput: React.FC<Props> = ({ id, name, value, onChange }) => {
   const onChangeInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value
+    const onChangeValue = e.currentTarget.value
 
-    onChange(value)
+    onChange(onChangeValue)
   }, [onChange])
 
   const onClickInput = useCallback(async (e: React.MouseEvent) => {
@@ -51,7 +51,7 @@ const AppDialogFolderInput: React.FC<Props> = ({ id, name, value, onChange }) =>
         className="form-control"
         name={name}
         onChange={onChangeInput}
-        defaultValue={value}
+        value={value}
       />
     </div>
   )

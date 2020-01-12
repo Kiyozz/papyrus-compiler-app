@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'path'
 import { Initialize } from './src/initialize'
+import { registerMenus } from './src/register-menus'
 
 let win: BrowserWindow | null = null
 
@@ -12,7 +13,7 @@ function createWindow() {
     height: 820,
     webPreferences: {
       nodeIntegration: true,
-      devTools: !!mainUrl
+      devTools: true
     },
     show: false
   })
@@ -35,6 +36,12 @@ function createWindow() {
 
   win.on('ready-to-show', () => {
     win!.show()
+  })
+
+  registerMenus({
+    openLogFile: () => {
+      win?.webContents.send('open-log-file')
+    }
   })
 }
 

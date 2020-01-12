@@ -9,7 +9,7 @@ export class ShellService {
   ) {}
 
   execute(cmd: string, cwd?: string) {
-    this.logService.debug(`Executing in "${cwd}" directory. Command ${cmd}`)
+    this.logService.debug('Executing in directory', cwd, 'Command', cmd)
 
     return exec(cmd, { cwd })
   }

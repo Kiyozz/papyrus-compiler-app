@@ -22,6 +22,6 @@ export class Initialize {
     }
 
     await fs.ensureFile(logFile)
-    await fs.rename(logFile, `${logFile.replace('.log', '')}.1.log`)
+    await fs.copy(logFile, `${logFile.replace('.log', '')}.1.log`)
   }
 }

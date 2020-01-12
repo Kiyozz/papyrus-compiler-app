@@ -1,5 +1,5 @@
-import 'electron'
+import { IpcMainEvent } from 'electron'
 
 export interface HandlerInterface<T = any> {
-  listen(event: Electron.IpcMainEvent, args?: T): any
+  listen(event: IpcMainEvent, args?: T): any
 }

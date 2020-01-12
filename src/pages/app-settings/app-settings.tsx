@@ -67,20 +67,25 @@ function calculateMo2StringLimitation({ folders, mo2Instance, gamePath, game }: 
 const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, detectedMo2SourcesFolders, loading, detectSourcesFoldersError, setGame, setGameFolder, setMo2, setMo2Instance, detectMo2SourcesFolder }) => {
   const [actualMo2FolderStringLimitation, setStringLimitation] = useState<number>()
   const onClickRadio = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
+    const value = e.target.value as Games
 
-    if (![Games.LE, Games.SE].includes(value as Games)) {
+    if (![Games.LE, Games.SE].includes(value)) {
       return
     }
 
-    setGame(value as Games)
-  }, [setGame])
+    setGame(value)
+
+    if (mo2 && mo2Instance.length > 0) {
+      detectMo2SourcesFolder(mo2Instance, value)
+    }
+  }, [setGame, mo2Instance, detectMo2SourcesFolder, mo2])
 
   const onChangeGameFolder = useCallback(debounce((value: string) => {
     setGameFolder(value)
   }, 300), [setGameFolder])
 
   const onChangeMo2Instance = useCallback(debounce((value: string) => {
+    setStringLimitation(0)
     setMo2Instance(value)
 
     if (value) {
@@ -97,7 +102,9 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, dete
   }, [])
 
   useEffect(() => {
-    if (!mo2) {
+    if (!mo2 || typeof detectSourcesFoldersError !== 'undefined') {
+      setStringLimitation(0)
+
       return
     }
 
@@ -107,7 +114,7 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, dete
       gamePath: gameFolder,
       mo2Instance
     }))
-  }, [detectedMo2SourcesFolders, game, gameFolder, mo2Instance, setStringLimitation, mo2])
+  }, [detectedMo2SourcesFolders, detectSourcesFoldersError, game, gameFolder, mo2Instance, setStringLimitation, mo2])
 
   const Mo2SourcesFoldersList = useMemo(() => {
     if (detectedMo2SourcesFolders && detectedMo2SourcesFolders.length === 0) {

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Mo2ModsPathExistsException } from '../exceptions/mo2'
-import GameHelper from '../helpers/game.helper'
-import PathHelper from '../helpers/path.helper'
+import { GameHelper } from '../helpers/game.helper'
+import { PathHelper } from '../helpers/path.helper'
 import { GameType } from '../types/game.type'
 
 interface GenerateImportsOptions {
@@ -22,14 +22,19 @@ export class Mo2Service {
     const otherSourcesPath = this.gameHelper.toOtherSource(game)
     const mo2OverwriteSourcesPath = this.pathHelper.join(mo2Path, 'overwrite', sourcesPath)
     const mo2OverwriteOtherSourcesPath = this.pathHelper.join(mo2Path, 'overwrite', otherSourcesPath)
+    const modsFolder = this.pathHelper.join(mo2Path, 'mods')
 
     const imports = [
-      ...mo2SourcesFolders,
+      ...mo2SourcesFolders.map(folder => folder.replace(modsFolder, '.')),
       mo2OverwriteOtherSourcesPath,
       mo2OverwriteSourcesPath
     ]
 
-    await this.pathHelper.ensureDirs(imports)
+    await this.pathHelper.ensureDirs([
+      ...mo2SourcesFolders,
+      mo2OverwriteOtherSourcesPath,
+      mo2OverwriteSourcesPath
+    ])
 
     return imports
   }

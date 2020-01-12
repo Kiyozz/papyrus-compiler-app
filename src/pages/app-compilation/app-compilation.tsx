@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import uniqBy from 'lodash-es/uniqBy'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { CSSTransition } from 'react-transition-group'
 import Select from 'react-select'
@@ -33,6 +33,8 @@ export interface DispatchesProps {
 type Props = StateProps & DispatchesProps
 
 const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts, setCompilationScripts, isCompilationRunning, popupOpen, groups }) => {
+  const addScriptsButtonRef = useRef<HTMLButtonElement>(null)
+
   const onClickRemoveScriptFromScript = useCallback((script: ScriptModel) => {
     return () => {
       const newListOfScripts = compilationScripts.filter(compilationScript => compilationScript !== script)
@@ -66,16 +68,19 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
 
   const onDrop = useCallback((pscFiles: File[]) => {
     const pscScripts: ScriptModel[] = pscFilesToPscScripts(pscFiles, compilationScripts)
+    const newScripts = uniqBy([...compilationScripts, ...pscScripts], 'name')
 
-    setCompilationScripts(uniqBy([...compilationScripts, ...pscScripts], 'name'))
+    setCompilationScripts(
+      newScripts.map((script, index) => ({ ...script, id: index }))
+    )
   }, [setCompilationScripts, compilationScripts])
-  const { getRootProps, isDragActive } = useDropzone({
+  const { getRootProps, isDragActive, getInputProps } = useDropzone({
     onDrop,
     accept: '.psc',
     preventDropOnDocument: true
   })
 
-  const scriptsList = useMemo(() => {
+  const scriptsList: JSX.Element[] = useMemo(() => {
     return compilationScripts.map((script) => {
       const onMouseEnterScript = createOnMouseEvent(script)
       const onMouseLeaveScript = createOnMouseEvent(undefined)
@@ -154,7 +159,14 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
         'app-compilation container': true,
         'app-compilation-is-dragging': isDragActive
       })}
-      {...getRootProps()}
+      {...getRootProps({
+        onClick: (e) => { // prevent click anywhere else button
+          if (e.target !== addScriptsButtonRef.current) {
+            addScriptsButtonRef.current?.blur()
+            e.stopPropagation()
+          }
+        }
+      })}
     >
       <AppTitle className="d-flex">
         Compilation
@@ -228,13 +240,25 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
                 {scriptsList}
               </>
             ) : (
-              <p className="text-secondary text-wrap">
-                You can drag and drop psc files to load them into the
-                application.
-              </p>
+              <>
+                <p className="text-secondary text-wrap">
+                  You can drag and drop psc files to load them into the
+                  application.
+
+                  <br />
+
+                  This is only available when not running in administrator.
+                </p>
+              </>
             )}
           </>
         )}
+
+        <button ref={addScriptsButtonRef} className="btn btn-outline-secondary mt-5 app-add-scripts-button position-relative">
+          <input {...getInputProps()} />
+
+          Add scripts
+        </button>
 
         <AppContainerLogs />
         <AppOpenLogFile />

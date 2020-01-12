@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import fs from 'fs-extra'
-import fg from 'fast-glob'
-import path from 'path'
 import { Handler } from '../decorators'
-import GameHelper from '../helpers/game.helper'
-import PathHelper from '../helpers/path.helper'
+import { InvalidMo2InstanceFolderException, InvalidMo2ConfigurationException, Mo2GetSourcesFoldersException } from '../exceptions'
+import { GameHelper } from '../helpers/game.helper'
+import { PathHelper } from '../helpers/path.helper'
 import { GameType } from '../types/game.type'
 import { HandlerInterface } from '../types/handler.interface'
 
@@ -25,24 +23,22 @@ export class Mo2Handler implements HandlerInterface {
     const sourcesFolderType = game === 'Skyrim Special Edition' ? 'Source/Scripts' : 'Scripts/Source'
 
     if (!mo2Instance || !game) {
-      this.throwError('Missing parameters: mo2Instance or game')
-
-      return
+      throw new InvalidMo2ConfigurationException(['mo2Instance', 'game'])
     }
 
     try {
-      await fs.stat(path.resolve(mo2Instance, 'mods'))
+      await this.pathHelper.stat(this.pathHelper.join(mo2Instance, 'mods'))
+      await this.pathHelper.stat(this.pathHelper.join(mo2Instance, 'profiles'))
+      await this.pathHelper.stat(this.pathHelper.join(mo2Instance, 'downloads'))
     } catch (e) {
-      this.throwError(`Folder "mods" does not exists in ${mo2Instance}`)
-
-      return
+      throw new InvalidMo2InstanceFolderException(mo2Instance)
     }
 
     const otherGameSourceFolder = this.gameHelper.toOtherSource(game)
-    const foldersToCheck = [otherGameSourceFolder, sourcesFolderType].map(f => `${this.pathHelper.toSlash(mo2Instance)}/mods/**/${f}`)
+    const foldersToCheck = [otherGameSourceFolder, sourcesFolderType].map(f => `${mo2Instance}/mods/**/${f}`)
 
     try {
-      let files = await fg(foldersToCheck, { absolute: true, deep: 3, onlyDirectories: true })
+      let files = await this.pathHelper.getPathsInFolder(foldersToCheck, { absolute: true, deep: 3, onlyDirectories: true })
       const doubleSourceFolders = files
         .map((file, index, list) => {
           const before = list[index === 0 ? 1 : index - 1]
@@ -82,15 +78,7 @@ export class Mo2Handler implements HandlerInterface {
 
       return files
     } catch (e) {
-      this.throwError(e)
+      throw new Mo2GetSourcesFoldersException(e.message)
     }
-  }
-
-  private throwError(err: Error | string) {
-    if (typeof err === 'string') {
-      err = new Error(err)
-    }
-
-    throw err
   }
 }

@@ -1,7 +1,6 @@
-import { CompileScriptException } from '../exceptions/compiler/compile-script.exception'
-import { InvalidConfigurationException } from '../exceptions/configuration/invalid-configuration.exception'
-import GameHelper from '../helpers/game.helper'
-import PathHelper from '../helpers/path.helper'
+import { CompileScriptException, InvalidConfigurationException } from '../exceptions'
+import { GameHelper } from '../helpers/game.helper'
+import { PathHelper } from '../helpers/path.helper'
 import { ConfigService } from './config.service'
 import { LogService } from './log.service'
 import { Mo2Service } from './mo2.service'
@@ -29,44 +28,48 @@ export class ScriptCompilerService {
   async compile(scriptName: string): Promise<string> {
     const runner: Runner = {
       exe: this.configService.papyrusCompilerExecutableRelative,
-      imports: [this.configService.importFolder],
+      imports: [this.configService.gameSourcesFolder],
       cwd: this.configService.gamePath,
       output: this.configService.output
     }
 
-    const gameExe = this.gameHelper.getExecutable(this.configService.game)
+    const gameExe = this.pathHelper.join(this.configService.gamePath, this.gameHelper.getExecutable(this.configService.game))
 
     this.logService.debug('Game executable is', gameExe)
+
+    if (!(await this.pathHelper.exists(this.configService.papyrusCompilerExecutableAbsolute))) {
+      throw new InvalidConfigurationException(this.configService.gamePath, this.configService.papyrusCompilerExecutableAbsolute)
+    }
 
     if (!(await this.pathHelper.exists(gameExe))) {
       throw new InvalidConfigurationException(this.configService.gamePath, gameExe)
     }
 
-    const hasOtherGameSource = await this.pathHelper.exists(this.configService.otherGameSourceFolder)
+    console.log(this.configService.otherGameSourcesFolder)
 
-    await this.ensureDir([this.configService.importFolder])
+    const hasOtherGameSource = await this.pathHelper.exists(this.configService.otherGameSourcesFolder)
+
+    await this.ensureDir([this.configService.gameSourcesFolder])
 
     if (hasOtherGameSource) {
-      runner.imports = [this.configService.otherGameSourceFolder, ...runner.imports]
+      runner.imports = [this.configService.otherGameSourcesFolder, ...runner.imports]
     }
 
     if (this.configService.hasMo2()) {
       const imports = await this.mo2Service.generateImports({
         game: this.configService.game,
-        mo2Path: this.configService.mo2Instance,
+        mo2Path: this.configService.mo2InstanceFolder,
         mo2SourcesFolders: this.configService.mo2SourcesFolders
       })
-      const output = await this.mo2Service.generateOutput(this.configService.mo2Instance)
+      const output = await this.mo2Service.generateOutput(this.configService.mo2InstanceFolder)
 
       runner.exe = this.configService.papyrusCompilerExecutableAbsolute
-      runner.cwd = await this.mo2Service.generateModsPath(this.configService.mo2Instance)
+      runner.cwd = await this.mo2Service.generateModsPath(this.configService.mo2InstanceFolder)
       runner.output = output
       runner.imports = [
         ...runner.imports,
         ...imports
       ]
-
-      await this.ensureDir([...imports, output])
     }
 
     const cmd = this.papyrusCompilerService.generateCmd({ exe: runner.exe, scriptName, imports: runner.imports, output: runner.output, flag: this.configService.flag })

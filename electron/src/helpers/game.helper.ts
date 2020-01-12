@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { GameType } from '../types/game.type'
 
 @Injectable()
-export default class GameHelper {
+export class GameHelper {
   constructor() {}
 
   toSource(game: GameType): string {

@@ -14,7 +14,7 @@ type Props = StateProps & DispatchesProps
 const AppOpenLogFile: React.FC<Props> = ({ openLogFile }) => {
   const onClickButtonOpenLogFile = useCallback(() => {
     openLogFile()
-  }, [])
+  }, [openLogFile])
 
   return (
     <div className="app-open-log-file">
