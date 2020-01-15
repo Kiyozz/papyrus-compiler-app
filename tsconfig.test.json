@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "es6",
+    "isolatedModules": false,
+    "types": [
+      "jasmine",
+      "node"
+    ]
+  },
+  "include": [
+    "tests/**/*.test.ts"
+  ]
+}

@@ -3,8 +3,6 @@ import log from 'electron-log'
 
 @Injectable()
 export class LogService {
-  transports = log.transports
-
   debug(...params: any[]): void {
     log.debug(params)
   }

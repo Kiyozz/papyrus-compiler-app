@@ -2,11 +2,21 @@ import path from 'path'
 import fs from 'fs-extra'
 import fg from 'fast-glob'
 import { Injectable } from '@nestjs/common'
-import { FileWriteException, FileReadException, FileNotExistsException, FileEnsureException } from '../exceptions/files'
+import {
+  FileWriteException,
+  FileReadException,
+  FileNotExistsException,
+  FileEnsureException,
+  FileAccessException
+} from '../exceptions/files'
 import { LogService } from '../services/log.service'
 
 @Injectable()
 export class PathHelper {
+  private path: typeof path = path
+  private fs: typeof fs = fs
+  private fg: typeof fg = fg
+
   constructor(
     private readonly logService: LogService
   ) {}
@@ -20,19 +30,23 @@ export class PathHelper {
   }
 
   join(...paths: string[]): string {
-    return path.join(...paths)
+    return this.path.join(...paths)
   }
 
   basename(p: string, ext?: string) {
-    return path.basename(p, ext)
+    return this.path.basename(p, ext)
   }
 
   async stat(filename: string): Promise<fs.Stats> {
-    return fs.stat(filename)
+    try {
+      return this.fs.stat(filename)
+    } catch (e) {
+      throw new FileAccessException(filename)
+    }
   }
 
   async exists(file: string): Promise<boolean> {
-    return fs.pathExists(file)
+    return this.fs.pathExists(file)
   }
 
   async ensureDirs(dirs: string[]): Promise<void> {
@@ -40,7 +54,7 @@ export class PathHelper {
 
     for (const dir of dirs) {
       try {
-        await fs.ensureDir(dir)
+        await this.fs.ensureDir(dir)
       } catch (e) {
         throw new FileEnsureException(dir)
       }
@@ -57,7 +71,7 @@ export class PathHelper {
     }
 
     try {
-      return fs.readFile(filename)
+      return this.fs.readFile(filename)
     } catch (e) {
       throw new FileReadException(filename, e.message)
     }
@@ -66,27 +80,27 @@ export class PathHelper {
   async writeFile(filename: string, data: any): Promise<void> {
     this.logService.debug('Writing file', filename, 'with', data)
 
-    const fileExists = this.exists(filename)
+    const fileExists = await this.exists(filename)
 
     if (!fileExists) {
       throw new FileNotExistsException(filename)
     }
 
     try {
-      return fs.writeFile(filename, data)
+      return this.fs.writeFile(filename, data)
     } catch (e) {
       throw new FileWriteException(filename, e.message)
     }
   }
 
   async getPathsInFolder(fileNames: string[], options: fg.Options): Promise<string[]> {
-    return fg(
+    return this.fg(
       fileNames.map(file => this.toSlash(file)),
       options
     )
   }
 
   get separator() {
-    return path.sep
+    return this.path.sep
   }
 }
