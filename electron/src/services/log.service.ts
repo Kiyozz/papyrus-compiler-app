@@ -3,19 +3,21 @@ import log from 'electron-log'
 
 @Injectable()
 export class LogService {
+  private logger: typeof log = log
+
   debug(...params: any[]): void {
-    log.debug(params)
+    this.logger.debug(params)
   }
 
   log(...params: any[]): void {
-    log.log(params)
+    this.logger.log(params)
   }
 
   info(...params: any[]): void {
-    log.info(params)
+    this.logger.info(params)
   }
 
   error(...params: any[]): void {
-    log.error(params)
+    this.logger.error(params)
   }
 }

@@ -45,7 +45,7 @@ export class Mo2Service {
     const modsPathExists = await this.pathHelper.exists(modsPath)
 
     if (!modsPathExists) {
-      throw new Mo2ModsPathExistsException(mo2Instance)
+      throw new Mo2ModsPathExistsException(modsPath)
     }
 
     return modsPath

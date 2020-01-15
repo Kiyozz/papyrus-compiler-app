@@ -4,6 +4,8 @@ import { LogService } from './log.service'
 
 @Injectable()
 export class ShellService {
+  private exec: typeof exec = exec
+
   constructor(
     private readonly logService: LogService
   ) {}
@@ -11,6 +13,6 @@ export class ShellService {
   execute(cmd: string, cwd?: string) {
     this.logService.debug('Executing in directory', cwd, 'Command', cmd)
 
-    return exec(cmd, { cwd })
+    return this.exec(cmd, { cwd })
   }
 }
