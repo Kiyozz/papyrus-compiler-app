@@ -1,5 +1,5 @@
-import { LogService } from '../../../electron/src/services/log.service'
-import { ShellService } from '../../../electron/src/services/shell.service'
+import { LogService } from '../../src/services/log.service'
+import { ShellService } from '../../src/services/shell.service'
 
 jest.mock('electron-log', () => ({
   debug: jest.fn(),

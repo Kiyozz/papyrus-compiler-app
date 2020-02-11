@@ -1,4 +1,4 @@
-import { PapyrusCompilerService } from '../../../electron/src/services/papyrus-compiler.service'
+import { PapyrusCompilerService } from '../../src/services/papyrus-compiler.service'
 
 describe('PapyrusCompilerService', () => {
   it('should be created', () => {

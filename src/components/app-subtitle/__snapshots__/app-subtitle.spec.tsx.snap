@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AppSubtitle> matches snapshot 1`] = `
+<h2
+  className="app-subtitle"
+>
+  TOTO
+</h2>
+`;

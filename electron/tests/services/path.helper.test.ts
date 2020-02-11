@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'fs-extra'
-import { PathHelper } from '../../../electron/src/helpers/path.helper'
-import { LogService } from '../../../electron/src/services/log.service'
+import { PathHelper } from '../../src/helpers/path.helper'
+import { LogService } from '../../src/services/log.service'
 
 jest.mock('electron-log', () => ({
   debug: jest.fn(),

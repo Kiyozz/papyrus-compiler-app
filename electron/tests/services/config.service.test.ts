@@ -1,6 +1,6 @@
-import { GameHelper } from '../../../electron/src/helpers/game.helper'
-import { PathHelper } from '../../../electron/src/helpers/path.helper'
-import { ConfigService } from '../../../electron/src/services/config.service'
+import { GameHelper } from '../../src/helpers/game.helper'
+import { PathHelper } from '../../src/helpers/path.helper'
+import { ConfigService } from '../../src/services/config.service'
 
 describe('ConfigService', () => {
   let service: ConfigService

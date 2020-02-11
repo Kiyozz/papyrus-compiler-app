@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AppTaskLoading> matches snapshot when loading 1`] = `
+<CSSTransition
+  classNames="app-fade"
+  in={true}
+  mountOnEnter={true}
+  timeout={300}
+  unmountOnExit={true}
+>
+  <div
+    className="app-task-loading"
+  >
+    <span
+      className="app-task-loading-spin"
+    >
+      <FontAwesomeIcon
+        border={false}
+        className=""
+        fixedWidth={false}
+        flip={null}
+        icon="circle-notch"
+        inverse={false}
+        listItem={false}
+        mask={null}
+        pull={null}
+        pulse={false}
+        rotation={null}
+        size={null}
+        spin={true}
+        symbol={false}
+        title=""
+        transform={null}
+      />
+    </span>
+  </div>
+</CSSTransition>
+`;
+
+exports[`<AppTaskLoading> matches snapshot when not loading 1`] = `
+<CSSTransition
+  classNames="app-fade"
+  in={false}
+  mountOnEnter={true}
+  timeout={300}
+  unmountOnExit={true}
+>
+  <div
+    className="app-task-loading"
+  >
+    <span
+      className="app-task-loading-spin"
+    >
+      <FontAwesomeIcon
+        border={false}
+        className=""
+        fixedWidth={false}
+        flip={null}
+        icon="circle-notch"
+        inverse={false}
+        listItem={false}
+        mask={null}
+        pull={null}
+        pulse={false}
+        rotation={null}
+        size={null}
+        spin={true}
+        symbol={false}
+        title=""
+        transform={null}
+      />
+    </span>
+  </div>
+</CSSTransition>
+`;

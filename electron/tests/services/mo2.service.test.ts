@@ -1,6 +1,6 @@
-import { GameHelper } from '../../../electron/src/helpers/game.helper'
-import { PathHelper } from '../../../electron/src/helpers/path.helper'
-import { Mo2Service } from '../../../electron/src/services/mo2.service'
+import { GameHelper } from '../../src/helpers/game.helper'
+import { PathHelper } from '../../src/helpers/path.helper'
+import { Mo2Service } from '../../src/services/mo2.service'
 
 describe('Mo2Service', () => {
   let pathHelper: PathHelper

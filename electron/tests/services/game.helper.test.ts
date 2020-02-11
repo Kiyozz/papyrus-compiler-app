@@ -1,4 +1,4 @@
-import { GameHelper } from '../../../electron/src/helpers/game.helper'
+import { GameHelper } from '../../src/helpers/game.helper'
 
 describe('GameHelper', () => {
   it('should be created', () => {
