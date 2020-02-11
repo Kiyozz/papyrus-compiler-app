@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AppSplashScreen> matches snapshot when initialized 1`] = `
+<CSSTransition
+  classNames="app-fade"
+  in={false}
+  mountOnEnter={true}
+  timeout={300}
+  unmountOnExit={true}
+>
+  <div
+    className="app-splash-screen"
+  >
+    <img
+      alt="Application logo"
+      src="papyrus-compiler-app-@2x.png"
+    />
+  </div>
+</CSSTransition>
+`;
+
+exports[`<AppSplashScreen> matches snapshot when not initialized 1`] = `
+<CSSTransition
+  classNames="app-fade"
+  in={true}
+  mountOnEnter={true}
+  timeout={300}
+  unmountOnExit={true}
+>
+  <div
+    className="app-splash-screen"
+  >
+    <img
+      alt="Application logo"
+      src="papyrus-compiler-app-@2x.png"
+    />
+  </div>
+</CSSTransition>
+`;
