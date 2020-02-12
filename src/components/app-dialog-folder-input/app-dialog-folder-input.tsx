@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import './app-dialog-folder-input.scss'
 
-interface Props {
+export interface Props {
   id: string
   name: string
   value: string

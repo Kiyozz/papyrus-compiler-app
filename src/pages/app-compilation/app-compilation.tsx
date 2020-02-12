@@ -15,7 +15,8 @@ import { ScriptStatus } from '../../enums/script-status.enum'
 import getIconFromStatus from '../../utils/scripts/get-icon-from-status'
 import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
 import pscFilesToPscScripts from '../../utils/scripts/psc-files-to-psc-scripts'
-import { map, max } from 'lodash-es'
+import map from 'lodash-es/map'
+import max from 'lodash-es/max'
 import useTimeout from '../../hooks/use-timeout'
 
 export interface StateProps {

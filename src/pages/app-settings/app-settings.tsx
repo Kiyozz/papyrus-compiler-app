@@ -4,7 +4,7 @@ import AppTitle from '../../components/app-title/app-title'
 import { Games } from '../../enums/games.enum'
 import AppDialogFolderInput from '../../components/app-dialog-folder-input/app-dialog-folder-input'
 import { CSSTransition } from 'react-transition-group'
-import { debounce } from 'lodash-es'
+import debounce from 'lodash-es/debounce'
 
 export interface StateProps {
   game: Games

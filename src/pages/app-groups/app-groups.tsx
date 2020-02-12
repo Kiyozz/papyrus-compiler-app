@@ -6,7 +6,8 @@ import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CSSTransition } from 'react-transition-group'
 import AppGroupsAddPopup from '../../components/app-groups-add-popup/app-groups-add-popup'
-import { map, max } from 'lodash-es'
+import map from 'lodash-es/map'
+import max from 'lodash-es/max'
 
 export interface StateProps {
   groups: GroupModel[]

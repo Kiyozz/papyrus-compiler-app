@@ -4,7 +4,7 @@ import { GroupModel, ScriptModel } from '../../models'
 import { useDropzone } from 'react-dropzone'
 import { CSSTransition } from 'react-transition-group'
 import pscFilesToPscScripts from '../../utils/scripts/psc-files-to-psc-scripts'
-import { uniqBy } from 'lodash-es'
+import uniqBy from 'lodash-es/uniqBy'
 import useOnKeyUp from '../../hooks/use-on-key-up'
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
   onGroupAdd: (group: GroupModel) => void
   onGroupEdit: (group: GroupModel) => void
   onClose: () => void
-  group: GroupModel | undefined
+  group?: GroupModel
 }
 
 const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, lastId, onClose, group }) => {

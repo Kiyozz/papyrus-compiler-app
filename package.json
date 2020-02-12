@@ -98,6 +98,9 @@
     ]
   },
   "jest": {
-
+    "transformIgnorePatterns": [
+      "node_modules/(?!lodash-es).*",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ]
   }
 }

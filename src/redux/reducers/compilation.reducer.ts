@@ -5,7 +5,6 @@ import * as CONSTANTS from '../actions/constants'
 import { ScriptModel } from '../../models'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import findScriptInList from '../../utils/scripts/find-script-in-list'
-import { get } from 'lodash-es'
 
 export interface CompilationState {
   compilationScripts: ScriptModel[]
@@ -50,7 +49,7 @@ export default function compilationReducer(state = initialState, action: AnyActi
         isCompilationRunning: true
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_SUCCESS:
-      const scriptSuccessAction = findScriptInList(state.compilationScripts, get(action.payload, '0.id'), ScriptStatus.SUCCESS)
+      const scriptSuccessAction = findScriptInList(state.compilationScripts, action.payload[0]?.id, ScriptStatus.SUCCESS)
 
       if (!scriptSuccessAction) {
         return state
@@ -61,7 +60,7 @@ export default function compilationReducer(state = initialState, action: AnyActi
         compilationScripts: uniqBy([...state.compilationScripts, scriptSuccessAction], 'id')
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_FAILED:
-      const scriptFailedAction = findScriptInList(state.compilationScripts, get(action.payload, '0.id'), ScriptStatus.FAILED)
+      const scriptFailedAction = findScriptInList(state.compilationScripts, action.payload[0]?.id, ScriptStatus.FAILED)
 
       if (!scriptFailedAction) {
         return state
