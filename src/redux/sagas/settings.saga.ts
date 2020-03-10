@@ -19,6 +19,21 @@ function* detectFolders(action: AnyAction) {
   }
 }
 
+function* detectBadInstallation(action: AnyAction) {
+  try {
+    yield put(actionSetTaskLoading(true))
+
+    const fileExists: boolean = yield call(api.detectBadInstallation, action.payload)
+
+    yield put(ACTIONS.actionDetectBadInstallationSuccess(fileExists))
+  } catch (e) {
+    yield put(ACTIONS.actionDetectBadInstallationFailed(e))
+  } finally {
+    yield put(actionSetTaskLoading(false))
+  }
+}
+
 export default function* settingsSaga() {
   yield takeLatest(CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS, detectFolders)
+  yield takeLatest(CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION, detectBadInstallation)
 }

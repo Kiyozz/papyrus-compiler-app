@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { RootStore } from '../../redux/stores/root.store'
 import AppSettings, { DispatchesProps, StateProps } from './app-settings'
 import {
+  actionDetectBadInstallation,
   actionDetectMo2SourcesFolders,
   actionSetGame,
   actionSetGameFolder,
@@ -18,7 +19,8 @@ function mapStateToProps({ settings, taskLoading: loading, error }: RootStore): 
     mo2Instance: settings.mo2Instance,
     detectedMo2SourcesFolders: settings.mo2SourcesFolders,
     loading,
-    detectSourcesFoldersError: error.detectSourcesFoldersFailed
+    detectSourcesFoldersError: error.detectSourcesFoldersFailed,
+    installationIsBad: settings.installationIsBad
   }
 }
 
@@ -28,7 +30,8 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchesProps {
     setGameFolder: gameFolder => dispatch(actionSetGameFolder(gameFolder)),
     setMo2: mo2 => dispatch(actionSetUseMo2(mo2)),
     setMo2Instance: mo2Instance => dispatch(actionSetMo2Instance(mo2Instance)),
-    detectMo2SourcesFolder: (mo2Instance, game) => dispatch(actionDetectMo2SourcesFolders([mo2Instance, game]))
+    detectMo2SourcesFolder: (mo2Instance, game) => dispatch(actionDetectMo2SourcesFolders([mo2Instance, game])),
+    detectBadInstallation: (gamePath, gameType) => dispatch(actionDetectBadInstallation({ gamePath, gameType }))
   }
 }
 

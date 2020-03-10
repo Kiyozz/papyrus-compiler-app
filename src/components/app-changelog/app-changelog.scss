@@ -19,7 +19,6 @@
 }
 
 .app-changelog {
-  padding: 1.5rem;
   width: 600px;
   max-height: 95%;
   overflow: auto;
@@ -31,8 +30,12 @@
   box-shadow: 0 0 10px rgba(#000, 0.3);
 }
 
+.app-changelog-content {
+  padding: 0 1.5rem 1.5rem;
+}
+
 .app-changelog-title {
-  padding: 0;
+  padding: 1.5rem 1.5rem 0 1.5rem;
   margin-bottom: 1rem;
   font-size: 2.2rem;
 }
@@ -40,9 +43,10 @@
 .app-changelog-close {
   position: absolute;
   top: 5px;
-  right: 5px;
+  right: 6px;
   font-size: 0.8rem;
   cursor: pointer;
+  z-index: 51;
 }
 
 .app-changelog-text {
@@ -70,11 +74,4 @@
 
 .app-changelog-download-button {
   margin-left: 10px;
-  border: none;
-  background: transparent;
-  color: $color-primary;
-
-  &:hover {
-    color: $color-primary-800;
-  }
 }

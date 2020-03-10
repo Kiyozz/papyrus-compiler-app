@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useCallback, useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
+import AppButton from '../app-button/app-button'
 import AppTitle from '../app-title/app-title'
 import './app-changelog.scss'
 import useOnKeyUp from '../../hooks/use-on-key-up'
@@ -47,24 +48,27 @@ const AppChangelog: React.FC<Props> = ({ version, notes, currentVersion, onClose
     <div className="app-changelog-popup">
       <div className="app-changelog-overlay" />
       <div className="app-changelog">
-        <AppTitle className="app-changelog-title">A new version is available</AppTitle>
+        <AppTitle className="app-changelog-title">
+          A new version is available
+          <span
+            className="app-changelog-close"
+            onClick={onClickClose}
+          >
+            <FontAwesomeIcon icon="times" />
+          </span>
+        </AppTitle>
 
-        <p>
-          Version {version}{CurrentVersionInfo}
-          <button className="app-changelog-download-button" onClick={onClickDownloadRelease}>
-            <FontAwesomeIcon icon="download" />
-          </button>
-        </p>
+        <div className="app-changelog-content">
+          <p>
+            Version {version}{CurrentVersionInfo}
+            <AppButton className="app-changelog-download-button" onClick={onClickDownloadRelease}>
+              Download <FontAwesomeIcon icon="download" />
+            </AppButton>
+          </p>
 
-        <span
-          className="app-changelog-close"
-          onClick={onClickClose}
-        >
-          <FontAwesomeIcon icon="times" />
-        </span>
-
-        <div className="app-changelog-text">
-          {Notes}
+          <div className="app-changelog-text">
+            {Notes}
+          </div>
         </div>
       </div>
     </div>

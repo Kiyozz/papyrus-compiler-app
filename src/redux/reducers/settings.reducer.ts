@@ -8,6 +8,7 @@ export interface SettingsState {
   gameFolder: string
   mo2Instance: string
   mo2SourcesFolders: string[]
+  installationIsBad: boolean
 }
 
 const initialState: SettingsState = {
@@ -15,7 +16,8 @@ const initialState: SettingsState = {
   game: Games.LE,
   gameFolder: '',
   mo2Instance: '',
-  mo2SourcesFolders: []
+  mo2SourcesFolders: [],
+  installationIsBad: false
 }
 
 export default function settingsReducer(state = initialState, action: AnyAction): SettingsState {
@@ -56,6 +58,11 @@ export default function settingsReducer(state = initialState, action: AnyAction)
       return {
         ...state,
         mo2SourcesFolders: action.payload || []
+      }
+    case CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION_SUCCESS:
+      return {
+        ...state,
+        installationIsBad: !(action.payload ?? true)
       }
     default:
       return state

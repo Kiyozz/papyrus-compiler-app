@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { CompileScriptHandler } from './event-handlers/compile-script.handler'
+import { GetFileHandler } from './event-handlers/file.handler'
 import { Mo2Handler } from './event-handlers/mo2.handler'
 import { GameHelper } from './helpers/game.helper'
 import { PathHelper } from './helpers/path.helper'
@@ -15,6 +16,7 @@ import { ShellService } from './services/shell.service'
     GameHelper,
     PathHelper,
     CompileScriptHandler,
+    GetFileHandler,
     Mo2Handler,
     LogService,
     Mo2Service,
@@ -25,7 +27,7 @@ import { ShellService } from './services/shell.service'
       useFactory: (...handlers) => {
         return handlers
       },
-      inject: [CompileScriptHandler, Mo2Handler]
+      inject: [CompileScriptHandler, Mo2Handler, GetFileHandler]
     }
   ]
 })

@@ -18,6 +18,10 @@ class Api {
   detectMo2SourcesFolders = ([mo2Instance, game]: [string, string]) => {
     return this.ipc.send('mo2-sources-folders', { mo2Instance, game })
   }
+
+  detectBadInstallation = ({ gameType, gamePath }: { gamePath: string, gameType: Games }) => {
+    return this.ipc.send('get-file', { gameType, gamePath, file: 'Actor.psc' })
+  }
 }
 
 const api = new Api()

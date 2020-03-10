@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo, useState, useEffect } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './app-settings.scss'
+import AppButton from '../../components/app-button/app-button'
 import AppTitle from '../../components/app-title/app-title'
 import { Games } from '../../enums/games.enum'
 import AppDialogFolderInput from '../../components/app-dialog-folder-input/app-dialog-folder-input'
@@ -14,6 +16,7 @@ export interface StateProps {
   detectedMo2SourcesFolders: string[]
   loading: boolean
   detectSourcesFoldersError: string | undefined
+  installationIsBad: boolean
 }
 
 export interface DispatchesProps {
@@ -22,6 +25,7 @@ export interface DispatchesProps {
   setMo2: (mo2: boolean) => void
   setMo2Instance: (mo2Instance: string) => void
   detectMo2SourcesFolder: (mo2Instance: string, game: string) => void
+  detectBadInstallation: (gamePath: string, gameType: Games) => void
 }
 
 type Props = StateProps & DispatchesProps
@@ -64,7 +68,7 @@ function calculateMo2StringLimitation({ folders, mo2Instance, gamePath, game }: 
   )
 }
 
-const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, detectedMo2SourcesFolders, loading, detectSourcesFoldersError, setGame, setGameFolder, setMo2, setMo2Instance, detectMo2SourcesFolder }) => {
+const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2, mo2Instance, detectedMo2SourcesFolders, detectBadInstallation, loading, detectSourcesFoldersError, setGame, setGameFolder, setMo2, setMo2Instance, detectMo2SourcesFolder }) => {
   const [actualMo2FolderStringLimitation, setStringLimitation] = useState<number>()
   const onClickRadio = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value as Games
@@ -78,11 +82,18 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, dete
     if (mo2 && mo2Instance.length > 0) {
       detectMo2SourcesFolder(mo2Instance, value)
     }
+
+    detectBadInstallation(gameFolder, value)
   }, [setGame, mo2Instance, detectMo2SourcesFolder, mo2])
+
+  useEffect(() => {
+    detectBadInstallation(gameFolder, game)
+  }, [])
 
   const onChangeGameFolder = useCallback(debounce((value: string) => {
     setGameFolder(value)
-  }, 300), [setGameFolder])
+    detectBadInstallation(value, game)
+  }, 300), [setGameFolder, detectBadInstallation, game])
 
   const onChangeMo2Instance = useCallback(debounce((value: string) => {
     setStringLimitation(0)
@@ -100,6 +111,12 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, dete
   const onSubmitForm = useCallback((e: React.FormEvent) => {
     e.preventDefault()
   }, [])
+
+  const onClickRefreshInstallation = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    detectBadInstallation(gameFolder, game)
+  }, [detectBadInstallation, gameFolder, game])
 
   useEffect(() => {
     if (!mo2 || typeof detectSourcesFoldersError !== 'undefined') {
@@ -197,6 +214,22 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, mo2, mo2Instance, dete
               value={gameFolder}
               onChange={onChangeGameFolder}
             />
+
+            <CSSTransition
+              timeout={150}
+              in={installationIsBad}
+              classNames="app-fade"
+              mountOnEnter
+              unmountOnExit
+            >
+              <div className="alert alert-danger app-settings-alert" role="alert">
+                <div>Installation seems invalid.</div>
+                <div>Checks that you have extracted Scripts.zip (from Creation Kit)</div>
+                <AppButton onClick={onClickRefreshInstallation}>
+                  <FontAwesomeIcon icon="sync-alt" spin={loading} />
+                </AppButton>
+              </div>
+            </CSSTransition>
           </div>
 
           <div className="form-group">
