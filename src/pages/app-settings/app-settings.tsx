@@ -84,10 +84,11 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2
     }
 
     detectBadInstallation(gameFolder, value)
-  }, [setGame, mo2Instance, detectMo2SourcesFolder, mo2])
+  }, [setGame, mo2Instance, detectMo2SourcesFolder, mo2, detectBadInstallation, gameFolder])
 
   useEffect(() => {
     detectBadInstallation(gameFolder, game)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const onChangeGameFolder = useCallback(debounce((value: string) => {

@@ -29,7 +29,7 @@ const AppChangelog: React.FC<Props> = ({ version, notes, currentVersion, onClose
     e.preventDefault()
 
     shell.openExternal(releaseLink)
-  }, [])
+  }, [releaseLink])
 
   useOnKeyUp('Escape', () => {
     onClose()
