@@ -6,6 +6,8 @@ import './app-changelog.scss'
 import useOnKeyUp from '../../hooks/use-on-key-up'
 import useStopScroll from '../../hooks/use-stop-scroll'
 
+const { shell } = window.require('electron')
+
 interface Props {
   version: string
   currentVersion?: string | undefined
@@ -21,10 +23,16 @@ const AppChangelog: React.FC<Props> = ({ version, notes, currentVersion, onClose
     onClose()
   }, [onClose])
 
+  const releaseLink = useMemo(() => `https://www.nexusmods.com/skyrim/mods/96339?tab=files`, [])
+  const onClickDownloadRelease = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    shell.openExternal(releaseLink)
+  }, [])
+
   useOnKeyUp('Escape', () => {
     onClose()
   })
-
   useStopScroll()
 
   const CurrentVersionInfo = useMemo(() => {
@@ -39,7 +47,14 @@ const AppChangelog: React.FC<Props> = ({ version, notes, currentVersion, onClose
     <div className="app-changelog-popup">
       <div className="app-changelog-overlay" />
       <div className="app-changelog">
-        <AppTitle className="app-changelog-title">Version {version}{CurrentVersionInfo}</AppTitle>
+        <AppTitle className="app-changelog-title">A new version is available</AppTitle>
+
+        <p>
+          Version {version}{CurrentVersionInfo}
+          <button className="app-changelog-download-button" onClick={onClickDownloadRelease}>
+            <FontAwesomeIcon icon="download" />
+          </button>
+        </p>
 
         <span
           className="app-changelog-close"

@@ -34,6 +34,7 @@
 .app-changelog-title {
   padding: 0;
   margin-bottom: 1rem;
+  font-size: 2.2rem;
 }
 
 .app-changelog-close {
@@ -65,4 +66,15 @@
   color: $color-subtitle;
   display: inline-block;
   margin-left: 0.25rem;
+}
+
+.app-changelog-download-button {
+  margin-left: 10px;
+  border: none;
+  background: transparent;
+  color: $color-primary;
+
+  &:hover {
+    color: $color-primary-800;
+  }
 }

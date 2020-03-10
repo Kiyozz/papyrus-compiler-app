@@ -9,7 +9,7 @@ export class Initialize {
     await Initialize.backupLatestLogFile()
 
     const app = await NestFactory.createApplicationContext(AppModule)
-    const parser = app.get<EventHandlerParser>(EventHandlerParser)
+    const parser: EventHandlerParser = app.get<EventHandlerParser>(EventHandlerParser)
 
     parser.register()
   }
