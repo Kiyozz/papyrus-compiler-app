@@ -18,7 +18,8 @@
 
   img {
     width: 125px;
-    animation: app-splash-screen-logo-grow 1.125s ease-in-out infinite;
+    animation: app-splash-screen-logo-grow 1.75s ease-in-out infinite;
+    animation-delay: 1s;
   }
 }
 

@@ -35,7 +35,7 @@ function packageApp() {
     arch: 'x64',
     dir: './build',
     out: './out',
-    icon: './src/assets/papyrus-compiler-app.ico'
+    icon: './src/assets/logo/app/icons/win/icon.ico'
   })
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import './app-splash-screen.scss'
-import appLogo from '../../assets/papyrus-compiler-app-@2x.png'
+import appLogo from '../../assets/logo/app/icons/png/1024x1024.png'
 import { CSSTransition } from 'react-transition-group'
 
 export interface StateProps {

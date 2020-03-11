@@ -26,7 +26,7 @@ $color-success-800: hsl(168, 80%, 23%);
 // --- Backgrounds
 
 $background-content: $color-secondary-200;
-$background-loading: $color-primary;
+$background-loading: $color-secondary-800;
 $background-sidebar: $color-secondary-300;
 $background-sidebar-link-active: $color-primary;
 $background-compilation-logs-popup: darken($background-content, 1);
