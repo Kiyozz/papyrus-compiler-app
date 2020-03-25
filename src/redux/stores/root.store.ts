@@ -28,9 +28,7 @@ export interface RootStore {
   error: ErrorState
 }
 
-export const history = createBrowserHistory()
-
-export default function createRootStore() {
+export default function createRootStore(history = createBrowserHistory()) {
   const sagaMiddleware = createSagaMiddleware()
   const store = createStore(
     combineReducers({
@@ -57,5 +55,8 @@ export default function createRootStore() {
 
   sagaMiddleware.run(rootSaga)
 
-  return store
+  return {
+    store,
+    history
+  }
 }

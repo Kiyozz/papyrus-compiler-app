@@ -4,8 +4,6 @@ import './app-content.scss'
 import AppCompilation from '../../pages/app-compilation/app-compilation.container'
 import AppGroups from '../../pages/app-groups/app-groups.container'
 import AppSettings from '../../pages/app-settings/app-settings.container'
-import { ConnectedRouter } from 'connected-react-router'
-import { history } from '../../redux/stores/root.store'
 
 const routes = [
   { path: '/compilation', component: AppCompilation },
@@ -16,18 +14,16 @@ const routes = [
 const AppContent: React.FC = () => {
   return (
     <div className="app-content">
-      <ConnectedRouter history={history}>
-        <Switch>
-          {routes.map(({ path, component }) => (
-            <Route
-              key={path}
-              path={path}
-              component={component}
-            />
-          ))}
-          <Redirect to="/compilation" />
-        </Switch>
-      </ConnectedRouter>
+      <Switch>
+        {routes.map(({ path, component }) => (
+          <Route
+            key={path}
+            path={path}
+            component={component}
+          />
+        ))}
+        <Redirect to="/compilation" />
+      </Switch>
     </div>
   )
 }

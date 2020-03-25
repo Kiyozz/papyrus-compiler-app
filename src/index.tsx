@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import './index.scss'
 import App from './components/app/app.container'
 import * as serviceWorker from './serviceWorker'
-import createRootStore, { history } from './redux/stores/root.store'
+import createRootStore from './redux/stores/root.store'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
@@ -17,7 +17,7 @@ declare global {
   }
 }
 
-const store = createRootStore()
+const { store, history } = createRootStore()
 
 ReactDOM.render((
   <Provider store={store}>

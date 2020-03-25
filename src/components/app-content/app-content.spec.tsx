@@ -1,6 +1,5 @@
 import React from 'react'
 import { renderWithRedux } from '../../utils/testing/test-utils'
-// import { Route, Switch, Redirect } from 'react-router-dom'
 import AppContent from './app-content'
 
 describe('<AppContent>', () => {
@@ -12,9 +11,17 @@ describe('<AppContent>', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should by compilation page by default', () => {
-    const { getByText } = renderWithRedux(<AppContent />)
+  it('should have compilation page by default', () => {
+    const { container } = renderWithRedux(<AppContent />)
 
-    expect(getByText(/Compilation/i)).toBeInTheDocument()
+    expect(container.querySelector('h1')).toHaveTextContent('Compilation')
+  })
+
+  it('should be groups page on /groups', () => {
+    const { container, history } = renderWithRedux(<AppContent />)
+
+    history.push('/groups')
+
+    expect(container.querySelector('h1')).toHaveTextContent('Groups')
   })
 })

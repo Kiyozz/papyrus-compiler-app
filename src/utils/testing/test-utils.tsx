@@ -1,4 +1,6 @@
 import { render } from '@testing-library/react'
+import { ConnectedRouter } from 'connected-react-router'
+import { createMemoryHistory } from 'history'
 import React from 'react'
 import { Provider } from 'react-redux'
 import createStore from '../../redux/stores/root.store'
@@ -38,13 +40,18 @@ export function mockElectronRequire() {
 }
 
 export function renderWithRedux(component: JSX.Element) {
-  const require = mockElectronRequire()
-  const store = createStore()
+  const { store, history } = createStore(createMemoryHistory())
 
   return {
-    ...render(<Provider store={store}>{component}</Provider>),
+    ...render((
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          {component}
+        </ConnectedRouter>
+      </Provider>
+    )),
     store,
-    require
+    history
   }
 }
 
