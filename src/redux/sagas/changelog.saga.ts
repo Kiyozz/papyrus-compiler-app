@@ -5,9 +5,11 @@ import {
   actionGetLatestNotesSuccess
 } from '../actions/changelog/changelog.actions'
 import * as CONSTANTS from '../actions/constants'
-import api from '../api/api'
+import createApi from '../api/create-api'
 
 function* getLatestRelease() {
+  const api = createApi()
+
   try {
     const startingVersion = process.env.REACT_APP_VERSION || ''
     const releases: GithubReleaseModel[] = yield call(api.getLatestNotes)

@@ -6,10 +6,10 @@ import compilationSaga from './compilation.saga'
 import groupsSaga from './groups.saga'
 import settingsSaga from './settings.saga'
 
-const { shell } = window.require('electron')
-const log = window.require('electron-log')
-
 function* openLogFile() {
+  const { shell } = window.require('electron')
+  const log = window.require('electron-log')
+
   yield takeLatest(CONSTANTS.APP_LOG_OPEN, function* () {
     yield call(() => shell.openExternal(log.transports.file.findLogPath()))
   })

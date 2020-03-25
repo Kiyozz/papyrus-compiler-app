@@ -1,11 +1,13 @@
 import { takeLatest, put, call } from 'redux-saga/effects'
 import * as CONSTANTS from '../actions/constants'
 import * as ACTIONS from '../actions/settings/settings.actions'
-import api from '../api/api'
+import createApi from '../api/create-api'
 import { AnyAction } from 'redux'
 import { actionSetTaskLoading } from '../actions/task-loading/task-loading.actions'
 
 function* detectFolders(action: AnyAction) {
+  const api = createApi()
+
   try {
     yield put(actionSetTaskLoading(true))
 
@@ -20,6 +22,8 @@ function* detectFolders(action: AnyAction) {
 }
 
 function* detectBadInstallation(action: AnyAction) {
+  const api = createApi()
+
   try {
     yield put(actionSetTaskLoading(true))
 

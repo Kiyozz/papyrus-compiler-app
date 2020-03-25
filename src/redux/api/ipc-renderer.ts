@@ -1,9 +1,15 @@
-if (typeof window.require === 'undefined') {
-  throw new Error('Run the app through Electron.')
-}
+import { ElectronRuntimeException } from './exceptions/electron-runtime.exception'
 
 export class IpcRenderer {
-  private ipcRenderer = window.require('electron').ipcRenderer
+  private ipcRenderer: any
+
+  constructor() {
+    if (typeof window.require === 'undefined') {
+      throw new ElectronRuntimeException()
+    }
+
+    this.ipcRenderer = window.require('electron').ipcRenderer
+  }
 
   send<R = any, Args = any>(event: string, ...args: Args[]): Promise<R> {
     return new Promise<R>((resolve, reject) => {

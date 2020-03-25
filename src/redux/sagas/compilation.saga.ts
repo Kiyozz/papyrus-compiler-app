@@ -8,11 +8,12 @@ import {
 } from '../actions/compilation/compilation.actions'
 import { AnyAction } from 'redux'
 import { ScriptModel } from '../../models'
-import api from '../api/api'
+import createApi from '../api/create-api'
 import { RootStore } from '../stores/root.store'
 import { SettingsState } from '../reducers/settings.reducer'
 
 function* startCompilation(action: AnyAction) {
+  const api = createApi()
   const scripts: ScriptModel[] = action.payload
   const { game, gameFolder, mo2Instance, mo2SourcesFolders }: SettingsState = yield select((store: RootStore) => store.settings)
 
