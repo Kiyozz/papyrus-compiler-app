@@ -14,7 +14,7 @@ export interface DispatchesProps {
   popupToggle: (toggle: boolean) => void
 }
 
-type Props = StateProps & DispatchesProps
+export type Props = StateProps & DispatchesProps
 
 const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle }) => {
   const onClickButtonOpenLogs = useCallback(() => {

@@ -26,7 +26,6 @@
     "electron-log": "^3.0.9",
     "fast-glob": "^3.1.0",
     "fs-extra": "^8.1.0",
-    "mutationobserver-shim": "^0.3.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.4"
   },
@@ -66,6 +65,7 @@
     "gulp-cli": "^2.2.0",
     "jest": "^24.9.0",
     "lodash-es": "^4.17.15",
+    "mutationobserver-shim": "^0.3.3",
     "node-sass": "^4.12.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
