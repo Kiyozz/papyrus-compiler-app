@@ -1,4 +1,5 @@
-import { getNodeText } from '@testing-library/react'
+import { ElementNotFoundException } from './exceptions/element-not-found.exception'
+import { MultipleElementsException } from './exceptions/multiple-elements.exception'
 
 export function extendQueries(element: HTMLElement) {
   return {
@@ -8,11 +9,11 @@ export function extendQueries(element: HTMLElement) {
       const result = Array.from(element.querySelectorAll(...args))
 
       if (result.length > 1) {
-        throw new Error(`Unable to find an element with the selector: "${args[0]}". This could be because the selector is broken up by multiple elements. Use getBySelectorAll instead.`)
+        throw new MultipleElementsException(args[0])
       }
 
       if (result.length === 0) {
-        throw new Error(`Unable to find an element with the selector: "${args[0]}". Element not found: ${getNodeText(element)}`)
+        throw new ElementNotFoundException(args[0], element)
       }
 
       return result[0] as HTMLElement
