@@ -1,12 +1,11 @@
 import React from 'react'
-import { render, fireEvent } from '../../utils/testing'
+import { render, fireEvent, buildProps } from '../../utils/testing'
 import AppCompilationLogs, { Props } from './app-compilation-logs'
 
-const props = (partial: Partial<Props> = {}): Props => ({
+const props = buildProps<Props>({
   logs: [],
   popupOpen: false,
-  popupToggle: jest.fn(),
-  ...partial
+  popupToggle: jest.fn()
 })
 
 describe('<AppCompilationLogs>', () => {

@@ -45,7 +45,7 @@ const AppDialogFolderInput: React.FC<Props> = ({ id, name, value, onChange }) =>
     <div
       className="app-dialog-folder-input"
       onClick={onClickInput}
-    >
+    > 
       <input
         id={id}
         className="form-control"

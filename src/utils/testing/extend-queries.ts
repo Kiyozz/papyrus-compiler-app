@@ -9,7 +9,7 @@ export function extendQueries(element: HTMLElement) {
       const result = Array.from(element.querySelectorAll(...args))
 
       if (result.length > 1) {
-        throw new MultipleElementsException(args[0])
+        throw new MultipleElementsException(args[0], element)
       }
 
       if (result.length === 0) {

@@ -1,23 +1,15 @@
 import classNames from 'classnames'
-import uniqBy from 'lodash-es/uniqBy'
-import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { useDropzone } from 'react-dropzone'
-import { CSSTransition } from 'react-transition-group'
-import Select from 'react-select'
-import './app-compilation.scss'
-import AppOpenLogFile from '../../components/app-open-log-file/app-open-log-file.container'
-import AppTitle from '../../components/app-title/app-title'
-import AppContainerLogs from '../../components/app-compilation-logs/app-compilation-logs.container'
-import { GroupModel, ScriptModel } from '../../models'
-import { format } from '../../utils/date/format'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ScriptStatus } from '../../enums/script-status.enum'
-import getIconFromStatus from '../../utils/scripts/get-icon-from-status'
-import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
-import pscFilesToPscScripts from '../../utils/scripts/psc-files-to-psc-scripts'
 import map from 'lodash-es/map'
 import max from 'lodash-es/max'
+import uniqBy from 'lodash-es/uniqBy'
+import React, { useCallback, useRef, useState } from 'react'
+import AppAddScripts from '../../components/app-add-scripts/app-add-scripts'
 import useTimeout from '../../hooks/use-timeout'
+import { GroupModel, ScriptModel } from '../../models'
+import pscFilesToPscScripts from '../../utils/scripts/psc-files-to-psc-scripts'
+import AppCompilationContent from './app-compilation-content'
+import AppCompilationTitle from './app-compilation-title'
+import './app-compilation.scss'
 
 export interface StateProps {
   isCompilationRunning: boolean
@@ -75,62 +67,6 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
       newScripts.map((script, index) => ({ ...script, id: index }))
     )
   }, [setCompilationScripts, compilationScripts])
-  const { getRootProps, isDragActive, getInputProps } = useDropzone({
-    onDrop,
-    accept: '.psc',
-    preventDropOnDocument: true
-  })
-
-  const scriptsList: JSX.Element[] = useMemo(() => {
-    return compilationScripts.map((script) => {
-      const onMouseEnterScript = createOnMouseEvent(script)
-      const onMouseLeaveScript = createOnMouseEvent(undefined)
-      const onMouseMoveScript = createOnMouseEvent(script)
-
-      return (
-        <div
-          key={script.id}
-          className="list-group-item"
-          onMouseEnter={onMouseEnterScript}
-          onMouseLeave={onMouseLeaveScript}
-          onMouseMove={onMouseMoveScript}
-        >
-          <CSSTransition
-            timeout={150}
-            in={isHoveringScript === script}
-            classNames="app-fade-grow"
-            mountOnEnter
-            unmountOnExit
-          >
-            <div className="app-list-group-item-script-hover">
-              <span onClick={onClickRemoveScriptFromScript(script)}>
-                <FontAwesomeIcon icon="trash" />
-              </span>
-            </div>
-          </CSSTransition>
-          <div className="app-list-group-item-script-name">{script.name}</div>
-          <div className="app-list-group-item-script-path ml-2 mt-2">
-            Last edited at {format(script.lastModified, 'PPpp')}
-            <span className={classNames(['app-list-group-item-script-status', getClassNameFromStatus(script)])}>
-              <FontAwesomeIcon
-                spin={script.status === ScriptStatus.RUNNING}
-                icon={getIconFromStatus(script)}
-              />
-            </span>
-          </div>
-        </div>
-      )
-    })
-  }, [compilationScripts, createOnMouseEvent, isHoveringScript, onClickRemoveScriptFromScript])
-
-  const groupSelectOptions = useMemo(() => {
-    return groups.filter(group => group.scripts.length > 0).map(group => {
-      return {
-        label: `Group ${group.name}`,
-        value: group
-      }
-    })
-  }, [groups])
 
   const onChangeGroup = useCallback(({ value: group }) => {
     const lastId = max(map(compilationScripts, 'id'))
@@ -155,116 +91,44 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
   }, { time: 3000 })
 
   return (
-    <div
-      className={classNames({
-        'app-compilation container': true,
-        'app-compilation-is-dragging': isDragActive
-      })}
-      {...getRootProps({
-        onClick: (e) => { // prevent click anywhere else button
-          if (e.target !== addScriptsButtonRef.current) {
-            addScriptsButtonRef.current?.blur()
-            e.stopPropagation()
-          }
+    <AppAddScripts
+      onDrop={onDrop}
+      onClick={(e) => { // prevent click anywhere else button
+        if (e.target !== addScriptsButtonRef.current) {
+          addScriptsButtonRef.current?.blur()
+          e.stopPropagation()
         }
-      })}
+      }}
+      accept=".psc"
+      className="app-compilation container"
     >
-      <AppTitle className="d-flex">
-        Compilation
-
-        <div className="app-compilation-action-group">
-          {groups.length > 0 && (
-            <Select
-              placeholder="Load a group"
-              onChange={onChangeGroup}
-              options={groupSelectOptions}
+      {({ Button, isDragActive }) => {
+        return (
+          <div className={classNames({ 'app-compilation-is-dragging': isDragActive })}>
+            <AppCompilationTitle
+              onChangeGroup={onChangeGroup}
+              onClickPlayPause={onClickPlayPause}
+              groups={groups}
+              compilationScripts={compilationScripts}
+              isCompilationRunning={isCompilationRunning}
+              justLoadedGroup={justLoadedGroup}
             />
-          )}
-        </div>
 
-        <CSSTransition
-          timeout={300}
-          mountOnEnter
-          unmountOnExit
-          classNames="app-fade"
-          in={!!justLoadedGroup}
-        >
-          <>
-            {justLoadedGroup && (
-              <span className="app-compilation-action-group-loaded">{justLoadedGroup.name} loaded!</span>
-            )}
-          </>
-        </CSSTransition>
-
-        <CSSTransition
-          timeout={300}
-          in={compilationScripts.length > 0}
-          classNames="app-fade"
-          mountOnEnter
-        >
-          <>
-            <div className="app-compilation-actions">
-              <div
-                className={classNames({
-                  'app-compilation-action': true,
-                  'app-compilation-action-disable': isCompilationRunning || compilationScripts.length === 0
-                })}
-                onClick={onClickPlayPause}
-              >
-                <FontAwesomeIcon
-                  spin={isCompilationRunning}
-                  icon={isCompilationRunning ? 'circle-notch' : 'play-circle'}
-                />
-              </div>
+            <div className="app-compilation-content">
+              <AppCompilationContent
+                isDragActive={isDragActive}
+                Button={Button}
+                compilationScripts={compilationScripts}
+                createOnMouseEvent={createOnMouseEvent}
+                isHoveringScript={isHoveringScript}
+                onClickRemoveScriptFromScript={onClickRemoveScriptFromScript}
+                popupOpen={popupOpen}
+              />
             </div>
-          </>
-        </CSSTransition>
-      </AppTitle>
-
-      <div className="app-compilation-content">
-        {!popupOpen && (
-          <>
-            <CSSTransition
-              timeout={300}
-              in={isDragActive}
-              classNames="app-fade"
-              mountOnEnter
-              unmountOnExit
-            >
-              <div className="app-compilation-is-dragging-container">
-                Drop files here...
-              </div>
-            </CSSTransition>
-
-            {scriptsList.length > 0 ? (
-              <>
-                {scriptsList}
-              </>
-            ) : (
-              <>
-                <p className="text-secondary text-wrap">
-                  You can drag and drop psc files to load them into the
-                  application.
-
-                  <br />
-
-                  This is only available when not running in administrator.
-                </p>
-              </>
-            )}
-          </>
-        )}
-
-        <button ref={addScriptsButtonRef} className="btn btn-outline-secondary mt-5 app-add-scripts-button position-relative">
-          <input {...getInputProps()} />
-
-          Add scripts
-        </button>
-
-        <AppContainerLogs />
-        <AppOpenLogFile />
-      </div>
-    </div>
+          </div>
+        )
+      }}
+    </AppAddScripts>
   )
 }
 
