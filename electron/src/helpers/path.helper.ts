@@ -29,6 +29,10 @@ export class PathHelper {
     return value.replace(/\//g, '\\')
   }
 
+  normalize(value: string): string {
+    return value[0] + value.substring(1).toLowerCase()
+  }
+
   join(...paths: string[]): string {
     return this.path.join(...paths)
   }

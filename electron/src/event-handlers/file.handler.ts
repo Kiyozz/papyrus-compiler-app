@@ -34,7 +34,9 @@ export class GetFileHandler implements HandlerInterface<GetFileParameters> {
     const pathToChecks = [
       this.pathHelper.join(mo2Path, 'mods', '**', sourcesFolder, file),
       this.pathHelper.join(mo2Path, 'overwrite', '**', sourcesFolder, file)
-    ].map(folder => this.pathHelper.toSlash(folder))
+    ]
+      .map(folder => this.pathHelper.toSlash(folder))
+      .map(folder => this.pathHelper.normalize(folder))
 
     this.logService.info('Checking that files', ...pathToChecks, 'exists')
 
@@ -43,16 +45,22 @@ export class GetFileHandler implements HandlerInterface<GetFileParameters> {
       { absolute: true, deep: 4 }
     )
 
+    this.logService.info('Found files: ', ...files)
+
     return files.length === 0 ? this.checksInGameDataFolder(file, gamePath, gameType) : true
   }
 
-  private checksInGameDataFolder(file: string, gamePath: string, gameType: GameType): Promise<boolean> {
+  private async checksInGameDataFolder(file: string, gamePath: string, gameType: GameType): Promise<boolean> {
     this.logService.info('Checking in Skyrim Data folder')
 
     const gameScriptsFolder = this.pathHelper.join(gamePath, 'data', this.gameHelper.toSource(gameType), file)
 
-    this.logService.info('Checking that', gameScriptsFolder, 'exists')
+    this.logService.info('Checking that', this.pathHelper.normalize(gameScriptsFolder), 'exists')
 
-    return this.pathHelper.exists(gameScriptsFolder)
+    const result = await this.pathHelper.exists(this.pathHelper.normalize(gameScriptsFolder))
+
+    this.logService.info('Found folder', result)
+
+    return result
   }
 }
