@@ -1,28 +1,20 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import classNames from 'classnames'
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import { AddScriptsButton } from '../../components/app-add-scripts/app-add-scripts'
 import AppContainerLogs from '../../components/app-compilation-logs/app-compilation-logs.container'
 import AppOpenLogFile from '../../components/app-open-log-file/app-open-log-file.container'
-import { ScriptStatus } from '../../enums/script-status.enum'
 import { ScriptModel } from '../../models'
-import { format } from '../../utils/date/format'
-import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
-import getIconFromStatus from '../../utils/scripts/get-icon-from-status'
+import AppCompilationScriptItem from './app-compilation-script-item'
+import { useCompilationContext } from './compilation-context'
 
 interface Props {
-  popupOpen: boolean
   isDragActive: boolean
-  isHoveringScript?: ScriptModel
-  compilationScripts: ScriptModel[]
-  Button: AddScriptsButton
-  onClickRemoveScriptFromScript(script: ScriptModel): () => void
-  createOnMouseEvent(script: ScriptModel | undefined): () => void
+  Button: JSX.Element
+  onClickRemoveScriptFromScript: (script: ScriptModel) => () => void
+  createOnMouseEvent: (script: ScriptModel | undefined) => () => void
 }
 
-const AppCompilationContent: React.FC<Props> = ({ popupOpen, isDragActive, isHoveringScript, compilationScripts, onClickRemoveScriptFromScript, createOnMouseEvent, Button }) => {
-  const addScriptsButtonRef = useRef<HTMLButtonElement>()
+const AppCompilationContent: React.FC<Props> = ({ isDragActive, onClickRemoveScriptFromScript, createOnMouseEvent, Button }) => {
+  const { popupOpen, compilationScripts, hoveringScript } = useCompilationContext()
 
   const scriptsList: JSX.Element[] = useMemo(() => {
     return compilationScripts.map((script) => {
@@ -31,40 +23,18 @@ const AppCompilationContent: React.FC<Props> = ({ popupOpen, isDragActive, isHov
       const onMouseMoveScript = createOnMouseEvent(script)
 
       return (
-        <div
+        <AppCompilationScriptItem
           key={script.id}
-          className="list-group-item"
+          hovering={hoveringScript === script}
+          onClickRemoveScript={onClickRemoveScriptFromScript(script)}
           onMouseEnter={onMouseEnterScript}
           onMouseLeave={onMouseLeaveScript}
           onMouseMove={onMouseMoveScript}
-        >
-          <CSSTransition
-            timeout={150}
-            in={isHoveringScript === script}
-            classNames="app-fade-grow"
-            mountOnEnter
-            unmountOnExit
-          >
-            <div className="app-list-group-item-script-hover">
-              <span onClick={onClickRemoveScriptFromScript(script)}>
-                <FontAwesomeIcon icon="trash" />
-              </span>
-            </div>
-          </CSSTransition>
-          <div className="app-list-group-item-script-name">{script.name}</div>
-          <div className="app-list-group-item-script-path ml-2 mt-2">
-            Last edited at {format(script.lastModified, 'PPpp')}
-            <span className={classNames(['app-list-group-item-script-status', getClassNameFromStatus(script)])}>
-              <FontAwesomeIcon
-                spin={script.status === ScriptStatus.RUNNING}
-                icon={getIconFromStatus(script)}
-              />
-            </span>
-          </div>
-        </div>
+          script={script}
+        />
       )
     })
-  }, [compilationScripts, createOnMouseEvent, isHoveringScript, onClickRemoveScriptFromScript])
+  }, [compilationScripts, createOnMouseEvent, hoveringScript, onClickRemoveScriptFromScript])
 
   return (
     <>
@@ -83,9 +53,7 @@ const AppCompilationContent: React.FC<Props> = ({ popupOpen, isDragActive, isHov
           </CSSTransition>
 
           {scriptsList.length > 0 ? (
-            <>
-              {scriptsList}
-            </>
+            scriptsList
           ) : (
             <>
               <p className="text-secondary text-wrap">
@@ -101,9 +69,7 @@ const AppCompilationContent: React.FC<Props> = ({ popupOpen, isDragActive, isHov
         </>
       )}
 
-      <Button ref={addScriptsButtonRef} className="btn btn-outline-secondary mt-5 app-add-scripts-button position-relative">
-        Add scripts
-      </Button>
+      {Button}
 
       <AppContainerLogs />
       <AppOpenLogFile />

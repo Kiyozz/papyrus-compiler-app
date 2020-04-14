@@ -10,7 +10,7 @@
   "main": "main.js",
   "scripts": {
     "start": "react-scripts start",
-    "start:electron": "cross-env TS_NODE_PROJECT=./tsconfig.electron.json NODE_ENV=development REACT_APP_MAIN=http://localhost:3001 electron -r dotenv/config -r ts-node/register electron/main.ts",
+    "start:electron": "cross-env TS_NODE_PROJECT=./tsconfig.electron.json NODE_ENV=development REACT_APP_MAIN=http://localhost:3000 electron -r dotenv/config -r ts-node/register electron/main.ts",
     "build": "react-scripts build",
     "build:electron": "cross-env NODE_ENV=production tsc -p tsconfig.electron.json",
     "test": "react-scripts test",

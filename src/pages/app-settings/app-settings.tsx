@@ -25,7 +25,7 @@ export interface DispatchesProps {
   setMo2: (mo2: boolean) => void
   setMo2Instance: (mo2Instance: string) => void
   detectMo2SourcesFolder: (mo2Instance: string, game: string) => void
-  detectBadInstallation: (gamePath: string, gameType: Games) => void
+  detectBadInstallation: (gamePath: string, gameType: Games, isUsingMo2: boolean, mo2Path: string) => void
 }
 
 type Props = StateProps & DispatchesProps
@@ -83,17 +83,17 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2
       detectMo2SourcesFolder(mo2Instance, value)
     }
 
-    detectBadInstallation(gameFolder, value)
+    detectBadInstallation(gameFolder, value, mo2, mo2Instance)
   }, [setGame, mo2Instance, detectMo2SourcesFolder, mo2, detectBadInstallation, gameFolder])
 
   useEffect(() => {
-    detectBadInstallation(gameFolder, game)
+    detectBadInstallation(gameFolder, game, mo2, mo2Instance)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const onChangeGameFolder = useCallback(debounce((value: string) => {
     setGameFolder(value)
-    detectBadInstallation(value, game)
+    detectBadInstallation(value, game, mo2, mo2Instance)
   }, 300), [setGameFolder, detectBadInstallation, game])
 
   const onChangeMo2Instance = useCallback(debounce((value: string) => {
@@ -116,7 +116,7 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2
   const onClickRefreshInstallation = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    detectBadInstallation(gameFolder, game)
+    detectBadInstallation(gameFolder, game, mo2, mo2Instance)
   }, [detectBadInstallation, gameFolder, game])
 
   useEffect(() => {

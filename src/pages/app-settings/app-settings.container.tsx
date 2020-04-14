@@ -31,7 +31,7 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchesProps {
     setMo2: mo2 => dispatch(actionSetUseMo2(mo2)),
     setMo2Instance: mo2Instance => dispatch(actionSetMo2Instance(mo2Instance)),
     detectMo2SourcesFolder: (mo2Instance, game) => dispatch(actionDetectMo2SourcesFolders([mo2Instance, game])),
-    detectBadInstallation: (gamePath, gameType) => dispatch(actionDetectBadInstallation({ gamePath, gameType }))
+    detectBadInstallation: (gamePath, gameType, isUsingMo2, mo2Path ) => dispatch(actionDetectBadInstallation({ gamePath, gameType, isUsingMo2, mo2Path }))
   }
 }
 

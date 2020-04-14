@@ -45,8 +45,8 @@ export class PathHelper {
     }
   }
 
-  async exists(file: string): Promise<boolean> {
-    return this.fs.pathExists(file)
+  async exists(fileOrFolder: string): Promise<boolean> {
+    return this.fs.pathExists(fileOrFolder)
   }
 
   async ensureDirs(dirs: string[]): Promise<void> {

@@ -19,8 +19,8 @@ class Api {
     return this.ipc.send('mo2-sources-folders', { mo2Instance, game })
   }
 
-  detectBadInstallation = ({ gameType, gamePath }: { gamePath: string, gameType: Games }) => {
-    return this.ipc.send('get-file', { gameType, gamePath, file: 'Actor.psc' })
+  detectBadInstallation = ({ gameType, gamePath, isUsingMo2, mo2Path }: { gamePath: string, gameType: Games, isUsingMo2: boolean, mo2Path: string }) => {
+    return this.ipc.send('get-file', { gameType, gamePath, isUsingMo2, mo2Path, file: 'Actor.psc' })
   }
 }
 

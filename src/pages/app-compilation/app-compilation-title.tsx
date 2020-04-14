@@ -1,21 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
-import React from 'react'
+import React, { useContext } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import AppTitle from '../../components/app-title/app-title'
 import { GroupModel, ScriptModel } from '../../models'
 import AppCompilationGroups from './app-compilation-groups'
+import { useCompilationContext } from './compilation-context'
 
 interface Props {
-  groups: GroupModel[]
-  compilationScripts: ScriptModel[]
-  isCompilationRunning: boolean
   onChangeGroup: ({ value }: { value: GroupModel }) => void
-  justLoadedGroup?: GroupModel
   onClickPlayPause: (e: React.MouseEvent<HTMLDivElement>) => void
 }
 
-const AppCompilationTitle: React.FC<Props> = ({ groups, onChangeGroup, justLoadedGroup, onClickPlayPause, isCompilationRunning, compilationScripts }) => {
+const AppCompilationTitle: React.FC<Props> = ({ onChangeGroup, onClickPlayPause }) => {
+  const { groups, justLoadedGroup, isCompilationRunning, compilationScripts } = useCompilationContext()
 
   return (
     <AppTitle className="d-flex">
