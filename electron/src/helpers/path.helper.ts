@@ -96,7 +96,10 @@ export class PathHelper {
   async getPathsInFolder(fileNames: string[], options: fg.Options): Promise<string[]> {
     return this.fg(
       fileNames.map(file => this.toSlash(file)),
-      options
+      {
+        caseSensitiveMatch: false,
+        ...options
+      }
     )
   }
 
