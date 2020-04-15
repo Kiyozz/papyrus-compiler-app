@@ -1,6 +1,6 @@
+import CircularProgress from '@material-ui/core/CircularProgress'
 import React from 'react'
 import './app-task-loading.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CSSTransition } from 'react-transition-group'
 
 export interface StateProps {
@@ -22,10 +22,7 @@ const AppTaskLoading: React.FC<Props> = ({ loading }) => {
     >
       <div className="app-task-loading">
         <span className="app-task-loading-spin">
-          <FontAwesomeIcon
-            icon="circle-notch"
-            spin
-          />
+          <CircularProgress />
         </span>
       </div>
     </CSSTransition>

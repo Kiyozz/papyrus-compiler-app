@@ -1,9 +1,10 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useCallback, useRef } from 'react'
+import CloseIcon from '@material-ui/icons/Close'
+import DownloadIcon from '@material-ui/icons/GetApp'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import React, { useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { CSSTransition } from 'react-transition-group'
 import AppButton from '../app-button/app-button'
-import AppSnackNotification from '../app-snack-notification/app-snack-notification'
 import AppTitle from '../app-title/app-title'
 import './app-changelog.scss'
 import useOnKeyUp from '../../hooks/use-on-key-up'
@@ -26,7 +27,6 @@ export interface OwnProps {
 type Props = StateProps & OwnProps
 
 const AppChangelog: React.FC<Props> = ({ onClose, notes, releaseLink, latestNotesVersion, startingVersion, showNotes }) => {
-  const elementRef = useRef(null)
   const onClickClose = useCallback((e: React.MouseEvent) => {
     e.preventDefault()
     onClose()
@@ -53,23 +53,22 @@ const AppChangelog: React.FC<Props> = ({ onClose, notes, releaseLink, latestNote
       <ScrollBlock>
         <div className="app-changelog-popup">
           <div className="app-changelog-overlay" />
-          <div className="app-changelog" ref={elementRef}>
-            <AppSnackNotification>fjezakh fiuja heuifa huzG</AppSnackNotification>
+          <div className="app-changelog">
             <AppTitle className="app-changelog-title">
               A new version is available
               <span
                 className="app-changelog-close"
                 onClick={onClickClose}
               >
-            <FontAwesomeIcon icon="times" />
+            <CloseIcon />
           </span>
             </AppTitle>
 
             <div className="app-changelog-content">
               <p>
-                {startingVersion} <FontAwesomeIcon icon="arrow-right" size="xs" /> {latestNotesVersion}
+                {startingVersion} <ArrowForwardIcon /> {latestNotesVersion}
                 <AppButton className="app-changelog-download-button" onClick={onClickDownloadRelease}>
-                  Download <FontAwesomeIcon icon="download" />
+                  Download <DownloadIcon />
                 </AppButton>
               </p>
 

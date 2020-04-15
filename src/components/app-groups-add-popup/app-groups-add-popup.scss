@@ -41,7 +41,7 @@
   color: $color-loading;
   font-weight: bold;
 
-  @include font-harmonia-sans;
+  @include font-default;
   @include text-large;
 }
 

@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core'
 import React from 'react'
 import { DropzoneState } from 'react-dropzone'
 
@@ -10,11 +11,11 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 
 const AppAddScriptsButton: React.FC<Props> = ({ getInputProps, children, buttonRef, ...shared }) => {
   return (
-    <button ref={buttonRef} {...shared}>
+    <Button color="primary" ref={buttonRef}>
       <input {...getInputProps()} />
 
       {children}
-    </button>
+    </Button>
   )
 }
 

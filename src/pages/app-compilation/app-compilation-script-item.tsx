@@ -1,8 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import DeleteIcon from '@material-ui/icons/Delete'
 import classNames from 'classnames'
 import React, { useCallback } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import { ScriptStatus } from '../../enums/script-status.enum'
 import { ScriptModel } from '../../models'
 import { format } from '../../utils/date/format'
 import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
@@ -38,7 +37,7 @@ const AppCompilationScriptItem: React.FC<Props> = ({ script, onMouseEnter, onMou
       >
         <div className="app-list-group-item-script-hover">
           <span onClick={onClickRemove}>
-            <FontAwesomeIcon icon="trash" />
+            <DeleteIcon />
           </span>
         </div>
       </CSSTransition>
@@ -46,10 +45,7 @@ const AppCompilationScriptItem: React.FC<Props> = ({ script, onMouseEnter, onMou
       <div className="app-list-group-item-script-path ml-2 mt-2">
         Last edited at {format(script.lastModified, 'PPpp')}
         <span className={classNames(['app-list-group-item-script-status', getClassNameFromStatus(script)])}>
-          <FontAwesomeIcon
-            spin={script.status === ScriptStatus.RUNNING}
-            icon={getIconFromStatus(script)}
-          />
+          {getIconFromStatus(script)}
         </span>
       </div>
     </div>

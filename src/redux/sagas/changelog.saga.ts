@@ -24,10 +24,14 @@ function* getLatestRelease() {
 
       console.log(release.tag_name, startingVersion)
 
-      if (typeof release !== 'undefined' && compareVersions.compare(release.tag_name, startingVersion, '>')) {
-        yield put(actionSetLatestVersion(release.tag_name))
-        yield put(actionSetShowNotes(true))
-        yield put(actionGetLatestNotesSuccess(release.body))
+      if (typeof release !== 'undefined') {
+        if (compareVersions.compare(release.tag_name, startingVersion, '>')) {
+          yield put(actionSetLatestVersion(release.tag_name))
+          yield put(actionSetShowNotes(true))
+          yield put(actionGetLatestNotesSuccess(release.body))
+        } else {
+          yield put(actionSetShowNotes(false))
+        }
 
         return
       }

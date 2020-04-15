@@ -1,7 +1,8 @@
+import { Button } from '@material-ui/core'
+import ErrorIcon from '@material-ui/icons/Error'
 import classNames from 'classnames'
 import React, { useCallback, useMemo } from 'react'
 import './app-compilation-logs.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AppTitle from '../app-title/app-title'
 import { CompilationLogsModel } from '../../models'
 
@@ -44,12 +45,12 @@ const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle }) =
 
   return (
     <div className="app-compilation-logs">
-      <button
-        className="btn btn-outline-secondary app-compilation-logs-button-activate d-flex justify-content-center align-items-center"
+      <Button
+        className="app-compilation-logs-button-activate"
         onClick={onClickButtonOpenLogs}
       >
-        <FontAwesomeIcon icon="exclamation-circle" />
-      </button>
+        <ErrorIcon />
+      </Button>
 
       <div
         className={classNames({
@@ -66,12 +67,12 @@ const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle }) =
             </div>
           </div>
 
-          <button
-            className="btn btn-outline-danger app-compilation-logs-button-activate"
+          <Button
+            className="app-compilation-logs-button-activate"
             onClick={onClickButtonCloseLogs}
           >
             Close
-          </button>
+          </Button>
         </div>
       </div>
     </div>

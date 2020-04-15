@@ -19,6 +19,8 @@
     "test:electron": "jest --config=electron/tests/jest.config.json"
   },
   "dependencies": {
+    "@material-ui/core": "^4.9.10",
+    "@material-ui/icons": "^4.9.1",
     "@nestjs/common": "^6.10.14",
     "@nestjs/core": "^6.10.14",
     "child-process-promise": "^2.2.1",
@@ -29,7 +31,7 @@
     "fs-extra": "^8.1.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.4",
-    "styled-components": "^5.1.0"
+    "typeface-roboto": "^0.0.75"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.22",
@@ -54,7 +56,6 @@
     "@types/react-select": "^3.0.4",
     "@types/react-transition-group": "^4.2.2",
     "@types/redux-actions": "^2.6.1",
-    "@types/styled-components": "^5.1.0",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.6.1",

@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect } from 'react'
+import { useOnIpcEvent } from './hooks/use-on-ipc-event'
+import AppChangelog from './components/app-changelog/app-changelog-container'
+import AppSidebar from './components/app-sidebar/app-sidebar'
+import AppContent from './components/app-content/app-content'
+import AppSplashScreen from './components/app-splash-screen/app-splash-screen.container'
+import AppTaskLoading from './components/app-task-loading/app-task-loading.container'
 import './app.scss'
-import { useOnIpcEvent } from '../../hooks/use-on-ipc-event'
-import AppChangelog from '../app-changelog/app-changelog-container'
-import AppSidebar from '../app-sidebar/app-sidebar'
-import AppContent from '../app-content/app-content'
-import AppSplashScreen from '../app-splash-screen/app-splash-screen.container'
-import AppTaskLoading from '../app-task-loading/app-task-loading.container'
 
 export interface StateProps {
   initialized: boolean

@@ -1,4 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled'
 import classNames from 'classnames'
 import React from 'react'
 import { CSSTransition } from 'react-transition-group'
@@ -55,10 +56,11 @@ const AppCompilationTitle: React.FC<Props> = ({ onChangeGroup, onClickPlayPause 
               })}
               onClick={onClickPlayPause}
             >
-              <FontAwesomeIcon
-                spin={isCompilationRunning}
-                icon={isCompilationRunning ? 'circle-notch' : 'play-circle'}
-              />
+              {isCompilationRunning ? (
+                <CircularProgress />
+              ) : (
+                <PlayCircleFilledIcon />
+              )}
             </div>
           </div>
         </>

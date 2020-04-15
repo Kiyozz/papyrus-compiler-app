@@ -16,7 +16,7 @@
 .app-list-group-item-script-path {
   font-size: 0.8rem;
   font-style: italic;
-  @include font-oxygen;
+  @include font-default;
 }
 
 .app-list-group-item-script-status {
@@ -59,7 +59,7 @@
   color: $color-loading;
   font-weight: bold;
 
-  @include font-harmonia-sans;
+  @include font-default;
   @include text-extra-large;
 }
 
@@ -72,7 +72,7 @@
 
 .app-compilation-action-group-loaded {
   font-size: 0.8rem;
-  @include font-capriola;
+  @include font-default;
   color: $color-secondary;
   margin-left: 10px;
   align-self: center;

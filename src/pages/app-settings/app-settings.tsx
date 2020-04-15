@@ -1,5 +1,10 @@
+import ReplayIcon from '@material-ui/icons/Replay'
+import Radio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormControl from '@material-ui/core/FormControl'
+import FormLabel from '@material-ui/core/FormLabel'
 import React, { useCallback, useMemo, useState, useEffect } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './app-settings.scss'
 import AppButton from '../../components/app-button/app-button'
 import AppTitle from '../../components/app-title/app-title'
@@ -165,47 +170,12 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2
       <AppTitle className="mb-3">Settings</AppTitle>
 
       <div className="app-settings-content">
-        <form onSubmit={onSubmitForm}>
-          <div className="form-group">
-            <h4>General</h4>
-
-            <div>Game</div>
-
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                id="gameLE"
-                type="radio"
-                name="game"
-                value={Games.LE}
-                onChange={onClickRadio}
-                checked={game === Games.LE}
-              />
-              <label
-                className="form-check-label"
-                htmlFor="gameLE"
-              >
-                {Games.LE}
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                id="gameSE"
-                type="radio"
-                name="game"
-                value={Games.SE}
-                onChange={onClickRadio}
-                checked={game === Games.SE}
-              />
-              <label
-                className="form-check-label"
-                htmlFor="gameSE"
-              >
-                {Games.SE}
-              </label>
-            </div>
-          </div>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Game</FormLabel>
+          <RadioGroup row value={game} onChange={onClickRadio}>
+            <FormControlLabel control={<Radio />} label={Games.LE} />
+            <FormControlLabel control={<Radio />} label={Games.SE} />
+          </RadioGroup>
           <div className="form-group">
             <label htmlFor="gameFolder">{game} folder (where {game === Games.SE ? 'SkyrimSE.exe' : 'TESV.exe'} is located)</label>
 
@@ -227,7 +197,7 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2
                 <div>Installation seems invalid.</div>
                 <div>Checks that you have extracted Scripts.zip (from Creation Kit)</div>
                 <AppButton onClick={onClickRefreshInstallation}>
-                  <FontAwesomeIcon icon="sync-alt" spin={loading} />
+                  <ReplayIcon />
                 </AppButton>
               </div>
             </CSSTransition>
@@ -310,7 +280,7 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2
               </CSSTransition>
             </>
           </CSSTransition>
-        </form>
+        </FormControl>
       </div>
     </div>
   )

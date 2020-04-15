@@ -9,10 +9,9 @@
 }
 
 .app-compilation-logs-button-activate {
-  position: fixed;
-  bottom: 0.5rem;
-  left: 0.65rem;
-  z-index: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .app-compilation-logs-popup {

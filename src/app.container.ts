@@ -1,13 +1,13 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { actionOpenLog } from '../../redux/actions/app/app.actions'
-import App, { DispatchesProps, StateProps } from './app'
 import {
+  actionOpenLog,
   actionGetLatestNotes,
-  actionSetShowNotes
-} from '../../redux/actions/changelog/changelog.actions'
-import { actionInitialization } from '../../redux/actions/initialization/initialization.actions'
-import { RootStore } from '../../redux/stores/root.store'
+  actionSetShowNotes,
+  actionInitialization
+} from './redux/actions'
+import App, { DispatchesProps, StateProps } from './app'
+import { RootStore } from './redux/stores/root.store'
 
 function mapStateToProps(store: RootStore): StateProps {
   return {

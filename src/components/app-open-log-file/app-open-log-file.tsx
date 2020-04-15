@@ -1,6 +1,7 @@
+import BugReportIcon from '@material-ui/icons/BugReport'
+import Button from '@material-ui/core/Button'
 import React, { useCallback } from 'react'
 import './app-open-log-file.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export interface StateProps {
 }
@@ -17,14 +18,13 @@ const AppOpenLogFile: React.FC<Props> = ({ openLogFile }) => {
   }, [openLogFile])
 
   return (
-    <div className="app-open-log-file">
-      <button
-        className="btn btn-outline-secondary app-open-log-file-button-activate d-flex justify-content-center align-items-center"
-        onClick={onClickButtonOpenLogFile}
-      >
-        <FontAwesomeIcon icon="file" />
-      </button>
-    </div>
+    <Button
+      color="secondary"
+      className="app-open-log-file-button-activate"
+      onClick={onClickButtonOpenLogFile}
+    >
+      <BugReportIcon />
+    </Button>
   )
 }
 

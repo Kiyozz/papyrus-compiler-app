@@ -1,9 +1,11 @@
+import CreateIcon from '@material-ui/icons/Create'
+import DeleteIcon from '@material-ui/icons/Delete'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 import React, { useCallback, useMemo, useState } from 'react'
 import './app-groups.scss'
 import AppTitle from '../../components/app-title/app-title'
 import { GroupModel } from '../../models'
 import classNames from 'classnames'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CSSTransition } from 'react-transition-group'
 import AppGroupsAddPopup from '../../components/app-groups-add-popup/app-groups-add-popup'
 import map from 'lodash-es/map'
@@ -102,13 +104,13 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
                 className="app-list-group-item-group-hover-action app-list-group-item-group-hover-edit"
                 onClick={onClickEditGroup(group)}
               >
-                <FontAwesomeIcon icon="pen" />
+                <CreateIcon />
               </span>
               <span
                 className="app-list-group-item-group-hover-action app-list-group-item-group-hover-remove"
                 onClick={onClickRemoveGroup(group)}
               >
-                <FontAwesomeIcon icon="trash" />
+                <DeleteIcon />
               </span>
             </div>
           </CSSTransition>
@@ -142,9 +144,7 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
             })}
             onClick={onClickAddButton}
           >
-            <FontAwesomeIcon
-              icon="plus-circle"
-            />
+            <AddCircleIcon />
           </div>
         </div>
       </AppTitle>

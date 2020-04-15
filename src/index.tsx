@@ -1,15 +1,11 @@
 import { ConnectedRouter } from 'connected-react-router'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import './index.scss'
-import App from './components/app/app.container'
+import App from './app.container'
 import * as serviceWorker from './serviceWorker'
-import createRootStore from './redux/stores/root.store'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-
-library.add(fas)
+import createRootStore, { RootStoreProvider } from './redux/stores/root.store'
 
 declare global {
   interface Window {
@@ -19,10 +15,12 @@ declare global {
 
 const { store, history } = createRootStore()
 
-ReactDOM.render((
+render((
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App />
+      <RootStoreProvider>
+        <App />
+      </RootStoreProvider>
     </ConnectedRouter>
   </Provider>
 ), document.getElementById('root'))

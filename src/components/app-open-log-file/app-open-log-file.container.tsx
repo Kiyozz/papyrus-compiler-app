@@ -1,10 +1,9 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { actionOpenLog } from '../../redux/actions/app/app.actions'
-import { RootStore } from '../../redux/stores/root.store'
+import { actionOpenLog } from '../../redux/actions'
 import AppOpenLogFile, { DispatchesProps, StateProps } from './app-open-log-file'
 
-function mapStateToProps(store: RootStore): StateProps {
+function mapStateToProps(): StateProps {
   return {
   }
 }

@@ -14,12 +14,16 @@
 }
 
 .app-sidebar-links {
-  margin-top: auto;
-  margin-bottom: auto;
+  margin-top: 25%;
+  margin-bottom: 25%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.app-sidebar-actions {
+  margin-top: auto;
 }
 
 .app-sidebar-logo {

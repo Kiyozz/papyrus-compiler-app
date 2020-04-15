@@ -9,13 +9,9 @@ $secondary: $color-secondary;
 $success: $color-success;
 $danger: $color-danger;
 
-@import "~bootstrap/scss/bootstrap";
-
-@import "assets/fonts/proxima-nova/proxima-nova.css";
-@import "assets/fonts/harmonia-sans/harmonia-sans.css";
-@import "~typeface-neuton/index.css";
-@import "~typeface-capriola/index.css";
-@import "~typeface-oxygen/index.css";
+@import "~bootstrap/scss/bootstrap-reboot";
+@import "~bootstrap/scss/bootstrap-grid";
+@import "~typeface-roboto/index.css";
 
 html {
   font-size: 16px;
@@ -35,7 +31,7 @@ body {
 }
 
 h1 {
-  font-family: 'Proxima Nova', Neuton, Capriola, sans-serif;
+  @include font-default;
 }
 
 code {
@@ -53,6 +49,10 @@ code {
 
 img {
   pointer-events: none;
+}
+
+button:focus {
+  outline: 0;
 }
 
 * {

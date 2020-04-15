@@ -1,7 +1,5 @@
 import React, { useMemo } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import AppContainerLogs from '../../components/app-compilation-logs/app-compilation-logs.container'
-import AppOpenLogFile from '../../components/app-open-log-file/app-open-log-file.container'
 import { ScriptModel } from '../../models'
 import AppCompilationScriptItem from './app-compilation-script-item'
 import { useCompilationContext } from './compilation-context'
@@ -70,9 +68,6 @@ const AppCompilationContent: React.FC<Props> = ({ isDragActive, onClickRemoveScr
       )}
 
       {Button}
-
-      <AppContainerLogs />
-      <AppOpenLogFile />
     </>
   )
 }
