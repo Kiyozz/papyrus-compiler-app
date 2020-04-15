@@ -1,5 +1,4 @@
 import path from 'path'
-import fs from 'fs-extra'
 import { PathHelper } from '../../src/helpers/path.helper'
 import { LogService } from '../../src/services/log.service'
 
@@ -9,21 +8,6 @@ jest.mock('electron-log', () => ({
   info: jest.fn(),
   error: jest.fn()
 }))
-
-interface MockHelperPropertyOptions {
-  once?: boolean
-  accessType?: string
-}
-
-function mockHelperProperty(helper: PathHelper, property: string, method: string, callback: (...args: any[]) => any, options?: MockHelperPropertyOptions) {
-  const spy = jest.spyOn((helper as any)[property], method, (options?.accessType) as any)
-
-  if (options?.once) {
-    spy.mockImplementationOnce(callback)
-  } else {
-    spy.mockImplementation(callback)
-  }
-}
 
 describe('PathHelper', () => {
   let helper: PathHelper
@@ -61,7 +45,8 @@ describe('PathHelper', () => {
   })
 
   it('should say the path exists', async () => {
-    mockHelperProperty(helper, 'fs', 'pathExists', () => Promise.resolve(true))
+    jest.spyOn(helper.fs, 'pathExists')
+      .mockImplementation(() => Promise.resolve(true))
 
     expect(await helper.exists('My File')).toBe(true)
   })
@@ -74,15 +59,17 @@ describe('PathHelper', () => {
   })
 
   it('should throws an error if fs.readFile failed', async () => {
-    mockHelperProperty(helper, 'fs', 'readFile', (file: string) => {
-      throw new Error(`Cannot read from file ${file}`)
-    })
+    jest.spyOn(helper.fs, 'readFile')
+      .mockImplementation((file: any) => {
+        throw new Error(`Cannot read from file ${file}`)
+      })
 
     await expect(helper.readFile('My file')).rejects.toThrow('Cannot read file "My file". Cannot read from file My file')
   })
 
   it('should read a file', async () => {
-    mockHelperProperty(helper, 'fs', 'readFile', () => Promise.resolve(Buffer.from('test file')))
+    jest.spyOn(helper.fs, 'readFile')
+      .mockImplementation(() => Promise.resolve(Buffer.from('test file')))
 
     const result = await helper.readFile('My file')
 
@@ -90,9 +77,10 @@ describe('PathHelper', () => {
   })
 
   it('should throws an error when cannot write a file', async () => {
-    mockHelperProperty(helper, 'fs', 'writeFile', (file: string) => {
-      throw new Error(`Cannot write file ${file}`)
-    })
+    jest.spyOn(helper.fs, 'writeFile')
+      .mockImplementation((file: any) => {
+        throw new Error(`Cannot write file ${file}`)
+      })
 
     await expect(helper.writeFile('My file', '')).rejects.toThrow('Cannot write to file "My file". Cannot write file My file')
   })
@@ -105,20 +93,20 @@ describe('PathHelper', () => {
   })
 
   it('should write a file', async () => {
-    mockHelperProperty(helper, 'fs', 'writeFile', () => undefined)
+    jest.spyOn(helper.fs, 'writeFile').mockImplementation(() => undefined)
 
     await expect(helper.writeFile('My file', '')).resolves.toBeUndefined()
   })
 
   it('should returns a empty list of folders', async () => {
-    jest.spyOn((helper as any), 'fg')
+    jest.spyOn(helper, 'fg')
       .mockImplementation(() => Promise.resolve([]))
 
     expect(await helper.getPathsInFolder([], {})).toHaveLength(0)
   })
 
   it('should returns a list of one folder', async () => {
-    jest.spyOn((helper as any), 'fg')
+    jest.spyOn(helper, 'fg')
       .mockImplementation(() => Promise.resolve(['C:\\fr.exe']))
 
     const result = await helper.getPathsInFolder(['**/fr.exe'], {})
@@ -128,7 +116,7 @@ describe('PathHelper', () => {
   })
 
   it('should throws an error if cannot ensureDirs', async () => {
-    mockHelperProperty(helper, 'fs', 'ensureDir', () => {
+    jest.spyOn(helper.fs, 'ensureDir').mockImplementation(() => {
       throw new Error('An error')
     })
 
@@ -136,7 +124,7 @@ describe('PathHelper', () => {
   })
 
   it('should throws an error if cannot ensureDirs', async () => {
-    mockHelperProperty(helper, 'fs', 'ensureDir', () => {
+    jest.spyOn(helper.fs, 'ensureDir').mockImplementation(() => {
       throw new Error('An error')
     })
 
@@ -144,32 +132,43 @@ describe('PathHelper', () => {
   })
 
   it('should throws an error if cannot ensureDirs at the second folder', async () => {
-    mockHelperProperty(helper, 'fs', 'ensureDir', () => undefined, { once: true })
-    mockHelperProperty(helper, 'fs', 'ensureDir', () => {
-      throw new Error('An error')
-    }, { once: true })
+    jest.spyOn(helper.fs, 'ensureDir')
+      .mockImplementationOnce(() => undefined)
+      .mockImplementationOnce(() => {
+        throw new Error('An error')
+      })
 
     await expect(helper.ensureDirs(['My folder', 'My second folder'])).rejects.toThrow('File "My second folder" seems to not exists or cannot be created.')
   })
 
   it('should give no errors to ensureDirs two folders', async () => {
-    mockHelperProperty(helper, 'fs', 'ensureDir', () => undefined, { once: true })
-    mockHelperProperty(helper, 'fs', 'ensureDir', () => undefined, { once: true })
+    jest.spyOn(helper.fs, 'ensureDir')
+      .mockImplementationOnce(() => undefined)
+      .mockImplementationOnce(() => undefined)
 
     expect(await helper.ensureDirs(['My folder', 'My second folder'])).toBeUndefined()
   })
 
   it('should throws an error if cannot get stat of a file', async () => {
-    mockHelperProperty(helper, 'fs', 'stat', () => {
-      throw new Error('An error')
-    })
+    jest.spyOn(helper.fs, 'stat')
+      .mockImplementation(() => {
+        throw new Error('An error')
+      })
 
     await expect(helper.stat('My file')).rejects.toThrow('Cannot access file "My file".')
   })
 
   it('should returns the separator', () => {
-    Object.defineProperty((helper as any).path, 'sep', { value: '/', configurable: false })
+    Object.defineProperty(helper.path, 'sep', { value: '/', configurable: false })
 
     expect(helper.separator).toBe('/')
+  })
+
+  it('should normalize a path with anti-slash', () => {
+    expect(helper.normalize('D:\\MyPath\\MyProgram')).toBe('D:\\mypath\\myprogram')
+  })
+
+  it('should normalize a path with slash', () => {
+    expect(helper.normalize('D:/MyPath/MyProgram')).toBe('D:/mypath/myprogram')
   })
 })

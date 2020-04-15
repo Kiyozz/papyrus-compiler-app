@@ -1,12 +1,38 @@
-import { useCallback, useEffect } from 'react'
+import { RefObject, useCallback, useEffect } from 'react'
 
-export default function useStopScroll() {
+interface UseStopScrollOptions {
+  notIn?: RefObject<HTMLElement>
+}
+
+const deepChilds = (element?: HTMLElement | ChildNode | null) => {
+  if (typeof element === 'undefined' || element === null) {
+    return []
+  }
+
+  let childs = Array.from(element.childNodes)
+
+  if (childs.length > 0) {
+    let childNotesDeep: ChildNode[] = []
+
+    for (const child of childs) {
+      childNotesDeep = [...childNotesDeep, ...deepChilds(child)]
+    }
+
+    childs = [...childs, ...childNotesDeep]
+  }
+
+  return childs
+}
+
+export default function useStopScroll(options: UseStopScrollOptions = {}) {
   const onScroll = useCallback((e: Event) => {
-    e.preventDefault()
-    e.returnValue = false
+    if (!deepChilds(options.notIn?.current).includes(e.target as HTMLElement)) {
+      e.preventDefault()
+      e.returnValue = false
 
-    return false
-  }, [])
+      return false
+    }
+  }, [options.notIn])
 
   useEffect(() => {
     window.addEventListener('DOMMouseScroll', onScroll, { passive: false })

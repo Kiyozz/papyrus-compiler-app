@@ -5,3 +5,5 @@ export const actionSetLatestVersion = createAction<string>(CONSTANTS.APP_CHANGEL
 export const actionGetLatestNotes = createAction(CONSTANTS.APP_CHANGELOG_GET_LATEST_NOTES)
 export const actionGetLatestNotesSuccess = createAction<string>(CONSTANTS.APP_CHANGELOG_GET_LATEST_NOTES_SUCCESS)
 export const actionGetLatestNotesFailed = createAction<Error>(CONSTANTS.APP_CHANGELOG_GET_LATEST_NOTES_FAILED)
+
+export const actionSetShowNotes = createAction<boolean>(CONSTANTS.APP_CHANGELOG_SET_SHOW_NOTES)

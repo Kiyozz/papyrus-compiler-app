@@ -117,7 +117,7 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2
     e.preventDefault()
 
     detectBadInstallation(gameFolder, game, mo2, mo2Instance)
-  }, [detectBadInstallation, gameFolder, game])
+  }, [detectBadInstallation, gameFolder, game, mo2, mo2Instance])
 
   useEffect(() => {
     if (!mo2 || typeof detectSourcesFoldersError !== 'undefined') {

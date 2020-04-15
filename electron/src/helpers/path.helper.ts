@@ -13,9 +13,9 @@ import { LogService } from '../services/log.service'
 
 @Injectable()
 export class PathHelper {
-  private path: typeof path = path
-  private fs: typeof fs = fs
-  private fg: typeof fg = fg
+  path: typeof path = path
+  fs: typeof fs = fs
+  fg: typeof fg = fg
 
   constructor(
     private readonly logService: LogService

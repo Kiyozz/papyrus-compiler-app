@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
-import React, { useContext } from 'react'
+import React from 'react'
 import { CSSTransition } from 'react-transition-group'
 import AppTitle from '../../components/app-title/app-title'
-import { GroupModel, ScriptModel } from '../../models'
+import { GroupModel } from '../../models'
 import AppCompilationGroups from './app-compilation-groups'
 import { useCompilationContext } from './compilation-context'
 

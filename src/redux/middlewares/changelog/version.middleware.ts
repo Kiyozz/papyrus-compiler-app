@@ -9,6 +9,10 @@ const versionMiddleware: VersionMiddleware = (prefix: string) => () => next => a
     localStorage.setItem(`${prefix}/${CONSTANTS.APP_CHANGELOG_SET_LATEST_VERSION}`, action.payload || '')
   }
 
+  if (action.type === CONSTANTS.APP_CHANGELOG_SET_SHOW_NOTES) {
+    localStorage.setItem(`${prefix}/${CONSTANTS.APP_CHANGELOG_SET_SHOW_NOTES}`, `${action.payload}` || 'false')
+  }
+
   return next(action)
 }
 
