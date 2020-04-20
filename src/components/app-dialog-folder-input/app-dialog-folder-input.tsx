@@ -1,22 +1,20 @@
+import FolderIcon from '@material-ui/icons/Folder'
+import TextField from '@material-ui/core/TextField'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import React, { useCallback } from 'react'
 import './app-dialog-folder-input.scss'
 
 export interface Props {
-  id: string
-  name: string
+  error?: boolean
+  label?: string
   value: string
   onChange: (value: string) => void
 }
 
-const AppDialogFolderInput: React.FC<Props> = ({ id, name, value, onChange }) => {
-  const onChangeInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const onChangeValue = e.currentTarget.value
-
-    onChange(onChangeValue)
-  }, [onChange])
-
-  const onClickInput = useCallback(async (e: React.MouseEvent) => {
+const AppDialogFolderInput: React.FC<Props> = ({ error = false, label, value, onChange }) => {
+  const onClickInput = useCallback(async (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
+    e.currentTarget.blur()
 
     const { dialog } = window.require('electron').remote
 
@@ -42,18 +40,22 @@ const AppDialogFolderInput: React.FC<Props> = ({ id, name, value, onChange }) =>
   }, [onChange])
 
   return (
-    <div
+    <TextField
+      error={error}
+      fullWidth
       className="app-dialog-folder-input"
+      value={value}
       onClick={onClickInput}
-    > 
-      <input
-        id={id}
-        className="form-control"
-        name={name}
-        onChange={onChangeInput}
-        value={value}
-      />
-    </div>
+      label={label}
+      placeholder="Select a folder"
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <FolderIcon />
+          </InputAdornment>
+        )
+      }}
+    />
   )
 }
 

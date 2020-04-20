@@ -21,6 +21,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.10",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.50",
     "@nestjs/common": "^6.10.14",
     "@nestjs/core": "^6.10.14",
     "child-process-promise": "^2.2.1",

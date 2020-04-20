@@ -11,7 +11,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 
 const AppAddScriptsButton: React.FC<Props> = ({ getInputProps, children, buttonRef, ...shared }) => {
   return (
-    <Button color="primary" ref={buttonRef}>
+    <Button color="primary" variant="contained" ref={buttonRef}>
       <input {...getInputProps()} />
 
       {children}

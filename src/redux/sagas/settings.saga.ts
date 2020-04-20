@@ -3,7 +3,7 @@ import * as CONSTANTS from '../actions/constants'
 import * as ACTIONS from '../actions/settings/settings.actions'
 import createApi from '../api/create-api'
 import { AnyAction } from 'redux'
-import { actionSetTaskLoading } from '../actions/task-loading/task-loading.actions'
+import { actionSetTaskLoading } from '../actions'
 
 function* detectFolders(action: AnyAction) {
   const api = createApi()

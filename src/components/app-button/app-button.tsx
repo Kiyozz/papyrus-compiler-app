@@ -1,3 +1,4 @@
+import Button, { ButtonProps } from '@material-ui/core/Button'
 import cx from 'classnames'
 import React from 'react'
 import './app-button.scss'
@@ -6,13 +7,13 @@ interface OwnProps {
   className?: string
 }
 
-type Props = OwnProps & React.ButtonHTMLAttributes<HTMLButtonElement>
+type Props = OwnProps & ButtonProps
 
 const AppButton: React.FC<Props> = ({ className, children, ...props }) => {
   return (
-    <button className={cx('app-button', className)} {...props}>
+    <Button className={cx('app-button', className)} {...props}>
       {children}
-    </button>
+    </Button>
   )
 }
 

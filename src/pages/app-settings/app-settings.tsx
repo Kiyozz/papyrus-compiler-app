@@ -1,16 +1,21 @@
-import ReplayIcon from '@material-ui/icons/Replay'
+import Alert from '@material-ui/lab/Alert'
+import Collapse from '@material-ui/core/Collapse'
+import UpdateIcon from '@material-ui/icons/Update'
+import Box from '@material-ui/core/Box'
+import RefreshIcon from '@material-ui/icons/Refresh'
+import Fade from '@material-ui/core/Fade'
+import Checkbox from '@material-ui/core/Checkbox'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
-import FormLabel from '@material-ui/core/FormLabel'
 import React, { useCallback, useMemo, useState, useEffect } from 'react'
 import './app-settings.scss'
 import AppButton from '../../components/app-button/app-button'
+import AppPaper from '../../components/app-paper/app-paper'
 import AppTitle from '../../components/app-title/app-title'
 import { Games } from '../../enums/games.enum'
 import AppDialogFolderInput from '../../components/app-dialog-folder-input/app-dialog-folder-input'
-import { CSSTransition } from 'react-transition-group'
 import debounce from 'lodash-es/debounce'
 
 export interface StateProps {
@@ -166,123 +171,104 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2
   }, [detectMo2SourcesFolder, mo2Instance, game])
 
   return (
-    <div className="app-settings container">
+    <Box className="app-settings container">
       <AppTitle className="mb-3">Settings</AppTitle>
 
       <div className="app-settings-content">
-        <FormControl component="fieldset">
-          <FormLabel component="legend">Game</FormLabel>
-          <RadioGroup row value={game} onChange={onClickRadio}>
-            <FormControlLabel control={<Radio />} label={Games.LE} />
-            <FormControlLabel control={<Radio />} label={Games.SE} />
-          </RadioGroup>
-          <div className="form-group">
-            <label htmlFor="gameFolder">{game} folder (where {game === Games.SE ? 'SkyrimSE.exe' : 'TESV.exe'} is located)</label>
+        <AppPaper>
+          <h4>Game</h4>
+          <FormControl component="fieldset" fullWidth>
+            <RadioGroup row value={game} onChange={onClickRadio}>
+              <FormControlLabel value={Games.LE} control={<Radio />} label={Games.LE} />
+              <FormControlLabel value={Games.SE} control={<Radio />} label={Games.SE} />
+            </RadioGroup>
+          </FormControl>
+          <AppDialogFolderInput
+            error={installationIsBad}
+            label={`${game} folder (where ${game === Games.SE ? 'SkyrimSE.exe' : 'TESV.exe'} is located)`}
+            value={gameFolder}
+            onChange={onChangeGameFolder}
+          />
 
-            <AppDialogFolderInput
-              id="gameFolder"
-              name="gameFolder"
-              value={gameFolder}
-              onChange={onChangeGameFolder}
-            />
-
-            <CSSTransition
-              timeout={150}
-              in={installationIsBad}
-              classNames="app-fade"
-              mountOnEnter
-              unmountOnExit
-            >
-              <div className="alert alert-danger app-settings-alert" role="alert">
-                <div>Installation seems invalid.</div>
-                <div>Checks that you have extracted Scripts.zip (from Creation Kit)</div>
+          <Collapse in={installationIsBad}>
+            <Alert
+              severity="error"
+              className="app-settings-alert"
+              action={(
                 <AppButton onClick={onClickRefreshInstallation}>
-                  <ReplayIcon />
+                  <RefreshIcon /> Refresh
                 </AppButton>
-              </div>
-            </CSSTransition>
-          </div>
+              )}
+            >
+              <div>Installation seems invalid.</div>
+              <div>Checks that you have extracted Scripts.zip (from Creation Kit)</div>
+            </Alert>
+          </Collapse>
+        </AppPaper>
 
-          <div className="form-group">
-            <h4>Mod Organizer 2</h4>
+        <AppPaper>
+          <h4>Mod Organizer 2</h4>
 
-            <div className="form-check">
-              <input
+          <FormControlLabel
+            control={(
+              <Checkbox
                 className="form-check-input"
                 id="mo2"
                 name="mo2"
-                type="checkbox"
                 checked={mo2}
                 onChange={onChangeMo2}
               />
-              <label
-                className="form-check-label"
-                htmlFor="mo2"
-              >
-                Using Mod Organizer 2
-              </label>
-            </div>
-          </div>
+            )}
+            label="Using Mod Organizer 2"
+          />
 
-          <CSSTransition
+          <Fade
             in={mo2}
-            timeout={300}
-            classNames="app-slide-inner"
-            mountOnEnter
             unmountOnExit
           >
-            <>
-              <div className="form-group">
-                <label htmlFor="mo2Instance">Mod Organizer 2 Instance</label>
+            <div>
+              <AppDialogFolderInput
+                error={!!detectSourcesFoldersError}
+                value={mo2Instance}
+                label="MO2 Instance folder"
+                onChange={onChangeMo2Instance}
+              />
 
-                <AppDialogFolderInput
-                  id="mo2Instance"
-                  name="mo2Instance"
-                  value={mo2Instance}
-                  onChange={onChangeMo2Instance}
-                />
-              </div>
-
-              <CSSTransition
-                timeout={300}
-                classNames="app-fade"
+              <Fade
                 in={!!Mo2SourcesFoldersList || !!detectSourcesFoldersError}
-                mountOnEnter
                 unmountOnExit
               >
-                <>
-                  <h5 className="app-settings-label">
-                    Detected sources folders ({actualMo2FolderStringLimitation}/{windowsCmdLimitation})
+                <div>
+                  <Collapse in={!!detectSourcesFoldersError}>
+                    <Alert severity="error">
+                      {detectSourcesFoldersError}
+                    </Alert>
+                  </Collapse>
 
-                    {Mo2SourcesFoldersList && (
-                      <button
+                  <Collapse in={!!Mo2SourcesFoldersList}>
+                    <h5 className="app-settings-label">
+                      Detected ({actualMo2FolderStringLimitation}/{windowsCmdLimitation})
+
+                      <AppButton
                         className="btn btn-primary btn-sm app-settings-mo2-sources-folders-update"
                         onClick={onClickUpdateDetectedSourcesFolders}
                         disabled={loading}
                       >
-                        Update
-                      </button>
-                    )}
-                  </h5>
+                        <UpdateIcon />
+                      </AppButton>
+                    </h5>
 
-                  {detectSourcesFoldersError && (
-                    <span className="app-error">
-                      {detectSourcesFoldersError}
-                    </span>
-                  )}
-
-                  {Mo2SourcesFoldersList && (
                     <ul className="app-settings-folders-list">
                       {Mo2SourcesFoldersList}
                     </ul>
-                  )}
-                </>
-              </CSSTransition>
-            </>
-          </CSSTransition>
-        </FormControl>
+                  </Collapse>
+                </div>
+              </Fade>
+            </div>
+          </Fade>
+        </AppPaper>
       </div>
-    </div>
+    </Box>
   )
 }
 
