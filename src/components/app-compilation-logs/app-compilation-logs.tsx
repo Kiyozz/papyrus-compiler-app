@@ -1,11 +1,14 @@
+import Box from '@material-ui/core/Box'
+import { makeStyles, Theme, styled } from '@material-ui/core/styles'
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
 import Button from '@material-ui/core/Button'
+import Backdrop from '@material-ui/core/Backdrop'
 import ErrorIcon from '@material-ui/icons/Error'
-import classNames from 'classnames'
 import React, { useCallback, useMemo } from 'react'
-import './app-compilation-logs.scss'
+import AppPaper from '../app-paper/app-paper'
 import AppTitle from '../app-title/app-title'
-import { CompilationLogsModel } from '../../models'
+import { CompilationLogsModel, ScriptModel } from '../../models'
+import './app-compilation-logs.scss'
 
 export interface StateProps {
   logs: CompilationLogsModel
@@ -22,7 +25,52 @@ export interface DispatchesProps {
 
 export type Props = StateProps & DispatchesProps & OwnProps
 
+const useStyles = makeStyles((theme: Theme) => ({
+  popup: {
+    zIndex: theme.zIndex.drawer + 1,
+    '& > p': {
+      fontSize: '0.9rem'
+    },
+    '& > h2': {
+      fontSize: '1.5rem'
+    },
+    pointerEvents: 'all'
+  },
+  popupPaper: {
+    width: '50%'
+  }
+}))
+
+const ScriptLogsSection = styled('div')({
+  '*': {
+    userSelect: 'none'
+  }
+})
+
+const ScriptName = styled('h2')({
+  fontSize: '1.5rem'
+})
+
+const ScriptLogs = styled('p')({
+  fontSize: '0.8rem'
+})
+
+const ScriptLogsLine = styled('span')({})
+
+const LogsListItem: React.FC<{ script: ScriptModel, logs: string }> = ({ script, logs }) => (
+  <ScriptLogsSection>
+    <ScriptName>{script.name}</ScriptName>
+    <ScriptLogs>
+      {logs.split('\n').map((log, i) => (
+        <ScriptLogsLine key={i}>{log} <br /></ScriptLogsLine>
+      ))}
+    </ScriptLogs>
+  </ScriptLogsSection>
+)
+
 const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle, open }) => {
+  const classes = useStyles()
+
   const onClickButtonOpenLogs = useCallback(() => {
     popupToggle(true)
   }, [popupToggle])
@@ -33,45 +81,26 @@ const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle, ope
   const LogsList = useMemo(() => {
     return logs.map(([script, scriptLogs], index) => {
       return (
-        <div
-          key={index}
-          className="app-compilation-logs-logs-section"
-        >
-          <h2>{script.name}</h2>
-          <p>
-            {scriptLogs.split('\n').map((log, i) => (
-              <span key={i}>{log} <br /></span>
-            ))}
-          </p>
-        </div>
+        <LogsListItem script={script} logs={scriptLogs} />
       )
     })
   }, [logs])
 
   return (
-    <div className="app-compilation-logs">
+    <Box>
       <SpeedDialAction
         className="app-compilation-logs-button-activate"
         onClick={onClickButtonOpenLogs}
         icon={<ErrorIcon />}
-        open={open}
+        open={open && logs.length > 0}
         title="Open scripts logs"
       />
 
-      <div
-        className={classNames({
-          'app-compilation-logs-popup': true,
-          'app-compilation-logs-popup-open': popupOpen
-        })}
-      >
-        <div>
+      <Backdrop className={classes.popup} open={popupOpen} onClick={onClickButtonCloseLogs}>
+        <AppPaper className={classes.popupPaper}>
           <AppTitle className="app-compilation-logs-title">Logs</AppTitle>
 
-          <div className="app-compilation-logs-logs-container">
-            <div className="app-compilation-logs-logs-section">
-              {LogsList}
-            </div>
-          </div>
+          {LogsList}
 
           <Button
             className="app-compilation-logs-button-activate"
@@ -79,9 +108,9 @@ const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle, ope
           >
             Close
           </Button>
-        </div>
-      </div>
-    </div>
+        </AppPaper>
+      </Backdrop>
+    </Box>
   )
 }
 

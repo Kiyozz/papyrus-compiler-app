@@ -1,4 +1,5 @@
-import classNames from 'classnames'
+import { styled } from '@material-ui/core/styles'
+import cx from 'classnames'
 import React from 'react'
 import './app-title.scss'
 
@@ -6,9 +7,17 @@ interface Props {
   className?: string
 }
 
+const Title = styled('h1')({
+  fontSize: '2.5rem',
+  position: 'sticky',
+  top: 0,
+  zIndex: 50,
+  paddingTop: 15
+})
+
 const AppTitle: React.FC<Props> = ({ children, className }) => {
   return (
-    <h1 className={classNames(['app-title', className])}>{children}</h1>
+    <Title className={cx(['app-title', className])}>{children}</Title>
   )
 }
 

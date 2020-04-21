@@ -17,7 +17,7 @@ export default function compilationLogsReducer(state = initialState, action: Any
     case CONSTANTS.APP_COMPILATION_LOGS_POPUP_TOGGLE:
       return {
         ...state,
-        popupOpen: action.payload || false
+        popupOpen: action.payload ?? false
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION:
       return {
