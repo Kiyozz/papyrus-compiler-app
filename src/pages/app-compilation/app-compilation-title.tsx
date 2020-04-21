@@ -1,8 +1,9 @@
+import Fade from '@material-ui/core/Fade'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled'
-import classNames from 'classnames'
 import React from 'react'
-import { CSSTransition } from 'react-transition-group'
+import AppButton from '../../components/app-button/app-button'
+import AppIconButton from '../../components/app-button/app-icon-button'
 import AppTitle from '../../components/app-title/app-title'
 import { GroupModel } from '../../models'
 import AppCompilationGroups from './app-compilation-groups'
@@ -10,7 +11,7 @@ import { useCompilationContext } from './compilation-context'
 
 interface Props {
   onChangeGroup: ({ value }: { value: GroupModel }) => void
-  onClickPlayPause: (e: React.MouseEvent<HTMLDivElement>) => void
+  onClickPlayPause: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 const AppCompilationTitle: React.FC<Props> = ({ onChangeGroup, onClickPlayPause }) => {
@@ -27,44 +28,36 @@ const AppCompilationTitle: React.FC<Props> = ({ onChangeGroup, onClickPlayPause 
         />
       </div>
 
-      <CSSTransition
-        timeout={300}
-        mountOnEnter
-        unmountOnExit
-        classNames="app-fade"
-        in={!!justLoadedGroup}
-      >
+      <Fade mountOnEnter unmountOnExit in={!!justLoadedGroup}>
         <>
           {justLoadedGroup && (
             <span className="app-compilation-action-group-loaded">{justLoadedGroup.name} loaded!</span>
           )}
         </>
-      </CSSTransition>
+      </Fade>
 
-      <CSSTransition
-        timeout={300}
-        in={compilationScripts.length > 0}
-        classNames="app-fade"
-        mountOnEnter
-      >
+      <Fade in={compilationScripts.length > 0} mountOnEnter>
         <>
           <div className="app-compilation-actions">
-            <div
-              className={classNames({
-                'app-compilation-action': true,
-                'app-compilation-action-disable': isCompilationRunning || compilationScripts.length === 0
-              })}
+            <AppButton
               onClick={onClickPlayPause}
-            >
-              {isCompilationRunning ? (
-                <CircularProgress />
-              ) : (
-                <PlayCircleFilledIcon />
+              color="primary"
+              aria-label="play"
+              variant="contained"
+              disabled={isCompilationRunning || compilationScripts.length === 0}
+              startIcon={(
+                isCompilationRunning ? (
+                  <CircularProgress size={18} />
+                ) : (
+                  <PlayCircleFilledIcon />
+                )
               )}
-            </div>
+            >
+              Play
+            </AppButton>
           </div>
         </>
-      </CSSTransition>
+      </Fade>
     </AppTitle>
   )
 }

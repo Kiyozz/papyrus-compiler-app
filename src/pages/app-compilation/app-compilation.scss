@@ -85,18 +85,6 @@
   align-items: center;
 }
 
-.app-compilation-action {
-  font-size: 2rem;
-  color: $color-button;
-  cursor: pointer;
-
-  &.app-compilation-action-disable {
-    opacity: 0.5;
-    pointer-events: none;
-    cursor: default;
-  }
-}
-
 .app-list-group-item-script-hover {
   position: absolute;
   top: 0;
@@ -117,6 +105,7 @@
 }
 
 .app-compilation .list-group-item {
+  position: relative;
   overflow: hidden;
 }
 

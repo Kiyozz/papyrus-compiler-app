@@ -1,22 +1,23 @@
-import Alert from '@material-ui/lab/Alert'
-import Collapse from '@material-ui/core/Collapse'
-import UpdateIcon from '@material-ui/icons/Update'
 import Box from '@material-ui/core/Box'
-import RefreshIcon from '@material-ui/icons/Refresh'
-import Fade from '@material-ui/core/Fade'
 import Checkbox from '@material-ui/core/Checkbox'
+import Collapse from '@material-ui/core/Collapse'
+import Fade from '@material-ui/core/Fade'
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormControl from '@material-ui/core/FormControl'
-import React, { useCallback, useMemo, useState, useEffect } from 'react'
-import './app-settings.scss'
+import RefreshIcon from '@material-ui/icons/Refresh'
+import Alert from '@material-ui/lab/Alert'
+import debounce from 'lodash-es/debounce'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import AppButton from '../../components/app-button/app-button'
+import AppDialogFolderInput from '../../components/app-dialog-folder-input/app-dialog-folder-input'
 import AppPaper from '../../components/app-paper/app-paper'
 import AppTitle from '../../components/app-title/app-title'
 import { Games } from '../../enums/games.enum'
-import AppDialogFolderInput from '../../components/app-dialog-folder-input/app-dialog-folder-input'
-import debounce from 'lodash-es/debounce'
+import { GameService } from '../../services/game.service'
+import './app-settings.scss'
+import { Mo2Service } from '../../services/mo2.service'
 
 export interface StateProps {
   game: Games
@@ -38,45 +39,10 @@ export interface DispatchesProps {
   detectBadInstallation: (gamePath: string, gameType: Games, isUsingMo2: boolean, mo2Path: string) => void
 }
 
+const mo2Service = new Mo2Service()
+const gameService = new GameService()
+
 type Props = StateProps & DispatchesProps
-
-interface CalculateMo2StringLimitationOptions {
-  folders: string[]
-  mo2Instance: string
-  gamePath: string
-  game: Games
-}
-
-const windowsCmdLimitation = 8191
-
-function calculateMo2StringLimitation({ folders, mo2Instance, gamePath, game }: CalculateMo2StringLimitationOptions): number {
-  const sourcesType = game === 'Skyrim Special Edition' ? 'Source\\Scripts' : 'Scripts\\Source'
-  const gameFolderData = gamePath + '\\Data\\' + sourcesType
-  const gameFolderPapyrus = gamePath + '\\Papyrus Compiler\\PapyrusCompiler.exe'
-  const mo2InstanceWithMods = mo2Instance + '\\mods'
-  const flagLength = `-f="TESV_Papyrus_Flags.flg"`.length
-  const output = `-o="${mo2Instance}\\overwrite\\${sourcesType}"`
-  const spacesBetweenArgs = 4
-  const averageScriptLength = 15
-  const foldersSum = folders
-    .map(folder => folder.replace(mo2Instance, ''))
-    .reduce((previous, next) => {
-      previous = next.length + previous
-
-      return previous
-    }, 0)
-
-  return (
-    gameFolderData.length +
-    gameFolderPapyrus.length +
-    mo2InstanceWithMods.length +
-    flagLength +
-    output.length +
-    spacesBetweenArgs +
-    averageScriptLength +
-    foldersSum
-  )
-}
 
 const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2, mo2Instance, detectedMo2SourcesFolders, detectBadInstallation, loading, detectSourcesFoldersError, setGame, setGameFolder, setMo2, setMo2Instance, detectMo2SourcesFolder }) => {
   const [actualMo2FolderStringLimitation, setStringLimitation] = useState<number>()
@@ -119,10 +85,6 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2
     setMo2(e.currentTarget.checked)
   }, [setMo2])
 
-  const onSubmitForm = useCallback((e: React.FormEvent) => {
-    e.preventDefault()
-  }, [])
-
   const onClickRefreshInstallation = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
@@ -136,7 +98,7 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2
       return
     }
 
-    setStringLimitation(calculateMo2StringLimitation({
+    setStringLimitation(mo2Service.calculateLimitation({
       folders: detectedMo2SourcesFolders,
       game,
       gamePath: gameFolder,
@@ -185,7 +147,7 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2
           </FormControl>
           <AppDialogFolderInput
             error={installationIsBad}
-            label={`${game} folder (where ${game === Games.SE ? 'SkyrimSE.exe' : 'TESV.exe'} is located)`}
+            label={`${game} folder (where ${gameService.toExecutable(game)} is located)`}
             value={gameFolder}
             onChange={onChangeGameFolder}
           />
@@ -247,14 +209,15 @@ const AppSettings: React.FC<Props> = ({ game, gameFolder, installationIsBad, mo2
 
                   <Collapse in={!!Mo2SourcesFoldersList}>
                     <h5 className="app-settings-label">
-                      Detected ({actualMo2FolderStringLimitation}/{windowsCmdLimitation})
+                      <span>Detected ({actualMo2FolderStringLimitation}/{mo2Service.windowsCmdLimitation})</span>
 
                       <AppButton
-                        className="btn btn-primary btn-sm app-settings-mo2-sources-folders-update"
+                        size="small"
+                        className="app-settings-mo2-sources-folders-update"
                         onClick={onClickUpdateDetectedSourcesFolders}
                         disabled={loading}
                       >
-                        <UpdateIcon />
+                        <RefreshIcon /> Refresh
                       </AppButton>
                     </h5>
 

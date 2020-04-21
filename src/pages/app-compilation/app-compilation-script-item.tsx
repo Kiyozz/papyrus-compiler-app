@@ -2,6 +2,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import classNames from 'classnames'
 import React, { useCallback } from 'react'
 import { CSSTransition } from 'react-transition-group'
+import AppPaper from '../../components/app-paper/app-paper'
 import { ScriptModel } from '../../models'
 import { format } from '../../utils/date/format'
 import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
@@ -22,7 +23,7 @@ const AppCompilationScriptItem: React.FC<Props> = ({ script, onMouseEnter, onMou
   }, [script, onClickRemoveScript])
 
   return (
-    <div
+    <AppPaper
       className="list-group-item"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -48,7 +49,7 @@ const AppCompilationScriptItem: React.FC<Props> = ({ script, onMouseEnter, onMou
           {getIconFromStatus(script)}
         </span>
       </div>
-    </div>
+    </AppPaper>
   )
 }
 

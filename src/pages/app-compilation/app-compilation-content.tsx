@@ -1,6 +1,12 @@
+import { Box } from '@material-ui/core'
+import { makeStyles, Theme } from '@material-ui/core/styles'
+import SpeedDial from '@material-ui/lab/SpeedDial'
 import React, { useMemo } from 'react'
-import { CSSTransition } from 'react-transition-group'
+import Fade from '@material-ui/core/Fade'
+import AppCompilationLogs from '../../components/app-compilation-logs/app-compilation-logs.container'
+import AppOpenLogFile from '../../components/app-open-log-file/app-open-log-file.container'
 import { ScriptModel } from '../../models'
+import AppCompilationActions from './app-compilation-actions'
 import AppCompilationScriptItem from './app-compilation-script-item'
 import { useCompilationContext } from './compilation-context'
 
@@ -11,8 +17,15 @@ interface Props {
   createOnMouseEvent: (script: ScriptModel | undefined) => () => void
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+  buttonWrapper: {
+    marginTop: theme.spacing(1)
+  }
+}))
+
 const AppCompilationContent: React.FC<Props> = ({ isDragActive, onClickRemoveScriptFromScript, createOnMouseEvent, Button }) => {
-  const { popupOpen, compilationScripts, hoveringScript } = useCompilationContext()
+  const classes = useStyles()
+  const { compilationScripts, hoveringScript } = useCompilationContext()
 
   const scriptsList: JSX.Element[] = useMemo(() => {
     return compilationScripts.map((script) => {
@@ -36,38 +49,38 @@ const AppCompilationContent: React.FC<Props> = ({ isDragActive, onClickRemoveScr
 
   return (
     <>
-      {!popupOpen && (
-        <>
-          <CSSTransition
-            timeout={300}
-            in={isDragActive}
-            classNames="app-fade"
-            mountOnEnter
-            unmountOnExit
-          >
-            <div className="app-compilation-is-dragging-container">
-              Drop files here...
-            </div>
-          </CSSTransition>
+      <Fade
+        in={isDragActive}
+        mountOnEnter
+        unmountOnExit
+      >
+        <div className="app-compilation-is-dragging-container">
+          Drop files here...
+        </div>
+      </Fade>
 
-          {scriptsList.length > 0 ? (
-            scriptsList
-          ) : (
-            <>
-              <p className="text-secondary text-wrap">
-                You can drag and drop psc files to load them into the
-                application.
+      <Fade in={scriptsList.length > 0}>
+        <div className="app-compilation-scripts-list">
+          {scriptsList}
+        </div>
+      </Fade>
 
-                <br />
+      <Fade in={scriptsList.length === 0} mountOnEnter unmountOnExit>
+        <p className="text-secondary text-wrap">
+          You can drag and drop psc files to load them into the
+          application.
 
-                This is only available when not running in administrator.
-              </p>
-            </>
-          )}
-        </>
-      )}
+          <br />
 
-      {Button}
+          This is only available when not running in administrator.
+        </p>
+      </Fade>
+
+      <AppCompilationActions />
+
+      <Box className={classes.buttonWrapper}>
+        {Button}
+      </Box>
     </>
   )
 }

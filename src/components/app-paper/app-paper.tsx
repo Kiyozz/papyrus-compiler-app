@@ -1,9 +1,9 @@
 import cx from 'classnames'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, Theme } from '@material-ui/core/styles'
 import Paper, { PaperProps } from '@material-ui/core/Paper'
 import React from 'react'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(1),
     '& + &': {
@@ -12,11 +12,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const AppPaper: React.FC<PaperProps> = ({ children, ...props }) => {
+const AppPaper: React.FC<PaperProps> = ({ children, className, ...props }) => {
   const classes = useStyles()
 
   return (
-    <Paper className={cx(classes.root, props.className)} {...props}>
+    <Paper className={cx(classes.root, className)} {...props}>
       {children}
     </Paper>
   )

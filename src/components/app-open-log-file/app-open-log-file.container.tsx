@@ -1,10 +1,11 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { actionOpenLog } from '../../redux/actions'
-import AppOpenLogFile, { DispatchesProps, StateProps } from './app-open-log-file'
+import AppOpenLogFile, { DispatchesProps, OwnProps, StateProps } from './app-open-log-file'
 
-function mapStateToProps(): StateProps {
+function mapStateToProps(_: any, own: OwnProps): StateProps {
   return {
+    open: own.open
   }
 }
 

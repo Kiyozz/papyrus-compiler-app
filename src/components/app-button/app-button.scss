@@ -1,13 +1,1 @@
 @import "../../scss/variables";
-
-.app-button {
-  border: none;
-  background: transparent;
-  padding: 0;
-  color: $color-primary;
-  font-size: 1em;
-
-  &:hover {
-    color: $color-primary-800;
-  }
-}

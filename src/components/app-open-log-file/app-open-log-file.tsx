@@ -1,30 +1,33 @@
 import BugReportIcon from '@material-ui/icons/BugReport'
-import Button from '@material-ui/core/Button'
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
 import React, { useCallback } from 'react'
 import './app-open-log-file.scss'
 
 export interface StateProps {
 }
 
+export interface OwnProps {
+  open: boolean
+}
+
 export interface DispatchesProps {
   openLogFile: () => void
 }
 
-type Props = StateProps & DispatchesProps
+type Props = StateProps & DispatchesProps & OwnProps
 
-const AppOpenLogFile: React.FC<Props> = ({ openLogFile }) => {
+const AppOpenLogFile: React.FC<Props> = ({ openLogFile, open }) => {
   const onClickButtonOpenLogFile = useCallback(() => {
     openLogFile()
   }, [openLogFile])
 
   return (
-    <Button
-      color="secondary"
-      className="app-open-log-file-button-activate"
+    <SpeedDialAction
       onClick={onClickButtonOpenLogFile}
-    >
-      <BugReportIcon />
-    </Button>
+      title="Open app logs file"
+      open={open}
+      icon={<BugReportIcon />}
+    />
   )
 }
 

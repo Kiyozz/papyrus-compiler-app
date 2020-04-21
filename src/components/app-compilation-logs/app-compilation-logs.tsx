@@ -1,4 +1,5 @@
-import { Button } from '@material-ui/core'
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
+import Button from '@material-ui/core/Button'
 import ErrorIcon from '@material-ui/icons/Error'
 import classNames from 'classnames'
 import React, { useCallback, useMemo } from 'react'
@@ -11,13 +12,17 @@ export interface StateProps {
   popupOpen: boolean
 }
 
+export interface OwnProps {
+  open: boolean
+}
+
 export interface DispatchesProps {
   popupToggle: (toggle: boolean) => void
 }
 
-export type Props = StateProps & DispatchesProps
+export type Props = StateProps & DispatchesProps & OwnProps
 
-const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle }) => {
+const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle, open }) => {
   const onClickButtonOpenLogs = useCallback(() => {
     popupToggle(true)
   }, [popupToggle])
@@ -45,12 +50,13 @@ const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle }) =
 
   return (
     <div className="app-compilation-logs">
-      <Button
+      <SpeedDialAction
         className="app-compilation-logs-button-activate"
         onClick={onClickButtonOpenLogs}
-      >
-        <ErrorIcon />
-      </Button>
+        icon={<ErrorIcon />}
+        open={open}
+        title="Open scripts logs"
+      />
 
       <div
         className={classNames({
@@ -58,7 +64,7 @@ const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle }) =
           'app-compilation-logs-popup-open': popupOpen
         })}
       >
-        <div className="container-fluid d-flex flex-column h-100 overflow-auto">
+        <div>
           <AppTitle className="app-compilation-logs-title">Logs</AppTitle>
 
           <div className="app-compilation-logs-logs-container">

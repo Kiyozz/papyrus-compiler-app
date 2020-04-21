@@ -11,7 +11,7 @@ type Props = OwnProps & ButtonProps
 
 const AppButton: React.FC<Props> = ({ className, children, ...props }) => {
   return (
-    <Button className={cx('app-button', className)} {...props}>
+    <Button className={cx(className)} {...props}>
       {children}
     </Button>
   )
