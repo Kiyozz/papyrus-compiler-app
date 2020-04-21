@@ -6,6 +6,7 @@ import React, { useCallback, useState } from 'react'
 import AppAddScripts from '../../components/app-add-scripts/app-add-scripts'
 import useTimeout from '../../hooks/use-timeout'
 import { GroupModel, ScriptModel } from '../../models'
+import { NodeService } from '../../services/node.service'
 import pscFilesToPscScripts from '../../utils/scripts/psc-files-to-psc-scripts'
 import AppCompilationContent from './app-compilation-content'
 import AppCompilationTitle from './app-compilation-title'
@@ -21,6 +22,8 @@ export interface DispatchesProps {
   startCompilation: (scripts: ScriptModel[]) => void
   setCompilationScripts: (scripts: ScriptModel[]) => void
 }
+
+const nodeService = new NodeService()
 
 type Props = StateProps & DispatchesProps
 
@@ -83,7 +86,7 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
       <AppAddScripts
         onDrop={onDrop}
         onClick={(e, buttonRef) => { // prevent click anywhere else button
-          if (e.target !== buttonRef.current) {
+          if (e.target !== buttonRef.current && !nodeService.isChildren(buttonRef.current, e.target as HTMLElement)) {
             buttonRef.current?.blur()
             e.stopPropagation()
           }
