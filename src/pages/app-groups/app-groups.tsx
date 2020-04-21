@@ -1,15 +1,16 @@
+import Box from '@material-ui/core/Box'
+import Fade from '@material-ui/core/Fade'
+import { styled } from '@material-ui/core/styles'
+import Zoom from '@material-ui/core/Zoom'
 import CreateIcon from '@material-ui/icons/Create'
 import DeleteIcon from '@material-ui/icons/Delete'
-import AddCircleIcon from '@material-ui/icons/AddCircle'
 import React, { useCallback, useMemo, useState } from 'react'
 import './app-groups.scss'
-import AppTitle from '../../components/app-title/app-title'
 import { GroupModel } from '../../models'
-import classNames from 'classnames'
-import { CSSTransition } from 'react-transition-group'
 import AppGroupsAddPopup from '../../components/app-groups-add-popup/app-groups-add-popup'
 import map from 'lodash-es/map'
 import max from 'lodash-es/max'
+import AppGroupsTitle from './app-groups-title'
 
 export interface StateProps {
   groups: GroupModel[]
@@ -22,6 +23,10 @@ export interface DispatchesProps {
 }
 
 type Props = StateProps & DispatchesProps
+
+const GroupsList = styled('div')({
+  position: 'relative'
+})
 
 const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }) => {
   const [showAddPopup, setShowPopup] = useState(false)
@@ -86,16 +91,13 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
 
       return (
         <div
-          className="list-group-item overflow-hidden"
           key={group.id}
           onMouseEnter={onMouseEnterGroup}
           onMouseLeave={onMouseLeaveGroup}
           onMouseMove={onMouseMoveGroup}
         >
-          <CSSTransition
-            timeout={150}
+          <Fade
             in={isHoveringGroup === group}
-            classNames="app-fade-grow"
             mountOnEnter
             unmountOnExit
           >
@@ -113,7 +115,7 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
                 <DeleteIcon />
               </span>
             </div>
-          </CSSTransition>
+          </Fade>
           <div className="app-groups-list-group-item-name">{group.name}</div>
           <div className="app-groups-list-group-item-scripts">
             {group.scripts.length > 0 ? (
@@ -134,28 +136,13 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
 
   return (
     <div className="app-groups container">
-      <AppTitle className="d-flex">
-        Groups
-
-        <div className="app-groups-actions">
-          <div
-            className={classNames({
-              'app-groups-action': true
-            })}
-            onClick={onClickAddButton}
-          >
-            <AddCircleIcon />
-          </div>
-        </div>
-      </AppTitle>
+      <AppGroupsTitle onClickAddButton={onClickAddButton} />
 
       <div className="app-groups-content">
-        <CSSTransition
+        <Fade
           in={showAddPopup}
-          timeout={300}
           mountOnEnter
           unmountOnExit
-          classNames="app-fade"
         >
           <AppGroupsAddPopup
             lastId={lastId}
@@ -164,18 +151,20 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
             onGroupEdit={onGroupEdit}
             onClose={onClosePopup}
           />
-        </CSSTransition>
+        </Fade>
 
-        <div className="app-groups-list list-group">
-          {groupsList.length > 0 ? (
-            groupsList
-          ) : (
-            <>
-              <p>You can create a group with the top-right button.</p>
-              <p>A group is a set of scripts that can be easily loaded on the compilation view.</p>
-            </>
-          )}
-        </div>
+        <Fade in={groupsList.length > 0}>
+          <GroupsList>
+            {groupsList}
+          </GroupsList>
+        </Fade>
+
+        <Fade in={groupsList.length === 0}>
+          <Box>
+            <p>You can create a group with the top-right button.</p>
+            <p>A group is a set of scripts that can be easily loaded on the compilation view.</p>
+          </Box>
+        </Fade>
       </div>
     </div>
   )
