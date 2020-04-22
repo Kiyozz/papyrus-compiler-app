@@ -4,7 +4,6 @@ import max from 'lodash-es/max'
 import uniqBy from 'lodash-es/uniqBy'
 import React, { useCallback, useState } from 'react'
 import AppAddScripts from '../../components/app-add-scripts/app-add-scripts'
-import useTimeout from '../../hooks/use-timeout'
 import { GroupModel, ScriptModel } from '../../models'
 import { NodeService } from '../../services/node.service'
 import pscFilesToPscScripts from '../../utils/scripts/psc-files-to-psc-scripts'
@@ -16,6 +15,7 @@ import CompilationContextProvider from './compilation-context'
 export interface StateProps {
   isCompilationRunning: boolean
   compilationScripts: ScriptModel[]
+  groups: GroupModel[]
 }
 
 export interface DispatchesProps {
@@ -27,7 +27,7 @@ const nodeService = new NodeService()
 
 type Props = StateProps & DispatchesProps
 
-const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts, setCompilationScripts, isCompilationRunning }) => {
+const AppCompilation: React.FC<Props> = ({ startCompilation, groups, compilationScripts, setCompilationScripts, isCompilationRunning }) => {
   const onClickRemoveScriptFromScript = useCallback((script: ScriptModel) => {
     return () => {
       const newListOfScripts = compilationScripts.filter(compilationScript => compilationScript !== script)
@@ -35,7 +35,6 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
       setCompilationScripts(newListOfScripts)
     }
   }, [setCompilationScripts, compilationScripts])
-  const [justLoadedGroup, setJustLoadedGroup] = useState<GroupModel | undefined>(undefined)
   const [hoveringScript, setHoveringScript] = useState<ScriptModel | undefined>(undefined)
   const createOnMouseEvent = useCallback((script?: ScriptModel) => {
     return () => {
@@ -61,28 +60,25 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, compilationScripts,
 
     setCompilationScripts(newScripts.map((script, index) => ({ ...script, id: index })))
   }, [setCompilationScripts, compilationScripts])
-  const onChangeGroup = useCallback(({ value: group }) => {
+  const onChangeGroup = useCallback((groupId: number) => {
     const lastId = max(map(compilationScripts, 'id')) ?? 0
+    const group = groups.find(group => group.id === groupId)
+
+    if (!group) {
+      return
+    }
+
     const scripts: ScriptModel[] = group.scripts.map((script: ScriptModel) => {
       script.id = lastId + script.id
 
       return script
     })
 
-    setJustLoadedGroup(group)
     setCompilationScripts(uniqBy([...compilationScripts, ...scripts], 'name'))
-  }, [compilationScripts, setCompilationScripts])
-
-  useTimeout(() => {
-    if (!justLoadedGroup) {
-      return
-    }
-
-    setJustLoadedGroup(undefined)
-  }, { time: 3000 })
+  }, [compilationScripts, setCompilationScripts, groups])
 
   return (
-    <CompilationContextProvider hoveringScript={hoveringScript} justLoadedGroup={justLoadedGroup}>
+    <CompilationContextProvider hoveringScript={hoveringScript}>
       <AppAddScripts
         onDrop={onDrop}
         onClick={(e, buttonRef) => { // prevent click anywhere else button

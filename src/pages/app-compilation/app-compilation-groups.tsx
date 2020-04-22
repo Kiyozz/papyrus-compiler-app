@@ -1,30 +1,62 @@
-import React, { useMemo } from 'react'
-import Select from 'react-select'
+import { makeStyles, Theme } from '@material-ui/core/styles'
+import React, { useMemo, useState } from 'react'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import Button from '@material-ui/core/Button'
 import { GroupModel } from '../../models'
 
 interface Props {
   groups: GroupModel[]
-  onChangeGroup: ({ value }: { value: GroupModel }) => void
+  onChangeGroup: (groupId: number) => void
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+  menu: {
+    width: '100%'
+  }
+}))
+
 const AppCompilationGroups: React.FC<Props> = ({ groups, onChangeGroup }) => {
+  const classes = useStyles()
+  const [anchor, setAnchor] = useState<HTMLElement | null>(null)
+
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget)
+  const onClose = () => setAnchor(null)
+
   const groupSelectOptions = useMemo(() => {
     return groups.filter(group => group.scripts.length > 0).map(group => {
-      return {
-        label: `Group ${group.name}`,
-        value: group
+      const onClickGroup = () => {
+        onClose()
+        onChangeGroup(group.id)
       }
+
+      return (
+        <MenuItem value={group.id} key={group.id} onClick={onClickGroup}>
+          {group.name}
+        </MenuItem>
+      )
     })
-  }, [groups])
+  }, [groups, onChangeGroup])
 
   return (
     <div className="app-compilation-action-group">
       {groups.length > 0 && (
-        <Select
-          placeholder="Load a group"
-          onChange={onChangeGroup as any}
-          options={groupSelectOptions}
-        />
+        <>
+          <Button aria-controls="load-group-menu" aria-haspopup="true" onClick={onClick}>
+            Load a group
+          </Button>
+
+          <Menu
+            id="load-group-menu"
+            keepMounted
+            className={classes.menu}
+            open={!!anchor}
+            onClose={onClose}
+            anchorEl={anchor}
+          >
+            {groupSelectOptions}
+          </Menu>
+        </>
       )}
     </div>
   )

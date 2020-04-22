@@ -12,7 +12,6 @@ interface CompilationContextValue extends CompilationContextOwnProps {
 }
 
 interface CompilationContextOwnProps {
-  justLoadedGroup: GroupModel | undefined
   hoveringScript: ScriptModel | undefined
 }
 
@@ -25,7 +24,6 @@ const mapStateToProps = (store: RootStore, own: CompilationContextOwnProps): Com
   isCompilationRunning: store.compilation.isCompilationRunning,
   groups: store.groups.groups,
   hoveringScript: own.hoveringScript,
-  justLoadedGroup: own.justLoadedGroup,
   popupOpen: store.compilationLogs.popupOpen
 })
 

@@ -1,11 +1,11 @@
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import { styled } from '@material-ui/core/styles'
-import Zoom from '@material-ui/core/Zoom'
 import CreateIcon from '@material-ui/icons/Create'
 import DeleteIcon from '@material-ui/icons/Delete'
 import React, { useCallback, useMemo, useState } from 'react'
 import './app-groups.scss'
+import AppPaper from '../../components/app-paper/app-paper'
 import { GroupModel } from '../../models'
 import AppGroupsAddPopup from '../../components/app-groups-add-popup/app-groups-add-popup'
 import map from 'lodash-es/map'
@@ -90,7 +90,7 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
       const onMouseMoveGroup = createOnMouseEvent(group)
 
       return (
-        <div
+        <AppPaper
           key={group.id}
           onMouseEnter={onMouseEnterGroup}
           onMouseLeave={onMouseLeaveGroup}
@@ -129,7 +129,7 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
               </>
             )}
           </div>
-        </div>
+        </AppPaper>
       )
     })
   }, [groups, createOnMouseEvent, isHoveringGroup, onClickRemoveGroup, onClickEditGroup])

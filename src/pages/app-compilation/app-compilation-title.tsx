@@ -4,17 +4,16 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled'
 import React from 'react'
 import AppButton from '../../components/app-button/app-button'
 import AppTitle from '../../components/app-title/app-title'
-import { GroupModel } from '../../models'
 import AppCompilationGroups from './app-compilation-groups'
 import { useCompilationContext } from './compilation-context'
 
 interface Props {
-  onChangeGroup: ({ value }: { value: GroupModel }) => void
+  onChangeGroup: (groupId: number) => void
   onClickPlayPause: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 const AppCompilationTitle: React.FC<Props> = ({ onChangeGroup, onClickPlayPause }) => {
-  const { groups, justLoadedGroup, isCompilationRunning, compilationScripts } = useCompilationContext()
+  const { groups, isCompilationRunning, compilationScripts } = useCompilationContext()
 
   return (
     <AppTitle className="d-flex">
@@ -26,14 +25,6 @@ const AppCompilationTitle: React.FC<Props> = ({ onChangeGroup, onClickPlayPause 
           onChangeGroup={onChangeGroup}
         />
       </div>
-
-      <Fade mountOnEnter unmountOnExit in={!!justLoadedGroup}>
-        <>
-          {justLoadedGroup && (
-            <span className="app-compilation-action-group-loaded">{justLoadedGroup.name} loaded!</span>
-          )}
-        </>
-      </Fade>
 
       <Fade in={compilationScripts.length > 0} mountOnEnter>
         <>

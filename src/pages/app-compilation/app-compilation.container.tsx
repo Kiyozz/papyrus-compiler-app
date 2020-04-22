@@ -5,12 +5,13 @@ import AppCompilation, { DispatchesProps, StateProps } from './app-compilation'
 import {
   actionSetCompilationScripts,
   actionStartCompilation
-} from '../../redux/actions/compilation/compilation.actions'
+} from '../../redux/actions'
 
 function mapStateToProps(store: RootStore): StateProps {
   return {
     isCompilationRunning: store.compilation.isCompilationRunning,
-    compilationScripts: store.compilation.compilationScripts
+    compilationScripts: store.compilation.compilationScripts,
+    groups: store.groups.groups
   }
 }
 

@@ -94,6 +94,8 @@ const AppCompilationLogs: React.FC<Props> = ({ logs, popupOpen, popupToggle, ope
         icon={<ErrorIcon />}
         open={open && logs.length > 0}
         title="Open scripts logs"
+        tooltipOpen
+        tooltipTitle="Compilation logs"
       />
 
       <Backdrop className={classes.popup} open={popupOpen} onClick={onClickButtonCloseLogs}>
