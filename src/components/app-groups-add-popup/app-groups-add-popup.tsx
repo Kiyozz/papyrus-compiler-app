@@ -1,8 +1,18 @@
+import Fade from '@material-ui/core/Fade'
+import Backdrop from '@material-ui/core/Backdrop'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import { makeStyles, Theme } from '@material-ui/core/styles'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import './app-groups-add-popup.scss'
 import { GroupModel, ScriptModel } from '../../models'
 import { useDropzone } from 'react-dropzone'
-import { CSSTransition } from 'react-transition-group'
 import pscFilesToPscScripts from '../../utils/scripts/psc-files-to-psc-scripts'
 import uniqBy from 'lodash-es/uniqBy'
 import useOnKeyUp from '../../hooks/use-on-key-up'
@@ -13,13 +23,21 @@ interface Props {
   onGroupEdit: (group: GroupModel) => void
   onClose: () => void
   group?: GroupModel
+  open: boolean
 }
 
-const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, lastId, onClose, group }) => {
+const useStyles = makeStyles((theme: Theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1
+  }
+}))
+
+const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, lastId, onClose, group }) => {
   const [name, setName] = useState('')
   const [scripts, setScripts] = useState<ScriptModel[]>([])
   const popupRef = useRef<HTMLDivElement>(null)
   const [isEdit, setEdit] = useState(false)
+  const classes = useStyles()
 
   useOnKeyUp('Escape', () => {
     onClose()
@@ -89,12 +107,14 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, lastId, o
   const scriptsList = useMemo(() => {
     return scripts.map((script, index) => {
       return (
-        <div
+        <ListItem
           key={script.id + index}
           onClick={onClickRemoveScriptFromGroup(script)}
         >
-          {script.name}
-        </div>
+          <ListItemText>
+            {script.name}
+          </ListItemText>
+        </ListItem>
       )
     })
   }, [scripts, onClickRemoveScriptFromGroup])
@@ -116,71 +136,68 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, lastId, o
   }, [onClose])
 
   return (
-    <div
-      className="app-groups-add-popup"
+    <Backdrop
+      open={open}
+      className={classes.backdrop}
       onClick={onClickPopupToClose}
-      ref={popupRef}
     >
-      <div className="app-groups-add-popup-container">
+      <Card className="app-groups-add-popup-container">
         <form
           className="h-100 d-flex flex-column"
           onSubmit={onSubmitAddGroup}
         >
-          <div className="form-group">
-            <label htmlFor="group-name">Name</label>
-            <input
-              className="form-control"
+          <CardContent>
+            <TextField
+              fullWidth
+              label="Name"
               name="group-name"
               id="group-name"
-              onChange={onChangeName}
               value={name}
+              onChange={onChangeName}
             />
-          </div>
-          <div
-            title="Add scripts"
-            className="form-group h-100 overflow-auto cursor-pointer"
-            {...getRootProps()}
-          >
-            <input {...getInputProps()} />
-
-            {scripts.length === 0 && (
-              'Drop your scripts files here or click here'
-            )}
-
-            <CSSTransition
-              timeout={150}
-              in={isDragActive}
-              classNames="app-fade"
-              mountOnEnter
-              unmountOnExit
+            <div
+              title="Add scripts"
+              className="app-groups-add-popup-scripts"
+              {...getRootProps()}
             >
-              <div className="app-groups-is-dragging-container">
-                Drop files here...
-              </div>
-            </CSSTransition>
+              <input {...getInputProps()} />
 
-            <div className="app-groups-popup-scripts">
-              {scriptsList}
+              {scripts.length === 0 && (
+                'Drop your scripts files here or click here'
+              )}
+
+              <Fade
+                in={isDragActive}
+                mountOnEnter
+                unmountOnExit
+              >
+                <div className="app-groups-is-dragging-container">
+                  Drop files here...
+                </div>
+              </Fade>
+
+              <List className="app-groups-popup-scripts">
+                {scriptsList}
+              </List>
             </div>
-          </div>
-          <div className="app-groups-add-popup-form-actions">
-            <button
-              className="btn btn-primary"
+          </CardContent>
+          <CardActions>
+            <Button
               type="submit"
+              color="primary"
+              variant="contained"
             >
               {isEdit ? 'Edit' : 'Add'}
-            </button>
-            <button
-              className="btn btn-secondary"
-              type="button"
+            </Button>
+            <Button
               onClick={onClickCancel}
             >
               Cancel
-            </button>
-          </div>
+            </Button>
+          </CardActions>
         </form>
-      </div>
-    </div>
+      </Card>
+    </Backdrop>
   )
 }
 

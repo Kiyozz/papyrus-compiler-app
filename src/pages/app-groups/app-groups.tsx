@@ -1,6 +1,6 @@
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
-import { styled } from '@material-ui/core/styles'
+import { styled, makeStyles, Theme } from '@material-ui/core/styles'
 import CreateIcon from '@material-ui/icons/Create'
 import DeleteIcon from '@material-ui/icons/Delete'
 import React, { useCallback, useMemo, useState } from 'react'
@@ -24,6 +24,12 @@ export interface DispatchesProps {
 
 type Props = StateProps & DispatchesProps
 
+const useStyles = makeStyles((theme: Theme) => ({
+  group: {
+    position: 'relative'
+  }
+}))
+
 const GroupsList = styled('div')({
   position: 'relative'
 })
@@ -32,6 +38,7 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
   const [showAddPopup, setShowPopup] = useState(false)
   const [isHoveringGroup, setHoveringGroup] = useState<GroupModel | undefined>(undefined)
   const [editingGroup, setEditingGroup] = useState<GroupModel | undefined>(undefined)
+  const classes = useStyles()
 
   const onClickRemoveGroup = useCallback((group: GroupModel) => {
     return () => {
@@ -92,6 +99,7 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
       return (
         <AppPaper
           key={group.id}
+          className={classes.group}
           onMouseEnter={onMouseEnterGroup}
           onMouseLeave={onMouseLeaveGroup}
           onMouseMove={onMouseMoveGroup}
@@ -139,14 +147,11 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
       <AppGroupsTitle onClickAddButton={onClickAddButton} />
 
       <div className="app-groups-content">
-        <Fade
-          in={showAddPopup}
-          mountOnEnter
-          unmountOnExit
-        >
+        <Fade in={showAddPopup} mountOnEnter unmountOnExit>
           <AppGroupsAddPopup
             lastId={lastId}
             group={editingGroup}
+            open={showAddPopup}
             onGroupAdd={onGroupAdd}
             onGroupEdit={onGroupEdit}
             onClose={onClosePopup}
