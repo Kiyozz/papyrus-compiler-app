@@ -38,9 +38,11 @@ const AppCompilationGroups: React.FC<Props> = ({ groups, onChangeGroup }) => {
     })
   }, [groups, onChangeGroup])
 
+  const notEmptyGroups = groups.filter(group => group.scripts.length > 0)
+
   return (
     <div className="app-compilation-action-group">
-      {groups.length > 0 && (
+      {notEmptyGroups.length > 0 && (
         <>
           <Button aria-controls="load-group-menu" aria-haspopup="true" onClick={onClick}>
             Load a group

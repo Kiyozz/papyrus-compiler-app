@@ -12,6 +12,7 @@ interface Props {
   Button: JSX.Element
   onClickRemoveScriptFromScript: (script: ScriptModel) => () => void
   createOnMouseEvent: (script: ScriptModel | undefined) => () => void
+  onClear: () => void
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-const AppCompilationContent: React.FC<Props> = ({ isDragActive, onClickRemoveScriptFromScript, createOnMouseEvent, Button }) => {
+const AppCompilationContent: React.FC<Props> = ({ isDragActive, onClear, onClickRemoveScriptFromScript, createOnMouseEvent, Button }) => {
   const classes = useStyles()
   const { compilationScripts, hoveringScript } = useCompilationContext()
 
@@ -73,7 +74,7 @@ const AppCompilationContent: React.FC<Props> = ({ isDragActive, onClickRemoveScr
         </p>
       </Fade>
 
-      <AppCompilationActions />
+      <AppCompilationActions hasScripts={scriptsList.length > 0} onClearScripts={onClear} />
 
       <Box className={classes.buttonWrapper}>
         {Button}

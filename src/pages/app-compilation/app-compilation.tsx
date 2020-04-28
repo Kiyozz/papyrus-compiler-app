@@ -77,6 +77,10 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, groups, compilation
     setCompilationScripts(uniqBy([...compilationScripts, ...scripts], 'name'))
   }, [compilationScripts, setCompilationScripts, groups])
 
+  const onClearScripts = () => {
+    setCompilationScripts([])
+  }
+
   return (
     <CompilationContextProvider hoveringScript={hoveringScript}>
       <AppAddScripts
@@ -106,6 +110,7 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, groups, compilation
                   Button={Button}
                   createOnMouseEvent={createOnMouseEvent}
                   onClickRemoveScriptFromScript={onClickRemoveScriptFromScript}
+                  onClear={onClearScripts}
                 />
               </div>
             </div>

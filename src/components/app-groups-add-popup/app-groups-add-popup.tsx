@@ -1,5 +1,9 @@
+import cx from 'classnames'
 import Fade from '@material-ui/core/Fade'
 import Backdrop from '@material-ui/core/Backdrop'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import DeleteIcon from '@material-ui/icons/Delete'
+import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Card from '@material-ui/core/Card'
@@ -18,8 +22,7 @@ import uniqBy from 'lodash-es/uniqBy'
 import useOnKeyUp from '../../hooks/use-on-key-up'
 
 interface Props {
-  lastId: number
-  onGroupAdd: (group: GroupModel) => void
+  onGroupAdd: (group: Omit<GroupModel, 'id'>) => void
   onGroupEdit: (group: GroupModel) => void
   onClose: () => void
   group?: GroupModel
@@ -29,10 +32,21 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1
+  },
+  list: {
+    width: '100%'
+  },
+  listItem: {
+    paddingTop: 0,
+    paddingBottom: 0
+  },
+  emptyText: {
+    width: '100%',
+    height: 150
   }
 }))
 
-const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, lastId, onClose, group }) => {
+const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose, group }) => {
   const [name, setName] = useState('')
   const [scripts, setScripts] = useState<ScriptModel[]>([])
   const popupRef = useRef<HTMLDivElement>(null)
@@ -80,11 +94,10 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, las
     }
 
     onGroupAdd({
-      id: ++lastId,
       name: name.trim(),
       scripts
     })
-  }, [name, isEdit, group, onGroupAdd, lastId, scripts, onGroupEdit])
+  }, [name, isEdit, group, onGroupAdd, scripts, onGroupEdit])
 
   const onChangeName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value
@@ -109,11 +122,16 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, las
       return (
         <ListItem
           key={script.id + index}
-          onClick={onClickRemoveScriptFromGroup(script)}
+          className={classes.listItem}
         >
           <ListItemText>
             {script.name}
           </ListItemText>
+          <ListItemSecondaryAction>
+            <IconButton edge="end" aria-label="delete" onClick={onClickRemoveScriptFromGroup(script)}>
+              <DeleteIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
         </ListItem>
       )
     })
@@ -163,7 +181,7 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, las
               <input {...getInputProps()} />
 
               {scripts.length === 0 && (
-                'Drop your scripts files here or click here'
+                <div className={classes.emptyText}>Drop your scripts files here or click here</div>
               )}
 
               <Fade
@@ -176,9 +194,11 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, las
                 </div>
               </Fade>
 
-              <List className="app-groups-popup-scripts">
-                {scriptsList}
-              </List>
+              <Fade in={scriptsList.length > 0}>
+                <List className={cx(['app-groups-popup-scripts', classes.list])}>
+                  {scriptsList}
+                </List>
+              </Fade>
             </div>
           </CardContent>
           <CardActions>

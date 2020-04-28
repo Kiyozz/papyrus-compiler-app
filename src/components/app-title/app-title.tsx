@@ -12,7 +12,9 @@ const Title = styled('h1')({
   position: 'sticky',
   top: 0,
   zIndex: 50,
-  paddingTop: 15
+  paddingTop: 15,
+  marginLeft: -2,
+  marginRight: -2
 })
 
 const AppTitle: React.FC<Props> = ({ children, className }) => {

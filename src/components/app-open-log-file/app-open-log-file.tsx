@@ -25,8 +25,6 @@ const AppOpenLogFile: React.FC<Props> = ({ openLogFile, open }) => {
     <SpeedDialAction
       onClick={onClickButtonOpenLogFile}
       title="Open app logs file"
-      tooltipOpen
-      tooltipTitle="Logs file"
       open={open}
       icon={<BugReportIcon />}
     />
