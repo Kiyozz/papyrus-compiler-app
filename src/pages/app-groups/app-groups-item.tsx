@@ -1,10 +1,8 @@
-import Fade from '@material-ui/core/Fade'
-import { makeStyles, Theme } from '@material-ui/core/styles'
-import CreateIcon from '@material-ui/icons/Create'
-import DeleteIcon from '@material-ui/icons/Delete'
+import { makeStyles } from '@material-ui/core/styles'
 import React from 'react'
 import AppPaper from '../../components/app-paper/app-paper'
 import { GroupModel } from '../../models'
+import AppGroupsItemMenu from './app-groups-item-menu'
 
 interface Props {
   onMouseEnter: () => void
@@ -16,13 +14,18 @@ interface Props {
   hoveringGroup?: GroupModel
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   group: {
     position: 'relative'
+  },
+  actions: {
+    position: 'absolute',
+    top: 5,
+    right: 5
   }
 }))
 
-const AppGroupsItem: React.FC<Props> = ({ group, hoveringGroup, onDelete, onEdit, onMouseEnter, onMouseLeave, onMouseMove }) => {
+const AppGroupsItem: React.FC<Props> = ({ group, onDelete, onEdit, onMouseEnter, onMouseLeave, onMouseMove }) => {
   const classes = useStyles()
 
   return (
@@ -33,26 +36,9 @@ const AppGroupsItem: React.FC<Props> = ({ group, hoveringGroup, onDelete, onEdit
       onMouseLeave={onMouseLeave}
       onMouseMove={onMouseMove}
     >
-      <Fade
-        in={hoveringGroup === group}
-        mountOnEnter
-        unmountOnExit
-      >
-        <div className="app-list-group-item-group-hover">
-          <span
-            className="app-list-group-item-group-hover-action app-list-group-item-group-hover-edit"
-            onClick={onEdit(group)}
-          >
-            <CreateIcon />
-          </span>
-          <span
-            className="app-list-group-item-group-hover-action app-list-group-item-group-hover-remove"
-            onClick={onDelete(group)}
-          >
-            <DeleteIcon />
-          </span>
-        </div>
-      </Fade>
+      <div className={classes.actions}>
+        <AppGroupsItemMenu onEdit={onEdit(group)} onDelete={onDelete(group)} group={group} />
+      </div>
       <div className="app-groups-list-group-item-name">{group.name}</div>
       <div className="app-groups-list-group-item-scripts">
         {group.scripts.length > 0 ? (

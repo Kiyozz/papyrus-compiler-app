@@ -1,6 +1,4 @@
 import cx from 'classnames'
-import map from 'lodash-es/map'
-import max from 'lodash-es/max'
 import uniqBy from 'lodash-es/uniqBy'
 import React, { useCallback, useState } from 'react'
 import AppAddScripts from '../../components/app-add-scripts/app-add-scripts'

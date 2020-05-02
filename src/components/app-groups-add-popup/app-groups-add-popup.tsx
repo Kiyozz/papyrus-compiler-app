@@ -128,13 +128,13 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onC
           </ListItemText>
           <ListItemSecondaryAction>
             <IconButton edge="end" aria-label="delete" onClick={onClickRemoveScriptFromGroup(script)}>
-              <DeleteIcon />
+              <DeleteIcon color="error" />
             </IconButton>
           </ListItemSecondaryAction>
         </ListItem>
       )
     })
-  }, [scripts, onClickRemoveScriptFromGroup])
+  }, [scripts, onClickRemoveScriptFromGroup, classes.listItem])
 
   const onClickPopupToClose = useCallback((e: React.MouseEvent) => {
     if (!popupRef.current) {

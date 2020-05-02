@@ -63,7 +63,7 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
     setShowPopup(false)
 
     addGroup(group as GroupModel)
-  }, [addGroup, groups, setShowPopup])
+  }, [addGroup, setShowPopup])
 
   const onGroupEdit = useCallback((lastGroupName: string, group: GroupModel) => {
     setShowPopup(false)
