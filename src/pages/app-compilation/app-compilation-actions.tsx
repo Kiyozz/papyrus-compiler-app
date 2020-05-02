@@ -4,7 +4,7 @@ import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon'
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
 import Backdrop from '@material-ui/core/Backdrop'
 import ClearIcon from '@material-ui/icons/Clear'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import AppCompilationLogs from '../../components/app-compilation-logs/app-compilation-logs.container'
 import AppOpenLogFile from '../../components/app-open-log-file/app-open-log-file.container'
 
@@ -28,13 +28,13 @@ const AppCompilationActions: React.FC<Props> = ({ hasScripts, onClearScripts }) 
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
     setOpen(false)
-  }, [])
+  }
 
-  const handleOpen = useCallback(() => {
+  const handleOpen = () => {
     setOpen(true)
-  }, [])
+  }
 
   const onClickEmpty = () => {
     onClearScripts()

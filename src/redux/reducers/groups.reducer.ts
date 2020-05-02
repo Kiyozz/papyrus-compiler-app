@@ -1,5 +1,6 @@
 import { AnyAction } from 'redux'
 import * as CONSTANTS from '../actions/constants'
+import uniqBy from 'lodash-es/uniqBy'
 import { GroupModel } from '../../models'
 
 export interface GroupsState {
@@ -36,19 +37,19 @@ export default function groupsReducer(state = initialState, action: AnyAction): 
     case CONSTANTS.APP_GROUPS_ADD_GROUP:
       return {
         ...state,
-        groups: [...state.groups, action.payload]
+        groups: uniqBy([...state.groups, action.payload], 'name')
       }
     case CONSTANTS.APP_GROUPS_REMOVE_GROUP:
       return {
         ...state,
-        groups: state.groups.filter(group => group.id !== action.payload.id)
+        groups: state.groups.filter(group => group.name !== action.payload.name)
       }
     case CONSTANTS.APP_GROUPS_EDIT_GROUP:
       return {
         ...state,
         groups: state.groups.map((group) => {
-          if (group.id === action.payload.id) {
-            group = { ...action.payload }
+          if (group.name === action.payload.lastName) {
+            group = { ...action.payload.group }
           }
 
           return group

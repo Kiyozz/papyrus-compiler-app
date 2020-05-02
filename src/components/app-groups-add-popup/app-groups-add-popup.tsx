@@ -22,8 +22,8 @@ import uniqBy from 'lodash-es/uniqBy'
 import useOnKeyUp from '../../hooks/use-on-key-up'
 
 interface Props {
-  onGroupAdd: (group: Omit<GroupModel, 'id'>) => void
-  onGroupEdit: (group: GroupModel) => void
+  onGroupAdd: (group: GroupModel) => void
+  onGroupEdit: (lastGroupName: string, group: GroupModel) => void
   onClose: () => void
   group?: GroupModel
   open: boolean
@@ -84,8 +84,7 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onC
     }
 
     if (isEdit && group) {
-      onGroupEdit({
-        id: group.id,
+      onGroupEdit(group.name, {
         name: name.trim(),
         scripts
       })

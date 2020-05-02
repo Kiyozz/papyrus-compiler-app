@@ -60,21 +60,17 @@ const AppCompilation: React.FC<Props> = ({ startCompilation, groups, compilation
 
     setCompilationScripts(newScripts.map((script, index) => ({ ...script, id: index })))
   }, [setCompilationScripts, compilationScripts])
-  const onChangeGroup = useCallback((groupId: number) => {
-    const lastId = max(map(compilationScripts, 'id')) ?? 0
-    const group = groups.find(group => group.id === groupId)
+  const onChangeGroup = useCallback((groupName: string) => {
+    const group = groups.find(group => group.name === groupName)
 
     if (!group) {
       return
     }
 
-    const scripts: ScriptModel[] = group.scripts.map((script: ScriptModel) => {
-      script.id = lastId + script.id
+    const scripts: ScriptModel[] = [...compilationScripts, ...group.scripts]
+      .map((script, index) => ({ ...script, id: index }))
 
-      return script
-    })
-
-    setCompilationScripts(uniqBy([...compilationScripts, ...scripts], 'name'))
+    setCompilationScripts(uniqBy(scripts, 'name'))
   }, [compilationScripts, setCompilationScripts, groups])
 
   const onClearScripts = () => {

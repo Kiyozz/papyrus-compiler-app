@@ -8,7 +8,7 @@ import AppCompilationGroups from './app-compilation-groups'
 import { useCompilationContext } from './compilation-context'
 
 interface Props {
-  onChangeGroup: (groupId: number) => void
+  onChangeGroup: (groupName: string) => void
   onClickPlayPause: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 

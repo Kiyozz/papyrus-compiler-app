@@ -27,7 +27,7 @@ const AppGroupsItem: React.FC<Props> = ({ group, hoveringGroup, onDelete, onEdit
 
   return (
     <AppPaper
-      key={group.id}
+      key={group.name}
       className={classes.group}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

@@ -7,7 +7,7 @@ import { GroupModel } from '../../models'
 
 interface Props {
   groups: GroupModel[]
-  onChangeGroup: (groupId: number) => void
+  onChangeGroup: (groupName: string) => void
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -27,11 +27,11 @@ const AppCompilationGroups: React.FC<Props> = ({ groups, onChangeGroup }) => {
     return groups.filter(group => group.scripts.length > 0).map(group => {
       const onClickGroup = () => {
         onClose()
-        onChangeGroup(group.id)
+        onChangeGroup(group.name)
       }
 
       return (
-        <MenuItem value={group.id} key={group.id} onClick={onClickGroup}>
+        <MenuItem value={group.name} key={group.name} onClick={onClickGroup}>
           {group.name}
         </MenuItem>
       )

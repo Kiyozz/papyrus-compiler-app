@@ -1,15 +1,10 @@
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
-import { styled, makeStyles, Theme } from '@material-ui/core/styles'
-import CreateIcon from '@material-ui/icons/Create'
-import DeleteIcon from '@material-ui/icons/Delete'
+import { styled } from '@material-ui/core/styles'
 import React, { useCallback, useMemo, useState } from 'react'
 import './app-groups.scss'
-import AppPaper from '../../components/app-paper/app-paper'
 import { GroupModel } from '../../models'
 import AppGroupsAddPopup from '../../components/app-groups-add-popup/app-groups-add-popup'
-import map from 'lodash-es/map'
-import max from 'lodash-es/max'
 import AppGroupsItem from './app-groups-item'
 import AppGroupsTitle from './app-groups-title'
 
@@ -20,7 +15,7 @@ export interface StateProps {
 export interface DispatchesProps {
   addGroup: (group: GroupModel) => void
   removeGroup: (group: GroupModel) => void
-  editGroup: (group: GroupModel) => void
+  editGroup: (lastGroupName: string, group: GroupModel) => void
 }
 
 type Props = StateProps & DispatchesProps
@@ -59,12 +54,6 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
     }
   }, [setHoveringGroup, isHoveringGroup, showAddPopup])
 
-  const lastId = useMemo(() => {
-    return (max(
-      groups.map((group) => max(map(group.scripts, 'id')))
-    ) ?? 0) + 1
-  }, [groups])
-
   const onClickAddButton = useCallback(() => {
     setEditingGroup(undefined)
     setShowPopup(true)
@@ -73,14 +62,12 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
   const onGroupAdd = useCallback((group: Partial<GroupModel>) => {
     setShowPopup(false)
 
-    group.id = (max(map(groups, 'id')) ?? 0) + 1
-
     addGroup(group as GroupModel)
   }, [addGroup, groups, setShowPopup])
 
-  const onGroupEdit = useCallback((group: GroupModel) => {
+  const onGroupEdit = useCallback((lastGroupName: string, group: GroupModel) => {
     setShowPopup(false)
-    editGroup(group)
+    editGroup(lastGroupName, group)
   }, [editGroup, setShowPopup])
 
   const onClosePopup = useCallback(() => {
@@ -102,7 +89,7 @@ const AppGroups: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
           onEdit={onClickEditGroup}
           hoveringGroup={isHoveringGroup}
           group={group}
-          key={group.id}
+          key={group.name}
         />
       )
     })

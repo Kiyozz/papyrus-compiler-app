@@ -6,5 +6,5 @@ export const actionSaveGroups = createAction<GroupModel[]>(CONSTANTS.APP_GROUPS_
 export const actionSaveGroupsToLocal = createAction<GroupModel[]>(CONSTANTS.APP_GROUPS_SAVE_GROUPS_TO_LOCAL)
 
 export const actionAddGroup = createAction<GroupModel>(CONSTANTS.APP_GROUPS_ADD_GROUP)
-export const actionEditGroup = createAction<GroupModel>(CONSTANTS.APP_GROUPS_EDIT_GROUP)
+export const actionEditGroup = createAction<{ group: GroupModel, lastName: string }>(CONSTANTS.APP_GROUPS_EDIT_GROUP)
 export const actionRemoveGroup = createAction<GroupModel>(CONSTANTS.APP_GROUPS_REMOVE_GROUP)
