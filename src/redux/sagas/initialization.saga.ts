@@ -3,9 +3,9 @@ import * as CONSTANTS from '../actions/constants'
 import {
   actionInitializationFailed,
   actionInitializationRestoreSettings,
-  actionInitializationSuccess
-} from '../actions/initialization/initialization.actions'
-import { actionDetectMo2SourcesFolders } from '../actions/settings/settings.actions'
+  actionInitializationSuccess,
+  actionDetectMo2SourcesFolders
+} from '../actions'
 import { RootStore } from '../stores/root.store'
 import { SettingsState } from '../reducers/settings.reducer'
 

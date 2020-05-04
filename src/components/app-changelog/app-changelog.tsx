@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import Dialog from '@material-ui/core/Dialog'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -5,16 +6,18 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
 import DownloadIcon from '@material-ui/icons/GetApp'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
-import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
+import { connect } from 'react-redux'
+
 import useOnKeyUp from '../../hooks/use-on-key-up'
-import styled from '@emotion/styled'
+import { RootStore } from '../../redux/stores/root.store'
 
 const { shell } = window.require('electron')
 
-export interface StateProps {
+interface StateProps {
   notes: string
   startingVersion: string
   latestNotesVersion: string
@@ -22,7 +25,7 @@ export interface StateProps {
   releaseLink: string
 }
 
-export interface OwnProps {
+interface OwnProps {
   onClose: () => void
 }
 
@@ -32,7 +35,7 @@ const Content = styled.div`
   padding: 0 30px;
 `
 
-const AppChangelog: React.FC<Props> = ({ onClose, notes, releaseLink, latestNotesVersion, startingVersion, showNotes }) => {
+const Component: React.FC<Props> = ({ onClose, notes, releaseLink, latestNotesVersion, startingVersion, showNotes }) => {
   const onClickDownloadRelease = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
@@ -69,5 +72,14 @@ const AppChangelog: React.FC<Props> = ({ onClose, notes, releaseLink, latestNote
     </Dialog>
   )
 }
+
+const AppChangelog = connect(({ changelog }: RootStore, { onClose }: OwnProps): StateProps & OwnProps => ({
+  onClose,
+  latestNotesVersion: changelog.version,
+  showNotes: changelog.showNotes,
+  startingVersion: changelog.startingVersion,
+  notes: changelog.notes,
+  releaseLink: 'https://www.nexusmods.com/skyrim/mods/96339?tab=files'
+}))(Component)
 
 export default AppChangelog

@@ -1,32 +1,44 @@
+import styled from '@emotion/styled'
+import Fade from '@material-ui/core/Fade'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import React from 'react'
-import './app-task-loading.scss'
-import { CSSTransition } from 'react-transition-group'
 
-export interface StateProps {
+import React from 'react'
+import { connect } from 'react-redux'
+
+import { RootStore } from '../../redux/stores/root.store'
+
+interface StateProps {
   loading: boolean
 }
 
-export interface DispatchesProps {}
+type Props = StateProps
 
-type Props = StateProps & DispatchesProps
+const Overlay = styled.div`
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+`
 
-const AppTaskLoading: React.FC<Props> = ({ loading }) => {
+const Component: React.FC<Props> = ({ loading }) => {
   return (
-    <CSSTransition
-      timeout={300}
-      classNames="app-fade"
+    <Fade
       in={loading}
       mountOnEnter
       unmountOnExit
     >
-      <div className="app-task-loading">
-        <span className="app-task-loading-spin">
-          <CircularProgress />
-        </span>
-      </div>
-    </CSSTransition>
+      <Overlay>
+        <CircularProgress size={32} />
+      </Overlay>
+    </Fade>
   )
 }
+
+const AppTaskLoading = connect((store: RootStore): StateProps => ({
+  loading: store.taskLoading
+}))(Component)
 
 export default AppTaskLoading

@@ -1,5 +1,5 @@
+import styled from '@emotion/styled'
 import { Box } from '@material-ui/core'
-import { makeStyles, Theme } from '@material-ui/core/styles'
 import React, { useMemo } from 'react'
 import Fade from '@material-ui/core/Fade'
 import { ScriptModel } from '../../models'
@@ -15,14 +15,11 @@ interface Props {
   onClear: () => void
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  buttonWrapper: {
-    marginTop: theme.spacing(1)
-  }
-}))
+const ButtonWrapper = styled(Box)`
+  margin-top: 8px;
+`
 
 const AppCompilationContent: React.FC<Props> = ({ isDragActive, onClear, onClickRemoveScriptFromScript, createOnMouseEvent, Button }) => {
-  const classes = useStyles()
   const { compilationScripts, hoveringScript } = useCompilationContext()
 
   const scriptsList: JSX.Element[] = useMemo(() => {
@@ -57,13 +54,11 @@ const AppCompilationContent: React.FC<Props> = ({ isDragActive, onClear, onClick
         </div>
       </Fade>
 
-      <Fade in={scriptsList.length > 0}>
+      {scriptsList.length > 0 ? (
         <div className="app-compilation-scripts-list">
           {scriptsList}
         </div>
-      </Fade>
-
-      <Fade in={scriptsList.length === 0} mountOnEnter unmountOnExit>
+      ) : (
         <p className="text-secondary text-wrap">
           You can drag and drop psc files to load them into the
           application.
@@ -72,13 +67,13 @@ const AppCompilationContent: React.FC<Props> = ({ isDragActive, onClear, onClick
 
           This is only available when not running in administrator.
         </p>
-      </Fade>
+      )}
 
       <AppCompilationActions hasScripts={scriptsList.length > 0} onClearScripts={onClear} />
 
-      <Box className={classes.buttonWrapper}>
+      <ButtonWrapper>
         {Button}
-      </Box>
+      </ButtonWrapper>
     </>
   )
 }

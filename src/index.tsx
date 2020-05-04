@@ -3,7 +3,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import './index.scss'
-import App from './app.container'
+import App from './app'
 import * as serviceWorker from './serviceWorker'
 import createRootStore, { RootStoreProvider } from './redux/stores/root.store'
 
