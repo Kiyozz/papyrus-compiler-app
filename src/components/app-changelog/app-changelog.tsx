@@ -1,14 +1,16 @@
-import CloseIcon from '@material-ui/icons/Close'
+import Dialog from '@material-ui/core/Dialog'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardActions from '@material-ui/core/CardActions'
 import DownloadIcon from '@material-ui/icons/GetApp'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
-import React, { useCallback } from 'react'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import { CSSTransition } from 'react-transition-group'
-import AppButton from '../app-button/app-button'
-import AppTitle from '../app-title/app-title'
-import './app-changelog.scss'
 import useOnKeyUp from '../../hooks/use-on-key-up'
-import ScrollBlock from '../scroll-block/scroll-block'
+import styled from '@emotion/styled'
 
 const { shell } = window.require('electron')
 
@@ -26,60 +28,45 @@ export interface OwnProps {
 
 type Props = StateProps & OwnProps
 
-const AppChangelog: React.FC<Props> = ({ onClose, notes, releaseLink, latestNotesVersion, startingVersion, showNotes }) => {
-  const onClickClose = useCallback((e: React.MouseEvent) => {
-    e.preventDefault()
-    onClose()
-  }, [onClose])
+const Content = styled.div`
+  padding: 0 30px;
+`
 
-  const onClickDownloadRelease = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+const AppChangelog: React.FC<Props> = ({ onClose, notes, releaseLink, latestNotesVersion, startingVersion, showNotes }) => {
+  const onClickDownloadRelease = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
     shell.openExternal(releaseLink)
-  }, [releaseLink])
+  }
 
   useOnKeyUp('Escape', () => {
     onClose()
   })
 
   return (
-    <CSSTransition
-      timeout={300}
-      classNames="app-fade"
-      in={showNotes}
-      unmountOnExit
-      mountOnEnter
-    >
-      <ScrollBlock>
-        <div className="app-changelog-popup">
-          <div className="app-changelog-overlay" />
-          <div className="app-changelog">
-            <AppTitle className="app-changelog-title">
-              A new version is available
-              <span
-                className="app-changelog-close"
-                onClick={onClickClose}
-              >
-            <CloseIcon />
-          </span>
-            </AppTitle>
-
-            <div className="app-changelog-content">
-              <p>
-                {startingVersion} <ArrowForwardIcon /> {latestNotesVersion}
-                <AppButton className="app-changelog-download-button" onClick={onClickDownloadRelease}>
-                  Download <DownloadIcon />
-                </AppButton>
-              </p>
-
-              <div className="app-changelog-text">
-                <ReactMarkdown source={notes} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </ScrollBlock>
-    </CSSTransition>
+    <Dialog open={showNotes} onClose={onClose}>
+      <Card>
+        <CardHeader
+          title="A new version is available"
+          subheader={
+            <div>{startingVersion} <ArrowForwardIcon /> {latestNotesVersion}</div>
+          }
+        />
+        <Content>
+          <CardContent>
+            <ReactMarkdown source={notes} />
+          </CardContent>
+        </Content>
+        <CardActions>
+          <Button color="primary" variant="contained" startIcon={<DownloadIcon />} onClick={onClickDownloadRelease}>
+            Download
+          </Button>
+          <Button onClick={onClose}>
+            Close
+          </Button>
+        </CardActions>
+      </Card>
+    </Dialog>
   )
 }
 

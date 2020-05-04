@@ -1,7 +1,6 @@
 import Button, { ButtonProps } from '@material-ui/core/Button'
 import cx from 'classnames'
 import React from 'react'
-import './app-button.scss'
 
 interface OwnProps {
   className?: string

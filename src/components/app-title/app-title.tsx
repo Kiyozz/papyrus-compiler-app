@@ -1,4 +1,4 @@
-import { styled } from '@material-ui/core/styles'
+import styled from '@emotion/styled'
 import cx from 'classnames'
 import React from 'react'
 import './app-title.scss'

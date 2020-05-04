@@ -159,10 +159,7 @@ const AppGroupsAddPopup: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onC
       onClick={onClickPopupToClose}
     >
       <Card className="app-groups-add-popup-container">
-        <form
-          className="h-100 d-flex flex-column"
-          onSubmit={onSubmitAddGroup}
-        >
+        <form onSubmit={onSubmitAddGroup}>
           <CardContent>
             <TextField
               fullWidth
