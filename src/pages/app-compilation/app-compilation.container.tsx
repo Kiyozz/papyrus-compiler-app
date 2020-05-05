@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { RootStore } from '../../redux/stores/root.store'
-import AppCompilation, { DispatchesProps, StateProps } from './app-compilation'
+import Component, { DispatchesProps, StateProps } from './app-compilation'
 import {
   actionSetCompilationScripts,
   actionStartCompilation
@@ -22,6 +22,6 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchesProps {
   }
 }
 
-const AppCompilationContainer = connect(mapStateToProps, mapDispatchToProps)(AppCompilation)
+const AppCompilationContainer = connect(mapStateToProps, mapDispatchToProps)(Component)
 
 export default AppCompilationContainer

@@ -1,22 +1,26 @@
-import Button from '@material-ui/core/Button'
 import React from 'react'
 import { DropzoneState } from 'react-dropzone'
 
 type GetInputProps = DropzoneState['getInputProps']
 
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
-  buttonRef: React.RefObject<HTMLButtonElement>
+interface Props {
+  buttonRef: React.RefObject<HTMLDivElement>
   getInputProps: GetInputProps
+  Button: JSX.Element
 }
 
-const AppAddScriptsButton: React.FC<Props> = ({ getInputProps, children, buttonRef, ...shared }) => {
+const AppAddScriptsButton: React.FC<Props> = ({ getInputProps, children, buttonRef, Button, ...shared }) => {
   return (
-    <Button color="primary" variant="contained" ref={buttonRef}>
+    <div ref={buttonRef}>
+      {Button}
+
       <input {...getInputProps()} />
 
       {children}
-    </Button>
+    </div>
   )
 }
+
+export type AppAddScriptsButtonProps = Props
 
 export default AppAddScriptsButton

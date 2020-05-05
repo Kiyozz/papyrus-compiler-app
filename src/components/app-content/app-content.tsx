@@ -2,12 +2,12 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import './app-content.scss'
 import AppCompilation from '../../pages/app-compilation/app-compilation.container'
-import AppGroups from '../../pages/app-groups/app-groups.container'
+import GroupsPage from '../../pages/app-groups/groups-page'
 import AppSettings from '../../pages/app-settings/app-settings.container'
 
 const routes = [
   { path: '/compilation', component: AppCompilation },
-  { path: '/groups', component: AppGroups },
+  { path: '/groups', component: GroupsPage },
   { path: '/settings', component: AppSettings }
 ]
 

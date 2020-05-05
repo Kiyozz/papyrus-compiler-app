@@ -1,5 +1,3 @@
-import styled from '@emotion/styled'
-
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
@@ -11,6 +9,7 @@ import AppSplashScreen from './components/app-splash-screen/app-splash-screen'
 import AppTaskLoading from './components/app-task-loading/app-task-loading'
 import { actionGetLatestNotes, actionInitialization, actionOpenLog, actionSetShowNotes } from './redux/actions'
 import { RootStore } from './redux/stores/root.store'
+import classes from './app.module.scss'
 
 export interface StateProps {
   initialized: boolean
@@ -24,11 +23,6 @@ export interface DispatchesProps {
 }
 
 type Props = StateProps & DispatchesProps
-
-const Container = styled.div`
-  min-height: 100%;
-  display: flex;
-`
 
 const Component: React.FC<Props> = ({ initialization, initialized, setShowNotes, getLatestNotes, openLogFile }) => {
   useOnIpcEvent('open-log-file', () => {
@@ -49,7 +43,7 @@ const Component: React.FC<Props> = ({ initialization, initialized, setShowNotes,
   }
 
   return (
-    <Container>
+    <div className={classes.container}>
       {initialized && (
         <AppChangelog onClose={onClickCloseChangelogPopup} />
       )}
@@ -58,7 +52,7 @@ const Component: React.FC<Props> = ({ initialization, initialized, setShowNotes,
       <AppSplashScreen />
       <AppSidebar />
       <AppContent />
-    </Container>
+    </div>
   )
 }
 

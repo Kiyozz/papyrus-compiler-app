@@ -7,15 +7,15 @@ interface Props {
   className?: string
 }
 
-const Title = styled('h1')({
-  fontSize: '2.5rem',
-  position: 'sticky',
-  top: 0,
-  zIndex: 50,
-  paddingTop: 15,
-  marginLeft: -2,
-  marginRight: -2
-})
+const Title = styled.h1`
+  font-size: 2.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding-top: 15;
+  margin-left: -2;
+  margin-right: -2;
+`
 
 const AppTitle: React.FC<Props> = ({ children, className }) => {
   return (

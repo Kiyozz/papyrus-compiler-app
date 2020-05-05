@@ -43,7 +43,7 @@ const AppCompilationScriptItem: React.FC<Props> = ({ script, onMouseEnter, onMou
         </div>
       </CSSTransition>
       <div className="app-list-group-item-script-name">{script.name}</div>
-      <div className="app-list-group-item-script-path ml-2 mt-2">
+      <div className="app-list-group-item-script-path mt-2">
         Last edited at {format(script.lastModified, 'PPpp')}
         <span className={classNames(['app-list-group-item-script-status', getClassNameFromStatus(script)])}>
           {getIconFromStatus(script)}

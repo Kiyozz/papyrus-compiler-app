@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import Dialog from '@material-ui/core/Dialog'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardActions from '@material-ui/core/CardActions'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContentText from '@material-ui/core/DialogContentText'
 import DownloadIcon from '@material-ui/icons/GetApp'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import Button from '@material-ui/core/Button'
@@ -48,27 +48,21 @@ const Component: React.FC<Props> = ({ onClose, notes, releaseLink, latestNotesVe
 
   return (
     <Dialog open={showNotes} onClose={onClose}>
-      <Card>
-        <CardHeader
-          title="A new version is available"
-          subheader={
-            <div>{startingVersion} <ArrowForwardIcon /> {latestNotesVersion}</div>
-          }
-        />
-        <Content>
-          <CardContent>
-            <ReactMarkdown source={notes} />
-          </CardContent>
-        </Content>
-        <CardActions>
-          <Button color="primary" variant="contained" startIcon={<DownloadIcon />} onClick={onClickDownloadRelease}>
-            Download
-          </Button>
-          <Button onClick={onClose}>
-            Close
-          </Button>
-        </CardActions>
-      </Card>
+      <DialogTitle>A new version is available</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          {startingVersion} <ArrowForwardIcon /> {latestNotesVersion}
+        </DialogContentText>
+        <ReactMarkdown source={notes} />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>
+          Close
+        </Button>
+        <Button color="primary" variant="contained" startIcon={<DownloadIcon />} onClick={onClickDownloadRelease}>
+          Download
+        </Button>
+      </DialogActions>
     </Dialog>
   )
 }

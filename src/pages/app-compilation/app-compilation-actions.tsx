@@ -5,7 +5,7 @@ import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
 import Backdrop from '@material-ui/core/Backdrop'
 import ClearIcon from '@material-ui/icons/Clear'
 import React, { useState } from 'react'
-import AppCompilationLogs from '../../components/app-compilation-logs/app-compilation-logs.container'
+import AppCompilationLogs from '../../components/compilation-logs/compilation-logs'
 import AppOpenLogFile from '../../components/app-open-log-file/app-open-log-file.container'
 
 interface Props {

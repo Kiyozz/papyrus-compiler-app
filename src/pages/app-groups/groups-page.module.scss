@@ -1,0 +1,32 @@
+@import "../../scss/variables";
+
+.groupsList {
+  position: relative;
+}
+
+.item {
+  position: relative;
+}
+
+.extended {
+  margin-right: 8px;
+}
+
+.fixedFab {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+}
+
+.scripts {
+  font-size: 0.8rem;
+  font-style: italic;
+
+  @include font-default;
+}
+
+.actions {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}

@@ -1,0 +1,16 @@
+div.scriptsContent {
+  $pad: 40px;
+
+  padding-left: $pad;
+  padding-right: $pad;
+}
+
+.content {
+  overflow: auto;
+  max-height: 150px;
+  height: 100%;
+  cursor: pointer;
+  margin-top: 1rem;
+  outline: none;
+  width: 300px;
+}

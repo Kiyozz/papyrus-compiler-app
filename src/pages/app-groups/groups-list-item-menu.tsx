@@ -15,7 +15,7 @@ interface Props {
   group: GroupModel
 }
 
-const AppGroupsItemMenu: React.FC<Props> = ({ group, onDelete, onEdit }) => {
+const GroupsListItemMenu: React.FC<Props> = ({ group, onDelete, onEdit }) => {
   const [anchorMenu, setAnchorMenu] = React.useState<HTMLElement | null>(null)
   const menuId = `group-${group.name}`
 
@@ -61,4 +61,4 @@ const AppGroupsItemMenu: React.FC<Props> = ({ group, onDelete, onEdit }) => {
   )
 }
 
-export default React.memo(AppGroupsItemMenu)
+export default GroupsListItemMenu

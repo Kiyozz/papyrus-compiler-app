@@ -2,10 +2,11 @@ import { ConnectedRouter } from 'connected-react-router'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import './index.scss'
+
 import App from './app'
-import * as serviceWorker from './serviceWorker'
+import './index.scss'
 import createRootStore, { RootStoreProvider } from './redux/stores/root.store'
+import * as serviceWorker from './serviceWorker'
 
 declare global {
   interface Window {

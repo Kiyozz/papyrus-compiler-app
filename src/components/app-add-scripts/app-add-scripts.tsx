@@ -1,10 +1,11 @@
 import cx from 'classnames'
 import React, { useCallback, useRef } from 'react'
 import { useDropzone } from 'react-dropzone'
-import AppAddScriptsButton from './app-add-scripts-button'
+import { NodeService } from '../../services/node.service'
+import AppAddScriptsButton, { AppAddScriptsButtonProps } from './app-add-scripts-button'
 
 type InputRef = React.RefObject<HTMLInputElement>
-type ButtonRef = React.RefObject<HTMLButtonElement>
+type ButtonRef = React.RefObject<HTMLDivElement>
 type RootRef = React.RefObject<HTMLElement>
 
 interface RenderChildren {
@@ -20,27 +21,37 @@ interface Props {
   preventDropOnDocument?: boolean
   onDrop(files: File[]): void
   onClick?: (e: React.MouseEvent<HTMLDivElement>, buttonRef: ButtonRef, inputRef: InputRef, rootRef: RootRef) => void
+  onlyClickButton?: boolean
   children: (renderProps: RenderChildren) => React.ReactNode
+  Button: JSX.Element
 }
 
 export type AddScriptsButton = JSX.Element
 
-const AppAddScripts: React.FC<Props> = ({ onDrop, onClick, className, accept = '', preventDropOnDocument = true, children, buttonClassName, buttonText }) => {
+const nodeService = new NodeService()
+
+const AppAddScripts: React.FC<Props> = ({ onDrop, onClick, className, onlyClickButton = false, accept = '', preventDropOnDocument = true, children, Button }) => {
   const { getRootProps, isDragActive, getInputProps, inputRef, rootRef } = useDropzone({
     onDrop,
     accept,
     preventDropOnDocument
   })
-  const buttonRef = useRef<HTMLButtonElement>(null)
+  const buttonRef = useRef<HTMLDivElement>(null)
 
   const onClickRoot = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    onClick?.(e, buttonRef, inputRef, rootRef)
-  }, [inputRef, buttonRef, rootRef, onClick])
+    if (onlyClickButton) {
+      if (e.target !== buttonRef.current && !nodeService.isChildren(buttonRef.current, e.target as HTMLElement)) {
+        e.stopPropagation()
 
-  const Button = (
-    <AppAddScriptsButton buttonRef={buttonRef} getInputProps={getInputProps} className={cx(buttonClassName)}>
-      {buttonText}
-    </AppAddScriptsButton>
+        return
+      }
+    }
+
+    onClick?.(e, buttonRef, inputRef, rootRef)
+  }, [inputRef, onlyClickButton, buttonRef, rootRef, onClick])
+
+  const AddButton = (
+    <AppAddScriptsButton buttonRef={buttonRef} getInputProps={getInputProps} Button={Button} />
   )
 
   return (
@@ -50,7 +61,7 @@ const AppAddScripts: React.FC<Props> = ({ onDrop, onClick, className, accept = '
         onClick: onClickRoot
       })}
     >
-      {children({ isDragActive, Button })}
+      {children({ isDragActive, Button: AddButton })}
     </div>
   )
 }

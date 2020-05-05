@@ -1,4 +1,3 @@
-import styled from '@emotion/styled'
 import Fade from '@material-ui/core/Fade'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
@@ -6,22 +5,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { RootStore } from '../../redux/stores/root.store'
+import classes from './task-loading.module.scss'
 
 interface StateProps {
   loading: boolean
 }
 
 type Props = StateProps
-
-const Overlay = styled.div`
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1500;
-`
 
 const Component: React.FC<Props> = ({ loading }) => {
   return (
@@ -30,9 +20,9 @@ const Component: React.FC<Props> = ({ loading }) => {
       mountOnEnter
       unmountOnExit
     >
-      <Overlay>
+      <div className={classes.overlay}>
         <CircularProgress size={32} />
-      </Overlay>
+      </div>
     </Fade>
   )
 }
