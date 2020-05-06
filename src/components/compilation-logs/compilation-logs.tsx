@@ -13,16 +13,16 @@ import { CompilationLogsModel, ScriptModel } from '../../models'
 import { actionPopupToggle } from '../../redux/actions'
 import { RootStore } from '../../redux/stores/root.store'
 
-export interface StateProps {
+interface StateProps {
   logs: CompilationLogsModel
   popupOpen: boolean
 }
 
-export interface OwnProps {
+interface OwnProps {
   open: boolean
 }
 
-export interface DispatchesProps {
+interface DispatchesProps {
   popupToggle: (toggle: boolean) => void
 }
 

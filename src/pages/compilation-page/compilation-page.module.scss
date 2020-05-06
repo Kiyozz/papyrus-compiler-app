@@ -1,0 +1,20 @@
+@import "../../scss/variables";
+@import "fab.module";
+@import "scripts.module";
+@import "title.module";
+@import "actions.module";
+
+.fullWidth {
+  width: 100%;
+}
+
+.page {
+  @include full-height;
+  @include padding-content;
+}
+
+.group {
+  font-size: 1rem;
+  align-self: center;
+  margin-left: 2rem;
+}

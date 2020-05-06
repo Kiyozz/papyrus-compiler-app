@@ -60,3 +60,11 @@ button:focus {
 label {
   margin: 0;
 }
+
+.MuiPaper-root {
+  padding: 8px;
+
+  & + & {
+    margin-top: 8px;
+  }
+}

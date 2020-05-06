@@ -1,15 +1,18 @@
 import { ScriptModel } from '../../models'
 import { ScriptStatus } from '../../enums/script-status.enum'
+import classes from '../../pages/compilation-page/compilation-page.module.scss'
 
 export default function getClassNameFromStatus(script: ScriptModel): string {
+  console.log('wk: script.status', script.status, classes.failed)
+
   switch (script.status) {
     case ScriptStatus.IDLE:
-      return 'app-list-group-item-script-status-idle'
+      return classes.idle
     case ScriptStatus.RUNNING:
-      return 'app-list-group-item-script-status-running'
+      return classes.running
     case ScriptStatus.SUCCESS:
-      return 'app-list-group-item-script-status-success'
+      return classes.success
     default:
-      return 'app-list-group-item-script-status-failed'
+      return classes.failed
   }
 }

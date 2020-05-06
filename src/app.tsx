@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
+import classes from './app.module.scss'
+import Sidebar from './components/sidebar/sidebar'
+import SplashScreen from './components/splash-screen/splash-screen'
+import LoadingIndicator from './components/loading-indicator/loading-indicator'
+import DialogChangelog from './components/dialog-changelog/dialog-changelog'
 import { useOnIpcEvent } from './hooks/use-on-ipc-event'
-import AppChangelog from './components/app-changelog/app-changelog'
-import AppSidebar from './components/app-sidebar/app-sidebar'
-import AppContent from './components/app-content/app-content'
-import AppSplashScreen from './components/app-splash-screen/app-splash-screen'
-import AppTaskLoading from './components/app-task-loading/app-task-loading'
 import { actionGetLatestNotes, actionInitialization, actionOpenLog, actionSetShowNotes } from './redux/actions'
 import { RootStore } from './redux/stores/root.store'
-import classes from './app.module.scss'
+import Routes from './routes'
 
 export interface StateProps {
   initialized: boolean
@@ -45,13 +45,16 @@ const Component: React.FC<Props> = ({ initialization, initialized, setShowNotes,
   return (
     <div className={classes.container}>
       {initialized && (
-        <AppChangelog onClose={onClickCloseChangelogPopup} />
+        <DialogChangelog onClose={onClickCloseChangelogPopup} />
       )}
 
-      <AppTaskLoading />
-      <AppSplashScreen />
-      <AppSidebar />
-      <AppContent />
+      <LoadingIndicator />
+      <SplashScreen />
+      <Sidebar />
+
+      <div className={classes.content}>
+        <Routes />
+      </div>
     </div>
   )
 }
