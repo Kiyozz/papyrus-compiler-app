@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
-import Title from '../../components/title/title'
 import { Games } from '../../enums/games.enum'
 import {
   actionDetectBadInstallation,
@@ -113,21 +112,30 @@ const Component: React.FC<Props> = ({ startingVersion, game, gameFolder, install
     }))
   }, [detectedMo2SourcesFolders, detectSourcesFoldersError, game, gameFolder, mo2Instance, setStringLimitation, mo2])
 
-  const onClickUpdateDetectedSourcesFolders = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    e.currentTarget.blur()
+  const onClickPageRefresh = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (installationIsBad) {
+      detectBadInstallation(gameFolder, game, mo2, mo2Instance)
+    }
 
     detectMo2SourcesFolder(mo2Instance, game)
   }
 
   return (
     <SettingsContextProvider limitation={actualMo2FolderStringLimitation}>
-      <PageAppBar title="Settings" actions={[{ text: 'Refresh', icon: <RefreshIcon /> }]} />
+      <PageAppBar
+        title="Settings"
+        actions={[{
+          text: 'Refresh',
+          icon: <RefreshIcon />,
+          onClick: onClickPageRefresh,
+          buttonProps: {
+            disabled: loading
+          }
+        }]}
+      />
 
       <Page>
         <div className={classes.page}>
-          <Title>Settings</Title>
-
           <SettingsVersion version={startingVersion} />
 
           <SettingsGame
@@ -139,7 +147,6 @@ const Component: React.FC<Props> = ({ startingVersion, game, gameFolder, install
           <SettingsMo2
             onChangeMo2={onChangeMo2}
             onChangeMo2Instance={onChangeMo2Instance}
-            onClickUpdateDetectedSourcesFolders={onClickUpdateDetectedSourcesFolders}
           />
         </div>
       </Page>

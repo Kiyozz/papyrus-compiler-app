@@ -8,20 +8,15 @@ import SettingsMo2Instance from './settings-mo2-instance'
 interface Props {
   onChangeMo2: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeMo2Instance: (value: string) => void
-  onClickUpdateDetectedSourcesFolders: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const SettingsMo2: React.FC<Props> = ({ onChangeMo2, onChangeMo2Instance, onClickUpdateDetectedSourcesFolders }) => {
+const SettingsMo2: React.FC<Props> = ({ onChangeMo2, onChangeMo2Instance }) => {
   return (
     <Paper>
       <h4>Mod Organizer 2</h4>
 
       <SettingsMo2Activation onChangeMo2={onChangeMo2} />
-
-      <SettingsMo2Instance
-        onChangeMo2Instance={onChangeMo2Instance}
-        onClickUpdateDetectedSourcesFolders={onClickUpdateDetectedSourcesFolders}
-      />
+      <SettingsMo2Instance onChangeMo2Instance={onChangeMo2Instance} />
     </Paper>
   )
 }

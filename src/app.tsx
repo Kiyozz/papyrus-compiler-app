@@ -56,9 +56,9 @@ const Component: React.FC<Props> = ({ initialization, initialized, setShowNotes,
       <PageContextProvider>
         <PageDrawer />
 
-        <div className={classes.content}>
+        <main className={classes.content}>
           <Routes />
-        </div>
+        </main>
       </PageContextProvider>
     </div>
   )

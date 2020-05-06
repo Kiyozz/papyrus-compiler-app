@@ -13,7 +13,6 @@ import { GroupModel } from '../../models'
 import { actionAddGroup, actionEditGroup, actionRemoveGroup } from '../../redux/actions'
 import { RootStore } from '../../redux/stores/root.store'
 import GroupsListItem from './groups-list-item'
-import GroupsPageTitle from './groups-page-title'
 import classes from './groups-page.module.scss'
 
 export interface StateProps {
@@ -70,8 +69,6 @@ const Component: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
       <PageAppBar title="Groups" />
 
       <Page>
-        <GroupsPageTitle />
-
         <div>
           <GroupsDialog
             group={editingGroup}

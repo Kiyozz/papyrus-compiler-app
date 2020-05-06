@@ -7,6 +7,7 @@ import App from './app'
 import './index.scss'
 import createRootStore, { RootStoreProvider } from './redux/stores/root.store'
 import * as serviceWorker from './serviceWorker'
+import Theme from './theme'
 
 declare global {
   interface Window {
@@ -20,7 +21,9 @@ render((
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <RootStoreProvider>
-        <App />
+        <Theme>
+          <App />
+        </Theme>
       </RootStoreProvider>
     </ConnectedRouter>
   </Provider>

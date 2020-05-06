@@ -5,7 +5,6 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled'
 
 import React from 'react'
 
-import Title from '../../components/title/title'
 import { useCompilationContext } from './compilation-context'
 import classes from './compilation-page.module.scss'
 
@@ -17,30 +16,24 @@ const CompilationPageTitle: React.FC<Props> = ({ onClickPlayPause }) => {
   const { isCompilationRunning, compilationScripts } = useCompilationContext()
 
   return (
-    <Title className="d-flex">
-      Compilation
-
-      <Fade in={compilationScripts.length > 0} mountOnEnter>
-        <div className={classes.actions}>
-          <Button
-            onClick={onClickPlayPause}
-            color="primary"
-            aria-label="play"
-            variant="contained"
-            disabled={isCompilationRunning || compilationScripts.length === 0}
-            startIcon={(
-              isCompilationRunning ? (
-                <CircularProgress size={18} />
-              ) : (
-                <PlayCircleFilledIcon />
-              )
-            )}
-          >
-            Play
-          </Button>
-        </div>
-      </Fade>
-    </Title>
+    <div className={classes.actions}>
+      <Button
+        onClick={onClickPlayPause}
+        color="primary"
+        aria-label="play"
+        variant="contained"
+        disabled={isCompilationRunning || compilationScripts.length === 0}
+        startIcon={(
+          isCompilationRunning ? (
+            <CircularProgress size={18} />
+          ) : (
+            <PlayCircleFilledIcon />
+          )
+        )}
+      >
+        Play
+      </Button>
+    </div>
   )
 }
 
