@@ -37,10 +37,6 @@ code {
     monospace;
 }
 
-.container {
-  outline: none;
-}
-
 #root {
   height: 100%;
 }
@@ -61,7 +57,7 @@ label {
   margin: 0;
 }
 
-.MuiPaper-root {
+.MuiPaper-root:not(.MuiMenu-paper):not(.MuiAppBar-root):not(.MuiDrawer-paper) {
   padding: 8px;
 
   & + & {

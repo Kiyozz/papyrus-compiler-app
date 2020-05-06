@@ -21,7 +21,7 @@ const GroupsListItem: React.FC<Props> = ({ group, onDelete, onEdit }) => {
       <div className={classes.actions}>
         <GroupsListItemMenu onEdit={onEdit(group)} onDelete={onDelete(group)} group={group} />
       </div>
-      <div className="app-groups-list-group-item-name">{group.name}</div>
+      <div className={classes.itemName}>{group.name}</div>
       <div className={classes.scripts}>
         {group.scripts.length > 0 ? (
           <>

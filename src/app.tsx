@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import classes from './app.module.scss'
+import PageContextProvider from './components/page/page-context'
+import PageDrawer from './components/page/page-drawer'
 import Sidebar from './components/sidebar/sidebar'
 import SplashScreen from './components/splash-screen/splash-screen'
 import LoadingIndicator from './components/loading-indicator/loading-indicator'
@@ -50,11 +52,14 @@ const Component: React.FC<Props> = ({ initialization, initialized, setShowNotes,
 
       <LoadingIndicator />
       <SplashScreen />
-      <Sidebar />
 
-      <div className={classes.content}>
-        <Routes />
-      </div>
+      <PageContextProvider>
+        <PageDrawer />
+
+        <div className={classes.content}>
+          <Routes />
+        </div>
+      </PageContextProvider>
     </div>
   )
 }

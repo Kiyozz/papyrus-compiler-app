@@ -11,13 +11,10 @@
   font-size: 0.85rem;
 }
 
-.label {
+.foldersList {
+  display: flex;
   margin-top: 0.5rem;
   font-size: 1rem;
-}
-
-button.updateFolders {
-  margin-left: 0.5rem;
 }
 
 .folders {
@@ -29,4 +26,12 @@ button.updateFolders {
   right: 16px;
   top: 16px;
   z-index: 51;
+}
+
+.listHeader {
+  display: flex;
+}
+
+.listHeaderRightText {
+  margin-left: auto;
 }

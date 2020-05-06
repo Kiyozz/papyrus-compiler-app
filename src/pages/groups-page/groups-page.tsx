@@ -7,6 +7,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import GroupsDialog from '../../components/groups-dialog/groups-dialog'
+import Page from '../../components/page/page'
+import PageAppBar from '../../components/page/page-app-bar'
 import { GroupModel } from '../../models'
 import { actionAddGroup, actionEditGroup, actionRemoveGroup } from '../../redux/actions'
 import { RootStore } from '../../redux/stores/root.store'
@@ -64,49 +66,53 @@ const Component: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
   }
 
   return (
-    <div className="app-groups container">
-      <GroupsPageTitle />
+    <>
+      <PageAppBar title="Groups" />
 
-      <div className="app-groups-content">
-        <GroupsDialog
-          group={editingGroup}
-          open={showAddPopup}
-          onGroupAdd={onGroupAdd}
-          onGroupEdit={onGroupEdit}
-          onClose={onClosePopup}
-        />
+      <Page>
+        <GroupsPageTitle />
 
-        <Fade in={groups.length > 0}>
-          <div className={classes.groupsList}>
-            {
-              groups.map((group) => {
-                return (
-                  <GroupsListItem
-                    onDelete={onClickRemoveGroup}
-                    onEdit={onClickEditGroup}
-                    group={group}
-                    key={group.name}
-                  />
-                )
-              })
-            }
+        <div>
+          <GroupsDialog
+            group={editingGroup}
+            open={showAddPopup}
+            onGroupAdd={onGroupAdd}
+            onGroupEdit={onGroupEdit}
+            onClose={onClosePopup}
+          />
+
+          <Fade in={groups.length > 0}>
+            <div className={classes.groupsList}>
+              {
+                groups.map((group) => {
+                  return (
+                    <GroupsListItem
+                      onDelete={onClickRemoveGroup}
+                      onEdit={onClickEditGroup}
+                      group={group}
+                      key={group.name}
+                    />
+                  )
+                })
+              }
+            </div>
+          </Fade>
+
+          <Fade in={groups.length === 0}>
+            <Box>
+              <p>You can create a group with the top-right button.</p>
+              <p>A group is a set of scripts that can be easily loaded on the compilation view.</p>
+            </Box>
+          </Fade>
+
+          <div className={classes.fixedFab}>
+            <Fab onClick={onClickAddButton} color="primary" variant="extended" aria-label="create a group">
+              <CreateIcon className={classes.extended} /> Create
+            </Fab>
           </div>
-        </Fade>
-
-        <Fade in={groups.length === 0}>
-          <Box>
-            <p>You can create a group with the top-right button.</p>
-            <p>A group is a set of scripts that can be easily loaded on the compilation view.</p>
-          </Box>
-        </Fade>
-
-        <div className={classes.fixedFab}>
-          <Fab onClick={onClickAddButton} color="primary" variant="extended" aria-label="create a group">
-            <CreateIcon className={classes.extended} /> Create
-          </Fab>
         </div>
-      </div>
-    </div>
+      </Page>
+    </>
   )
 }
 

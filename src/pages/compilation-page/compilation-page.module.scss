@@ -8,11 +8,6 @@
   width: 100%;
 }
 
-.page {
-  @include full-height;
-  @include padding-content;
-}
-
 .group {
   font-size: 1rem;
   align-self: center;

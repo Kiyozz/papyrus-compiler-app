@@ -1,10 +1,10 @@
-import Box from '@material-ui/core/Box'
-
-import cx from 'classnames'
+import RefreshIcon from '@material-ui/icons/Refresh'
 import debounce from 'lodash-es/debounce'
 import React from 'react'
 import { connect } from 'react-redux'
 
+import Page from '../../components/page/page'
+import PageAppBar from '../../components/page/page-app-bar'
 import Title from '../../components/title/title'
 import { Games } from '../../enums/games.enum'
 import {
@@ -122,23 +122,27 @@ const Component: React.FC<Props> = ({ startingVersion, game, gameFolder, install
 
   return (
     <SettingsContextProvider limitation={actualMo2FolderStringLimitation}>
-      <Box className={cx(classes.page, 'container')}>
-        <Title>Settings</Title>
+      <PageAppBar title="Settings" actions={[{ text: 'Refresh', icon: <RefreshIcon /> }]} />
 
-        <SettingsVersion version={startingVersion} />
+      <Page>
+        <div className={classes.page}>
+          <Title>Settings</Title>
 
-        <SettingsGame
-          onClickRadio={onClickRadio}
-          onChangeGameFolder={onChangeGameFolder}
-          onClickRefreshInstallation={onClickRefreshInstallation}
-        />
+          <SettingsVersion version={startingVersion} />
 
-        <SettingsMo2
-          onChangeMo2={onChangeMo2}
-          onChangeMo2Instance={onChangeMo2Instance}
-          onClickUpdateDetectedSourcesFolders={onClickUpdateDetectedSourcesFolders}
-        />
-      </Box>
+          <SettingsGame
+            onClickRadio={onClickRadio}
+            onChangeGameFolder={onChangeGameFolder}
+            onClickRefreshInstallation={onClickRefreshInstallation}
+          />
+
+          <SettingsMo2
+            onChangeMo2={onChangeMo2}
+            onChangeMo2Instance={onChangeMo2Instance}
+            onClickUpdateDetectedSourcesFolders={onClickUpdateDetectedSourcesFolders}
+          />
+        </div>
+      </Page>
     </SettingsContextProvider>
   )
 }

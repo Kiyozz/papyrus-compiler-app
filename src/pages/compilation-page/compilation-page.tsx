@@ -1,12 +1,13 @@
 import Fab from '@material-ui/core/Fab'
 import SearchIcon from '@material-ui/icons/Search'
 
-import cx from 'classnames'
 import uniqBy from 'lodash-es/uniqBy'
 import React from 'react'
 import { connect } from 'react-redux'
 
 import DropScripts from '../../components/drop-scripts/drop-scripts'
+import Page from '../../components/page/page'
+import PageAppBar from '../../components/page/page-app-bar'
 import { GroupModel, ScriptModel } from '../../models'
 import { actionSetCompilationScripts, actionStartCompilation } from '../../redux/actions'
 import { RootStore } from '../../redux/stores/root.store'
@@ -81,34 +82,37 @@ const Component: React.FC<Props> = ({ startCompilation, groups, compilationScrip
 
   return (
     <CompilationContextProvider hoveringScript={hoveringScript}>
-      <DropScripts
-        onDrop={onDrop}
-        accept=".psc"
-        className={cx(classes.page, 'container')}
-        onlyClickButton
-        Button={
-          <Fab className={classes.fab} variant="extended" color="primary">
-            <SearchIcon className={classes.fabIcon} /> Search scripts
-          </Fab>
-        }
-      >
-        {({ Button, isDragActive }) => (
-          <>
-            <CompilationPageTitle
-              onClickPlayPause={onClickPlayPause}
-            />
+      <PageAppBar title="Compilation" />
 
-            <CompilationPageContent
-              isDragActive={isDragActive}
-              AddScriptsButton={Button}
-              createOnMouseEvent={createOnMouseEvent}
-              onChangeGroup={onChangeGroup}
-              onClickRemoveScriptFromScript={onClickRemoveScriptFromScript}
-              onClear={onClearScripts}
-            />
-          </>
-        )}
-      </DropScripts>
+      <Page>
+        <DropScripts
+          onDrop={onDrop}
+          accept=".psc"
+          onlyClickButton
+          Button={
+            <Fab className={classes.fab} variant="extended" color="primary">
+              <SearchIcon className={classes.fabIcon} /> Search scripts
+            </Fab>
+          }
+        >
+          {({ Button, isDragActive }) => (
+            <>
+              <CompilationPageTitle
+                onClickPlayPause={onClickPlayPause}
+              />
+
+              <CompilationPageContent
+                isDragActive={isDragActive}
+                AddScriptsButton={Button}
+                createOnMouseEvent={createOnMouseEvent}
+                onChangeGroup={onChangeGroup}
+                onClickRemoveScriptFromScript={onClickRemoveScriptFromScript}
+                onClear={onClearScripts}
+              />
+            </>
+          )}
+        </DropScripts>
+      </Page>
     </CompilationContextProvider>
   )
 }
