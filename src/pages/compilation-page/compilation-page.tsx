@@ -95,7 +95,6 @@ const Component: React.FC<Props> = ({ startCompilation, groups, compilationScrip
         {({ Button, isDragActive }) => (
           <>
             <CompilationPageTitle
-              onChangeGroup={onChangeGroup}
               onClickPlayPause={onClickPlayPause}
             />
 
@@ -103,6 +102,7 @@ const Component: React.FC<Props> = ({ startCompilation, groups, compilationScrip
               isDragActive={isDragActive}
               AddScriptsButton={Button}
               createOnMouseEvent={createOnMouseEvent}
+              onChangeGroup={onChangeGroup}
               onClickRemoveScriptFromScript={onClickRemoveScriptFromScript}
               onClear={onClearScripts}
             />

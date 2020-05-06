@@ -20,16 +20,6 @@ const mockedModules: any = {
   }
 }
 
-export function mockFontAwesome() {
-  jest.mock('@fortawesome/react-fontawesome', () => {
-    return {
-      FontAwesomeIcon: () => (
-        <svg />
-      )
-    }
-  })
-}
-
 export function mockElectronRequire() {
   return jest.fn((moduleAsked: string) => {
     return mockedModules[moduleAsked] ?? {}

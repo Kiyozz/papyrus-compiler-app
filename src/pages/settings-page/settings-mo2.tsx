@@ -82,9 +82,11 @@ const SettingsMo2: React.FC<Props> = ({ onChangeMo2, onChangeMo2Instance, onClic
                   </Button>
                 </h5>
 
-                <ul className={classes.folders}>
-                  {Mo2SourcesFoldersList}
-                </ul>
+                <Collapse in={mo2Folders.length > 0}>
+                  <ul className={classes.folders}>
+                    {Mo2SourcesFoldersList}
+                  </ul>
+                </Collapse>
               </Collapse>
             </div>
           </Fade>

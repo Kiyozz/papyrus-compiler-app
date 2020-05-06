@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Games } from '../../enums/games.enum'
 import { RootStore } from '../../redux/stores/root.store'
+import { GameService } from '../../services/game.service'
 import { Mo2Service } from '../../services/mo2.service'
 
 interface SettingsContextInterface {
@@ -9,11 +10,13 @@ interface SettingsContextInterface {
   mo2Folders: string[]
   mo2Instance: string
   game: Games
+  gameFolder: string
   installationIsBad: boolean
   mo2FoldersError?: string
   limitation?: number
   loading: boolean
   mo2Service: Mo2Service
+  gameService: GameService
 }
 
 interface OwnProps {
@@ -35,6 +38,7 @@ const Provider: React.FC<SettingsContextInterface> = ({ children, ...props }) =>
 const SettingsContextProvider = connect(
   ({ settings, error, taskLoading }: RootStore, own: OwnProps): SettingsContextInterface => ({
     game: settings.game,
+    gameFolder: settings.gameFolder,
     installationIsBad: settings.installationIsBad,
     limitation: own.limitation,
     mo2: settings.mo2,
@@ -42,7 +46,8 @@ const SettingsContextProvider = connect(
     mo2Instance: settings.mo2Instance,
     mo2FoldersError: error.detectSourcesFoldersFailed,
     loading: taskLoading,
-    mo2Service: new Mo2Service()
+    mo2Service: new Mo2Service(),
+    gameService: new GameService()
   })
 )(Provider)
 

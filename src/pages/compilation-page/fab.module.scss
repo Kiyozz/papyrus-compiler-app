@@ -2,8 +2,13 @@
   margin-right: 8px;
 }
 
-button.fab {
+.fabs {
+  display: flex;
   position: fixed;
   right: 88px;
   bottom: 16px;
+
+  * + * {
+    margin-left: 1rem;
+  }
 }

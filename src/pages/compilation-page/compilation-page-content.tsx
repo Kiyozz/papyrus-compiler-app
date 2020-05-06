@@ -4,7 +4,9 @@ import DropFilesOverlay from '../../components/drop-files-overlay/drop-files-ove
 import { ScriptModel } from '../../models'
 import { useCompilationContext } from './compilation-context'
 import CompilationPageActions from './compilation-page-actions'
+import GroupsLoader from './groups-loader'
 import ScriptItem from './script-item'
+import classes from './compilation-page.module.scss'
 
 interface Props {
   isDragActive: boolean
@@ -12,10 +14,11 @@ interface Props {
   onClickRemoveScriptFromScript: (script: ScriptModel) => () => void
   createOnMouseEvent: (script: ScriptModel | undefined) => () => void
   onClear: () => void
+  onChangeGroup: (groupName: string) => void
 }
 
-const CompilationPageContent: React.FC<Props> = ({ isDragActive, onClear, onClickRemoveScriptFromScript, createOnMouseEvent, AddScriptsButton }) => {
-  const { compilationScripts, hoveringScript } = useCompilationContext()
+const CompilationPageContent: React.FC<Props> = ({ isDragActive, onClear, onChangeGroup, onClickRemoveScriptFromScript, createOnMouseEvent, AddScriptsButton }) => {
+  const { compilationScripts, hoveringScript, groups } = useCompilationContext()
 
   const scriptsList: JSX.Element[] = useMemo(() => {
     return compilationScripts.map((script) => {
@@ -58,7 +61,11 @@ const CompilationPageContent: React.FC<Props> = ({ isDragActive, onClear, onClic
 
       <CompilationPageActions hasScripts={scriptsList.length > 0} onClearScripts={onClear} />
 
-      {AddScriptsButton}
+
+      <div className={classes.fabs}>
+        {AddScriptsButton}
+        <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
+      </div>
     </>
   )
 }

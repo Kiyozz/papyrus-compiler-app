@@ -32,7 +32,7 @@ const CompilationPageActions: React.FC<Props> = ({ hasScripts, onClearScripts })
   return (
     <>
       <SpeedDial
-        className={classes.fabs}
+        className={classes.fabsSpeedDial}
         icon={<SpeedDialIcon />}
         ariaLabel="Compilation actions"
         onOpen={handleOpen}
