@@ -48,8 +48,6 @@ export default function settingsReducer(state = initialState, action: AnyAction)
         mo2SourcesFolders: action.payload || []
       }
     case CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_FAILED:
-      console.log('error', action.payload)
-
       return {
         ...state,
         mo2SourcesFolders: []

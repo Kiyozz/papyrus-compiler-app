@@ -38,8 +38,6 @@ const Component: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
 
   const onClickEditGroup = (group: GroupModel) => {
     return () => {
-      console.log('yo')
-
       setEditingGroup(group)
       setShowPopup(true)
     }

@@ -22,8 +22,6 @@ function* getLatestRelease() {
       const [ release ] = result[0] as [GithubReleaseModel]
       const startingVersion: string = yield select((state: RootStore) => state.changelog.startingVersion)
 
-      console.log(release.tag_name, startingVersion)
-
       if (typeof release !== 'undefined') {
         if (compareVersions.compare(release.tag_name, startingVersion, '>')) {
           yield put(actionSetLatestVersion(release.tag_name))
