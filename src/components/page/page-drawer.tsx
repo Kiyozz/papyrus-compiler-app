@@ -5,12 +5,13 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
 import CodeIcon from '@material-ui/icons/Code'
 import LayersIcon from '@material-ui/icons/Layers'
 import SettingsIcon from '@material-ui/icons/Settings'
 
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 import AppIcon from '../../assets/logo/vector/app-icon'
 import { usePageContext } from './page-context'
@@ -24,6 +25,26 @@ const PageDrawer: React.FC<Props> = () => {
 
   const onClick = () => setOpen(false)
 
+  const links = [
+    {
+      Icon: CodeIcon,
+      text: 'Compilation',
+      path: '/compilation'
+    },
+    {
+      Icon: LayersIcon,
+      text: 'Groups',
+      path: '/groups'
+    },
+    {
+      Icon: SettingsIcon,
+      text: 'Settings',
+      path: '/settings'
+    }
+  ]
+
+  const { pathname } = useLocation()
+
   return (
     <nav>
       <Drawer
@@ -35,37 +56,31 @@ const PageDrawer: React.FC<Props> = () => {
           paper: classes.drawer
         }}
       >
-        <div className={classes.drawerTop}>
-          <AppIcon fontSize="large" color="primary" />
-          <Typography className={classes.titleApp} variant="h5" component="h1">Papyrus Compiler</Typography>
-        </div>
-        <Divider />
-        <List>
-          <NavLink activeClassName={classes.active} className={classes.link} to="/compilation" onClick={onClick}>
-            <ListItem button disableRipple>
-              <ListItemIcon color="inherit">
-                <CodeIcon />
-              </ListItemIcon>
-               <ListItemText primary="Compilation" />
-            </ListItem>
-          </NavLink>
-          <NavLink activeClassName={classes.active} className={classes.link} to="/groups" onClick={onClick}>
-            <ListItem button disableRipple>
-              <ListItemIcon color="inherit">
-                <LayersIcon />
-              </ListItemIcon>
-               <ListItemText primary="Groups" />
-            </ListItem>
-          </NavLink>
-          <NavLink activeClassName={classes.active} className={classes.link} to="/settings" onClick={onClick}>
-            <ListItem button disableRipple>
-              <ListItemIcon color="inherit">
-                <SettingsIcon />
-              </ListItemIcon>
-               <ListItemText primary="Settings" />
-            </ListItem>
-          </NavLink>
-        </List>
+        <Box bgcolor="background.default" className={classes.box}>
+          <div className={classes.drawerTop}>
+            <AppIcon fontSize="large" color="primary" />
+            <Typography className={classes.titleApp} variant="h5" component="h1">Papyrus Compiler</Typography>
+          </div>
+          <Divider />
+          <List>
+            {links.map(Link => {
+              const isActive = pathname === Link.path
+
+              return (
+                <NavLink key={Link.path} activeClassName={classes.active} className={classes.link} to={Link.path} onClick={onClick}>
+                  <Box bgcolor={isActive ? 'primary.main' : ''} className={classes.drawerLink}>
+                    <ListItem button disableRipple>
+                      <ListItemIcon color="inherit">
+                        <Link.Icon />
+                      </ListItemIcon>
+                      <ListItemText primary={Link.text} />
+                    </ListItem>
+                  </Box>
+                </NavLink>
+              )
+            })}
+          </List>
+        </Box>
       </Drawer>
     </nav>
   )

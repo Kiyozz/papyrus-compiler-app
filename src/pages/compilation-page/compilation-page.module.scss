@@ -8,7 +8,16 @@
   width: 100%;
 }
 
+.fullHeight {
+  @include full-height;
+}
+
 .group {
+  display: inline;
   font-size: 1rem;
   align-self: center;
+}
+
+.inline {
+  display: inline;
 }

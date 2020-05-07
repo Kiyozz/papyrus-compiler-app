@@ -1,5 +1,4 @@
 import Box from '@material-ui/core/Box'
-import Fab from '@material-ui/core/Fab'
 import Fade from '@material-ui/core/Fade'
 import CreateIcon from '@material-ui/icons/Create'
 
@@ -66,7 +65,16 @@ const Component: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
 
   return (
     <>
-      <PageAppBar title="Groups" />
+      <PageAppBar
+        title="Groups"
+        actions={[
+          {
+            text: 'Create',
+            icon: <CreateIcon />,
+            onClick: onClickAddButton
+          }
+        ]}
+      />
 
       <Page>
         <div>
@@ -101,12 +109,6 @@ const Component: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
               <p>A group is a set of scripts that can be easily loaded on the compilation view.</p>
             </Box>
           </Fade>
-
-          <div className={classes.fixedFab}>
-            <Fab onClick={onClickAddButton} color="primary" variant="extended" aria-label="create a group">
-              <CreateIcon className={classes.extended} /> Create
-            </Fab>
-          </div>
         </div>
       </Page>
     </>

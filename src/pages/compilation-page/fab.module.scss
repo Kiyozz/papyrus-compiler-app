@@ -5,10 +5,7 @@
 .fabs {
   display: flex;
   position: fixed;
-  right: 88px;
+  left: calc(50% + 120px);
   bottom: 16px;
-
-  * + * {
-    margin-left: 1rem;
-  }
+  transform: translateX(-50%);
 }

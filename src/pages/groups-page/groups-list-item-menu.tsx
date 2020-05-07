@@ -54,7 +54,7 @@ const GroupsListItemMenu: React.FC<Props> = ({ group, onDelete, onEdit }) => {
           <ListItemIcon>
             <DeleteIcon fontSize="small" color="error" />
           </ListItemIcon>
-          <Typography variant="inherit">Delete</Typography>
+          <Typography variant="inherit">Remove</Typography>
         </MenuItem>
       </Menu>
     </>

@@ -5,7 +5,7 @@ import {
   actionStartCompilationScriptSuccess,
   actionStartCompilationScriptStart,
   actionStartCompilationScriptFailed
-} from '../actions/compilation/compilation.actions'
+} from '../actions'
 import { AnyAction } from 'redux'
 import { ScriptModel } from '../../models'
 import createApi from '../api/create-api'

@@ -12,6 +12,14 @@ h1.titleApp {
   width: 240px;
 }
 
+.box {
+  height: 100%;
+}
+
+.drawerLink {
+  width: 100%;
+}
+
 .drawerTop {
   height: 64px;
   display: flex;
@@ -40,7 +48,6 @@ h1.titleApp {
 }
 
 .active {
-  background-color: #78909c;
   color: white;
 
   &:hover {

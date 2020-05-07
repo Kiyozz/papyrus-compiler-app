@@ -1,6 +1,6 @@
-import Fab from '@material-ui/core/Fab'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 
 import React from 'react'
@@ -40,9 +40,9 @@ const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
     <div className={classes.group}>
       {notEmptyGroups.length > 0 && (
         <>
-          <Fab color="primary" variant="extended" aria-controls="load-group-menu" aria-haspopup="true" onClick={onClick}>
-            <AddIcon className={classes.fabIcon} /> Load group
-          </Fab>
+          <Button color="inherit" startIcon={<AddIcon />} aria-controls="load-group-menu" aria-haspopup="true" onClick={onClick}>
+            Load group
+          </Button>
 
           <Menu
             id="load-group-menu"

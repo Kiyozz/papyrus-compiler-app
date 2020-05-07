@@ -1,24 +1,25 @@
+import Typography from '@material-ui/core/Typography'
+
 import React, { useMemo } from 'react'
 
 import DropFilesOverlay from '../../components/drop-files-overlay/drop-files-overlay'
 import { ScriptModel } from '../../models'
 import { useCompilationContext } from './compilation-context'
 import CompilationPageActions from './compilation-page-actions'
-import GroupsLoader from './groups-loader'
+import PlayButton from './play-button'
 import ScriptItem from './script-item'
 import classes from './compilation-page.module.scss'
 
 interface Props {
   isDragActive: boolean
-  AddScriptsButton: JSX.Element
   onClickRemoveScriptFromScript: (script: ScriptModel) => () => void
   createOnMouseEvent: (script: ScriptModel | undefined) => () => void
   onClear: () => void
-  onChangeGroup: (groupName: string) => void
+  onClickPlayPause: () => void
 }
 
-const CompilationPageContent: React.FC<Props> = ({ isDragActive, onClear, onChangeGroup, onClickRemoveScriptFromScript, createOnMouseEvent, AddScriptsButton }) => {
-  const { compilationScripts, hoveringScript, groups } = useCompilationContext()
+const CompilationPageContent: React.FC<Props> = ({ isDragActive, onClear, onClickPlayPause, onClickRemoveScriptFromScript, createOnMouseEvent }) => {
+  const { compilationScripts, hoveringScript } = useCompilationContext()
 
   const scriptsList: JSX.Element[] = useMemo(() => {
     return compilationScripts.map((script) => {
@@ -49,22 +50,21 @@ const CompilationPageContent: React.FC<Props> = ({ isDragActive, onClear, onChan
           {scriptsList}
         </div>
       ) : (
-        <p className="text-secondary text-wrap">
-          You can drag and drop psc files to load them into the
-          application.
-
-          <br />
-
-          This is only available when not running in administrator.
-        </p>
+        <>
+          <Typography variant="body1">
+            You can drag and drop psc files to load them into the
+            application.
+          </Typography>
+          <Typography variant="body1">
+            This is only available when not running in administrator.
+          </Typography>
+        </>
       )}
 
       <CompilationPageActions hasScripts={scriptsList.length > 0} onClearScripts={onClear} />
 
-
       <div className={classes.fabs}>
-        {AddScriptsButton}
-        <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
+        <PlayButton onClick={onClickPlayPause} />
       </div>
     </>
   )

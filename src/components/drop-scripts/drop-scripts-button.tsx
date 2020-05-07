@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React from 'react'
 import { DropzoneState } from 'react-dropzone'
 
@@ -7,11 +8,12 @@ interface Props {
   buttonRef: React.RefObject<HTMLDivElement>
   getInputProps: GetInputProps
   Button: JSX.Element
+  className?: string
 }
 
-const DropScriptsButton: React.FC<Props> = ({ getInputProps, children, buttonRef, Button }) => {
+const DropScriptsButton: React.FC<Props> = ({ getInputProps, children, buttonRef, Button, className }) => {
   return (
-    <div ref={buttonRef}>
+    <div ref={buttonRef} className={cx(className)}>
       {Button}
 
       <input {...getInputProps()} />

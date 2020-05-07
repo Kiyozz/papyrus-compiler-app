@@ -1,7 +1,5 @@
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Fab from '@material-ui/core/Fab'
-import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled'
 import SearchIcon from '@material-ui/icons/Search'
+import Button from '@material-ui/core/Button'
 
 import uniqBy from 'lodash-es/uniqBy'
 import React from 'react'
@@ -17,6 +15,7 @@ import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scrip
 import CompilationContextProvider from './compilation-context'
 import CompilationPageContent from './compilation-page-content'
 import classes from './compilation-page.module.scss'
+import GroupsLoader from './groups-loader'
 
 export interface StateProps {
   isCompilationRunning: boolean
@@ -82,50 +81,46 @@ const Component: React.FC<Props> = ({ startCompilation, groups, compilationScrip
 
   return (
     <CompilationContextProvider hoveringScript={hoveringScript}>
-      <PageAppBar
-        title="Compilation"
-        actions={[
-          {
-            icon: (
-              isCompilationRunning ? (
-                <CircularProgress size={18} />
-              ) : (
-                <PlayCircleFilledIcon />
-              )
-            ),
-            onClick: onClickPlayPause,
-            iconButtonProps: {
-              disabled: compilationScripts.length === 0 || isCompilationRunning
-            }
-          }
-        ]}
-      />
+      <DropScripts
+        onDrop={onDrop}
+        accept=".psc"
+        className={classes.fullHeight}
+        buttonClassName={classes.inline}
+        onlyClickButton
+        Button={
+          <Button color="inherit" startIcon={<SearchIcon />}>
+            Search scripts
+          </Button>
+        }
+      >
+        {({ Button: AddScriptsButton, isDragActive }) => (
+          <>
+            <PageAppBar
+              title="Compilation"
+              actions={[
+                {
+                  button: AddScriptsButton
+                },
+                {
+                  button: (
+                    <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
+                  )
+                }
+              ]}
+            />
 
-      <Page>
-        <DropScripts
-          onDrop={onDrop}
-          accept=".psc"
-          onlyClickButton
-          Button={
-            <Fab className={classes.fab} variant="extended" color="primary">
-              <SearchIcon className={classes.fabIcon} /> Search scripts
-            </Fab>
-          }
-        >
-          {({ Button, isDragActive }) => (
-            <>
+            <Page>
               <CompilationPageContent
                 isDragActive={isDragActive}
-                AddScriptsButton={Button}
                 createOnMouseEvent={createOnMouseEvent}
-                onChangeGroup={onChangeGroup}
+                onClickPlayPause={onClickPlayPause}
                 onClickRemoveScriptFromScript={onClickRemoveScriptFromScript}
                 onClear={onClearScripts}
               />
-            </>
-          )}
-        </DropScripts>
-      </Page>
+            </Page>
+          </>
+        )}
+      </DropScripts>
     </CompilationContextProvider>
   )
 }

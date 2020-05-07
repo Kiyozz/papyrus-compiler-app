@@ -23,13 +23,14 @@ interface Props {
   onlyClickButton?: boolean
   children: (renderProps: RenderChildren) => React.ReactNode
   Button: JSX.Element
+  buttonClassName?: string
 }
 
 export type AddScriptsButton = JSX.Element
 
 const nodeService = new NodeService()
 
-const DropScripts: React.FC<Props> = ({ onDrop, onClick, className, onlyClickButton = false, accept = '', preventDropOnDocument = true, children, Button }) => {
+const DropScripts: React.FC<Props> = ({ onDrop, onClick, className, buttonClassName, onlyClickButton = false, accept = '', preventDropOnDocument = true, children, Button }) => {
   const { getRootProps, isDragActive, getInputProps, inputRef, rootRef } = useDropzone({
     onDrop,
     accept,
@@ -50,8 +51,10 @@ const DropScripts: React.FC<Props> = ({ onDrop, onClick, className, onlyClickBut
   }, [inputRef, onlyClickButton, buttonRef, rootRef, onClick])
 
   const AddButton = (
-    <DropScriptsButton buttonRef={buttonRef} getInputProps={getInputProps} Button={Button} />
+    <DropScriptsButton className={buttonClassName} buttonRef={buttonRef} getInputProps={getInputProps} Button={Button} />
   )
+
+  console.log('wk: className', className)
 
   return (
     <div

@@ -12,7 +12,7 @@ interface Props {
 }
 
 const SettingsMo2Instance: React.FC<Props> = ({ onChangeMo2Instance }) => {
-  const { mo2, mo2Folders, mo2FoldersError, mo2Instance, limitation, mo2Service, loading } = useSettingsContext()
+  const { mo2, mo2Folders, mo2FoldersError, mo2Instance, limitation, mo2Service } = useSettingsContext()
 
   return (
     <Collapse in={mo2}>

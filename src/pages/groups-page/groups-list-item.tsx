@@ -1,4 +1,5 @@
 import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 
 import React from 'react'
 
@@ -21,8 +22,8 @@ const GroupsListItem: React.FC<Props> = ({ group, onDelete, onEdit }) => {
       <div className={classes.actions}>
         <GroupsListItemMenu onEdit={onEdit(group)} onDelete={onDelete(group)} group={group} />
       </div>
-      <div className={classes.itemName}>{group.name}</div>
-      <div className={classes.scripts}>
+      <Typography variant="body1" component="div">{group.name}</Typography>
+      <Typography variant="body2" component="div" className={classes.scripts}>
         {group.scripts.length > 0 ? (
           <>
             {group.scripts.slice(0, 3).map((script) => script.name).join(', ')}
@@ -33,7 +34,7 @@ const GroupsListItem: React.FC<Props> = ({ group, onDelete, onEdit }) => {
             No scripts
           </>
         )}
-      </div>
+      </Typography>
     </Paper>
   )
 }

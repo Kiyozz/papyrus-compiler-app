@@ -14,10 +14,16 @@ interface Action {
   iconButtonProps?: IconButtonProps
 }
 
+interface ActionButton {
+  button: JSX.Element
+}
+
 interface Props {
   title?: string
-  actions?: Action[]
+  actions?: (Action | ActionButton)[]
 }
+
+const isActionButton = (action: Action | ActionButton): action is ActionButton => action.hasOwnProperty('button')
 
 const PageAppBar: React.FC<Props> = ({ title, actions = [] }) => {
   return (
@@ -27,6 +33,14 @@ const PageAppBar: React.FC<Props> = ({ title, actions = [] }) => {
           <Typography variant="h6" className={classes.title}>{title}</Typography>
           <div>
             {actions.map((action, index) => {
+              if (isActionButton(action)) {
+                return (
+                  <React.Fragment key={index}>
+                    {action.button}
+                  </React.Fragment>
+                )
+              }
+
               if (typeof action.text === 'undefined' && typeof action.icon !== 'undefined') {
                 return (
                   <IconButton

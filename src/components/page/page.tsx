@@ -2,7 +2,6 @@ import Fade from '@material-ui/core/Fade'
 import Container from '@material-ui/core/Container'
 
 import React from 'react'
-import PageAppBar from './page-app-bar'
 
 interface Props {
   className?: string

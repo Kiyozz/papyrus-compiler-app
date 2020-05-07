@@ -113,6 +113,10 @@ const Component: React.FC<Props> = ({ startingVersion, game, gameFolder, install
   }, [detectedMo2SourcesFolders, detectSourcesFoldersError, game, gameFolder, mo2Instance, setStringLimitation, mo2])
 
   const onClickPageRefresh = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (loading) {
+      return
+    }
+
     if (installationIsBad) {
       detectBadInstallation(gameFolder, game, mo2, mo2Instance)
     }
@@ -127,10 +131,7 @@ const Component: React.FC<Props> = ({ startingVersion, game, gameFolder, install
         actions={[{
           text: 'Refresh',
           icon: <RefreshIcon />,
-          onClick: onClickPageRefresh,
-          buttonProps: {
-            disabled: loading
-          }
+          onClick: onClickPageRefresh
         }]}
       />
 

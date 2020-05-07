@@ -1,6 +1,7 @@
 import { createMuiTheme, ThemeProvider } from '@material-ui/core'
-import purple from '@material-ui/core/colors/blueGrey'
-import yellow from '@material-ui/core/colors/yellow'
+import blueGrey from '@material-ui/core/colors/blueGrey'
+import brown from '@material-ui/core/colors/brown'
+import red from '@material-ui/core/colors/red'
 import React from 'react'
 
 interface Props {
@@ -9,8 +10,15 @@ interface Props {
 
 const theme = createMuiTheme({
   palette: {
-    primary: yellow,
-    secondary: purple
+    type: 'dark',
+    primary: {
+      main: brown['200'],
+      light: brown['A400']
+    },
+    secondary: blueGrey,
+    error: {
+      main: red['300']
+    }
   }
 })
 

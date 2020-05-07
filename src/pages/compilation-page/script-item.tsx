@@ -1,6 +1,8 @@
 import Button from '@material-ui/core/Button'
+import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 import cx from 'classnames'
@@ -35,22 +37,18 @@ const ScriptItem: React.FC<Props> = ({ script, onMouseEnter, onMouseLeave, onMou
       onMouseMove={onMouseMove}
       aria-label="script"
     >
-      <Fade
-        in={hovering}
-        mountOnEnter
-        unmountOnExit
-      >
-        <div className={classes.scriptHover}>
-          <Button aria-label="delete" startIcon={<DeleteIcon />} onClick={onClickRemove}>Delete</Button>
-        </div>
+      <Fade in={hovering}>
+        <Box bgcolor="primary.main" color="inherit" className={classes.scriptHover}>
+          <Button aria-label="delete" startIcon={<DeleteIcon />} onClick={onClickRemove}>Remove from list</Button>
+        </Box>
       </Fade>
-      <div className={classes.scriptName}>{script.name}</div>
-      <div className={classes.scriptPath}>
+      <Typography variant="body1" component="div">{script.name}</Typography>
+      <Typography variant="body2" component="div" className={classes.scriptPath}>
         Last edited at {format(script.lastModified, 'PPpp')}
         <span className={cx([classes.scriptStatus, getClassNameFromStatus(script)])}>
           {getIconFromStatus(script)}
         </span>
-      </div>
+      </Typography>
     </Paper>
   )
 }

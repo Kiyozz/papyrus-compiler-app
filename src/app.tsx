@@ -1,10 +1,10 @@
+import Box from '@material-ui/core/Box'
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import classes from './app.module.scss'
 import PageContextProvider from './components/page/page-context'
 import PageDrawer from './components/page/page-drawer'
-import Sidebar from './components/sidebar/sidebar'
 import SplashScreen from './components/splash-screen/splash-screen'
 import LoadingIndicator from './components/loading-indicator/loading-indicator'
 import DialogChangelog from './components/dialog-changelog/dialog-changelog'
@@ -56,9 +56,9 @@ const Component: React.FC<Props> = ({ initialization, initialized, setShowNotes,
       <PageContextProvider>
         <PageDrawer />
 
-        <main className={classes.content}>
+        <Box className={classes.content} bgcolor="background.default">
           <Routes />
-        </main>
+        </Box>
       </PageContextProvider>
     </div>
   )

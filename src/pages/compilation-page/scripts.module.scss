@@ -2,15 +2,10 @@
   position: relative;
 }
 
-.scriptName {
-  color: $color-secondary-800;
-}
-
 .scriptPath {
   margin-top: 8px;
   font-size: 0.8rem;
   font-style: italic;
-  @include font-default;
 }
 
 .scriptStatus {
@@ -44,11 +39,9 @@
   bottom: 0;
   left: 0;
   z-index: 1;
-  background: $color-primary-500;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
   border-radius: 4px;
-  color: $color-secondary-200;
 }
