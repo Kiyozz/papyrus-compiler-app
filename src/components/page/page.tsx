@@ -1,7 +1,10 @@
 import Fade from '@material-ui/core/Fade'
 import Container from '@material-ui/core/Container'
 
+import cx from 'classnames'
 import React from 'react'
+
+import classes from './page.module.scss'
 
 interface Props {
   className?: string
@@ -10,7 +13,7 @@ interface Props {
 const Page: React.FC<Props> = ({ children, className }) => {
   return (
     <Fade timeout={500} in appear exit={false} mountOnEnter unmountOnExit>
-      <Container className={className}>
+      <Container className={cx(classes.container, className)}>
         {children}
       </Container>
     </Fade>

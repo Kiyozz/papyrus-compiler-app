@@ -13,14 +13,14 @@ interface Props {
 }
 
 const CompilationPageActions: React.FC<Props> = ({ hasScripts, onClearScripts }) => {
-  const { compilationScripts } = useCompilationContext()
+  const { compilationScripts, hoveringScript } = useCompilationContext()
 
   const onClickEmpty = () => {
     onClearScripts()
   }
 
   return (
-    <Fade in={compilationScripts.length >= 3}>
+    <Fade in={compilationScripts.length >= 3 && !(compilationScripts.length > 5 && !!hoveringScript)}>
       <Fab
         className={classes.fabsActions}
         onClick={onClickEmpty}
