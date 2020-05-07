@@ -3,6 +3,7 @@ import Fab from '@material-ui/core/Fab'
 import ClearIcon from '@material-ui/icons/Clear'
 
 import React from 'react'
+import buttonsDisable from './action-buttons-disable'
 import { useCompilationContext } from './compilation-context'
 
 import classes from './compilation-page.module.scss'
@@ -20,7 +21,7 @@ const CompilationPageActions: React.FC<Props> = ({ hasScripts, onClearScripts })
   }
 
   return (
-    <Fade in={compilationScripts.length >= 3 && !(compilationScripts.length > 5 && !!hoveringScript)}>
+    <Fade in={compilationScripts.length >= 3 && !buttonsDisable(compilationScripts, hoveringScript)}>
       <Fab
         className={classes.fabsActions}
         onClick={onClickEmpty}

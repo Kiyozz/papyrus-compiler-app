@@ -3,6 +3,7 @@ import Fab from '@material-ui/core/Fab'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import PlayIcon from '@material-ui/icons/PlayCircleFilled'
 import React from 'react'
+import buttonsDisable from './action-buttons-disable'
 import { useCompilationContext } from './compilation-context'
 import classes from './compilation-page.module.scss'
 
@@ -26,7 +27,7 @@ const PlayButton: React.FC<Props> = ({ onClick }) => {
   }
 
   return (
-    <Fade in={!(compilationScripts.length > 5 && !!hoveringScript)}>
+    <Fade in={!buttonsDisable(compilationScripts, hoveringScript)}>
       <Fab
         variant="extended"
         color="primary"
