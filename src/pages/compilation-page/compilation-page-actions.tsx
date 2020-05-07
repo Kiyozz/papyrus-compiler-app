@@ -1,12 +1,10 @@
-import SpeedDial from '@material-ui/lab/SpeedDial'
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon'
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
+import Fade from '@material-ui/core/Fade'
+import Fab from '@material-ui/core/Fab'
 import ClearIcon from '@material-ui/icons/Clear'
 
 import React from 'react'
+import { useCompilationContext } from './compilation-context'
 
-import AppCompilationLogs from '../../components/compilation-logs/compilation-logs'
-import OpenLogFileAction from '../../components/open-log-file-action/open-log-file-action'
 import classes from './compilation-page.module.scss'
 
 interface Props {
@@ -15,40 +13,24 @@ interface Props {
 }
 
 const CompilationPageActions: React.FC<Props> = ({ hasScripts, onClearScripts }) => {
-  const [open, setOpen] = React.useState(false)
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
+  const { compilationScripts } = useCompilationContext()
 
   const onClickEmpty = () => {
     onClearScripts()
   }
 
   return (
-    <>
-      <SpeedDial
-        className={classes.fabsSpeedDial}
-        icon={<SpeedDialIcon />}
-        ariaLabel="Compilation actions"
-        onOpen={handleOpen}
-        onClose={handleClose}
-        open={open}
+    <Fade in={compilationScripts.length >= 3}>
+      <Fab
+        className={classes.fabsActions}
+        onClick={onClickEmpty}
+        variant="extended"
+        color="secondary"
+        disabled={!hasScripts}
       >
-        <SpeedDialAction
-          onClick={onClickEmpty}
-          title="Empty list"
-          open={open && hasScripts}
-          icon={<ClearIcon />}
-        />
-        <OpenLogFileAction open={open} />
-        <AppCompilationLogs open={open} />
-      </SpeedDial>
-    </>
+        <ClearIcon className={classes.fabsActionsIcon} /> Clear list
+      </Fab>
+    </Fade>
   )
 }
 

@@ -14,6 +14,8 @@ h1.titleApp {
 
 .box {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .drawerLink {
@@ -35,6 +37,10 @@ h1.titleApp {
   h1 {
     margin-right: 36px;
   }
+}
+
+ul.listSecondary {
+  margin-top: auto;
 }
 
 .link {

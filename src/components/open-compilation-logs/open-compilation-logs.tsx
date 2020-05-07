@@ -3,8 +3,10 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
 import ErrorIcon from '@material-ui/icons/Error'
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
 
 import React from 'react'
 import { connect } from 'react-redux'
@@ -18,15 +20,11 @@ interface StateProps {
   popupOpen: boolean
 }
 
-interface OwnProps {
-  open: boolean
-}
-
 interface DispatchesProps {
   popupToggle: (toggle: boolean) => void
 }
 
-export type Props = StateProps & DispatchesProps & OwnProps
+export type Props = StateProps & DispatchesProps
 
 const LogsListItem: React.FC<{ script: ScriptModel, logs: string }> = ({ script, logs }) => (
   <div>
@@ -39,7 +37,7 @@ const LogsListItem: React.FC<{ script: ScriptModel, logs: string }> = ({ script,
   </div>
 )
 
-const Component: React.FC<Props> = ({ logs, popupOpen, popupToggle, open }) => {
+const Component: React.FC<Props> = ({ logs, popupOpen, popupToggle }) => {
   const onClickButtonOpenLogs = () => {
     popupToggle(true)
   }
@@ -49,40 +47,41 @@ const Component: React.FC<Props> = ({ logs, popupOpen, popupToggle, open }) => {
   }
 
   return (
-    <div>
-      <SpeedDialAction
-        onClick={onClickButtonOpenLogs}
-        icon={<ErrorIcon />}
-        open={open && logs.length > 0}
-        title="Open scripts logs"
-      />
+    <>
+      <ListItem button onClick={onClickButtonOpenLogs}>
+        <ListItemIcon>
+          <ErrorIcon />
+        </ListItemIcon>
+        <ListItemText primary="Compilation logs" />
+      </ListItem>
 
       <Dialog open={popupOpen} onClose={onClickButtonCloseLogs}>
-        <DialogTitle>Logs</DialogTitle>
+        <DialogTitle>Compilation logs</DialogTitle>
         <DialogContent>
-          {
+          {logs.length > 0 ? (
             logs.map(([script, scriptLogs], index) => (
               <LogsListItem key={index} script={script} logs={scriptLogs} />
             ))
-          }
+          ) : (
+            'No logs'
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={onClickButtonCloseLogs}>Close</Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   )
 }
 
-const CompilationLogs = connect(
-  (store: RootStore, own: OwnProps): StateProps & OwnProps => ({
+const OpenCompilationLogs = connect(
+  (store: RootStore): StateProps => ({
     logs: store.compilationLogs.logs,
-    popupOpen: store.compilationLogs.popupOpen,
-    open: own.open
+    popupOpen: store.compilationLogs.popupOpen
   }),
   (dispatch): DispatchesProps => ({
     popupToggle: toggle => dispatch(actionPopupToggle(toggle))
   })
 )(Component)
 
-export default CompilationLogs
+export default OpenCompilationLogs

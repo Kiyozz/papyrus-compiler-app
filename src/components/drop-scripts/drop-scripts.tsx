@@ -54,8 +54,6 @@ const DropScripts: React.FC<Props> = ({ onDrop, onClick, className, buttonClassN
     <DropScriptsButton className={buttonClassName} buttonRef={buttonRef} getInputProps={getInputProps} Button={Button} />
   )
 
-  console.log('wk: className', className)
-
   return (
     <div
       className={cx(classes.outline, className)}

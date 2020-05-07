@@ -14,6 +14,8 @@ import React from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import AppIcon from '../../assets/logo/vector/app-icon'
+import OpenCompilationLogs from '../open-compilation-logs/open-compilation-logs'
+import OpenLogFileAction from '../open-log-file-action/open-log-file-action'
 import { usePageContext } from './page-context'
 import classes from './page.module.scss'
 
@@ -79,6 +81,10 @@ const PageDrawer: React.FC<Props> = () => {
                 </NavLink>
               )
             })}
+          </List>
+          <List className={classes.listSecondary}>
+            <OpenLogFileAction />
+            <OpenCompilationLogs />
           </List>
         </Box>
       </Drawer>
