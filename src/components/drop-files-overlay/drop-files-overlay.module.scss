@@ -2,7 +2,7 @@
 
 div.background {
   position: fixed;
-  z-index: 1051;
+  z-index: 1201;
   top: 0;
   right: 0;
   bottom: 0;
@@ -12,11 +12,17 @@ div.background {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: $background-loading;
-  color: $color-loading;
   font-weight: bold;
   text-align: center;
 
   @include font-default;
   @include text-large;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include full-height;
+  @include full-width;
 }
