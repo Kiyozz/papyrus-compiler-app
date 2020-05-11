@@ -69,7 +69,7 @@ const PageDrawer: React.FC<Props> = () => {
               const isActive = pathname === Link.path
 
               return (
-                <NavLink key={Link.path} activeClassName={classes.active} className={classes.link} to={Link.path} onClick={onClick}>
+                <NavLink tabIndex={-1} key={Link.path} activeClassName={classes.active} className={classes.link} to={Link.path} onClick={onClick}>
                   <Box bgcolor={isActive ? 'primary.main' : ''} className={classes.drawerLink}>
                     <ListItem button disableRipple>
                       <ListItemIcon color="inherit">
