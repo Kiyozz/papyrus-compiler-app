@@ -1,4 +1,5 @@
 import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 
 import React from 'react'
 
@@ -13,7 +14,9 @@ interface Props {
 const SettingsMo2: React.FC<Props> = ({ onChangeMo2, onChangeMo2Instance }) => {
   return (
     <Paper>
-      <h4>Mod Organizer 2</h4>
+      <Typography variant="h5" component="h1">
+        Mod Organizer 2
+      </Typography>
 
       <SettingsMo2Activation onChangeMo2={onChangeMo2} />
       <SettingsMo2Instance onChangeMo2Instance={onChangeMo2Instance} />

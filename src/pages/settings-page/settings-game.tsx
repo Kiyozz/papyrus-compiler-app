@@ -5,6 +5,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Paper from '@material-ui/core/Paper'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
+import Typography from '@material-ui/core/Typography'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import Alert from '@material-ui/lab/Alert'
 import React from 'react'
@@ -24,7 +25,7 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
 
   return (
     <Paper>
-      <h4>Game</h4>
+      <Typography variant="h5" component="h1">Game</Typography>
       <FormControl component="fieldset" fullWidth>
         <RadioGroup row value={game} onChange={onClickRadio}>
           <FormControlLabel value={Games.LE} control={<Radio />} label={Games.LE} />
