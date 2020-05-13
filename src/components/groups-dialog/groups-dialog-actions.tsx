@@ -7,7 +7,7 @@ import classes from './groups-dialog.module.scss'
 interface Props {
   onClose: () => void
   isEdit: boolean
-  AddScriptsButton: JSX.Element
+  AddScriptsButton?: JSX.Element | null
 }
 
 const GroupsDialogActions: React.FC<Props> = ({ AddScriptsButton, onClose, isEdit }) => {

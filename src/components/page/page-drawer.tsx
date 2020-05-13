@@ -23,9 +23,9 @@ interface Props {
 }
 
 const PageDrawer: React.FC<Props> = () => {
-  const { setOpen } = usePageContext()
+  const { setDrawerOpen } = usePageContext()
 
-  const onClick = () => setOpen(false)
+  const onClick = () => setDrawerOpen(false)
 
   const links = [
     {
@@ -53,7 +53,7 @@ const PageDrawer: React.FC<Props> = () => {
         anchor="left"
         container={document.body}
         variant="permanent"
-        onClose={() => setOpen(false)}
+        onClose={() => setDrawerOpen(false)}
         classes={{
           paper: classes.drawer
         }}

@@ -7,7 +7,7 @@ type GetInputProps = DropzoneState['getInputProps']
 interface Props {
   buttonRef: React.RefObject<HTMLDivElement>
   getInputProps: GetInputProps
-  Button: JSX.Element
+  Button?: JSX.Element | null
   className?: string
 }
 

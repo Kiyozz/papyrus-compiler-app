@@ -5,16 +5,15 @@ import uniqBy from 'lodash-es/uniqBy'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import DropScripts from '../../components/drop-scripts/drop-scripts'
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
+import { useDrop } from '../../hooks/use-drop'
 import { GroupModel, ScriptModel } from '../../models'
 import { actionSetCompilationScripts, actionStartCompilation } from '../../redux/actions'
 import { RootStore } from '../../redux/stores/root.store'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
 import CompilationContextProvider from './compilation-context'
 import CompilationPageContent from './compilation-page-content'
-import classes from './compilation-page.module.scss'
 import GroupsLoader from './groups-loader'
 
 export interface StateProps {
@@ -79,48 +78,58 @@ const Component: React.FC<Props> = ({ startCompilation, groups, compilationScrip
     setCompilationScripts([])
   }
 
+  const addScriptsButton = useDrop({
+    button: (
+      <Button color="inherit" startIcon={<SearchIcon />}>
+        Search scripts
+      </Button>
+    ),
+    onDrop
+  })
+
   return (
     <CompilationContextProvider hoveringScript={hoveringScript}>
-      <DropScripts
-        onDrop={onDrop}
-        accept=".psc"
-        className={classes.fullHeight}
-        buttonClassName={classes.inline}
-        onlyClickButton
-        Button={
-          <Button color="inherit" startIcon={<SearchIcon />}>
-            Search scripts
-          </Button>
-        }
-      >
-        {({ Button: AddScriptsButton, isDragActive }) => (
-          <>
-            <PageAppBar
-              title="Compilation"
-              actions={[
-                {
-                  button: AddScriptsButton
-                },
-                {
-                  button: (
-                    <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
-                  )
-                }
-              ]}
-            />
+      {/*<DropScripts*/}
+      {/*  onDrop={onDrop}*/}
+      {/*  accept=".psc"*/}
+      {/*  className={classes.fullHeight}*/}
+      {/*  buttonClassName={classes.inline}*/}
+      {/*  onlyClickButton*/}
+      {/*  Button={*/}
+      {/*    <Button color="inherit" startIcon={<SearchIcon />}>*/}
+      {/*      Search scripts*/}
+      {/*    </Button>*/}
+      {/*  }*/}
+      {/*>*/}
+      {/*  {({ Button: AddScriptsButton, isDragActive }) => (*/}
+      {/*    <>*/}
+      {/*      */}
+      {/*    </>*/}
+      {/*  )}*/}
+      {/*</DropScripts>*/}
 
-            <Page>
-              <CompilationPageContent
-                isDragActive={isDragActive}
-                createOnMouseEvent={createOnMouseEvent}
-                onClickPlayPause={onClickPlayPause}
-                onClickRemoveScriptFromScript={onClickRemoveScriptFromScript}
-                onClear={onClearScripts}
-              />
-            </Page>
-          </>
-        )}
-      </DropScripts>
+      <PageAppBar
+        title="Compilation"
+        actions={[
+          {
+            button: addScriptsButton
+          },
+          {
+            button: (
+              <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
+            )
+          }
+        ]}
+      />
+
+      <Page>
+        <CompilationPageContent
+          createOnMouseEvent={createOnMouseEvent}
+          onClickPlayPause={onClickPlayPause}
+          onClickRemoveScriptFromScript={onClickRemoveScriptFromScript}
+          onClear={onClearScripts}
+        />
+      </Page>
     </CompilationContextProvider>
   )
 }

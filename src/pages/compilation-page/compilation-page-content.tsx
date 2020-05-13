@@ -2,7 +2,6 @@ import Typography from '@material-ui/core/Typography'
 
 import React, { useMemo } from 'react'
 
-import DropFilesOverlay from '../../components/drop-files-overlay/drop-files-overlay'
 import { ScriptModel } from '../../models'
 import { useCompilationContext } from './compilation-context'
 import CompilationPageActions from './compilation-page-actions'
@@ -11,14 +10,13 @@ import ScriptItem from './script-item'
 import classes from './compilation-page.module.scss'
 
 interface Props {
-  isDragActive: boolean
   onClickRemoveScriptFromScript: (script: ScriptModel) => () => void
   createOnMouseEvent: (script: ScriptModel | undefined) => () => void
   onClear: () => void
   onClickPlayPause: () => void
 }
 
-const CompilationPageContent: React.FC<Props> = ({ isDragActive, onClear, onClickPlayPause, onClickRemoveScriptFromScript, createOnMouseEvent }) => {
+const CompilationPageContent: React.FC<Props> = ({ onClear, onClickPlayPause, onClickRemoveScriptFromScript, createOnMouseEvent }) => {
   const { compilationScripts, hoveringScript } = useCompilationContext()
 
   const scriptsList: JSX.Element[] = useMemo(() => {
@@ -43,8 +41,6 @@ const CompilationPageContent: React.FC<Props> = ({ isDragActive, onClear, onClic
 
   return (
     <>
-      <DropFilesOverlay open={isDragActive} />
-
       {compilationScripts.length > 0 ? (
         <div className="app-compilation-scripts-list">
           {scriptsList}

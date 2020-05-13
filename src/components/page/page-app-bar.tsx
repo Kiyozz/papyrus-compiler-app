@@ -15,7 +15,7 @@ interface Action {
 }
 
 interface ActionButton {
-  button: JSX.Element
+  button?: JSX.Element | null
 }
 
 interface Props {
@@ -31,7 +31,7 @@ const PageAppBar: React.FC<Props> = ({ title, actions = [] }) => {
       <AppBar position="sticky">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>{title}</Typography>
-          <div>
+          <div className={classes.flex}>
             {actions.map((action, index) => {
               if (isActionButton(action)) {
                 return (

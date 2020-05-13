@@ -18,21 +18,22 @@ interface Props {
   className?: string
   accept?: string
   preventDropOnDocument?: boolean
-  onDrop(files: File[]): void
+  onDrop?: OnDropFunction
   onClick?: (e: React.MouseEvent<HTMLDivElement>, buttonRef: ButtonRef, inputRef: InputRef, rootRef: RootRef) => void
   onlyClickButton?: boolean
   children: (renderProps: RenderChildren) => React.ReactNode
-  Button: JSX.Element
+  Button?: JSX.Element | null
   buttonClassName?: string
 }
 
 export type AddScriptsButton = JSX.Element
+export type OnDropFunction = ((files: File[]) => void) | null
 
 const nodeService = new NodeService()
 
 const DropScripts: React.FC<Props> = ({ onDrop, onClick, className, buttonClassName, onlyClickButton = false, accept = '', preventDropOnDocument = true, children, Button }) => {
   const { getRootProps, isDragActive, getInputProps, inputRef, rootRef } = useDropzone({
-    onDrop,
+    onDrop: (files) => onDrop?.(files),
     accept,
     preventDropOnDocument
   })

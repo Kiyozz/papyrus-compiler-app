@@ -6,7 +6,7 @@
 }
 
 .content {
-  height: inherit;
+  height: 100%;
   @include full-width;
   background: $background-content;
   padding-left: 240px;
