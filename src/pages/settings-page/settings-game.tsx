@@ -49,8 +49,8 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
             </Button>
           )}
         >
-          <div>Installation seems invalid.</div>
-          <div>Checks that you have extracted Scripts.zip from Creation Kit</div>
+          <Typography variant="body2" paragraph>Installation seems invalid:</Typography>
+          <Typography variant="body2">Check if you have extracted Scripts.zip from Creation Kit.</Typography>
         </Alert>
       </Collapse>
     </Paper>
