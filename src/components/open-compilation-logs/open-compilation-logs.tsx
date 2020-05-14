@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ErrorIcon from '@material-ui/icons/Error'
+import Typography from '@material-ui/core/Typography'
 
 import React from 'react'
 import { connect } from 'react-redux'
@@ -28,7 +29,7 @@ export type Props = StateProps & DispatchesProps
 
 const LogsListItem: React.FC<{ script: ScriptModel, logs: string }> = ({ script, logs }) => (
   <div>
-    <h2>{script.name}</h2>
+    <Typography variant="h6" component="h3">{script.name}</Typography>
     <div>
       {logs.split('\n').map((log, i) => (
         <span key={i}>{log} <br /></span>
