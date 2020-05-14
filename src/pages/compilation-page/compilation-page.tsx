@@ -1,5 +1,5 @@
-import SearchIcon from '@material-ui/icons/Search'
 import Button from '@material-ui/core/Button'
+import SearchIcon from '@material-ui/icons/Search'
 
 import uniqBy from 'lodash-es/uniqBy'
 import React from 'react'

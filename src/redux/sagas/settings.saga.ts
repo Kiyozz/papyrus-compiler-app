@@ -1,9 +1,9 @@
-import { takeLatest, put, call } from 'redux-saga/effects'
+import { AnyAction } from 'redux'
+import { call, put, takeLatest } from 'redux-saga/effects'
+import { actionSetTaskLoading } from '../actions'
 import * as CONSTANTS from '../actions/constants'
 import * as ACTIONS from '../actions/settings/settings.actions'
 import createApi from '../api/create-api'
-import { AnyAction } from 'redux'
-import { actionSetTaskLoading } from '../actions'
 
 function* detectFolders(action: AnyAction) {
   const api = createApi()

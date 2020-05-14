@@ -1,7 +1,7 @@
-import { AnyAction } from 'redux'
-import * as CONSTANTS from '../actions/constants'
 import uniqBy from 'lodash-es/uniqBy'
+import { AnyAction } from 'redux'
 import { GroupModel } from '../../models'
+import * as CONSTANTS from '../actions/constants'
 
 export interface GroupsState {
   groups: GroupModel[]

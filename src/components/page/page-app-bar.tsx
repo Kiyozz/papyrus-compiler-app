@@ -1,8 +1,8 @@
 import AppBar from '@material-ui/core/AppBar'
+import Button, { ButtonProps } from '@material-ui/core/Button'
 import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import Button, { ButtonProps } from '@material-ui/core/Button'
 import React from 'react'
 import classes from './page.module.scss'
 

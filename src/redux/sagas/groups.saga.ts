@@ -1,7 +1,7 @@
-import { takeLatest, select, put } from 'redux-saga/effects'
+import { put, select, takeLatest } from 'redux-saga/effects'
 import * as CONSTANTS from '../actions/constants'
-import { RootStore } from '../stores/root.store'
 import { actionSaveGroupsToLocal } from '../actions/groups/groups.actions'
+import { RootStore } from '../stores/root.store'
 
 function* onAddOrRemoveGroup() {
   const groups = yield select((state: RootStore) => state.groups.groups)

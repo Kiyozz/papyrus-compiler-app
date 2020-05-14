@@ -3,11 +3,10 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import classes from './app.module.scss'
+import DialogChangelog from './components/dialog-changelog/dialog-changelog'
 import PageContextProvider from './components/page/page-context'
 import PageDrawer from './components/page/page-drawer'
 import SplashScreen from './components/splash-screen/splash-screen'
-import LoadingIndicator from './components/loading-indicator/loading-indicator'
-import DialogChangelog from './components/dialog-changelog/dialog-changelog'
 import { useOnIpcEvent } from './hooks/use-on-ipc-event'
 import { actionGetLatestNotes, actionInitialization, actionOpenLog, actionSetShowNotes } from './redux/actions'
 import { RootStore } from './redux/stores/root.store'
@@ -50,7 +49,6 @@ const Component: React.FC<Props> = ({ initialization, initialized, setShowNotes,
         <DialogChangelog onClose={onClickCloseChangelogPopup} />
       )}
 
-      <LoadingIndicator />
       <SplashScreen />
 
       <PageContextProvider>

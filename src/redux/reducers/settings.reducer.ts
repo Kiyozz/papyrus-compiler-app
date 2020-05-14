@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux'
-import * as CONSTANTS from '../actions/constants'
 import { Games } from '../../enums/games.enum'
+import * as CONSTANTS from '../actions/constants'
 
 export interface SettingsState {
   mo2: boolean

@@ -1,9 +1,11 @@
 import compareVersions from 'compare-versions'
-import { takeLatest, call, put, race, delay, select } from 'redux-saga/effects'
+import { call, delay, put, race, select, takeLatest } from 'redux-saga/effects'
 import { GithubReleaseModel } from '../../models'
 import {
   actionGetLatestNotesFailed,
-  actionGetLatestNotesSuccess, actionSetLatestVersion, actionSetShowNotes
+  actionGetLatestNotesSuccess,
+  actionSetLatestVersion,
+  actionSetShowNotes
 } from '../actions/changelog/changelog.actions'
 import * as CONSTANTS from '../actions/constants'
 import createApi from '../api/create-api'

@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions'
-import * as CONSTANTS from '../constants'
 import { ScriptModel } from '../../../models'
+import * as CONSTANTS from '../constants'
 
 export const actionSetCompilationScripts = createAction<ScriptModel[]>(CONSTANTS.APP_COMPILATION_SET_COMPILATION_SCRIPTS)
 

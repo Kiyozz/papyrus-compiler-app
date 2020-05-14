@@ -1,9 +1,9 @@
-import * as CONSTANTS from '../../actions/constants'
 import { Middleware } from 'redux'
-import { RootStore } from '../../stores/root.store'
 import { GroupModel } from '../../../models'
+import * as CONSTANTS from '../../actions/constants'
 import { actionSaveGroups } from '../../actions/groups/groups.actions'
 import { actionSetDetectedMo2SourcesFolders, actionSetMo2Instance } from '../../actions/settings/settings.actions'
+import { RootStore } from '../../stores/root.store'
 
 function transformPayload(payload: any) {
   if (payload === false) {

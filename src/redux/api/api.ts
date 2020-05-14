@@ -1,6 +1,6 @@
+import { Games } from '../../enums/games.enum'
 import { GithubReleaseModel, ScriptModel } from '../../models'
 import { IpcRenderer } from './ipc-renderer'
-import { Games } from '../../enums/games.enum'
 
 class Api {
   private ipc = new IpcRenderer()

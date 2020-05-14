@@ -1,5 +1,0 @@
-export * from '@testing-library/react'
-export * from './mock-modules'
-export { buildProps } from './build-props'
-export { render, renderWithRedux } from './render'
-export { fireEventChange } from './events'

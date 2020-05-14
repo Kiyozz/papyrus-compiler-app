@@ -1,16 +1,16 @@
-import { takeLatest, put, call, select } from 'redux-saga/effects'
-import * as CONSTANTS from '../actions/constants'
+import { AnyAction } from 'redux'
+import { call, put, select, takeLatest } from 'redux-saga/effects'
+import { ScriptModel } from '../../models'
 import {
   actionStartCompilationFinish,
-  actionStartCompilationScriptSuccess,
+  actionStartCompilationScriptFailed,
   actionStartCompilationScriptStart,
-  actionStartCompilationScriptFailed
+  actionStartCompilationScriptSuccess
 } from '../actions'
-import { AnyAction } from 'redux'
-import { ScriptModel } from '../../models'
+import * as CONSTANTS from '../actions/constants'
 import createApi from '../api/create-api'
-import { RootStore } from '../stores/root.store'
 import { SettingsState } from '../reducers/settings.reducer'
+import { RootStore } from '../stores/root.store'
 
 function* startCompilation(action: AnyAction) {
   const api = createApi()

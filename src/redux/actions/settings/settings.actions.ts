@@ -1,6 +1,6 @@
-import * as CONSTANTS from '../constants'
 import { createAction } from 'redux-actions'
 import { Games } from '../../../enums/games.enum'
+import * as CONSTANTS from '../constants'
 
 export const actionSetGame = createAction<Games>(CONSTANTS.APP_SETTINGS_SET_GAME)
 export const actionSetGameFolder = createAction<string>(CONSTANTS.APP_SETTINGS_SET_GAME_FOLDER)

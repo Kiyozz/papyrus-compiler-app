@@ -1,9 +1,9 @@
-import { fork, all, takeLatest, call } from 'redux-saga/effects'
+import { all, call, fork, takeLatest } from 'redux-saga/effects'
 import * as CONSTANTS from '../actions/constants'
 import changelogSaga from './changelog.saga'
-import initializationSaga from './initialization.saga'
 import compilationSaga from './compilation.saga'
 import groupsSaga from './groups.saga'
+import initializationSaga from './initialization.saga'
 import settingsSaga from './settings.saga'
 
 function* openLogFile() {

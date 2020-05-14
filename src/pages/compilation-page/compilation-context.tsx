@@ -1,5 +1,4 @@
 import React from 'react'
-import { createContext, useContext } from 'react'
 import { connect } from 'react-redux'
 import { GroupModel, ScriptModel } from '../../models'
 import { RootStore } from '../../redux/stores/root.store'
@@ -15,9 +14,9 @@ interface CompilationContextOwnProps {
   hoveringScript: ScriptModel | undefined
 }
 
-export const CompilationContext = createContext({} as CompilationContextValue)
+export const CompilationContext = React.createContext({} as CompilationContextValue)
 
-export const useCompilationContext = () => useContext(CompilationContext) as CompilationContextValue
+export const useCompilationContext = () => React.useContext(CompilationContext) as CompilationContextValue
 
 const mapStateToProps = (store: RootStore, own: CompilationContextOwnProps): CompilationContextValue => ({
   compilationScripts: store.compilation.compilationScripts,

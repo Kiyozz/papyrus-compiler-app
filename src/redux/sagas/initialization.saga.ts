@@ -1,13 +1,13 @@
-import { take, put, select, race } from 'redux-saga/effects'
-import * as CONSTANTS from '../actions/constants'
+import { put, race, select, take } from 'redux-saga/effects'
 import {
+  actionDetectMo2SourcesFolders,
   actionInitializationFailed,
   actionInitializationRestoreSettings,
-  actionInitializationSuccess,
-  actionDetectMo2SourcesFolders
+  actionInitializationSuccess
 } from '../actions'
-import { RootStore } from '../stores/root.store'
+import * as CONSTANTS from '../actions/constants'
 import { SettingsState } from '../reducers/settings.reducer'
+import { RootStore } from '../stores/root.store'
 
 export default function* initializationSaga() {
   while (true) {

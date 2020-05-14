@@ -1,4 +1,3 @@
-import Fade from '@material-ui/core/Fade'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled'

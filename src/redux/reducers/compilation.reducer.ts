@@ -1,10 +1,10 @@
-import uniqBy from 'lodash-es/uniqBy'
 import find from 'lodash-es/find'
+import uniqBy from 'lodash-es/uniqBy'
 import { AnyAction } from 'redux'
-import * as CONSTANTS from '../actions/constants'
-import { ScriptModel } from '../../models'
 import { ScriptStatus } from '../../enums/script-status.enum'
+import { ScriptModel } from '../../models'
 import findScriptInList from '../../utils/scripts/find-script-in-list'
+import * as CONSTANTS from '../actions/constants'
 
 export interface CompilationState {
   compilationScripts: ScriptModel[]

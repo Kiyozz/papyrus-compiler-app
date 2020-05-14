@@ -5,9 +5,9 @@ import React, { useMemo } from 'react'
 import { ScriptModel } from '../../models'
 import { useCompilationContext } from './compilation-context'
 import CompilationPageActions from './compilation-page-actions'
+import classes from './compilation-page.module.scss'
 import PlayButton from './play-button'
 import ScriptItem from './script-item'
-import classes from './compilation-page.module.scss'
 
 interface Props {
   onClickRemoveScriptFromScript: (script: ScriptModel) => () => void
