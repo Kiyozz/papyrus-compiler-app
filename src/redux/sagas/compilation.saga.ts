@@ -1,13 +1,7 @@
 import { AnyAction } from 'redux'
 import { call, put, select, takeLatest } from 'redux-saga/effects'
 import { ScriptModel } from '../../models'
-import {
-  actionStartCompilationFinish,
-  actionStartCompilationScriptFailed,
-  actionStartCompilationScriptStart,
-  actionStartCompilationScriptSuccess
-} from '../actions'
-import * as CONSTANTS from '../actions/constants'
+import actions, { CONSTANTS } from '../actions'
 import createApi from '../api/create-api'
 import { SettingsState } from '../reducers/settings.reducer'
 import { RootStore } from '../stores/root.store'
@@ -21,7 +15,7 @@ function* startCompilation(action: AnyAction) {
 
   for (const script of scripts) {
     try {
-      yield put(actionStartCompilationScriptStart(script))
+      yield put(actions.compilationPage.compilation.script.start(script))
 
       const logs: string = yield call(api.compileScript, script, [
         game,
@@ -30,7 +24,7 @@ function* startCompilation(action: AnyAction) {
         mo2SourcesFolders
       ])
 
-      yield put(actionStartCompilationScriptSuccess([script, logs]))
+      yield put(actions.compilationPage.compilation.script.success([script, logs]))
     } catch (e) {
       let err = e
 
@@ -38,11 +32,11 @@ function* startCompilation(action: AnyAction) {
         err = err.message
       }
 
-      yield put(actionStartCompilationScriptFailed([script, err]))
+      yield put(actions.compilationPage.compilation.script.failed([script, err]))
     }
   }
 
-  yield put(actionStartCompilationFinish())
+  yield put(actions.compilationPage.compilation.finish())
 }
 
 export default function* compilationSaga() {

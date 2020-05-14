@@ -1,5 +1,5 @@
 import { Middleware } from 'redux'
-import * as CONSTANTS from '../../actions/constants'
+import { CONSTANTS } from '../../actions'
 import { RootStore } from '../../stores/root.store'
 
 type VersionMiddleware = (prefix: string) => Middleware<{}, RootStore>

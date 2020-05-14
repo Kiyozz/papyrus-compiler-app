@@ -12,7 +12,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { CompilationLogsModel, ScriptModel } from '../../models'
-import { actionPopupToggle } from '../../redux/actions'
+import actions from '../../redux/actions'
 import { RootStore } from '../../redux/stores/root.store'
 
 interface StateProps {
@@ -80,7 +80,7 @@ const OpenCompilationLogs = connect(
     popupOpen: store.compilationLogs.popupOpen
   }),
   (dispatch): DispatchesProps => ({
-    popupToggle: toggle => dispatch(actionPopupToggle(toggle))
+    popupToggle: toggle => dispatch(actions.compilationPage.logs.popupToggle(toggle))
   })
 )(Component)
 

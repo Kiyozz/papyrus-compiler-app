@@ -9,7 +9,7 @@ import GroupsDialog from '../../components/groups-dialog/groups-dialog'
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
 import { GroupModel } from '../../models'
-import { actionAddGroup, actionEditGroup, actionRemoveGroup } from '../../redux/actions'
+import actions from '../../redux/actions'
 import { RootStore } from '../../redux/stores/root.store'
 import GroupsListItem from './groups-list-item'
 import classes from './groups-page.module.scss'
@@ -120,9 +120,9 @@ const GroupsPage = connect(
     groups: store.groups.groups
   }),
   (dispatch): DispatchesProps => ({
-    addGroup: group => dispatch(actionAddGroup(group)),
-    removeGroup: group => dispatch(actionRemoveGroup(group)),
-    editGroup: (lastGroupName, group) => dispatch(actionEditGroup({ group, lastName: lastGroupName }))
+    addGroup: group => dispatch(actions.groupsPage.add(group)),
+    removeGroup: group => dispatch(actions.groupsPage.remove(group)),
+    editGroup: (lastGroupName, group) => dispatch(actions.groupsPage.edit({ group, lastName: lastGroupName }))
   })
 )(Component)
 

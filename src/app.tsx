@@ -8,7 +8,7 @@ import PageContextProvider from './components/page/page-context'
 import PageDrawer from './components/page/page-drawer'
 import SplashScreen from './components/splash-screen/splash-screen'
 import { useOnIpcEvent } from './hooks/use-on-ipc-event'
-import { actionGetLatestNotes, actionInitialization, actionOpenLog, actionSetShowNotes } from './redux/actions'
+import actions from './redux/actions'
 import { RootStore } from './redux/stores/root.store'
 import Routes from './routes'
 
@@ -65,10 +65,10 @@ const Component: React.FC<Props> = ({ initialization, initialized, setShowNotes,
 const App = connect((store: RootStore): StateProps => ({
   initialized: store.initialization
 }), (dispatch): DispatchesProps => ({
-  initialization: () => dispatch(actionInitialization()),
-  getLatestNotes: () => dispatch(actionGetLatestNotes()),
-  openLogFile: () => dispatch(actionOpenLog()),
-  setShowNotes: show => dispatch(actionSetShowNotes(show))
+  initialization: () => dispatch(actions.initialization.start()),
+  openLogFile: () => dispatch(actions.openLogFile()),
+  getLatestNotes: () => dispatch(actions.changelog.latestNotes.start()),
+  setShowNotes: show => dispatch(actions.changelog.showNotes(show))
 }))(Component)
 
 export default App

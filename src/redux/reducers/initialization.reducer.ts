@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import * as CONSTANTS from '../actions/constants'
+import { CONSTANTS } from '../actions'
 
 export type InitializationState = boolean
 

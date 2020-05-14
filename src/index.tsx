@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 
 import App from './app'
 import './index.scss'
-import createRootStore, { RootStoreProvider } from './redux/stores/root.store'
+import createRootStore from './redux/stores/root.store'
 import * as serviceWorker from './serviceWorker'
 import Theme from './theme'
 
@@ -20,11 +20,9 @@ const { store, history } = createRootStore()
 render((
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <RootStoreProvider>
-        <Theme>
-          <App />
-        </Theme>
-      </RootStoreProvider>
+      <Theme>
+        <App />
+      </Theme>
     </ConnectedRouter>
   </Provider>
 ), document.getElementById('root'))

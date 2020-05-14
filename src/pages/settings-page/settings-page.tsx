@@ -6,14 +6,7 @@ import { connect } from 'react-redux'
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
 import { Games } from '../../enums/games.enum'
-import {
-  actionDetectBadInstallation,
-  actionDetectMo2SourcesFolders,
-  actionSetGame,
-  actionSetGameFolder,
-  actionSetMo2Instance,
-  actionSetUseMo2
-} from '../../redux/actions'
+import actions from '../../redux/actions'
 import { RootStore } from '../../redux/stores/root.store'
 import { Mo2Service } from '../../services/mo2.service'
 import SettingsContextProvider from './settings-context'
@@ -156,24 +149,24 @@ const Component: React.FC<Props> = ({ startingVersion, game, gameFolder, install
 }
 
 const SettingsPage = connect(
-  ({ settings, taskLoading: loading, error, changelog }: RootStore): StateProps => ({
+  ({ settings, taskLoading: loading, changelog }: RootStore): StateProps => ({
     game: settings.game,
     gameFolder: settings.gameFolder,
     mo2: settings.mo2,
     mo2Instance: settings.mo2Instance,
     detectedMo2SourcesFolders: settings.mo2SourcesFolders,
     loading,
-    detectSourcesFoldersError: error.detectSourcesFoldersFailed,
+    detectSourcesFoldersError: settings.mo2DetectSourcesFoldersError,
     installationIsBad: settings.installationIsBad,
     startingVersion: changelog.startingVersion
   }),
   (dispatch): DispatchesProps => ({
-    setGame: game => dispatch(actionSetGame(game)),
-    setGameFolder: gameFolder => dispatch(actionSetGameFolder(gameFolder)),
-    setMo2: mo2 => dispatch(actionSetUseMo2(mo2)),
-    setMo2Instance: mo2Instance => dispatch(actionSetMo2Instance(mo2Instance)),
-    detectMo2SourcesFolder: (mo2Instance, game) => dispatch(actionDetectMo2SourcesFolders([mo2Instance, game])),
-    detectBadInstallation: (gamePath, gameType, isUsingMo2, mo2Path ) => dispatch(actionDetectBadInstallation({ gamePath, gameType, isUsingMo2, mo2Path }))
+    setGame: game => dispatch(actions.settingsPage.game.type(game)),
+    setGameFolder: gameFolder => dispatch(actions.settingsPage.game.folder(gameFolder)),
+    setMo2: mo2 => dispatch(actions.settingsPage.mo2.use(mo2)),
+    setMo2Instance: mo2Instance => dispatch(actions.settingsPage.mo2.instance(mo2Instance)),
+    detectMo2SourcesFolder: (mo2Instance, game) => dispatch(actions.settingsPage.mo2.detectSources.start([mo2Instance, game])),
+    detectBadInstallation: (gamePath, gameType, isUsingMo2, mo2Path ) => dispatch(actions.settingsPage.detectBadInstallation.start({ gamePath, gameType, isUsingMo2, mo2Path }))
   })
 )(Component)
 

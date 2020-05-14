@@ -36,7 +36,7 @@ const Provider: React.FC<SettingsContextInterface> = ({ children, ...props }) =>
 }
 
 const SettingsContextProvider = connect(
-  ({ settings, error, taskLoading }: RootStore, own: OwnProps): SettingsContextInterface => ({
+  ({ settings, taskLoading }: RootStore, own: OwnProps): SettingsContextInterface => ({
     game: settings.game,
     gameFolder: settings.gameFolder,
     installationIsBad: settings.installationIsBad,
@@ -44,7 +44,7 @@ const SettingsContextProvider = connect(
     mo2: settings.mo2,
     mo2Folders: settings.mo2SourcesFolders,
     mo2Instance: settings.mo2Instance,
-    mo2FoldersError: error.detectSourcesFoldersFailed,
+    mo2FoldersError: settings.mo2DetectSourcesFoldersError,
     loading: taskLoading,
     mo2Service: new Mo2Service(),
     gameService: new GameService()

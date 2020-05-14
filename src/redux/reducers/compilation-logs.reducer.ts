@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux'
 import { CompilationLogsModel, ScriptModel } from '../../models'
-import * as CONSTANTS from '../actions/constants'
+import { CONSTANTS } from '../actions'
 
 export interface CompilationLogsState {
   logs: CompilationLogsModel,

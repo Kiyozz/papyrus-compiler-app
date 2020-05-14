@@ -4,7 +4,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import BugReportIcon from '@material-ui/icons/BugReport'
 import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
-import { actionOpenLog } from '../../redux/actions'
+import actions from '../../redux/actions'
 
 export interface DispatchesProps {
   openLogFile: () => void
@@ -30,7 +30,7 @@ const Component: React.FC<Props> = ({ openLogFile }) => {
 const OpenLogFileAction = connect(
   undefined,
   (dispatch): DispatchesProps => ({
-    openLogFile: () => dispatch(actionOpenLog())
+    openLogFile: () => dispatch(actions.openLogFile())
   })
 )(Component)
 

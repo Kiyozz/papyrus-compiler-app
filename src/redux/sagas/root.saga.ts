@@ -1,5 +1,5 @@
 import { all, call, fork, takeLatest } from 'redux-saga/effects'
-import * as CONSTANTS from '../actions/constants'
+import { CONSTANTS } from '../actions'
 import changelogSaga from './changelog.saga'
 import compilationSaga from './compilation.saga'
 import groupsSaga from './groups.saga'

@@ -9,7 +9,7 @@ import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
 import { useDrop } from '../../hooks/use-drop'
 import { GroupModel, ScriptModel } from '../../models'
-import { actionSetCompilationScripts, actionStartCompilation } from '../../redux/actions'
+import actions from '../../redux/actions'
 import { RootStore } from '../../redux/stores/root.store'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
 import CompilationContextProvider from './compilation-context'
@@ -141,8 +141,8 @@ const CompilationPage = connect(
     groups: store.groups.groups
   }),
   (dispatch): DispatchesProps => ({
-    startCompilation: scripts => dispatch(actionStartCompilation(scripts)),
-    setCompilationScripts: scripts => dispatch(actionSetCompilationScripts(scripts))
+    startCompilation: scripts => dispatch(actions.compilationPage.compilation.startWholeCompilation(scripts)),
+    setCompilationScripts: scripts => dispatch(actions.compilationPage.setScripts(scripts))
   })
 )(Component)
 

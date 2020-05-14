@@ -1,23 +1,21 @@
 import { AnyAction } from 'redux'
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { actionSetTaskLoading } from '../actions'
-import * as CONSTANTS from '../actions/constants'
-import * as ACTIONS from '../actions/settings/settings.actions'
+import actions, { CONSTANTS } from '../actions'
 import createApi from '../api/create-api'
 
 function* detectFolders(action: AnyAction) {
   const api = createApi()
 
   try {
-    yield put(actionSetTaskLoading(true))
+    yield put(actions.task.loading(true))
 
-    const files: string[] = yield call(api.detectMo2SourcesFolders, action.payload)
+    const folders: string[] = yield call(api.detectMo2SourcesFolders, action.payload)
 
-    yield put(ACTIONS.actionDetectMo2SourcesFoldersSuccess(files))
+    yield put(actions.settingsPage.mo2.detectSources.success(folders))
   } catch (e) {
-    yield put(ACTIONS.actionDetectMo2SourcesFoldersFailed(e))
+    yield put(actions.settingsPage.mo2.detectSources.failed(e))
   } finally {
-    yield put(actionSetTaskLoading(false))
+    yield put(actions.task.loading(false))
   }
 }
 
@@ -25,15 +23,15 @@ function* detectBadInstallation(action: AnyAction) {
   const api = createApi()
 
   try {
-    yield put(actionSetTaskLoading(true))
+    yield put(actions.task.loading(true))
 
     const fileExists: boolean = yield call(api.detectBadInstallation, action.payload)
 
-    yield put(ACTIONS.actionDetectBadInstallationSuccess(fileExists))
+    yield put(actions.settingsPage.detectBadInstallation.success(fileExists))
   } catch (e) {
-    yield put(ACTIONS.actionDetectBadInstallationFailed(e))
+    yield put(actions.settingsPage.detectBadInstallation.failed(e))
   } finally {
-    yield put(actionSetTaskLoading(false))
+    yield put(actions.task.loading(false))
   }
 }
 

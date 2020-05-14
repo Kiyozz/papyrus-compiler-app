@@ -1,8 +1,6 @@
 import { Middleware } from 'redux'
 import { GroupModel } from '../../../models'
-import * as CONSTANTS from '../../actions/constants'
-import { actionSaveGroups } from '../../actions/groups/groups.actions'
-import { actionSetDetectedMo2SourcesFolders, actionSetMo2Instance } from '../../actions/settings/settings.actions'
+import actions, { CONSTANTS } from '../../actions'
 import { RootStore } from '../../stores/root.store'
 
 function transformPayload(payload: any) {
@@ -44,7 +42,7 @@ const storageMiddleware: StorageMiddleware = (prefix: string) => store => next =
 
     const groups: GroupModel[] = JSON.parse(savedGroupsString)
 
-    store.dispatch(actionSaveGroups(groups))
+    store.dispatch(actions.groupsPage.save(groups))
 
     actionsToListen.forEach((actionToListen) => {
       const key = `${prefix}/${actionToListen}`
@@ -80,8 +78,8 @@ const storageMiddleware: StorageMiddleware = (prefix: string) => store => next =
     localStorage.setItem(`${prefix}/${CONSTANTS.APP_SETTINGS_SET_MO2_INSTANCE}`, '')
     localStorage.setItem(`${prefix}/${CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS}`, '[]')
 
-    store.dispatch(actionSetMo2Instance(''))
-    store.dispatch(actionSetDetectedMo2SourcesFolders([]))
+    store.dispatch(actions.settingsPage.mo2.instance(''))
+    store.dispatch(actions.settingsPage.mo2.detectSources.success([]))
   }
 
   localStorage.setItem(`${prefix}/${action.type}`, transformPayload(action.payload))

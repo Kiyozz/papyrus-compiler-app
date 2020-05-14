@@ -1,13 +1,7 @@
 import compareVersions from 'compare-versions'
 import { call, delay, put, race, select, takeLatest } from 'redux-saga/effects'
 import { GithubReleaseModel } from '../../models'
-import {
-  actionGetLatestNotesFailed,
-  actionGetLatestNotesSuccess,
-  actionSetLatestVersion,
-  actionSetShowNotes
-} from '../actions/changelog/changelog.actions'
-import * as CONSTANTS from '../actions/constants'
+import actions, { CONSTANTS } from '../actions'
 import createApi from '../api/create-api'
 import { RootStore } from '../stores/root.store'
 
@@ -26,20 +20,20 @@ function* getLatestRelease() {
 
       if (typeof release !== 'undefined') {
         if (compareVersions.compare(release.tag_name, startingVersion, '>')) {
-          yield put(actionSetLatestVersion(release.tag_name))
-          yield put(actionSetShowNotes(true))
-          yield put(actionGetLatestNotesSuccess(release.body))
+          yield put(actions.changelog.latestVersion(release.tag_name))
+          yield put(actions.changelog.showNotes(true))
+          yield put(actions.changelog.latestNotes.success(release.body))
         } else {
-          yield put(actionSetShowNotes(false))
+          yield put(actions.changelog.showNotes(false))
         }
 
         return
       }
 
-      yield put(actionGetLatestNotesFailed(new Error(`Version ${startingVersion} not found.`)))
+      yield put(actions.changelog.latestNotes.failed(new Error(`Version ${startingVersion} not found.`)))
     }
   } catch (e) {
-    yield put(actionGetLatestNotesFailed(e))
+    yield put(actions.changelog.latestNotes.failed(e))
   }
 }
 

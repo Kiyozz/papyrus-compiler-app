@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux'
 import { Games } from '../../enums/games.enum'
-import * as CONSTANTS from '../actions/constants'
+import { CONSTANTS } from '../actions'
 
 export interface SettingsState {
   mo2: boolean
@@ -9,6 +9,7 @@ export interface SettingsState {
   mo2Instance: string
   mo2SourcesFolders: string[]
   installationIsBad: boolean
+  mo2DetectSourcesFoldersError?: string
 }
 
 const initialState: SettingsState = {
@@ -25,37 +26,36 @@ export default function settingsReducer(state = initialState, action: AnyAction)
     case CONSTANTS.APP_SETTINGS_SET_USE_MO2:
       return {
         ...state,
-        mo2: action.payload || false
+        mo2: action.payload ?? false,
+        mo2DetectSourcesFoldersError: action.payload === false ? undefined : state.mo2DetectSourcesFoldersError
       }
     case CONSTANTS.APP_SETTINGS_SET_GAME:
       return {
         ...state,
-        game: action.payload || Games.LE
+        game: action.payload ?? Games.LE
       }
     case CONSTANTS.APP_SETTINGS_SET_GAME_FOLDER:
       return {
         ...state,
-        gameFolder: action.payload.trim() || ''
+        gameFolder: action.payload.trim() ?? ''
       }
     case CONSTANTS.APP_SETTINGS_SET_MO2_INSTANCE:
       return {
         ...state,
-        mo2Instance: action.payload.trim() || ''
+        mo2Instance: action.payload.trim() ?? '',
+        mo2DetectSourcesFoldersError: undefined
       }
     case CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS:
       return {
         ...state,
-        mo2SourcesFolders: action.payload || []
+        mo2SourcesFolders: action.payload ?? [],
+        mo2DetectSourcesFoldersError: undefined
       }
     case CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_FAILED:
       return {
         ...state,
-        mo2SourcesFolders: []
-      }
-    case CONSTANTS.APP_SETTINGS_SET_DETECTED_SOURCES_FOLDERS:
-      return {
-        ...state,
-        mo2SourcesFolders: action.payload || []
+        mo2SourcesFolders: [],
+        mo2DetectSourcesFoldersError: action.payload
       }
     case CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION_SUCCESS:
       return {
