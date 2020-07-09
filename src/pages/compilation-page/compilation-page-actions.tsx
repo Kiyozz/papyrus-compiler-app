@@ -3,6 +3,7 @@ import Fade from '@material-ui/core/Fade'
 import ClearIcon from '@material-ui/icons/Clear'
 
 import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import buttonsDisable from './action-buttons-disable'
 import { useCompilationContext } from './compilation-context'
 
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const CompilationPageActions: React.FC<Props> = ({ hasScripts, onClearScripts }) => {
+  const { t } = useTranslation()
   const { compilationScripts, hoveringScript } = useCompilationContext()
 
   const onClickEmpty = useCallback(() => {
@@ -29,7 +31,7 @@ const CompilationPageActions: React.FC<Props> = ({ hasScripts, onClearScripts })
         color="secondary"
         disabled={!hasScripts}
       >
-        <ClearIcon className={classes.fabsActionsIcon} /> Clear list
+        <ClearIcon className={classes.fabsActionsIcon} /> {t('page.compilation.actions.clearList')}
       </Fab>
     </Fade>
   )

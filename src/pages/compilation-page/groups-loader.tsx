@@ -4,8 +4,9 @@ import MenuItem from '@material-ui/core/MenuItem'
 import AddIcon from '@material-ui/icons/Add'
 
 import React, { useState, useMemo, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { Group, GroupModel } from '../../models'
+import { Group } from '../../models'
 import classes from './compilation-page.module.scss'
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
+  const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
 
   const onClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget), [])
@@ -32,7 +34,7 @@ const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
         </MenuItem>
       )
     })
-  }, [groups, onChangeGroup])
+  }, [groups, onChangeGroup, onClose])
 
   const notEmptyGroups = groups.filter(group => !group.isEmpty())
 
@@ -41,7 +43,7 @@ const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
       {notEmptyGroups.length > 0 && (
         <>
           <Button color="inherit" startIcon={<AddIcon />} aria-controls="load-group-menu" aria-haspopup="true" onClick={onClick}>
-            Load group
+            {t('page.compilation.actions.loadGroup')}
           </Button>
 
           <Menu

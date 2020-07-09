@@ -1,6 +1,7 @@
 import Typography from '@material-ui/core/Typography'
 
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { ScriptModel } from '../../models'
 import { useCompilationContext } from './compilation-context'
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const CompilationPageContent: React.FC<Props> = ({ onClear, onClickPlayPause, onClickRemoveScriptFromScript, createOnMouseEvent }) => {
+  const { t } = useTranslation()
   const { compilationScripts, hoveringScript } = useCompilationContext()
 
   const scriptsList: JSX.Element[] = useMemo(() => {
@@ -48,11 +50,10 @@ const CompilationPageContent: React.FC<Props> = ({ onClear, onClickPlayPause, on
       ) : (
         <>
           <Typography variant="body1">
-            You can drag and drop psc files to load them into the
-            application.
+            {t('page.compilation.dragAndDropText')}
           </Typography>
           <Typography variant="body1">
-            This is only available when not running in administrator.
+            {t('page.compilation.dragAndDropAdmin')}
           </Typography>
         </>
       )}

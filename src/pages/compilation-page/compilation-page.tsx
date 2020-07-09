@@ -3,6 +3,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import { RouteComponentProps } from '@reach/router'
 
 import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
@@ -20,6 +21,7 @@ import GroupsLoader from './groups-loader'
 type Props = RouteComponentProps
 
 const CompilationPage: React.FC<Props> = () => {
+  const { t } = useTranslation()
   const groups = useStoreSelector(state => state.groups.groups.map(group => new Group(group.name, group.scripts)))
   const isCompilationRunning = useStoreSelector(state => state.compilation.isCompilationRunning)
   const compilationScripts = useStoreSelector(state => state.compilation.compilationScripts)
@@ -78,7 +80,7 @@ const CompilationPage: React.FC<Props> = () => {
   const addScriptsButton = useDrop({
     button: (
       <Button color="inherit" startIcon={<SearchIcon />}>
-        Search scripts
+        {t('page.compilation.actions.searchScripts')}
       </Button>
     ),
     onDrop
@@ -87,7 +89,7 @@ const CompilationPage: React.FC<Props> = () => {
   return (
     <CompilationContextProvider hoveringScript={hoveringScript}>
       <PageAppBar
-        title="Compilation"
+        title={t('page.compilation.title')}
         actions={[
           {
             button: addScriptsButton

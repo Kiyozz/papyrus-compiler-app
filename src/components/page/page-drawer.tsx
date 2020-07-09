@@ -10,8 +10,9 @@ import CodeIcon from '@material-ui/icons/Code'
 import LayersIcon from '@material-ui/icons/Layers'
 import SettingsIcon from '@material-ui/icons/Settings'
 
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useLocation } from '@reach/router'
+import { useTranslation } from 'react-i18next'
 
 import AppIcon from '../../assets/logo/vector/app-icon'
 import OpenCompilationLogs from '../open-compilation-logs/open-compilation-logs'
@@ -25,26 +26,29 @@ interface Props {
 
 const PageDrawer: React.FC<Props> = () => {
   const { setDrawerOpen } = usePageContext()
+  const { t } = useTranslation()
 
   const onClick = useCallback(() => setDrawerOpen(false), [setDrawerOpen])
 
-  const links = [
-    {
-      Icon: CodeIcon,
-      text: 'Compilation',
-      path: '/compilation'
-    },
-    {
-      Icon: LayersIcon,
-      text: 'Groups',
-      path: '/groups'
-    },
-    {
-      Icon: SettingsIcon,
-      text: 'Settings',
-      path: '/settings'
-    }
-  ]
+  const links = useMemo(() => (
+    [
+      {
+        Icon: CodeIcon,
+        text: t('nav.compilation'),
+        path: '/compilation'
+      },
+      {
+        Icon: LayersIcon,
+        text: t('nav.groups'),
+        path: '/groups'
+      },
+      {
+        Icon: SettingsIcon,
+        text: t('nav.settings'),
+        path: '/settings'
+      }
+    ]
+  ), [t])
 
   const { pathname } = useLocation()
 

@@ -6,6 +6,7 @@ import { Provider as ReduxProvider } from 'react-redux'
 import App from './app'
 import './index.scss'
 import createRootStore from './redux/stores/root.store'
+import './translations'
 import * as serviceWorker from './serviceWorker'
 import ThemeProvider from './theme'
 
