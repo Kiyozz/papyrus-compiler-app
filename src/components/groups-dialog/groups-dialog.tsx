@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField'
 import SearchIcon from '@material-ui/icons/Search'
 
 import uniqBy from 'lodash-es/uniqBy'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { useDrop } from '../../hooks/use-drop'
 
 import { GroupModel, ScriptModel } from '../../models'
@@ -26,14 +26,20 @@ interface Props {
 }
 
 const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose, group }) => {
-  const [name, setName] = React.useState('')
-  const [scripts, setScripts] = React.useState<ScriptModel[]>([])
-  const [isEdit, setEdit] = React.useState(false)
+  const [name, setName] = useState('')
+  const [scripts, setScripts] = useState<ScriptModel[]>([])
+  const [isEdit, setEdit] = useState(false)
 
-  const onDialogClose = () => {
+  const empty = useCallback(() => {
+    setName('')
+    setScripts([])
+    setEdit(false)
+  }, [])
+
+  const onDialogClose = useCallback(() => {
     empty()
     onClose()
-  }
+  }, [empty, onClose])
 
   React.useEffect(() => {
     if (!group) {
@@ -45,23 +51,17 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
     setName(group.name)
     setScripts(group.scripts)
     setEdit(true)
-  }, [group])
+  }, [group, empty])
 
-  const empty = () => {
-    setName('')
-    setScripts([])
-    setEdit(false)
-  }
-
-  const onClickRemoveScriptFromGroup = (script: ScriptModel) => {
+  const onClickRemoveScriptFromGroup = useCallback((script: ScriptModel) => {
     return (e: React.MouseEvent) => {
       e.stopPropagation()
 
-      setScripts(scripts.filter(scriptFromList => scriptFromList.name !== script.name))
+      setScripts(s => s.filter(scriptFromList => scriptFromList.name !== script.name))
     }
-  }
+  }, [])
 
-  const onSubmitAddGroup = (e: React.FormEvent) => {
+  const onSubmitAddGroup = useCallback((e: React.FormEvent) => {
     e.preventDefault()
 
     if (!name || !name.trim()) {
@@ -85,17 +85,17 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
     })
 
     empty()
-  }
+  }, [name, isEdit, group, scripts, empty, onGroupAdd, onGroupEdit])
 
-  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value)
-  }
+  }, [])
 
-  const onDrop = (pscFiles: File[]) => {
+  const onDrop = useCallback((pscFiles: File[]) => {
     const pscScripts = pscFilesToPscScripts(pscFiles)
 
-    setScripts(uniqBy([...scripts, ...pscScripts], 'name'))
-  }
+    setScripts(s => uniqBy([...s, ...pscScripts], 'name'))
+  }, [])
 
   const addScriptsButton = useDrop({
     button: (
@@ -110,19 +110,6 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
       onClose={onDialogClose}
       aria-labelledby="create-group-title"
     >
-      {/*<DropScripts*/}
-      {/*  onDrop={onDrop}*/}
-      {/*  accept=".psc"*/}
-      {/*  onlyClickButton*/}
-      {/*  Button={<Button startIcon={<SearchIcon />} variant="text" color="secondary">Search scripts</Button>}*/}
-      {/*>*/}
-      {/*  {({ Button, isDragActive }) => (*/}
-      {/*    <>*/}
-      {/*      */}
-      {/*    </>*/}
-      {/*  )}*/}
-      {/*</DropScripts>*/}
-
       <DialogTitle id="create-group-title">{isEdit ? 'Edit a group' : 'Create a new group'}</DialogTitle>
       <form onSubmit={onSubmitAddGroup}>
         <DialogContent className={classes.scriptsContent}>

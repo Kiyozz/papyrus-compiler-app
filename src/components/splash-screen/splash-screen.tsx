@@ -1,20 +1,15 @@
 import Fade from '@material-ui/core/Fade'
 
 import React from 'react'
-import { connect } from 'react-redux'
 
 import appLogo from '../../assets/logo/app/icons/png/1024x1024.png'
-import { RootStore } from '../../redux/stores/root.store'
+import { useStoreSelector } from '../../redux/use-store-selector'
 
 import classes from './splash-screen.module.scss'
 
-interface StateProps {
-  initialized: boolean
-}
+const SplashScreen: React.FC = () => {
+  const initialized = useStoreSelector(state => state.initialization)
 
-type Props = StateProps
-
-const Component: React.FC<Props> = ({ initialized }) => {
   return (
     <Fade
       in={!initialized}
@@ -30,9 +25,5 @@ const Component: React.FC<Props> = ({ initialized }) => {
     </Fade>
   )
 }
-
-const SplashScreen = connect((store: RootStore): StateProps => ({
-  initialized: store.initialization
-}))(Component)
 
 export default SplashScreen

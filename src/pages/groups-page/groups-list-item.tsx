@@ -3,14 +3,14 @@ import Typography from '@material-ui/core/Typography'
 
 import React from 'react'
 
-import { GroupModel } from '../../models'
+import { Group, GroupModel } from '../../models'
 import GroupsListItemMenu from './groups-list-item-menu'
 import classes from './groups-page.module.scss'
 
 interface Props {
   onEdit: (group: GroupModel) => () => void
   onDelete: (group: GroupModel) => () => void
-  group: GroupModel
+  group: Group
 }
 
 const GroupsListItem: React.FC<Props> = ({ group, onDelete, onEdit }) => {
@@ -24,7 +24,7 @@ const GroupsListItem: React.FC<Props> = ({ group, onDelete, onEdit }) => {
       </div>
       <Typography variant="body1" component="div">{group.name}</Typography>
       <Typography variant="body2" component="div" className={classes.scripts}>
-        {group.scripts.length > 0 ? (
+        {!group.isEmpty() ? (
           <>
             {group.scripts.slice(0, 3).map((script) => script.name).join(', ')}
             {group.scripts.length > 3 ? ', ...' : ''}

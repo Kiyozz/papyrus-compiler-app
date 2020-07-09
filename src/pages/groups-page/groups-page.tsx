@@ -1,67 +1,62 @@
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import CreateIcon from '@material-ui/icons/Create'
+import { RouteComponentProps } from '@reach/router'
 
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useCallback, useState } from 'react'
 
 import GroupsDialog from '../../components/groups-dialog/groups-dialog'
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
-import { GroupModel } from '../../models'
+import { Group, GroupModel } from '../../models'
 import actions from '../../redux/actions'
-import { RootStore } from '../../redux/stores/root.store'
+import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 import GroupsListItem from './groups-list-item'
 import classes from './groups-page.module.scss'
 
-export interface StateProps {
-  groups: GroupModel[]
-}
+type Props = RouteComponentProps
 
-export interface DispatchesProps {
-  addGroup: (group: GroupModel) => void
-  removeGroup: (group: GroupModel) => void
-  editGroup: (lastGroupName: string, group: GroupModel) => void
-}
+const GroupsPage: React.FC<Props> = () => {
+  const groups = useStoreSelector(state => state.groups.groups.map(g => new Group(g.name, g.scripts)))
+  const addGroup = useAction(actions.groupsPage.add)
+  const editGroup = useAction(actions.groupsPage.edit)
+  const removeGroup = useAction(actions.groupsPage.remove)
 
-type Props = StateProps & DispatchesProps
+  const [showAddPopup, setShowPopup] = useState(false)
+  const [editingGroup, setEditingGroup] = useState<GroupModel | undefined>(undefined)
 
-const Component: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }) => {
-  const [showAddPopup, setShowPopup] = React.useState(false)
-  const [editingGroup, setEditingGroup] = React.useState<GroupModel | undefined>(undefined)
-
-  const onClickRemoveGroup = (group: GroupModel) => {
+  const onClickRemoveGroup = useCallback((group: GroupModel) => {
     return () => {
       removeGroup(group)
     }
-  }
+  }, [removeGroup])
 
-  const onClickEditGroup = (group: GroupModel) => {
+  const onClickEditGroup = useCallback((group: GroupModel) => {
     return () => {
       setEditingGroup(group)
       setShowPopup(true)
     }
-  }
+  }, [])
 
-  const onClickAddButton = () => {
+  const onClickAddButton = useCallback(() => {
     setEditingGroup(undefined)
     setShowPopup(true)
-  }
+  }, [])
 
-  const onGroupAdd = (group: Partial<GroupModel>) => {
+  const onGroupAdd = useCallback((group: Partial<GroupModel>) => {
     setShowPopup(false)
 
     addGroup(group as GroupModel)
-  }
+  }, [setShowPopup, addGroup])
 
-  const onGroupEdit = (lastGroupName: string, group: GroupModel) => {
+  const onGroupEdit = useCallback((lastGroupName: string, group: GroupModel) => {
     setShowPopup(false)
-    editGroup(lastGroupName, group)
-  }
+    editGroup({ group, lastName: lastGroupName })
+  }, [setShowPopup, editGroup])
 
-  const onClosePopup = () => {
+  const onClosePopup = useCallback(() => {
     setShowPopup(false)
-  }
+  }, [])
 
   return (
     <>
@@ -114,16 +109,5 @@ const Component: React.FC<Props> = ({ groups, addGroup, removeGroup, editGroup }
     </>
   )
 }
-
-const GroupsPage = connect(
-  (store: RootStore): StateProps => ({
-    groups: store.groups.groups
-  }),
-  (dispatch): DispatchesProps => ({
-    addGroup: group => dispatch(actions.groupsPage.add(group)),
-    removeGroup: group => dispatch(actions.groupsPage.remove(group)),
-    editGroup: (lastGroupName, group) => dispatch(actions.groupsPage.edit({ group, lastName: lastGroupName }))
-  })
-)(Component)
 
 export default GroupsPage

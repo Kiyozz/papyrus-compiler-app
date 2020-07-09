@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import CreateIcon from '@material-ui/icons/Create'
 import DeleteIcon from '@material-ui/icons/Delete'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { GroupModel } from '../../models'
 
 interface Props {
@@ -16,21 +16,21 @@ interface Props {
 }
 
 const GroupsListItemMenu: React.FC<Props> = ({ group, onDelete, onEdit }) => {
-  const [anchorMenu, setAnchorMenu] = React.useState<HTMLElement | null>(null)
+  const [anchorMenu, setAnchorMenu] = useState<HTMLElement | null>(null)
   const menuId = `group-${group.name}`
 
-  const onOpen = (e: React.MouseEvent<HTMLElement>) => setAnchorMenu(e.currentTarget)
-  const onClose = () => setAnchorMenu(null)
+  const onOpen = useCallback((e: React.MouseEvent<HTMLElement>) => setAnchorMenu(e.currentTarget), [])
+  const onClose = useCallback(() => setAnchorMenu(null), [])
 
-  const onClickEdit = () => {
+  const onClickEdit = useCallback(() => {
     onClose()
     onEdit()
-  }
+  }, [onClose, onEdit])
 
-  const onClickDelete = () => {
+  const onClickDelete = useCallback(() => {
     onClose()
     onDelete()
-  }
+  }, [onDelete, onClose])
 
   return (
     <>

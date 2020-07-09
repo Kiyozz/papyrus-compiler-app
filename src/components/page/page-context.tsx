@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import DropFilesOverlay from '../drop-files-overlay/drop-files-overlay'
 import DropScripts, { OnDropFunction } from '../drop-scripts/drop-scripts'
 
@@ -13,12 +13,12 @@ interface PageContextInterface {
 
 const PageContext = React.createContext({} as PageContextInterface)
 
-export const usePageContext = () => React.useContext(PageContext)
+export const usePageContext = () => useContext(PageContext)
 
 const PageContextProvider: React.FC = ({ children }) => {
-  const [drawerOpen, setDrawerOpen] = React.useState(false)
-  const [onDrop, setOnDrop] = React.useState<OnDropFunction | null>(null)
-  const [AddScriptsButton, setAddScriptsButton] = React.useState<JSX.Element | null>(null)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [onDrop, setOnDrop] = useState<OnDropFunction | null>(null)
+  const [AddScriptsButton, setAddScriptsButton] = useState<JSX.Element | null>(null)
 
   return (
     <DropScripts accept=".psc" onlyClickButton onDrop={onDrop} Button={AddScriptsButton}>

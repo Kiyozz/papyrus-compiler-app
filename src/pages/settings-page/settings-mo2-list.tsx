@@ -8,7 +8,7 @@ import FolderIcon from '@material-ui/icons/Folder'
 
 import React from 'react'
 
-import { useSettingsContext } from './settings-context'
+import { useSettings } from './settings-context'
 import classes from './settings-page.module.scss'
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const SettingsMo2List: React.FC<Props> = ({ limitationText }) => {
-  const { mo2Instance, mo2Folders } = useSettingsContext()
+  const { mo2Instance, mo2Folders } = useSettings()
 
   const folders = mo2Folders
     .map((folder) => folder.replace(`${mo2Instance}\\mods\\`, ''))

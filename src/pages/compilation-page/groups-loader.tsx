@@ -3,24 +3,24 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import AddIcon from '@material-ui/icons/Add'
 
-import React from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 
-import { GroupModel } from '../../models'
+import { Group, GroupModel } from '../../models'
 import classes from './compilation-page.module.scss'
 
 interface Props {
-  groups: GroupModel[]
+  groups: Group[]
   onChangeGroup: (groupName: string) => void
 }
 
 const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
-  const [anchor, setAnchor] = React.useState<HTMLElement | null>(null)
+  const [anchor, setAnchor] = useState<HTMLElement | null>(null)
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget)
-  const onClose = () => setAnchor(null)
+  const onClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget), [])
+  const onClose = useCallback(() => setAnchor(null), [])
 
-  const groupSelectOptions = React.useMemo(() => {
-    return groups.filter(group => group.scripts.length > 0).map(group => {
+  const groupSelectOptions = useMemo(() => {
+    return groups.filter(group => !group.isEmpty()).map(group => {
       const onClickGroup = () => {
         onClose()
         onChangeGroup(group.name)
@@ -34,7 +34,7 @@ const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
     })
   }, [groups, onChangeGroup])
 
-  const notEmptyGroups = groups.filter(group => group.scripts.length > 0)
+  const notEmptyGroups = groups.filter(group => !group.isEmpty())
 
   return (
     <div className={classes.group}>

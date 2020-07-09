@@ -1,5 +1,4 @@
-import { connectRouter, routerMiddleware, RouterState } from 'connected-react-router'
-import { createBrowserHistory } from 'history'
+import { createHistory } from '@reach/router'
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
@@ -16,7 +15,6 @@ import taskLoadingReducer, { TaskLoadingState } from '../reducers/task-loading.r
 import rootSaga from '../sagas/root.saga'
 
 export interface RootStore {
-  router: RouterState
   initialization: InitializationState
   compilation: CompilationState
   compilationLogs: CompilationLogsState
@@ -28,7 +26,7 @@ export interface RootStore {
 
 const PREFIX = 'papyrus-compiler-app'
 
-export default function createRootStore(history = createBrowserHistory()) {
+export default function createRootStore(history = createHistory(window as any)) {
   const sagaMiddleware = createSagaMiddleware()
   const store = createStore(
     combineReducers({
@@ -38,12 +36,10 @@ export default function createRootStore(history = createBrowserHistory()) {
       groups: groupsReducer,
       settings: settingsReducer,
       changelog: changelogReducer(PREFIX),
-      taskLoading: taskLoadingReducer,
-      router: connectRouter(history)
+      taskLoading: taskLoadingReducer
     }),
     composeWithDevTools(
       applyMiddleware(
-        routerMiddleware(history),
         sagaMiddleware,
         versionMiddleware(PREFIX),
         storageMiddleware(PREFIX),

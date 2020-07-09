@@ -1,11 +1,10 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useMemo, useContext, createContext } from 'react'
 import { Games } from '../../enums/games.enum'
-import { RootStore } from '../../redux/stores/root.store'
+import { useStoreSelector } from '../../redux/use-store-selector'
 import { GameService } from '../../services/game.service'
 import { Mo2Service } from '../../services/mo2.service'
 
-interface SettingsContextInterface {
+interface StateProps {
   mo2: boolean
   mo2Folders: string[]
   mo2Instance: string
@@ -23,32 +22,39 @@ interface OwnProps {
   limitation?: number
 }
 
-const SettingsContext = React.createContext({} as SettingsContextInterface)
+type SettingsContextInterface = StateProps & OwnProps
 
-export const useSettingsContext = () => React.useContext(SettingsContext)
+const SettingsContext = createContext({} as SettingsContextInterface)
 
-const Provider: React.FC<SettingsContextInterface> = ({ children, ...props }) => {
-  return (
-    <SettingsContext.Provider value={props}>
-      {children}
-    </SettingsContext.Provider>
-  )
-}
+export const useSettings = () => useContext(SettingsContext)
 
-const SettingsContextProvider = connect(
-  ({ settings, taskLoading }: RootStore, own: OwnProps): SettingsContextInterface => ({
+const SettingsContextProvider: React.FC<OwnProps> = ({ children, ...props }) => {
+  const state = useStoreSelector(({ settings, taskLoading }) => ({
     game: settings.game,
     gameFolder: settings.gameFolder,
     installationIsBad: settings.installationIsBad,
-    limitation: own.limitation,
     mo2: settings.mo2,
     mo2Folders: settings.mo2SourcesFolders,
     mo2Instance: settings.mo2Instance,
     mo2FoldersError: settings.mo2DetectSourcesFoldersError,
-    loading: taskLoading,
-    mo2Service: new Mo2Service(),
-    gameService: new GameService()
-  })
-)(Provider)
+    loading: taskLoading
+  }))
+
+  const mo2Service = useMemo(() => new Mo2Service(), [])
+  const gameService = useMemo(() => new GameService(), [])
+
+  const value = useMemo(() => ({
+    ...props,
+    ...state,
+    mo2Service,
+    gameService
+  }), [state, props, mo2Service, gameService])
+
+  return (
+    <SettingsContext.Provider value={value}>
+      {children}
+    </SettingsContext.Provider>
+  )
+}
 
 export default SettingsContextProvider

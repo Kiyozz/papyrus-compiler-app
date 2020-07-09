@@ -11,7 +11,7 @@ import Alert from '@material-ui/lab/Alert'
 import React from 'react'
 import FolderTextField from '../../components/folder-text-field/folder-text-field'
 import { Games } from '../../enums/games.enum'
-import { useSettingsContext } from './settings-context'
+import { useSettings } from './settings-context'
 import classes from './settings-page.module.scss'
 
 interface Props {
@@ -21,7 +21,7 @@ interface Props {
 }
 
 const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onClickRefreshInstallation }) => {
-  const { game, installationIsBad, gameFolder, gameService } = useSettingsContext()
+  const { game, installationIsBad, gameFolder, gameService } = useSettings()
 
   return (
     <Paper>

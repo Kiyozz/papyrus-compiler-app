@@ -1,13 +1,12 @@
 import RefreshIcon from '@material-ui/icons/Refresh'
 import debounce from 'lodash-es/debounce'
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useState, useCallback, useEffect } from 'react'
 
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
 import { Games } from '../../enums/games.enum'
 import actions from '../../redux/actions'
-import { RootStore } from '../../redux/stores/root.store'
+import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 import { Mo2Service } from '../../services/mo2.service'
 import SettingsContextProvider from './settings-context'
 import SettingsGame from './settings-game'
@@ -15,34 +14,27 @@ import SettingsMo2 from './settings-mo2'
 import classes from './settings-page.module.scss'
 import SettingsVersion from './settings-version'
 
-export interface StateProps {
-  game: Games
-  gameFolder: string
-  mo2: boolean
-  mo2Instance: string
-  detectedMo2SourcesFolders: string[]
-  loading: boolean
-  detectSourcesFoldersError: string | undefined
-  installationIsBad: boolean
-  startingVersion: string
-}
-
-export interface DispatchesProps {
-  setGame: (game: Games) => void
-  setGameFolder: (gameFolder: string) => void
-  setMo2: (mo2: boolean) => void
-  setMo2Instance: (mo2Instance: string) => void
-  detectMo2SourcesFolder: (mo2Instance: string, game: string) => void
-  detectBadInstallation: (gamePath: string, gameType: Games, isUsingMo2: boolean, mo2Path: string) => void
-}
-
 const mo2Service = new Mo2Service()
 
-type Props = StateProps & DispatchesProps
+const SettingsPage: React.FC = () => {
+  const [actualMo2FolderStringLimitation, setStringLimitation] = useState<number>()
+  const startingVersion = useStoreSelector(state => state.changelog.startingVersion)
+  const game = useStoreSelector(state => state.settings.game)
+  const gameFolder = useStoreSelector(state => state.settings.gameFolder)
+  const mo2 = useStoreSelector(state => state.settings.mo2)
+  const mo2Instance = useStoreSelector(state => state.settings.mo2Instance)
+  const detectedMo2SourcesFolders = useStoreSelector(state => state.settings.mo2SourcesFolders)
+  const loading = useStoreSelector(state => state.taskLoading)
+  const detectSourcesFoldersError = useStoreSelector(state => state.settings.mo2DetectSourcesFoldersError)
+  const installationIsBad = useStoreSelector(state => state.settings.installationIsBad)
+  const detectBadInstallation = useAction(actions.settingsPage.detectBadInstallation.start)
+  const setGame = useAction(actions.settingsPage.game.type)
+  const setGameFolder = useAction(actions.settingsPage.game.folder)
+  const setMo2 = useAction(actions.settingsPage.mo2.use)
+  const setMo2Instance = useAction(actions.settingsPage.mo2.instance)
+  const detectMo2SourcesFolder = useAction(actions.settingsPage.mo2.detectSources.start)
 
-const Component: React.FC<Props> = ({ startingVersion, game, gameFolder, installationIsBad, mo2, mo2Instance, detectedMo2SourcesFolders, detectBadInstallation, loading, detectSourcesFoldersError, setGame, setGameFolder, setMo2, setMo2Instance, detectMo2SourcesFolder }) => {
-  const [actualMo2FolderStringLimitation, setStringLimitation] = React.useState<number>()
-  const onClickRadio = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onClickRadio = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value as Games
 
     if (![Games.LE, Games.SE].includes(value)) {
@@ -50,47 +42,23 @@ const Component: React.FC<Props> = ({ startingVersion, game, gameFolder, install
     }
 
     setGame(value)
-  }
+  }, [setGame])
 
-  React.useEffect(() => {
-    if (!gameFolder || (mo2 && !mo2Instance)) {
+  useEffect(() => {
+    if (!game || !gameFolder || (mo2 && !mo2Instance)) {
       return
     }
 
-    detectBadInstallation(gameFolder, game, mo2, mo2Instance)
+    detectBadInstallation({ gamePath: gameFolder, gameType: game, isUsingMo2: mo2, mo2Path: mo2Instance })
   }, [detectBadInstallation, gameFolder, game, mo2, mo2Instance])
 
-  const onChangeGameFolder = debounce((value: string) => {
-    setGameFolder(value)
-    detectBadInstallation(value, game, mo2, mo2Instance)
-  }, 300)
-
-  const onChangeMo2Instance = debounce((value: string) => {
-    setStringLimitation(0)
-    setMo2Instance(value)
-
-    if (value) {
-      detectMo2SourcesFolder(value, game)
-    }
-  }, 300)
-
-  const onChangeMo2 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMo2(e.currentTarget.checked)
-  }
-
-  const onClickRefreshInstallation = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-
-    detectBadInstallation(gameFolder, game, mo2, mo2Instance)
-  }
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (mo2 && !!mo2Instance && !!game) {
-      detectMo2SourcesFolder(mo2Instance, game)
+      detectMo2SourcesFolder([mo2Instance, game])
     }
   }, [detectMo2SourcesFolder, mo2, mo2Instance, game])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!mo2 || typeof detectSourcesFoldersError !== 'undefined') {
       setStringLimitation(0)
 
@@ -105,17 +73,38 @@ const Component: React.FC<Props> = ({ startingVersion, game, gameFolder, install
     }))
   }, [detectedMo2SourcesFolders, detectSourcesFoldersError, game, gameFolder, mo2Instance, setStringLimitation, mo2])
 
-  const onClickPageRefresh = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onChangeGameFolder = useCallback(debounce((value: string) => {
+    setGameFolder(value)
+  }, 300), [game, mo2, mo2Instance, setGameFolder, detectBadInstallation])
+
+  const onChangeMo2Instance = useCallback(debounce((value: string) => {
+    setStringLimitation(0)
+    setMo2Instance(value)
+  }, 300), [detectMo2SourcesFolder, game])
+
+  const onChangeMo2 = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setMo2(e.currentTarget.checked)
+  }, [setMo2])
+
+  const onClickRefreshInstallation = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    detectBadInstallation({ gamePath: gameFolder, gameType: game, isUsingMo2: mo2, mo2Path: mo2Instance })
+  }, [detectBadInstallation, gameFolder, game, mo2, mo2Instance])
+
+  const onClickPageRefresh = useCallback(() => {
     if (loading) {
       return
     }
 
     if (installationIsBad) {
-      detectBadInstallation(gameFolder, game, mo2, mo2Instance)
+      detectBadInstallation({ gamePath: gameFolder, gameType: game, isUsingMo2: mo2, mo2Path: mo2Instance })
     }
 
-    detectMo2SourcesFolder(mo2Instance, game)
-  }
+    if (!!mo2Instance) {
+      detectMo2SourcesFolder([mo2Instance, game])
+    }
+  }, [loading, detectBadInstallation, detectMo2SourcesFolder, installationIsBad, gameFolder, game, mo2, mo2Instance])
 
   return (
     <SettingsContextProvider limitation={actualMo2FolderStringLimitation}>
@@ -147,27 +136,5 @@ const Component: React.FC<Props> = ({ startingVersion, game, gameFolder, install
     </SettingsContextProvider>
   )
 }
-
-const SettingsPage = connect(
-  ({ settings, taskLoading: loading, changelog }: RootStore): StateProps => ({
-    game: settings.game,
-    gameFolder: settings.gameFolder,
-    mo2: settings.mo2,
-    mo2Instance: settings.mo2Instance,
-    detectedMo2SourcesFolders: settings.mo2SourcesFolders,
-    loading,
-    detectSourcesFoldersError: settings.mo2DetectSourcesFoldersError,
-    installationIsBad: settings.installationIsBad,
-    startingVersion: changelog.startingVersion
-  }),
-  (dispatch): DispatchesProps => ({
-    setGame: game => dispatch(actions.settingsPage.game.type(game)),
-    setGameFolder: gameFolder => dispatch(actions.settingsPage.game.folder(gameFolder)),
-    setMo2: mo2 => dispatch(actions.settingsPage.mo2.use(mo2)),
-    setMo2Instance: mo2Instance => dispatch(actions.settingsPage.mo2.instance(mo2Instance)),
-    detectMo2SourcesFolder: (mo2Instance, game) => dispatch(actions.settingsPage.mo2.detectSources.start([mo2Instance, game])),
-    detectBadInstallation: (gamePath, gameType, isUsingMo2, mo2Path ) => dispatch(actions.settingsPage.detectBadInstallation.start({ gamePath, gameType, isUsingMo2, mo2Path }))
-  })
-)(Component)
 
 export default SettingsPage

@@ -21,7 +21,7 @@ export const useDrop = (options: UseDropOptions): JSX.Element | undefined | null
     setOnDrop(() => options.onDrop)
 
     return () => setOnDrop(null)
-  }, [])
+  }, [options.onDrop])
 
   return addScriptsButton
 }

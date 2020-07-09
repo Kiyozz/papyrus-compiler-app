@@ -1,44 +1,40 @@
 import Button from '@material-ui/core/Button'
 import SearchIcon from '@material-ui/icons/Search'
+import { RouteComponentProps } from '@reach/router'
 
-import uniqBy from 'lodash-es/uniqBy'
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useCallback, useState } from 'react'
 
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
 import { useDrop } from '../../hooks/use-drop'
-import { GroupModel, ScriptModel } from '../../models'
+import { Group, ScriptModel } from '../../models'
 import actions from '../../redux/actions'
-import { RootStore } from '../../redux/stores/root.store'
+import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
+import reorderScripts from '../../utils/scripts/reorder-scripts'
+import uniqScripts from '../../utils/scripts/uniq-scripts'
 import CompilationContextProvider from './compilation-context'
 import CompilationPageContent from './compilation-page-content'
 import GroupsLoader from './groups-loader'
 
-export interface StateProps {
-  isCompilationRunning: boolean
-  compilationScripts: ScriptModel[]
-  groups: GroupModel[]
-}
+type Props = RouteComponentProps
 
-export interface DispatchesProps {
-  startCompilation: (scripts: ScriptModel[]) => void
-  setCompilationScripts: (scripts: ScriptModel[]) => void
-}
+const CompilationPage: React.FC<Props> = () => {
+  const groups = useStoreSelector(state => state.groups.groups.map(group => new Group(group.name, group.scripts)))
+  const isCompilationRunning = useStoreSelector(state => state.compilation.isCompilationRunning)
+  const compilationScripts = useStoreSelector(state => state.compilation.compilationScripts)
+  const startCompilation = useAction(actions.compilationPage.compilation.startWholeCompilation)
+  const setCompilationScripts = useAction(actions.compilationPage.setScripts)
 
-type Props = StateProps & DispatchesProps
-
-const Component: React.FC<Props> = ({ startCompilation, groups, compilationScripts, setCompilationScripts, isCompilationRunning }) => {
-  const [hoveringScript, setHoveringScript] = React.useState<ScriptModel | undefined>(undefined)
-  const onClickRemoveScriptFromScript = (script: ScriptModel) => {
+  const [hoveringScript, setHoveringScript] = useState<ScriptModel | undefined>(undefined)
+  const onClickRemoveScriptFromScript = useCallback((script: ScriptModel) => {
     return () => {
       const newListOfScripts = compilationScripts.filter(compilationScript => compilationScript !== script)
 
       setCompilationScripts(newListOfScripts)
     }
-  }
-  const createOnMouseEvent = (script?: ScriptModel) => {
+  }, [compilationScripts, setCompilationScripts])
+  const createOnMouseEvent = useCallback((script?: ScriptModel) => {
     return () => {
       if (isCompilationRunning) {
         return
@@ -48,35 +44,36 @@ const Component: React.FC<Props> = ({ startCompilation, groups, compilationScrip
         setHoveringScript(script)
       }
     }
-  }
-  const onClickPlayPause = () => {
+  }, [isCompilationRunning, hoveringScript])
+
+  const onClickPlayPause = useCallback(() => {
     if (compilationScripts.length === 0) {
       return
     }
 
     startCompilation(compilationScripts)
-  }
-  const onDrop = (pscFiles: File[]) => {
-    const pscScripts: ScriptModel[] = pscFilesToPscScripts(pscFiles, compilationScripts)
-    const newScripts = uniqBy([...compilationScripts, ...pscScripts], 'name')
+  }, [compilationScripts, startCompilation])
 
-    setCompilationScripts(newScripts.map((script, index) => ({ ...script, id: index })))
-  }
-  const onChangeGroup = (groupName: string) => {
+  const onDrop = useCallback((pscFiles: File[]) => {
+    const pscScripts: ScriptModel[] = pscFilesToPscScripts(pscFiles, compilationScripts)
+    const newScripts = uniqScripts([...compilationScripts, ...pscScripts])
+
+    setCompilationScripts(reorderScripts(newScripts))
+  }, [compilationScripts, setCompilationScripts])
+
+  const onChangeGroup = useCallback((groupName: string) => {
     const group = groups.find(group => group.name === groupName)
 
     if (!group) {
       return
     }
 
-    const scripts: ScriptModel[] = uniqBy([...compilationScripts, ...group.scripts], 'name')
-      .map((script, index) => ({ ...script, id: index }))
+    setCompilationScripts(reorderScripts(uniqScripts([...compilationScripts, ...group.scripts])))
+  }, [setCompilationScripts, compilationScripts, groups])
 
-    setCompilationScripts(scripts)
-  }
-  const onClearScripts = () => {
+  const onClearScripts = useCallback(() => {
     setCompilationScripts([])
-  }
+  }, [setCompilationScripts])
 
   const addScriptsButton = useDrop({
     button: (
@@ -89,25 +86,6 @@ const Component: React.FC<Props> = ({ startCompilation, groups, compilationScrip
 
   return (
     <CompilationContextProvider hoveringScript={hoveringScript}>
-      {/*<DropScripts*/}
-      {/*  onDrop={onDrop}*/}
-      {/*  accept=".psc"*/}
-      {/*  className={classes.fullHeight}*/}
-      {/*  buttonClassName={classes.inline}*/}
-      {/*  onlyClickButton*/}
-      {/*  Button={*/}
-      {/*    <Button color="inherit" startIcon={<SearchIcon />}>*/}
-      {/*      Search scripts*/}
-      {/*    </Button>*/}
-      {/*  }*/}
-      {/*>*/}
-      {/*  {({ Button: AddScriptsButton, isDragActive }) => (*/}
-      {/*    <>*/}
-      {/*      */}
-      {/*    </>*/}
-      {/*  )}*/}
-      {/*</DropScripts>*/}
-
       <PageAppBar
         title="Compilation"
         actions={[
@@ -133,17 +111,5 @@ const Component: React.FC<Props> = ({ startCompilation, groups, compilationScrip
     </CompilationContextProvider>
   )
 }
-
-const CompilationPage = connect(
-  (store: RootStore): StateProps => ({
-    isCompilationRunning: store.compilation.isCompilationRunning,
-    compilationScripts: store.compilation.compilationScripts,
-    groups: store.groups.groups
-  }),
-  (dispatch): DispatchesProps => ({
-    startCompilation: scripts => dispatch(actions.compilationPage.compilation.startWholeCompilation(scripts)),
-    setCompilationScripts: scripts => dispatch(actions.compilationPage.setScripts(scripts))
-  })
-)(Component)
 
 export default CompilationPage

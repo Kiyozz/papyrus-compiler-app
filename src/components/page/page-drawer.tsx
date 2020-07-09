@@ -10,12 +10,13 @@ import CodeIcon from '@material-ui/icons/Code'
 import LayersIcon from '@material-ui/icons/Layers'
 import SettingsIcon from '@material-ui/icons/Settings'
 
-import React from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import React, { useCallback } from 'react'
+import { useLocation } from '@reach/router'
 
 import AppIcon from '../../assets/logo/vector/app-icon'
 import OpenCompilationLogs from '../open-compilation-logs/open-compilation-logs'
 import OpenLogFileAction from '../open-log-file-action/open-log-file-action'
+import { ActiveLink } from '../sidebar/sidebar-link'
 import { usePageContext } from './page-context'
 import classes from './page.module.scss'
 
@@ -25,7 +26,7 @@ interface Props {
 const PageDrawer: React.FC<Props> = () => {
   const { setDrawerOpen } = usePageContext()
 
-  const onClick = () => setDrawerOpen(false)
+  const onClick = useCallback(() => setDrawerOpen(false), [setDrawerOpen])
 
   const links = [
     {
@@ -69,7 +70,7 @@ const PageDrawer: React.FC<Props> = () => {
               const isActive = pathname === Link.path
 
               return (
-                <NavLink tabIndex={-1} key={Link.path} activeClassName={classes.active} className={classes.link} to={Link.path} onClick={onClick}>
+                <ActiveLink tabIndex={-1} key={Link.path} activeClassName={classes.active} className={classes.link} to={Link.path} onClick={onClick}>
                   <Box bgcolor={isActive ? 'primary.main' : ''} className={classes.drawerLink}>
                     <ListItem button disableRipple>
                       <ListItemIcon color="inherit">
@@ -78,7 +79,7 @@ const PageDrawer: React.FC<Props> = () => {
                       <ListItemText primary={Link.text} />
                     </ListItem>
                   </Box>
-                </NavLink>
+                </ActiveLink>
               )
             })}
           </List>

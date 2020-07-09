@@ -2,7 +2,7 @@ import Fab from '@material-ui/core/Fab'
 import Fade from '@material-ui/core/Fade'
 import ClearIcon from '@material-ui/icons/Clear'
 
-import React from 'react'
+import React, { useCallback } from 'react'
 import buttonsDisable from './action-buttons-disable'
 import { useCompilationContext } from './compilation-context'
 
@@ -16,12 +16,12 @@ interface Props {
 const CompilationPageActions: React.FC<Props> = ({ hasScripts, onClearScripts }) => {
   const { compilationScripts, hoveringScript } = useCompilationContext()
 
-  const onClickEmpty = () => {
+  const onClickEmpty = useCallback(() => {
     onClearScripts()
-  }
+  }, [onClearScripts])
 
   return (
-    <Fade in={compilationScripts.length >= 3 && !buttonsDisable(compilationScripts, hoveringScript)}>
+    <Fade in={compilationScripts.length >= 1 && !buttonsDisable(compilationScripts, hoveringScript)}>
       <Fab
         className={classes.fabsActions}
         onClick={onClickEmpty}

@@ -1,13 +1,13 @@
-import { ConnectedRouter } from 'connected-react-router'
+import { LocationProvider } from '@reach/router'
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
 
 import App from './app'
 import './index.scss'
 import createRootStore from './redux/stores/root.store'
 import * as serviceWorker from './serviceWorker'
-import Theme from './theme'
+import ThemeProvider from './theme'
 
 declare global {
   interface Window {
@@ -18,13 +18,13 @@ declare global {
 const { store, history } = createRootStore()
 
 render((
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <Theme>
+  <ReduxProvider store={store}>
+    <ThemeProvider>
+      <LocationProvider history={history}>
         <App />
-      </Theme>
-    </ConnectedRouter>
-  </Provider>
+      </LocationProvider>
+    </ThemeProvider>
+  </ReduxProvider>
 ), document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change

@@ -1,26 +1,25 @@
 import React from 'react'
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { Redirect, Router } from '@reach/router'
 import CompilationPage from './pages/compilation-page/compilation-page'
 import GroupsPage from './pages/groups-page/groups-page'
 import SettingsPage from './pages/settings-page/settings-page'
 
 const routes = [
-  { path: '/compilation', component: CompilationPage },
-  { path: '/groups', component: GroupsPage },
-  { path: '/settings', component: SettingsPage }
+  { path: 'compilation', Component: CompilationPage },
+  { path: 'groups', Component: GroupsPage },
+  { path: 'settings', Component: SettingsPage }
 ]
 
 const Routes = () => (
-  <Switch>
-    {routes.map(({ path, component }) => (
-      <Route
+  <Router>
+    {routes.map(({ path, Component }) => (
+      <Component
         key={path}
         path={path}
-        component={component}
       />
     ))}
-    <Redirect to="/compilation" />
-  </Switch>
+    <Redirect from="*" default noThrow to="/compilation" />
+  </Router>
 )
 
 export default Routes

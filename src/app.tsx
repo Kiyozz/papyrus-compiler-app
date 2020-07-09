@@ -1,6 +1,5 @@
 import Box from '@material-ui/core/Box'
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import React, { useCallback, useEffect } from 'react'
 
 import classes from './app.module.scss'
 import DialogChangelog from './components/dialog-changelog/dialog-changelog'
@@ -9,12 +8,8 @@ import PageDrawer from './components/page/page-drawer'
 import SplashScreen from './components/splash-screen/splash-screen'
 import { useOnIpcEvent } from './hooks/use-on-ipc-event'
 import actions from './redux/actions'
-import { RootStore } from './redux/stores/root.store'
+import { useActions, useStoreSelector } from './redux/use-store-selector'
 import Routes from './routes'
-
-export interface StateProps {
-  initialized: boolean
-}
 
 export interface DispatchesProps {
   initialization: () => void
@@ -23,9 +18,17 @@ export interface DispatchesProps {
   setShowNotes: (show: boolean) => void
 }
 
-type Props = StateProps & DispatchesProps
+const useAppActions = () => useActions<DispatchesProps>({
+  initialization: actions.initialization.start,
+  openLogFile: actions.openLogFile,
+  getLatestNotes: actions.changelog.latestNotes.start,
+  setShowNotes: actions.changelog.showNotes
+})
 
-const Component: React.FC<Props> = ({ initialization, initialized, setShowNotes, getLatestNotes, openLogFile }) => {
+const App: React.FC = () => {
+  const { initialization, getLatestNotes, setShowNotes, openLogFile } = useAppActions()
+  const initialized = useStoreSelector(state => state.initialization)
+
   useOnIpcEvent('open-log-file', () => {
     openLogFile()
   })
@@ -39,9 +42,9 @@ const Component: React.FC<Props> = ({ initialization, initialized, setShowNotes,
     // eslint-disable-next-line
   }, [])
 
-  const onClickCloseChangelogPopup = () => {
+  const onClickCloseChangelogPopup = useCallback(() => {
     setShowNotes(false)
-  }
+  }, [setShowNotes])
 
   return (
     <div className={classes.container}>
@@ -61,14 +64,5 @@ const Component: React.FC<Props> = ({ initialization, initialized, setShowNotes,
     </div>
   )
 }
-
-const App = connect((store: RootStore): StateProps => ({
-  initialized: store.initialization
-}), (dispatch): DispatchesProps => ({
-  initialization: () => dispatch(actions.initialization.start()),
-  openLogFile: () => dispatch(actions.openLogFile()),
-  getLatestNotes: () => dispatch(actions.changelog.latestNotes.start()),
-  setShowNotes: show => dispatch(actions.changelog.showNotes(show))
-}))(Component)
 
 export default App

@@ -4,7 +4,7 @@ import Alert from '@material-ui/lab/Alert'
 import React from 'react'
 
 import FolderTextField from '../../components/folder-text-field/folder-text-field'
-import { useSettingsContext } from './settings-context'
+import { useSettings } from './settings-context'
 import SettingsMo2List from './settings-mo2-list'
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const SettingsMo2Instance: React.FC<Props> = ({ onChangeMo2Instance }) => {
-  const { mo2, mo2Folders, mo2FoldersError, mo2Instance, limitation, mo2Service } = useSettingsContext()
+  const { mo2, mo2Folders, mo2FoldersError, mo2Instance, limitation, mo2Service } = useSettings()
 
   return (
     <Collapse in={mo2}>

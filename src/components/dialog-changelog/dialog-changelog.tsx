@@ -9,10 +9,10 @@ import DownloadIcon from '@material-ui/icons/GetApp'
 
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import { connect } from 'react-redux'
 
 import useOnKeyUp from '../../hooks/use-on-key-up'
 import { RootStore } from '../../redux/stores/root.store'
+import { useStoreSelector } from '../../redux/use-store-selector'
 
 const { shell } = window.require('electron')
 
@@ -24,13 +24,19 @@ interface StateProps {
   releaseLink: string
 }
 
-interface OwnProps {
+interface Props {
   onClose: () => void
 }
 
-type Props = StateProps & OwnProps
+const DialogChangelog: React.FC<Props> = ({ onClose }) => {
+  const { startingVersion, showNotes, latestNotesVersion, notes, releaseLink } = useStoreSelector<StateProps>(({ changelog }: RootStore) => ({
+    latestNotesVersion: changelog.version,
+    showNotes: changelog.showNotes,
+    startingVersion: changelog.startingVersion,
+    notes: changelog.notes,
+    releaseLink: 'https://www.nexusmods.com/skyrim/mods/96339?tab=files'
+  }))
 
-const Component: React.FC<Props> = ({ onClose, notes, releaseLink, latestNotesVersion, startingVersion, showNotes }) => {
   const onClickDownloadRelease = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
@@ -61,14 +67,5 @@ const Component: React.FC<Props> = ({ onClose, notes, releaseLink, latestNotesVe
     </Dialog>
   )
 }
-
-const DialogChangelog = connect(({ changelog }: RootStore, { onClose }: OwnProps): StateProps & OwnProps => ({
-  onClose,
-  latestNotesVersion: changelog.version,
-  showNotes: changelog.showNotes,
-  startingVersion: changelog.startingVersion,
-  notes: changelog.notes,
-  releaseLink: 'https://www.nexusmods.com/skyrim/mods/96339?tab=files'
-}))(Component)
 
 export default DialogChangelog

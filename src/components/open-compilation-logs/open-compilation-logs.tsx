@@ -9,23 +9,11 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ErrorIcon from '@material-ui/icons/Error'
 import Typography from '@material-ui/core/Typography'
 
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useCallback } from 'react'
 
-import { CompilationLogsModel, ScriptModel } from '../../models'
+import { ScriptModel } from '../../models'
 import actions from '../../redux/actions'
-import { RootStore } from '../../redux/stores/root.store'
-
-interface StateProps {
-  logs: CompilationLogsModel
-  popupOpen: boolean
-}
-
-interface DispatchesProps {
-  popupToggle: (toggle: boolean) => void
-}
-
-export type Props = StateProps & DispatchesProps
+import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 
 const LogsListItem: React.FC<{ script: ScriptModel, logs: string }> = ({ script, logs }) => (
   <div>
@@ -38,14 +26,18 @@ const LogsListItem: React.FC<{ script: ScriptModel, logs: string }> = ({ script,
   </div>
 )
 
-const Component: React.FC<Props> = ({ logs, popupOpen, popupToggle }) => {
-  const onClickButtonOpenLogs = () => {
-    popupToggle(true)
-  }
+const OpenCompilationLogs: React.FC = () => {
+  const logs = useStoreSelector(state => state.compilationLogs.logs)
+  const popupOpen = useStoreSelector(state => state.compilationLogs.popupOpen)
+  const popupToggle = useAction(actions.compilationPage.logs.popupToggle)
 
-  const onClickButtonCloseLogs = () => {
+  const onClickButtonOpenLogs = useCallback(() => {
+    popupToggle(true)
+  }, [popupToggle])
+
+  const onClickButtonCloseLogs = useCallback(() => {
     popupToggle(false)
-  }
+  }, [popupToggle])
 
   return (
     <>
@@ -74,15 +66,5 @@ const Component: React.FC<Props> = ({ logs, popupOpen, popupToggle }) => {
     </>
   )
 }
-
-const OpenCompilationLogs = connect(
-  (store: RootStore): StateProps => ({
-    logs: store.compilationLogs.logs,
-    popupOpen: store.compilationLogs.popupOpen
-  }),
-  (dispatch): DispatchesProps => ({
-    popupToggle: toggle => dispatch(actions.compilationPage.logs.popupToggle(toggle))
-  })
-)(Component)
 
 export default OpenCompilationLogs
