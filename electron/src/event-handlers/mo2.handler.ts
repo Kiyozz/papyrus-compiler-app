@@ -27,9 +27,9 @@ export class Mo2Handler implements HandlerInterface {
     }
 
     try {
-      await this.pathHelper.stat(this.pathHelper.join(mo2Instance, 'mods'))
-      await this.pathHelper.stat(this.pathHelper.join(mo2Instance, 'profiles'))
-      await this.pathHelper.stat(this.pathHelper.join(mo2Instance, 'downloads'))
+      for (const folder of ['mods', 'profiles', 'downloads']) {
+        await this.pathHelper.stat(this.pathHelper.join(mo2Instance, folder))
+      }
     } catch (e) {
       throw new InvalidMo2InstanceFolderException(mo2Instance)
     }

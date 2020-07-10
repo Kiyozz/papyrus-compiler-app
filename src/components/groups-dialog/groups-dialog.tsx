@@ -7,11 +7,10 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
 import SearchIcon from '@material-ui/icons/Search'
 
-import uniqBy from 'lodash-es/uniqBy'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDrop } from '../../hooks/use-drop'
 
+import { useDrop } from '../../hooks/use-drop'
 import { GroupModel, ScriptModel } from '../../models'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
 import uniqScripts from '../../utils/scripts/uniq-scripts'

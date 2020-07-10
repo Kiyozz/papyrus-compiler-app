@@ -1,6 +1,7 @@
 import RefreshIcon from '@material-ui/icons/Refresh'
 import debounce from 'lodash-es/debounce'
 import React, { useState, useCallback, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
@@ -17,6 +18,7 @@ import SettingsVersion from './settings-version'
 const mo2Service = new Mo2Service()
 
 const SettingsPage: React.FC = () => {
+  const { t } = useTranslation()
   const [actualMo2FolderStringLimitation, setStringLimitation] = useState<number>()
   const startingVersion = useStoreSelector(state => state.changelog.startingVersion)
   const game = useStoreSelector(state => state.settings.game)
@@ -109,9 +111,9 @@ const SettingsPage: React.FC = () => {
   return (
     <SettingsContextProvider limitation={actualMo2FolderStringLimitation}>
       <PageAppBar
-        title="Settings"
+        title={t('page.settings.title')}
         actions={[{
-          text: 'Refresh',
+          text: t('page.settings.actions.refresh'),
           icon: <RefreshIcon />,
           onClick: onClickPageRefresh
         }]}

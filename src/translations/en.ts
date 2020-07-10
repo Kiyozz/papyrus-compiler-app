@@ -40,7 +40,27 @@ export default {
       }
     },
     settings: {
-      title: 'Settings'
+      title: 'Settings',
+      actions: {
+        refresh: 'Refresh'
+      },
+      game: 'Game',
+      gameFolderInfo: '{{game}} folder (where {{exe}} is located)',
+      errors: {
+        installationInvalid: 'Installation seems invalid:',
+        installationInvalidInfo: 'Check if you have extracted Scripts.zip from Creation Kit.'
+      },
+      mo2: {
+        enable: 'Enable',
+        enableText: 'Only enable this option when the app is not started from MO2.',
+        instance: 'MO2 Instance folder',
+        limit: 'Limit {{limit}}',
+        errorInstance: 'The folder "{{folder}}" does not contains {{requiredFolders}} folders.'
+      },
+      version: 'Version {{version}}'
     }
+  },
+  common: {
+    selectFolder: 'Select a folder'
   }
 }

@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import Alert from '@material-ui/lab/Alert'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import FolderTextField from '../../components/folder-text-field/folder-text-field'
 import { Games } from '../../enums/games.enum'
 import { useSettings } from './settings-context'
@@ -21,11 +22,12 @@ interface Props {
 }
 
 const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onClickRefreshInstallation }) => {
+  const { t } = useTranslation()
   const { game, installationIsBad, gameFolder, gameService } = useSettings()
 
   return (
     <Paper>
-      <Typography variant="h5" component="h1">Game</Typography>
+      <Typography variant="h5" component="h1">{t('page.settings.game')}</Typography>
       <FormControl component="fieldset" fullWidth>
         <RadioGroup row value={game} onChange={onClickRadio}>
           <FormControlLabel value={Games.LE} control={<Radio />} label={Games.LE} />
@@ -34,7 +36,7 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
       </FormControl>
       <FolderTextField
         error={installationIsBad}
-        label={`${game} folder (where ${gameService.toExecutable(game)} is located)`}
+        label={t('page.settings.gameFolderInfo', { game, exe: gameService.toExecutable(game) })}
         value={gameFolder}
         onChange={onChangeGameFolder}
       />
@@ -45,12 +47,12 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
           className={classes.alert}
           action={(
             <Button onClick={onClickRefreshInstallation} startIcon={<RefreshIcon />}>
-              Refresh
+              {t('page.settings.actions.refresh')}
             </Button>
           )}
         >
-          <Typography variant="body2" paragraph>Installation seems invalid:</Typography>
-          <Typography variant="body2">Check if you have extracted Scripts.zip from Creation Kit.</Typography>
+          <Typography variant="body2" paragraph>{t('page.settings.errors.installationInvalid')}</Typography>
+          <Typography variant="body2">{t('page.settings.errors.installationInvalidInfo')}</Typography>
         </Alert>
       </Collapse>
     </Paper>

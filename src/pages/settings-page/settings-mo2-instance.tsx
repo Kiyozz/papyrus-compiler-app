@@ -2,6 +2,7 @@ import Collapse from '@material-ui/core/Collapse'
 import Alert from '@material-ui/lab/Alert'
 
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import FolderTextField from '../../components/folder-text-field/folder-text-field'
 import { useSettings } from './settings-context'
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const SettingsMo2Instance: React.FC<Props> = ({ onChangeMo2Instance }) => {
+  const { t } = useTranslation()
   const { mo2, mo2Folders, mo2FoldersError, mo2Instance, limitation, mo2Service } = useSettings()
 
   return (
@@ -19,7 +21,7 @@ const SettingsMo2Instance: React.FC<Props> = ({ onChangeMo2Instance }) => {
       <FolderTextField
         error={!!mo2FoldersError}
         value={mo2Instance}
-        label="MO2 Instance folder"
+        label={t('page.settings.mo2.instance')}
         onChange={onChangeMo2Instance}
       />
 
@@ -30,7 +32,7 @@ const SettingsMo2Instance: React.FC<Props> = ({ onChangeMo2Instance }) => {
       </Collapse>
 
       <Collapse in={mo2Folders.length > 0 && !!mo2Instance}>
-        <SettingsMo2List limitationText={`Limit ${limitation}/${mo2Service.windowsCmdLimitation}`} />
+        <SettingsMo2List limitationText={t('page.settings.mo2.limit', { limit: `${limitation}/${mo2Service.windowsCmdLimitation}` })} />
       </Collapse>
     </Collapse>
   )

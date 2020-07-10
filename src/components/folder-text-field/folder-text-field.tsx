@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField'
 import FolderIcon from '@material-ui/icons/Folder'
 
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import classes from './folder-text-field.module.scss'
 
@@ -14,6 +15,7 @@ export interface Props {
 }
 
 const FolderTextField: React.FC<Props> = ({ error = false, label, value, onChange }) => {
+  const { t } = useTranslation()
   const onClickInput = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     e.currentTarget.blur()
@@ -49,7 +51,7 @@ const FolderTextField: React.FC<Props> = ({ error = false, label, value, onChang
       value={value}
       onClick={onClickInput}
       label={label}
-      placeholder="Select a folder"
+      placeholder={t('common.selectFolder')}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
