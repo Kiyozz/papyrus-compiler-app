@@ -21,7 +21,23 @@ export default {
       }
     },
     groups: {
-      title: 'Groups'
+      title: 'Groups',
+      actions: {
+        create: 'Create',
+        edit: 'Edit',
+        remove: 'Remove'
+      },
+      createGroupText: 'You can create a group with the top-right button.',
+      whatIsAGroup: 'A group is a set of scripts that can be easily loaded on the compilation view.',
+      noScripts: 'No scripts',
+      dialog: {
+        searchScripts: 'Search scripts',
+        createGroup: 'Create a new group',
+        editGroup: 'Edit a group',
+        name: 'Name',
+        dropScripts: 'Drop your scripts files here',
+        close: 'Close'
+      }
     },
     settings: {
       title: 'Settings'

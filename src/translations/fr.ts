@@ -21,7 +21,23 @@ export default {
       }
     },
     groups: {
-      title: 'Groupes'
+      title: 'Groupes',
+      actions: {
+        create: 'Créer',
+        edit: 'Modifier',
+        remove: 'Supprimer'
+      },
+      createGroupText: 'Vous pouvez créer un groupe avec le bouton $t(page.groups.actions.create).',
+      whatIsAGroup: 'Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation.',
+      noScripts: 'Aucun scripts',
+      dialog: {
+        searchScripts: 'Rechercher',
+        createGroup: 'Créer un groupe',
+        editGroup: 'Modifier un groupe',
+        name: 'Nom',
+        dropScripts: 'Glisser-déposer vos scripts ici',
+        close: 'Fermer'
+      }
     },
     settings: {
       title: 'Paramètres'

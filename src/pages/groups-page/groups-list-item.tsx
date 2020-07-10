@@ -2,6 +2,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { Group, GroupModel } from '../../models'
 import GroupsListItemMenu from './groups-list-item-menu'
@@ -14,6 +15,8 @@ interface Props {
 }
 
 const GroupsListItem: React.FC<Props> = ({ group, onDelete, onEdit }) => {
+  const { t } = useTranslation()
+
   return (
     <Paper
       key={group.name}
@@ -31,7 +34,7 @@ const GroupsListItem: React.FC<Props> = ({ group, onDelete, onEdit }) => {
           </>
         ) : (
           <>
-            No scripts
+            {t('page.groups.noScripts')}
           </>
         )}
       </Typography>

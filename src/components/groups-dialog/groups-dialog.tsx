@@ -9,10 +9,12 @@ import SearchIcon from '@material-ui/icons/Search'
 
 import uniqBy from 'lodash-es/uniqBy'
 import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDrop } from '../../hooks/use-drop'
 
 import { GroupModel, ScriptModel } from '../../models'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
+import uniqScripts from '../../utils/scripts/uniq-scripts'
 import GroupsDialogActions from './groups-dialog-actions'
 import GroupsDialogList from './groups-dialog-list'
 import classes from './groups-dialog.module.scss'
@@ -26,6 +28,7 @@ interface Props {
 }
 
 const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose, group }) => {
+  const { t } = useTranslation()
   const [name, setName] = useState('')
   const [scripts, setScripts] = useState<ScriptModel[]>([])
   const [isEdit, setEdit] = useState(false)
@@ -94,12 +97,12 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
   const onDrop = useCallback((pscFiles: File[]) => {
     const pscScripts = pscFilesToPscScripts(pscFiles)
 
-    setScripts(s => uniqBy([...s, ...pscScripts], 'name'))
+    setScripts(s => uniqScripts([...s, ...pscScripts]))
   }, [])
 
   const addScriptsButton = useDrop({
     button: (
-      <Button startIcon={<SearchIcon />} variant="text" color="secondary">Search scripts</Button>
+      <Button startIcon={<SearchIcon />} variant="text" color="secondary">{t('page.groups.dialog.searchScripts')}</Button>
     ),
     onDrop
   })
@@ -110,12 +113,12 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
       onClose={onDialogClose}
       aria-labelledby="create-group-title"
     >
-      <DialogTitle id="create-group-title">{isEdit ? 'Edit a group' : 'Create a new group'}</DialogTitle>
+      <DialogTitle id="create-group-title">{isEdit ? t('page.groups.dialog.editGroup') : t('page.groups.dialog.createGroup')}</DialogTitle>
       <form onSubmit={onSubmitAddGroup}>
         <DialogContent className={classes.scriptsContent}>
           <TextField
             fullWidth
-            label="Name"
+            label={t('page.groups.dialog.name')}
             name="group-name"
             id="group-name"
             value={name}
@@ -129,7 +132,7 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
               />
             ) : (
               <DialogContentText>
-                Drop your scripts files here
+                {t('page.groups.dialog.dropScripts')}
               </DialogContentText>
             )}
           </div>

@@ -4,6 +4,7 @@ import CreateIcon from '@material-ui/icons/Create'
 import { RouteComponentProps } from '@reach/router'
 
 import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import GroupsDialog from '../../components/groups-dialog/groups-dialog'
 import Page from '../../components/page/page'
@@ -17,6 +18,7 @@ import classes from './groups-page.module.scss'
 type Props = RouteComponentProps
 
 const GroupsPage: React.FC<Props> = () => {
+  const { t } = useTranslation()
   const groups = useStoreSelector(state => state.groups.groups.map(g => new Group(g.name, g.scripts)))
   const addGroup = useAction(actions.groupsPage.add)
   const editGroup = useAction(actions.groupsPage.edit)
@@ -45,7 +47,6 @@ const GroupsPage: React.FC<Props> = () => {
 
   const onGroupAdd = useCallback((group: Partial<GroupModel>) => {
     setShowPopup(false)
-
     addGroup(group as GroupModel)
   }, [setShowPopup, addGroup])
 
@@ -61,10 +62,10 @@ const GroupsPage: React.FC<Props> = () => {
   return (
     <>
       <PageAppBar
-        title="Groups"
+        title={t('page.groups.title')}
         actions={[
           {
-            text: 'Create',
+            text: t('page.groups.actions.create'),
             icon: <CreateIcon />,
             onClick: onClickAddButton
           }
@@ -100,8 +101,8 @@ const GroupsPage: React.FC<Props> = () => {
 
           <Fade in={groups.length === 0}>
             <Box>
-              <p>You can create a group with the top-right button.</p>
-              <p>A group is a set of scripts that can be easily loaded on the compilation view.</p>
+              <p>{t('page.groups.createGroupText')}</p>
+              <p>{t('page.groups.whatIsAGroup')}</p>
             </Box>
           </Fade>
         </div>

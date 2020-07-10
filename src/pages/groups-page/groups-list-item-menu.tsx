@@ -7,6 +7,7 @@ import CreateIcon from '@material-ui/icons/Create'
 import DeleteIcon from '@material-ui/icons/Delete'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { GroupModel } from '../../models'
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const GroupsListItemMenu: React.FC<Props> = ({ group, onDelete, onEdit }) => {
+  const { t } = useTranslation()
   const [anchorMenu, setAnchorMenu] = useState<HTMLElement | null>(null)
   const menuId = `group-${group.name}`
 
@@ -48,13 +50,13 @@ const GroupsListItemMenu: React.FC<Props> = ({ group, onDelete, onEdit }) => {
           <ListItemIcon>
             <CreateIcon fontSize="small" color="primary" />
           </ListItemIcon>
-          <Typography variant="inherit">Edit</Typography>
+          <Typography variant="inherit">{t('page.groups.actions.edit')}</Typography>
         </MenuItem>
         <MenuItem onClick={onClickDelete}>
           <ListItemIcon>
             <DeleteIcon fontSize="small" color="error" />
           </ListItemIcon>
-          <Typography variant="inherit">Remove</Typography>
+          <Typography variant="inherit">{t('page.groups.actions.remove')}</Typography>
         </MenuItem>
       </Menu>
     </>
