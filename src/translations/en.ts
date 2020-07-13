@@ -61,6 +61,15 @@ export default {
     }
   },
   common: {
-    selectFolder: 'Select a folder'
+    selectFolder: 'Select a folder',
+    logs: {
+      nav: 'Compilation logs',
+      title: 'Compilation logs',
+      noLogs: 'No logs',
+      close: 'Close',
+      scriptFailed: 'Script {{script}} failed to compile: {{message}}',
+      scriptFailedCmd: 'Executed command: {{cmd}}',
+      invalidConfiguration: '{{folder}} is a invalid Skyrim directory. The folder does not contains {{exe}}.'
+    }
   }
 }

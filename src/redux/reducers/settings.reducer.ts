@@ -9,7 +9,7 @@ export interface SettingsState {
   mo2Instance: string
   mo2SourcesFolders: string[]
   installationIsBad: boolean
-  mo2DetectSourcesFoldersError?: string
+  mo2DetectSourcesFoldersError?: Error
 }
 
 const initialState: SettingsState = {

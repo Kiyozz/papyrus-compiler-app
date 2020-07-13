@@ -18,6 +18,25 @@ class Api {
 
   compileScript = (script: ScriptModel, [game, gamePath, mo2Instance, mo2SourcesFolders]: [Games, string, string, string[]]) => {
     return this.ipc.send('compile-script', { script: script.name, game, gamePath, mo2Instance, mo2SourcesFolders })
+      .catch(err => {
+        if (!isJson(err)) {
+          throw err
+        }
+
+        console.log('to', err)
+
+        let { error, command, script } = JSON.parse(err)
+
+        if (isJson(error)) {
+          const { gamePath, executable } = JSON.parse(error)
+
+          error = i18n.t('common.logs.invalidConfiguration', { folder: gamePath, exe: executable })
+        }
+
+        const commandMessage = `\n${typeof command !== 'undefined' ? i18n.t('common.logs.scriptFailedCommand', { cmd: command }) : ''}`
+
+        throw new Error(`${i18n.t('common.logs.scriptFailed', { script, message: error })}${commandMessage}`)
+      })
   }
 
   getLatestNotes = async () => {
@@ -35,7 +54,7 @@ class Api {
 
         const { folder, requiredFolders } = JSON.parse(err)
 
-        throw i18n.t('page.settings.mo2.errorInstance', { folder, requiredFolders: requiredFolders.map((d: string) => `"${d}"`).join(', ') })
+        throw new Error(i18n.t('page.settings.mo2.errorInstance', { folder, requiredFolders: requiredFolders.map((d: string) => `"${d}"`).join(', ') }))
       })
   }
 

@@ -27,7 +27,7 @@ const SettingsMo2Instance: React.FC<Props> = ({ onChangeMo2Instance }) => {
 
       <Collapse in={!!mo2FoldersError}>
         <Alert severity="error">
-          {mo2FoldersError}
+          {mo2FoldersError?.message}
         </Alert>
       </Collapse>
 

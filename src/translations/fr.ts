@@ -61,6 +61,15 @@ export default {
     }
   },
   common: {
-    selectFolder: 'Sélectionner un dossier'
+    selectFolder: 'Sélectionner un dossier',
+    logs: {
+      nav: 'Logs',
+      title: 'Logs de compilation',
+      noLogs: 'Aucun logs',
+      close: 'Fermer',
+      scriptFailed: 'Problème avec le script {{script}} : {{message}}',
+      scriptFailedCmd: 'Commande : {{cmd}}',
+      invalidConfiguration: 'Le dossier "{{folder}}" n\'est pas valide. Il ne contient pas "{{exe}}".'
+    }
   }
 }

@@ -11,7 +11,7 @@ interface StateProps {
   game: Games
   gameFolder: string
   installationIsBad: boolean
-  mo2FoldersError?: string
+  mo2FoldersError?: Error
   limitation?: number
   loading: boolean
   mo2Service: Mo2Service

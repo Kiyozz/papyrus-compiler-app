@@ -10,6 +10,7 @@ import ErrorIcon from '@material-ui/icons/Error'
 import Typography from '@material-ui/core/Typography'
 
 import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { ScriptModel } from '../../models'
 import actions from '../../redux/actions'
@@ -27,6 +28,7 @@ const LogsListItem: React.FC<{ script: ScriptModel, logs: string }> = ({ script,
 )
 
 const OpenCompilationLogs: React.FC = () => {
+  const { t } = useTranslation()
   const logs = useStoreSelector(state => state.compilationLogs.logs)
   const popupOpen = useStoreSelector(state => state.compilationLogs.popupOpen)
   const popupToggle = useAction(actions.compilationPage.logs.popupToggle)
@@ -45,22 +47,22 @@ const OpenCompilationLogs: React.FC = () => {
         <ListItemIcon>
           <ErrorIcon />
         </ListItemIcon>
-        <ListItemText primary="Compilation logs" />
+        <ListItemText primary={t('common.logs.nav')} />
       </ListItem>
 
       <Dialog open={popupOpen} onClose={onClickButtonCloseLogs}>
-        <DialogTitle>Compilation logs</DialogTitle>
+        <DialogTitle>{t('common.logs.title')}</DialogTitle>
         <DialogContent>
           {logs.length > 0 ? (
             logs.map(([script, scriptLogs], index) => (
               <LogsListItem key={index} script={script} logs={scriptLogs} />
             ))
           ) : (
-            'No logs'
+            t('common.logs.noLogs')
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClickButtonCloseLogs}>Close</Button>
+          <Button onClick={onClickButtonCloseLogs}>{t('common.logs.close')}</Button>
         </DialogActions>
       </Dialog>
     </>
