@@ -1,7 +1,7 @@
 const { src, dest, series } = require('gulp')
 const path = require('path')
 const del = require('del')
-const { exec, spawn } = require('child_process')
+const { exec } = require('child_process')
 const packager = require('electron-packager')
 const Seven = require('node-7z')
 const zipBin = require('7zip-bin')
