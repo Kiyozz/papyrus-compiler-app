@@ -21,7 +21,7 @@ function install() {
 }
 
 function buildReact() {
-  return exec('npm run build', { cwd: __dirname })
+  return exec('npm run build', { cwd: __dirname, envs: { REACT_APP_NEXUS_PATH: process.env.REACT_APP_NEXUS_PATH } })
 }
 
 function buildElectron() {
@@ -45,11 +45,5 @@ const defaultTask = series(cleanOut, build, packageApp)
 module.exports = {
   build,
   default: defaultTask,
-  'package-app': packageApp,
-  clean,
-  'clean-out': cleanOut,
-  'build-react': buildReact,
-  'build-electron': buildElectron,
-  'copy-assets': copyAssets,
-  install
+  'package-app': packageApp
 }

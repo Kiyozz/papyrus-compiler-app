@@ -13,10 +13,8 @@
     "start:electron": "cross-env TS_NODE_PROJECT=./tsconfig.electron.json NODE_ENV=development REACT_APP_MAIN=http://localhost:3000 electron -r dotenv/config -r ts-node/register electron/main.ts",
     "build": "react-scripts build",
     "build:electron": "cross-env NODE_ENV=production tsc -p tsconfig.electron.json",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "package": "gulp",
-    "test:electron": "jest --config=electron/tests/jest.config.json"
+    "package:le": "cross-env REACT_APP_NEXUS_PATH=https://www.nexusmods.com/skyrim/mods/96339?tab=files gulp",
+    "package:se": "cross-env REACT_APP_NEXUS_PATH=https://www.nexusmods.com/skyrimspecialedition/mods/23852?tab=files gulp"
   },
   "dependencies": {
     "@nestjs/common": "^6.10.14",

@@ -28,10 +28,11 @@ const useAppActions = () => useActions<DispatchesProps>({
 const App: React.FC = () => {
   const { initialization, getLatestNotes, setShowNotes, openLogFile } = useAppActions()
   const initialized = useStoreSelector(state => state.initialization)
-
-  useOnIpcEvent('open-log-file', () => {
+  const onLogFileOpen = useCallback(() => {
     openLogFile()
-  })
+  }, [openLogFile])
+
+  useOnIpcEvent('open-log-file', onLogFileOpen)
 
   useEffect(() => {
     initialization()

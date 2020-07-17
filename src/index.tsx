@@ -5,6 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux'
 
 import App from './app'
 import './index.scss'
+import { ElectronRuntimeException } from './redux/api/exceptions/electron-runtime.exception'
 import createRootStore from './redux/stores/root.store'
 import './translations'
 import * as serviceWorker from './serviceWorker'
@@ -14,6 +15,10 @@ declare global {
   interface Window {
     require: any
   }
+}
+
+if (typeof window.require === 'undefined') {
+  throw new ElectronRuntimeException()
 }
 
 const { store, history } = createRootStore()

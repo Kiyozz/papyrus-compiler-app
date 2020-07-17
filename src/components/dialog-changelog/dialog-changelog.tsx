@@ -7,14 +7,12 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import DownloadIcon from '@material-ui/icons/GetApp'
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 
 import useOnKeyUp from '../../hooks/use-on-key-up'
 import { RootStore } from '../../redux/stores/root.store'
 import { useStoreSelector } from '../../redux/use-store-selector'
-
-const { shell } = window.require('electron')
 
 interface StateProps {
   notes: string
@@ -29,12 +27,15 @@ interface Props {
 }
 
 const DialogChangelog: React.FC<Props> = ({ onClose }) => {
+  const shell = useMemo(() => window.require('electron').shell, [])
+  const nexusPath = useMemo(() => process.env.REACT_APP_NEXUS_PATH ?? 'https://www.nexusmods.com/skyrim/mods/96339?tab=files', [])
+
   const { startingVersion, showNotes, latestNotesVersion, notes, releaseLink } = useStoreSelector<StateProps>(({ changelog }: RootStore) => ({
     latestNotesVersion: changelog.version,
     showNotes: changelog.showNotes,
     startingVersion: changelog.startingVersion,
     notes: changelog.notes,
-    releaseLink: 'https://www.nexusmods.com/skyrim/mods/96339?tab=files'
+    releaseLink: nexusPath
   }))
 
   const onClickDownloadRelease = (e: React.MouseEvent<HTMLButtonElement>) => {

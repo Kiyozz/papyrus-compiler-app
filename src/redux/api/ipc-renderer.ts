@@ -1,13 +1,7 @@
-import { ElectronRuntimeException } from './exceptions/electron-runtime.exception'
-
 export class IpcRenderer {
   private ipcRenderer: any
 
   constructor() {
-    if (typeof window.require === 'undefined') {
-      throw new ElectronRuntimeException()
-    }
-
     this.ipcRenderer = window.require('electron').ipcRenderer
   }
 
