@@ -54,7 +54,7 @@ export class PathHelper {
   }
 
   async ensureDirs(dirs: string[]): Promise<void> {
-    this.logService.debug(`Checking presence of directorie${dirs.length > 1 ? 's' : ''}`, ...dirs.map(dir => `"${dir}"`))
+    this.logService.debug(`Checking presence of director${dirs.length > 1 ? 'ies' : 'y'}`, ...dirs.map(dir => `"${dir}"`))
 
     for (const dir of dirs) {
       try {

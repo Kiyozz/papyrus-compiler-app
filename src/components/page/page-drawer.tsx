@@ -35,7 +35,7 @@ const PageDrawer: React.FC<Props> = () => {
       {
         Icon: CodeIcon,
         text: t('nav.compilation'),
-        path: '/compilation'
+        path: '/'
       },
       {
         Icon: LayersIcon,

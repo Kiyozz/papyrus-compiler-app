@@ -16,6 +16,10 @@ packaged
 # production
 /build
 /out
+/build-le
+/build-se
+/papyrus-compiler-app-le.7z
+/papyrus-compiler-app-se.7z
 
 # misc
 .DS_Store

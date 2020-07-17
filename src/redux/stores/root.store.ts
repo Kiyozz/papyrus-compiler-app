@@ -1,4 +1,4 @@
-import { createHistory } from '@reach/router'
+import { createHistory, createMemorySource } from '@reach/router'
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
@@ -26,7 +26,7 @@ export interface RootStore {
 
 const PREFIX = 'papyrus-compiler-app'
 
-export default function createRootStore(history = createHistory(window as any)) {
+export default function createRootStore(history = createHistory(createMemorySource('/'))) {
   const sagaMiddleware = createSagaMiddleware()
   const store = createStore(
     combineReducers({

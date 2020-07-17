@@ -13,5 +13,5 @@ export function useOnIpcEvent(event: string, callback: (...args: any[]) => void)
     return () => {
       ipcRenderer?.removeListener(event, onEvent)
     }
-  }, [onEvent])
+  }, [event, onEvent, ipcRenderer])
 }
