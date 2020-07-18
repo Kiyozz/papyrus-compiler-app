@@ -49,6 +49,8 @@
     "@types/react-select": "^3.0.4",
     "@types/redux-actions": "^2.6.1",
     "bootstrap": "^4.3.1",
+    "browserslist": "^4.13.0",
+    "caniuse-lite": "1.0.30001102",
     "classnames": "^2.2.6",
     "cli-spinners": "^2.3.0",
     "compare-versions": "^3.6.0",
@@ -86,10 +88,10 @@
   },
   "browserslist": {
     "production": [
-      "chrome 83"
+      "chrome 74"
     ],
     "development": [
-      "chrome 83"
+      "chrome 74"
     ]
   }
 }
