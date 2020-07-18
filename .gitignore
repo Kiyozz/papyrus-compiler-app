@@ -18,8 +18,8 @@ packaged
 /out
 /build-le
 /build-se
-/papyrus-compiler-app-le.7z
-/papyrus-compiler-app-se.7z
+/papyrus-compiler-le.7z
+/papyrus-compiler-se.7z
 
 # misc
 .DS_Store
