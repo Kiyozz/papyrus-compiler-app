@@ -21,7 +21,7 @@ const LogsListItem: React.FC<{ script: ScriptModel, logs: string }> = ({ script,
     <Typography variant="h6" component="h3">{script.name}</Typography>
     <div>
       {logs.split('\n').map((log, i) => (
-        <span key={i}>{log} <br /></span>
+        <Typography variant="caption" component="span" key={i}>{log} <br /></Typography>
       ))}
     </div>
   </div>

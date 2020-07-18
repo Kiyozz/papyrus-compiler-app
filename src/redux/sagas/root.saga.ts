@@ -5,13 +5,13 @@ import compilationSaga from './compilation.saga'
 import groupsSaga from './groups.saga'
 import initializationSaga from './initialization.saga'
 import settingsSaga from './settings.saga'
+import createApi from '../api/create-api'
 
 function* openLogFile() {
-  const { shell } = window.require('electron')
-  const log = window.require('electron-log')
+  const api = createApi()
 
   yield takeLatest(CONSTANTS.APP_LOG_OPEN, function* () {
-    yield call(() => shell.openExternal(log.transports.file.findLogPath()))
+    yield call(api.openLogFile)
   })
 }
 

@@ -23,8 +23,6 @@ class Api {
           throw err
         }
 
-        console.log('to', err)
-
         let { error, command, script } = JSON.parse(err)
 
         if (isJson(error)) {
@@ -33,7 +31,7 @@ class Api {
           error = i18n.t('common.logs.invalidConfiguration', { folder: gamePath, exe: executable })
         }
 
-        const commandMessage = `\n${typeof command !== 'undefined' ? i18n.t('common.logs.scriptFailedCommand', { cmd: command }) : ''}`
+        const commandMessage = `\n${typeof command !== 'undefined' ? i18n.t('common.logs.scriptFailedCmd', { cmd: command }) : ''}`
 
         throw new Error(`${i18n.t('common.logs.scriptFailed', { script, message: error })}${commandMessage}`)
       })
@@ -59,7 +57,22 @@ class Api {
   }
 
   detectBadInstallation = ({ gameType, gamePath, isUsingMo2, mo2Path }: { gamePath: string, gameType: Games, isUsingMo2: boolean, mo2Path: string }) => {
-    return this.ipc.send('get-file', { gameType, gamePath, isUsingMo2, mo2Path, file: 'Actor.psc' })
+    return this.ipc.invoke('get-file', { gameType, gamePath, isUsingMo2, mo2Path, file: 'Actor.psc' })
+  }
+
+  openLogFile = () => {
+    return this.ipc.send('log-file')
+  }
+
+  openDialog = (): Promise<string | undefined> => {
+    return this.ipc.invoke<string | null>('open-dialog')
+      .then(response => {
+        if (response === null) {
+          return
+        }
+
+        return response
+      })
   }
 }
 

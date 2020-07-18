@@ -27,4 +27,8 @@ export class IpcRenderer {
       this.ipcRenderer.send(event, ...args)
     })
   }
+
+  invoke<Response = any, Args = any>(event: string, ...args: Args[]): Promise<Response> {
+    return this.ipcRenderer.invoke(event, ...args)
+  }
 }

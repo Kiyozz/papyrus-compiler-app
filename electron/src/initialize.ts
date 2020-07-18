@@ -15,7 +15,7 @@ export class Initialize {
   }
 
   private static async backupLatestLogFile() {
-    const logFile = log.transports.file.findLogPath()
+    const logFile = log.transports.file.getFile().path
 
     if (!logFile) {
       return

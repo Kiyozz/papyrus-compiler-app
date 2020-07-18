@@ -64,9 +64,11 @@ export class CompileScriptHandler implements HandlerInterface<CompileScriptParam
     } catch (err) {
       if (!(err instanceof CompileScriptException)) {
         this.logService.debug(err)
-      }
 
-      this.throwError(script, { stderr: err.message })
+        this.throwError(script, { stderr: err.message })
+      } else {
+        throw err
+      }
     }
   }
 

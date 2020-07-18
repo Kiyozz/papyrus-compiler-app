@@ -2,8 +2,9 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
 import FolderIcon from '@material-ui/icons/Folder'
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import createApi from '../../redux/api/create-api'
 
 import classes from './folder-text-field.module.scss'
 
@@ -16,30 +17,19 @@ export interface Props {
 
 const FolderTextField: React.FC<Props> = ({ error = false, label, value, onChange }) => {
   const { t } = useTranslation()
+  const api = useMemo(() => createApi(), [])
   const onClickInput = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     e.currentTarget.blur()
 
-    const { dialog } = window.require('electron').remote
-
     try {
-      const result = await dialog.showOpenDialog({
-        properties: ['openDirectory']
-      })
+      const result = await api.openDialog()
 
-      if (result.canceled) {
-        return
+      if (typeof result !== 'undefined') {
+        onChange(result)
       }
-
-      const [folder] = result.filePaths
-
-      if (!folder) {
-        return
-      }
-
-      onChange(folder)
     } catch (e) {
-      console.log(e)
+      console.log(e?.message)
     }
   }
 

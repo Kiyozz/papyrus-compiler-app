@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Handler } from '../decorators'
+import { Handler, HandlerInvoke } from '../decorators'
 import { GameHelper } from '../helpers/game.helper'
 import { PathHelper } from '../helpers/path.helper'
 import { LogService } from '../services/log.service'
@@ -15,7 +15,7 @@ interface GetFileParameters {
 }
 
 @Injectable()
-@Handler('get-file')
+@HandlerInvoke('get-file')
 export class GetFileHandler implements HandlerInterface<GetFileParameters> {
   constructor(
     private readonly gameHelper: GameHelper,
