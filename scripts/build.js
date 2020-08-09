@@ -199,6 +199,9 @@ class Build {
       await del('./build')
       await del('./build-le')
       await del('./build-se')
+      await del('./out')
+      await del('./papyrus-compiler-se.7z')
+      await del('./papyrus-compiler-le.7z')
 
       s.succeed('Builds cleaned')
     } catch (e) {

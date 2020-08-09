@@ -1,6 +1,6 @@
 {
   "name": "papyrus-compiler-app",
-  "version": "4.0.0-beta8.2",
+  "version": "4.0.0-beta8.2.1",
   "description": "Papyrus-compiler-app by WK's",
   "repository": "git@github.com:Kiyozz/papyrus-compiler-app",
   "author": "WK <kevinturmel@gmail.com>",
@@ -76,12 +76,8 @@
     "react-select": "^3.0.8",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
-    "redux-devtools-extension": "^2.13.8",
     "redux-saga": "^1.1.3",
     "ts-node": "^8.5.4",
-    "typeface-capriola": "^0.0.72",
-    "typeface-neuton": "^0.0.72",
-    "typeface-oxygen": "^0.0.72",
     "typeface-roboto": "^0.0.75",
     "typescript": "~3.7.2",
     "yargs": "^15.4.1"

@@ -1,6 +1,5 @@
 import { createHistory, createMemorySource } from '@reach/router'
-import { applyMiddleware, combineReducers, createStore } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { applyMiddleware, combineReducers, createStore, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import versionMiddleware from '../middlewares/changelog/version.middleware'
 import logMiddleware from '../middlewares/log/log.middleware'
@@ -38,7 +37,7 @@ export default function createRootStore(history = createHistory(createMemorySour
       changelog: changelogReducer(PREFIX),
       taskLoading: taskLoadingReducer
     }),
-    composeWithDevTools(
+    compose(
       applyMiddleware(
         sagaMiddleware,
         versionMiddleware(PREFIX),
