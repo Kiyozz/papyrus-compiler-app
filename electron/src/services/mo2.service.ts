@@ -1,5 +1,5 @@
 import { Mo2ModsPathExistsException } from '../exceptions/mo2'
-import { GameHelper } from '../helpers/game.helper'
+import { toOtherSource, toSource } from '../helpers/game.helper'
 import { PathHelper } from '../helpers/path.helper'
 import { GameType } from '../types/game.type'
 
@@ -10,11 +10,11 @@ interface GenerateImportsOptions {
 }
 
 export class Mo2Service {
-  constructor(private readonly pathHelper: PathHelper, private readonly gameHelper: GameHelper) {}
+  constructor(private readonly pathHelper: PathHelper) {}
 
   async generateImports({ game, mo2Path, mo2SourcesFolders }: GenerateImportsOptions): Promise<string[]> {
-    const sourcesPath = this.gameHelper.toSource(game)
-    const otherSourcesPath = this.gameHelper.toOtherSource(game)
+    const sourcesPath = toSource(game)
+    const otherSourcesPath = toOtherSource(game)
     const mo2OverwriteSourcesPath = this.pathHelper.join(mo2Path, 'overwrite', sourcesPath)
     const mo2OverwriteOtherSourcesPath = this.pathHelper.join(mo2Path, 'overwrite', otherSourcesPath)
     const modsFolder = this.pathHelper.join(mo2Path, 'mods')

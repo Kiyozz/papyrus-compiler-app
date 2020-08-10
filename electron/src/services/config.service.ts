@@ -1,5 +1,5 @@
 import * as path from 'path'
-import { GameHelper } from '../helpers/game.helper'
+import { toOtherSource, toSource } from '../helpers/game.helper'
 import { PathHelper } from '../helpers/path.helper'
 import { GameType } from '../types/game.type'
 
@@ -41,7 +41,7 @@ export class ConfigService {
   }
 
   get papyrusCompilerExecutableRelative() {
-    return `.\\${this.papyrusCompilerFolder}\\PapyrusCompiler.exe`
+    return `.${path.sep}${this.papyrusCompilerFolder}${path.sep}PapyrusCompiler.exe`
   }
 
   get papyrusCompilerExecutableAbsolute() {
@@ -52,9 +52,17 @@ export class ConfigService {
     return !!this.options.mo2InstanceFolder && this.mo2SourcesFolders?.length > 0
   }
 
-  static create(pathHelper: PathHelper, gameHelper: GameHelper, { game, gamePath, mo2SourcesFolders, mo2InstanceFolder }: { game: GameType, gamePath: string, mo2SourcesFolders: string[], mo2InstanceFolder: string }) {
-    const gameSourcesType = gameHelper.toSource(game)
-    const pathToCheckGameSourceFolder = gameHelper.toOtherSource(game)
+  static create(
+    pathHelper: PathHelper,
+    {
+      game,
+      gamePath,
+      mo2SourcesFolders,
+      mo2InstanceFolder
+    }: { game: GameType; gamePath: string; mo2SourcesFolders: string[]; mo2InstanceFolder: string }
+  ) {
+    const gameSourcesType = toSource(game)
+    const pathToCheckGameSourceFolder = toOtherSource(game)
     const gameSourcesFolder = pathHelper.join(gamePath, 'Data', gameSourcesType)
     const otherGameSourcesFolder = pathHelper.join(gamePath, 'Data', pathToCheckGameSourceFolder)
     const output = pathHelper.join(gamePath, 'Data\\Scripts')

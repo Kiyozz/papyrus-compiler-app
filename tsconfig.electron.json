@@ -9,13 +9,10 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "sourceMap": false,
-    "outDir": "build"
+    "noEmit": true
   },
   "include": [
     "electron/main.ts"

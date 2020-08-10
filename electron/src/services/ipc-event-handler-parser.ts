@@ -4,7 +4,7 @@ import { ipcMain } from 'electron'
 import { HandlerInterface, HandlerInvokeInterface } from '../types/handler.interface'
 import { LogService } from './log.service'
 
-export class EventHandlerParser {
+export class IpcEventHandlerParser {
   constructor(
     private eventHandlers: HandlerInterface[],
     private eventHandlersInvoke: HandlerInvokeInterface[],

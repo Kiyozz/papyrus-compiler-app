@@ -1,5 +1,5 @@
 import { CompileScriptException, InvalidConfigurationException } from '../exceptions'
-import { GameHelper } from '../helpers/game.helper'
+import { getExecutable } from '../helpers/game.helper'
 import { PathHelper } from '../helpers/path.helper'
 import { ConfigService } from './config.service'
 import { LogService } from './log.service'
@@ -17,7 +17,6 @@ interface Runner {
 export class ScriptCompilerService {
   constructor(
     private readonly configService: ConfigService,
-    private readonly gameHelper: GameHelper,
     private readonly pathHelper: PathHelper,
     private readonly shellService: ShellService,
     private readonly papyrusCompilerService: PapyrusCompilerService,
@@ -33,12 +32,15 @@ export class ScriptCompilerService {
       output: this.configService.output
     }
 
-    const gameExe = this.pathHelper.join(this.configService.gamePath, this.gameHelper.getExecutable(this.configService.game))
+    const gameExe = this.pathHelper.join(this.configService.gamePath, getExecutable(this.configService.game))
 
     this.logService.debug('Game executable is', gameExe)
 
     if (!(await this.pathHelper.exists(this.configService.papyrusCompilerExecutableAbsolute))) {
-      throw new InvalidConfigurationException(this.configService.gamePath, this.configService.papyrusCompilerExecutableAbsolute)
+      throw new InvalidConfigurationException(
+        this.configService.gamePath,
+        this.configService.papyrusCompilerExecutableAbsolute
+      )
     }
 
     if (!(await this.pathHelper.exists(gameExe))) {
@@ -66,13 +68,16 @@ export class ScriptCompilerService {
       runner.exe = this.configService.papyrusCompilerExecutableAbsolute
       runner.cwd = await this.mo2Service.generateModsPath(this.configService.mo2InstanceFolder)
       runner.output = output
-      runner.imports = [
-        ...runner.imports,
-        ...imports
-      ]
+      runner.imports = [...runner.imports, ...imports]
     }
 
-    const cmd = this.papyrusCompilerService.generateCmd({ exe: runner.exe, scriptName, imports: runner.imports, output: runner.output, flag: this.configService.flag })
+    const cmd = this.papyrusCompilerService.generateCmd({
+      exe: runner.exe,
+      scriptName,
+      imports: runner.imports,
+      output: runner.output,
+      flag: this.configService.flag
+    })
 
     try {
       const result = await this.shellService.execute(cmd, runner.cwd)

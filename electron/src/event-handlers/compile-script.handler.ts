@@ -1,6 +1,5 @@
 import { Handler } from '../decorators'
 import { CompileScriptException } from '../exceptions'
-import { GameHelper } from '../helpers/game.helper'
 import { PathHelper } from '../helpers/path.helper'
 import { ScriptCompilerService } from '../services/script-compiler.service'
 import { ConfigService } from '../services/config.service'
@@ -23,7 +22,6 @@ interface CompileScriptParameters {
 @Handler('compile-script')
 export class CompileScriptHandler implements HandlerInterface<CompileScriptParameters> {
   constructor(
-    private readonly gameHelper: GameHelper,
     private readonly pathHelper: PathHelper,
     private readonly shellService: ShellService,
     private readonly papyrusCompilerService: PapyrusCompilerService,
@@ -35,7 +33,7 @@ export class CompileScriptHandler implements HandlerInterface<CompileScriptParam
     event: Electron.IpcMainEvent,
     { script, game, gamePath, mo2SourcesFolders, mo2Instance }: CompileScriptParameters
   ) {
-    const configService = ConfigService.create(this.pathHelper, this.gameHelper, {
+    const configService = ConfigService.create(this.pathHelper, {
       game,
       gamePath,
       mo2SourcesFolders,
@@ -43,7 +41,6 @@ export class CompileScriptHandler implements HandlerInterface<CompileScriptParam
     })
     const compileService = new ScriptCompilerService(
       configService,
-      this.gameHelper,
       this.pathHelper,
       this.shellService,
       this.papyrusCompilerService,

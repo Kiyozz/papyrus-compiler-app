@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'path'
-import { Initialize } from './src/initialize'
+import { initialize } from './src/initialize'
 import { registerMenus } from './src/register-menus'
 
 let win: BrowserWindow | null = null
@@ -28,7 +28,7 @@ function createWindow() {
     win.webContents.openDevTools({ mode: 'bottom' })
   }
 
-  Initialize.main()
+  initialize()
 
   win.on('closed', () => {
     win = null

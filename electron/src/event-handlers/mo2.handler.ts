@@ -4,7 +4,7 @@ import {
   InvalidMo2ConfigurationException,
   Mo2GetSourcesFoldersException
 } from '../exceptions'
-import { GameHelper } from '../helpers/game.helper'
+import { toOtherSource } from '../helpers/game.helper'
 import { PathHelper } from '../helpers/path.helper'
 import { GameType } from '../types/game.type'
 import { HandlerInterface } from '../types/handler.interface'
@@ -16,7 +16,7 @@ interface Mo2SourcesFolderParameters {
 
 @Handler('mo2-sources-folders')
 export class Mo2Handler implements HandlerInterface {
-  constructor(private readonly pathHelper: PathHelper, private readonly gameHelper: GameHelper) {}
+  constructor(private readonly pathHelper: PathHelper) {}
 
   async listen(event: Electron.IpcMainEvent, { mo2Instance, game }: Mo2SourcesFolderParameters) {
     const sourcesFolderType = game === 'Skyrim Special Edition' ? 'Source/Scripts' : 'Scripts/Source'
@@ -33,11 +33,11 @@ export class Mo2Handler implements HandlerInterface {
       throw new InvalidMo2InstanceFolderException(mo2Instance)
     }
 
-    const otherGameSourceFolder = this.gameHelper.toOtherSource(game)
+    const otherGameSourceFolder = toOtherSource(game)
     const foldersToCheck = [otherGameSourceFolder, sourcesFolderType].map(f => `${mo2Instance}/mods/**/${f}`)
 
     try {
-      let files = await this.pathHelper.getPathsInFolder(foldersToCheck, {
+      let files: readonly string[] = await this.pathHelper.getPathsInFolder(foldersToCheck, {
         absolute: true,
         deep: 3,
         onlyDirectories: true
@@ -60,7 +60,7 @@ export class Mo2Handler implements HandlerInterface {
 
           return isSame && new RegExp(sourcesFolderType).test(file) ? file : before
         })
-        .filter(f => !!f) as string[]
+        .filter(f => !!f) as readonly string[]
 
       files = files
         .filter(file => {

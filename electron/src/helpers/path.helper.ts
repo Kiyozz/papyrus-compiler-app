@@ -11,10 +11,6 @@ import {
 import { LogService } from '../services/log.service'
 
 export class PathHelper {
-  path: typeof path = path
-  fs: typeof fs = fs
-  fg: typeof fg = fg
-
   constructor(private readonly logService: LogService) {}
 
   toSlash(value: string): string {
@@ -30,23 +26,23 @@ export class PathHelper {
   }
 
   join(...paths: string[]): string {
-    return this.path.join(...paths)
+    return path.join(...paths)
   }
 
   basename(p: string, ext?: string) {
-    return this.path.basename(p, ext)
+    return path.basename(p, ext)
   }
 
   async stat(filename: string): Promise<fs.Stats> {
     try {
-      return this.fs.stat(filename)
+      return fs.stat(filename)
     } catch (e) {
       throw new FileAccessException(filename)
     }
   }
 
   async exists(fileOrFolder: string): Promise<boolean> {
-    return this.fs.pathExists(fileOrFolder)
+    return fs.pathExists(fileOrFolder)
   }
 
   async ensureDirs(dirs: string[]): Promise<void> {
@@ -57,7 +53,7 @@ export class PathHelper {
 
     for (const dir of dirs) {
       try {
-        await this.fs.ensureDir(dir)
+        await fs.ensureDir(dir)
       } catch (e) {
         throw new FileEnsureException(dir)
       }
@@ -74,7 +70,7 @@ export class PathHelper {
     }
 
     try {
-      return this.fs.readFile(filename)
+      return fs.readFile(filename)
     } catch (e) {
       throw new FileReadException(filename, e.message)
     }
@@ -90,14 +86,14 @@ export class PathHelper {
     }
 
     try {
-      return this.fs.writeFile(filename, data)
+      return fs.writeFile(filename, data)
     } catch (e) {
       throw new FileWriteException(filename, e.message)
     }
   }
 
   async getPathsInFolder(fileNames: string[], options: fg.Options): Promise<string[]> {
-    return this.fg(
+    return fg(
       fileNames.map(file => this.toSlash(file)),
       {
         caseSensitiveMatch: false,
@@ -107,6 +103,6 @@ export class PathHelper {
   }
 
   get separator() {
-    return this.path.sep
+    return path.sep
   }
 }
