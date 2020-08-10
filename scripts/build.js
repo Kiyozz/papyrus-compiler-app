@@ -243,6 +243,8 @@ class Build {
       await exec('yarn install --prod', { cwd: this.buildDir })
 
       await this.util.wait()
+      await del(path.join(this.buildDir, 'yarn.lock'))
+      await del(path.join(this.buildDir, 'package.json'))
       await this.fileHandler.copy(this.buildDir, this.buildLeDir)
       await this.fileHandler.move(this.buildDir, this.buildSeDir)
 

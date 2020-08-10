@@ -14,7 +14,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "outDir": "build"
   },
   "include": [
