@@ -270,7 +270,7 @@ class Build {
 
       await this.util.wait()
       await del(path.join(this.buildDir, 'yarn.lock'))
-      await del(path.join(this.buildDir, 'package.json'))
+      // await del(path.join(this.buildDir, 'package.json'))
       await this.fileHandler.copy(this.buildDir, this.buildLeDir)
       await this.fileHandler.copy(this.buildDir, this.buildSeDir)
 

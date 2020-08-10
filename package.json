@@ -7,11 +7,11 @@
   "license": "MIT",
   "private": true,
   "homepage": "./",
-  "main": "build/main.js",
+  "main": "main.js",
   "scripts": {
     "start": "react-scripts start",
     "start:electron": "cross-env TS_NODE_PROJECT=./tsconfig.electron.json NODE_ENV=development REACT_APP_MAIN=http://localhost:3000 electron -r dotenv/config -r ts-node/register electron/main.ts",
-    "build": "react-scripts build",
+    "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "build:electron": "cross-env NODE_ENV=production rollup -c rollup.config.js",
     "package": "node ./scripts/build.js"
   },
@@ -32,7 +32,6 @@
     "@material-ui/lab": "^4.0.0-alpha.52",
     "@reach/router": "^1.3.4",
     "@rollup/plugin-babel": "^5.1.0",
-    "@rollup/plugin-commonjs": "^13.0.2",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@types/child-process-promise": "^2.2.1",
     "@types/classnames": "^2.2.9",
