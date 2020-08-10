@@ -6,6 +6,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
 import SearchIcon from '@material-ui/icons/Search'
+import Paper from '@material-ui/core/Paper'
 
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -126,16 +127,18 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
             value={name}
             onChange={onChangeName}
           />
-          <div className={classes.content}>
-            {scripts.length > 0 ? (
+          {scripts.length > 0 ? (
+            <Paper className={classes.content} elevation={3}>
               <GroupsDialogList scripts={scripts} onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup} />
-            ) : (
+            </Paper>
+          ) : (
+            <div className={classes.content}>
               <DialogContentText>{t('page.groups.dialog.dropScripts')}</DialogContentText>
-            )}
-          </div>
+            </div>
+          )}
         </DialogContent>
         <DialogActions>
-          <GroupsDialogActions AddScriptsButton={addScriptsButton} onClose={onClose} isEdit={isEdit} />
+          <GroupsDialogActions name={name} AddScriptsButton={addScriptsButton} onClose={onClose} isEdit={isEdit} />
         </DialogActions>
       </form>
     </Dialog>

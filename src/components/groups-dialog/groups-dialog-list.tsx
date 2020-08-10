@@ -15,12 +15,10 @@ interface Props {
 }
 
 const GroupsDialogList: React.FC<Props> = ({ scripts, onClickRemoveScriptFromGroup }) => (
-  <List>
+  <List style={{ padding: '0' }}>
     {scripts.map((script, index) => (
       <ListItem key={script.id + index}>
-        <ListItemText>
-          {script.name}
-        </ListItemText>
+        <ListItemText>{script.name}</ListItemText>
         <ListItemSecondaryAction>
           <IconButton edge="end" aria-label="delete" onClick={onClickRemoveScriptFromGroup(script)}>
             <DeleteIcon color="error" />
