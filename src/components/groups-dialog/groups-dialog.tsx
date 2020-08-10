@@ -63,31 +63,34 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
     }
   }, [])
 
-  const onSubmitAddGroup = useCallback((e: React.FormEvent) => {
-    e.preventDefault()
+  const onSubmitAddGroup = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault()
 
-    if (!name || !name.trim()) {
-      return
-    }
+      if (!name || !name.trim()) {
+        return
+      }
 
-    if (isEdit && group) {
-      onGroupEdit(group.name, {
+      if (isEdit && group) {
+        onGroupEdit(group.name, {
+          name: name.trim(),
+          scripts
+        })
+
+        empty()
+
+        return
+      }
+
+      onGroupAdd({
         name: name.trim(),
         scripts
       })
 
       empty()
-
-      return
-    }
-
-    onGroupAdd({
-      name: name.trim(),
-      scripts
-    })
-
-    empty()
-  }, [name, isEdit, group, scripts, empty, onGroupAdd, onGroupEdit])
+    },
+    [name, isEdit, group, scripts, empty, onGroupAdd, onGroupEdit]
+  )
 
   const onChangeName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value)
@@ -101,18 +104,18 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
 
   const addScriptsButton = useDrop({
     button: (
-      <Button startIcon={<SearchIcon />} variant="text" color="secondary">{t('page.groups.dialog.searchScripts')}</Button>
+      <Button startIcon={<SearchIcon />} variant="text" color="secondary">
+        {t('page.groups.dialog.searchScripts')}
+      </Button>
     ),
     onDrop
   })
 
   return (
-    <Dialog
-      open={open}
-      onClose={onDialogClose}
-      aria-labelledby="create-group-title"
-    >
-      <DialogTitle id="create-group-title">{isEdit ? t('page.groups.dialog.editGroup') : t('page.groups.dialog.createGroup')}</DialogTitle>
+    <Dialog open={open} onClose={onDialogClose} aria-labelledby="create-group-title" maxWidth="lg" fullWidth>
+      <DialogTitle id="create-group-title">
+        {isEdit ? t('page.groups.dialog.editGroup') : t('page.groups.dialog.createGroup')}
+      </DialogTitle>
       <form onSubmit={onSubmitAddGroup}>
         <DialogContent className={classes.scriptsContent}>
           <TextField
@@ -125,14 +128,9 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
           />
           <div className={classes.content}>
             {scripts.length > 0 ? (
-              <GroupsDialogList
-                scripts={scripts}
-                onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup}
-              />
+              <GroupsDialogList scripts={scripts} onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup} />
             ) : (
-              <DialogContentText>
-                {t('page.groups.dialog.dropScripts')}
-              </DialogContentText>
+              <DialogContentText>{t('page.groups.dialog.dropScripts')}</DialogContentText>
             )}
           </div>
         </DialogContent>
