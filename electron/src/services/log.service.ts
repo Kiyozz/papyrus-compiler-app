@@ -1,7 +1,5 @@
-import { Injectable } from '@nestjs/common'
 import log from 'electron-log'
 
-@Injectable()
 export class LogService {
   private logger: typeof log = log
 

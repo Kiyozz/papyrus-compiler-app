@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common'
 import { Mo2ModsPathExistsException } from '../exceptions/mo2'
 import { GameHelper } from '../helpers/game.helper'
 import { PathHelper } from '../helpers/path.helper'
@@ -10,12 +9,8 @@ interface GenerateImportsOptions {
   mo2SourcesFolders: string[]
 }
 
-@Injectable()
 export class Mo2Service {
-  constructor(
-    private readonly pathHelper: PathHelper,
-    private readonly gameHelper: GameHelper
-  ) {}
+  constructor(private readonly pathHelper: PathHelper, private readonly gameHelper: GameHelper) {}
 
   async generateImports({ game, mo2Path, mo2SourcesFolders }: GenerateImportsOptions): Promise<string[]> {
     const sourcesPath = this.gameHelper.toSource(game)
@@ -30,11 +25,7 @@ export class Mo2Service {
       mo2OverwriteSourcesPath
     ]
 
-    await this.pathHelper.ensureDirs([
-      ...mo2SourcesFolders,
-      mo2OverwriteOtherSourcesPath,
-      mo2OverwriteSourcesPath
-    ])
+    await this.pathHelper.ensureDirs([...mo2SourcesFolders, mo2OverwriteOtherSourcesPath, mo2OverwriteSourcesPath])
 
     return imports
   }

@@ -1,7 +1,6 @@
 import path from 'path'
 import fs from 'fs-extra'
 import fg from 'fast-glob'
-import { Injectable } from '@nestjs/common'
 import {
   FileWriteException,
   FileReadException,
@@ -11,15 +10,12 @@ import {
 } from '../exceptions/files'
 import { LogService } from '../services/log.service'
 
-@Injectable()
 export class PathHelper {
   path: typeof path = path
   fs: typeof fs = fs
   fg: typeof fg = fg
 
-  constructor(
-    private readonly logService: LogService
-  ) {}
+  constructor(private readonly logService: LogService) {}
 
   toSlash(value: string): string {
     return value.replace(/\\/g, '/')
@@ -54,7 +50,10 @@ export class PathHelper {
   }
 
   async ensureDirs(dirs: string[]): Promise<void> {
-    this.logService.debug(`Checking presence of director${dirs.length > 1 ? 'ies' : 'y'}`, ...dirs.map(dir => `"${dir}"`))
+    this.logService.debug(
+      `Checking presence of director${dirs.length > 1 ? 'ies' : 'y'}`,
+      ...dirs.map(dir => `"${dir}"`)
+    )
 
     for (const dir of dirs) {
       try {

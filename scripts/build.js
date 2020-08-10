@@ -1,7 +1,8 @@
 const path = require('path')
 const del = require('del')
 const readline = require('readline')
-const { exec } = require('child-process-promise')
+const childProcess = require('child_process')
+const { promisify } = require('util')
 const Spinners = require('cli-spinners')
 const ora = require('ora')
 const fs = require('fs-extra')
@@ -10,15 +11,17 @@ const Seven = require('node-7z')
 const zipBin = require('7zip-bin')
 const args = require('yargs').argv
 
+const exec = promisify(childProcess.exec)
+
 const isSkipBuild = typeof args.skipBuild !== 'undefined'
 
-const PROJECT_DIR = path.resolve(__dirname, '..')
-const PACKAGE_DIR = path.resolve(PROJECT_DIR, 'out')
-const BUILD_DIR = path.resolve(PROJECT_DIR, 'build')
+const PROJECT_DIR = path.join(__dirname, '..')
+const PACKAGE_DIR = path.join(PROJECT_DIR, 'out')
+const BUILD_DIR = path.join(PROJECT_DIR, 'build')
 const BUILD_LE = 'build-le'
 const BUILD_SE = 'build-se'
-const BUILD_LE_DIR = path.resolve(PROJECT_DIR, BUILD_LE)
-const BUILD_SE_DIR = path.resolve(PROJECT_DIR, BUILD_SE)
+const BUILD_LE_DIR = path.join(PROJECT_DIR, BUILD_LE)
+const BUILD_SE_DIR = path.join(PROJECT_DIR, BUILD_SE)
 
 class FileHandler {
   /**
@@ -49,7 +52,7 @@ class Util {
    * @returns {Promise<void>}
    */
   async wait(ms = 1000) {
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
       setTimeout(resolve, ms)
     })
   }
@@ -87,7 +90,7 @@ class Packager {
    * @param {string} projectDir
    * @param {string} packageDir
    */
-  constructor (icon, projectDir, packageDir) {
+  constructor(icon, projectDir, packageDir) {
     this.projectDir = projectDir
     this.packageDir = packageDir
     this.icon = icon
@@ -112,7 +115,7 @@ class ZipCreator {
    * @param {string} projectDir
    * @param {string} workingDir
    */
-  constructor (projectDir, workingDir) {
+  constructor(projectDir, workingDir) {
     this.projectDir = projectDir
     this.workingDir = workingDir
   }
@@ -124,26 +127,22 @@ class ZipCreator {
    * @returns {Promise<void>}
    */
   start(filename, destination) {
-    const stream = Seven.add(
-      path.resolve(this.projectDir, `${filename}.7z`),
-      '*',
-      {
-        $bin: zipBin.path7za,
-        fullyQualifiedPaths: true,
-        workingDir: this.workingDir,
-        $progress: true,
-        method: ['0=LZMA2'],
-        noRootDuplication: true,
-        $spawnOptions: { cwd: path.resolve(destination, 'papyrus-compiler-app-win32-x64') }
-      }
-    )
+    const stream = Seven.add(path.resolve(this.projectDir, `${filename}.7z`), '*', {
+      $bin: zipBin.path7za,
+      fullyQualifiedPaths: true,
+      workingDir: this.workingDir,
+      $progress: true,
+      method: ['0=LZMA2'],
+      noRootDuplication: true,
+      $spawnOptions: { cwd: path.resolve(destination, 'papyrus-compiler-app-win32-x64') }
+    })
 
     return new Promise(function (resolve, reject) {
-      stream.on('end', function() {
+      stream.on('end', function () {
         resolve()
       })
 
-      stream.on('error', function(err) {
+      stream.on('error', function (err) {
         reject(err)
       })
     })
@@ -165,7 +164,19 @@ class Build {
    * @param {string} buildLe
    * @param {string} buildSe
    */
-  constructor (zipCreator, packager, util, fileHandler, projectDir, packageDir, buildDir, buildLeDir, buildSeDir, buildLe, buildSe) {
+  constructor(
+    zipCreator,
+    packager,
+    util,
+    fileHandler,
+    projectDir,
+    packageDir,
+    buildDir,
+    buildLeDir,
+    buildSeDir,
+    buildLe,
+    buildSe
+  ) {
     this.zipCreator = zipCreator
     this.packager = packager
     this.util = util
@@ -218,15 +229,22 @@ class Build {
     try {
       s.text = 'Create Legendary Edition build'
 
-      await exec('cross-env REACT_APP_NEXUS_PATH=https://www.nexusmods.com/skyrim/mods/96339?tab=files npm run build', { cwd: this.projectDir })
+      await exec('cross-env REACT_APP_NEXUS_PATH=https://www.nexusmods.com/skyrim/mods/96339?tab=files npm run build', {
+        cwd: this.projectDir
+      })
       await this.fileHandler.move(this.buildDir, this.buildLeDir)
 
       s.text = 'Create Special Edition build'
 
-      await exec('cross-env REACT_APP_NEXUS_PATH=https://www.nexusmods.com/skyrimspecialedition/mods/23852?tab=files npm run build', { cwd: this.projectDir })
+      await exec(
+        'cross-env REACT_APP_NEXUS_PATH=https://www.nexusmods.com/skyrimspecialedition/mods/23852?tab=files npm run build',
+        { cwd: this.projectDir }
+      )
       await this.fileHandler.move(this.buildDir, this.buildSeDir)
 
       s.text = 'Create Main build'
+
+      await this.util.wait(500)
 
       s.stop()
       sApp.start()
@@ -235,8 +253,16 @@ class Build {
 
       sApp.text = 'Assets'
 
-      await this.fileHandler.copy(path.resolve(this.projectDir, 'package.json'), path.resolve(this.buildDir, 'package.json'))
+      await this.fileHandler.copy(
+        path.resolve(this.projectDir, 'package.json'),
+        path.resolve(this.buildDir, 'package.json')
+      )
+
+      await this.util.wait()
+
       await this.fileHandler.copy(path.resolve(this.projectDir, 'yarn.lock'), path.resolve(this.buildDir, 'yarn.lock'))
+
+      await this.util.wait()
 
       sApp.text = 'Dependencies'
 
@@ -246,7 +272,9 @@ class Build {
       await del(path.join(this.buildDir, 'yarn.lock'))
       await del(path.join(this.buildDir, 'package.json'))
       await this.fileHandler.copy(this.buildDir, this.buildLeDir)
-      await this.fileHandler.move(this.buildDir, this.buildSeDir)
+      await this.fileHandler.copy(this.buildDir, this.buildSeDir)
+
+      await del(this.buildDir)
 
       sApp.stop()
 
@@ -305,11 +333,7 @@ class Build {
 
 const builder = new Build(
   new ZipCreator(PROJECT_DIR, PACKAGE_DIR),
-  new Packager(
-    path.resolve(PROJECT_DIR, 'src/assets/logo/app/icons/win/icon.ico'),
-    PROJECT_DIR,
-    PACKAGE_DIR
-  ),
+  new Packager(path.resolve(PROJECT_DIR, 'src/assets/logo/app/icons/win/icon.ico'), PROJECT_DIR, PACKAGE_DIR),
   new Util(),
   new FileHandler(),
   PROJECT_DIR,

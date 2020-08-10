@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common'
 import { Handler } from '../decorators'
 import { CompileScriptException } from '../exceptions'
 import { GameHelper } from '../helpers/game.helper'
@@ -21,7 +20,6 @@ interface CompileScriptParameters {
   mo2SourcesFolders: string[]
 }
 
-@Injectable()
 @Handler('compile-script')
 export class CompileScriptHandler implements HandlerInterface<CompileScriptParameters> {
   constructor(
@@ -33,8 +31,16 @@ export class CompileScriptHandler implements HandlerInterface<CompileScriptParam
     private readonly logService: LogService
   ) {}
 
-  async listen(event: Electron.IpcMainEvent, { script, game, gamePath, mo2SourcesFolders, mo2Instance }: CompileScriptParameters) {
-    const configService = ConfigService.create(this.pathHelper, this.gameHelper, { game, gamePath, mo2SourcesFolders, mo2InstanceFolder: mo2Instance })
+  async listen(
+    event: Electron.IpcMainEvent,
+    { script, game, gamePath, mo2SourcesFolders, mo2Instance }: CompileScriptParameters
+  ) {
+    const configService = ConfigService.create(this.pathHelper, this.gameHelper, {
+      game,
+      gamePath,
+      mo2SourcesFolders,
+      mo2InstanceFolder: mo2Instance
+    })
     const compileService = new ScriptCompilerService(
       configService,
       this.gameHelper,

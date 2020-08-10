@@ -1,6 +1,9 @@
-import { Injectable } from '@nestjs/common'
 import { Handler } from '../decorators'
-import { InvalidMo2InstanceFolderException, InvalidMo2ConfigurationException, Mo2GetSourcesFoldersException } from '../exceptions'
+import {
+  InvalidMo2InstanceFolderException,
+  InvalidMo2ConfigurationException,
+  Mo2GetSourcesFoldersException
+} from '../exceptions'
 import { GameHelper } from '../helpers/game.helper'
 import { PathHelper } from '../helpers/path.helper'
 import { GameType } from '../types/game.type'
@@ -11,13 +14,9 @@ interface Mo2SourcesFolderParameters {
   game: GameType
 }
 
-@Injectable()
 @Handler('mo2-sources-folders')
 export class Mo2Handler implements HandlerInterface {
-  constructor(
-    private readonly pathHelper: PathHelper,
-    private readonly gameHelper: GameHelper
-  ) {}
+  constructor(private readonly pathHelper: PathHelper, private readonly gameHelper: GameHelper) {}
 
   async listen(event: Electron.IpcMainEvent, { mo2Instance, game }: Mo2SourcesFolderParameters) {
     const sourcesFolderType = game === 'Skyrim Special Edition' ? 'Source/Scripts' : 'Scripts/Source'
@@ -38,7 +37,11 @@ export class Mo2Handler implements HandlerInterface {
     const foldersToCheck = [otherGameSourceFolder, sourcesFolderType].map(f => `${mo2Instance}/mods/**/${f}`)
 
     try {
-      let files = await this.pathHelper.getPathsInFolder(foldersToCheck, { absolute: true, deep: 3, onlyDirectories: true })
+      let files = await this.pathHelper.getPathsInFolder(foldersToCheck, {
+        absolute: true,
+        deep: 3,
+        onlyDirectories: true
+      })
       const doubleSourceFolders = files
         .map((file, index, list) => {
           const before = list[index === 0 ? 1 : index - 1]
@@ -55,12 +58,12 @@ export class Mo2Handler implements HandlerInterface {
             return false
           }
 
-          return isSame && (new RegExp(sourcesFolderType)).test(file) ? file : before
+          return isSame && new RegExp(sourcesFolderType).test(file) ? file : before
         })
         .filter(f => !!f) as string[]
 
       files = files
-        .filter((file) => {
+        .filter(file => {
           const sliced = file.slice(0, -15)
           const isInDouble = doubleSourceFolders.some(inFile => {
             const slicedIn = inFile.slice(0, -15)

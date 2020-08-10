@@ -1,5 +1,4 @@
-import { Injectable } from '@nestjs/common'
-import { Handler, HandlerInvoke } from '../decorators'
+import { HandlerInvoke } from '../decorators'
 import { GameHelper } from '../helpers/game.helper'
 import { PathHelper } from '../helpers/path.helper'
 import { LogService } from '../services/log.service'
@@ -14,7 +13,6 @@ interface GetFileParameters {
   mo2Path: string
 }
 
-@Injectable()
 @HandlerInvoke('get-file')
 export class GetFileHandler implements HandlerInterface<GetFileParameters> {
   constructor(
@@ -24,7 +22,9 @@ export class GetFileHandler implements HandlerInterface<GetFileParameters> {
   ) {}
 
   async listen(event: Electron.IpcMainEvent, { file, gamePath, gameType, isUsingMo2, mo2Path }: GetFileParameters) {
-    return isUsingMo2 ? this.checksInMo2(file, gameType, gamePath, mo2Path) : this.checksInGameDataFolder(file, gamePath, gameType)
+    return isUsingMo2
+      ? this.checksInMo2(file, gameType, gamePath, mo2Path)
+      : this.checksInGameDataFolder(file, gamePath, gameType)
   }
 
   private async checksInMo2(file: string, gameType: GameType, gamePath: string, mo2Path: string): Promise<boolean> {
@@ -40,10 +40,7 @@ export class GetFileHandler implements HandlerInterface<GetFileParameters> {
 
     this.logService.info('Checking that files', ...pathToChecks, 'exists')
 
-    const files = await this.pathHelper.getPathsInFolder(
-      [...pathToChecks],
-      { absolute: true, deep: 4 }
-    )
+    const files = await this.pathHelper.getPathsInFolder([...pathToChecks], { absolute: true, deep: 4 })
 
     this.logService.info('Found files: ', ...files)
 

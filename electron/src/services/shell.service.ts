@@ -1,14 +1,11 @@
-import { exec } from 'child-process-promise'
-import { Injectable } from '@nestjs/common'
+import { exec } from 'child_process'
+import { promisify } from 'util'
 import { LogService } from './log.service'
 
-@Injectable()
 export class ShellService {
-  private exec: typeof exec = exec
+  private exec = promisify(exec)
 
-  constructor(
-    private readonly logService: LogService
-  ) {}
+  constructor(private readonly logService: LogService) {}
 
   execute(cmd: string, cwd?: string) {
     this.logService.debug('Executing in directory', cwd, 'Command', cmd)

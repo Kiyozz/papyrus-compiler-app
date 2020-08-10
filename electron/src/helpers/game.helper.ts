@@ -1,7 +1,5 @@
-import { Injectable } from '@nestjs/common'
 import { GameType } from '../types/game.type'
 
-@Injectable()
 export class GameHelper {
   constructor() {}
 
