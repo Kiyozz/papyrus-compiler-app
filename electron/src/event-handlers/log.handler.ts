@@ -5,7 +5,7 @@ import log from 'electron-log'
 
 @Handler('log-file')
 export class LogHandler implements HandlerInterface {
-  async listen(event: Electron.IpcMainEvent, args?: any): Promise<void> {
+  async listen(): Promise<void> {
     const logFile = log.transports.file.getFile()
 
     try {

@@ -32,11 +32,15 @@ export class ScriptCompilerService {
       output: this.configService.output
     }
 
+    this.logService.info('Runner config', runner)
+
     const gameExe = this.pathHelper.join(this.configService.gamePath, getExecutable(this.configService.game))
 
-    this.logService.debug('Game executable is', gameExe)
+    this.logService.info('Game executable is', gameExe)
 
     if (!(await this.pathHelper.exists(this.configService.papyrusCompilerExecutableAbsolute))) {
+      this.logService.error('Configuration is invalid, papyrus compiler does not exists in game directory')
+
       throw new InvalidConfigurationException(
         this.configService.gamePath,
         this.configService.papyrusCompilerExecutableAbsolute
@@ -44,20 +48,30 @@ export class ScriptCompilerService {
     }
 
     if (!(await this.pathHelper.exists(gameExe))) {
+      this.logService.error('Configuration is invalid, game executable does not exists in game directory')
+
       throw new InvalidConfigurationException(this.configService.gamePath, gameExe)
     }
+
+    this.logService.debug('Other game source', this.configService.otherGameSourcesFolder)
 
     console.log(this.configService.otherGameSourcesFolder)
 
     const hasOtherGameSource = await this.pathHelper.exists(this.configService.otherGameSourcesFolder)
 
+    this.logService.info('Creating game sources folder if not')
+
     await this.ensureDir([this.configService.gameSourcesFolder])
 
     if (hasOtherGameSource) {
+      this.logService.info('Other game sources found. Importing them')
+
       runner.imports = [this.configService.otherGameSourcesFolder, ...runner.imports]
     }
 
     if (this.configService.hasMo2()) {
+      this.logService.info('Using MO2 support')
+
       const imports = await this.mo2Service.generateImports({
         game: this.configService.game,
         mo2Path: this.configService.mo2InstanceFolder,
@@ -69,6 +83,8 @@ export class ScriptCompilerService {
       runner.cwd = await this.mo2Service.generateModsPath(this.configService.mo2InstanceFolder)
       runner.output = output
       runner.imports = [...runner.imports, ...imports]
+
+      this.logService.debug('New runner config', runner)
     }
 
     const cmd = this.papyrusCompilerService.generateCmd({
@@ -82,15 +98,14 @@ export class ScriptCompilerService {
     try {
       const result = await this.shellService.execute(cmd, runner.cwd)
 
+      this.logService.info('COMPILATION RESULT', result)
+
       return result.stdout
     } catch (err) {
+      this.logService.error('ERROR COMPILATION', err)
       const output = err.stderr.replace('<unknown>', 'unknown')
 
-      if (!output) {
-        throw new CompileScriptException(scriptName, err.stdout.replace('<unknown>', 'unknown'), cmd)
-      }
-
-      throw new CompileScriptException(scriptName, output, cmd)
+      throw new CompileScriptException(scriptName, !output ? err.stdout.replace('<unknown>', 'unknown') : output, cmd)
     }
   }
 

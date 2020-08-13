@@ -4,7 +4,7 @@ import { dialog } from 'electron'
 
 @HandlerInvoke('open-dialog')
 export class DialogHandler implements HandlerInterface {
-  async listen(event: Electron.IpcMainEvent, args?: any): Promise<any> {
+  async listen(): Promise<any> {
     const result = await dialog.showOpenDialog({
       properties: ['openDirectory']
     })

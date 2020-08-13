@@ -30,18 +30,24 @@ export class PathHelper {
   }
 
   basename(p: string, ext?: string) {
+    this.logService.info('Getting basename of', p, 'with ext', ext)
+
     return path.basename(p, ext)
   }
 
   async stat(filename: string): Promise<fs.Stats> {
+    this.logService.info('Getting statistics of the path', filename)
+
     try {
-      return fs.stat(filename)
+      return await fs.stat(filename)
     } catch (e) {
       throw new FileAccessException(filename)
     }
   }
 
-  async exists(fileOrFolder: string): Promise<boolean> {
+  exists(fileOrFolder: string): Promise<boolean> {
+    this.logService.info('Is the path exists?', fileOrFolder)
+
     return fs.pathExists(fileOrFolder)
   }
 
@@ -93,13 +99,19 @@ export class PathHelper {
   }
 
   async getPathsInFolder(fileNames: string[], options: fg.Options): Promise<string[]> {
-    return fg(
+    this.logService.info('Getting paths in folder', fileNames, 'with options', options)
+
+    const response = await fg(
       fileNames.map(file => this.toSlash(file)),
       {
         caseSensitiveMatch: false,
         ...options
       }
     )
+
+    this.logService.info('Response of fast-glob', response)
+
+    return response
   }
 
   get separator() {

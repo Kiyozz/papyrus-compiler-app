@@ -36,7 +36,7 @@ export async function initialize() {
     [
       new CompileScriptHandler(pathHelper, shellService, papyrusCompilerService, mo2Service, logService),
       new LogHandler(),
-      new Mo2Handler(pathHelper)
+      new Mo2Handler(pathHelper, logService)
     ],
     [new GetFileHandler(logService, pathHelper), new DialogHandler()],
     logService

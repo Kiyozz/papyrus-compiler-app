@@ -39,6 +39,7 @@ export class CompileScriptHandler implements HandlerInterface<CompileScriptParam
       mo2SourcesFolders,
       mo2InstanceFolder: mo2Instance
     })
+
     const compileService = new ScriptCompilerService(
       configService,
       this.pathHelper,
@@ -48,7 +49,7 @@ export class CompileScriptHandler implements HandlerInterface<CompileScriptParam
       this.logService
     )
 
-    this.logService.info('Started compilation for script:', script)
+    this.logService.info('Started compilation for script:', { script, game, gamePath, mo2SourcesFolders, mo2Instance })
 
     try {
       const result = await compileService.compile(script)
@@ -58,24 +59,28 @@ export class CompileScriptHandler implements HandlerInterface<CompileScriptParam
       this.logService.log('Compilation is success', isSuccess)
 
       if (isSuccess) {
-        this.logService.info(`Script ${script} successfully compiled.`)
+        this.logService.info(`Script ${script} successfully compiled.`, result)
 
         return result
-      } else {
-        this.throwError(script, { stderr: result })
       }
+
+      this.logService.error('Error compilation', result)
+
+      throw this.throwError(script, { stderr: result })
     } catch (err) {
       if (!(err instanceof CompileScriptException)) {
         this.logService.debug(err)
 
-        this.throwError(script, { stderr: err.message })
-      } else {
-        throw err
+        throw this.throwError(script, { stderr: err.message })
       }
+
+      this.logService.error('Catched error', err)
+
+      throw err
     }
   }
 
   private throwError(script: string, result: { stderr: string }) {
-    throw new CompileScriptException(script, result.stderr)
+    return new CompileScriptException(script, result.stderr)
   }
 }
