@@ -31,7 +31,7 @@ jobs:
     - name: Dependencies
       run: yarn --network-timeout 100000
     - name: Build
-      run: yarn package --no-package --no-zip
+      run: yarn package
     - name: Upload artifact
       uses: actions/upload-artifact@v2.1.4
       with:
