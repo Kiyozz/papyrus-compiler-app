@@ -7,6 +7,10 @@ name: Automatic build
 on:
   push:
     branches: [master]
+    paths:
+      - '**.ts'
+      - '**.js'
+      - '**.tsx'
   pull_request:
     branches: [master]
 
