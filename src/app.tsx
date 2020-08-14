@@ -18,12 +18,13 @@ export interface DispatchesProps {
   setShowNotes: (show: boolean) => void
 }
 
-const useAppActions = () => useActions<DispatchesProps>({
-  initialization: actions.initialization.start,
-  openLogFile: actions.openLogFile,
-  getLatestNotes: actions.changelog.latestNotes.start,
-  setShowNotes: actions.changelog.showNotes
-})
+const useAppActions = () =>
+  useActions<DispatchesProps>({
+    initialization: actions.initialization.start,
+    openLogFile: actions.openLogFile,
+    getLatestNotes: actions.changelog.latestNotes.start,
+    setShowNotes: actions.changelog.showNotes
+  })
 
 const App: React.FC = () => {
   const { initialization, getLatestNotes, setShowNotes, openLogFile } = useAppActions()
@@ -49,9 +50,7 @@ const App: React.FC = () => {
 
   return (
     <div className={classes.container}>
-      {initialized && (
-        <DialogChangelog onClose={onClickCloseChangelogPopup} />
-      )}
+      {initialized && <DialogChangelog onClose={onClickCloseChangelogPopup} />}
 
       <SplashScreen />
 

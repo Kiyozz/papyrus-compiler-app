@@ -37,14 +37,7 @@ export default function createRootStore(history = createHistory(createMemorySour
       changelog: changelogReducer(PREFIX),
       taskLoading: taskLoadingReducer
     }),
-    compose(
-      applyMiddleware(
-        sagaMiddleware,
-        versionMiddleware(PREFIX),
-        storageMiddleware(PREFIX),
-        logMiddleware
-      )
-    )
+    compose(applyMiddleware(sagaMiddleware, versionMiddleware(PREFIX), storageMiddleware(PREFIX), logMiddleware))
   )
 
   sagaMiddleware.run(rootSaga)

@@ -18,14 +18,10 @@ const PlayButton: React.FC<Props> = ({ onClick }) => {
 
   const Icon: React.FC<{ className: string }> = ({ className }) => {
     if (isCompilationRunning) {
-      return (
-        <CircularProgress size={18} className={className} />
-      )
+      return <CircularProgress size={18} className={className} />
     }
 
-    return (
-      <PlayIcon className={className} />
-    )
+    return <PlayIcon className={className} />
   }
 
   return (

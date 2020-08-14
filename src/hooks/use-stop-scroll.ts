@@ -25,14 +25,17 @@ const deepChilds = (element?: HTMLElement | ChildNode | null) => {
 }
 
 export default function useStopScroll(options: UseStopScrollOptions = {}) {
-  const onScroll = useCallback((e: Event) => {
-    if (!deepChilds(options.notIn?.current).includes(e.target as HTMLElement)) {
-      e.preventDefault()
-      e.returnValue = false
+  const onScroll = useCallback(
+    (e: Event) => {
+      if (!deepChilds(options.notIn?.current).includes(e.target as HTMLElement)) {
+        e.preventDefault()
+        e.returnValue = false
 
-      return false
-    }
-  }, [options.notIn])
+        return false
+      }
+    },
+    [options.notIn]
+  )
 
   useEffect(() => {
     window.addEventListener('DOMMouseScroll', onScroll, { passive: false })

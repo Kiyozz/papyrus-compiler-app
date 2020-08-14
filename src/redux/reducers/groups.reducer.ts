@@ -16,7 +16,7 @@ export default function groupsReducer(state = initialState, action: AnyAction): 
     case CONSTANTS.APP_GROUPS_SAVE_GROUPS:
       let groups: GroupModel[] = action.payload || []
 
-      groups = groups.map((group) => {
+      groups = groups.map(group => {
         const scripts = group.scripts.map((script, index) => {
           return {
             ...script,
@@ -47,7 +47,7 @@ export default function groupsReducer(state = initialState, action: AnyAction): 
     case CONSTANTS.APP_GROUPS_EDIT_GROUP:
       return {
         ...state,
-        groups: state.groups.map((group) => {
+        groups: state.groups.map(group => {
           if (group.name === action.payload.lastName) {
             group = { ...action.payload.group }
           }

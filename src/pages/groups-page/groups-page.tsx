@@ -27,11 +27,14 @@ const GroupsPage: React.FC<Props> = () => {
   const [showAddPopup, setShowPopup] = useState(false)
   const [editingGroup, setEditingGroup] = useState<GroupModel | undefined>(undefined)
 
-  const onClickRemoveGroup = useCallback((group: GroupModel) => {
-    return () => {
-      removeGroup(group)
-    }
-  }, [removeGroup])
+  const onClickRemoveGroup = useCallback(
+    (group: GroupModel) => {
+      return () => {
+        removeGroup(group)
+      }
+    },
+    [removeGroup]
+  )
 
   const onClickEditGroup = useCallback((group: GroupModel) => {
     return () => {
@@ -45,15 +48,21 @@ const GroupsPage: React.FC<Props> = () => {
     setShowPopup(true)
   }, [])
 
-  const onGroupAdd = useCallback((group: Partial<GroupModel>) => {
-    setShowPopup(false)
-    addGroup(group as GroupModel)
-  }, [setShowPopup, addGroup])
+  const onGroupAdd = useCallback(
+    (group: Partial<GroupModel>) => {
+      setShowPopup(false)
+      addGroup(group as GroupModel)
+    },
+    [setShowPopup, addGroup]
+  )
 
-  const onGroupEdit = useCallback((lastGroupName: string, group: GroupModel) => {
-    setShowPopup(false)
-    editGroup({ group, lastName: lastGroupName })
-  }, [setShowPopup, editGroup])
+  const onGroupEdit = useCallback(
+    (lastGroupName: string, group: GroupModel) => {
+      setShowPopup(false)
+      editGroup({ group, lastName: lastGroupName })
+    },
+    [setShowPopup, editGroup]
+  )
 
   const onClosePopup = useCallback(() => {
     setShowPopup(false)
@@ -84,18 +93,16 @@ const GroupsPage: React.FC<Props> = () => {
 
           <Fade in={groups.length > 0}>
             <div className={classes.groupsList}>
-              {
-                groups.map((group) => {
-                  return (
-                    <GroupsListItem
-                      onDelete={onClickRemoveGroup}
-                      onEdit={onClickEditGroup}
-                      group={group}
-                      key={group.name}
-                    />
-                  )
-                })
-              }
+              {groups.map(group => {
+                return (
+                  <GroupsListItem
+                    onDelete={onClickRemoveGroup}
+                    onEdit={onClickEditGroup}
+                    group={group}
+                    key={group.name}
+                  />
+                )
+              })}
             </div>
           </Fade>
 

@@ -27,7 +27,9 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
 
   return (
     <Paper>
-      <Typography variant="h5" component="h1">{t('page.settings.game')}</Typography>
+      <Typography variant="h5" component="h1">
+        {t('page.settings.game')}
+      </Typography>
       <FormControl component="fieldset" fullWidth>
         <RadioGroup row value={game} onChange={onClickRadio}>
           <FormControlLabel value={Games.LE} control={<Radio />} label={Games.LE} />
@@ -45,13 +47,15 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
         <Alert
           severity="error"
           className={classes.alert}
-          action={(
+          action={
             <Button onClick={onClickRefreshInstallation} startIcon={<RefreshIcon />}>
               {t('page.settings.actions.refresh')}
             </Button>
-          )}
+          }
         >
-          <Typography variant="body2" paragraph>{t('page.settings.errors.installationInvalid')}</Typography>
+          <Typography variant="body2" paragraph>
+            {t('page.settings.errors.installationInvalid')}
+          </Typography>
           <Typography variant="body2">{t('page.settings.errors.installationInvalidInfo')}</Typography>
         </Alert>
       </Collapse>

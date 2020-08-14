@@ -10,7 +10,7 @@ interface Options {
 }
 
 export default function useTimeout(start: StartCallback, options: Options = { time: 3000 }) {
-  let timer = useRef<any>(null)
+  const timer = useRef<any>(null)
 
   useEffect(() => {
     if (timer.current) {

@@ -1,8 +1,24 @@
 {
   "extends": [
-    "ecp"
+    "ecp",
+    "prettier/@typescript-eslint",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
   ],
   "rules": {
-    "@typescript-eslint/no-extra-parens": "off"
+    "@typescript-eslint/no-extra-parens": "off",
+    "@typescript-eslint/no-use-before-define": [
+      "error",
+      {
+        "variables": false
+      }
+    ],
+    "react/prop-types": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }

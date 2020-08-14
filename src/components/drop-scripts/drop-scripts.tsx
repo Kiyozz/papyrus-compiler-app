@@ -31,28 +31,46 @@ export type OnDropFunction = ((files: File[]) => void) | null
 
 const nodeService = new NodeService()
 
-const DropScripts: React.FC<Props> = ({ onDrop, onClick, className, buttonClassName, onlyClickButton = false, accept = '', preventDropOnDocument = true, children, Button }) => {
+const DropScripts: React.FC<Props> = ({
+  onDrop,
+  onClick,
+  className,
+  buttonClassName,
+  onlyClickButton = false,
+  accept = '',
+  preventDropOnDocument = true,
+  children,
+  Button
+}) => {
   const { getRootProps, isDragActive, getInputProps, inputRef, rootRef } = useDropzone({
-    onDrop: (files) => onDrop?.(files),
+    onDrop: files => onDrop?.(files),
     accept,
     preventDropOnDocument
   })
   const buttonRef = useRef<HTMLDivElement>(null)
 
-  const onClickRoot = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (onlyClickButton) {
-      if (e.target !== buttonRef.current && !nodeService.isChildren(buttonRef.current, e.target as HTMLElement)) {
-        e.stopPropagation()
+  const onClickRoot = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (onlyClickButton) {
+        if (e.target !== buttonRef.current && !nodeService.isChildren(buttonRef.current, e.target as HTMLElement)) {
+          e.stopPropagation()
 
-        return
+          return
+        }
       }
-    }
 
-    onClick?.(e, buttonRef, inputRef, rootRef)
-  }, [inputRef, onlyClickButton, buttonRef, rootRef, onClick])
+      onClick?.(e, buttonRef, inputRef, rootRef)
+    },
+    [inputRef, onlyClickButton, buttonRef, rootRef, onClick]
+  )
 
   const AddButton = (
-    <DropScriptsButton className={buttonClassName} buttonRef={buttonRef} getInputProps={getInputProps} Button={Button} />
+    <DropScriptsButton
+      className={buttonClassName}
+      buttonRef={buttonRef}
+      getInputProps={getInputProps}
+      Button={Button}
+    />
   )
 
   return (

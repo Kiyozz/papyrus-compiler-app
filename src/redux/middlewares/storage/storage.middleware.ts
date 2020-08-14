@@ -34,7 +34,10 @@ const storageMiddleware: StorageMiddleware = (prefix: string) => store => next =
   if (action.type === CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS) {
     const files: string[] = action.payload
 
-    localStorage.setItem(`${prefix}/${CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS}`, JSON.stringify(files || []))
+    localStorage.setItem(
+      `${prefix}/${CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS}`,
+      JSON.stringify(files || [])
+    )
   }
 
   if (action.type === CONSTANTS.APP_INITIALIZATION_RESTORE_SETTINGS) {
@@ -44,7 +47,7 @@ const storageMiddleware: StorageMiddleware = (prefix: string) => store => next =
 
     store.dispatch(actions.groupsPage.save(groups))
 
-    actionsToListen.forEach((actionToListen) => {
+    actionsToListen.forEach(actionToListen => {
       const key = `${prefix}/${actionToListen}`
       let item = null
 

@@ -24,7 +24,14 @@ interface Props {
   hovering: boolean
 }
 
-const ScriptItem: React.FC<Props> = ({ script, onMouseEnter, onMouseLeave, onMouseMove, onClickRemoveScript, hovering }) => {
+const ScriptItem: React.FC<Props> = ({
+  script,
+  onMouseEnter,
+  onMouseLeave,
+  onMouseMove,
+  onClickRemoveScript,
+  hovering
+}) => {
   const { t } = useTranslation()
   const onClickRemove = useCallback(() => {
     onClickRemoveScript(script)
@@ -41,15 +48,19 @@ const ScriptItem: React.FC<Props> = ({ script, onMouseEnter, onMouseLeave, onMou
     >
       <Fade in={hovering}>
         <Box bgcolor="primary.main" color="inherit" className={classes.scriptHover}>
-          <Button aria-label="delete" startIcon={<DeleteIcon />} onClick={onClickRemove}>{t('page.compilation.scriptItem.removeFromList')}</Button>
+          <Button aria-label="delete" startIcon={<DeleteIcon />} onClick={onClickRemove}>
+            {t('page.compilation.scriptItem.removeFromList')}
+          </Button>
         </Box>
       </Fade>
-      <Typography variant="body1" component="div">{script.name}</Typography>
+      <Typography variant="body1" component="div">
+        {script.name}
+      </Typography>
       <Typography variant="body2" component="div" className={classes.scriptPath}>
-        <Trans i18nKey="page.compilation.scriptItem.lastModified">{{ date: format(script.lastModified, 'PPpp') }}</Trans>
-        <span className={cx([classes.scriptStatus, getClassNameFromStatus(script)])}>
-          {getIconFromStatus(script)}
-        </span>
+        <Trans i18nKey="page.compilation.scriptItem.lastModified">
+          {{ date: format(script.lastModified, 'PPpp') }}
+        </Trans>
+        <span className={cx([classes.scriptStatus, getClassNameFromStatus(script)])}>{getIconFromStatus(script)}</span>
       </Typography>
     </Paper>
   )

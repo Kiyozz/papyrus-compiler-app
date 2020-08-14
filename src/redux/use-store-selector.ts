@@ -19,14 +19,11 @@ export function useAction<R extends ActionFunctionAny<any>>(action: R): (...para
 export function useActions<Actions = any>(actions: Actions): Actions {
   const dispatch = useDispatch()
 
-  return useMemo(
-    () => {
-      if (Array.isArray(actions)) {
-        return actions.map(a => bindActionCreators(a, dispatch))
-      }
+  return useMemo(() => {
+    if (Array.isArray(actions)) {
+      return actions.map(a => bindActionCreators(a, dispatch))
+    }
 
-      return bindActionCreators(actions as any, dispatch)
-    },
-    [dispatch, actions]
-  )
+    return bindActionCreators(actions as any, dispatch)
+  }, [dispatch, actions])
 }

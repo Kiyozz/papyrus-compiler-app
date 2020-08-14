@@ -23,15 +23,16 @@ if (typeof window.require === 'undefined') {
 
 const { store, history } = createRootStore()
 
-render((
+render(
   <ReduxProvider store={store}>
     <ThemeProvider>
       <LocationProvider history={history}>
         <App />
       </LocationProvider>
     </ThemeProvider>
-  </ReduxProvider>
-), document.getElementById('root'))
+  </ReduxProvider>,
+  document.getElementById('root')
+)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

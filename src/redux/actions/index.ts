@@ -39,13 +39,15 @@ const actions = {
     save: createAction<GroupModel[]>(CONSTANTS.APP_GROUPS_SAVE_GROUPS),
     saveToLocal: createAction<GroupModel[]>(CONSTANTS.APP_GROUPS_SAVE_GROUPS_TO_LOCAL),
     add: createAction<GroupModel>(CONSTANTS.APP_GROUPS_ADD_GROUP),
-    edit: createAction<{ group: GroupModel, lastName: string }>(CONSTANTS.APP_GROUPS_EDIT_GROUP),
+    edit: createAction<{ group: GroupModel; lastName: string }>(CONSTANTS.APP_GROUPS_EDIT_GROUP),
     remove: createAction<GroupModel>(CONSTANTS.APP_GROUPS_REMOVE_GROUP)
   },
   settingsPage: {
     restore: createAction(CONSTANTS.APP_INITIALIZATION_RESTORE_SETTINGS),
     detectBadInstallation: {
-      start: createAction<{ gamePath: string, gameType: Games, isUsingMo2: boolean, mo2Path: string }>(CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION),
+      start: createAction<{ gamePath: string; gameType: Games; isUsingMo2: boolean; mo2Path: string }>(
+        CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION
+      ),
       success: createAction<boolean>(CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION_SUCCESS),
       failed: createAction<Error>(CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION_FAILED)
     },
@@ -68,8 +70,6 @@ const actions = {
   }
 }
 
-export {
-  CONSTANTS
-}
+export { CONSTANTS }
 
 export default actions

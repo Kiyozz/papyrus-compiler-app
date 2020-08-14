@@ -21,9 +21,7 @@ const SettingsMo2: React.FC<Props> = ({ onChangeMo2, onChangeMo2Instance }) => {
         Mod Organizer 2
       </Typography>
 
-      <Typography variant="body2">
-        {t('page.settings.mo2.enableText')}
-      </Typography>
+      <Typography variant="body2">{t('page.settings.mo2.enableText')}</Typography>
 
       <SettingsMo2Activation onChangeMo2={onChangeMo2} />
       <SettingsMo2Instance onChangeMo2Instance={onChangeMo2Instance} />

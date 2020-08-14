@@ -21,17 +21,14 @@ import { ActiveLink } from '../sidebar/sidebar-link'
 import { usePageContext } from './page-context'
 import classes from './page.module.scss'
 
-interface Props {
-}
-
-const PageDrawer: React.FC<Props> = () => {
+const PageDrawer: React.FC = () => {
   const { setDrawerOpen } = usePageContext()
   const { t } = useTranslation()
 
   const onClick = useCallback(() => setDrawerOpen(false), [setDrawerOpen])
 
-  const links = useMemo(() => (
-    [
+  const links = useMemo(
+    () => [
       {
         Icon: CodeIcon,
         text: t('nav.compilation'),
@@ -47,8 +44,9 @@ const PageDrawer: React.FC<Props> = () => {
         text: t('nav.settings'),
         path: '/settings'
       }
-    ]
-  ), [t])
+    ],
+    [t]
+  )
 
   const { pathname } = useLocation()
 
@@ -66,7 +64,9 @@ const PageDrawer: React.FC<Props> = () => {
         <Box bgcolor="background.default" className={classes.box}>
           <div className={classes.drawerTop}>
             <AppIcon fontSize="large" color="primary" />
-            <Typography className={classes.titleApp} variant="h5" component="h1">Papyrus Compiler</Typography>
+            <Typography className={classes.titleApp} variant="h5" component="h1">
+              Papyrus Compiler
+            </Typography>
           </div>
           <Divider />
           <List>
@@ -74,7 +74,14 @@ const PageDrawer: React.FC<Props> = () => {
               const isActive = pathname === Link.path
 
               return (
-                <ActiveLink tabIndex={-1} key={Link.path} activeClassName={classes.active} className={classes.link} to={Link.path} onClick={onClick}>
+                <ActiveLink
+                  tabIndex={-1}
+                  key={Link.path}
+                  activeClassName={classes.active}
+                  className={classes.link}
+                  to={Link.path}
+                  onClick={onClick}
+                >
                   <Box bgcolor={isActive ? 'primary.main' : ''} className={classes.drawerLink}>
                     <ListItem button disableRipple>
                       <ListItemIcon color="inherit">

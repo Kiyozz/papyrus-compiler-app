@@ -29,24 +29,30 @@ const CompilationPage: React.FC<Props> = () => {
   const setCompilationScripts = useAction(actions.compilationPage.setScripts)
 
   const [hoveringScript, setHoveringScript] = useState<ScriptModel | undefined>(undefined)
-  const onClickRemoveScriptFromScript = useCallback((script: ScriptModel) => {
-    return () => {
-      const newListOfScripts = compilationScripts.filter(compilationScript => compilationScript !== script)
+  const onClickRemoveScriptFromScript = useCallback(
+    (script: ScriptModel) => {
+      return () => {
+        const newListOfScripts = compilationScripts.filter(compilationScript => compilationScript !== script)
 
-      setCompilationScripts(newListOfScripts)
-    }
-  }, [compilationScripts, setCompilationScripts])
-  const createOnMouseEvent = useCallback((script?: ScriptModel) => {
-    return () => {
-      if (isCompilationRunning) {
-        return
+        setCompilationScripts(newListOfScripts)
       }
+    },
+    [compilationScripts, setCompilationScripts]
+  )
+  const createOnMouseEvent = useCallback(
+    (script?: ScriptModel) => {
+      return () => {
+        if (isCompilationRunning) {
+          return
+        }
 
-      if (hoveringScript !== script) {
-        setHoveringScript(script)
+        if (hoveringScript !== script) {
+          setHoveringScript(script)
+        }
       }
-    }
-  }, [isCompilationRunning, hoveringScript])
+    },
+    [isCompilationRunning, hoveringScript]
+  )
 
   const onClickPlayPause = useCallback(() => {
     if (compilationScripts.length === 0) {
@@ -56,22 +62,28 @@ const CompilationPage: React.FC<Props> = () => {
     startCompilation(compilationScripts)
   }, [compilationScripts, startCompilation])
 
-  const onDrop = useCallback((pscFiles: File[]) => {
-    const pscScripts: ScriptModel[] = pscFilesToPscScripts(pscFiles, compilationScripts)
-    const newScripts = uniqScripts([...compilationScripts, ...pscScripts])
+  const onDrop = useCallback(
+    (pscFiles: File[]) => {
+      const pscScripts: ScriptModel[] = pscFilesToPscScripts(pscFiles, compilationScripts)
+      const newScripts = uniqScripts([...compilationScripts, ...pscScripts])
 
-    setCompilationScripts(reorderScripts(newScripts))
-  }, [compilationScripts, setCompilationScripts])
+      setCompilationScripts(reorderScripts(newScripts))
+    },
+    [compilationScripts, setCompilationScripts]
+  )
 
-  const onChangeGroup = useCallback((groupName: string) => {
-    const group = groups.find(group => group.name === groupName)
+  const onChangeGroup = useCallback(
+    (groupName: string) => {
+      const group = groups.find(g => g.name === groupName)
 
-    if (!group) {
-      return
-    }
+      if (!group) {
+        return
+      }
 
-    setCompilationScripts(reorderScripts(uniqScripts([...compilationScripts, ...group.scripts])))
-  }, [setCompilationScripts, compilationScripts, groups])
+      setCompilationScripts(reorderScripts(uniqScripts([...compilationScripts, ...group.scripts])))
+    },
+    [setCompilationScripts, compilationScripts, groups]
+  )
 
   const onClearScripts = useCallback(() => {
     setCompilationScripts([])
@@ -95,9 +107,7 @@ const CompilationPage: React.FC<Props> = () => {
             button: addScriptsButton
           },
           {
-            button: (
-              <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
-            )
+            button: <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
           }
         ]}
       />

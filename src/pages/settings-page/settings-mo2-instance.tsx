@@ -26,13 +26,13 @@ const SettingsMo2Instance: React.FC<Props> = ({ onChangeMo2Instance }) => {
       />
 
       <Collapse in={!!mo2FoldersError}>
-        <Alert severity="error">
-          {mo2FoldersError?.message}
-        </Alert>
+        <Alert severity="error">{mo2FoldersError?.message}</Alert>
       </Collapse>
 
       <Collapse in={mo2Folders.length > 0 && !!mo2Instance}>
-        <SettingsMo2List limitationText={t('page.settings.mo2.limit', { limit: `${limitation}/${mo2Service.windowsCmdLimitation}` })} />
+        <SettingsMo2List
+          limitationText={t('page.settings.mo2.limit', { limit: `${limitation}/${mo2Service.windowsCmdLimitation}` })}
+        />
       </Collapse>
     </Collapse>
   )

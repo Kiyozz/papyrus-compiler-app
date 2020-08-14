@@ -28,15 +28,20 @@ interface Props {
 
 const DialogChangelog: React.FC<Props> = ({ onClose }) => {
   const shell = useMemo(() => window.require('electron').shell, [])
-  const nexusPath = useMemo(() => process.env.REACT_APP_NEXUS_PATH ?? 'https://www.nexusmods.com/skyrim/mods/96339?tab=files', [])
+  const nexusPath = useMemo(
+    () => process.env.REACT_APP_NEXUS_PATH ?? 'https://www.nexusmods.com/skyrim/mods/96339?tab=files',
+    []
+  )
 
-  const { startingVersion, showNotes, latestNotesVersion, notes, releaseLink } = useStoreSelector<StateProps>(({ changelog }: RootStore) => ({
-    latestNotesVersion: changelog.version,
-    showNotes: changelog.showNotes,
-    startingVersion: changelog.startingVersion,
-    notes: changelog.notes,
-    releaseLink: nexusPath
-  }))
+  const { startingVersion, showNotes, latestNotesVersion, notes, releaseLink } = useStoreSelector<StateProps>(
+    ({ changelog }: RootStore) => ({
+      latestNotesVersion: changelog.version,
+      showNotes: changelog.showNotes,
+      startingVersion: changelog.startingVersion,
+      notes: changelog.notes,
+      releaseLink: nexusPath
+    })
+  )
 
   const onClickDownloadRelease = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -58,9 +63,7 @@ const DialogChangelog: React.FC<Props> = ({ onClose }) => {
         <ReactMarkdown source={notes} />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>
-          Close
-        </Button>
+        <Button onClick={onClose}>Close</Button>
         <Button color="primary" variant="contained" startIcon={<DownloadIcon />} onClick={onClickDownloadRelease}>
           Download
         </Button>

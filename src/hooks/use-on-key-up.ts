@@ -7,27 +7,30 @@ interface UseOnKeyUpOptions {
 }
 
 export default function useOnKeyUp(key: string, action: () => void, options?: UseOnKeyUpOptions) {
-  const onKeyUp = useCallback((e: KeyboardEvent) => {
-    if (e.key !== key) {
-      return
-    }
-
-    if (options) {
-      if (options.ctrl && !e.ctrlKey) {
+  const onKeyUp = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key !== key) {
         return
       }
 
-      if (options.alt && !e.altKey) {
-        return
+      if (options) {
+        if (options.ctrl && !e.ctrlKey) {
+          return
+        }
+
+        if (options.alt && !e.altKey) {
+          return
+        }
+
+        if (options.shift && !e.shiftKey) {
+          return
+        }
       }
 
-      if (options.shift && !e.shiftKey) {
-        return
-      }
-    }
-
-    action()
-  }, [action, key, options])
+      action()
+    },
+    [action, key, options]
+  )
 
   useEffect(() => {
     document.body.addEventListener('keyup', onKeyUp)

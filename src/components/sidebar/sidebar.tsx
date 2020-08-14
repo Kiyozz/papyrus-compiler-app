@@ -12,10 +12,7 @@ const Sidebar: React.FC = () => {
   return (
     <div className={classes.sidebar}>
       <div className={classes.logo}>
-        <img
-          src={appLogo}
-          alt="app logo"
-        />
+        <img src={appLogo} alt="app logo" />
       </div>
       <div className={classes.links}>
         <SidebarLink to="/compilation">

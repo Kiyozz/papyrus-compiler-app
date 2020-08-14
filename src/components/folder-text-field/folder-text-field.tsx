@@ -28,8 +28,8 @@ const FolderTextField: React.FC<Props> = ({ error = false, label, value, onChang
       if (typeof result !== 'undefined') {
         onChange(result)
       }
-    } catch (e) {
-      console.log(e?.message)
+    } catch (err) {
+      console.log(err?.message)
     }
   }
 

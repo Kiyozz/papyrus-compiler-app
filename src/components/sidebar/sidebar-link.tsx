@@ -30,18 +30,13 @@ export const ActiveLink: React.FC<ActiveLinkProps> = ({ children, className, act
   )
 }
 
-const SidebarLink: React.FC<Props> = ({ to, exact, children }) => {
+const SidebarLink: React.FC<Props> = ({ to, children }) => {
   const onClickLink = useCallback((e: React.MouseEvent<HTMLElement>) => {
     e.currentTarget.blur()
   }, [])
 
   return (
-    <ActiveLink
-      to={to}
-      className={classes.link}
-      activeClassName={classes.active}
-      onClick={onClickLink as any}
-    >
+    <ActiveLink to={to} className={classes.link} activeClassName={classes.active} onClick={onClickLink as any}>
       {children}
     </ActiveLink>
   )

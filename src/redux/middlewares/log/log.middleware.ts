@@ -20,5 +20,4 @@ const logMiddleware: Middleware<{}, RootStore> = store => next => (action: AnyAc
   return result
 }
 
-
 export default logMiddleware

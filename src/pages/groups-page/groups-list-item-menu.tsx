@@ -39,13 +39,7 @@ const GroupsListItemMenu: React.FC<Props> = ({ group, onDelete, onEdit }) => {
       <IconButton onClick={onOpen} aria-controls={menuId} aria-haspopup="true">
         <MoreVertIcon />
       </IconButton>
-      <Menu
-        id={menuId}
-        keepMounted
-        onClose={onClose}
-        anchorEl={anchorMenu}
-        open={anchorMenu !== null}
-      >
+      <Menu id={menuId} keepMounted onClose={onClose} anchorEl={anchorMenu} open={anchorMenu !== null}>
         <MenuItem onClick={onClickEdit}>
           <ListItemIcon>
             <CreateIcon fontSize="small" color="primary" />

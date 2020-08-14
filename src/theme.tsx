@@ -4,10 +4,6 @@ import brown from '@material-ui/core/colors/brown'
 import red from '@material-ui/core/colors/red'
 import React from 'react'
 
-interface Props {
-
-}
-
 const theme = createMuiTheme({
   palette: {
     type: 'dark',
@@ -22,12 +18,8 @@ const theme = createMuiTheme({
   }
 })
 
-const Theme: React.FC<Props> = ({ children }) => {
-  return (
-    <ThemeProvider theme={theme}>
-      {children}
-    </ThemeProvider>
-  )
+const Theme: React.FC = ({ children }) => {
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>
 }
 
 export default Theme

@@ -12,7 +12,9 @@ const DropFilesOverlay: React.FC<Props> = ({ open }) => {
   return (
     <Backdrop open={open} className={classes.background}>
       <Box className={classes.box} bgcolor="primary.main" color="text.primary">
-        <Typography variant="h1" component="div">Drop files</Typography>
+        <Typography variant="h1" component="div">
+          Drop files
+        </Typography>
       </Box>
     </Backdrop>
   )

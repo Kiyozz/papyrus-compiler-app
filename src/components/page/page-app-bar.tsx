@@ -30,25 +30,18 @@ const PageAppBar: React.FC<Props> = ({ title, actions = [] }) => {
     <>
       <AppBar position="sticky">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>{title}</Typography>
+          <Typography variant="h6" className={classes.title}>
+            {title}
+          </Typography>
           <div className={classes.flex}>
             {actions.map((action, index) => {
               if (isActionButton(action)) {
-                return (
-                  <React.Fragment key={index}>
-                    {action.button}
-                  </React.Fragment>
-                )
+                return <React.Fragment key={index}>{action.button}</React.Fragment>
               }
 
               if (typeof action.text === 'undefined' && typeof action.icon !== 'undefined') {
                 return (
-                  <IconButton
-                    color="inherit"
-                    key={index}
-                    onClick={action.onClick}
-                    {...action.iconButtonProps}
-                  >
+                  <IconButton color="inherit" key={index} onClick={action.onClick} {...action.iconButtonProps}>
                     {action.icon}
                   </IconButton>
                 )

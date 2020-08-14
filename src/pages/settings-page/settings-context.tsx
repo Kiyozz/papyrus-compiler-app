@@ -43,18 +43,17 @@ const SettingsContextProvider: React.FC<OwnProps> = ({ children, ...props }) => 
   const mo2Service = useMemo(() => new Mo2Service(), [])
   const gameService = useMemo(() => new GameService(), [])
 
-  const value = useMemo(() => ({
-    ...props,
-    ...state,
-    mo2Service,
-    gameService
-  }), [state, props, mo2Service, gameService])
-
-  return (
-    <SettingsContext.Provider value={value}>
-      {children}
-    </SettingsContext.Provider>
+  const value = useMemo(
+    () => ({
+      ...props,
+      ...state,
+      mo2Service,
+      gameService
+    }),
+    [state, props, mo2Service, gameService]
   )
+
+  return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>
 }
 
 export default SettingsContextProvider

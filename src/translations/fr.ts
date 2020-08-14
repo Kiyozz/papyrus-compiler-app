@@ -11,10 +11,10 @@ export default {
         searchScripts: 'Rechercher',
         loadGroup: 'Groupe',
         start: 'Lancer',
-        clearList: 'Vider la liste',
+        clearList: 'Vider la liste'
       },
-      dragAndDropText: 'Vous pouvez glisser-déposer des fichiers psc pour les charger dans l\'application.',
-      dragAndDropAdmin: 'Cette fonctionnalité n\'est pas disponible si l\'application est lancée en mode administrateur.',
+      dragAndDropText: "Vous pouvez glisser-déposer des fichiers psc pour les charger dans l'application.",
+      dragAndDropAdmin: "Cette fonctionnalité n'est pas disponible si l'application est lancée en mode administrateur.",
       scriptItem: {
         lastModified: 'Modifié le {{date}}',
         removeFromList: 'Supprimer de la liste'
@@ -52,8 +52,8 @@ export default {
       },
       mo2: {
         enable: 'Activer',
-        enableText: 'Activez cette option uniquement si l\'application n\'est pas lancé à partir de MO2.',
-        instance: 'Dossier de l\'instance MO2',
+        enableText: "Activez cette option uniquement si l'application n'est pas lancé à partir de MO2.",
+        instance: "Dossier de l'instance MO2",
         limit: 'Limite {{limit}}',
         errorInstance: 'Le dossier "{{folder}}" ne contient pas les dossiers {{requiredFolders}}.'
       },

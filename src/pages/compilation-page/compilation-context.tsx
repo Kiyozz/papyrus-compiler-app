@@ -26,10 +26,8 @@ const mapStateToProps = (store: RootStore, own: CompilationContextOwnProps): Com
   popupOpen: store.compilationLogs.popupOpen
 })
 
-const Provider: React.FC<CompilationContextValue> = ({ children, ...props}) => (
-  <CompilationContext.Provider value={props}>
-    {children}
-  </CompilationContext.Provider>
+const Provider: React.FC<CompilationContextValue> = ({ children, ...props }) => (
+  <CompilationContext.Provider value={props}>{children}</CompilationContext.Provider>
 )
 
 const CompilationContextProvider = connect(mapStateToProps)(Provider)

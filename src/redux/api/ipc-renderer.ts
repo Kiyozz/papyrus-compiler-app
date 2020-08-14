@@ -10,13 +10,13 @@ export class IpcRenderer {
       const eventSuccess = `${event}-success`
       const eventError = `${event}-error`
 
-      const onError = (event: Electron.Event, payload: string) => {
+      const onError = (e: Electron.Event, payload: string) => {
         this.ipcRenderer.removeListener(eventSuccess, onSuccess)
 
         reject(payload)
       }
 
-      const onSuccess = (event: Electron.Event, payload: R) => {
+      const onSuccess = (e: Electron.Event, payload: R) => {
         this.ipcRenderer.removeListener(eventError, onError)
 
         resolve(payload)

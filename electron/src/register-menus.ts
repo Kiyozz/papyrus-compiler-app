@@ -4,29 +4,29 @@ interface RegisterMenusCallbacks {
   openLogFile: () => void
 }
 
-const SEPARATOR = (): MenuItemConstructorOptions => ({ type: "separator" })
+const SEPARATOR = (): MenuItemConstructorOptions => ({ type: 'separator' })
 
 const defaultMenu: MenuItemConstructorOptions[] = [
   {
-    label: "File",
-    submenu: [{ role: "quit" }]
+    label: 'File',
+    submenu: [{ role: 'quit' }]
   },
   {
-    label: "Edit",
+    label: 'Edit',
     submenu: [
-      { role: "undo" },
-      { role: "redo" },
+      { role: 'undo' },
+      { role: 'redo' },
       SEPARATOR(),
-      { role: "cut" },
-      { role: "copy" },
-      { role: "paste" },
-      { role: "pasteAndMatchStyle" },
-      { role: "delete" },
-      { role: "selectAll" }
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+      { role: 'pasteAndMatchStyle' },
+      { role: 'delete' },
+      { role: 'selectAll' }
     ]
   },
   {
-    label: "View",
+    label: 'View',
     submenu: [
       {
         label: 'Reload',
@@ -44,17 +44,14 @@ const defaultMenu: MenuItemConstructorOptions[] = [
           app?.exit(0)
         }
       },
-      { role: "toggleDevTools" },
+      { role: 'toggleDevTools' },
       SEPARATOR(),
-      { role: "togglefullscreen" }
+      { role: 'togglefullscreen' }
     ]
   },
   {
-    role: "window",
-    submenu: [
-      { role: "minimize" },
-      { role: "close" }
-    ]
+    role: 'window',
+    submenu: [{ role: 'minimize' }, { role: 'close' }]
   }
 ]
 

@@ -15,7 +15,7 @@ function* getLatestRelease() {
     ])
 
     if (typeof result[1] === 'undefined' && typeof result[0] !== 'undefined') {
-      const [ release ] = result[0] as [GithubReleaseModel]
+      const [release] = result[0] as [GithubReleaseModel]
       const startingVersion: string = yield select((state: RootStore) => state.changelog.startingVersion)
 
       if (typeof release !== 'undefined') {

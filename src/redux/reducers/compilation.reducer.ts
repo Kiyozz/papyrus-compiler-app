@@ -37,10 +37,10 @@ export default function compilationReducer(state = initialState, action: AnyActi
         compilationScripts: uniqBy([...state.compilationScripts, script], 'id')
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION:
-      const scripts = state.compilationScripts.map(script => {
-        script.status = ScriptStatus.IDLE
+      const scripts = state.compilationScripts.map(s => {
+        s.status = ScriptStatus.IDLE
 
-        return script
+        return s
       })
 
       return {
@@ -49,7 +49,11 @@ export default function compilationReducer(state = initialState, action: AnyActi
         isCompilationRunning: true
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_SUCCESS:
-      const scriptSuccessAction = findScriptInList(state.compilationScripts, action.payload[0]?.id, ScriptStatus.SUCCESS)
+      const scriptSuccessAction = findScriptInList(
+        state.compilationScripts,
+        action.payload[0]?.id,
+        ScriptStatus.SUCCESS
+      )
 
       if (!scriptSuccessAction) {
         return state

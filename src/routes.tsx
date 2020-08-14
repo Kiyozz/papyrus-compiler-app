@@ -13,11 +13,7 @@ const routes = [
 const Routes = () => (
   <Router>
     {routes.map(({ path, Component, default: defaultPage }) => (
-      <Component
-        key={path}
-        path={path}
-        default={defaultPage}
-      />
+      <Component key={path} path={path} default={defaultPage} />
     ))}
   </Router>
 )

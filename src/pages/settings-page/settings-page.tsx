@@ -1,5 +1,4 @@
 import RefreshIcon from '@material-ui/icons/Refresh'
-import debounce from 'lodash-es/debounce'
 import React, { useState, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -36,15 +35,18 @@ const SettingsPage: React.FC = () => {
   const setMo2Instance = useAction(actions.settingsPage.mo2.instance)
   const detectMo2SourcesFolder = useAction(actions.settingsPage.mo2.detectSources.start)
 
-  const onClickRadio = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value as Games
+  const onClickRadio = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value as Games
 
-    if (![Games.LE, Games.SE].includes(value)) {
-      return
-    }
+      if (![Games.LE, Games.SE].includes(value)) {
+        return
+      }
 
-    setGame(value)
-  }, [setGame])
+      setGame(value)
+    },
+    [setGame]
+  )
 
   useEffect(() => {
     if (!game || !gameFolder || (mo2 && !mo2Instance)) {
@@ -67,32 +69,46 @@ const SettingsPage: React.FC = () => {
       return
     }
 
-    setStringLimitation(mo2Service.calculateLimitation({
-      folders: detectedMo2SourcesFolders,
-      game,
-      gamePath: gameFolder,
-      mo2Instance
-    }))
+    setStringLimitation(
+      mo2Service.calculateLimitation({
+        folders: detectedMo2SourcesFolders,
+        game,
+        gamePath: gameFolder,
+        mo2Instance
+      })
+    )
   }, [detectedMo2SourcesFolders, detectSourcesFoldersError, game, gameFolder, mo2Instance, setStringLimitation, mo2])
 
-  const onChangeGameFolder = useCallback(debounce((value: string) => {
-    setGameFolder(value)
-  }, 300), [game, mo2, mo2Instance, setGameFolder, detectBadInstallation])
+  const onChangeGameFolder = useCallback(
+    (value: string) => {
+      setGameFolder(value)
+    },
+    [setGameFolder]
+  )
 
-  const onChangeMo2Instance = useCallback(debounce((value: string) => {
-    setStringLimitation(0)
-    setMo2Instance(value)
-  }, 300), [detectMo2SourcesFolder, game])
+  const onChangeMo2Instance = useCallback(
+    (value: string) => {
+      setStringLimitation(0)
+      setMo2Instance(value)
+    },
+    [setMo2Instance]
+  )
 
-  const onChangeMo2 = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setMo2(e.currentTarget.checked)
-  }, [setMo2])
+  const onChangeMo2 = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setMo2(e.currentTarget.checked)
+    },
+    [setMo2]
+  )
 
-  const onClickRefreshInstallation = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  const onClickRefreshInstallation = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault()
 
-    detectBadInstallation({ gamePath: gameFolder, gameType: game, isUsingMo2: mo2, mo2Path: mo2Instance })
-  }, [detectBadInstallation, gameFolder, game, mo2, mo2Instance])
+      detectBadInstallation({ gamePath: gameFolder, gameType: game, isUsingMo2: mo2, mo2Path: mo2Instance })
+    },
+    [detectBadInstallation, gameFolder, game, mo2, mo2Instance]
+  )
 
   const onClickPageRefresh = useCallback(() => {
     if (loading) {
@@ -112,11 +128,13 @@ const SettingsPage: React.FC = () => {
     <SettingsContextProvider limitation={actualMo2FolderStringLimitation}>
       <PageAppBar
         title={t('page.settings.title')}
-        actions={[{
-          text: t('page.settings.actions.refresh'),
-          icon: <RefreshIcon />,
-          onClick: onClickPageRefresh
-        }]}
+        actions={[
+          {
+            text: t('page.settings.actions.refresh'),
+            icon: <RefreshIcon />,
+            onClick: onClickPageRefresh
+          }
+        ]}
       />
 
       <Page>
@@ -129,10 +147,7 @@ const SettingsPage: React.FC = () => {
             onClickRefreshInstallation={onClickRefreshInstallation}
           />
 
-          <SettingsMo2
-            onChangeMo2={onChangeMo2}
-            onChangeMo2Instance={onChangeMo2Instance}
-          />
+          <SettingsMo2 onChangeMo2={onChangeMo2} onChangeMo2Instance={onChangeMo2Instance} />
         </div>
       </Page>
     </SettingsContextProvider>

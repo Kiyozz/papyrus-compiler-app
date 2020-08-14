@@ -18,19 +18,17 @@ interface Props {
 const SettingsMo2List: React.FC<Props> = ({ limitationText }) => {
   const { mo2Instance, mo2Folders } = useSettings()
 
-  const folders = mo2Folders
-    .map((folder) => folder.replace(`${mo2Instance}\\mods\\`, ''))
+  const folders = mo2Folders.map(folder => folder.replace(`${mo2Instance}\\mods\\`, ''))
 
   return (
     <>
       <List
-        subheader={(
+        subheader={
           <ListSubheader className={classes.listHeader}>
             Sources
-
             <div className={classes.listHeaderRightText}>{limitationText}</div>
           </ListSubheader>
-        )}
+        }
       >
         {folders.map(folder => (
           <ListItem key={folder}>

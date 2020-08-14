@@ -16,14 +16,7 @@ const SettingsMo2Activation: React.FC<Props> = ({ onChangeMo2 }) => {
   return (
     <Tooltip title={t<string>('page.settings.mo2.enableText')} placement="right" arrow>
       <FormControlLabel
-        control={(
-          <Checkbox
-            id="mo2"
-            name="mo2"
-            checked={mo2}
-            onChange={onChangeMo2}
-          />
-        )}
+        control={<Checkbox id="mo2" name="mo2" checked={mo2} onChange={onChangeMo2} />}
         label={t('page.settings.mo2.enable')}
       />
     </Tooltip>

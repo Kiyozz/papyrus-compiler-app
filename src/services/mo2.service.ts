@@ -12,10 +12,10 @@ export class Mo2Service {
 
   calculateLimitation({ folders, game, gamePath, mo2Instance }: CalculateLimitationOptions): number {
     const sourcesType = game === 'Skyrim Special Edition' ? 'Source\\Scripts' : 'Scripts\\Source'
-    const gameFolderData = gamePath + '\\Data\\' + sourcesType
-    const gameFolderPapyrus = gamePath + '\\Papyrus Compiler\\PapyrusCompiler.exe'
-    const mo2InstanceWithMods = mo2Instance + '\\mods'
-    const flagLength = `-f="TESV_Papyrus_Flags.flg"`.length
+    const gameFolderData = `${gamePath}\\Data\\${sourcesType}`
+    const gameFolderPapyrus = `${gamePath}\\Papyrus Compiler\\PapyrusCompiler.exe`
+    const mo2InstanceWithMods = `${mo2Instance}\\mods`
+    const flagLength = '-f="TESV_Papyrus_Flags.flg"'.length
     const output = `-o="${mo2Instance}\\overwrite\\${sourcesType}"`
     const spacesBetweenArgs = 4
     const averageScriptLength = 15

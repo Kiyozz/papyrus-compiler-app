@@ -11,16 +11,9 @@ const SplashScreen: React.FC = () => {
   const initialized = useStoreSelector(state => state.initialization)
 
   return (
-    <Fade
-      in={!initialized}
-      mountOnEnter
-      unmountOnExit
-    >
+    <Fade in={!initialized} mountOnEnter unmountOnExit>
       <div className={classes.splash}>
-        <img
-          src={appLogo}
-          alt="Application logo"
-        />
+        <img src={appLogo} alt="Application logo" />
       </div>
     </Fade>
   )

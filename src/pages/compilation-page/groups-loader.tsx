@@ -22,18 +22,20 @@ const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
   const onClose = useCallback(() => setAnchor(null), [])
 
   const groupSelectOptions = useMemo(() => {
-    return groups.filter(group => !group.isEmpty()).map(group => {
-      const onClickGroup = () => {
-        onClose()
-        onChangeGroup(group.name)
-      }
+    return groups
+      .filter(group => !group.isEmpty())
+      .map(group => {
+        const onClickGroup = () => {
+          onClose()
+          onChangeGroup(group.name)
+        }
 
-      return (
-        <MenuItem value={group.name} key={group.name} onClick={onClickGroup}>
-          {group.name}
-        </MenuItem>
-      )
-    })
+        return (
+          <MenuItem value={group.name} key={group.name} onClick={onClickGroup}>
+            {group.name}
+          </MenuItem>
+        )
+      })
   }, [groups, onChangeGroup, onClose])
 
   const notEmptyGroups = groups.filter(group => !group.isEmpty())
@@ -42,7 +44,13 @@ const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
     <div className={classes.group}>
       {notEmptyGroups.length > 0 && (
         <>
-          <Button color="inherit" startIcon={<AddIcon />} aria-controls="load-group-menu" aria-haspopup="true" onClick={onClick}>
+          <Button
+            color="inherit"
+            startIcon={<AddIcon />}
+            aria-controls="load-group-menu"
+            aria-haspopup="true"
+            onClick={onClick}
+          >
             {t('page.compilation.actions.loadGroup')}
           </Button>
 
