@@ -182,7 +182,7 @@ async function build() {
 
     sApp.text = 'Assets'
 
-    await this.fileHandler.copy(path.resolve(PROJECT_DIR, 'package.json'), path.resolve(BUILD_DIR, 'package.json'))
+    await copy(path.resolve(PROJECT_DIR, 'package.json'), path.resolve(BUILD_DIR, 'package.json'))
 
     await wait()
 
@@ -197,8 +197,8 @@ async function build() {
     await wait()
     await del(path.join(BUILD_DIR, 'yarn.lock'))
     // await del(path.join(BUILD_DIR, 'package.json'))
-    await this.fileHandler.copy(BUILD_DIR, BUILD_LE_DIR)
-    await this.fileHandler.copy(BUILD_DIR, BUILD_SE_DIR)
+    await copy(BUILD_DIR, BUILD_LE_DIR)
+    await copy(BUILD_DIR, BUILD_SE_DIR)
 
     await del(BUILD_DIR)
 
