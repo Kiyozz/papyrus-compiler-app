@@ -35,17 +35,6 @@ jobs:
       run: yarn --network-timeout 100000
     - name: Build
       run: yarn package
-    - uses: montudor/action-zip@v0.1.0
-      with:
-        args: zip -qq -r ./node_modules.zip ./node_modules
-    - name: Upload node_modules
-      uses: actions/upload-artifact@v2.1.4
-      with:
-        # Artifact name
-        name: node_modules
-        # A file, directory or wildcard pattern that describes what to upload
-        path: node_modules.zip
-        # The desired beha
     - name: Upload artifact
       uses: actions/upload-artifact@v2.1.4
       with:

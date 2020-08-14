@@ -23,7 +23,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: egordm/gha-yarn-node-cache@v1
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules
 
       # Runs a single command using the runners shell
       - name: Setup Node.js
@@ -36,12 +39,8 @@ jobs:
           workflow: auto_build.yml
           github_token: ${{ secrets.GITHUB_TOKEN }}
           name: build
-      - name: 'Download node_modules'
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          workflow: auto_build.yml
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          name: node_modules
+      - name: Dependencies
+        run: yarn --network-timeout 100000
       - name: Package
         run: yarn package --package --zip
       - name: Upload packages
