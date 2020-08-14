@@ -1,0 +1,22 @@
+@import "../../scss/variables";
+
+.groupsList {
+  position: relative;
+}
+
+.item {
+  position: relative;
+}
+
+.scripts {
+  font-size: 0.8rem;
+  font-style: italic;
+
+  @include font-default;
+}
+
+.actions {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}

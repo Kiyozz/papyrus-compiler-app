@@ -1,0 +1,70 @@
+@import "scss/variables";
+@import "scss/transitions";
+@import "scss/scrollbar";
+
+$primary: $color-primary;
+$secondary: $color-secondary;
+$success: $color-success;
+$danger: $color-danger;
+
+@import "~bootstrap/scss/bootstrap-reboot";
+@import "~bootstrap/scss/bootstrap-grid";
+@import "~typeface-roboto/index.css";
+
+html {
+  font-size: 16px;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  @include font-default;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1em;
+  color: $color-secondary-500;
+}
+
+h1 {
+  @include font-default;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#root {
+  height: 100%;
+}
+
+img {
+  pointer-events: none;
+}
+
+button:focus {
+  outline: 0;
+}
+
+* {
+  user-select: none;
+}
+
+label {
+  margin: 0;
+}
+
+.MuiPaper-root:not(.MuiMenu-paper):not(.MuiAppBar-root):not(.MuiDrawer-paper) {
+  padding: 8px;
+
+  & + & {
+    margin-top: 8px;
+  }
+}
+
+.MuiContainer-root {
+  margin-top: 16px;
+}

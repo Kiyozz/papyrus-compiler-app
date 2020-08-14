@@ -1,0 +1,9 @@
+.textField {
+  display: flex;
+  cursor: pointer;
+
+  input {
+    user-select: none;
+    cursor: pointer;
+  }
+}
