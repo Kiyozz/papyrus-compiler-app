@@ -37,11 +37,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           name: build
       - name: 'Download node_modules'
-      uses: dawidd6/action-download-artifact@v2
-      with:
-        workflow: auto_build.yml
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        name: node_modules
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: auto_build.yml
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          name: node_modules
       - name: Package
         run: yarn package --package --zip
       - name: Upload packages
