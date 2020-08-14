@@ -29,7 +29,7 @@ jobs:
       with:
         node-version: 10.18.0
     - name: Dependencies
-      run: yarn --network-timeout
+      run: yarn --network-timeout 100000
     - name: Package
       run: yarn package --package --zip
     - name: Upload packages
