@@ -23,6 +23,19 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules
+      # Runs a single command using the runners shell
+      - name: Setup Node.js
+        uses: actions/setup-node@v1.4.3
+        with:
+          node-version: 10.18.0
+      - name: Dependencies
+        run: yarn --network-timeout 100000
 
       - name: 'Download package'
         uses: dawidd6/action-download-artifact@v2
