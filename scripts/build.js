@@ -14,6 +14,8 @@ const args = require('yargs').argv
 const exec = promisify(childProcess.exec)
 
 const isSkipBuild = typeof args.skipBuild !== 'undefined'
+const isForcePackage = typeof args.package !== 'undefined'
+const isForceZip = typeof args.zip !== 'undefined'
 
 const PROJECT_DIR = path.join(__dirname, '..')
 const PACKAGE_DIR = path.join(PROJECT_DIR, 'out')
@@ -30,7 +32,7 @@ class FileHandler {
    * @param {string} to
    * @return {Promise<void>}
    */
-  async move(from, to) {
+  move(from, to) {
     return fs.move(from, to, { overwrite: true })
   }
 
@@ -40,7 +42,7 @@ class FileHandler {
    * @param {string} to
    * @return {Promise<void>}
    */
-  async copy(from, to) {
+  copy(from, to) {
     return fs.copy(from, to, { recursive: true })
   }
 }
@@ -51,8 +53,8 @@ class Util {
    * @param {number} ms
    * @returns {Promise<void>}
    */
-  async wait(ms = 1000) {
-    return new Promise(function (resolve) {
+  wait(ms = 1000) {
+    return new Promise(function(resolve) {
       setTimeout(resolve, ms)
     })
   }
@@ -69,8 +71,8 @@ class Util {
       output: process.stdout
     })
 
-    return new Promise(function (resolve) {
-      rl.question(`${question} (y/n): `, function (ans) {
+    return new Promise(function(resolve) {
+      rl.question(`${question} (y/n): `, function(ans) {
         rl.close()
 
         if (ans === '' || ans === 'y') {
@@ -137,12 +139,12 @@ class ZipCreator {
       $spawnOptions: { cwd: path.resolve(destination, 'papyrus-compiler-app-win32-x64') }
     })
 
-    return new Promise(function (resolve, reject) {
-      stream.on('end', function () {
+    return new Promise(function(resolve, reject) {
+      stream.on('end', function() {
         resolve()
       })
 
-      stream.on('error', function (err) {
+      stream.on('error', function(err) {
         reject(err)
       })
     })
@@ -153,7 +155,7 @@ class Build {
   /**
    *
    * @param {ZipCreator} zipCreator
-   * @param {Packager} packager
+   * @param {Packager} usedPackager
    * @param {Util} util
    * @param {FileHandler} fileHandler
    * @param {string} projectDir
@@ -166,7 +168,7 @@ class Build {
    */
   constructor(
     zipCreator,
-    packager,
+    usedPackager,
     util,
     fileHandler,
     projectDir,
@@ -178,7 +180,7 @@ class Build {
     buildSe
   ) {
     this.zipCreator = zipCreator
-    this.packager = packager
+    this.packager = usedPackager
     this.util = util
     this.fileHandler = fileHandler
     this.projectDir = projectDir
@@ -287,10 +289,12 @@ class Build {
   }
 
   async packaging() {
-    const response = await this.util.ask('Package the builds?')
+    if (!isForcePackage) {
+      const response = await this.util.ask('Package the builds?')
 
-    if (!response) {
-      return false
+      if (!response) {
+        return false
+      }
     }
 
     const s = ora({ text: 'Building Legendary Edition package', spinner: Spinners.simpleDotsScrolling }).start()
@@ -311,22 +315,26 @@ class Build {
   }
 
   async zipping() {
-    const response = await this.util.ask('Zip the packages?')
+    if (!isForceZip) {
+      const response = await this.util.ask('Zip the packages?')
 
-    if (response) {
-      const s = ora({ text: 'Building Legendary Edition zip', spinner: Spinners.simpleDotsScrolling }).start()
-
-      try {
-        await this.zipCreator.start('papyrus-compiler-le', path.resolve(this.packageDir, 'build-le'))
-
-        s.text = 'Building Special Edition zip'
-
-        await this.zipCreator.start('papyrus-compiler-se', path.resolve(this.packageDir, 'build-se'))
-
-        s.succeed('Zips builded')
-      } catch (e) {
-        s.fail(e.message)
+      if (!response) {
+        return false
       }
+    }
+
+    const s = ora({ text: 'Building Legendary Edition zip', spinner: Spinners.simpleDotsScrolling }).start()
+
+    try {
+      await this.zipCreator.start('papyrus-compiler-le', path.resolve(this.packageDir, 'build-le'))
+
+      s.text = 'Building Special Edition zip'
+
+      await this.zipCreator.start('papyrus-compiler-se', path.resolve(this.packageDir, 'build-se'))
+
+      s.succeed('Zips builded')
+    } catch (e) {
+      s.fail(e.message)
     }
   }
 }

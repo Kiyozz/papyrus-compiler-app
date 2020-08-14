@@ -13,7 +13,8 @@
     "start:electron": "cross-env TS_NODE_PROJECT=./tsconfig.electron.json NODE_ENV=development REACT_APP_MAIN=http://localhost:3000 electron -r dotenv/config -r ts-node/register electron/main.ts",
     "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "build:electron": "cross-env NODE_ENV=production rollup -c rollup.config.js",
-    "package": "node ./scripts/build.js"
+    "package": "node ./scripts/build.js",
+    "ci:package": "node ./scripts/build.js --package --zip"
   },
   "dependencies": {
     "electron-log": "^4.2.2",
