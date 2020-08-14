@@ -21,7 +21,7 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-    - uses: egordm/gha-yarn-node-cache@v1
+    # - uses: egordm/gha-yarn-node-cache@v1
 
     # Runs a single command using the runners shell
     - name: Setup Node.js
@@ -29,17 +29,21 @@ jobs:
       with:
         node-version: 10.18.0
     - name: Dependencies
-      run: yarn install
-    - name: Package
-      run: yarn package --package --zip
-    - name: Upload packages
-      uses: actions/upload-artifact@v2.1.4
-      with:
-        # Artifact name
-        name: papyrus-compiler
-        # A file, directory or wildcard pattern that describes what to upload
-        path: |
-          papyrus-compiler-le.7z
-          papyrus-compiler-se.7z
-        # The desired beha
+      run: yarn --network-timeout
+  package:
+    runs-on: windows-latest
+
+    steps:
+      - name: Package
+        run: yarn package --package --zip
+      - name: Upload packages
+        uses: actions/upload-artifact@v2.1.4
+        with:
+          # Artifact name
+          name: papyrus-compiler
+          # A file, directory or wildcard pattern that describes what to upload
+          path: |
+            papyrus-compiler-le.7z
+            papyrus-compiler-se.7z
+          # The desired beha
       
