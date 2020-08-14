@@ -31,11 +31,17 @@ jobs:
         with:
           node-version: 10.18.0
       - name: 'Download build artifact'
-        uses: actions/download-artifact@v2.0.5
+        uses: dawidd6/action-download-artifact@v2
         with:
-          name: 'build'
-      - name: Dependencies
-        run: yarn --network-timeout 100000
+          workflow: auto_build.yml
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          name: build
+      - name: 'Download node_modules'
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: auto_build.yml
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        name: node_modules
       - name: Package
         run: yarn package --package --zip
       - name: Upload packages
