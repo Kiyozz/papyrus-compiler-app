@@ -9,9 +9,7 @@ import { RootStore } from '../stores/root.store'
 function* startCompilation(action: AnyAction) {
   const api = createApi()
   const scripts: ScriptModel[] = action.payload
-  const { game, gameFolder, mo2Instance, mo2SourcesFolders }: SettingsState = yield select(
-    (store: RootStore) => store.settings
-  )
+  const { game, gameFolder, mo2Instance, mo2SourcesFolders }: SettingsState = yield select((store: RootStore) => store.settings)
 
   console.log('Starting compilation for', scripts)
 

@@ -23,9 +23,7 @@ const PageContextProvider: React.FC = ({ children }) => {
   return (
     <DropScripts accept=".psc" onlyClickButton onDrop={onDrop} Button={AddScriptsButton}>
       {({ Button, isDragActive }) => (
-        <PageContext.Provider
-          value={{ drawerOpen, setDrawerOpen, addScriptsButton: Button, isDragActive, setOnDrop, setAddScriptsButton }}
-        >
+        <PageContext.Provider value={{ drawerOpen, setDrawerOpen, addScriptsButton: Button, isDragActive, setOnDrop, setAddScriptsButton }}>
           <DropFilesOverlay open={isDragActive && onDrop !== null} />
 
           {children}

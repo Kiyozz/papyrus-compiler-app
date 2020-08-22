@@ -2,7 +2,7 @@ import { Middleware } from 'redux'
 import { CONSTANTS } from '../../actions'
 import { RootStore } from '../../stores/root.store'
 
-type VersionMiddleware = (prefix: string) => Middleware<{}, RootStore>
+type VersionMiddleware = (prefix: string) => Middleware<unknown, RootStore>
 
 const versionMiddleware: VersionMiddleware = (prefix: string) => () => next => action => {
   if (action.type === CONSTANTS.APP_CHANGELOG_SET_LATEST_VERSION) {

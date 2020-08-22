@@ -22,29 +22,17 @@ type Props = RouteComponentProps
 
 const CompilationPage: React.FC<Props> = () => {
   const { t } = useTranslation()
-  const groups = useStoreSelector(state =>
-    state.groups.groups.map(group => new Group(group.name, group.scripts))
-  )
-  const isCompilationRunning = useStoreSelector(
-    state => state.compilation.isCompilationRunning
-  )
-  const compilationScripts = useStoreSelector(
-    state => state.compilation.compilationScripts
-  )
-  const startCompilation = useAction(
-    actions.compilationPage.compilation.startWholeCompilation
-  )
+  const groups = useStoreSelector(state => state.groups.groups.map(group => new Group(group.name, group.scripts)))
+  const isCompilationRunning = useStoreSelector(state => state.compilation.isCompilationRunning)
+  const compilationScripts = useStoreSelector(state => state.compilation.compilationScripts)
+  const startCompilation = useAction(actions.compilationPage.compilation.startWholeCompilation)
   const setCompilationScripts = useAction(actions.compilationPage.setScripts)
 
-  const [hoveringScript, setHoveringScript] = useState<ScriptModel | undefined>(
-    undefined
-  )
+  const [hoveringScript, setHoveringScript] = useState<ScriptModel | undefined>(undefined)
   const onClickRemoveScriptFromScript = useCallback(
     (script: ScriptModel) => {
       return () => {
-        const newListOfScripts = compilationScripts.filter(
-          compilationScript => compilationScript !== script
-        )
+        const newListOfScripts = compilationScripts.filter(compilationScript => compilationScript !== script)
 
         setCompilationScripts(newListOfScripts)
       }
@@ -76,10 +64,7 @@ const CompilationPage: React.FC<Props> = () => {
 
   const onDrop = useCallback(
     (pscFiles: File[]) => {
-      const pscScripts: ScriptModel[] = pscFilesToPscScripts(
-        pscFiles,
-        compilationScripts
-      )
+      const pscScripts: ScriptModel[] = pscFilesToPscScripts(pscFiles, compilationScripts)
       const newScripts = uniqScripts([...compilationScripts, ...pscScripts])
 
       setCompilationScripts(reorderScripts(newScripts))
@@ -95,9 +80,7 @@ const CompilationPage: React.FC<Props> = () => {
         return
       }
 
-      setCompilationScripts(
-        reorderScripts(uniqScripts([...compilationScripts, ...group.scripts]))
-      )
+      setCompilationScripts(reorderScripts(uniqScripts([...compilationScripts, ...group.scripts])))
     },
     [setCompilationScripts, compilationScripts, groups]
   )
@@ -124,9 +107,7 @@ const CompilationPage: React.FC<Props> = () => {
             button: addScriptsButton
           },
           {
-            button: (
-              <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
-            )
+            button: <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
           }
         ]}
       />

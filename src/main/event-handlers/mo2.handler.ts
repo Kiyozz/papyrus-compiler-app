@@ -1,9 +1,5 @@
 import { Handler } from '../decorators'
-import {
-  InvalidMo2InstanceFolderException,
-  InvalidMo2ConfigurationException,
-  Mo2GetSourcesFoldersException
-} from '../exceptions'
+import { InvalidMo2InstanceFolderException, InvalidMo2ConfigurationException, Mo2GetSourcesFoldersException } from '../exceptions'
 import { toOtherSource } from '../helpers/game.helper'
 import { PathHelper } from '../helpers/path.helper'
 import { GameType } from '../types/game.type'

@@ -17,11 +17,5 @@ function* openLogFile() {
 
 export default function* rootSaga() {
   yield fork(openLogFile)
-  yield all([
-    fork(initializationSaga),
-    fork(compilationSaga),
-    fork(changelogSaga),
-    fork(groupsSaga),
-    fork(settingsSaga)
-  ])
+  yield all([fork(initializationSaga), fork(compilationSaga), fork(changelogSaga), fork(groupsSaga), fork(settingsSaga)])
 }

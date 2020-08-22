@@ -13,10 +13,7 @@ export default function* initializationSaga() {
 
       if (mo2Instance && game) {
         yield put(actions.settingsPage.mo2.detectSources.start([mo2Instance, game]))
-        yield race([
-          take(CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS),
-          take(CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_FAILED)
-        ])
+        yield race([take(CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS), take(CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_FAILED)])
       }
 
       yield put(actions.initialization.success())

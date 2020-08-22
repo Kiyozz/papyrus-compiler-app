@@ -1,7 +1,7 @@
 import { AnyAction, Middleware } from 'redux'
 import { RootStore } from '../../stores/root.store'
 
-const logMiddleware: Middleware<{}, RootStore> = store => next => (action: AnyAction) => {
+const logMiddleware: Middleware<unknown, RootStore> = store => next => (action: AnyAction) => {
   if (process.env.NODE_ENV !== 'development') {
     return next(action)
   }

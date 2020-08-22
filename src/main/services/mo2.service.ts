@@ -19,11 +19,7 @@ export class Mo2Service {
     const mo2OverwriteOtherSourcesPath = this.pathHelper.join(mo2Path, 'overwrite', otherSourcesPath)
     const modsFolder = this.pathHelper.join(mo2Path, 'mods')
 
-    const imports = [
-      ...mo2SourcesFolders.map(folder => folder.replace(modsFolder, '.')),
-      mo2OverwriteOtherSourcesPath,
-      mo2OverwriteSourcesPath
-    ]
+    const imports = [...mo2SourcesFolders.map(folder => folder.replace(modsFolder, '.')), mo2OverwriteOtherSourcesPath, mo2OverwriteSourcesPath]
 
     await this.pathHelper.ensureDirs([...mo2SourcesFolders, mo2OverwriteOtherSourcesPath, mo2OverwriteSourcesPath])
 

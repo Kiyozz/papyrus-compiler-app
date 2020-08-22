@@ -34,13 +34,7 @@ export async function initialize() {
 
   const parser = new IpcEventHandlerParser(
     [
-      new CompileScriptHandler(
-        pathHelper,
-        shellService,
-        papyrusCompilerService,
-        mo2Service,
-        logService
-      ),
+      new CompileScriptHandler(pathHelper, shellService, papyrusCompilerService, mo2Service, logService),
       new LogHandler(),
       new Mo2Handler(pathHelper, logService)
     ],

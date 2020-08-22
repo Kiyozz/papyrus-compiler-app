@@ -44,24 +44,11 @@ const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
     <div className={classes.group}>
       {notEmptyGroups.length > 0 && (
         <>
-          <Button
-            color="inherit"
-            startIcon={<AddIcon />}
-            aria-controls="load-group-menu"
-            aria-haspopup="true"
-            onClick={onClick}
-          >
+          <Button color="inherit" startIcon={<AddIcon />} aria-controls="load-group-menu" aria-haspopup="true" onClick={onClick}>
             {t('page.compilation.actions.loadGroup')}
           </Button>
 
-          <Menu
-            id="load-group-menu"
-            keepMounted
-            className={classes.fullWidth}
-            open={!!anchor}
-            onClose={onClose}
-            anchorEl={anchor}
-          >
+          <Menu id="load-group-menu" keepMounted className={classes.fullWidth} open={!!anchor} onClose={onClose} anchorEl={anchor}>
             {groupSelectOptions}
           </Menu>
         </>

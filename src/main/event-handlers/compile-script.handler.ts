@@ -29,10 +29,7 @@ export class CompileScriptHandler implements HandlerInterface<CompileScriptParam
     private readonly logService: LogService
   ) {}
 
-  async listen(
-    event: Electron.IpcMainEvent,
-    { script, game, gamePath, mo2SourcesFolders, mo2Instance }: CompileScriptParameters
-  ) {
+  async listen(event: Electron.IpcMainEvent, { script, game, gamePath, mo2SourcesFolders, mo2Instance }: CompileScriptParameters) {
     const configService = ConfigService.create(this.pathHelper, {
       game,
       gamePath,

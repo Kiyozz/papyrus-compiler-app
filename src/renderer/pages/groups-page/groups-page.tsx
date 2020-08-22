@@ -83,25 +83,12 @@ const GroupsPage: React.FC<Props> = () => {
 
       <Page>
         <div>
-          <GroupsDialog
-            group={editingGroup}
-            open={showAddPopup}
-            onGroupAdd={onGroupAdd}
-            onGroupEdit={onGroupEdit}
-            onClose={onClosePopup}
-          />
+          <GroupsDialog group={editingGroup} open={showAddPopup} onGroupAdd={onGroupAdd} onGroupEdit={onGroupEdit} onClose={onClosePopup} />
 
           <Fade in={groups.length > 0}>
             <div className={classes.groupsList}>
               {groups.map(group => {
-                return (
-                  <GroupsListItem
-                    onDelete={onClickRemoveGroup}
-                    onEdit={onClickEditGroup}
-                    group={group}
-                    key={group.name}
-                  />
-                )
+                return <GroupsListItem onDelete={onClickRemoveGroup} onEdit={onClickEditGroup} group={group} key={group.name} />
               })}
             </div>
           </Fade>

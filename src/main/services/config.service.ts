@@ -54,12 +54,7 @@ export class ConfigService {
 
   static create(
     pathHelper: PathHelper,
-    {
-      game,
-      gamePath,
-      mo2SourcesFolders,
-      mo2InstanceFolder
-    }: { game: GameType; gamePath: string; mo2SourcesFolders: string[]; mo2InstanceFolder: string }
+    { game, gamePath, mo2SourcesFolders, mo2InstanceFolder }: { game: GameType; gamePath: string; mo2SourcesFolders: string[]; mo2InstanceFolder: string }
   ) {
     const gameSourcesType = toSource(game)
     const pathToCheckGameSourceFolder = toOtherSource(game)

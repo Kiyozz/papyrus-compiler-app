@@ -141,11 +141,7 @@ const SettingsPage: React.FC = () => {
         <div className={classes.page}>
           <SettingsVersion version={startingVersion} />
 
-          <SettingsGame
-            onClickRadio={onClickRadio}
-            onChangeGameFolder={onChangeGameFolder}
-            onClickRefreshInstallation={onClickRefreshInstallation}
-          />
+          <SettingsGame onClickRadio={onClickRadio} onChangeGameFolder={onChangeGameFolder} onClickRefreshInstallation={onClickRefreshInstallation} />
 
           <SettingsMo2 onChangeMo2={onChangeMo2} onChangeMo2Instance={onChangeMo2Instance} />
         </div>

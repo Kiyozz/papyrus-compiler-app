@@ -18,9 +18,7 @@ export class GetFileHandler implements HandlerInterface<GetFileParameters> {
   constructor(private readonly logService: LogService, private readonly pathHelper: PathHelper) {}
 
   listen(event: Electron.IpcMainEvent, { file, gamePath, gameType, isUsingMo2, mo2Path }: GetFileParameters) {
-    return isUsingMo2
-      ? this.checksInMo2(file, gameType, gamePath, mo2Path)
-      : this.checksInGameDataFolder(file, gamePath, gameType)
+    return isUsingMo2 ? this.checksInMo2(file, gameType, gamePath, mo2Path) : this.checksInGameDataFolder(file, gamePath, gameType)
   }
 
   private async checksInMo2(file: string, gameType: GameType, gamePath: string, mo2Path: string): Promise<boolean> {

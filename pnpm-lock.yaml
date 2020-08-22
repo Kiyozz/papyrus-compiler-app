@@ -52,7 +52,7 @@ devDependencies:
   react: 16.13.1
   react-dom: 16.13.1_react@16.13.1
   react-dropzone: 11.0.3_react@16.13.1
-  react-i18next: 11.7.0_i18next@19.7.0+react@16.13.1
+  react-i18next: 11.7.1_i18next@19.7.0+react@16.13.1
   react-markdown: 4.3.1_react@16.13.1
   react-redux: 7.2.1_49f644e2f7de4182503f8b93abece808
   redux: 4.0.5
@@ -8162,7 +8162,7 @@ packages:
       react: '>= 16.8'
     resolution:
       integrity: sha512-+MoMOoKZfkZ9i1+qEFl2ZU29AB/c9K2bFxyACqGynguJunmqO+k2PJ2AcuiH51xVNl9R7q/x5QdBaIWb6RtoSw==
-  /react-i18next/11.7.0_i18next@19.7.0+react@16.13.1:
+  /react-i18next/11.7.1_i18next@19.7.0+react@16.13.1:
     dependencies:
       '@babel/runtime': 7.11.2
       html-parse-stringify2: 2.0.1
@@ -8173,7 +8173,7 @@ packages:
       i18next: '>= 19.0.0'
       react: '>= 16.8.0'
     resolution:
-      integrity: sha512-8tvVkpuxQlubcszZON+jmoCgiA9gCZ74OAYli9KChPhETtq8pJsANBTe9KRLRLmX3ubumgvidURWr0VvKz1tww==
+      integrity: sha512-K7qWaQ03Nc25BqSqdKz1iGU5inwNQnDVcen/tpiILEXyd0w/z+untrsuUy5Y3PqAkwJ7m1FACwBttSSitxDKQA==
   /react-is/16.13.1:
     dev: true
     resolution:
@@ -10610,7 +10610,7 @@ specifiers:
   react: ^16.13.1
   react-dom: ^16.13.1
   react-dropzone: ^11.0.3
-  react-i18next: ^11.7.0
+  react-i18next: ^11.7.1
   react-markdown: ^4.3.1
   react-redux: 7.2.1
   redux: ^4.0.5

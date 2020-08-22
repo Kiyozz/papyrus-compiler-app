@@ -64,14 +64,7 @@ const DropScripts: React.FC<Props> = ({
     [inputRef, onlyClickButton, buttonRef, rootRef, onClick]
   )
 
-  const AddButton = (
-    <DropScriptsButton
-      className={buttonClassName}
-      buttonRef={buttonRef}
-      getInputProps={getInputProps}
-      Button={Button}
-    />
-  )
+  const AddButton = <DropScriptsButton className={buttonClassName} buttonRef={buttonRef} getInputProps={getInputProps} Button={Button} />
 
   return (
     <div

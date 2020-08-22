@@ -41,10 +41,7 @@ export class ScriptCompilerService {
     if (!(await this.pathHelper.exists(this.configService.papyrusCompilerExecutableAbsolute))) {
       this.logService.error('Configuration is invalid, papyrus compiler does not exists in game directory')
 
-      throw new InvalidConfigurationException(
-        this.configService.gamePath,
-        this.configService.papyrusCompilerExecutableAbsolute
-      )
+      throw new InvalidConfigurationException(this.configService.gamePath, this.configService.papyrusCompilerExecutableAbsolute)
     }
 
     if (!(await this.pathHelper.exists(gameExe))) {

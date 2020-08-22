@@ -49,11 +49,7 @@ export default function compilationReducer(state = initialState, action: AnyActi
         isCompilationRunning: true
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_SUCCESS:
-      const scriptSuccessAction = findScriptInList(
-        state.compilationScripts,
-        action.payload[0]?.id,
-        ScriptStatus.SUCCESS
-      )
+      const scriptSuccessAction = findScriptInList(state.compilationScripts, action.payload[0]?.id, ScriptStatus.SUCCESS)
 
       if (!scriptSuccessAction) {
         return state

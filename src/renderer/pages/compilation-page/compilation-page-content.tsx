@@ -17,12 +17,7 @@ interface Props {
   onClickPlayPause: () => void
 }
 
-const CompilationPageContent: React.FC<Props> = ({
-  onClear,
-  onClickPlayPause,
-  onClickRemoveScriptFromScript,
-  createOnMouseEvent
-}) => {
+const CompilationPageContent: React.FC<Props> = ({ onClear, onClickPlayPause, onClickRemoveScriptFromScript, createOnMouseEvent }) => {
   const { t } = useTranslation()
   const { compilationScripts, hoveringScript } = useCompilationContext()
 

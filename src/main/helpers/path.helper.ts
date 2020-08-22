@@ -1,13 +1,7 @@
 import path from 'path'
 import fs from 'fs-extra'
 import fg from 'fast-glob'
-import {
-  FileWriteException,
-  FileReadException,
-  FileNotExistsException,
-  FileEnsureException,
-  FileAccessException
-} from '../exceptions/files'
+import { FileWriteException, FileReadException, FileNotExistsException, FileEnsureException, FileAccessException } from '../exceptions/files'
 import { LogService } from '../services/log.service'
 
 export class PathHelper {
@@ -52,10 +46,7 @@ export class PathHelper {
   }
 
   async ensureDirs(dirs: string[]): Promise<void> {
-    this.logService.debug(
-      `Checking presence of director${dirs.length > 1 ? 'ies' : 'y'}`,
-      ...dirs.map(dir => `"${dir}"`)
-    )
+    this.logService.debug(`Checking presence of director${dirs.length > 1 ? 'ies' : 'y'}`, ...dirs.map(dir => `"${dir}"`))
 
     for (const dir of dirs) {
       try {

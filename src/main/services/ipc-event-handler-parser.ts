@@ -5,11 +5,7 @@ import { HandlerInterface, HandlerInvokeInterface } from '../types/handler.inter
 import { LogService } from './log.service'
 
 export class IpcEventHandlerParser {
-  constructor(
-    private eventHandlers: HandlerInterface[],
-    private eventHandlersInvoke: HandlerInvokeInterface[],
-    private readonly logService: LogService
-  ) {}
+  constructor(private eventHandlers: HandlerInterface[], private eventHandlersInvoke: HandlerInvokeInterface[], private readonly logService: LogService) {}
 
   register() {
     this.eventHandlers.forEach(eventHandler => {

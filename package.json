@@ -14,7 +14,7 @@
     "package:le": "electron-builder -p=never --config.productName='PCA LE'",
     "prepackage:se": "pnpm build:se",
     "package:se": "electron-builder -p=never --config.productName='PCA SE'",
-    "lint": "eslint packages/* --ext .ts,.tsx",
+    "lint": "eslint src/* --ext .ts,.tsx",
     "release": "semantic-release"
   },
   "repository": "git@github.com/Kiyozz/papyrus-compiler-app.git",
@@ -83,7 +83,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.3",
-    "react-i18next": "^11.7.0",
+    "react-i18next": "^11.7.1",
     "react-markdown": "^4.3.1",
     "react-redux": "7.2.1",
     "redux": "^4.0.5",

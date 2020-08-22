@@ -9,10 +9,7 @@ function* getLatestRelease() {
   const api = createApi()
 
   try {
-    const result: [GithubReleaseModel[] | undefined, boolean | undefined] = yield race([
-      call(api.getLatestNotes),
-      delay(5000)
-    ])
+    const result: [GithubReleaseModel[] | undefined, boolean | undefined] = yield race([call(api.getLatestNotes), delay(5000)])
 
     if (typeof result[1] === 'undefined' && typeof result[0] !== 'undefined') {
       const [release] = result[0] as [GithubReleaseModel]

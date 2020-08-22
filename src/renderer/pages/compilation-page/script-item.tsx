@@ -24,14 +24,7 @@ interface Props {
   hovering: boolean
 }
 
-const ScriptItem: React.FC<Props> = ({
-  script,
-  onMouseEnter,
-  onMouseLeave,
-  onMouseMove,
-  onClickRemoveScript,
-  hovering
-}) => {
+const ScriptItem: React.FC<Props> = ({ script, onMouseEnter, onMouseLeave, onMouseMove, onClickRemoveScript, hovering }) => {
   const { t } = useTranslation()
   const onClickRemove = useCallback(() => {
     onClickRemoveScript(script)
@@ -57,9 +50,7 @@ const ScriptItem: React.FC<Props> = ({
         {script.name}
       </Typography>
       <Typography variant="body2" component="div" className={classes.scriptPath}>
-        <Trans i18nKey="page.compilation.scriptItem.lastModified">
-          {{ date: format(script.lastModified, 'PPpp') }}
-        </Trans>
+        <Trans i18nKey="page.compilation.scriptItem.lastModified">{{ date: format(script.lastModified, 'PPpp') }}</Trans>
         <span className={cx([classes.scriptStatus, getClassNameFromStatus(script)])}>{getIconFromStatus(script)}</span>
       </Typography>
     </Paper>

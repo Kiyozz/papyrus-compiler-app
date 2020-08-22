@@ -114,19 +114,10 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
 
   return (
     <Dialog open={open} onClose={onDialogClose} aria-labelledby="create-group-title" maxWidth="lg" fullWidth>
-      <DialogTitle id="create-group-title">
-        {isEdit ? t('page.groups.dialog.editGroup') : t('page.groups.dialog.createGroup')}
-      </DialogTitle>
+      <DialogTitle id="create-group-title">{isEdit ? t('page.groups.dialog.editGroup') : t('page.groups.dialog.createGroup')}</DialogTitle>
       <form onSubmit={onSubmitAddGroup}>
         <DialogContent className={classes.scriptsContent}>
-          <TextField
-            fullWidth
-            label={t('page.groups.dialog.name')}
-            name="group-name"
-            id="group-name"
-            value={name}
-            onChange={onChangeName}
-          />
+          <TextField fullWidth label={t('page.groups.dialog.name')} name="group-name" id="group-name" value={name} onChange={onChangeName} />
           {scripts.length > 0 ? (
             <Paper className={classes.content} elevation={3}>
               <GroupsDialogList scripts={scripts} onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup} />

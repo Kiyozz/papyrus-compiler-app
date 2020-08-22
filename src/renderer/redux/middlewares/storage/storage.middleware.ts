@@ -15,7 +15,7 @@ function transformPayload(payload: any) {
   return payload || ''
 }
 
-type StorageMiddleware = (prefix: string) => Middleware<{}, RootStore>
+type StorageMiddleware = (prefix: string) => Middleware<unknown, RootStore>
 
 const storageMiddleware: StorageMiddleware = (prefix: string) => store => next => action => {
   const actionsToListen = [
@@ -34,10 +34,7 @@ const storageMiddleware: StorageMiddleware = (prefix: string) => store => next =
   if (action.type === CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS) {
     const files: string[] = action.payload
 
-    localStorage.setItem(
-      `${prefix}/${CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS}`,
-      JSON.stringify(files || [])
-    )
+    localStorage.setItem(`${prefix}/${CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS}`, JSON.stringify(files || []))
   }
 
   if (action.type === CONSTANTS.APP_INITIALIZATION_RESTORE_SETTINGS) {

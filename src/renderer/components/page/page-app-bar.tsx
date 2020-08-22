@@ -48,13 +48,7 @@ const PageAppBar: React.FC<Props> = ({ title, actions = [] }) => {
               }
 
               return (
-                <Button
-                  color="inherit"
-                  key={action.text}
-                  startIcon={action.icon}
-                  onClick={action.onClick}
-                  {...action.buttonProps}
-                >
+                <Button color="inherit" key={action.text} startIcon={action.icon} onClick={action.onClick} {...action.buttonProps}>
                   {action.text}
                 </Button>
               )

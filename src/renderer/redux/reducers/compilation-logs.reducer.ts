@@ -31,13 +31,7 @@ export default function compilationLogsReducer(state = initialState, action: Any
       if (typeof payload[1] !== 'string') {
         return {
           ...state,
-          logs: [
-            ...state.logs,
-            [
-              payload[0],
-              'An error occured. For more info, checks the log file (CTRL + ALT + J when focused on the app).'
-            ]
-          ]
+          logs: [...state.logs, [payload[0], 'An error occured. For more info, checks the log file (CTRL + ALT + J when focused on the app).']]
         }
       }
 
