@@ -15,6 +15,7 @@ on:
       - '.github/**'
   pull_request:
     branches: [master]
+  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -53,7 +54,7 @@ jobs:
           path: dist
       - name: Build SE
         run: pnpm build:se
-      - name: Upload artifact
+      - name: Upload SE
         uses: actions/upload-artifact@v2.1.4
         with:
           # Artifact name
