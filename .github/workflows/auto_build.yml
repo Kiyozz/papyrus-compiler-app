@@ -41,7 +41,7 @@ jobs:
         with:
           version: 5.5.2
           run_install:
-            - --shamefully-hoist
+            args: [--shamefully-hoist]
       - name: Build LE
         run: pnpm build:le
       - name: Upload LE
