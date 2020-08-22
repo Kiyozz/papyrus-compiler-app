@@ -12,6 +12,7 @@ on:
       - '**.js'
       - '**.tsx'
       - '.env**'
+      - '.github/**'
   pull_request:
     branches: [master]
 
