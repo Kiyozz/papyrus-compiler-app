@@ -1,0 +1,74 @@
+@import "../../scss/variables";
+
+.container {
+  padding-bottom: 72px;
+}
+
+.title {
+  flex-grow: 1;
+}
+
+h1.titleApp {
+  @include font-proxima-nova;
+}
+
+.drawer {
+  width: 240px;
+}
+
+.box {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.flex {
+  display: flex;
+}
+
+.drawerLink {
+  width: 100%;
+}
+
+.drawerTop {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    height: 48px;
+    margin-left: 16px;
+    margin-right: 32px;
+  }
+
+  h1 {
+    margin-right: 36px;
+  }
+}
+
+ul.listSecondary {
+  margin-top: auto;
+}
+
+.link {
+  display: flex;
+  color: inherit;
+
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.active {
+  color: white;
+
+  &:hover {
+    color: white;
+  }
+
+  :global(.MuiListItemIcon-root) {
+    color: inherit;
+  }
+}

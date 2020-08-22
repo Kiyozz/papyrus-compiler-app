@@ -1,0 +1,11 @@
+.fabIcon {
+  margin-right: 8px;
+}
+
+.fabs {
+  display: flex;
+  position: fixed;
+  left: calc(50% + 120px);
+  bottom: 16px;
+  transform: translateX(-50%);
+}

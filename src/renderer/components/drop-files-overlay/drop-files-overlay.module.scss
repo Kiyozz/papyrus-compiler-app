@@ -1,0 +1,28 @@
+@import "../../scss/variables";
+
+div.background {
+  position: fixed;
+  z-index: 1301;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  text-align: center;
+
+  @include font-default;
+  @include text-large;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include full-height;
+  @include full-width;
+}
