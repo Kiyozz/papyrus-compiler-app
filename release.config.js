@@ -8,12 +8,6 @@ module.exports = {
         preset: 'conventionalcommits'
       }
     ],
-    [
-      '@semantic-release/github',
-      {
-        assets: ['papyrus-compiler-se.7z', 'papyrus-compiler-le.7z']
-      }
-    ],
     '@semantic-release/changelog',
     [
       '@semantic-release/npm',
