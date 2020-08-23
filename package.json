@@ -1,6 +1,6 @@
 {
   "name": "pca",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Papyrus compiler app by WushuLate",
   "private": true,
   "scripts": {
@@ -17,7 +17,10 @@
     "lint": "eslint src/* --ext .ts,.tsx",
     "release": "semantic-release"
   },
-  "repository": "git@github.com/Kiyozz/papyrus-compiler-app.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kiyozz/papyrus-compiler-app.git"
+  },
   "keywords": [
     "electron",
     "typescript",
@@ -29,14 +32,17 @@
   "author": "WK <kevinturmel@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@sindresorhus/is": "^3.1.2",
+    "deepmerge": "^4.2.2",
     "electron-better-ipc": "^1.1.1",
     "electron-default-menu": "^1.0.2",
     "electron-log": "^4.2.4",
+    "electron-store": "^6.0.0",
     "electron-util": "^0.14.2",
     "fast-glob": "^3.2.4",
     "fs-extra": "^9.0.1",
-    "reflect-metadata": "^0.1.13",
-    "source-map-support": "^0.5.19"
+    "source-map-support": "^0.5.19",
+    "type-fest": "^0.16.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.2",
@@ -93,6 +99,7 @@
     "sass-loader": "^9.0.3",
     "semantic-release": "^17.1.1",
     "style-loader": "^1.2.1",
+    "tsconfig-paths-webpack-plugin": "^3.3.0",
     "typeface-roboto": "^0.0.75",
     "typeface-roboto-mono": "^0.0.75",
     "typescript": "^3.9.7",

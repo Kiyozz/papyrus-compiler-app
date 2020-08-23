@@ -45,7 +45,7 @@ export default {
         refresh: 'Rafraîchir'
       },
       game: 'Jeu',
-      gameFolderInfo: 'Dossier de {{game}} (où {{exe}} se trouve)',
+      gameFolderInfo: 'Dossier de {{gameType}} (où {{exe}} se trouve)',
       errors: {
         installationInvalid: 'Le dossier semble invalide :',
         installationInvalidInfo: 'Vérifiez que vous avez extrait le fichier Scripts.zip de Creation Kit.'

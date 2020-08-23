@@ -4,7 +4,7 @@ import FolderIcon from '@material-ui/icons/Folder'
 
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import createApi from '../../redux/api/create-api'
+import apiFactory from '../../redux/api/api-factory'
 
 import classes from './folder-text-field.module.scss'
 
@@ -17,7 +17,7 @@ export interface Props {
 
 const FolderTextField: React.FC<Props> = ({ error = false, label, value, onChange }) => {
   const { t } = useTranslation()
-  const api = useMemo(() => createApi(), [])
+  const api = useMemo(() => apiFactory(), [])
   const onClickInput = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     e.currentTarget.blur()

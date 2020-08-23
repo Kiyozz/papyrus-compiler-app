@@ -11,16 +11,7 @@ import React, { useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 
 import useOnKeyUp from '../../hooks/use-on-key-up'
-import { RootStore } from '../../redux/stores/root.store'
 import { useStoreSelector } from '../../redux/use-store-selector'
-
-interface StateProps {
-  notes: string
-  startingVersion: string
-  latestNotesVersion: string
-  showNotes: boolean
-  releaseLink: string
-}
 
 interface Props {
   onClose: () => void
@@ -28,15 +19,11 @@ interface Props {
 
 const DialogChangelog: React.FC<Props> = ({ onClose }) => {
   const shell = useMemo(() => window.require('electron').shell, [])
-  const nexusPath = useMemo(() => process.env.APP_NEXUS_PATH ?? 'https://www.nexusmods.com/skyrim/mods/96339?tab=files', [])
-
-  const { startingVersion, showNotes, latestNotesVersion, notes, releaseLink } = useStoreSelector<StateProps>(({ changelog }: RootStore) => ({
-    latestNotesVersion: changelog.version,
-    showNotes: changelog.showNotes,
-    startingVersion: changelog.startingVersion,
-    notes: changelog.notes,
-    releaseLink: nexusPath
-  }))
+  const releaseLink = useMemo(() => process.env.APP_NEXUS_PATH ?? 'https://www.nexusmods.com/skyrim/mods/96339?tab=files', [])
+  const showNotes = useStoreSelector(store => store.changelog.showNotes)
+  const notes = useStoreSelector(store => store.changelog.notes)
+  const latestVersion = useStoreSelector(store => store.changelog.latestVersion)
+  const version = useStoreSelector(store => store.changelog.version)
 
   const onClickDownloadRelease = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -53,7 +40,7 @@ const DialogChangelog: React.FC<Props> = ({ onClose }) => {
       <DialogTitle>A new version is available</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          {startingVersion} <ArrowForwardIcon /> {latestNotesVersion}
+          {version} <ArrowForwardIcon /> {latestVersion}
         </DialogContentText>
         <ReactMarkdown source={notes} />
       </DialogContent>

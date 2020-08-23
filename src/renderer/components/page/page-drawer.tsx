@@ -15,8 +15,8 @@ import { useLocation } from '@reach/router'
 import { useTranslation } from 'react-i18next'
 
 import AppIcon from '../../assets/logo/vector/app-icon'
+import { useStoreSelector } from '../../redux/use-store-selector'
 import OpenCompilationLogs from '../open-compilation-logs/open-compilation-logs'
-import OpenLogFileAction from '../open-log-file-action/open-log-file-action'
 import { ActiveLink } from '../sidebar/sidebar-link'
 import { usePageContext } from './page-context'
 import classes from './page.module.scss'
@@ -49,6 +49,7 @@ const PageDrawer: React.FC = () => {
   )
 
   const { pathname } = useLocation()
+  const version = useStoreSelector(state => state.changelog.version)
 
   return (
     <nav>
@@ -65,7 +66,10 @@ const PageDrawer: React.FC = () => {
           <div className={classes.drawerTop}>
             <AppIcon fontSize="large" color="primary" />
             <Typography className={classes.titleApp} variant="h5" component="h1">
-              Papyrus Compiler
+              PCA
+              <Typography className={classes.titleAppVersion} component="span">
+                {version}
+              </Typography>
             </Typography>
           </div>
           <Divider />
@@ -88,7 +92,6 @@ const PageDrawer: React.FC = () => {
             })}
           </List>
           <List className={classes.listSecondary}>
-            <OpenLogFileAction />
             <OpenCompilationLogs />
           </List>
         </Box>

@@ -5,8 +5,10 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import FolderIcon from '@material-ui/icons/Folder'
+import is from '@sindresorhus/is'
 
 import React from 'react'
+import { usePageContext } from '../../components/page/page-context'
 
 import { useSettings } from './settings-context'
 import classes from './settings-page.module.scss'
@@ -16,9 +18,18 @@ interface Props {
 }
 
 const SettingsMo2List: React.FC<Props> = ({ limitationText }) => {
-  const { mo2Instance, mo2Folders } = useSettings()
+  const {
+    config: { mo2 }
+  } = usePageContext()
+  const {
+    mo2: { sources }
+  } = useSettings()
 
-  const folders = mo2Folders.map(folder => folder.replace(`${mo2Instance}\\mods\\`, ''))
+  if (is.undefined(mo2.instance) || is.undefined(sources)) {
+    return null
+  }
+
+  const folders = new Set(sources.map(folder => folder.replace(/.*([/\\])mods([/\\])/gi, '')))
 
   return (
     <>
@@ -30,7 +41,7 @@ const SettingsMo2List: React.FC<Props> = ({ limitationText }) => {
           </ListSubheader>
         }
       >
-        {folders.map(folder => (
+        {Array.from(folders).map(folder => (
           <ListItem key={folder}>
             <ListItemAvatar>
               <Avatar>

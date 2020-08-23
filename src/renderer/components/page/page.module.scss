@@ -12,6 +12,12 @@ h1.titleApp {
   @include font-proxima-nova;
 }
 
+span.titleAppVersion {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-family: inherit;
+}
+
 .drawer {
   width: 240px;
 }

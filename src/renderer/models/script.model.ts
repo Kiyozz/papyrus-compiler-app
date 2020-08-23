@@ -1,9 +1,8 @@
+import { Script } from '@common'
 import { ScriptStatus } from '../enums/script-status.enum'
 
-export interface ScriptModel {
+export interface ScriptModel extends Script {
   id: number
-  name: string
-  path: string
   lastModified: number
   status: ScriptStatus
 }

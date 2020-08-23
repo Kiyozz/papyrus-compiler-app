@@ -1,17 +1,14 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
+import type { RendererProcessIpc } from 'electron-better-ipc'
 
-export function useOnIpcEvent(event: string, callback: (...args: any[]) => void) {
-  const ipcRenderer = useMemo(() => window.require('electron').ipcRenderer, [])
-
-  const onEvent = useCallback(() => {
-    callback()
-  }, [callback])
+export function useOnIpcEvent(event: string, callback: (data: unknown) => void) {
+  const ipc = useMemo<RendererProcessIpc>(() => window.require('electron-better-ipc').ipcRenderer, [])
 
   useEffect(() => {
-    ipcRenderer?.on(event, onEvent)
+    const cb = ipc.answerMain(event, data => callback(data))
 
     return () => {
-      ipcRenderer?.removeListener(event, onEvent)
+      cb()
     }
-  }, [event, onEvent, ipcRenderer])
+  }, [event, ipc, callback])
 }

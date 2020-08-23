@@ -2,6 +2,7 @@ import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import CreateIcon from '@material-ui/icons/Create'
 import { RouteComponentProps } from '@reach/router'
+import is from '@sindresorhus/is'
 
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,20 +10,81 @@ import { useTranslation } from 'react-i18next'
 import GroupsDialog from '../../components/groups-dialog/groups-dialog'
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
-import { Group, GroupModel } from '../../models'
-import actions from '../../redux/actions'
-import { useAction, useStoreSelector } from '../../redux/use-store-selector'
+import { usePageContext } from '../../components/page/page-context'
+import { GroupModel } from '../../models'
 import GroupsListItem from './groups-list-item'
 import classes from './groups-page.module.scss'
 
 type Props = RouteComponentProps
 
+interface EditGroupParams {
+  group: GroupModel
+  lastGroupName: string
+}
+
 const GroupsPage: React.FC<Props> = () => {
   const { t } = useTranslation()
-  const groups = useStoreSelector(state => state.groups.groups.map(g => new Group(g.name, g.scripts)))
-  const addGroup = useAction(actions.groupsPage.add)
-  const editGroup = useAction(actions.groupsPage.edit)
-  const removeGroup = useAction(actions.groupsPage.remove)
+  const { groups, updateConfig } = usePageContext()
+  const addGroup = useCallback(
+    (group: GroupModel) => {
+      if (!is.undefined(groups.find(g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase()))) {
+        return
+      }
+
+      updateConfig({
+        groups: [
+          ...groups,
+          {
+            name: group.name,
+            scripts: group.scripts.map(s => ({ name: s.name, path: s.path }))
+          }
+        ]
+      })
+    },
+    [updateConfig, groups]
+  )
+  const editGroup = useCallback(
+    ({ group, lastGroupName }: EditGroupParams) => {
+      if (
+        group.name.trim().toLowerCase() !== lastGroupName.trim().toLowerCase() &&
+        !is.undefined(groups.find(g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase()))
+      ) {
+        return
+      }
+
+      updateConfig({
+        groups: groups.map(g => {
+          if (g.name === lastGroupName) {
+            return {
+              scripts: group.scripts.map(s => ({ name: s.name, path: s.path })),
+              name: group.name
+            }
+          }
+
+          return {
+            ...g,
+            scripts: g.scripts.map(s => ({ name: s.name, path: s.path }))
+          }
+        })
+      })
+    },
+    [groups, updateConfig]
+  )
+  const removeGroup = useCallback(
+    (group: GroupModel) => {
+      if (is.undefined(groups.find(g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase()))) {
+        return
+      }
+
+      updateConfig(
+        {
+          groups: groups.map(g => ({ name: g.name, scripts: g.scripts })).filter(g => g.name !== group.name)
+        },
+        true
+      )
+    },
+    [groups, updateConfig]
+  )
 
   const [showAddPopup, setShowPopup] = useState(false)
   const [editingGroup, setEditingGroup] = useState<GroupModel | undefined>(undefined)
@@ -59,7 +121,7 @@ const GroupsPage: React.FC<Props> = () => {
   const onGroupEdit = useCallback(
     (lastGroupName: string, group: GroupModel) => {
       setShowPopup(false)
-      editGroup({ group, lastName: lastGroupName })
+      editGroup({ group, lastGroupName })
     },
     [setShowPopup, editGroup]
   )

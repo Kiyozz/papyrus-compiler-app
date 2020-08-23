@@ -2,22 +2,20 @@ import { AnyAction } from 'redux'
 import { CONSTANTS } from '../actions'
 
 export interface ChangelogState {
-  startingVersion: string
-  version: string
   notes: string
+  latestVersion: string
+  version: string
   showNotes: boolean
 }
 
 export default function createChangeLogReducer(prefix: string) {
-  const startingVersion = process.env.REACT_APP_VERSION || ''
-  const latestVersionSaved = localStorage.getItem(`${prefix}/${CONSTANTS.APP_CHANGELOG_SET_LATEST_VERSION}`) ?? ''
   const showNotesSaved = (localStorage.getItem(`${prefix}/${CONSTANTS.APP_CHANGELOG_SET_SHOW_NOTES}`) ?? 'false') === 'true'
 
   const initialState: ChangelogState = {
-    startingVersion,
-    version: latestVersionSaved,
     notes: '',
-    showNotes: showNotesSaved
+    showNotes: showNotesSaved,
+    version: '',
+    latestVersion: ''
   }
 
   return function changelogReducer(state = initialState, action: AnyAction): ChangelogState {
@@ -27,15 +25,26 @@ export default function createChangeLogReducer(prefix: string) {
           ...state,
           notes: action.payload || ''
         }
-      case CONSTANTS.APP_CHANGELOG_SET_LATEST_VERSION:
+      case CONSTANTS.APP_CHANGELOG_GET_LATEST_NOTES_FAILED:
         return {
           ...state,
-          version: action.payload || ''
+          notes: '',
+          showNotes: false
         }
       case CONSTANTS.APP_CHANGELOG_SET_SHOW_NOTES:
         return {
           ...state,
           showNotes: action.payload ?? false
+        }
+      case CONSTANTS.APP_CHANGELOG_SET_LATEST_VERSION:
+        return {
+          ...state,
+          latestVersion: action.payload ?? ''
+        }
+      case CONSTANTS.APP_CHANGELOG_SET_VERSION:
+        return {
+          ...state,
+          version: action.payload ?? ''
         }
       default:
         return state

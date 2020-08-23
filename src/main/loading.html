@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <style>
+          body {
+            margin: 0;
+            background-color: #303030;
+          }
+
+          .content {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: #303030;
+            color: #bcaaa4;
+          }
+
+          svg {
+            animation: rotating 2s infinite cubic-bezier(0, 0.69, 1, 1.1);
+            animation-delay: 0.25s;
+          }
+
+          @keyframes rotating {
+            0% {
+              transform: rotate(0) scale(1);
+            }
+
+            50% {
+              transform: rotate(360deg) scale(0.6);
+            }
+
+            100% {
+              transform: rotate(0) scale(1);
+            }
+          }
+
+          h1 {
+            color: rgb(202, 202, 202);
+            margin: 0;
+            font-family: Arial, sans-serif;
+            font-size: 1.25em;
+          }
+        </style>
+        <title>PCA Starting</title>
+    </head>
+    <body>
+        <div class="content">
+            <svg focusable="false" viewBox="0 0 24 24" aria-hidden="true" style="height: 150px;width: 150px;">
+                <g>
+                    <g>
+                        <g>
+                            <g transform="matrix(0.023261376487247822,0,0,0.023261376487247822,-53.75114056074676,-53.75114336268325) ">
+                                <g transform="matrix(11.07810326687287,0,0,11.07810326687287,149.97218195081322,154.81885626911432) "
+                                   fill="currentColor">
+                                    <path d="m279.466348,216.466358l-35.8,-20.7c-1.6,-0.9 -3.6,-0.9 -5.2,0l-36.3,20.9l0.4,0c-1.7,0.9 -2.5,2.7 -2.5,4.7l0,39.5c0,1.9 0.5,3.6 2.2,4.5l36.4,21.2c0.8,0.5 1.6,0.7 2.5,0.7l0.2,0c0.9,0 1.8,-0.2 2.6,-0.7l36.6,-21.2c1.6,-0.9 2.6,-2.7 2.6,-4.5l0,-39.5c-0.1,-2.3 -1.6,-4.2 -3.7,-4.9zm-38.4,-10.2l25.8,14.9l-25.8,14.9l-25.8,-14.9l25.8,-14.9zm-31,51.6l0,-27.9l25,15.1l0,28l-25,-15.2zm35,15.2l0,-28.1l28,-15.1l0,28.1l-28,15.1z" />
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+            <h1>PCA is starting</h1>
+        </div>
+    </body>
+</html>

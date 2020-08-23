@@ -1,15 +1,14 @@
-import { AnyAction } from 'redux'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import actions, { CONSTANTS } from '../actions'
-import createApi from '../api/create-api'
+import apiFactory from '../api/api-factory'
 
-function* detectFolders(action: AnyAction) {
-  const api = createApi()
+function* detectFolders() {
+  const api = apiFactory()
 
   try {
     yield put(actions.task.loading(true))
 
-    const folders: string[] = yield call(api.detectMo2SourcesFolders, action.payload)
+    const folders: string[] = yield call(api.detectMo2SourcesFolders)
 
     yield put(actions.settingsPage.mo2.detectSources.success(folders))
   } catch (e) {
@@ -19,13 +18,13 @@ function* detectFolders(action: AnyAction) {
   }
 }
 
-function* detectBadInstallation(action: AnyAction) {
-  const api = createApi()
+function* detectBadInstallation() {
+  const api = apiFactory()
 
   try {
     yield put(actions.task.loading(true))
 
-    const fileExists: boolean = yield call(api.detectBadInstallation, action.payload)
+    const fileExists: boolean = yield call(api.detectBadInstallation)
 
     yield put(actions.settingsPage.detectBadInstallation.success(fileExists))
   } catch (e) {

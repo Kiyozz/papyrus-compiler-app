@@ -10,8 +10,9 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import Alert from '@material-ui/lab/Alert'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { getExecutable, Games } from '@common'
 import FolderTextField from '../../components/folder-text-field/folder-text-field'
-import { Games } from '../../enums/games.enum'
+import { usePageContext } from '../../components/page/page-context'
 import { useSettings } from './settings-context'
 import classes from './settings-page.module.scss'
 
@@ -23,7 +24,10 @@ interface Props {
 
 const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onClickRefreshInstallation }) => {
   const { t } = useTranslation()
-  const { game, installationIsBad, gameFolder, gameService } = useSettings()
+  const {
+    config: { gameType, gamePath }
+  } = usePageContext()
+  const { installationIsBad } = useSettings()
 
   return (
     <Paper>
@@ -31,15 +35,15 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
         {t('page.settings.game')}
       </Typography>
       <FormControl component="fieldset" fullWidth>
-        <RadioGroup row value={game} onChange={onClickRadio}>
+        <RadioGroup row value={gameType} onChange={onClickRadio}>
           <FormControlLabel value={Games.LE} control={<Radio />} label={Games.LE} />
           <FormControlLabel value={Games.SE} control={<Radio />} label={Games.SE} />
         </RadioGroup>
       </FormControl>
       <FolderTextField
         error={installationIsBad}
-        label={t('page.settings.gameFolderInfo', { game, exe: gameService.toExecutable(game) })}
-        value={gameFolder}
+        label={t('page.settings.gameFolderInfo', { gameType, exe: getExecutable(gameType) })}
+        value={gamePath}
         onChange={onChangeGameFolder}
       />
 

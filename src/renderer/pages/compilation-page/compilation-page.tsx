@@ -7,8 +7,9 @@ import { useTranslation } from 'react-i18next'
 
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
+import { usePageContext } from '../../components/page/page-context'
 import { useDrop } from '../../hooks/use-drop'
-import { Group, ScriptModel } from '../../models'
+import { ScriptModel } from '../../models'
 import actions from '../../redux/actions'
 import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
@@ -22,7 +23,7 @@ type Props = RouteComponentProps
 
 const CompilationPage: React.FC<Props> = () => {
   const { t } = useTranslation()
-  const groups = useStoreSelector(state => state.groups.groups.map(group => new Group(group.name, group.scripts)))
+  const { groups } = usePageContext()
   const isCompilationRunning = useStoreSelector(state => state.compilation.isCompilationRunning)
   const compilationScripts = useStoreSelector(state => state.compilation.compilationScripts)
   const startCompilation = useAction(actions.compilationPage.compilation.startWholeCompilation)

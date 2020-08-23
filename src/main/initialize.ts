@@ -1,46 +1,66 @@
-import log from 'electron-log'
-import fs from 'fs-extra'
-import { CompileScriptHandler } from './event-handlers/compile-script.handler'
-import { DialogHandler } from './event-handlers/dialog.handler'
-import { GetFileHandler } from './event-handlers/file.handler'
-import { LogHandler } from './event-handlers/log.handler'
-import { Mo2Handler } from './event-handlers/mo2.handler'
-import { PathHelper } from './helpers/path.helper'
-import { IpcEventHandlerParser } from './services/ipc-event-handler-parser'
-import { LogService } from './services/log.service'
-import { Mo2Service } from './services/mo2.service'
-import { PapyrusCompilerService } from './services/papyrus-compiler.service'
-import { ShellService } from './services/shell.service'
+import { EVENTS } from '@common'
+import appStore from '../common/appStore'
+import { BadInstallationHandler } from './event-handlers/BadInstallationHandler'
+import { CompileScriptHandler } from './event-handlers/CompileScriptHandler'
+import ConfigGetHandler from './event-handlers/ConfigGetHandler'
+import ConfigUpdateHandler from './event-handlers/ConfigUpdateHandler'
+import { DialogHandler } from './event-handlers/DialogHandler'
+import { FilesStatsHandler } from './event-handlers/FilesStatsHandler'
+import { GetVersionHandler } from './event-handlers/GetVersionHandler'
+import { InAppErrorHandler } from './event-handlers/InAppErrorHandler'
+import { Mo2ModsSourcesHandler } from './event-handlers/Mo2ModsSourcesHandler'
+import { OpenLogFileHandler } from './event-handlers/OpenLogFileHandler'
+import { HandlerInterface } from './HandlerInterface'
+import { registerMenus } from './registerMenus'
+import Log from './services/Log'
+import { copy, ensureFiles } from './services/path'
+import { registerEvents } from './services/registerEvents'
+
+const log = new Log('Initialize')
 
 async function backupLatestLogFile() {
   const logFile = log.transports.file.getFile().path
 
   if (!logFile) {
+    log.info('There is no log file')
+
     return
   }
 
-  await fs.ensureFile(logFile)
-  await fs.copy(logFile, `${logFile.replace('.log', '')}.1.log`)
+  log.info('A log file exists, creation of a new one')
+
+  await ensureFiles([logFile])
+
+  const logFilename = logFile.replace('.log', '')
+
+  await copy(logFile, `${logFilename}.1.log`)
+
+  log.info(`file ${logFilename}.1.log created`)
 }
 
 export async function initialize() {
   await backupLatestLogFile()
 
-  const logService = new LogService()
-  const pathHelper = new PathHelper(logService)
-  const shellService = new ShellService(logService)
-  const papyrusCompilerService = new PapyrusCompilerService()
-  const mo2Service = new Mo2Service(pathHelper)
+  const openLogFileHandler = new OpenLogFileHandler()
+  const events = new Map<string, HandlerInterface>([
+    [EVENTS.COMPILE_SCRIPT, new CompileScriptHandler()],
+    [EVENTS.OPEN_DIALOG, new DialogHandler()],
+    [EVENTS.MO2_MODS_SOURCES, new Mo2ModsSourcesHandler()],
+    [EVENTS.BAD_INSTALLATION, new BadInstallationHandler()],
+    [EVENTS.CONFIG_UPDATE, new ConfigUpdateHandler()],
+    [EVENTS.CONFIG_GET, new ConfigGetHandler()],
+    [EVENTS.FILES_STATS, new FilesStatsHandler()],
+    [EVENTS.GET_VERSION, new GetVersionHandler()],
+    [EVENTS.IN_APP_ERROR, new InAppErrorHandler()]
+  ])
 
-  const parser = new IpcEventHandlerParser(
-    [
-      new CompileScriptHandler(pathHelper, shellService, papyrusCompilerService, mo2Service, logService),
-      new LogHandler(),
-      new Mo2Handler(pathHelper, logService)
-    ],
-    [new GetFileHandler(logService, pathHelper), new DialogHandler()],
-    logService
-  )
+  log.log(appStore.path)
 
-  parser.register()
+  registerMenus({
+    openLogFile: () => {
+      openLogFileHandler.listen()
+    }
+  })
+
+  registerEvents(events)
 }

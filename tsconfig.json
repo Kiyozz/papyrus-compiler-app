@@ -3,6 +3,13 @@
   "compilerOptions": {
     "jsx": "react",
     "skipLibCheck": true,
-    "noImplicitReturns": false
+    "noImplicitReturns": false,
+    "experimentalDecorators": false,
+    "baseUrl": "./",
+    "paths": {
+      "@common": [
+        "./src/common/index.ts"
+      ]
+    }
   }
 }

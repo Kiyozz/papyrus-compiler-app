@@ -1,10 +1,13 @@
 import Collapse from '@material-ui/core/Collapse'
 import Alert from '@material-ui/lab/Alert'
+import is from '@sindresorhus/is'
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import FolderTextField from '../../components/folder-text-field/folder-text-field'
+import { usePageContext } from '../../components/page/page-context'
+import { useCmdLimitation } from '../../hooks/useCmdLimitation'
 import { useSettings } from './settings-context'
 import SettingsMo2List from './settings-mo2-list'
 
@@ -14,18 +17,25 @@ interface Props {
 
 const SettingsMo2Instance: React.FC<Props> = ({ onChangeMo2Instance }) => {
   const { t } = useTranslation()
-  const { mo2, mo2Folders, mo2FoldersError, mo2Instance, limitation, mo2Service } = useSettings()
+  const {
+    config: { mo2 }
+  } = usePageContext()
+  const {
+    mo2: { sources, sourcesError }
+  } = useSettings()
+
+  const { current, max } = useCmdLimitation(sources)
 
   return (
-    <Collapse in={mo2}>
-      <FolderTextField error={!!mo2FoldersError} value={mo2Instance} label={t('page.settings.mo2.instance')} onChange={onChangeMo2Instance} />
+    <Collapse in={mo2.use}>
+      <FolderTextField error={!!sourcesError} value={mo2.instance ?? ''} label={t('page.settings.mo2.instance')} onChange={onChangeMo2Instance} />
 
-      <Collapse in={!!mo2FoldersError}>
-        <Alert severity="error">{mo2FoldersError?.message}</Alert>
+      <Collapse in={!is.undefined(sourcesError)}>
+        <Alert severity="error">{sourcesError?.message}</Alert>
       </Collapse>
 
-      <Collapse in={mo2Folders.length > 0 && !!mo2Instance}>
-        <SettingsMo2List limitationText={t('page.settings.mo2.limit', { limit: `${limitation}/${mo2Service.windowsCmdLimitation}` })} />
+      <Collapse in={sources.length > 0 && !is.nullOrUndefined(mo2.instance)}>
+        <SettingsMo2List limitationText={t('page.settings.mo2.limit', { limit: `${current}/${max}` })} />
       </Collapse>
     </Collapse>
   )

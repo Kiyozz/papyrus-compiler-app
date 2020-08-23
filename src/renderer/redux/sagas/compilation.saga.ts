@@ -1,15 +1,12 @@
 import { AnyAction } from 'redux'
-import { call, put, select, takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 import { ScriptModel } from '../../models'
 import actions, { CONSTANTS } from '../actions'
-import createApi from '../api/create-api'
-import { SettingsState } from '../reducers/settings.reducer'
-import { RootStore } from '../stores/root.store'
+import apiFactory from '../api/api-factory'
 
 function* startCompilation(action: AnyAction) {
-  const api = createApi()
+  const api = apiFactory()
   const scripts: ScriptModel[] = action.payload
-  const { game, gameFolder, mo2Instance, mo2SourcesFolders }: SettingsState = yield select((store: RootStore) => store.settings)
 
   console.log('Starting compilation for', scripts)
 
@@ -17,7 +14,7 @@ function* startCompilation(action: AnyAction) {
     try {
       yield put(actions.compilationPage.compilation.script.start(script))
 
-      const logs: string = yield call(api.compileScript, script, [game, gameFolder, mo2Instance, mo2SourcesFolders])
+      const logs: string = yield call(api.compileScript, script)
 
       yield put(actions.compilationPage.compilation.script.success([script, logs]))
     } catch (e) {

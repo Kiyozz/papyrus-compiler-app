@@ -1,5 +1,6 @@
 const path = require('path')
 const dotenv = require('dotenv')
+const TsconfigPathsWebpackPlugin = require('tsconfig-paths-webpack-plugin')
 const webpack = require('webpack')
 
 const appVersion = process.env.APP_VERSION || ''
@@ -29,7 +30,10 @@ module.exports = config => {
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js'],
-      plugins: []
+      plugins: [new TsconfigPathsWebpackPlugin()],
+      alias: {
+        '@common': path.resolve(__dirname, 'src/common/index.ts')
+      }
     },
     plugins: [...config.plugins, new webpack.EnvironmentPlugin(Object.keys(parsed))]
   }
