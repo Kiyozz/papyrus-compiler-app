@@ -60,7 +60,7 @@ export async function ensureFiles(items: string[]): Promise<void> {
   }
 }
 
-export async function getPathsInFolder(fileNames: string[], options: fg.Options): Promise<string[]> {
+export async function getPathsInFolder(fileNames: string[], options: fg.Options = {}): Promise<string[]> {
   log.info('Getting paths in folder', fileNames, 'with options', options)
 
   const response = await fg(

@@ -32,9 +32,11 @@ const SettingsPage: React.FC = () => {
   const setDisableMo2 = useCallback(() => updateConfig({ mo2: { use: false, instance: undefined } }), [updateConfig])
   const setEmptyDetectedSourcesFolders = useAction(actions.settingsPage.mo2.detectSources.empty)
   const detectMo2SourcesFolder = useAction(actions.settingsPage.mo2.detectSources.start)
+  const setInstallationIsBad = useAction(actions.settingsPage.installationIsBad)
 
   const onClickRadio = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInstallationIsBad(false)
       const value = e.target.value as GameType
 
       if (![Games.LE, Games.SE].includes(value)) {
@@ -43,7 +45,7 @@ const SettingsPage: React.FC = () => {
 
       setGame(value)
     },
-    [setGame]
+    [setGame, setInstallationIsBad]
   )
 
   useEffect(() => {

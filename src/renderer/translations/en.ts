@@ -45,15 +45,15 @@ export default {
         refresh: 'Refresh'
       },
       game: 'Game',
-      gameFolderInfo: '{{game}} folder (where {{exe}} is located)',
+      gameFolderInfo: '{{gameType}} folder (where {{exe}} is located)',
       errors: {
         installationInvalid: 'Installation seems invalid:',
-        installationInvalidInfo: 'Check if you have extracted Scripts.zip from Creation Kit.'
+        installationInvalidInfo: 'Check if you have extracted Scripts.zip from Creation Kit or the executable {{exe}} exists in your game.'
       },
       mo2: {
         enable: 'Enable',
         enableText: 'Only enable this option when the app is not started from MO2.',
-        instance: 'MO2 Instance folder',
+        instance: 'Instance folder',
         limit: 'Limit {{limit}}',
         errorInstance: 'The folder "{{folder}}" does not contains {{requiredFolders}} folders.'
       },

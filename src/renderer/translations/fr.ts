@@ -48,12 +48,12 @@ export default {
       gameFolderInfo: 'Dossier de {{gameType}} (où {{exe}} se trouve)',
       errors: {
         installationInvalid: 'Le dossier semble invalide :',
-        installationInvalidInfo: 'Vérifiez que vous avez extrait le fichier Scripts.zip de Creation Kit.'
+        installationInvalidInfo: 'Vérifiez que vous avez extrait le fichier Scripts.zip de Creation Kit ou que {{exe}} existe dans le dossier.'
       },
       mo2: {
         enable: 'Activer',
         enableText: "Activez cette option uniquement si l'application n'est pas lancé à partir de MO2.",
-        instance: "Dossier de l'instance MO2",
+        instance: "Dossier de l'instance",
         limit: 'Limite {{limit}}',
         errorInstance: 'Le dossier "{{folder}}" ne contient pas les dossiers {{requiredFolders}}.'
       },

@@ -1,23 +1,32 @@
+import { app } from 'electron'
 import Store from 'electron-store'
+import { is } from 'electron-util'
+import { join } from '../main/services/path'
 import { Config } from './interfaces/Config'
 import { Group } from './interfaces/Group'
+import * as fs from 'fs'
+
+const jsonPath = is.development ? join(__dirname, '../..', 'package.json') : join(app.getAppPath(), 'package.json')
+const json = JSON.parse(fs.readFileSync(jsonPath).toString())
 
 const defaultConfig: Config = {
   mo2: {
     use: false,
-    output: 'overwrite\\Scripts'
+    output: 'overwrite\\Scripts',
+    mods: 'mods'
   },
   gameType: (process.env.APP_NEXUS_PATH ?? '').includes('specialedition') ? 'Skyrim Special Edition' : 'Skyrim Legendary Edition',
   gamePath: '',
   flag: 'TESV_Papyrus_Flags.flg',
-  compilerPath: 'PapyrusCompiler\\PapyrusCompiler.exe',
+  compilerPath: 'Papyrus Compiler\\PapyrusCompiler.exe',
   output: 'Data\\Scripts',
   groups: [] as Group[]
 }
 
 const appStore = new Store<Config>({
   defaults: defaultConfig,
-  schema: {
+  projectVersion: json.version,
+  /*schema: {
     mo2: {
       type: 'object',
       properties: {
@@ -33,9 +42,13 @@ const appStore = new Store<Config>({
         instance: {
           description: 'Path for the MO2 Instance',
           type: 'string'
+        },
+        mods: {
+          description: 'Path for the mods directory',
+          type: 'string'
         }
       },
-      required: ['use', 'output']
+      required: ['use', 'output', 'mods']
     },
     gameType: {
       description: 'Type of game used',
@@ -87,8 +100,15 @@ const appStore = new Store<Config>({
         required: ['name', 'scripts']
       }
     }
+  },*/
+  migrations: {
+    '4.1.0': (store: Store) => {
+      console.log('toto')
+
+      store.set('mo2.mods', 'mods')
+    }
   }
-})
+} as any)
 
 const groups = appStore.get('groups')
 const setOfGroupNames = new Set(groups.map(g => g.name))

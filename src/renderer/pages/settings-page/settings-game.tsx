@@ -28,6 +28,7 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
     config: { gameType, gamePath }
   } = usePageContext()
   const { installationIsBad } = useSettings()
+  const exe = getExecutable(gameType)
 
   return (
     <Paper>
@@ -40,12 +41,7 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
           <FormControlLabel value={Games.SE} control={<Radio />} label={Games.SE} />
         </RadioGroup>
       </FormControl>
-      <FolderTextField
-        error={installationIsBad}
-        label={t('page.settings.gameFolderInfo', { gameType, exe: getExecutable(gameType) })}
-        value={gamePath}
-        onChange={onChangeGameFolder}
-      />
+      <FolderTextField error={installationIsBad} label={t('page.settings.gameFolderInfo', { gameType, exe })} value={gamePath} onChange={onChangeGameFolder} />
 
       <Collapse in={installationIsBad}>
         <Alert
@@ -60,7 +56,7 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
           <Typography variant="body2" paragraph>
             {t('page.settings.errors.installationInvalid')}
           </Typography>
-          <Typography variant="body2">{t('page.settings.errors.installationInvalidInfo')}</Typography>
+          <Typography variant="body2">{t('page.settings.errors.installationInvalidInfo', { exe })}</Typography>
         </Alert>
       </Collapse>
     </Paper>

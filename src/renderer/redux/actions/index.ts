@@ -35,6 +35,7 @@ const actions = {
     }
   },
   settingsPage: {
+    installationIsBad: createAction<boolean>(CONSTANTS.APP_SETTINGS_INSTALLATION_IS_BAD),
     detectBadInstallation: {
       start: createAction(CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION),
       success: createAction<boolean>(CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION_SUCCESS),

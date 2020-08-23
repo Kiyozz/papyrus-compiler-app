@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is'
 import appStore from '../../common/appStore'
-import { getExecutable, toOtherSource, toSource } from '../../common/game'
+import { getExecutable, toOtherSource, toSource } from '@common'
 import CompilerScriptException from '../exceptions/CompilerScriptException'
 import InvalidConfigurationException from '../exceptions/InvalidConfigurationException'
 import Mo2InvalidConfigurationException from '../exceptions/mo2/Mo2InvalidConfigurationException'
@@ -85,8 +85,7 @@ export async function compile(scriptName: string): Promise<string> {
       const imports = await mo2.generateImports({
         gameType,
         mo2: {
-          instance: mo2Config.instance,
-          sources: []
+          instance: mo2Config.instance
         }
       })
 
@@ -115,7 +114,7 @@ export async function compile(scriptName: string): Promise<string> {
 
     checkCommandResult(scriptName, result)
 
-    return result.stdout
+    return result.stdout.trim()
   } catch (err) {
     if (err instanceof CompilerScriptException) {
       throw err

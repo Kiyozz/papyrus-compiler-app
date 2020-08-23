@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is'
 import appStore from '../../common/appStore'
-import { toSource, toSlash } from '@common'
+import { toSource, toSlash, getExecutable } from '@common'
 import Log from '../services/Log'
 import * as path from '../services/path'
 import { HandlerInterface } from '../HandlerInterface'
@@ -8,7 +8,15 @@ import { HandlerInterface } from '../HandlerInterface'
 export class BadInstallationHandler implements HandlerInterface {
   private readonly log = new Log('BadInstallationHandler')
 
-  listen() {
+  async listen() {
+    const gamePath = appStore.get('gamePath')
+    const gameType = appStore.get('gameType')
+    const executable = getExecutable(gameType)
+
+    if (!(await path.exists(path.join(gamePath, executable)))) {
+      return false
+    }
+
     const file = 'Actor.psc'
     const isUsingMo2: boolean = appStore.get('mo2.use')
 
@@ -26,7 +34,8 @@ export class BadInstallationHandler implements HandlerInterface {
     this.log.info('Checking in Mo2 folder')
 
     const sourcesFolder = toSource(gameType)
-    const pathToChecks = [path.join(mo2.instance, 'mods', '**', sourcesFolder, file), path.join(mo2.instance, 'overwrite', '**', sourcesFolder, file)]
+    const modsPath = path.join(mo2.instance, mo2.mods)
+    const pathToChecks = [path.join(modsPath, '**', sourcesFolder, file), path.join(mo2.instance, 'overwrite', '**', sourcesFolder, file)]
       .map(folder => toSlash(folder))
       .map(folder => path.normalize(folder))
 

@@ -50,6 +50,11 @@ export default function createSettingsReducer() {
           ...state,
           installationIsBad: !(action.payload ?? true)
         }
+      case CONSTANTS.APP_SETTINGS_INSTALLATION_IS_BAD:
+        return {
+          ...state,
+          installationIsBad: action.payload ?? false
+        }
       default:
         return state
     }

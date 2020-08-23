@@ -13,16 +13,10 @@ export class CompileScriptHandler implements HandlerInterface<string> {
 
     this.log.info('Started compilation for script:', script)
 
-    try {
-      const result = await compile(script)
+    const result = await compile(script)
 
-      this.log.info(`Script ${script} successfully compiled.`, result)
+    this.log.info(`Script ${script} successfully compiled.`, result)
 
-      return result
-    } catch (err) {
-      this.log.error('Catched error', err)
-
-      throw err
-    }
+    return result
   }
 }

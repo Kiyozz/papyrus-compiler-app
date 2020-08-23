@@ -4,7 +4,7 @@ import { GithubReleaseModel, ScriptModel } from '../../models'
 
 class Api {
   compileScript = (script: ScriptModel) => {
-    return ipc.callMain(EVENTS.COMPILE_SCRIPT, { script: script.name })
+    return ipc.callMain(EVENTS.COMPILE_SCRIPT, script.name)
   }
 
   getLatestNotes = async () => {

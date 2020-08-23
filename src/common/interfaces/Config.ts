@@ -5,6 +5,7 @@ interface ConfigMo2 {
   use: boolean
   instance?: string
   output: OutputPath
+  mods: string
 }
 
 export interface Config {
