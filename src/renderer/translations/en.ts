@@ -60,6 +60,9 @@ export default {
       version: 'Version {{version}}'
     }
   },
+  changelog: {
+    newVersion: 'New version available'
+  },
   common: {
     selectFolder: 'Select a folder',
     logs: {

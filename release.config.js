@@ -5,7 +5,12 @@ module.exports = {
     [
       '@semantic-release/release-notes-generator',
       {
-        preset: 'conventionalcommits'
+        preset: 'conventionalcommits',
+        presetConfig: {
+          commitUrlFormat: ' ',
+          compareUrlFormat: ' ',
+          userUrlFormat: ' '
+        }
       }
     ],
     '@semantic-release/changelog',

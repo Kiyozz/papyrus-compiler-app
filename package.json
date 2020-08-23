@@ -15,7 +15,7 @@
     "prepackage:se": "pnpm build:se",
     "package:se": "electron-builder -p=never --config.productName='PCA SE'",
     "lint": "eslint src/* --ext .ts,.tsx",
-    "release": "semantic-release"
+    "release:dry": "semantic-release --dry-run --no-ci"
   },
   "repository": {
     "type": "git",
