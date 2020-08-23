@@ -39,6 +39,8 @@ try {
   ipc.callMain(EVENTS.IN_APP_ERROR, e)
 }
 
-window.onerror = (event: Event | string, source?: string, lineno?: number, colno?: number, error?: Error) => {
-  ipc.callMain(EVENTS.IN_APP_ERROR, new Error(`From ${source}: L${lineno}C${colno}. ERROR: ${error}`))
+if (process.env.NODE_ENV === 'production') {
+  window.onerror = (event: Event | string, source?: string, lineno?: number, colno?: number, error?: Error) => {
+    ipc.callMain(EVENTS.IN_APP_ERROR, new Error(`From ${source}: L${lineno}C${colno}. ERROR: ${error}`))
+  }
 }

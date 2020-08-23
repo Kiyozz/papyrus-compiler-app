@@ -1,15 +1,19 @@
 ::-webkit-scrollbar {
-  width: 5px;
-  background-color: $background-content;
-  // -webkit-border-radius: 100px;
+  width: 7px;
+  height: 7px;
+  background-color: transparent;
 }
 
-::-webkit-scrollbar-thumb:vertical {
-  background: $color-secondary-500;
-  // -webkit-border-radius: 100px;
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+  border-color: transparent;
 }
 
-::-webkit-scrollbar-thumb:vertical:active {
-  background: $color-secondary;
-  // -webkit-border-radius: 100px;
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: $color-scrollbar;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
 }

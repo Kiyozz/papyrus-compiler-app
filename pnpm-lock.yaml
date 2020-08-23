@@ -21,6 +21,7 @@ devDependencies:
   '@semantic-release/git': 9.0.0_semantic-release@17.1.1
   '@semantic-release/release-notes-generator': 9.0.1_semantic-release@17.1.1
   '@types/classnames': 2.2.10
+  '@types/electron-devtools-installer': 2.2.0
   '@types/lodash-es': 4.17.3
   '@types/reach__router': 1.3.5
   '@types/react': 16.9.46
@@ -39,6 +40,7 @@ devDependencies:
   dotenv: 8.2.0
   electron: 9.2.1
   electron-builder: 22.8.0
+  electron-devtools-installer: 3.1.1
   electron-webpack: 2.8.2_webpack@4.44.1
   electron-webpack-ts: 4.0.1_typescript@3.9.7
   eslint: 7.7.0
@@ -1689,6 +1691,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==
+  /@types/electron-devtools-installer/2.2.0:
+    dev: true
+    resolution:
+      integrity: sha512-HJNxpaOXuykCK4rQ6FOMxAA0NLFYsf7FiPFGmab0iQmtVBHSAfxzy3MRFpLTTDDWbV0yD2YsHOQvdu8yCqtCfw==
   /@types/eslint-visitor-keys/1.0.0:
     dev: true
     resolution:
@@ -4042,6 +4048,14 @@ packages:
     dev: true
     resolution:
       integrity: sha512-b5kcM3hmUqn64+RUcHjjr8ZMpHS2WJ5YO0pnG9+P/RTdx46of/JrEjuciHWux6pE+On6ynWhHJF53j/EDJN0PA==
+  /electron-devtools-installer/3.1.1:
+    dependencies:
+      rimraf: 3.0.2
+      semver: 7.3.2
+      unzip-crx-3: 0.2.0
+    dev: true
+    resolution:
+      integrity: sha512-g2D4J6APbpsiIcnLkFMyKZ6bOpEJ0Ltcc2m66F7oKUymyGAt628OWeU9nRZoh1cNmUs/a6Cls2UfOmsZtE496Q==
   /electron-is-dev/1.2.0:
     dev: false
     resolution:
@@ -5688,6 +5702,10 @@ packages:
       node: '>= 4'
     resolution:
       integrity: sha512-BMpfD7PpiETpBl/A6S498BaIJ6Y/ABT93ETbby2fP00v4EbvPBXWEoaR1UBPKs3iR53pJY7EtZk5KACI57i1Uw==
+  /immediate/3.0.6:
+    dev: true
+    resolution:
+      integrity: sha1-nbHb0Pr43m++D13V5Wu2BigN5ps=
   /import-fresh/3.2.1:
     dependencies:
       parent-module: 1.0.1
@@ -6375,6 +6393,15 @@ packages:
       node: '>=4.0'
     resolution:
       integrity: sha512-z1xSldJ6imESSzOjd3NNkieVJKRlKYSOtMG8SFyCj2FIrvSaSuli/WjpBkEzCBoR9bYYYFgqJw61Xhu7Lcgk+w==
+  /jszip/3.5.0:
+    dependencies:
+      lie: 3.3.0
+      pako: 1.0.11
+      readable-stream: 2.3.7
+      set-immediate-shim: 1.0.1
+    dev: true
+    resolution:
+      integrity: sha512-WRtu7TPCmYePR1nazfrtuF216cIVon/3GWOvHS9QR5bIwSbnxtdpma6un3jyGGNhHsKCSzn5Ypk+EkDRvTGiFA==
   /just-curry-it/3.1.0:
     dev: true
     resolution:
@@ -6458,6 +6485,12 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==
+  /lie/3.3.0:
+    dependencies:
+      immediate: 3.0.6
+    dev: true
+    resolution:
+      integrity: sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ==
   /lines-and-columns/1.1.6:
     dev: true
     resolution:
@@ -8684,6 +8717,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==
+  /rimraf/3.0.2:
+    dependencies:
+      glob: 7.1.6
+    dev: true
+    hasBin: true
+    resolution:
+      integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
   /ripemd160/2.0.2:
     dependencies:
       hash-base: 3.1.0
@@ -8962,6 +9002,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-BF+XgtARrppoA93TgrJDkrPYkPc=
+  /set-immediate-shim/1.0.1:
+    dev: true
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-SysbJ+uAip+NzEgaWOXlb1mfP2E=
   /set-value/2.0.1:
     dependencies:
       extend-shallow: 2.0.1
@@ -10054,6 +10100,14 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-g3aHP30jNRef+x5vw6jtDfyKtVk=
+  /unzip-crx-3/0.2.0:
+    dependencies:
+      jszip: 3.5.0
+      mkdirp: 0.5.5
+      yaku: 0.16.7
+    dev: true
+    resolution:
+      integrity: sha512-0+JiUq/z7faJ6oifVB5nSwt589v1KCduqIJupNVDoWSXZtWDmjDGO3RAEOvwJ07w90aoXoP4enKsR7ecMrJtWQ==
   /upath/1.2.0:
     dev: true
     engines:
@@ -10564,6 +10618,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-r9S/ZyXu/Xu9q1tYlpsLIsa3EeLXXk0VwlxqTcFRfg9EhMW+17kbt9G0NrgCmhGb5vT2hyhJZLfDGx+7+5Uj/w==
+  /yaku/0.16.7:
+    dev: true
+    resolution:
+      integrity: sha1-HRlceKqbW/hHnIlblQT9TwhHmE4=
   /yallist/3.1.1:
     dev: true
     resolution:
@@ -10646,6 +10704,7 @@ specifiers:
   '@semantic-release/release-notes-generator': ^9.0.1
   '@sindresorhus/is': ^3.1.2
   '@types/classnames': ^2.2.10
+  '@types/electron-devtools-installer': ^2.2.0
   '@types/lodash-es': ^4.17.3
   '@types/reach__router': ^1.3.5
   '@types/react': ^16.9.46
@@ -10667,6 +10726,7 @@ specifiers:
   electron-better-ipc: ^1.1.1
   electron-builder: ^22.8.0
   electron-default-menu: ^1.0.2
+  electron-devtools-installer: ^3.1.1
   electron-log: ^4.2.4
   electron-store: ^6.0.0
   electron-util: ^0.14.2

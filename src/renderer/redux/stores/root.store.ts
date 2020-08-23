@@ -1,7 +1,6 @@
 import { createHistory, createMemorySource } from '@reach/router'
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import versionMiddleware from '../middlewares/changelog/version.middleware'
 import logMiddleware from '../middlewares/log/log.middleware'
 import changelogReducer, { ChangelogState } from '../reducers/changelog.reducer'
 import compilationLogsReducer, { CompilationLogsState } from '../reducers/compilation-logs.reducer'
@@ -33,7 +32,7 @@ export default function createRootStore(history = createHistory(createMemorySour
       changelog: changelogReducer(PREFIX),
       taskLoading: taskLoadingReducer
     }),
-    compose(applyMiddleware(sagaMiddleware, versionMiddleware(PREFIX), logMiddleware))
+    compose(applyMiddleware(sagaMiddleware, logMiddleware))
   )
 
   sagaMiddleware.run(rootSaga)

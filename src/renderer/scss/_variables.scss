@@ -41,6 +41,10 @@ $color-subtitle: $color-secondary;
 $color-button: $color-primary;
 $color-button-disable: $color-primary;
 
+// Scrollbar
+$color-scrollbar: #6a6e72;
+$color-scrollbar-active: #8d6e63;
+
 // --- Mixins
 
 @mixin font-capriola() {

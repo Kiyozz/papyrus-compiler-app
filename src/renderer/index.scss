@@ -29,6 +29,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 1em;
   color: $color-secondary-500;
+  overflow-y: overlay;
+  overflow-x: hidden;
 }
 
 h1 {

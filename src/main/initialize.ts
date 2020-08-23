@@ -1,4 +1,5 @@
 import { EVENTS } from '@common'
+import { is } from 'electron-util'
 import appStore from '../common/appStore'
 import { BadInstallationHandler } from './event-handlers/BadInstallationHandler'
 import { CompileScriptHandler } from './event-handlers/CompileScriptHandler'
@@ -17,6 +18,15 @@ import { copy, ensureFiles } from './services/path'
 import { registerEvents } from './services/registerEvents'
 
 const log = new Log('Initialize')
+
+function installExtensions() {
+  if (is.development) {
+    const installer = require('electron-devtools-installer')
+    const extensions = [installer.REACT_DEVELOPER_TOOLS, installer.REDUX_DEVTOOLS]
+
+    return Promise.all(extensions.map(name => installer.default(name))).catch(e => log.log(e))
+  }
+}
 
 async function backupLatestLogFile() {
   const logFile = log.transports.file.getFile().path
@@ -40,6 +50,7 @@ async function backupLatestLogFile() {
 
 export async function initialize() {
   await backupLatestLogFile()
+  await installExtensions()
 
   const openLogFileHandler = new OpenLogFileHandler()
   const events = new Map<string, HandlerInterface>([
