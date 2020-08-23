@@ -14,7 +14,7 @@ import { OpenLogFileHandler } from './event-handlers/OpenLogFileHandler'
 import { HandlerInterface } from './HandlerInterface'
 import { registerMenus } from './registerMenus'
 import Log from './services/Log'
-import { copy, ensureFiles } from './services/path'
+import { move, ensureFiles } from './services/path'
 import { registerEvents } from './services/registerEvents'
 
 const log = new Log('Initialize')
@@ -43,7 +43,8 @@ async function backupLatestLogFile() {
 
   const logFilename = logFile.replace('.log', '')
 
-  await copy(logFile, `${logFilename}.1.log`)
+  await move(logFile, `${logFilename}.1.log`, { overwrite: true })
+  await ensureFiles([logFile])
 
   log.info(`file ${logFilename}.1.log created`)
 }
@@ -68,8 +69,8 @@ export async function initialize() {
   log.log(appStore.path)
 
   registerMenus({
-    openLogFile: () => {
-      openLogFileHandler.listen()
+    openLogFile: (file: string) => {
+      openLogFileHandler.listen(file)
     }
   })
 

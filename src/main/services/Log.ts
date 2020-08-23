@@ -24,4 +24,12 @@ export default class Log {
   }
 
   catchErrors = log.catchErrors
+
+  get file() {
+    return log.transports.file.getFile()
+  }
+
+  get previousSessionFilePath() {
+    return this.file.path.replace('.log', '.1.log')
+  }
 }

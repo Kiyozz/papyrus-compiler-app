@@ -14,7 +14,7 @@ export function normalize(value: string): string {
 }
 
 export const join = path.join
-export const copy = fs.copy
+export const move = fs.move
 
 export const readFile = fs.readFile
 

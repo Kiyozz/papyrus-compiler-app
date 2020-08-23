@@ -1,18 +1,13 @@
 import { shell } from 'electron'
-import Log from '../services/Log'
 import { HandlerInterface } from '../HandlerInterface'
 
 export class OpenLogFileHandler implements HandlerInterface {
-  private readonly log = new Log('LogHandler')
-
-  async listen(): Promise<void> {
-    const logFile = this.log.transports.file.getFile()
-
+  async listen(file: string): Promise<void> {
     try {
-      await shell.openExternal(logFile.path)
+      await shell.openExternal(file)
     } catch (e) {
       if (e.message.includes('Invalid URL')) {
-        await shell.openExternal(`file://${logFile.path}`)
+        await shell.openExternal(`file://${file}`)
       } else {
         throw e
       }
