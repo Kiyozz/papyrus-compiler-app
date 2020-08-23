@@ -12,4 +12,6 @@
     * Open the log file of the previous session with "Help > Previous session logs"
     * The button to open log file has been removed from UI in favor of app menu button
     * List of scripts from MO2 in settings removed
-    * Path of the MO2 "mods" folder can be set in preferences in the json file
+    * Path of the MO2 "mods" folder can be set in preferences in the json file relative to the mo2 instance
+    * Output default can be set in the json file relative to the gamePath
+    * Output mo2 can be set in the json file relative to the mo2 instance
