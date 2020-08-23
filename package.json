@@ -11,9 +11,9 @@
     "build:le": "cross-env APP_VERSION=LE electron-webpack",
     "build:se": "cross-env APP_VERSION=SE electron-webpack",
     "prepackage:le": "pnpm build:le",
-    "package:le": "electron-builder -p=never --config.productName='PCA LE'",
+    "package:le": "electron-builder -p=never --config.productName=\"PCA LE\"",
     "prepackage:se": "pnpm build:se",
-    "package:se": "electron-builder -p=never --config.productName='PCA SE'",
+    "package:se": "electron-builder -p=never --config.productName=\"PCA SE\"",
     "lint": "eslint src --ext .ts,.tsx",
     "release:dry": "semantic-release --dry-run --no-ci"
   },
@@ -97,6 +97,7 @@
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
     "redux-saga": "^1.1.3",
+    "rimraf": "^3.0.2",
     "sass": "^1.26.10",
     "sass-loader": "^9.0.3",
     "semantic-release": "^17.1.1",
@@ -122,6 +123,20 @@
     "copyright": "Copyright © WushuLate",
     "extraMetadata": {
       "name": "PCA"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "7z"
+      ]
+    },
+    "mac": {
+      "target": [
+        "zip"
+      ]
+    },
+    "directories": {
+      "buildResources": "resources"
     }
   },
   "husky": {

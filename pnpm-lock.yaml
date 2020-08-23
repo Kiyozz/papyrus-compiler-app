@@ -63,6 +63,7 @@ devDependencies:
   redux: 4.0.5
   redux-actions: 2.6.5
   redux-saga: 1.1.3
+  rimraf: 3.0.2
   sass: 1.26.10
   sass-loader: 9.0.3_sass@1.26.10+webpack@4.44.1
   semantic-release: 17.1.1_semantic-release@17.1.1
@@ -10770,6 +10771,7 @@ specifiers:
   redux: ^4.0.5
   redux-actions: ^2.6.5
   redux-saga: ^1.1.3
+  rimraf: ^3.0.2
   sass: ^1.26.10
   sass-loader: ^9.0.3
   semantic-release: ^17.1.1
