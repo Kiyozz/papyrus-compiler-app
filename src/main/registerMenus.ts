@@ -15,34 +15,40 @@ interface RegisterMenusCallbacks {
 const log = new Log('RegisterMenus')
 
 export async function registerMenus({ openLogFile }: RegisterMenusCallbacks) {
+  const nexusPath = process.env.APP_NEXUS_PATH ?? 'https://github.com/Kiyozz/papyrus-compiler-app'
+
   const menu = appMenu([
     {
-      label: 'Configuration',
+      label: 'Preferences...',
       submenu: [
         {
-          label: 'Reset configuration',
+          label: 'Configuration',
+          click() {
+            appStore.openInEditor()
+          },
+          accelerator: 'CommandOrControl+,'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Reset',
           click() {
             appStore.reset()
             ipc.callFocusedRenderer(EVENTS.CONFIG_RESET)
           }
-        },
-        {
-          label: 'Open configuration',
-          click() {
-            appStore.openInEditor()
-          }
         }
       ]
-    }
+    },
+    openUrlMenuItem({
+      label: 'Check for updates',
+      url: nexusPath
+    })
   ])
 
   const helpMenu: MenuItemConstructorOptions = {
     label: 'Help',
     submenu: [
-      openUrlMenuItem({
-        label: 'Show in Nexusmods',
-        url: process.env.APP_NEXUS_PATH ?? 'https://github.com/Kiyozz/papyrus-compiler-app'
-      }),
       openUrlMenuItem({
         label: 'Report bug',
         url: 'https://github.com/Kiyozz/papyrus-compiler-app/issues/new'
