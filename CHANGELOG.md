@@ -1,3 +1,7 @@
+### 4.1.1 (2020-08-24)
+
+    * Using the app through MO2 VFS re-works
+
 ## 4.1.0 (2020-08-23)
 
 ### Features

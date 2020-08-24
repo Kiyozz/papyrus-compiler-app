@@ -1,10 +1,10 @@
 import { app, BrowserWindow } from 'electron'
 import { debugInfo, is } from 'electron-util'
-import path from 'path'
+import * as path from 'path'
 import { format } from 'url'
 import { initialize } from './initialize'
 import Log from './services/Log'
-import loadingHtmlFile from './loading.html'
+// import loadingHtmlFile from './loading.html'
 import { createReportDialog } from './services/reportDialog'
 
 const log = new Log('Main')
@@ -13,11 +13,11 @@ let win: BrowserWindow | null = null
 function createWindow() {
   log.log(debugInfo())
 
-  const loading = new BrowserWindow({ width: 300, backgroundColor: '#303030', height: 200, show: false, frame: false })
+  // const loading = new BrowserWindow({ width: 300, backgroundColor: '#303030', height: 200, show: false, frame: false })
 
-  loading.on('ready-to-show', () => {
-    loading.show()
-  })
+  // loading.on('ready-to-show', () => {
+  //   loading.show()
+  // })
 
   win = new BrowserWindow({
     width: 800,
@@ -31,13 +31,13 @@ function createWindow() {
 
   const isDev = is.development
 
-  loading.loadURL(
-    format({
-      pathname: path.resolve(__dirname, loadingHtmlFile),
-      protocol: 'file',
-      slashes: true
-    })
-  )
+  // loading.loadURL(
+  //   format({
+  //     pathname: path.resolve(__dirname, loadingHtmlFile),
+  //     protocol: 'file',
+  //     slashes: true
+  //   })
+  // )
 
   setTimeout(() => {
     if (isDev) {
@@ -66,8 +66,8 @@ function createWindow() {
     })
 
     win!.on('ready-to-show', () => {
-      loading.hide()
-      loading.close()
+      // loading.hide()
+      // loading.close()
 
       setTimeout(() => {
         win!.show()
