@@ -36,7 +36,7 @@ jobs:
           run_install: |
             - args: [--shamefully-hoist]
       - name: Build LE
-        run: pnpm build:le
+        run: pnpm build:le --no-progress
       - name: Upload LE
         uses: actions/upload-artifact@v2
         with:
@@ -45,7 +45,7 @@ jobs:
           # A file, directory or wildcard pattern that describes what to upload
           path: dist
       - name: Build SE
-        run: pnpm build:se
+        run: pnpm build:se --no-progress
       - name: Upload SE
         uses: actions/upload-artifact@v2
         with:
@@ -72,6 +72,13 @@ jobs:
         uses: actions/setup-node@v1.4.4
         with:
           node-version: 15.0.1
+
+      - name: Dependencies
+        uses: pnpm/action-setup@v1.2.1
+        with:
+          version: 5.10.2
+          run_install: |
+            - args: [--shamefully-hoist]
 
       - name: Download build LE
         uses: actions/download-artifact@v2
