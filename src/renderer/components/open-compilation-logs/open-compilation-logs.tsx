@@ -20,7 +20,7 @@ import classes from './open-compilation-logs.module.scss'
 
 const LogsListItem: React.FC<{ script: ScriptModel; logs: string }> = ({ script, logs }) => (
   <div>
-    <Typography variant="h6" component="h3">
+    <Typography className={classes.logTitle} variant="h6" component="h3">
       {script.name}
     </Typography>
     <code className={classes.logsContainer}>
