@@ -2,13 +2,15 @@ import ipc from './ipc-renderer'
 import { EVENTS } from '@common'
 import { GithubReleaseModel, ScriptModel } from '../../models'
 
-class Api {
+const GITHUB_REPOSITORY = 'https://api.github.com/repos/Kiyozz/papyrus-compiler-app'
+
+class IpcApi {
   compileScript = (script: ScriptModel) => {
     return ipc.callMain(EVENTS.COMPILE_SCRIPT, script.name)
   }
 
   getLatestNotes = async () => {
-    const response = await fetch('https://api.github.com/repos/Kiyozz/papyrus-compiler-app/releases')
+    const response = await fetch(`${GITHUB_REPOSITORY}/releases`)
 
     return (await response.json()) as Promise<GithubReleaseModel[]>
   }
@@ -36,4 +38,4 @@ class Api {
   }
 }
 
-export default Api
+export default IpcApi

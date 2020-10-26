@@ -53,7 +53,7 @@ export class BadInstallationHandler implements HandlerInterface {
     const gameType = appStore.get('gameType')
     this.log.info('Checking in Skyrim Data folder')
 
-    const gameScriptsFolder = path.join(gamePath, 'data', toSource(gameType), file)
+    const gameScriptsFolder = path.join(gamePath, 'Data', toSource(gameType), file)
 
     this.log.info('Checking that', path.normalize(gameScriptsFolder), 'exists')
 

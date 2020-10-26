@@ -1,6 +1,6 @@
 import { Games, GameType } from '@common'
 import RefreshIcon from '@material-ui/icons/Refresh'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Page from '../../components/page/page'
@@ -12,6 +12,7 @@ import SettingsContextProvider from './settings-context'
 import SettingsGame from './settings-game'
 import SettingsMo2 from './settings-mo2'
 import classes from './settings-page.module.scss'
+import { debounce } from 'lodash-es'
 
 const SettingsPage: React.FC = () => {
   const { t } = useTranslation()
@@ -34,6 +35,8 @@ const SettingsPage: React.FC = () => {
   const detectMo2SourcesFolder = useAction(actions.settingsPage.mo2.detectSources.start)
   const setInstallationIsBad = useAction(actions.settingsPage.installationIsBad)
 
+  const debouncedDetectBadInstallation = useMemo(() => debounce(detectBadInstallation, 500), [detectBadInstallation])
+
   const onClickRadio = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInstallationIsBad(false)
@@ -53,8 +56,8 @@ const SettingsPage: React.FC = () => {
       return
     }
 
-    detectBadInstallation()
-  }, [detectBadInstallation, gamePath, gameType, useMo2, mo2Instance])
+    debouncedDetectBadInstallation()
+  }, [debouncedDetectBadInstallation, gamePath, gameType, useMo2, mo2Instance])
 
   useEffect(() => {
     if (useMo2 && !!mo2Instance && !!gameType) {
