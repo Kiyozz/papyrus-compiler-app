@@ -24,7 +24,7 @@ const CompilationPageActions: React.FC<Props> = ({ hasScripts, onClearScripts })
 
   return (
     <Fade in={compilationScripts.length >= 1 && !buttonsDisable(compilationScripts, hoveringScript)}>
-      <Fab className={classes.fabsActions} onClick={onClickEmpty} variant="extended" color="secondary" disabled={!hasScripts}>
+      <Fab className={classes.fabsActions} onClick={onClickEmpty} variant="extended" disabled={!hasScripts}>
         <ClearIcon className={classes.fabsActionsIcon} /> {t('page.compilation.actions.clearList')}
       </Fab>
     </Fade>

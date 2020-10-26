@@ -26,7 +26,7 @@ const PlayButton: React.FC<Props> = ({ onClick }) => {
 
   return (
     <Fade in={!buttonsDisable(compilationScripts, hoveringScript)}>
-      <Fab variant="extended" color="primary" onClick={onClick} disabled={compilationScripts.length === 0 || isCompilationRunning}>
+      <Fab variant="extended" color="secondary" onClick={onClick} disabled={compilationScripts.length === 0 || isCompilationRunning}>
         <Icon className={classes.fabIcon} /> {t('page.compilation.actions.start')}
       </Fab>
     </Fade>
