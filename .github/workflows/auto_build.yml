@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Automatic build
+name: CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -11,11 +11,6 @@ on:
       - '**.ts'
       - '**.js'
       - '**.tsx'
-      - '.env**'
-      - '.github/**'
-  pull_request:
-    branches: [master]
-  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -27,37 +22,25 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: PNPM Store
+        uses: actions/cache@v2
         with:
           path: ~/.pnpm-store
           key: node_modules
 
-      # Runs a single command using the runners shell
-      - name: Setup Node.js
-        uses: actions/setup-node@v1.4.3
+      - name: Setup Node
+        uses: actions/setup-node@v1.4.4
         with:
-          node-version: 14.8.0
-      - uses: pnpm/action-setup@v1.2.0
+          node-version: 15.0.1
+      - name: Dependencies
+        uses: pnpm/action-setup@v1.2.1
         with:
-          version: 5.5.2
+          version: 5.10.2
           run_install: |
             - args: [--shamefully-hoist]
-      - name: Build LE
-        run: pnpm build:le
-      - name: Upload LE
-        uses: actions/upload-artifact@v2.1.4
-        with:
-          # Artifact name
-          name: build-le
-          # A file, directory or wildcard pattern that describes what to upload
-          path: dist
-      - name: Build SE
-        run: pnpm build:se
-      - name: Upload SE
-        uses: actions/upload-artifact@v2.1.4
-        with:
-          # Artifact name
-          name: build-se
-          # A file, directory or wildcard pattern that describes what to upload
-          path: dist
+      - name: Lint
+        run: pnpm lint
+      - name: Build
+        run: pnpm build

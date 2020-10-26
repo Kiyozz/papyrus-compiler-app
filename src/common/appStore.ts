@@ -103,8 +103,6 @@ const appStore = new Store<Config>({
   },*/
   migrations: {
     '4.1.0': (store: Store) => {
-      console.log('toto')
-
       store.set('mo2.mods', 'mods')
     }
   }

@@ -10,12 +10,9 @@
     "prebuild:se": "rimraf dist",
     "build:le": "cross-env APP_VERSION=LE electron-webpack",
     "build:se": "cross-env APP_VERSION=SE electron-webpack",
-    "prepackage:le": "pnpm build:le",
     "package:le": "electron-builder -p=never --config.productName=\"PCA LE\"",
-    "prepackage:se": "pnpm build:se",
     "package:se": "electron-builder -p=never --config.productName=\"PCA SE\"",
-    "lint": "eslint src --ext .ts,.tsx",
-    "release:dry": "semantic-release --dry-run --no-ci"
+    "lint": "eslint src --ext .ts,.tsx"
   },
   "repository": {
     "type": "git",
@@ -45,8 +42,6 @@
     "type-fest": "^0.16.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^9.1.2",
-    "@commitlint/config-conventional": "^9.1.2",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
@@ -83,7 +78,6 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "file-loader": "^6.0.0",
-    "husky": "^4.2.5",
     "i18next": "^19.7.0",
     "i18next-browser-languagedetector": "^6.0.1",
     "lodash-es": "^4.17.15",
@@ -135,14 +129,14 @@
         "zip"
       ]
     },
+    "linux": {
+      "target": [
+        "deb",
+        "tar.gz"
+      ]
+    },
     "directories": {
       "buildResources": "resources"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pnpm lint",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   }
 }
