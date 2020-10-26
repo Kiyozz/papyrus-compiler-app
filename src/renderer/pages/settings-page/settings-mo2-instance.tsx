@@ -18,7 +18,7 @@ const SettingsMo2Instance: React.FC<Props> = ({ onChangeMo2Instance }) => {
 
   return (
     <Collapse in={mo2.use}>
-      <FolderTextField value={mo2.instance ?? ''} label={t('page.settings.mo2.instance')} onChange={onChangeMo2Instance} />
+      <FolderTextField defaultValue={mo2.instance ?? ''} label={t('page.settings.mo2.instance')} onChange={onChangeMo2Instance} />
     </Collapse>
   )
 }

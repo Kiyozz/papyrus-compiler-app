@@ -1,5 +1,5 @@
-import Api from './api'
+import IpcApi from './ipc-api'
 
 export default function apiFactory() {
-  return new Api()
+  return new IpcApi()
 }

@@ -1,4 +1,5 @@
 import { toSlash } from '@common'
+import { is } from 'electron-util'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
 import path from 'path'
@@ -10,6 +11,10 @@ import { pluralize } from './pluralize'
 const log = new Log('PathHelper')
 
 export function normalize(value: string): string {
+  if (is.linux) {
+    return value
+  }
+
   return value[0] + value.substring(1).toLowerCase()
 }
 

@@ -41,7 +41,12 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
           <FormControlLabel value={Games.SE} control={<Radio />} label={Games.SE} />
         </RadioGroup>
       </FormControl>
-      <FolderTextField error={installationIsBad} label={t('page.settings.gameFolderInfo', { gameType, exe })} value={gamePath} onChange={onChangeGameFolder} />
+      <FolderTextField
+        error={installationIsBad}
+        label={t('page.settings.gameFolderInfo', { gameType, exe })}
+        defaultValue={gamePath}
+        onChange={onChangeGameFolder}
+      />
 
       <Collapse in={installationIsBad}>
         <Alert

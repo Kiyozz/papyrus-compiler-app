@@ -43,4 +43,4 @@ jobs:
       - name: Lint
         run: pnpm lint
       - name: Build
-        run: pnpm build -- --no-progress
+        run: pnpm build -- -- --no-progress
