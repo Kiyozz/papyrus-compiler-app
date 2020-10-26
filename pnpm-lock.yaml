@@ -11,8 +11,6 @@ dependencies:
   source-map-support: 0.5.19
   type-fest: 0.16.0
 devDependencies:
-  '@commitlint/cli': 9.1.2
-  '@commitlint/config-conventional': 9.1.2
   '@material-ui/core': 4.11.0_d426dd326b3971af37f48226b01da079
   '@material-ui/icons': 4.9.1_1b20ce52c450f50469ef79c5110c413c
   '@material-ui/lab': 4.0.0-alpha.56_1b20ce52c450f50469ef79c5110c413c
@@ -49,7 +47,6 @@ devDependencies:
   eslint-plugin-react: 7.20.6_eslint@7.7.0
   eslint-plugin-react-hooks: 4.1.0_eslint@7.7.0
   file-loader: 6.0.0_webpack@4.44.1
-  husky: 4.2.5
   i18next: 19.7.0
   i18next-browser-languagedetector: 6.0.1
   lodash-es: 4.17.15
@@ -66,15 +63,15 @@ devDependencies:
   rimraf: 3.0.2
   sass: 1.26.10
   sass-loader: 9.0.3_sass@1.26.10+webpack@4.44.1
-  semantic-release: 17.1.1_semantic-release@17.1.1
+  semantic-release: 17.1.1
   style-loader: 1.2.1_webpack@4.44.1
   ts-loader: 8.0.2_typescript@3.9.7
   tsconfig-paths-webpack-plugin: 3.3.0
   typeface-roboto: 0.0.75
   typeface-roboto-mono: 0.0.75
   typescript: 3.9.7
-  webpack: 4.44.1_webpack@4.44.1
-lockfileVersion: 5.1
+  webpack: 4.44.1
+lockfileVersion: 5.2
 packages:
   /7zip-bin/5.0.3:
     dev: true
@@ -1028,159 +1025,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-O53yME4ZZI0jO1EVGtF1ePGl0LHirG4P1ibcD80XyzZcKhcMFeCXmh4Xb1ifGBIV233Qg12x4rBfQgA+tmOukA==
-  /@commitlint/cli/9.1.2:
-    dependencies:
-      '@babel/runtime': 7.11.2
-      '@commitlint/format': 9.1.2
-      '@commitlint/lint': 9.1.2
-      '@commitlint/load': 9.1.2
-      '@commitlint/read': 9.1.2
-      chalk: 4.1.0
-      core-js: 3.6.5
-      get-stdin: 7.0.0
-      lodash: 4.17.20
-      resolve-from: 5.0.0
-      resolve-global: 1.0.0
-      yargs: 15.4.1
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    hasBin: true
-    resolution:
-      integrity: sha512-ctRrrPqjZ8r4Vc4FXpPaScEpkPwfvB0Us3NK2SD2AnLwXGMxOLFTabDmNySU1Xc40ud2CmJsaV8lpavvzs8ZZA==
-  /@commitlint/config-conventional/9.1.2:
-    dependencies:
-      conventional-changelog-conventionalcommits: 4.3.0
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-2zfnsrBJuCNJEKMEmltYlCUEoQNE4anvEBI/SYEuiB1JYXYaELijobDBpqhUVjh5NEpprNTY16oMZat6ewnxOg==
-  /@commitlint/ensure/9.1.2:
-    dependencies:
-      '@commitlint/types': 9.1.2
-      lodash: 4.17.20
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-hwQICwpNSTsZgj/1/SdPvYAzhwjwgCJI4vLbT879+Jc+AJ6sj2bUDGw/F89vzgKz1VnaMm4D65bNhoWhG3pdhQ==
-  /@commitlint/execute-rule/9.1.2:
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-NGbeo0KCVYo1yj9vVPFHv6RGFpIF6wcQxpFYUKGIzZVV9Vz1WyiKS689JXa99Dt1aN0cZlEJJLnTNDIgYls0Vg==
-  /@commitlint/format/9.1.2:
-    dependencies:
-      '@commitlint/types': 9.1.2
-      chalk: 4.1.0
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-+ZWTOSGEU6dbn3NRh1q7sY5K5QLiSs7E2uSzuYnWHXcQk8nlTvnE0ibwMCQxdKLaOTZiN57fHM/7M9Re2gsRuw==
-  /@commitlint/is-ignored/9.1.2:
-    dependencies:
-      '@commitlint/types': 9.1.2
-      semver: 7.3.2
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-423W/+Ro+Cc8cg81+t9gds1EscMZNjnGT31nKDvxVxJxXiXQsYYoFEQbU+nfUrRGQsUikEgEJ3ppVGr1linvcQ==
-  /@commitlint/lint/9.1.2:
-    dependencies:
-      '@commitlint/is-ignored': 9.1.2
-      '@commitlint/parse': 9.1.2
-      '@commitlint/rules': 9.1.2
-      '@commitlint/types': 9.1.2
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-XvggqHZ4XSTKOgzJhCzz52cWRRO57QQnEviwGj0qnD4jdwC+8h2u9LNZwoa2tGAuaNM3nSm//wNK7FRZhgiiFA==
-  /@commitlint/load/9.1.2:
-    dependencies:
-      '@commitlint/execute-rule': 9.1.2
-      '@commitlint/resolve-extends': 9.1.2
-      '@commitlint/types': 9.1.2
-      chalk: 4.1.0
-      cosmiconfig: 6.0.0
-      lodash: 4.17.20
-      resolve-from: 5.0.0
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-FPL82xBuF7J3EJ57kLVoligQP4BFRwrknooP+vNT787AXmQ/Fddc/iYYwHwy67pNkk5N++/51UyDl/CqiHb6nA==
-  /@commitlint/message/9.1.2:
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-ndlx5z7bPVLG347oYJUHuQ41eTcsw+aUYT1ZwQyci0Duy2atpuoeeSw9SuM1PjufzRCpb6ExzFEgGzcCRKAJsg==
-  /@commitlint/parse/9.1.2:
-    dependencies:
-      conventional-changelog-angular: 5.0.11
-      conventional-commits-parser: 3.1.0
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-d+/VYbkotctW+lzDpus/R6xTerOqFQkW1myH+3PwnqYSE6JU/uHT4MlZNGJBv8pX9SPlR66t6X9puFobqtezEw==
-  /@commitlint/read/9.1.2:
-    dependencies:
-      '@commitlint/top-level': 9.1.2
-      fs-extra: 8.1.0
-      git-raw-commits: 2.0.7
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-C2sNBQOqeQXMxpWtRnXYKYB3D9yuybPtQNY/P67A6o8XH/UMHkFaUTyIx1KRgu0IG0yTTItRt46FGnsMWLotvA==
-  /@commitlint/resolve-extends/9.1.2:
-    dependencies:
-      import-fresh: 3.2.1
-      lodash: 4.17.20
-      resolve-from: 5.0.0
-      resolve-global: 1.0.0
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-HcoL+qFGmWEu9VM4fY0HI+VzF4yHcg3x+9Hx6pYFZ+r2wLbnKs964y0v68oyMO/mS/46MVoLNXZGR8U3adpadg==
-  /@commitlint/rules/9.1.2:
-    dependencies:
-      '@commitlint/ensure': 9.1.2
-      '@commitlint/message': 9.1.2
-      '@commitlint/to-lines': 9.1.2
-      '@commitlint/types': 9.1.2
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-1vecFuzqVqjiT57ocXq1bL8V6GEF1NZs3BR0dQzObaqHftImIxBVII299gasckTkcuxNc8M+7XxZyKxUthukpQ==
-  /@commitlint/to-lines/9.1.2:
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-o4zWcMf9EnzA3MOqx01780SgrKq5hqDJmUBPk30g6an0XcDuDy3OSZHHTJFdzsg4V9FjC4OY44sFeK7GN7NaxQ==
-  /@commitlint/top-level/9.1.2:
-    dependencies:
-      find-up: 4.1.0
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-KMPP5xVePcz3B1dKqcZdU4FZBVOkT+bG3ip4RQX2TeCJoomMkTjd0utALs7rpTGLID6BXbwwXepZCZJREjR/Bw==
-  /@commitlint/types/9.1.2:
-    dev: true
-    engines:
-      node: '>=v8.17.0'
-    resolution:
-      integrity: sha512-r3fwVbVH+M8W0qYlBBZFsUwKe6NT5qvz+EmU7sr8VeN1cQ63z+3cfXyTo7WGGEMEgKiT0jboNAK3b1FZp8k9LQ==
   /@develar/schema-utils/2.6.5:
     dependencies:
       ajv: 6.12.4
@@ -1535,7 +1379,7 @@ packages:
       aggregate-error: 3.1.0
       fs-extra: 9.0.1
       lodash: 4.17.20
-      semantic-release: 17.1.1_semantic-release@17.1.1
+      semantic-release: 17.1.1
     dev: true
     engines:
       node: '>=10.18'
@@ -1552,7 +1396,7 @@ packages:
       import-from: 3.0.0
       lodash: 4.17.20
       micromatch: 4.0.2
-      semantic-release: 17.1.1_semantic-release@17.1.1
+      semantic-release: 17.1.1
     dev: true
     engines:
       node: '>=10.18'
@@ -1574,7 +1418,7 @@ packages:
       lodash: 4.17.20
       micromatch: 4.0.2
       p-reduce: 2.1.0
-      semantic-release: 17.1.1_semantic-release@17.1.1
+      semantic-release: 17.1.1
     dev: true
     engines:
       node: '>=10.18'
@@ -1599,7 +1443,7 @@ packages:
       mime: 2.4.6
       p-filter: 2.1.0
       p-retry: 4.2.0
-      semantic-release: 17.1.1_semantic-release@17.1.1
+      semantic-release: 17.1.1
       url-join: 4.0.1
     dev: true
     engines:
@@ -1621,7 +1465,7 @@ packages:
       rc: 1.2.8
       read-pkg: 5.2.0
       registry-auth-token: 4.2.0
-      semantic-release: 17.1.1_semantic-release@17.1.1
+      semantic-release: 17.1.1
       semver: 7.3.2
       tempy: 0.5.0
     dev: true
@@ -1643,7 +1487,7 @@ packages:
       into-stream: 5.1.1
       lodash: 4.17.20
       read-pkg-up: 7.0.1
-      semantic-release: 17.1.1_semantic-release@17.1.1
+      semantic-release: 17.1.1
     dev: true
     engines:
       node: '>=10.18'
@@ -2484,7 +2328,7 @@ packages:
       mkdirp: 0.5.5
       pify: 4.0.1
       schema-utils: 2.7.0
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
     dev: true
     engines:
       node: '>= 6.9'
@@ -3162,13 +3006,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=
-  /compare-func/1.3.4:
-    dependencies:
-      array-ify: 1.0.0
-      dot-prop: 3.0.0
-    dev: true
-    resolution:
-      integrity: sha512-sq2sWtrqKPkEXAC8tEJA1+BqAH9GbFkGBtUOqrUX57VSfwp8xyktctk+uLoRy5eccTdxzDcVIztlYDpKs3Jv1Q==
   /compare-func/2.0.0:
     dependencies:
       array-ify: 1.0.0
@@ -3296,16 +3133,6 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-nSLypht/1yEflhuTogC03i7DX7sOrXGsRn14g131Potqi6cbGbGEE9PSDEHKldabB6N76HiSyw9Ph+kLmC04Qw==
-  /conventional-changelog-conventionalcommits/4.3.0:
-    dependencies:
-      compare-func: 1.3.4
-      lodash: 4.17.20
-      q: 1.5.1
-    dev: true
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-oYHydvZKU+bS8LnGqTMlNrrd7769EsuEHKy4fh1oMdvvDi7fem8U+nvfresJ1IDB8K00Mn4LpiA/lR+7Gs6rgg==
   /conventional-changelog-conventionalcommits/4.4.0:
     dependencies:
       compare-func: 2.0.0
@@ -3400,6 +3227,7 @@ packages:
       integrity: sha512-7ItTKOhOZbznhXAQ2g/slGg1PJV5zDO/WdkTwi7UEOJmkvsE32PWvx6mKtDjiMpjnR2CNf6BAD6sSxIlv7ptng==
   /core-js/3.6.5:
     dev: true
+    optional: true
     requiresBuild: true
     resolution:
       integrity: sha512-vZVEEwZoIsI+vPEuoF9Iqf5H7/M3eeQqWlQnYa8FSKKePuYTf5MWnxb5SDAzCa60b3JBRS5g9b+Dq7b1y/RCrA==
@@ -3547,7 +3375,7 @@ packages:
       postcss-value-parser: 4.1.0
       schema-utils: 2.7.0
       semver: 6.3.0
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
     dev: true
     engines:
       node: '>= 8.9.0'
@@ -3570,7 +3398,7 @@ packages:
       postcss-value-parser: 4.1.0
       schema-utils: 2.7.0
       semver: 7.3.2
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
     dev: true
     engines:
       node: '>= 10.13.0'
@@ -3617,12 +3445,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
-  /dargs/7.0.0:
-    dev: true
-    engines:
-      node: '>=8'
-    resolution:
-      integrity: sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==
   /date-fns/2.15.0:
     dev: true
     engines:
@@ -3952,14 +3774,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-7hwEmg6RiSQfm/GwPL4AAWXKy3YNNZA3oFv2Pdiey0mwkRCPZ9x6SZbkLcn8Ma5PYeVokzoD4Twv2n7LKp5WeA==
-  /dot-prop/3.0.0:
-    dependencies:
-      is-obj: 1.0.1
-    dev: true
-    engines:
-      node: '>=0.10.0'
-    resolution:
-      integrity: sha1-G3CK8JSknJoOfbyteQq6U52sEXc=
   /dot-prop/5.2.0:
     dependencies:
       is-obj: 2.0.0
@@ -4146,7 +3960,7 @@ packages:
       style-loader: 1.2.1_webpack@4.44.1
       terser-webpack-plugin: 2.3.8_webpack@4.44.1
       url-loader: 4.1.0_file-loader@6.0.0+webpack@4.44.1
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
       webpack-cli: 3.3.12_webpack@4.44.1
       webpack-dev-server: 3.11.0_7d74d9f6ceb0e540c1e44d9709220c58
       webpack-merge: 4.2.2
@@ -4756,7 +4570,7 @@ packages:
     dependencies:
       loader-utils: 2.0.0
       schema-utils: 2.7.0
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
     dev: true
     engines:
       node: '>= 10.13.0'
@@ -5043,12 +4857,6 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-jp4tHawyV7+fkkSKyvjuLZswblUtz+SQKzSWnBbii16BuZksJlU1wuBYXY75r+duh/llF1ur6oNwi+2ZzjKZ7g==
-  /get-stdin/7.0.0:
-    dev: true
-    engines:
-      node: '>=8'
-    resolution:
-      integrity: sha512-zRKcywvrXlXsA0v0i9Io4KDRaAw7+a1ZpjRwl9Wox8PFlVCCHra7E9c4kqXCoCM9nR5tBkaTTZRBoCm60bFqTQ==
   /get-stream/4.1.0:
     dependencies:
       pump: 3.0.0
@@ -5082,19 +4890,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-LmpMGxP8AAKCB7p5WnrDFme5/Uo=
-  /git-raw-commits/2.0.7:
-    dependencies:
-      dargs: 7.0.0
-      lodash.template: 4.5.0
-      meow: 7.1.0
-      split2: 2.2.0
-      through2: 3.0.2
-    dev: true
-    engines:
-      node: '>=10'
-    hasBin: true
-    resolution:
-      integrity: sha512-SkwrTqrDxw8y0G1uGJ9Zw13F7qu3LF8V4BifyDeiJCxSnjRGZD9SaoMiMqUvvXMXh6S3sOQ1DsBN7L2fMUZW/g==
   /glob-parent/3.1.0:
     dependencies:
       is-glob: 3.1.0
@@ -5135,14 +4930,6 @@ packages:
     optional: true
     resolution:
       integrity: sha512-caAljRMS/qcDo69X9BfkgrihGUgGx44Fb4QQToNQjsiWh+YlQ66uqYVAdA8Olqit+5Ng0nkz09je3ZzANMZcjg==
-  /global-dirs/0.1.1:
-    dependencies:
-      ini: 1.3.5
-    dev: true
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha1-sxnA3UYH81PzvpzKTHL8FIxJ9EU=
   /global-dirs/2.0.1:
     dependencies:
       ini: 1.3.5
@@ -5448,7 +5235,7 @@ packages:
       htmlparser2: 4.1.0
       loader-utils: 2.0.0
       schema-utils: 2.7.0
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
     dev: true
     engines:
       node: '>= 10.13.0'
@@ -5500,7 +5287,7 @@ packages:
       pretty-error: 2.1.1
       tapable: 1.1.3
       util.promisify: 1.0.0
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
     dev: true
     engines:
       node: '>=6.9'
@@ -5625,25 +5412,6 @@ packages:
       node: '>=8.12.0'
     resolution:
       integrity: sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
-  /husky/4.2.5:
-    dependencies:
-      chalk: 4.1.0
-      ci-info: 2.0.0
-      compare-versions: 3.6.0
-      cosmiconfig: 6.0.0
-      find-versions: 3.2.0
-      opencollective-postinstall: 2.0.3
-      pkg-dir: 4.2.0
-      please-upgrade-node: 3.2.0
-      slash: 3.0.0
-      which-pm-runs: 1.0.0
-    dev: true
-    engines:
-      node: '>=10'
-    hasBin: true
-    requiresBuild: true
-    resolution:
-      integrity: sha512-SYZ95AjKcX7goYVZtVZF2i6XiZcHknw50iXvY7b0MiGoj5RwdgRQNEHdb+gPDPCXKlzwrybjFjkL6FOj8uRhZQ==
   /hyphenate-style-name/1.0.4:
     dev: true
     resolution:
@@ -6044,12 +5812,6 @@ packages:
       node: '>=0.12.0'
     resolution:
       integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
-  /is-obj/1.0.1:
-    dev: true
-    engines:
-      node: '>=0.10.0'
-    resolution:
-      integrity: sha1-PkcprB9f3gJc19g6iW2rn09n2w8=
   /is-obj/2.0.0:
     engines:
       node: '>=8'
@@ -6563,10 +6325,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
-  /lodash._reinterpolate/3.0.0:
-    dev: true
-    resolution:
-      integrity: sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
   /lodash.camelcase/4.3.0:
     dev: true
     resolution:
@@ -6591,19 +6349,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-1SfftUVuynzJu5XV2ur4i6VKVFE=
-  /lodash.template/4.5.0:
-    dependencies:
-      lodash._reinterpolate: 3.0.0
-      lodash.templatesettings: 4.2.0
-    dev: true
-    resolution:
-      integrity: sha512-84vYFxIkmidUiFxidA/KjjH9pAycqW+h980j7Fuz5qxRtO9pgB7MDFTdys1N7A5mcucRiDyEq4fusljItR1T/A==
-  /lodash.templatesettings/4.2.0:
-    dependencies:
-      lodash._reinterpolate: 3.0.0
-    dev: true
-    resolution:
-      integrity: sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==
   /lodash.toarray/4.4.0:
     dev: true
     resolution:
@@ -6912,7 +6657,7 @@ packages:
       loader-utils: 1.4.0
       normalize-url: 1.9.1
       schema-utils: 1.0.0
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
       webpack-sources: 1.4.3
     dev: true
     engines:
@@ -7510,11 +7255,6 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==
-  /opencollective-postinstall/2.0.3:
-    dev: true
-    hasBin: true
-    resolution:
-      integrity: sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
   /opn/5.5.0:
     dependencies:
       is-wsl: 1.1.0
@@ -7918,12 +7658,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-nDywThFk1i4BQK4twPQ6TA4RT8bDY96yeuCVBWL3ePARCiEKDRSrNGbFIgUJpLp+XeIR65v8ra7WuJOFUBtkMA==
-  /please-upgrade-node/3.2.0:
-    dependencies:
-      semver-compare: 1.0.0
-    dev: true
-    resolution:
-      integrity: sha512-gQR3WpIgNIKwBMVLkpMUeR3e1/E1y42bqDQZfql+kDeXd8COYfM8PQA4X6y7a8u9Ua9FHmsrrmirW2vHs45hWg==
   /popper.js/1.16.1-lts:
     dev: true
     resolution:
@@ -8662,14 +8396,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==
-  /resolve-global/1.0.0:
-    dependencies:
-      global-dirs: 0.1.1
-    dev: true
-    engines:
-      node: '>=8'
-    resolution:
-      integrity: sha512-zFa12V4OLtT5XUX/Q4VLvTfBf+Ok0SPc1FNGM/z9ctUdiU618qwKpWnd0CHs3+RqROfyEg/DhuHbMWYqcgljEw==
   /resolve-url/0.2.1:
     deprecated: 'https://github.com/lydell/resolve-url#deprecated'
     dev: true
@@ -8788,7 +8514,7 @@ packages:
       sass: 1.26.10
       schema-utils: 2.7.0
       semver: 7.3.2
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
     dev: true
     engines:
       node: '>= 10.13.0'
@@ -8856,7 +8582,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-8M3wBCzeWIJnQfl43IKwOmC4H/RAp50S8DF60znzjW5GVqTcSe2vWclt7hmYVPkKPlHWOu5EaWOMZ2Y6W8ZXTA==
-  /semantic-release/17.1.1_semantic-release@17.1.1:
+  /semantic-release/17.1.1:
     dependencies:
       '@semantic-release/commit-analyzer': 8.0.1_semantic-release@17.1.1
       '@semantic-release/error': 2.2.0
@@ -8890,12 +8616,11 @@ packages:
     engines:
       node: '>=10.18'
     hasBin: true
-    peerDependencies:
-      semantic-release: '*'
     resolution:
       integrity: sha512-9H+207eynBJElrQBHySZm+sIEoJeUhPA2zU4cdlY1QSInd2lnE8GRD2ALry9EassE22c9WW+aCREwBhro5AIIg==
   /semver-compare/1.0.0:
     dev: true
+    optional: true
     resolution:
       integrity: sha1-De4hahyUGrN+nvsXiPavxf9VN/w=
   /semver-diff/3.1.1:
@@ -9495,7 +9220,7 @@ packages:
     dependencies:
       loader-utils: 2.0.0
       schema-utils: 2.7.0
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
     dev: true
     engines:
       node: '>= 8.9.0'
@@ -9606,7 +9331,7 @@ packages:
       serialize-javascript: 4.0.0
       source-map: 0.6.1
       terser: 4.8.0
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
       webpack-sources: 1.4.3
       worker-farm: 1.7.0
     dev: true
@@ -9626,7 +9351,7 @@ packages:
       serialize-javascript: 4.0.0
       source-map: 0.6.1
       terser: 4.8.0
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
       webpack-sources: 1.4.3
     dev: true
     engines:
@@ -10171,7 +9896,7 @@ packages:
       loader-utils: 2.0.0
       mime-types: 2.1.27
       schema-utils: 2.7.0
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
     dev: true
     engines:
       node: '>= 10.13.0'
@@ -10342,7 +10067,7 @@ packages:
       loader-utils: 1.4.0
       supports-color: 6.1.0
       v8-compile-cache: 2.1.1
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
       yargs: 13.3.2
     dev: true
     engines:
@@ -10358,7 +10083,7 @@ packages:
       mime: 2.4.6
       mkdirp: 0.5.5
       range-parser: 1.2.1
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
       webpack-log: 2.0.0
     dev: true
     engines:
@@ -10398,7 +10123,7 @@ packages:
       strip-ansi: 3.0.1
       supports-color: 6.1.0
       url: 0.11.0
-      webpack: 4.44.1_webpack@4.44.1
+      webpack: 4.44.1
       webpack-cli: 3.3.12_webpack@4.44.1
       webpack-dev-middleware: 3.7.2_webpack@4.44.1
       webpack-log: 2.0.0
@@ -10438,7 +10163,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-lgTS3Xhv1lCOKo7SA5TjKXMjpSM4sBjNV5+q2bqesbSPs5FjGmU6jjtBSkX9b4qW87vDIsCIlUPOEhbZrMdjeQ==
-  /webpack/4.44.1_webpack@4.44.1:
+  /webpack/4.44.1:
     dependencies:
       '@webassemblyjs/ast': 1.9.0
       '@webassemblyjs/helper-module-context': 1.9.0
@@ -10468,7 +10193,6 @@ packages:
       node: '>=6.11.5'
     hasBin: true
     peerDependencies:
-      webpack: '*'
       webpack-cli: '*'
       webpack-command: '*'
     peerDependenciesMeta:
@@ -10506,10 +10230,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-2e8H3Od7mQK4o6j6SzHD4/fm6Ho=
-  /which-pm-runs/1.0.0:
-    dev: true
-    resolution:
-      integrity: sha1-Zws6+8VS4LVd9rd4DKdGFfI60cs=
   /which/1.3.1:
     dependencies:
       isexe: 2.0.0
@@ -10710,8 +10430,6 @@ packages:
     resolution:
       integrity: sha1-x+sXyT4RLLEIb6bY5R+wZnt5pfk=
 specifiers:
-  '@commitlint/cli': ^9.1.2
-  '@commitlint/config-conventional': ^9.1.2
   '@material-ui/core': ^4.11.0
   '@material-ui/icons': ^4.9.1
   '@material-ui/lab': ^4.0.0-alpha.56
@@ -10757,7 +10475,6 @@ specifiers:
   fast-glob: ^3.2.4
   file-loader: ^6.0.0
   fs-extra: ^9.0.1
-  husky: ^4.2.5
   i18next: ^19.7.0
   i18next-browser-languagedetector: ^6.0.1
   lodash-es: ^4.17.15
