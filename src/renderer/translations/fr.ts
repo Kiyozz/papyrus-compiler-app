@@ -61,7 +61,11 @@ export default {
     }
   },
   changelog: {
-    newVersion: 'Nouvelle version disponible'
+    newVersion: 'Nouvelle version disponible',
+    available: {
+      view: 'Voir les nouveautés',
+      message: 'Nouvelle version disponible : {{version}}'
+    }
   },
   common: {
     selectFolder: 'Sélectionner un dossier',

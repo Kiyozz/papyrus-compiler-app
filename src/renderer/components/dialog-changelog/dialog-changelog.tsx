@@ -1,7 +1,8 @@
-import { Typography, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core'
+import { Typography, Button, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar } from '@material-ui/core'
 import DownloadIcon from '@material-ui/icons/GetApp'
+import CloseIcon from '@material-ui/icons/Close'
 
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
 
@@ -44,37 +45,76 @@ const DialogChangelog: React.FC<Props> = ({ onClose }) => {
   const releaseLink = useMemo(() => process.env.APP_NEXUS_PATH ?? 'https://www.nexusmods.com/skyrim/mods/96339?tab=files', [])
   const showNotes = useStoreSelector(store => store.changelog.showNotes)
   const notes = useStoreSelector(store => store.changelog.notes)
+  const latestVersion = useStoreSelector(store => store.changelog.latestVersion)
 
-  const onClickDownloadRelease = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  const [isUserShowNotes, setUserShowNotes] = useState(false)
 
-    shell.openExternal(releaseLink)
-  }
+  const onClickDownloadRelease = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault()
+
+      shell.openExternal(releaseLink)
+    },
+    [releaseLink, shell]
+  )
+
+  const onClickShowNotes = useCallback(() => {
+    if (showNotes) {
+      setUserShowNotes(true)
+    }
+  }, [showNotes])
+
+  const onCloseDialog = useCallback(() => {
+    setUserShowNotes(false)
+    onClose()
+  }, [onClose])
 
   useOnKeyUp('Escape', () => {
     onClose()
   })
 
   return (
-    <Dialog open={showNotes} fullWidth maxWidth="sm" onClose={onClose}>
-      <DialogTitle>{t('changelog.newVersion')}</DialogTitle>
-      <DialogContent>
-        <ReactMarkdown
-          source={notes}
-          renderers={{
-            paragraph: Paragraph,
-            heading: Heading,
-            code: Code
-          }}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Close</Button>
-        <Button color="primary" variant="contained" startIcon={<DownloadIcon />} onClick={onClickDownloadRelease}>
-          Download
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left'
+        }}
+        open={showNotes && !isUserShowNotes}
+        autoHideDuration={10000}
+        message={t('changelog.available.message', { version: latestVersion })}
+        action={
+          <>
+            <Button color="primary" size="small" onClick={onClickShowNotes}>
+              {t('changelog.available.view')}
+            </Button>
+            <IconButton onClick={onCloseDialog} aria-label="close" color="inherit">
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </>
+        }
+      />
+
+      <Dialog open={isUserShowNotes} fullWidth maxWidth="sm" onClose={onCloseDialog}>
+        <DialogTitle>{t('changelog.newVersion')}</DialogTitle>
+        <DialogContent>
+          <ReactMarkdown
+            source={notes}
+            renderers={{
+              paragraph: Paragraph,
+              heading: Heading,
+              code: Code
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onCloseDialog}>Close</Button>
+          <Button color="primary" variant="contained" startIcon={<DownloadIcon />} onClick={onClickDownloadRelease}>
+            Download
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
 
