@@ -58,6 +58,10 @@ button:focus {
   user-select: none;
 }
 
+code, code span, .text-selectable {
+  user-select: text;
+}
+
 label {
   margin: 0;
 }

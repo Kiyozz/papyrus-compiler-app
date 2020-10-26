@@ -53,10 +53,12 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
             </Button>
           }
         >
-          <Typography variant="body2" paragraph>
+          <Typography variant="body2" paragraph className="text-selectable">
             {t('page.settings.errors.installationInvalid')}
           </Typography>
-          <Typography variant="body2">{t('page.settings.errors.installationInvalidInfo', { exe })}</Typography>
+          <Typography variant="body2" className="text-selectable">
+            {t('page.settings.errors.installationInvalidInfo', { exe })}
+          </Typography>
         </Alert>
       </Collapse>
     </Paper>
