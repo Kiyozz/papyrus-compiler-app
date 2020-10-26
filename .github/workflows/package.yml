@@ -85,7 +85,10 @@ jobs:
         with:
           name: build-le
       - name: Package LE
-        run: pnpm package:le
+        run: |
+          dir
+          dir dist
+          pnpm package:le
       - name: Upload LE package
         uses: actions/upload-artifact@v2
         with:
