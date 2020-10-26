@@ -94,6 +94,13 @@ jobs:
           name: package-le
           # A file, directory or wildcard pattern that describes what to upload
           path: dist/PCA*.7z
+      - name: Upload LE setup
+        uses: actions/upload-artifact@v2
+        with:
+          # Artifact name
+          name: setup-le
+          # A file, directory or wildcard pattern that describes what to upload
+          path: dist/PCA*.exe
       - name: Clean LE
         run: pnpx rimraf dist
 
@@ -111,3 +118,10 @@ jobs:
           name: package-se
           # A file, directory or wildcard pattern that describes what to upload
           path: dist/PCA*.7z
+      - name: Upload SE setup
+        uses: actions/upload-artifact@v2
+        with:
+          # Artifact name
+          name: setup-se
+          # A file, directory or wildcard pattern that describes what to upload
+          path: dist/PCA*.exe
