@@ -84,11 +84,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-le
+          path: dist
       - name: Package LE
-        run: |
-          dir
-          dir dist
-          pnpm package:le
+        run: pnpm package:le
       - name: Upload LE package
         uses: actions/upload-artifact@v2
         with:
@@ -103,6 +101,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-se
+          path: dist
       - name: Package SE
         run: pnpm package:se
       - name: Upload SE package
