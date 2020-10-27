@@ -1,3 +1,16 @@
+## 4.2.0 (2020-10-27)
+
+### Features
+
+    * Input folder now accept manually added text (#35)
+    * Changelog alert silent (#37)
+    * Swap colors of buttons in compilation page (#38)
+    * Update dependencies (#36)
+
+### Bug Fixes
+
+    * Allow logs to be selectable (#34)
+
 ### 4.1.1 (2020-08-24)
 
     * Using the app through MO2 VFS re-works
