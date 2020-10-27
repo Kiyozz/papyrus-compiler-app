@@ -38,6 +38,7 @@ module.exports = {
     '@typescript-eslint/no-require-imports': 'off',
     '@typescript-eslint/no-unnecessary-condition': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-shadow': 'error',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/quotes': [
       'warn',
@@ -95,7 +96,7 @@ module.exports = {
     'no-lonely-if': 'warn',
     'no-path-concat': 'error',
     'no-return-await': 'error',
-    'no-shadow': 'error',
+    'no-shadow': 'off',
     'no-this-before-super': 'error',
     'no-trailing-spaces': 'warn',
     'no-unused-vars': 'off',

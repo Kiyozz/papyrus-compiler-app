@@ -1,7 +1,7 @@
 {
   "name": "pca",
   "version": "4.1.1",
-  "description": "Papyrus compiler app by WushuLate",
+  "description": "Papyrus compiler app (PCA) by WushuLate",
   "private": true,
   "scripts": {
     "start": "electron-webpack dev",
