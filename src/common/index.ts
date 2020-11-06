@@ -1,8 +1,10 @@
 export * from './game'
 export * from './slash'
 import * as EVENTS from './events'
+import * as CONSTANTS from './constants'
 
 export { EVENTS }
+export { CONSTANTS }
 export type { AppStore } from './appStore'
 export * from './interfaces/Config'
 export * from './interfaces/Group'

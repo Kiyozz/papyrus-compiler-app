@@ -11,7 +11,7 @@ import { pluralize } from './pluralize'
 const log = new Log('PathHelper')
 
 export function normalize(value: string): string {
-  if (is.linux) {
+  if (is.linux || is.macos) {
     return value
   }
 

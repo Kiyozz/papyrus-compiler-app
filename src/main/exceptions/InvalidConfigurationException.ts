@@ -1,5 +1,5 @@
 export default class InvalidConfigurationException extends Error {
-  constructor(gamePath: string, executable: string) {
-    super(`"${gamePath}" is an invalid Skyrim directory. \nThe folder does not contains "${executable}".`)
+  constructor(executable: string) {
+    super(`Invalid configuration: "${executable}" does not resolve to a valid path`)
   }
 }

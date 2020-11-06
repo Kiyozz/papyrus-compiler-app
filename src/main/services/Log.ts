@@ -1,10 +1,26 @@
 import log from 'electron-log'
 
 export default class Log {
+  catchErrors = log.catchErrors
+
   constructor(private namespace: string) {}
 
+  get transports() {
+    return log.transports
+  }
+
+  get file() {
+    return log.transports.file.getFile()
+  }
+
+  get previousSessionFilePath() {
+    return this.file.path.replace('.log', '.1.log')
+  }
+
   debug(...params: unknown[]): void {
-    log.debug(`[${this.namespace}]`, params)
+    if (this.isDebugEnabled()) {
+      log.debug(`[${this.namespace}]`, params)
+    }
   }
 
   log(...params: unknown[]): void {
@@ -19,17 +35,7 @@ export default class Log {
     log.error(`[${this.namespace}]`, params)
   }
 
-  get transports() {
-    return log.transports
-  }
-
-  catchErrors = log.catchErrors
-
-  get file() {
-    return log.transports.file.getFile()
-  }
-
-  get previousSessionFilePath() {
-    return this.file.path.replace('.log', '.1.log')
+  isDebugEnabled(): boolean {
+    return true
   }
 }
