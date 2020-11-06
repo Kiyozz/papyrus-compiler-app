@@ -1,5 +1,4 @@
 import { Config, EVENTS, PartialDeep } from '@common'
-import type { Stats } from '@common'
 import is from '@sindresorhus/is'
 import { ipcRenderer as ipc } from 'electron-better-ipc'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
@@ -25,27 +24,18 @@ const PageContext = React.createContext({} as PageContextInterface)
 
 export const usePageContext = () => useContext(PageContext)
 
-async function selectGroups(config: Config): Promise<Group[]> {
+function selectGroups(config: Config): Group[] {
   if (config.groups.length === 0) {
     return []
   }
-
-  const scripts = config.groups.reduce<string[]>((scr, group) => {
-    return [...scr, ...group.scripts.map(s => s.path)]
-  }, [])
-
-  const stats = await ipc.callMain<string[], Map<string, Stats>>(EVENTS.FILES_STATS, scripts)
 
   return config.groups.map(
     g =>
       new Group(
         g.name,
         g.scripts.map((s, i) => {
-          const lastModified = stats.get(s.path)?.mtimeMs
-
           return {
             status: ScriptStatus.IDLE,
-            lastModified: lastModified ?? 0,
             id: i,
             name: s.name,
             path: s.path
@@ -66,16 +56,16 @@ const PageContextProvider: React.FC = ({ children }) => {
   const updateConfig = useCallback((partialConfig: PartialDeep<Config>, override?: boolean) => {
     ipc
       .callMain<{ config: PartialDeep<Config>; override?: boolean }, Config>(EVENTS.CONFIG_UPDATE, { config: partialConfig, override })
-      .then(async updatedConfig => {
+      .then(updatedConfig => {
         setConfig(updatedConfig)
-        setGroups(await selectGroups(updatedConfig))
+        setGroups(selectGroups(updatedConfig))
       })
   }, [])
 
   useEffect(() => {
-    ipc.callMain<unknown, Config>(EVENTS.CONFIG_GET).then(async initialConfig => {
+    ipc.callMain<unknown, Config>(EVENTS.CONFIG_GET).then(initialConfig => {
       setConfig(initialConfig)
-      setGroups(await selectGroups(initialConfig))
+      setGroups(selectGroups(initialConfig))
     })
   }, [])
 

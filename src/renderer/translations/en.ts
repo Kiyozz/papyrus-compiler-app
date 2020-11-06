@@ -16,7 +16,6 @@ export default {
       dragAndDropText: 'You can drag and drop psc files to load them into the application.',
       dragAndDropAdmin: 'This is only available when not running in administrator.',
       scriptItem: {
-        lastModified: 'Last edited at {{date}}',
         removeFromList: 'Remove from list'
       }
     },
