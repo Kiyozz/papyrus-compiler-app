@@ -102,7 +102,7 @@ const appStore = new Store<Config>({
     }
   },*/
   migrations: {
-    '4.1.0': (store: Store) => {
+    '4.1.0': (store: AppStore) => {
       store.set('mo2.mods', 'mods')
     }
   }

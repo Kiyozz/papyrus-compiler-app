@@ -7,10 +7,9 @@ import DeleteIcon from '@material-ui/icons/Delete'
 
 import cx from 'classnames'
 import React, { useCallback } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
 import { ScriptModel } from '../../models'
-import { format } from '../../utils/date/format'
 import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
 import getIconFromStatus from '../../utils/scripts/get-icon-from-status'
 import classes from './compilation-page.module.scss'
@@ -50,7 +49,6 @@ const ScriptItem: React.FC<Props> = ({ script, onMouseEnter, onMouseLeave, onMou
         {script.name}
       </Typography>
       <Typography variant="body2" component="div" className={classes.scriptPath}>
-        <Trans i18nKey="page.compilation.scriptItem.lastModified">{{ date: format(script.lastModified, 'PPpp') }}</Trans>
         <span className={cx([classes.scriptStatus, getClassNameFromStatus(script)])}>{getIconFromStatus(script)}</span>
       </Typography>
     </Paper>
