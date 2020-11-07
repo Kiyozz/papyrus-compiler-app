@@ -117,7 +117,7 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
       <DialogTitle id="create-group-title">{isEdit ? t('page.groups.dialog.editGroup') : t('page.groups.dialog.createGroup')}</DialogTitle>
       <form onSubmit={onSubmitAddGroup}>
         <DialogContent className={classes.scriptsContent}>
-          <TextField fullWidth label={t('page.groups.dialog.name')} name="group-name" id="group-name" value={name} onChange={onChangeName} />
+          <TextField fullWidth label={t('page.groups.dialog.name')} name="group-name" id="group-name" autoFocus value={name} onChange={onChangeName} />
           {scripts.length > 0 ? (
             <Paper className={classes.content} elevation={3}>
               <GroupsDialogList scripts={scripts} onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup} />
