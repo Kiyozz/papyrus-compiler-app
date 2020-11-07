@@ -1,7 +1,8 @@
-import { toAntiSlash, AppStore } from '@common'
+import { AppStore, toAntiSlash, toSlash } from '@common'
+import is from '@sindresorhus/is'
+import * as util from 'electron-util'
 import * as path from 'path'
 import type { Migration } from './Migration'
-import is from '@sindresorhus/is'
 
 export class Migration420 implements Migration {
   migrate(store: AppStore): number {
@@ -10,8 +11,9 @@ export class Migration420 implements Migration {
 
       if (is.nonEmptyString(gamePath)) {
         const compilerPath = store.get('compilerPath')
+        const slashFunc = util.is.linux || util.is.macos ? toSlash : toAntiSlash
 
-        store.set('compilerPath', toAntiSlash(path.join(gamePath, compilerPath)))
+        store.set('compilerPath', slashFunc(path.join(gamePath, compilerPath)))
       }
 
       return 0
