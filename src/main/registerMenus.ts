@@ -2,15 +2,15 @@ import is from '@sindresorhus/is'
 import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
 import defaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem } from 'electron-util'
-import Log from './services/Log'
+import { Logger } from './Logger'
 import { exists } from './services/path'
-import appStore, { defaultConfig } from '../common/appStore'
+import { appStore, defaultConfig } from '@common/store'
 
 interface RegisterMenusCallbacks {
   openLogFile: (file: string) => void
 }
 
-const log = new Log('RegisterMenus')
+const logger = new Logger('registerMenus')
 
 export async function registerMenus({ openLogFile }: RegisterMenusCallbacks) {
   const nexusPath =
@@ -55,19 +55,19 @@ export async function registerMenus({ openLogFile }: RegisterMenusCallbacks) {
       {
         label: 'Logs',
         click() {
-          openLogFile(log.file.path)
+          openLogFile(logger.file.path)
         },
         accelerator: 'CommandOrControl+Alt+J'
       }
     ]
   }
 
-  if (await exists(log.previousSessionFilePath)) {
+  if (await exists(logger.previousSessionFilePath)) {
     if (is.array(helpMenu.submenu)) {
       helpMenu.submenu.push({
         label: 'Previous session logs',
         click() {
-          openLogFile(log.previousSessionFilePath)
+          openLogFile(logger.previousSessionFilePath)
         },
         accelerator: 'CommandOrControl+Alt+Shift+J'
       })
@@ -84,7 +84,7 @@ export async function registerMenus({ openLogFile }: RegisterMenusCallbacks) {
     return m
   })
 
-  log.log('Registering app menus')
+  logger.log('Registering app menus')
 
   Menu.setApplicationMenu(Menu.buildFromTemplate([menu, ...defaultMenus]))
 }

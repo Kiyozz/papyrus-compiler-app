@@ -1,13 +1,13 @@
-import appStore from '../../common/appStore'
+import { appStore } from '@common/store'
 import { Config } from '@common/interfaces/Config'
-import { HandlerInterface } from '../HandlerInterface'
-import Log from '../services/Log'
+import { EventHandler } from '../EventHandler'
+import { Logger } from '../Logger'
 
-const log = new Log('ConfigUpdateHandler')
+const logger = new Logger('ConfigUpdateHandler')
 
-export default class ConfigGetHandler implements HandlerInterface {
+export class ConfigGetHandler implements EventHandler {
   listen(): Config {
-    log.info('Getting the configuration')
+    logger.debug('Get configuration')
 
     return appStore.store
   }

@@ -1,4 +1,4 @@
-import { AppStore } from '../appStore'
+import { AppStore } from '../store'
 import { Migration } from './Migration'
 
 export class Migration410 implements Migration {

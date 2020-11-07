@@ -51,4 +51,4 @@ storeCheck(appStore, defaultConfig)
 
 export type AppStore = Store<Config>
 
-export default appStore
+export { appStore }

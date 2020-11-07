@@ -1,4 +1,4 @@
-import { AppStore } from '@common/appStore'
+import { AppStore } from '@common/store'
 import { Config } from '@common/interfaces/Config'
 import is from '@sindresorhus/is'
 import { groupValidator } from './validators/groupValidator'

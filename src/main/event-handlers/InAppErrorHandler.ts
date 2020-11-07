@@ -1,8 +1,8 @@
 import is from '@sindresorhus/is'
-import { HandlerInterface } from '../HandlerInterface'
-import { createReportDialog } from '../services/reportDialog'
+import { EventHandler } from '../EventHandler'
+import { createReportDialog } from '../services/createReportDialog'
 
-export class InAppErrorHandler implements HandlerInterface<Error> {
+export class InAppErrorHandler implements EventHandler<Error> {
   listen(args?: Error) {
     if (is.undefined(args)) {
       return

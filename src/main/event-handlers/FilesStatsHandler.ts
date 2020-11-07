@@ -1,9 +1,9 @@
 import is from '@sindresorhus/is'
-import { HandlerInterface } from '../HandlerInterface'
+import { EventHandler } from '../EventHandler'
 import { Stats } from '@common/interfaces/Stats'
 import { stat } from '../services/path'
 
-export class FilesStatsHandler implements HandlerInterface<string[]> {
+export class FilesStatsHandler implements EventHandler<string[]> {
   async listen(files?: string[]): Promise<Map<string, Stats>> {
     if (is.undefined(files)) {
       throw new TypeError('"files" is undefined.')

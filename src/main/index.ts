@@ -3,15 +3,15 @@ import { debugInfo, is } from 'electron-util'
 import * as path from 'path'
 import { format } from 'url'
 import { initialize } from './initialize'
-import Log from './services/Log'
+import { Logger } from './Logger'
 // import loadingHtmlFile from './loading.html'
-import { createReportDialog } from './services/reportDialog'
+import { createReportDialog } from './services/createReportDialog'
 
-const log = new Log('Main')
+const logger = new Logger('Main')
 let win: BrowserWindow | null = null
 
 function createWindow() {
-  log.log(debugInfo())
+  logger.log(debugInfo())
 
   // const loading = new BrowserWindow({ width: 300, backgroundColor: '#303030', height: 200, show: false, frame: false })
 
@@ -40,58 +40,56 @@ function createWindow() {
   //   })
   // )
 
-  setTimeout(() => {
-    if (isDev) {
-      win!.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
-    } else {
-      win!.loadURL(
-        format({
-          pathname: path.join(__dirname, 'index.html'),
-          protocol: 'file',
-          slashes: true
-        })
-      )
-    }
-
-    initialize()
-
-    win!.on('closed', () => {
-      win = null
-    })
-
-    win!.webContents.on('devtools-opened', () => {
-      win!.focus()
-      setImmediate(() => {
-        win!.focus()
+  if (isDev) {
+    win!.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
+  } else {
+    win!.loadURL(
+      format({
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file',
+        slashes: true
       })
+    )
+  }
+
+  initialize()
+
+  win!.on('closed', () => {
+    win = null
+  })
+
+  win!.webContents.on('devtools-opened', () => {
+    win!.focus()
+    setImmediate(() => {
+      win!.focus()
     })
+  })
 
-    win!.on('ready-to-show', () => {
-      // loading.hide()
-      // loading.close()
+  win!.on('ready-to-show', () => {
+    // loading.hide()
+    // loading.close()
 
-      setTimeout(() => {
-        win!.show()
-        win!.focus()
+    setTimeout(() => {
+      win!.show()
+      win!.focus()
 
-        if (isDev) {
-          win!.webContents.openDevTools({ mode: 'bottom' })
-        }
-
-        setImmediate(() => win!.focus())
-      }, 300)
-    })
-
-    log.catchErrors({
-      showDialog: false,
-      onError(error, versions, submitIssue) {
-        createReportDialog(error, versions, submitIssue)
-
-        win?.close()
-        win = null
+      if (isDev) {
+        win!.webContents.openDevTools({ mode: 'bottom' })
       }
-    })
-  }, 1500)
+
+      setImmediate(() => win!.focus())
+    }, 300)
+  })
+
+  logger.catchErrors({
+    showDialog: false,
+    onError(error, versions, submitIssue) {
+      createReportDialog(error, versions, submitIssue)
+
+      win?.close()
+      win = null
+    }
+  })
 }
 
 app.on('ready', createWindow)

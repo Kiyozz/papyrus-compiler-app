@@ -1,6 +1,7 @@
 import log from 'electron-log'
+import { is } from 'electron-util'
 
-export default class Log {
+export class Logger {
   catchErrors = log.catchErrors
 
   constructor(private namespace: string) {}
@@ -35,7 +36,11 @@ export default class Log {
     log.error(`[${this.namespace}]`, params)
   }
 
+  warn(...params: unknown[]): void {
+    log.warn(`[${this.namespace}]`, params)
+  }
+
   isDebugEnabled(): boolean {
-    return true
+    return is.development
   }
 }

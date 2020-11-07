@@ -1,23 +1,23 @@
 import * as EVENTS from '@common/events'
 import { is } from 'electron-util'
-import appStore from '../common/appStore'
+import { appStore } from '@common/store'
 import { BadInstallationHandler } from './event-handlers/BadInstallationHandler'
-import { CompileScriptHandler } from './event-handlers/CompileScriptHandler'
-import ConfigGetHandler from './event-handlers/ConfigGetHandler'
-import ConfigUpdateHandler from './event-handlers/ConfigUpdateHandler'
+import { ScriptCompileHandler } from './event-handlers/ScriptCompileHandler'
+import { ConfigGetHandler } from './event-handlers/ConfigGetHandler'
+import { ConfigUpdateHandler } from './event-handlers/ConfigUpdateHandler'
 import { DialogHandler } from './event-handlers/DialogHandler'
 import { FilesStatsHandler } from './event-handlers/FilesStatsHandler'
 import { GetVersionHandler } from './event-handlers/GetVersionHandler'
 import { InAppErrorHandler } from './event-handlers/InAppErrorHandler'
 import { Mo2ModsSourcesHandler } from './event-handlers/Mo2ModsSourcesHandler'
 import { OpenLogFileHandler } from './event-handlers/OpenLogFileHandler'
-import { HandlerInterface } from './HandlerInterface'
+import { EventHandler } from './EventHandler'
 import { registerMenus } from './registerMenus'
-import Log from './services/Log'
+import { Logger } from './Logger'
 import { ensureFiles, move } from './services/path'
-import { registerEvents } from './services/registerEvents'
+import { registerIpcEvents } from './registerIpcEvents'
 
-const log = new Log('Initialize')
+const logger = new Logger('Initialize')
 
 function installExtensions() {
   if (is.development) {
@@ -29,20 +29,23 @@ function installExtensions() {
 
     return Promise.all(
       extensions.map(name => installer.default(name))
-    ).catch(e => log.log(e))
+    ).catch(e => logger.log(e))
   }
 }
 
-async function backupLatestLogFile() {
-  const logFile = log.transports.file.getFile().path
+/**
+ * Rename the current log file to have previous session log file
+ */
+async function backupLogFile() {
+  const logFile = logger.transports.file.getFile().path
 
   if (!logFile) {
-    log.info('There is no log file')
+    logger.info('There is no log file')
 
     return
   }
 
-  log.info('A log file exists, creation of a new one')
+  logger.info('A log file exists, creation of a new one')
 
   await ensureFiles([logFile])
 
@@ -51,16 +54,16 @@ async function backupLatestLogFile() {
   await move(logFile, `${logFilename}.1.log`, { overwrite: true })
   await ensureFiles([logFile])
 
-  log.info(`file ${logFilename}.1.log created`)
+  logger.info(`file ${logFilename}.1.log created`)
 }
 
 export async function initialize() {
-  await backupLatestLogFile()
+  await backupLogFile()
   await installExtensions()
 
   const openLogFileHandler = new OpenLogFileHandler()
-  const events = new Map<string, HandlerInterface>([
-    [EVENTS.COMPILE_SCRIPT, new CompileScriptHandler()],
+  const events = new Map<string, EventHandler>([
+    [EVENTS.COMPILE_SCRIPT, new ScriptCompileHandler()],
     [EVENTS.OPEN_DIALOG, new DialogHandler()],
     [EVENTS.MO2_MODS_SOURCES, new Mo2ModsSourcesHandler()],
     [EVENTS.BAD_INSTALLATION, new BadInstallationHandler()],
@@ -71,13 +74,13 @@ export async function initialize() {
     [EVENTS.IN_APP_ERROR, new InAppErrorHandler()]
   ])
 
-  log.log(appStore.path)
+  logger.debug(appStore.path)
 
-  registerMenus({
+  await registerMenus({
     openLogFile: (file: string) => {
       openLogFileHandler.listen(file)
     }
   })
 
-  registerEvents(events)
+  registerIpcEvents(events)
 }

@@ -1,12 +1,12 @@
 import { exec as originalExec } from 'child_process'
 import { promisify } from 'util'
-import Log from './Log'
+import { Logger } from '../Logger'
 
 const exec = promisify(originalExec)
-const log = new Log('ExecuteCommand')
+const logger = new Logger('ExecuteCommand')
 
 export function executeCommand(cmd: string, cwd?: string) {
-  log.debug('Executing in directory', cwd, 'Command', cmd)
+  logger.debug('Executing in directory', cwd, 'Command', cmd)
 
   return exec(cmd, { cwd })
 }

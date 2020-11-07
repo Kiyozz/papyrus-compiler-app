@@ -1,10 +1,10 @@
 import is from '@sindresorhus/is'
-import { HandlerInterface } from '../HandlerInterface'
-import { compile } from '../services/compile'
-import Log from '../services/Log'
+import { EventHandler } from '../EventHandler'
+import { compileScript } from '../services/compileScript'
+import { Logger } from '../Logger'
 
-export class CompileScriptHandler implements HandlerInterface<string> {
-  private readonly log = new Log('CompilerScriptHandler')
+export class ScriptCompileHandler implements EventHandler<string> {
+  private readonly log = new Logger('ScriptCompileHandler')
 
   async listen(script?: string) {
     if (is.undefined(script)) {
@@ -13,7 +13,7 @@ export class CompileScriptHandler implements HandlerInterface<string> {
 
     this.log.info('Started compilation for script:', script)
 
-    const result = await compile(script)
+    const result = await compileScript(script)
 
     this.log.info(`Script ${script} successfully compiled.`, result)
 
