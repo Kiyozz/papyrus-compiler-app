@@ -1,14 +1,14 @@
-import { toSlash } from '@common/slash'
+import { toSlash } from '@pca/common/slash'
 import { is } from 'electron-util'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
 import path from 'path'
-import FileAccessException from '../exceptions/files/FileAccessException'
-import EnsureException from '../exceptions/files/EnsureException'
-import Log from './Log'
+import { FileAccessException } from '../exceptions/files/FileAccessException'
+import { EnsureException } from '../exceptions/files/EnsureException'
+import { Logger } from '../Logger'
 import { pluralize } from './pluralize'
 
-const log = new Log('PathHelper')
+const logger = new Logger('PathHelper')
 
 export function normalize(value: string): string {
   if (is.linux || is.macos) {
@@ -24,7 +24,7 @@ export const move = fs.move
 export const readFile = fs.readFile
 
 export async function stat(filename: string): Promise<fs.Stats> {
-  log.info('Getting statistics of the path', filename)
+  logger.debug('Getting statistics of the path', filename)
 
   try {
     return await fs.stat(filename)
@@ -36,16 +36,16 @@ export async function stat(filename: string): Promise<fs.Stats> {
 export async function exists(fileOrFolder: string): Promise<boolean> {
   const result = await fs.pathExists(fileOrFolder)
 
-  log.info('Is the path exists?', fileOrFolder, result)
+  logger.debug('Is the path exists?', fileOrFolder, result)
 
   return result
 }
 
 export async function ensureDirs(items: string[]): Promise<void> {
-  log.debug(
+  logger.debug(
     `Checking presence of director${pluralize(items, {
       single: 'y',
-      multiple: 'is'
+      multiple: 'ies'
     })}`,
     ...items.map(i => `"${i}"`)
   )
@@ -60,7 +60,7 @@ export async function ensureDirs(items: string[]): Promise<void> {
 }
 
 export async function ensureFiles(items: string[]): Promise<void> {
-  log.debug(
+  logger.debug(
     `Checking presence of file${pluralize(items)}`,
     ...items.map(i => `"${i}"`)
   )
@@ -78,7 +78,7 @@ export async function getPathsInFolder(
   fileNames: string[],
   options: fg.Options = {}
 ): Promise<string[]> {
-  log.info('Getting paths in folder', fileNames, 'with options', options)
+  logger.debug('Getting paths in folder', fileNames, 'with options', options)
 
   const response = await fg(
     fileNames.map(file => toSlash(file)),
@@ -88,7 +88,7 @@ export async function getPathsInFolder(
     }
   )
 
-  log.info('Response of fast-glob', response)
+  logger.debug('Response of fast-glob', response)
 
   return response
 }

@@ -1,12 +1,12 @@
 import is from '@sindresorhus/is'
-import appStore from '../../common/appStore'
-import { getExecutable, toOtherSource, toSource } from '@common/game'
-import CompilerScriptException from '../exceptions/CompilerScriptException'
-import InvalidConfigurationException from '../exceptions/InvalidConfigurationException'
-import Mo2InvalidConfigurationException from '../exceptions/mo2/Mo2InvalidConfigurationException'
+import { appStore } from '@pca/common/store'
+import { getExecutable, toOtherSource, toSource } from '@pca/common/game'
+import { ScriptCompilationException } from '../exceptions/ScriptCompilationException'
+import { ConfigurationException } from '../exceptions/ConfigurationException'
+import { Mo2InvalidConfigurationException } from '../exceptions/mo2/Mo2InvalidConfigurationException'
 import { executeCommand } from './executeCommand'
 import { generateCompilerCmd } from './generateCompilerCmd'
-import Log from './Log'
+import { Logger } from '../Logger'
 import * as mo2 from './mo2'
 import * as path from './path'
 
@@ -17,7 +17,7 @@ interface Runner {
   output: string
 }
 
-const log = new Log('Compile')
+const logger = new Logger('Compile')
 
 function checkCommandResult(
   script: string,
@@ -26,12 +26,12 @@ function checkCommandResult(
   const isSuccess = /0 failed/.test(result.stdout)
 
   if (!isSuccess) {
-    throw new CompilerScriptException(script, result.stderr)
+    throw new ScriptCompilationException(script, result.stderr)
   }
 }
 
-export async function compile(scriptName: string): Promise<string> {
-  log.info('Compile script', scriptName)
+export async function compileScript(scriptName: string): Promise<string> {
+  logger.info('Compile script', scriptName)
   const gamePath = appStore.get('gamePath')
   const gameType = appStore.get('gameType')
   const compilerPath = appStore.get('compilerPath')
@@ -46,46 +46,46 @@ export async function compile(scriptName: string): Promise<string> {
     output: path.join(gamePath, appStore.get('output'))
   }
 
-  log.info('With config', runner)
+  logger.info('With config', runner)
 
   const gameExe = path.join(gamePath, getExecutable(gameType))
 
-  log.info('Game executable is', gameExe)
+  logger.debug('Game executable is', gameExe)
 
   if (!(await path.exists(compilerPath))) {
-    log.error(
+    logger.error(
       'Configuration is invalid, papyrus compiler does not exists in game directory'
     )
 
-    throw new InvalidConfigurationException(compilerPath)
+    throw new ConfigurationException(compilerPath)
   }
 
   if (!(await path.exists(gameExe))) {
-    log.error(
+    logger.error(
       'Configuration is invalid, game executable does not exists in game directory'
     )
 
-    throw new InvalidConfigurationException(gameExe)
+    throw new ConfigurationException(gameExe)
   }
 
-  log.info('Creating game sources folder if not')
+  logger.info('Creating game sources folder if not')
 
   await path.ensureDirs([gameSourcesAbsolute])
 
   const otherSourceAbsolute = path.join(dataDirectory, toOtherSource(gameType))
 
-  log.debug('Other game source', otherSourceAbsolute)
+  logger.debug('Other game source', otherSourceAbsolute)
 
   const hasOtherGameSource = await path.exists(otherSourceAbsolute)
 
   if (hasOtherGameSource) {
-    log.info('Other game sources found. Importing them')
+    logger.info('Other game sources found. Importing them')
 
     runner.imports = [otherSourceAbsolute, ...runner.imports]
   }
 
   if (mo2Config.instance?.length ?? 0 > 0) {
-    log.info('Using MO2 support')
+    logger.info('Using MO2 support')
 
     if (!is.undefined(mo2Config.instance)) {
       const imports = await mo2.generateImports({
@@ -99,7 +99,7 @@ export async function compile(scriptName: string): Promise<string> {
       runner.output = await mo2.generateOutput(mo2Config.instance)
       runner.imports = [...runner.imports, ...imports]
 
-      log.debug('(MO2) Final config', runner)
+      logger.debug('(MO2) Final config', runner)
     } else {
       throw new Mo2InvalidConfigurationException(['instance', 'sources'])
     }
@@ -116,22 +116,25 @@ export async function compile(scriptName: string): Promise<string> {
   try {
     const result = await executeCommand(cmd, runner.cwd)
 
-    log.debug('Compilation result', result)
+    logger.debug('Compilation result', result)
 
     checkCommandResult(scriptName, result)
 
     return result.stdout.trim()
   } catch (err) {
-    if (err instanceof CompilerScriptException) {
+    if (err instanceof ScriptCompilationException) {
       throw err
     }
 
-    log.error('Compilation error', { message: err.message, stack: err.stack })
+    logger.error('Compilation error', {
+      message: err.message,
+      stack: err.stack
+    })
 
     const outputStdErr = err.stderr.replace('<unknown>', 'unknown')
     const outputStdOut = err.stdout.replace('<unknown>', 'unknown')
 
-    throw new CompilerScriptException(
+    throw new ScriptCompilationException(
       scriptName,
       !outputStdErr ? outputStdOut : outputStdErr,
       cmd

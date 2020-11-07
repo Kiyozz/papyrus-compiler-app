@@ -1,6 +1,6 @@
-import * as EVENTS from '@common/events'
+import * as EVENTS from '@pca/common/events'
 import { LocationProvider } from '@reach/router'
-import { ipcRenderer } from '@common/ipc'
+import { ipcRenderer } from '@pca/common/ipc'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider as ReduxProvider } from 'react-redux'

@@ -1,9 +1,9 @@
-import { toAntiSlash } from '@common/slash'
-import { GameType, toOtherSource, toSource } from '@common/game'
-import appStore from '../../common/appStore'
-import Mo2ModsPathExistsException from '../exceptions/mo2/Mo2ModsPathExistsException'
-import Mo2SourcesException from '../exceptions/mo2/Mo2SourcesException'
-import Log from './Log'
+import { toAntiSlash } from '@pca/common/slash'
+import { GameType, toOtherSource, toSource } from '@pca/common/game'
+import { appStore } from '@pca/common/store'
+import { Mo2ModsPathExistsException } from '../exceptions/mo2/Mo2ModsPathExistsException'
+import { Mo2SourcesException } from '../exceptions/mo2/Mo2SourcesException'
+import { Logger } from '../Logger'
 import * as path from './path'
 
 interface GenerateImportsOptions {
@@ -13,7 +13,7 @@ interface GenerateImportsOptions {
   }
 }
 
-const log = new Log('Mo2Generate')
+const logger = new Logger('Mo2Generate')
 
 async function getSources(gameType: GameType, instance: string) {
   const sourcesPath = toSource(gameType)
@@ -48,7 +48,7 @@ async function getSources(gameType: GameType, instance: string) {
     })
     .filter(f => !!f) as readonly string[]
 
-  log.info('[MO2] DoubleSourceFolders', doubleSourceFolders)
+  logger.info('[MO2] DoubleSourceFolders', doubleSourceFolders)
 
   files = files
     .filter(file => {
@@ -67,7 +67,7 @@ async function getSources(gameType: GameType, instance: string) {
     })
     .map(file => toAntiSlash(file))
 
-  log.info('[MO2] Folders containing sources', files)
+  logger.info('[MO2] Folders containing sources', files)
 
   files.sort()
 
@@ -78,7 +78,7 @@ export async function generateImports({
   gameType,
   mo2: { instance }
 }: GenerateImportsOptions): Promise<string[]> {
-  log.info('Generating ModOrganizer imports')
+  logger.info('Generating ModOrganizer imports')
 
   const sourcesPath = toSource(gameType)
   const otherSourcesPath = toOtherSource(gameType)
@@ -111,7 +111,7 @@ export async function generateImports({
 }
 
 export async function generateModsPath(mo2Instance: string): Promise<string> {
-  log.info('Generating ModOrganizer mods path')
+  logger.info('Generating ModOrganizer mods path')
 
   const modsPath = path.join(
     mo2Instance,
@@ -127,7 +127,7 @@ export async function generateModsPath(mo2Instance: string): Promise<string> {
 }
 
 export async function generateOutput(mo2Instance: string): Promise<string> {
-  log.info('Generating ModOrganizer output directory')
+  logger.info('Generating ModOrganizer output directory')
 
   const output = path.join(
     mo2Instance,

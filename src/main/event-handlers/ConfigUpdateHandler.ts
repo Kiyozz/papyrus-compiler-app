@@ -1,24 +1,24 @@
 import is from '@sindresorhus/is'
 import deepmerge from 'deepmerge'
-import appStore from '../../common/appStore'
-import { Config } from '@common/interfaces/Config'
-import { PartialDeep } from '@common/interfaces/PartialDeep'
-import * as CONSTANTS from '@common/constants'
-import { HandlerInterface } from '../HandlerInterface'
-import Log from '../services/Log'
+import { appStore } from '@pca/common/store'
+import { Config } from '@pca/common/interfaces/Config'
+import { PartialDeep } from '@pca/common/interfaces/PartialDeep'
+import * as CONSTANTS from '@pca/common/constants'
+import { EventHandler } from '../EventHandler'
+import { Logger } from '../Logger'
 import { join } from '../services/path'
 
-const log = new Log('ConfigUpdateHandler')
+const logger = new Logger('ConfigUpdateHandler')
 
 interface ConfigUpdateHandlerParams {
   config: PartialDeep<Config>
   override?: boolean
 }
 
-export default class ConfigUpdateHandler
-  implements HandlerInterface<ConfigUpdateHandlerParams> {
+export class ConfigUpdateHandler
+  implements EventHandler<ConfigUpdateHandlerParams> {
   listen(args?: ConfigUpdateHandlerParams): Config {
-    log.info('Updating the configuration')
+    logger.info('Updating the configuration')
 
     if (is.undefined(args)) {
       throw new TypeError('Cannot update the configuration without arguments')
@@ -26,7 +26,7 @@ export default class ConfigUpdateHandler
 
     ;(Object.entries(args.config) as [keyof Config, unknown][]).forEach(
       ([key, value]) => {
-        log.debug('Updating key', key, 'with value', value)
+        logger.debug('Updating key', key, 'with value', value)
 
         if (!appStore.has(key)) {
           return
@@ -41,7 +41,7 @@ export default class ConfigUpdateHandler
         }
 
         if (args.override) {
-          log.debug('Total overwrite of the previous value')
+          logger.debug('Total overwrite of the previous value')
 
           appStore.set(key, value)
         } else {

@@ -1,4 +1,4 @@
-export default class Mo2InvalidConfigurationException extends Error {
+export class Mo2InvalidConfigurationException extends Error {
   constructor(params: readonly any[]) {
     if (params.length === 0) {
       throw new TypeError('Params cannot be empty.')

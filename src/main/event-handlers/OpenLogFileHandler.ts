@@ -1,7 +1,7 @@
 import { shell } from 'electron'
-import { HandlerInterface } from '../HandlerInterface'
+import { EventHandler } from '../EventHandler'
 
-export class OpenLogFileHandler implements HandlerInterface {
+export class OpenLogFileHandler implements EventHandler {
   async listen(file: string): Promise<void> {
     try {
       await shell.openExternal(file)

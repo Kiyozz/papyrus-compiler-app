@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is'
 
-export default class CompilerScriptException extends Error {
+export class ScriptCompilationException extends Error {
   constructor(script: string, err: string, cmd?: string) {
     const removedString = `Script ${script} failed to compile: `
 

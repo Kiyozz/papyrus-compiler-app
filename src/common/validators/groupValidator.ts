@@ -1,5 +1,5 @@
 import is from '@sindresorhus/is'
-import { Group } from '@common/interfaces/Group'
+import { Group } from '../interfaces/Group'
 import { scriptValidator } from './scriptValidator'
 
 function hasValidValues(group: Group): boolean {

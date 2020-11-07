@@ -1,7 +1,7 @@
 import { dialog } from 'electron'
-import { HandlerInterface } from '../HandlerInterface'
+import { EventHandler } from '../EventHandler'
 
-export class DialogHandler implements HandlerInterface {
+export class DialogHandler implements EventHandler {
   async listen(): Promise<any> {
     const result = await dialog.showOpenDialog({
       properties: ['openDirectory']

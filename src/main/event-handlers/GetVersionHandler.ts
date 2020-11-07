@@ -1,9 +1,9 @@
 import { is } from 'electron-util'
 import { app } from 'electron'
 import { join, readFile } from '../services/path'
-import { HandlerInterface } from '../HandlerInterface'
+import { EventHandler } from '../EventHandler'
 
-export class GetVersionHandler implements HandlerInterface {
+export class GetVersionHandler implements EventHandler {
   async listen(): Promise<string> {
     if (is.development) {
       try {

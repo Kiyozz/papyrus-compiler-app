@@ -1,5 +1,5 @@
 import { toAntiSlash, toSlash } from '../slash'
-import { AppStore } from '../appStore'
+import { AppStore } from '../store'
 import is from '@sindresorhus/is'
 import * as util from 'electron-util'
 import * as path from 'path'

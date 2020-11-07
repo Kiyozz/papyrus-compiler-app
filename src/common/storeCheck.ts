@@ -1,5 +1,5 @@
-import { AppStore } from '@common/appStore'
-import { Config } from '@common/interfaces/Config'
+import { AppStore } from '@pca/common/store'
+import { Config } from '@pca/common/interfaces/Config'
 import is from '@sindresorhus/is'
 import { groupValidator } from './validators/groupValidator'
 
