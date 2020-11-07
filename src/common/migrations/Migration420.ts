@@ -1,8 +1,9 @@
-import { AppStore, toAntiSlash, toSlash } from '@common'
+import { toAntiSlash, toSlash } from '../slash'
+import { AppStore } from '../appStore'
 import is from '@sindresorhus/is'
 import * as util from 'electron-util'
 import * as path from 'path'
-import type { Migration } from './Migration'
+import { Migration } from './Migration'
 
 export class Migration420 implements Migration {
   migrate(store: AppStore): number {

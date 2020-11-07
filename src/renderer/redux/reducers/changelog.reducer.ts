@@ -9,7 +9,10 @@ export interface ChangelogState {
 }
 
 export default function createChangeLogReducer(prefix: string) {
-  const showNotesSaved = (localStorage.getItem(`${prefix}/${CONSTANTS.APP_CHANGELOG_SET_SHOW_NOTES}`) ?? 'false') === 'true'
+  const showNotesSaved =
+    (localStorage.getItem(
+      `${prefix}/${CONSTANTS.APP_CHANGELOG_SET_SHOW_NOTES}`
+    ) ?? 'false') === 'true'
 
   const initialState: ChangelogState = {
     notes: '',
@@ -18,7 +21,10 @@ export default function createChangeLogReducer(prefix: string) {
     latestVersion: ''
   }
 
-  return function changelogReducer(state = initialState, action: AnyAction): ChangelogState {
+  return function changelogReducer(
+    state = initialState,
+    action: AnyAction
+  ): ChangelogState {
     switch (action.type) {
       case CONSTANTS.APP_CHANGELOG_GET_LATEST_NOTES_SUCCESS:
         return {

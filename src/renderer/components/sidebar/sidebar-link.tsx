@@ -9,7 +9,8 @@ interface Props {
   exact?: boolean
 }
 
-type LinkPropsAny = React.PropsWithoutRef<LinkProps<any>> & React.RefAttributes<HTMLAnchorElement>
+type LinkPropsAny = React.PropsWithoutRef<LinkProps<any>> &
+  React.RefAttributes<HTMLAnchorElement>
 
 interface ActiveLinkProps extends LinkPropsAny {
   to: string
@@ -17,7 +18,12 @@ interface ActiveLinkProps extends LinkPropsAny {
   activeClassName?: string
 }
 
-export const ActiveLink: React.FC<ActiveLinkProps> = ({ children, className, activeClassName, ...props }) => {
+export const ActiveLink: React.FC<ActiveLinkProps> = ({
+  children,
+  className,
+  activeClassName,
+  ...props
+}) => {
   return (
     <Link
       {...props}
@@ -36,7 +42,12 @@ const SidebarLink: React.FC<Props> = ({ to, children }) => {
   }, [])
 
   return (
-    <ActiveLink to={to} className={classes.link} activeClassName={classes.active} onClick={onClickLink as any}>
+    <ActiveLink
+      to={to}
+      className={classes.link}
+      activeClassName={classes.active}
+      onClick={onClickLink as any}
+    >
       {children}
     </ActiveLink>
   )

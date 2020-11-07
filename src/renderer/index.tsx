@@ -1,6 +1,6 @@
-import { EVENTS } from '@common'
+import * as EVENTS from '@common/events'
 import { LocationProvider } from '@reach/router'
-import ipc from './redux/api/ipc-renderer'
+import { ipcRenderer } from '@common/ipc'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider as ReduxProvider } from 'react-redux'
@@ -36,11 +36,20 @@ try {
     document.getElementById('app')
   )
 } catch (e) {
-  ipc.callMain(EVENTS.IN_APP_ERROR, e)
+  ipcRenderer.invoke(EVENTS.IN_APP_ERROR, e)
 }
 
 if (process.env.NODE_ENV === 'production') {
-  window.onerror = (event: Event | string, source?: string, lineno?: number, colno?: number, error?: Error) => {
-    ipc.callMain(EVENTS.IN_APP_ERROR, new Error(`From ${source}: L${lineno}C${colno}. ERROR: ${error}`))
+  window.onerror = (
+    event: Event | string,
+    source?: string,
+    lineno?: number,
+    colno?: number,
+    error?: Error
+  ) => {
+    ipcRenderer.invoke(
+      EVENTS.IN_APP_ERROR,
+      new Error(`From ${source}: L${lineno}C${colno}. ERROR: ${error}`)
+    )
   }
 }

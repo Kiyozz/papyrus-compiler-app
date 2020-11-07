@@ -1,4 +1,5 @@
-import { toAntiSlash, toSource } from '@common'
+import { toAntiSlash } from '@common/slash'
+import { toSource } from '@common/game'
 import { useMemo } from 'react'
 import { usePageContext } from '../components/page/page-context'
 
@@ -19,10 +20,21 @@ export function useCmdLimitation(sources: string[]): Out {
   } = usePageContext()
   const max = useMemo(() => 8191, [])
 
-  const baseGameScriptsSources = useMemo(() => toAntiSlash(toSource(gameType)), [gameType])
-  const baseBaseScriptsSourcesAbsolute = useMemo(() => toAntiSlash(`${gamePath}/Data/${baseGameScriptsSources}`), [baseGameScriptsSources, gamePath])
-  const compilerPathAbsolute = useMemo(() => toAntiSlash(`${gamePath}/${compilerPath}`), [compilerPath, gamePath])
-  const instanceWithMods = useMemo(() => toAntiSlash(`${instance}/mods`), [instance])
+  const baseGameScriptsSources = useMemo(
+    () => toAntiSlash(toSource(gameType)),
+    [gameType]
+  )
+  const baseBaseScriptsSourcesAbsolute = useMemo(
+    () => toAntiSlash(`${gamePath}/Data/${baseGameScriptsSources}`),
+    [baseGameScriptsSources, gamePath]
+  )
+  const compilerPathAbsolute = useMemo(
+    () => toAntiSlash(`${gamePath}/${compilerPath}`),
+    [compilerPath, gamePath]
+  )
+  const instanceWithMods = useMemo(() => toAntiSlash(`${instance}/mods`), [
+    instance
+  ])
   const spacesBetweenArgs = 4
   const averageScriptLength = 15
 

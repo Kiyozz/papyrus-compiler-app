@@ -8,7 +8,9 @@ interface UseDropOptions {
   onDrop: OnDropFunction | null
 }
 
-export const useDrop = (options: UseDropOptions): JSX.Element | undefined | null => {
+export const useDrop = (
+  options: UseDropOptions
+): JSX.Element | undefined | null => {
   const { addScriptsButton, setAddScriptsButton, setOnDrop } = usePageContext()
 
   React.useEffect(() => {

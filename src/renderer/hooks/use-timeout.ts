@@ -9,7 +9,10 @@ interface Options {
   end?: EndCallback
 }
 
-export default function useTimeout(start: StartCallback, options: Options = { time: 3000 }) {
+export default function useTimeout(
+  start: StartCallback,
+  options: Options = { time: 3000 }
+) {
   const timer = useRef<any>(null)
 
   useEffect(() => {

@@ -18,14 +18,22 @@ import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 
 import classes from './open-compilation-logs.module.scss'
 
-const LogsListItem: React.FC<{ script: ScriptModel; logs: string }> = ({ script, logs }) => (
+const LogsListItem: React.FC<{ script: ScriptModel; logs: string }> = ({
+  script,
+  logs
+}) => (
   <div>
     <Typography className={classes.logTitle} variant="h6" component="h3">
       {script.name}
     </Typography>
     <code className={classes.logsContainer}>
       {logs.split('\n').map((log, i) => (
-        <Typography className={classes.logItem} variant="caption" component="span" key={i}>
+        <Typography
+          className={classes.logItem}
+          variant="caption"
+          component="span"
+          key={i}
+        >
           {log} <br />
         </Typography>
       ))}
@@ -56,15 +64,24 @@ const OpenCompilationLogs: React.FC = () => {
         <ListItemText primary={t('common.logs.nav')} />
       </ListItem>
 
-      <Dialog open={popupOpen} onClose={onClickButtonCloseLogs} maxWidth="lg" fullWidth>
+      <Dialog
+        open={popupOpen}
+        onClose={onClickButtonCloseLogs}
+        maxWidth="lg"
+        fullWidth
+      >
         <DialogTitle>{t('common.logs.title')}</DialogTitle>
         <DialogContent>
           {logs.length > 0
-            ? logs.map(([script, scriptLogs], index) => <LogsListItem key={index} script={script} logs={scriptLogs} />)
+            ? logs.map(([script, scriptLogs], index) => (
+                <LogsListItem key={index} script={script} logs={scriptLogs} />
+              ))
             : t('common.logs.noLogs')}
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClickButtonCloseLogs}>{t('common.logs.close')}</Button>
+          <Button onClick={onClickButtonCloseLogs}>
+            {t('common.logs.close')}
+          </Button>
         </DialogActions>
       </Dialog>
     </>

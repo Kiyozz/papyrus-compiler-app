@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is'
 import appStore from '../../common/appStore'
-import { getExecutable, toOtherSource, toSource } from '@common'
+import { getExecutable, toOtherSource, toSource } from '@common/game'
 import CompilerScriptException from '../exceptions/CompilerScriptException'
 import InvalidConfigurationException from '../exceptions/InvalidConfigurationException'
 import Mo2InvalidConfigurationException from '../exceptions/mo2/Mo2InvalidConfigurationException'
@@ -19,7 +19,10 @@ interface Runner {
 
 const log = new Log('Compile')
 
-function checkCommandResult(script: string, result: { stdout: string; stderr: string }) {
+function checkCommandResult(
+  script: string,
+  result: { stdout: string; stderr: string }
+) {
   const isSuccess = /0 failed/.test(result.stdout)
 
   if (!isSuccess) {
@@ -50,13 +53,17 @@ export async function compile(scriptName: string): Promise<string> {
   log.info('Game executable is', gameExe)
 
   if (!(await path.exists(compilerPath))) {
-    log.error('Configuration is invalid, papyrus compiler does not exists in game directory')
+    log.error(
+      'Configuration is invalid, papyrus compiler does not exists in game directory'
+    )
 
     throw new InvalidConfigurationException(compilerPath)
   }
 
   if (!(await path.exists(gameExe))) {
-    log.error('Configuration is invalid, game executable does not exists in game directory')
+    log.error(
+      'Configuration is invalid, game executable does not exists in game directory'
+    )
 
     throw new InvalidConfigurationException(gameExe)
   }
@@ -124,6 +131,10 @@ export async function compile(scriptName: string): Promise<string> {
     const outputStdErr = err.stderr.replace('<unknown>', 'unknown')
     const outputStdOut = err.stdout.replace('<unknown>', 'unknown')
 
-    throw new CompilerScriptException(scriptName, !outputStdErr ? outputStdOut : outputStdErr, cmd)
+    throw new CompilerScriptException(
+      scriptName,
+      !outputStdErr ? outputStdOut : outputStdErr,
+      cmd
+    )
   }
 }

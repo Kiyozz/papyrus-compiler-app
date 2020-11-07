@@ -20,7 +20,11 @@ const GroupsListItem: React.FC<Props> = ({ group, onDelete, onEdit }) => {
   return (
     <Paper key={group.name} className={classes.item}>
       <div className={classes.actions}>
-        <GroupsListItemMenu onEdit={onEdit(group)} onDelete={onDelete(group)} group={group} />
+        <GroupsListItemMenu
+          onEdit={onEdit(group)}
+          onDelete={onDelete(group)}
+          group={group}
+        />
       </div>
       <Typography variant="body1" component="div">
         {group.name}

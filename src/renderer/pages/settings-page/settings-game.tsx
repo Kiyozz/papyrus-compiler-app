@@ -10,7 +10,7 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import Alert from '@material-ui/lab/Alert'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { getExecutable, Games } from '@common'
+import { Games, getExecutable } from '@common/game'
 import FolderTextField from '../../components/folder-text-field/folder-text-field'
 import { usePageContext } from '../../components/page/page-context'
 import { useSettings } from './settings-context'
@@ -22,7 +22,11 @@ interface Props {
   onClickRefreshInstallation: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onClickRefreshInstallation }) => {
+const SettingsGame: React.FC<Props> = ({
+  onChangeGameFolder,
+  onClickRadio,
+  onClickRefreshInstallation
+}) => {
   const { t } = useTranslation()
   const {
     config: { gameType, gamePath }
@@ -37,8 +41,16 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
       </Typography>
       <FormControl component="fieldset" fullWidth>
         <RadioGroup row value={gameType} onChange={onClickRadio}>
-          <FormControlLabel value={Games.LE} control={<Radio />} label={Games.LE} />
-          <FormControlLabel value={Games.SE} control={<Radio />} label={Games.SE} />
+          <FormControlLabel
+            value={Games.LE}
+            control={<Radio />}
+            label={Games.LE}
+          />
+          <FormControlLabel
+            value={Games.SE}
+            control={<Radio />}
+            label={Games.SE}
+          />
         </RadioGroup>
       </FormControl>
       <FolderTextField
@@ -53,7 +65,10 @@ const SettingsGame: React.FC<Props> = ({ onChangeGameFolder, onClickRadio, onCli
           severity="error"
           className={classes.alert}
           action={
-            <Button onClick={onClickRefreshInstallation} startIcon={<RefreshIcon />}>
+            <Button
+              onClick={onClickRefreshInstallation}
+              startIcon={<RefreshIcon />}
+            >
               {t('page.settings.actions.refresh')}
             </Button>
           }

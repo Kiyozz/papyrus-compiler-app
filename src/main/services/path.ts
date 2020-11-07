@@ -1,4 +1,4 @@
-import { toSlash } from '@common'
+import { toSlash } from '@common/slash'
 import { is } from 'electron-util'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
@@ -42,7 +42,13 @@ export async function exists(fileOrFolder: string): Promise<boolean> {
 }
 
 export async function ensureDirs(items: string[]): Promise<void> {
-  log.debug(`Checking presence of director${pluralize(items, { single: 'y', multiple: 'is' })}`, ...items.map(i => `"${i}"`))
+  log.debug(
+    `Checking presence of director${pluralize(items, {
+      single: 'y',
+      multiple: 'is'
+    })}`,
+    ...items.map(i => `"${i}"`)
+  )
 
   for (const item of items) {
     try {
@@ -54,7 +60,10 @@ export async function ensureDirs(items: string[]): Promise<void> {
 }
 
 export async function ensureFiles(items: string[]): Promise<void> {
-  log.debug(`Checking presence of file${pluralize(items)}`, ...items.map(i => `"${i}"`))
+  log.debug(
+    `Checking presence of file${pluralize(items)}`,
+    ...items.map(i => `"${i}"`)
+  )
 
   for (const item of items) {
     try {
@@ -65,7 +74,10 @@ export async function ensureFiles(items: string[]): Promise<void> {
   }
 }
 
-export async function getPathsInFolder(fileNames: string[], options: fg.Options = {}): Promise<string[]> {
+export async function getPathsInFolder(
+  fileNames: string[],
+  options: fg.Options = {}
+): Promise<string[]> {
   log.info('Getting paths in folder', fileNames, 'with options', options)
 
   const response = await fg(

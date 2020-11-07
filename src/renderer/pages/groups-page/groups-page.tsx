@@ -27,7 +27,13 @@ const GroupsPage: React.FC<Props> = () => {
   const { groups, updateConfig } = usePageContext()
   const addGroup = useCallback(
     (group: GroupModel) => {
-      if (!is.undefined(groups.find(g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase()))) {
+      if (
+        !is.undefined(
+          groups.find(
+            g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase()
+          )
+        )
+      ) {
         return
       }
 
@@ -46,8 +52,13 @@ const GroupsPage: React.FC<Props> = () => {
   const editGroup = useCallback(
     ({ group, lastGroupName }: EditGroupParams) => {
       if (
-        group.name.trim().toLowerCase() !== lastGroupName.trim().toLowerCase() &&
-        !is.undefined(groups.find(g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase()))
+        group.name.trim().toLowerCase() !==
+          lastGroupName.trim().toLowerCase() &&
+        !is.undefined(
+          groups.find(
+            g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase()
+          )
+        )
       ) {
         return
       }
@@ -72,13 +83,21 @@ const GroupsPage: React.FC<Props> = () => {
   )
   const removeGroup = useCallback(
     (group: GroupModel) => {
-      if (is.undefined(groups.find(g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase()))) {
+      if (
+        is.undefined(
+          groups.find(
+            g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase()
+          )
+        )
+      ) {
         return
       }
 
       updateConfig(
         {
-          groups: groups.map(g => ({ name: g.name, scripts: g.scripts })).filter(g => g.name !== group.name)
+          groups: groups
+            .map(g => ({ name: g.name, scripts: g.scripts }))
+            .filter(g => g.name !== group.name)
         },
         true
       )
@@ -87,7 +106,9 @@ const GroupsPage: React.FC<Props> = () => {
   )
 
   const [showAddPopup, setShowPopup] = useState(false)
-  const [editingGroup, setEditingGroup] = useState<GroupModel | undefined>(undefined)
+  const [editingGroup, setEditingGroup] = useState<GroupModel | undefined>(
+    undefined
+  )
 
   const onClickRemoveGroup = useCallback(
     (group: GroupModel) => {
@@ -145,12 +166,25 @@ const GroupsPage: React.FC<Props> = () => {
 
       <Page>
         <div>
-          <GroupsDialog group={editingGroup} open={showAddPopup} onGroupAdd={onGroupAdd} onGroupEdit={onGroupEdit} onClose={onClosePopup} />
+          <GroupsDialog
+            group={editingGroup}
+            open={showAddPopup}
+            onGroupAdd={onGroupAdd}
+            onGroupEdit={onGroupEdit}
+            onClose={onClosePopup}
+          />
 
           <Fade in={groups.length > 0}>
             <div className={classes.groupsList}>
               {groups.map(group => {
-                return <GroupsListItem onDelete={onClickRemoveGroup} onEdit={onClickEditGroup} group={group} key={group.name} />
+                return (
+                  <GroupsListItem
+                    onDelete={onClickRemoveGroup}
+                    onEdit={onClickEditGroup}
+                    group={group}
+                    key={group.name}
+                  />
+                )
               })}
             </div>
           </Fade>

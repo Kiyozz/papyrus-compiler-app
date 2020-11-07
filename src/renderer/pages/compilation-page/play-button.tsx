@@ -14,7 +14,11 @@ interface Props {
 
 const PlayButton: React.FC<Props> = ({ onClick }) => {
   const { t } = useTranslation()
-  const { isCompilationRunning, compilationScripts, hoveringScript } = useCompilationContext()
+  const {
+    isCompilationRunning,
+    compilationScripts,
+    hoveringScript
+  } = useCompilationContext()
 
   const Icon: React.FC<{ className: string }> = ({ className }) => {
     if (isCompilationRunning) {
@@ -26,8 +30,14 @@ const PlayButton: React.FC<Props> = ({ onClick }) => {
 
   return (
     <Fade in={!buttonsDisable(compilationScripts, hoveringScript)}>
-      <Fab variant="extended" color="secondary" onClick={onClick} disabled={compilationScripts.length === 0 || isCompilationRunning}>
-        <Icon className={classes.fabIcon} /> {t('page.compilation.actions.start')}
+      <Fab
+        variant="extended"
+        color="secondary"
+        onClick={onClick}
+        disabled={compilationScripts.length === 0 || isCompilationRunning}
+      >
+        <Icon className={classes.fabIcon} />{' '}
+        {t('page.compilation.actions.start')}
       </Fab>
     </Fade>
   )

@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, createContext } from 'react'
+import React, { createContext, useContext, useMemo } from 'react'
 import { SettingsState } from '../../redux/reducers/settings.reducer'
 import { useStoreSelector } from '../../redux/use-store-selector'
 
@@ -26,7 +26,11 @@ const SettingsContextProvider: React.FC = ({ children, ...props }) => {
     [state, props]
   )
 
-  return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>
+  return (
+    <SettingsContext.Provider value={value}>
+      {children}
+    </SettingsContext.Provider>
+  )
 }
 
 export default SettingsContextProvider

@@ -1,6 +1,6 @@
 {
   "endOfLine": "lf",
-  "printWidth": 160,
+  "printWidth": 80,
   "jsxSingleQuote": false,
   "jsxBracketSameLine": false,
   "semi": false,

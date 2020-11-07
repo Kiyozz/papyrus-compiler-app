@@ -12,7 +12,10 @@ const initialState: CompilationLogsState = {
   popupOpen: false
 }
 
-export default function compilationLogsReducer(state = initialState, action: AnyAction): CompilationLogsState {
+export default function compilationLogsReducer(
+  state = initialState,
+  action: AnyAction
+): CompilationLogsState {
   switch (action.type) {
     case CONSTANTS.APP_COMPILATION_LOGS_POPUP_TOGGLE:
       return {
@@ -31,7 +34,13 @@ export default function compilationLogsReducer(state = initialState, action: Any
       if (typeof payload[1] !== 'string') {
         return {
           ...state,
-          logs: [...state.logs, [payload[0], 'An error occured. For more info, checks the log file (CTRL + ALT + J when focused on the app).']]
+          logs: [
+            ...state.logs,
+            [
+              payload[0],
+              'An error occured. For more info, checks the log file (CTRL + ALT + J when focused on the app).'
+            ]
+          ]
         }
       }
 

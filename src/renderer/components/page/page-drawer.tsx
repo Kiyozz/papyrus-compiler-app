@@ -65,7 +65,11 @@ const PageDrawer: React.FC = () => {
         <Box bgcolor="background.default" className={classes.box}>
           <div className={classes.drawerTop}>
             <AppIcon fontSize="large" color="primary" />
-            <Typography className={classes.titleApp} variant="h5" component="h1">
+            <Typography
+              className={classes.titleApp}
+              variant="h5"
+              component="h1"
+            >
               PCA
               <Typography className={classes.titleAppVersion} component="span">
                 {version}
@@ -78,8 +82,18 @@ const PageDrawer: React.FC = () => {
               const isActive = pathname === Link.path
 
               return (
-                <ActiveLink tabIndex={-1} key={Link.path} activeClassName={classes.active} className={classes.link} to={Link.path} onClick={onClick}>
-                  <Box bgcolor={isActive ? 'primary.main' : ''} className={classes.drawerLink}>
+                <ActiveLink
+                  tabIndex={-1}
+                  key={Link.path}
+                  activeClassName={classes.active}
+                  className={classes.link}
+                  to={Link.path}
+                  onClick={onClick}
+                >
+                  <Box
+                    bgcolor={isActive ? 'primary.main' : ''}
+                    className={classes.drawerLink}
+                  >
                     <ListItem button disableRipple>
                       <ListItemIcon color="inherit">
                         <Link.Icon />

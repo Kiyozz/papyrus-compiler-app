@@ -14,7 +14,9 @@ interface Props {
 const Page: React.FC<Props> = ({ children, className }) => {
   return (
     <Fade timeout={500} in appear exit={false} mountOnEnter unmountOnExit>
-      <Container className={cx(classes.container, className)}>{children}</Container>
+      <Container className={cx(classes.container, className)}>
+        {children}
+      </Container>
     </Fade>
   )
 }

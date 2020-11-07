@@ -1,7 +1,6 @@
 dependencies:
   '@sindresorhus/is': 3.1.2
   deepmerge: 4.2.2
-  electron-better-ipc: 1.1.1
   electron-default-menu: 1.0.2
   electron-log: 4.2.4
   electron-store: 6.0.1
@@ -3859,12 +3858,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-dldq3ZfFtgVTJMLjOe+/3sROTzALlL9E34V4/sDtUd/KlBSS0s6U1/+WPE1B4sj9CXHJpL1M6rhNJnc9Wbal9w==
-  /electron-better-ipc/1.1.1:
-    dependencies:
-      serialize-error: 5.0.0
-    dev: false
-    resolution:
-      integrity: sha512-Y8Ty54HJtzT6aWNTyE092W/7q8y3+yJz0XvRpOKGIsLDL2H7oWIFkUegmB+6h5SszjtBiQFpmNmHOKfkDZ8HbQ==
   /electron-builder/22.8.1:
     dependencies:
       '@types/yargs': 15.0.9
@@ -8758,14 +8751,6 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-BsVKsiGcQMFwT8UxypobUKyv7irCNRHk1T0G680vk88yf6LBByGcZJOTJCrTP2xVN6yI+XjPJcNuE3V4fT9sAg==
-  /serialize-error/5.0.0:
-    dependencies:
-      type-fest: 0.8.1
-    dev: false
-    engines:
-      node: '>=8'
-    resolution:
-      integrity: sha512-/VtpuyzYf82mHYTtI4QKtwHa79vAdU5OQpNPAmE/0UDdlGT0ZxHwC+J6gXkw29wwoVI8fMPsfcVHOwXtUQYYQA==
   /serialize-error/7.0.1:
     dependencies:
       type-fest: 0.13.1
@@ -9714,6 +9699,7 @@ packages:
     resolution:
       integrity: sha512-q+MB8nYR1KDLrgr4G5yemftpMC7/QLqVndBmEEdqzmNj5dcFOO4Oo8qlwZE3ULT3+Zim1F8Kq4cBnikNhlCMlg==
   /type-fest/0.8.1:
+    dev: true
     engines:
       node: '>=8'
     resolution:
@@ -10543,7 +10529,6 @@ specifiers:
   deepmerge: ~4.2.2
   dotenv: ~8.2.0
   electron: ~10.1.5
-  electron-better-ipc: ~1.1.1
   electron-builder: ~22.8.1
   electron-default-menu: ~1.0.2
   electron-devtools-installer: ~3.1.1

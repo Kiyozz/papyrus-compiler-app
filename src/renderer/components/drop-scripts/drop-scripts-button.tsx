@@ -11,7 +11,13 @@ interface Props {
   className?: string
 }
 
-const DropScriptsButton: React.FC<Props> = ({ getInputProps, children, buttonRef, Button, className }) => {
+const DropScriptsButton: React.FC<Props> = ({
+  getInputProps,
+  children,
+  buttonRef,
+  Button,
+  className
+}) => {
   return (
     <div ref={buttonRef} className={cx(className)}>
       {Button}

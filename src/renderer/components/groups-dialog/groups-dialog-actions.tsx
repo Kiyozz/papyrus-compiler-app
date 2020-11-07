@@ -12,15 +12,27 @@ interface Props {
   AddScriptsButton?: JSX.Element | null
 }
 
-const GroupsDialogActions: React.FC<Props> = ({ name, AddScriptsButton, onClose, isEdit }) => {
+const GroupsDialogActions: React.FC<Props> = ({
+  name,
+  AddScriptsButton,
+  onClose,
+  isEdit
+}) => {
   const { t } = useTranslation()
 
   return (
     <>
       <div className={classes.auto}>{AddScriptsButton}</div>
       <Button onClick={onClose}>{t('page.groups.dialog.close')}</Button>
-      <Button type="submit" color="primary" variant="contained" disabled={name === ''}>
-        {isEdit ? t('page.groups.actions.edit') : t('page.groups.actions.create')}
+      <Button
+        type="submit"
+        color="primary"
+        variant="contained"
+        disabled={name === ''}
+      >
+        {isEdit
+          ? t('page.groups.actions.edit')
+          : t('page.groups.actions.create')}
       </Button>
     </>
   )

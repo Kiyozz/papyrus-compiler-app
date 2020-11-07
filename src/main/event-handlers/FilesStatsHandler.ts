@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is'
 import { HandlerInterface } from '../HandlerInterface'
-import { Stats } from '@common'
+import { Stats } from '@common/interfaces/Stats'
 import { stat } from '../services/path'
 
 export class FilesStatsHandler implements HandlerInterface<string[]> {

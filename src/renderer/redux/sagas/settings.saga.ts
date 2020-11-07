@@ -36,5 +36,8 @@ function* detectBadInstallation() {
 
 export default function* settingsSaga() {
   yield takeLatest(CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS, detectFolders)
-  yield takeLatest(CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION, detectBadInstallation)
+  yield takeLatest(
+    CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION,
+    detectBadInstallation
+  )
 }

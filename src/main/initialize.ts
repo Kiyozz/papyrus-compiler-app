@@ -1,4 +1,4 @@
-import { EVENTS } from '@common'
+import * as EVENTS from '@common/events'
 import { is } from 'electron-util'
 import appStore from '../common/appStore'
 import { BadInstallationHandler } from './event-handlers/BadInstallationHandler'
@@ -14,7 +14,7 @@ import { OpenLogFileHandler } from './event-handlers/OpenLogFileHandler'
 import { HandlerInterface } from './HandlerInterface'
 import { registerMenus } from './registerMenus'
 import Log from './services/Log'
-import { move, ensureFiles } from './services/path'
+import { ensureFiles, move } from './services/path'
 import { registerEvents } from './services/registerEvents'
 
 const log = new Log('Initialize')
@@ -22,9 +22,14 @@ const log = new Log('Initialize')
 function installExtensions() {
   if (is.development) {
     const installer = require('electron-devtools-installer')
-    const extensions = [installer.REACT_DEVELOPER_TOOLS, installer.REDUX_DEVTOOLS]
+    const extensions = [
+      installer.REACT_DEVELOPER_TOOLS,
+      installer.REDUX_DEVTOOLS
+    ]
 
-    return Promise.all(extensions.map(name => installer.default(name))).catch(e => log.log(e))
+    return Promise.all(
+      extensions.map(name => installer.default(name))
+    ).catch(e => log.log(e))
   }
 }
 

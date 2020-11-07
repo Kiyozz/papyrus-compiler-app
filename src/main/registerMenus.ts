@@ -1,7 +1,5 @@
-import { EVENTS } from '@common'
 import is from '@sindresorhus/is'
 import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
-import { ipcMain as ipc } from 'electron-better-ipc'
 import defaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem } from 'electron-util'
 import Log from './services/Log'
@@ -15,7 +13,9 @@ interface RegisterMenusCallbacks {
 const log = new Log('RegisterMenus')
 
 export async function registerMenus({ openLogFile }: RegisterMenusCallbacks) {
-  const nexusPath = process.env.APP_NEXUS_PATH ?? 'https://github.com/Kiyozz/papyrus-compiler-app'
+  const nexusPath =
+    process.env.APP_NEXUS_PATH ??
+    'https://github.com/Kiyozz/papyrus-compiler-app'
 
   const menu = appMenu([
     {
@@ -35,7 +35,6 @@ export async function registerMenus({ openLogFile }: RegisterMenusCallbacks) {
           label: 'Reset',
           click() {
             appStore.store = defaultConfig
-            ipc.callFocusedRenderer(EVENTS.CONFIG_RESET)
           }
         }
       ]

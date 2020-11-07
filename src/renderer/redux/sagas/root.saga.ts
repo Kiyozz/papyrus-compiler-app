@@ -5,5 +5,10 @@ import initializationSaga from './initialization.saga'
 import settingsSaga from './settings.saga'
 
 export default function* rootSaga() {
-  yield all([fork(initializationSaga), fork(compilationSaga), fork(changelogSaga), fork(settingsSaga)])
+  yield all([
+    fork(initializationSaga),
+    fork(compilationSaga),
+    fork(changelogSaga),
+    fork(settingsSaga)
+  ])
 }

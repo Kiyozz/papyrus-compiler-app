@@ -1,4 +1,13 @@
-import { Typography, Button, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar } from '@material-ui/core'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Snackbar,
+  Typography
+} from '@material-ui/core'
 import DownloadIcon from '@material-ui/icons/GetApp'
 import CloseIcon from '@material-ui/icons/Close'
 
@@ -42,7 +51,12 @@ const Code: React.FC<{ value: string }> = ({ value }) => {
 const DialogChangelog: React.FC<Props> = ({ onClose }) => {
   const shell = useMemo(() => window.require('electron').shell, [])
   const { t } = useTranslation()
-  const releaseLink = useMemo(() => process.env.APP_NEXUS_PATH ?? 'https://www.nexusmods.com/skyrim/mods/96339?tab=files', [])
+  const releaseLink = useMemo(
+    () =>
+      process.env.APP_NEXUS_PATH ??
+      'https://www.nexusmods.com/skyrim/mods/96339?tab=files',
+    []
+  )
   const showNotes = useStoreSelector(store => store.changelog.showNotes)
   const notes = useStoreSelector(store => store.changelog.notes)
   const latestVersion = useStoreSelector(store => store.changelog.latestVersion)
@@ -88,14 +102,23 @@ const DialogChangelog: React.FC<Props> = ({ onClose }) => {
             <Button color="primary" size="small" onClick={onClickShowNotes}>
               {t('changelog.available.view')}
             </Button>
-            <IconButton onClick={onCloseDialog} aria-label="close" color="inherit">
+            <IconButton
+              onClick={onCloseDialog}
+              aria-label="close"
+              color="inherit"
+            >
               <CloseIcon fontSize="small" />
             </IconButton>
           </>
         }
       />
 
-      <Dialog open={isUserShowNotes} fullWidth maxWidth="sm" onClose={onCloseDialog}>
+      <Dialog
+        open={isUserShowNotes}
+        fullWidth
+        maxWidth="sm"
+        onClose={onCloseDialog}
+      >
         <DialogTitle>{t('changelog.newVersion')}</DialogTitle>
         <DialogContent>
           <ReactMarkdown
@@ -109,7 +132,12 @@ const DialogChangelog: React.FC<Props> = ({ onClose }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={onCloseDialog}>Close</Button>
-          <Button color="primary" variant="contained" startIcon={<DownloadIcon />} onClick={onClickDownloadRelease}>
+          <Button
+            color="primary"
+            variant="contained"
+            startIcon={<DownloadIcon />}
+            onClick={onClickDownloadRelease}
+          >
             Download
           </Button>
         </DialogActions>

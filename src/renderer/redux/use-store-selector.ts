@@ -9,7 +9,9 @@ export function useStoreSelector<R>(selector: (state: RootStore) => R) {
   return useSelector<RootStore, R>(selector)
 }
 
-export function useAction<R extends ActionFunctionAny<unknown>>(action: R): (...params: Parameters<R>) => void {
+export function useAction<R extends ActionFunctionAny<unknown>>(
+  action: R
+): (...params: Parameters<R>) => void {
   const dispatch = useDispatch()
 
   return useMemo(() => {
