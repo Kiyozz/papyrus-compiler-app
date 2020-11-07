@@ -14,7 +14,10 @@ interface Props {
   onClearScripts: () => void
 }
 
-const CompilationPageActions: React.FC<Props> = ({ hasScripts, onClearScripts }) => {
+const CompilationPageActions: React.FC<Props> = ({
+  hasScripts,
+  onClearScripts
+}) => {
   const { t } = useTranslation()
   const { compilationScripts, hoveringScript } = useCompilationContext()
 
@@ -23,9 +26,20 @@ const CompilationPageActions: React.FC<Props> = ({ hasScripts, onClearScripts })
   }, [onClearScripts])
 
   return (
-    <Fade in={compilationScripts.length >= 1 && !buttonsDisable(compilationScripts, hoveringScript)}>
-      <Fab className={classes.fabsActions} onClick={onClickEmpty} variant="extended" disabled={!hasScripts}>
-        <ClearIcon className={classes.fabsActionsIcon} /> {t('page.compilation.actions.clearList')}
+    <Fade
+      in={
+        compilationScripts.length >= 1 &&
+        !buttonsDisable(compilationScripts, hoveringScript)
+      }
+    >
+      <Fab
+        className={classes.fabsActions}
+        onClick={onClickEmpty}
+        variant="extended"
+        disabled={!hasScripts}
+      >
+        <ClearIcon className={classes.fabsActionsIcon} />{' '}
+        {t('page.compilation.actions.clearList')}
       </Fab>
     </Fade>
   )

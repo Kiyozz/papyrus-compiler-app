@@ -1,5 +1,5 @@
 import appStore from '../../common/appStore'
-import { Config } from '@common'
+import { Config } from '@common/interfaces/Config'
 import { HandlerInterface } from '../HandlerInterface'
 import Log from '../services/Log'
 

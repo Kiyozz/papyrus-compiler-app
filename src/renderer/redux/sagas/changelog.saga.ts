@@ -1,5 +1,13 @@
 import compareVersions from 'compare-versions'
-import { call, select, delay, take, put, race, takeLatest } from 'redux-saga/effects'
+import {
+  call,
+  delay,
+  put,
+  race,
+  select,
+  take,
+  takeLatest
+} from 'redux-saga/effects'
 import { GithubReleaseModel } from '../../models'
 import actions, { CONSTANTS } from '../actions'
 import apiFactory from '../api/api-factory'
@@ -13,7 +21,10 @@ function* getLatestRelease() {
   const version = yield select((store: RootStore) => store.changelog.version)
 
   try {
-    const result: [GithubReleaseModel[] | undefined, boolean | undefined] = yield race([call(api.getLatestNotes), delay(5000)])
+    const result: [
+      GithubReleaseModel[] | undefined,
+      boolean | undefined
+    ] = yield race([call(api.getLatestNotes), delay(5000)])
 
     if (typeof result[1] === 'undefined' && typeof result[0] !== 'undefined') {
       const [release] = result[0] as [GithubReleaseModel]
@@ -30,7 +41,11 @@ function* getLatestRelease() {
         return
       }
 
-      yield put(actions.changelog.latestNotes.failed(new Error(`Version ${version} not found.`)))
+      yield put(
+        actions.changelog.latestNotes.failed(
+          new Error(`Version ${version} not found.`)
+        )
+      )
     }
   } catch (e) {
     yield put(actions.changelog.latestNotes.failed(e))

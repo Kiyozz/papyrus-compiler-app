@@ -7,8 +7,8 @@
     "experimentalDecorators": false,
     "baseUrl": "./",
     "paths": {
-      "@common": [
-        "./src/common/index.ts"
+      "@common/*": [
+        "./src/common/*"
       ]
     }
   }

@@ -19,7 +19,12 @@ interface Props {
   accept?: string
   preventDropOnDocument?: boolean
   onDrop?: OnDropFunction
-  onClick?: (e: React.MouseEvent<HTMLDivElement>, buttonRef: ButtonRef, inputRef: InputRef, rootRef: RootRef) => void
+  onClick?: (
+    e: React.MouseEvent<HTMLDivElement>,
+    buttonRef: ButtonRef,
+    inputRef: InputRef,
+    rootRef: RootRef
+  ) => void
   onlyClickButton?: boolean
   children: (renderProps: RenderChildren) => React.ReactNode
   Button?: JSX.Element | null
@@ -42,7 +47,13 @@ const DropScripts: React.FC<Props> = ({
   children,
   Button
 }) => {
-  const { getRootProps, isDragActive, getInputProps, inputRef, rootRef } = useDropzone({
+  const {
+    getRootProps,
+    isDragActive,
+    getInputProps,
+    inputRef,
+    rootRef
+  } = useDropzone({
     onDrop: files => onDrop?.(files),
     accept,
     preventDropOnDocument
@@ -52,7 +63,10 @@ const DropScripts: React.FC<Props> = ({
   const onClickRoot = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (onlyClickButton) {
-        if (e.target !== buttonRef.current && !nodeService.isChildren(buttonRef.current, e.target as HTMLElement)) {
+        if (
+          e.target !== buttonRef.current &&
+          !nodeService.isChildren(buttonRef.current, e.target as HTMLElement)
+        ) {
           e.stopPropagation()
 
           return
@@ -64,7 +78,14 @@ const DropScripts: React.FC<Props> = ({
     [inputRef, onlyClickButton, buttonRef, rootRef, onClick]
   )
 
-  const AddButton = <DropScriptsButton className={buttonClassName} buttonRef={buttonRef} getInputProps={getInputProps} Button={Button} />
+  const AddButton = (
+    <DropScriptsButton
+      className={buttonClassName}
+      buttonRef={buttonRef}
+      getInputProps={getInputProps}
+      Button={Button}
+    />
+  )
 
   return (
     <div

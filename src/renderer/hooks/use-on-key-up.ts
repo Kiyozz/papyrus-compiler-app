@@ -6,7 +6,11 @@ interface UseOnKeyUpOptions {
   alt?: boolean
 }
 
-export default function useOnKeyUp(key: string, action: () => void, options?: UseOnKeyUpOptions) {
+export default function useOnKeyUp(
+  key: string,
+  action: () => void,
+  options?: UseOnKeyUpOptions
+) {
   const onKeyUp = useCallback(
     (e: KeyboardEvent) => {
       if (e.key !== key) {

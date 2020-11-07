@@ -1,4 +1,5 @@
-import { toOtherSource, toSource, GameType, toAntiSlash } from '@common'
+import { toAntiSlash } from '@common/slash'
+import { GameType, toOtherSource, toSource } from '@common/game'
 import appStore from '../../common/appStore'
 import Mo2ModsPathExistsException from '../exceptions/mo2/Mo2ModsPathExistsException'
 import Mo2SourcesException from '../exceptions/mo2/Mo2SourcesException'
@@ -18,7 +19,9 @@ async function getSources(gameType: GameType, instance: string) {
   const sourcesPath = toSource(gameType)
   const otherSourcesPath = toOtherSource(gameType)
   const modsPath = path.join(instance, appStore.get('mo2.mods'))
-  const foldersToCheck = [sourcesPath, otherSourcesPath].map(p => `${modsPath}/**/${p}`)
+  const foldersToCheck = [sourcesPath, otherSourcesPath].map(
+    p => `${modsPath}/**/${p}`
+  )
 
   let files: string[] = await path.getPathsInFolder(foldersToCheck, {
     absolute: true,
@@ -71,7 +74,10 @@ async function getSources(gameType: GameType, instance: string) {
   return files
 }
 
-export async function generateImports({ gameType, mo2: { instance } }: GenerateImportsOptions): Promise<string[]> {
+export async function generateImports({
+  gameType,
+  mo2: { instance }
+}: GenerateImportsOptions): Promise<string[]> {
   log.info('Generating ModOrganizer imports')
 
   const sourcesPath = toSource(gameType)
@@ -80,9 +86,21 @@ export async function generateImports({ gameType, mo2: { instance } }: GenerateI
 
   try {
     const sources = await getSources(gameType, instance)
-    const mo2OverwriteSourcesPath = path.join(instance, 'overwrite', sourcesPath)
-    const mo2OverwriteOtherSourcesPath = path.join(instance, 'overwrite', otherSourcesPath)
-    const imports = [...sources.map(folder => folder.replace(modsPath, '.')), mo2OverwriteOtherSourcesPath, mo2OverwriteSourcesPath]
+    const mo2OverwriteSourcesPath = path.join(
+      instance,
+      'overwrite',
+      sourcesPath
+    )
+    const mo2OverwriteOtherSourcesPath = path.join(
+      instance,
+      'overwrite',
+      otherSourcesPath
+    )
+    const imports = [
+      ...sources.map(folder => folder.replace(modsPath, '.')),
+      mo2OverwriteOtherSourcesPath,
+      mo2OverwriteSourcesPath
+    ]
 
     await path.ensureDirs([mo2OverwriteSourcesPath])
 
@@ -95,7 +113,10 @@ export async function generateImports({ gameType, mo2: { instance } }: GenerateI
 export async function generateModsPath(mo2Instance: string): Promise<string> {
   log.info('Generating ModOrganizer mods path')
 
-  const modsPath = path.join(mo2Instance, appStore.get<string, string>('mo2.mods'))
+  const modsPath = path.join(
+    mo2Instance,
+    appStore.get<string, string>('mo2.mods')
+  )
   const modsPathExists = await path.exists(modsPath)
 
   if (!modsPathExists) {
@@ -108,7 +129,10 @@ export async function generateModsPath(mo2Instance: string): Promise<string> {
 export async function generateOutput(mo2Instance: string): Promise<string> {
   log.info('Generating ModOrganizer output directory')
 
-  const output = path.join(mo2Instance, appStore.get<string, string>('mo2.output'))
+  const output = path.join(
+    mo2Instance,
+    appStore.get<string, string>('mo2.output')
+  )
 
   await path.ensureDirs([output])
 

@@ -1,4 +1,4 @@
-import type { CompilerPath, Flag, GamePath, GameType, OutputPath } from '../game'
+import { CompilerPath, Flag, GamePath, GameType, OutputPath } from '../game'
 import { Group } from './Group'
 
 interface ConfigMo2 {

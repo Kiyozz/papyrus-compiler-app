@@ -23,7 +23,9 @@ interface Props {
   actions?: (Action | ActionButton)[]
 }
 
-const isActionButton = (action: Action | ActionButton): action is ActionButton => action.hasOwnProperty('button')
+const isActionButton = (
+  action: Action | ActionButton
+): action is ActionButton => action.hasOwnProperty('button')
 
 const PageAppBar: React.FC<Props> = ({ title, actions = [] }) => {
   return (
@@ -36,19 +38,35 @@ const PageAppBar: React.FC<Props> = ({ title, actions = [] }) => {
           <div className={classes.flex}>
             {actions.map((action, index) => {
               if (isActionButton(action)) {
-                return <React.Fragment key={index}>{action.button}</React.Fragment>
+                return (
+                  <React.Fragment key={index}>{action.button}</React.Fragment>
+                )
               }
 
-              if (typeof action.text === 'undefined' && typeof action.icon !== 'undefined') {
+              if (
+                typeof action.text === 'undefined' &&
+                typeof action.icon !== 'undefined'
+              ) {
                 return (
-                  <IconButton color="inherit" key={index} onClick={action.onClick} {...action.iconButtonProps}>
+                  <IconButton
+                    color="inherit"
+                    key={index}
+                    onClick={action.onClick}
+                    {...action.iconButtonProps}
+                  >
                     {action.icon}
                   </IconButton>
                 )
               }
 
               return (
-                <Button color="inherit" key={action.text} startIcon={action.icon} onClick={action.onClick} {...action.buttonProps}>
+                <Button
+                  color="inherit"
+                  key={action.text}
+                  startIcon={action.icon}
+                  onClick={action.onClick}
+                  {...action.buttonProps}
+                >
                   {action.text}
                 </Button>
               )

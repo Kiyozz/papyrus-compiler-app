@@ -16,7 +16,10 @@ const initialState: CompilationState = {
   isCompilationRunning: false
 }
 
-export default function compilationReducer(state = initialState, action: AnyAction): CompilationState {
+export default function compilationReducer(
+  state = initialState,
+  action: AnyAction
+): CompilationState {
   switch (action.type) {
     case CONSTANTS.APP_COMPILATION_SET_COMPILATION_SCRIPTS:
       return {
@@ -49,7 +52,11 @@ export default function compilationReducer(state = initialState, action: AnyActi
         isCompilationRunning: true
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_SUCCESS:
-      const scriptSuccessAction = findScriptInList(state.compilationScripts, action.payload[0]?.id, ScriptStatus.SUCCESS)
+      const scriptSuccessAction = findScriptInList(
+        state.compilationScripts,
+        action.payload[0]?.id,
+        ScriptStatus.SUCCESS
+      )
 
       if (!scriptSuccessAction) {
         return state
@@ -57,10 +64,17 @@ export default function compilationReducer(state = initialState, action: AnyActi
 
       return {
         ...state,
-        compilationScripts: uniqBy([...state.compilationScripts, scriptSuccessAction], 'id')
+        compilationScripts: uniqBy(
+          [...state.compilationScripts, scriptSuccessAction],
+          'id'
+        )
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_FAILED:
-      const scriptFailedAction = findScriptInList(state.compilationScripts, action.payload[0]?.id, ScriptStatus.FAILED)
+      const scriptFailedAction = findScriptInList(
+        state.compilationScripts,
+        action.payload[0]?.id,
+        ScriptStatus.FAILED
+      )
 
       if (!scriptFailedAction) {
         return state
@@ -68,7 +82,10 @@ export default function compilationReducer(state = initialState, action: AnyActi
 
       return {
         ...state,
-        compilationScripts: uniqBy([...state.compilationScripts, scriptFailedAction], 'id')
+        compilationScripts: uniqBy(
+          [...state.compilationScripts, scriptFailedAction],
+          'id'
+        )
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION_FINISH:
       return {

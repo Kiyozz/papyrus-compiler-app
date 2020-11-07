@@ -1,4 +1,5 @@
-import type { AppStore, Config } from '@common'
+import { AppStore } from '@common/appStore'
+import { Config } from '@common/interfaces/Config'
 import is from '@sindresorhus/is'
 import { groupValidator } from './validators/groupValidator'
 
@@ -10,7 +11,11 @@ function checkMo2(appStore: AppStore, defaultConfig: Config) {
     resetMo2Config()
   }
 
-  if ((Object.keys(mo2) as (keyof Config['mo2'])[]).some(key => is.nullOrUndefined(mo2[key]))) {
+  if (
+    (Object.keys(mo2) as (keyof Config['mo2'])[]).some(key =>
+      is.nullOrUndefined(mo2[key])
+    )
+  ) {
     resetMo2Config()
   }
 
@@ -26,7 +31,10 @@ function checkMo2(appStore: AppStore, defaultConfig: Config) {
     resetMo2Config()
   }
 
-  if (is.null_(mo2.instance) || (is.string(mo2.instance) && is.emptyString(mo2.instance.trim()))) {
+  if (
+    is.null_(mo2.instance) ||
+    (is.string(mo2.instance) && is.emptyString(mo2.instance.trim()))
+  ) {
     resetMo2Config()
   }
 }
@@ -57,7 +65,10 @@ function checkGameType(appStore: AppStore, defaultConfig: Config) {
     resetGameType()
   }
 
-  if (gameType !== 'Skyrim Legendary Edition' && gameType !== 'Skyrim Special Edition') {
+  if (
+    gameType !== 'Skyrim Legendary Edition' &&
+    gameType !== 'Skyrim Special Edition'
+  ) {
     resetGameType()
   }
 }
@@ -87,7 +98,10 @@ function checkCompilerPath(appStore: AppStore, defaultConfig: Config) {
   const compilerPath = appStore.get('compilerPath')
   const gamePath = appStore.get('gamePath')
 
-  if (is.nullOrUndefined(compilerPath) || (is.string(compilerPath) && is.emptyString(compilerPath.trim()))) {
+  if (
+    is.nullOrUndefined(compilerPath) ||
+    (is.string(compilerPath) && is.emptyString(compilerPath.trim()))
+  ) {
     if (is.emptyString(gamePath)) {
       appStore.set('compilerPath', defaultConfig.compilerPath)
     }

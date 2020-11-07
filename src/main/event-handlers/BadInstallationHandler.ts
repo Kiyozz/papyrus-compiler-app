@@ -1,6 +1,7 @@
 import is from '@sindresorhus/is'
 import appStore from '../../common/appStore'
-import { toSource, toSlash, getExecutable } from '@common'
+import { toSlash } from '@common/slash'
+import { getExecutable, toSource } from '@common/game'
 import Log from '../services/Log'
 import * as path from '../services/path'
 import { HandlerInterface } from '../HandlerInterface'
@@ -20,7 +21,9 @@ export class BadInstallationHandler implements HandlerInterface {
     const file = 'Actor.psc'
     const isUsingMo2: boolean = appStore.get('mo2.use')
 
-    return isUsingMo2 ? this.checksInMo2(file) : this.checksInGameDataFolder(file)
+    return isUsingMo2
+      ? this.checksInMo2(file)
+      : this.checksInGameDataFolder(file)
   }
 
   private async checksInMo2(file: string): Promise<boolean> {
@@ -35,13 +38,19 @@ export class BadInstallationHandler implements HandlerInterface {
 
     const sourcesFolder = toSource(gameType)
     const modsPath = path.join(mo2.instance, mo2.mods)
-    const pathToChecks = [path.join(modsPath, '**', sourcesFolder, file), path.join(mo2.instance, 'overwrite', '**', sourcesFolder, file)]
+    const pathToChecks = [
+      path.join(modsPath, '**', sourcesFolder, file),
+      path.join(mo2.instance, 'overwrite', '**', sourcesFolder, file)
+    ]
       .map(folder => toSlash(folder))
       .map(folder => path.normalize(folder))
 
     this.log.info('Checking that files', ...pathToChecks, 'exists')
 
-    const files = await path.getPathsInFolder([...pathToChecks], { absolute: true, deep: 4 })
+    const files = await path.getPathsInFolder([...pathToChecks], {
+      absolute: true,
+      deep: 4
+    })
 
     this.log.info('Found files: ', ...files)
 
@@ -53,7 +62,12 @@ export class BadInstallationHandler implements HandlerInterface {
     const gameType = appStore.get('gameType')
     this.log.info('Checking in Skyrim Data folder')
 
-    const gameScriptsFolder = path.join(gamePath, 'Data', toSource(gameType), file)
+    const gameScriptsFolder = path.join(
+      gamePath,
+      'Data',
+      toSource(gameType),
+      file
+    )
 
     this.log.info('Checking that', path.normalize(gameScriptsFolder), 'exists')
 

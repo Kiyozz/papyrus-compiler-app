@@ -1,5 +1,8 @@
 export class NodeService {
-  isChildren(from: HTMLElement | ChildNode | undefined | null, child: HTMLElement): boolean {
+  isChildren(
+    from: HTMLElement | ChildNode | undefined | null,
+    child: HTMLElement
+  ): boolean {
     return this.deepChilds(from).includes(child)
   }
 

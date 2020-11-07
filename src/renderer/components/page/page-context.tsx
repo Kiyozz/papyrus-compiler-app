@@ -1,6 +1,8 @@
-import { Config, EVENTS, PartialDeep } from '@common'
+import { Config } from '@common/interfaces/Config'
+import { PartialDeep } from '@common/interfaces/PartialDeep'
+import * as EVENTS from '@common/events'
 import is from '@sindresorhus/is'
-import { ipcRenderer as ipc } from 'electron-better-ipc'
+import { ipcRenderer } from '@common/ipc'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import { Group } from '../../models'
@@ -50,31 +52,28 @@ const PageContextProvider: React.FC = ({ children }) => {
   const [groups, setGroups] = useState<Group[]>([])
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [onDrop, setOnDrop] = useState<OnDropFunction | null>(null)
-  const [AddScriptsButton, setAddScriptsButton] = useState<JSX.Element | null>(null)
+  const [AddScriptsButton, setAddScriptsButton] = useState<JSX.Element | null>(
+    null
+  )
   const version = useStoreSelector(state => state.changelog.version)
 
-  const updateConfig = useCallback((partialConfig: PartialDeep<Config>, override?: boolean) => {
-    ipc
-      .callMain<{ config: PartialDeep<Config>; override?: boolean }, Config>(EVENTS.CONFIG_UPDATE, { config: partialConfig, override })
-      .then(updatedConfig => {
-        setConfig(updatedConfig)
-        setGroups(selectGroups(updatedConfig))
-      })
-  }, [])
+  const updateConfig = useCallback(
+    (partialConfig: PartialDeep<Config>, override?: boolean) => {
+      ipcRenderer
+        .invoke(EVENTS.CONFIG_UPDATE, { config: partialConfig, override })
+        .then((updatedConfig: Config) => {
+          setConfig(updatedConfig)
+          setGroups(selectGroups(updatedConfig))
+        })
+    },
+    []
+  )
 
   useEffect(() => {
-    ipc.callMain<unknown, Config>(EVENTS.CONFIG_GET).then(initialConfig => {
+    ipcRenderer.invoke(EVENTS.CONFIG_GET).then((initialConfig: Config) => {
       setConfig(initialConfig)
       setGroups(selectGroups(initialConfig))
     })
-  }, [])
-
-  useEffect(() => {
-    const cb = ipc.answerMain<Config>(EVENTS.CONFIG_UPDATED, configUpdated => {
-      setConfig(configUpdated)
-    })
-
-    return () => cb()
   }, [])
 
   if (is.undefined(config) || is.undefined(version)) {
@@ -82,10 +81,25 @@ const PageContextProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <DropScripts accept=".psc" onlyClickButton onDrop={onDrop} Button={AddScriptsButton}>
+    <DropScripts
+      accept=".psc"
+      onlyClickButton
+      onDrop={onDrop}
+      Button={AddScriptsButton}
+    >
       {({ Button, isDragActive }) => (
         <PageContext.Provider
-          value={{ drawerOpen, groups, config, updateConfig, setDrawerOpen, addScriptsButton: Button, isDragActive, setOnDrop, setAddScriptsButton }}
+          value={{
+            drawerOpen,
+            groups,
+            config,
+            updateConfig,
+            setDrawerOpen,
+            addScriptsButton: Button,
+            isDragActive,
+            setOnDrop,
+            setAddScriptsButton
+          }}
         >
           <DropFilesOverlay open={isDragActive && onDrop !== null} />
 

@@ -8,7 +8,9 @@ import { Migration410 } from './migrations/Migration410'
 import { Migration420 } from './migrations/Migration420'
 import { storeCheck } from './storeCheck'
 
-const jsonPath = is.development ? join(__dirname, '../..', 'package.json') : join(app.getAppPath(), 'package.json')
+const jsonPath = is.development
+  ? join(__dirname, '../..', 'package.json')
+  : join(app.getAppPath(), 'package.json')
 const json = JSON.parse(fs.readFileSync(jsonPath).toString())
 
 export const defaultConfig: Config = {
@@ -17,7 +19,9 @@ export const defaultConfig: Config = {
     output: 'overwrite\\Scripts',
     mods: 'mods'
   },
-  gameType: (process.env.APP_NEXUS_PATH ?? '').includes('specialedition') ? 'Skyrim Special Edition' : 'Skyrim Legendary Edition',
+  gameType: (process.env.APP_NEXUS_PATH ?? '').includes('specialedition')
+    ? 'Skyrim Special Edition'
+    : 'Skyrim Legendary Edition',
   gamePath: '',
   flag: 'TESV_Papyrus_Flags.flg',
   compilerPath: '',

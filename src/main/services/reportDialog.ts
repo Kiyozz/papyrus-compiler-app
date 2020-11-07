@@ -1,4 +1,4 @@
-import { GITHUB_ISSUES_NEW } from '@common'
+import { GITHUB_ISSUES_NEW } from '@common/constants'
 import is from '@sindresorhus/is'
 import { app, dialog, shell } from 'electron'
 import { ReportData } from 'electron-log'
@@ -30,15 +30,19 @@ export function createReportDialog(
         if (!is.undefined(submitIssue)) {
           submitIssue(GITHUB_ISSUES_NEW, {
             title: `Error report for ${versions?.app ?? '"Type the version"'}`,
-            body: `Error:\n\`\`\`\n${message.join('\n\n')}\n\n${stack?.join('\n\n') ?? ''}\n\`\`\`\n`,
+            body: `Error:\n\`\`\`\n${message.join('\n\n')}\n\n${
+              stack?.join('\n\n') ?? ''
+            }\n\`\`\`\n`,
             labels,
             assignee: ['Kiyozz']
           })
         } else {
           shell.openExternal(
-            `${GITHUB_ISSUES_NEW}?title=Error report&labels=${labels.join(',')}&assignee=Kiyozz&body=Error: %0A \`\`\`%0A ${message.join('%0A%0A')}%0A%0A${
-              stack?.join('%0A%0A') ?? ''
-            }%0A \`\`\`\n`
+            `${GITHUB_ISSUES_NEW}?title=Error report&labels=${labels.join(
+              ','
+            )}&assignee=Kiyozz&body=Error: %0A \`\`\`%0A ${message.join(
+              '%0A%0A'
+            )}%0A%0A${stack?.join('%0A%0A') ?? ''}%0A \`\`\`\n`
           )
         }
       }

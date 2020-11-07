@@ -3,7 +3,7 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import AddIcon from '@material-ui/icons/Add'
 
-import React, { useState, useMemo, useCallback } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Group } from '../../models'
@@ -18,7 +18,10 @@ const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
 
-  const onClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget), [])
+  const onClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget),
+    []
+  )
   const onClose = useCallback(() => setAnchor(null), [])
 
   const groupSelectOptions = useMemo(() => {
@@ -44,11 +47,24 @@ const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
     <div className={classes.group}>
       {notEmptyGroups.length > 0 && (
         <>
-          <Button color="inherit" startIcon={<AddIcon />} aria-controls="load-group-menu" aria-haspopup="true" onClick={onClick}>
+          <Button
+            color="inherit"
+            startIcon={<AddIcon />}
+            aria-controls="load-group-menu"
+            aria-haspopup="true"
+            onClick={onClick}
+          >
             {t('page.compilation.actions.loadGroup')}
           </Button>
 
-          <Menu id="load-group-menu" keepMounted className={classes.fullWidth} open={!!anchor} onClose={onClose} anchorEl={anchor}>
+          <Menu
+            id="load-group-menu"
+            keepMounted
+            className={classes.fullWidth}
+            open={!!anchor}
+            onClose={onClose}
+            anchorEl={anchor}
+          >
             {groupSelectOptions}
           </Menu>
         </>

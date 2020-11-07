@@ -1,4 +1,4 @@
-import { Games, GameType } from '@common'
+import { Games, GameType } from '@common/game'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -24,18 +24,44 @@ const SettingsPage: React.FC = () => {
   const useMo2 = mo2.use
   const mo2Instance = mo2.instance
   const loading = useStoreSelector(state => state.taskLoading)
-  const installationIsBad = useStoreSelector(state => state.settings.installationIsBad)
-  const detectBadInstallation = useAction(actions.settingsPage.detectBadInstallation.start)
-  const setGame = useCallback((game: GameType) => updateConfig({ gameType: game }), [updateConfig])
-  const setGameFolder = useCallback((path: string) => updateConfig({ gamePath: path }), [updateConfig])
-  const setMo2 = useCallback((useMo2Updated: boolean) => updateConfig({ mo2: { use: useMo2Updated } }), [updateConfig])
-  const setMo2Instance = useCallback((instance?: string) => updateConfig({ mo2: { instance } }), [updateConfig])
-  const setDisableMo2 = useCallback(() => updateConfig({ mo2: { use: false, instance: undefined } }), [updateConfig])
-  const setEmptyDetectedSourcesFolders = useAction(actions.settingsPage.mo2.detectSources.empty)
-  const detectMo2SourcesFolder = useAction(actions.settingsPage.mo2.detectSources.start)
+  const installationIsBad = useStoreSelector(
+    state => state.settings.installationIsBad
+  )
+  const detectBadInstallation = useAction(
+    actions.settingsPage.detectBadInstallation.start
+  )
+  const setGame = useCallback(
+    (game: GameType) => updateConfig({ gameType: game }),
+    [updateConfig]
+  )
+  const setGameFolder = useCallback(
+    (path: string) => updateConfig({ gamePath: path }),
+    [updateConfig]
+  )
+  const setMo2 = useCallback(
+    (useMo2Updated: boolean) => updateConfig({ mo2: { use: useMo2Updated } }),
+    [updateConfig]
+  )
+  const setMo2Instance = useCallback(
+    (instance?: string) => updateConfig({ mo2: { instance } }),
+    [updateConfig]
+  )
+  const setDisableMo2 = useCallback(
+    () => updateConfig({ mo2: { use: false, instance: undefined } }),
+    [updateConfig]
+  )
+  const setEmptyDetectedSourcesFolders = useAction(
+    actions.settingsPage.mo2.detectSources.empty
+  )
+  const detectMo2SourcesFolder = useAction(
+    actions.settingsPage.mo2.detectSources.start
+  )
   const setInstallationIsBad = useAction(actions.settingsPage.installationIsBad)
 
-  const debouncedDetectBadInstallation = useMemo(() => debounce(detectBadInstallation, 500), [detectBadInstallation])
+  const debouncedDetectBadInstallation = useMemo(
+    () => debounce(detectBadInstallation, 500),
+    [detectBadInstallation]
+  )
 
   const onClickRadio = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,7 +144,13 @@ const SettingsPage: React.FC = () => {
     if (!!mo2Instance) {
       detectMo2SourcesFolder()
     }
-  }, [loading, detectBadInstallation, detectMo2SourcesFolder, installationIsBad, mo2Instance])
+  }, [
+    loading,
+    detectBadInstallation,
+    detectMo2SourcesFolder,
+    installationIsBad,
+    mo2Instance
+  ])
 
   return (
     <SettingsContextProvider>
@@ -135,9 +167,16 @@ const SettingsPage: React.FC = () => {
 
       <Page>
         <div className={classes.page}>
-          <SettingsGame onClickRadio={onClickRadio} onChangeGameFolder={onChangeGameFolder} onClickRefreshInstallation={onClickRefreshInstallation} />
+          <SettingsGame
+            onClickRadio={onClickRadio}
+            onChangeGameFolder={onChangeGameFolder}
+            onClickRefreshInstallation={onClickRefreshInstallation}
+          />
 
-          <SettingsMo2 onChangeMo2={onChangeMo2} onChangeMo2Instance={onChangeMo2Instance} />
+          <SettingsMo2
+            onChangeMo2={onChangeMo2}
+            onChangeMo2Instance={onChangeMo2Instance}
+          />
         </div>
       </Page>
     </SettingsContextProvider>

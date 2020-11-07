@@ -17,7 +17,12 @@ interface Props {
   onClickPlayPause: () => void
 }
 
-const CompilationPageContent: React.FC<Props> = ({ onClear, onClickPlayPause, onClickRemoveScriptFromScript, createOnMouseEvent }) => {
+const CompilationPageContent: React.FC<Props> = ({
+  onClear,
+  onClickPlayPause,
+  onClickRemoveScriptFromScript,
+  createOnMouseEvent
+}) => {
   const { t } = useTranslation()
   const { compilationScripts, hoveringScript } = useCompilationContext()
 
@@ -39,7 +44,12 @@ const CompilationPageContent: React.FC<Props> = ({ onClear, onClickPlayPause, on
         />
       )
     })
-  }, [compilationScripts, createOnMouseEvent, hoveringScript, onClickRemoveScriptFromScript])
+  }, [
+    compilationScripts,
+    createOnMouseEvent,
+    hoveringScript,
+    onClickRemoveScriptFromScript
+  ])
 
   return (
     <>
@@ -47,12 +57,19 @@ const CompilationPageContent: React.FC<Props> = ({ onClear, onClickPlayPause, on
         <div className="app-compilation-scripts-list">{scriptsList}</div>
       ) : (
         <>
-          <Typography variant="body1">{t('page.compilation.dragAndDropText')}</Typography>
-          <Typography variant="body1">{t('page.compilation.dragAndDropAdmin')}</Typography>
+          <Typography variant="body1">
+            {t('page.compilation.dragAndDropText')}
+          </Typography>
+          <Typography variant="body1">
+            {t('page.compilation.dragAndDropAdmin')}
+          </Typography>
         </>
       )}
 
-      <CompilationPageActions hasScripts={scriptsList.length > 0} onClearScripts={onClear} />
+      <CompilationPageActions
+        hasScripts={scriptsList.length > 0}
+        onClearScripts={onClear}
+      />
 
       <div className={classes.fabs}>
         <PlayButton onClick={onClickPlayPause} />

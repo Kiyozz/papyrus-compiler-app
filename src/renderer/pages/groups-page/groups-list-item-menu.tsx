@@ -21,7 +21,10 @@ const GroupsListItemMenu: React.FC<Props> = ({ group, onDelete, onEdit }) => {
   const [anchorMenu, setAnchorMenu] = useState<HTMLElement | null>(null)
   const menuId = `group-${group.name}`
 
-  const onOpen = useCallback((e: React.MouseEvent<HTMLElement>) => setAnchorMenu(e.currentTarget), [])
+  const onOpen = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => setAnchorMenu(e.currentTarget),
+    []
+  )
   const onClose = useCallback(() => setAnchorMenu(null), [])
 
   const onClickEdit = useCallback(() => {
@@ -39,18 +42,28 @@ const GroupsListItemMenu: React.FC<Props> = ({ group, onDelete, onEdit }) => {
       <IconButton onClick={onOpen} aria-controls={menuId} aria-haspopup="true">
         <MoreVertIcon />
       </IconButton>
-      <Menu id={menuId} keepMounted onClose={onClose} anchorEl={anchorMenu} open={anchorMenu !== null}>
+      <Menu
+        id={menuId}
+        keepMounted
+        onClose={onClose}
+        anchorEl={anchorMenu}
+        open={anchorMenu !== null}
+      >
         <MenuItem onClick={onClickEdit}>
           <ListItemIcon>
             <CreateIcon fontSize="small" color="primary" />
           </ListItemIcon>
-          <Typography variant="inherit">{t('page.groups.actions.edit')}</Typography>
+          <Typography variant="inherit">
+            {t('page.groups.actions.edit')}
+          </Typography>
         </MenuItem>
         <MenuItem onClick={onClickDelete}>
           <ListItemIcon>
             <DeleteIcon fontSize="small" color="error" />
           </ListItemIcon>
-          <Typography variant="inherit">{t('page.groups.actions.remove')}</Typography>
+          <Typography variant="inherit">
+            {t('page.groups.actions.remove')}
+          </Typography>
         </MenuItem>
       </Menu>
     </>

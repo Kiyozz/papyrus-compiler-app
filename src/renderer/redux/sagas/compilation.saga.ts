@@ -16,7 +16,9 @@ function* startCompilation(action: AnyAction) {
 
       const logs: string = yield call(api.compileScript, script)
 
-      yield put(actions.compilationPage.compilation.script.success([script, logs]))
+      yield put(
+        actions.compilationPage.compilation.script.success([script, logs])
+      )
     } catch (e) {
       let err = e
 
@@ -24,7 +26,9 @@ function* startCompilation(action: AnyAction) {
         err = err.message
       }
 
-      yield put(actions.compilationPage.compilation.script.failed([script, err]))
+      yield put(
+        actions.compilationPage.compilation.script.failed([script, err])
+      )
     }
   }
 
@@ -32,5 +36,8 @@ function* startCompilation(action: AnyAction) {
 }
 
 export default function* compilationSaga() {
-  yield takeLatest(CONSTANTS.APP_COMPILATION_START_COMPILATION, startCompilation)
+  yield takeLatest(
+    CONSTANTS.APP_COMPILATION_START_COMPILATION,
+    startCompilation
+  )
 }

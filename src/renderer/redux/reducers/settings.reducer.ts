@@ -19,7 +19,10 @@ const defaultInitial: LocalSettings = {
 }
 
 export default function createSettingsReducer() {
-  return function settingsReducer(state = defaultInitial, action: AnyAction): SettingsState {
+  return function settingsReducer(
+    state = defaultInitial,
+    action: AnyAction
+  ): SettingsState {
     switch (action.type) {
       case CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS:
         return {

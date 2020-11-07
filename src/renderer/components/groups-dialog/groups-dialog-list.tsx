@@ -11,16 +11,25 @@ import { ScriptModel } from '../../models'
 
 interface Props {
   scripts: ScriptModel[]
-  onClickRemoveScriptFromGroup: (script: ScriptModel) => (e: React.MouseEvent) => void
+  onClickRemoveScriptFromGroup: (
+    script: ScriptModel
+  ) => (e: React.MouseEvent) => void
 }
 
-const GroupsDialogList: React.FC<Props> = ({ scripts, onClickRemoveScriptFromGroup }) => (
+const GroupsDialogList: React.FC<Props> = ({
+  scripts,
+  onClickRemoveScriptFromGroup
+}) => (
   <List style={{ padding: '0' }}>
     {scripts.map((script, index) => (
       <ListItem key={script.id + index}>
         <ListItemText>{script.name}</ListItemText>
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label="delete" onClick={onClickRemoveScriptFromGroup(script)}>
+          <IconButton
+            edge="end"
+            aria-label="delete"
+            onClick={onClickRemoveScriptFromGroup(script)}
+          >
             <DeleteIcon color="error" />
           </IconButton>
         </ListItemSecondaryAction>

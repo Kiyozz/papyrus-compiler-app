@@ -1,4 +1,4 @@
-import { ipcMain as ipc } from 'electron-better-ipc'
+import { ipcMain as ipc } from '@common/ipc'
 import { HandlerInterface } from '../HandlerInterface'
 import Log from './Log'
 
@@ -10,7 +10,7 @@ export function registerEvents(handlers: Map<string, HandlerInterface>) {
   handlers.forEach((handler, name) => {
     log.info(`Register event "${name}".`)
 
-    ipc.answerRenderer(name, async args => {
+    ipc.handle(name, async (_, args) => {
       log.info(`Event "${name}" in progress.`)
 
       try {

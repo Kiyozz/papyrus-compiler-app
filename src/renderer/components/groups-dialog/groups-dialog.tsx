@@ -27,7 +27,13 @@ interface Props {
   open: boolean
 }
 
-const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose, group }) => {
+const GroupsDialog: React.FC<Props> = ({
+  onGroupAdd,
+  onGroupEdit,
+  open,
+  onClose,
+  group
+}) => {
   const { t } = useTranslation()
   const [name, setName] = useState('')
   const [scripts, setScripts] = useState<ScriptModel[]>([])
@@ -60,7 +66,9 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
     return (e: React.MouseEvent) => {
       e.stopPropagation()
 
-      setScripts(s => s.filter(scriptFromList => scriptFromList.name !== script.name))
+      setScripts(s =>
+        s.filter(scriptFromList => scriptFromList.name !== script.name)
+      )
     }
   }, [])
 
@@ -113,23 +121,51 @@ const GroupsDialog: React.FC<Props> = ({ onGroupAdd, onGroupEdit, open, onClose,
   })
 
   return (
-    <Dialog open={open} onClose={onDialogClose} aria-labelledby="create-group-title" maxWidth="lg" fullWidth>
-      <DialogTitle id="create-group-title">{isEdit ? t('page.groups.dialog.editGroup') : t('page.groups.dialog.createGroup')}</DialogTitle>
+    <Dialog
+      open={open}
+      onClose={onDialogClose}
+      aria-labelledby="create-group-title"
+      maxWidth="lg"
+      fullWidth
+    >
+      <DialogTitle id="create-group-title">
+        {isEdit
+          ? t('page.groups.dialog.editGroup')
+          : t('page.groups.dialog.createGroup')}
+      </DialogTitle>
       <form onSubmit={onSubmitAddGroup}>
         <DialogContent className={classes.scriptsContent}>
-          <TextField fullWidth label={t('page.groups.dialog.name')} name="group-name" id="group-name" autoFocus value={name} onChange={onChangeName} />
+          <TextField
+            fullWidth
+            label={t('page.groups.dialog.name')}
+            name="group-name"
+            id="group-name"
+            autoFocus
+            value={name}
+            onChange={onChangeName}
+          />
           {scripts.length > 0 ? (
             <Paper className={classes.content} elevation={3}>
-              <GroupsDialogList scripts={scripts} onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup} />
+              <GroupsDialogList
+                scripts={scripts}
+                onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup}
+              />
             </Paper>
           ) : (
             <div className={classes.content}>
-              <DialogContentText>{t('page.groups.dialog.dropScripts')}</DialogContentText>
+              <DialogContentText>
+                {t('page.groups.dialog.dropScripts')}
+              </DialogContentText>
             </div>
           )}
         </DialogContent>
         <DialogActions>
-          <GroupsDialogActions name={name} AddScriptsButton={addScriptsButton} onClose={onClose} isEdit={isEdit} />
+          <GroupsDialogActions
+            name={name}
+            AddScriptsButton={addScriptsButton}
+            onClose={onClose}
+            isEdit={isEdit}
+          />
         </DialogActions>
       </form>
     </Dialog>

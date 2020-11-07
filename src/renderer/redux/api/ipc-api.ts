@@ -1,12 +1,13 @@
-import ipc from './ipc-renderer'
-import { EVENTS } from '@common'
+import { ipcRenderer } from '@common/ipc'
+import * as EVENTS from '@common/events'
 import { GithubReleaseModel, ScriptModel } from '../../models'
 
-const GITHUB_REPOSITORY = 'https://api.github.com/repos/Kiyozz/papyrus-compiler-app'
+const GITHUB_REPOSITORY =
+  'https://api.github.com/repos/Kiyozz/papyrus-compiler-app'
 
 class IpcApi {
   compileScript = (script: ScriptModel) => {
-    return ipc.callMain(EVENTS.COMPILE_SCRIPT, script.name)
+    return ipcRenderer.invoke(EVENTS.COMPILE_SCRIPT, script.name)
   }
 
   getLatestNotes = async () => {
@@ -16,25 +17,27 @@ class IpcApi {
   }
 
   detectMo2SourcesFolders = () => {
-    return ipc.callMain(EVENTS.MO2_MODS_SOURCES)
+    return ipcRenderer.invoke(EVENTS.MO2_MODS_SOURCES)
   }
 
   detectBadInstallation = () => {
-    return ipc.callMain(EVENTS.BAD_INSTALLATION)
+    return ipcRenderer.invoke(EVENTS.BAD_INSTALLATION)
   }
 
   getVersion = () => {
-    return ipc.callMain<unknown, string>(EVENTS.GET_VERSION)
+    return ipcRenderer.invoke<string>(EVENTS.GET_VERSION)
   }
 
   openDialog = (): Promise<string | undefined> => {
-    return ipc.callMain<unknown, string | null>(EVENTS.OPEN_DIALOG).then(response => {
-      if (response === null) {
-        return
-      }
+    return ipcRenderer
+      .invoke<string | null>(EVENTS.OPEN_DIALOG)
+      .then(response => {
+        if (response === null) {
+          return
+        }
 
-      return response
-    })
+        return response
+      })
   }
 }
 

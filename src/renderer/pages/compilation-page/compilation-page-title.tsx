@@ -22,7 +22,13 @@ const CompilationPageTitle: React.FC<Props> = ({ onClickPlayPause }) => {
         aria-label="play"
         variant="contained"
         disabled={isCompilationRunning || compilationScripts.length === 0}
-        startIcon={isCompilationRunning ? <CircularProgress size={18} /> : <PlayCircleFilledIcon />}
+        startIcon={
+          isCompilationRunning ? (
+            <CircularProgress size={18} />
+          ) : (
+            <PlayCircleFilledIcon />
+          )
+        }
       >
         Play
       </Button>

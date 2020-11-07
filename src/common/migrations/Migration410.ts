@@ -1,5 +1,5 @@
-import type { AppStore } from '@common'
-import type { Migration } from './Migration'
+import { AppStore } from '../appStore'
+import { Migration } from './Migration'
 
 export class Migration410 implements Migration {
   migrate(store: AppStore): number {

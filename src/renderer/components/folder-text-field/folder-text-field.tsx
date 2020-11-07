@@ -16,7 +16,12 @@ export interface Props {
   onChange: (value: string) => void
 }
 
-const FolderTextField: React.FC<Props> = ({ error = false, label, defaultValue, onChange }) => {
+const FolderTextField: React.FC<Props> = ({
+  error = false,
+  label,
+  defaultValue,
+  onChange
+}) => {
   const { t } = useTranslation()
   const [value, setValue] = useState(defaultValue)
   const [isHover, setHover] = useState(false)
@@ -68,7 +73,13 @@ const FolderTextField: React.FC<Props> = ({ error = false, label, defaultValue, 
       placeholder={t('common.selectFolder')}
       InputProps={{
         startAdornment: (
-          <InputAdornment position="start" onClick={onClickInput} className={classes.icon} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          <InputAdornment
+            position="start"
+            onClick={onClickInput}
+            className={classes.icon}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             {isHover ? <FolderOpenIcon /> : <FolderIcon />}
           </InputAdornment>
         )
