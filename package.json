@@ -1,6 +1,6 @@
 {
   "name": "pca",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "description": "Papyrus compiler app (PCA) by WushuLate",
   "private": true,
   "scripts": {
