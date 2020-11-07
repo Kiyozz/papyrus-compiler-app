@@ -21,6 +21,10 @@ const SettingsPage: React.FC = () => {
     updateConfig
   } = usePageContext()
 
+  const debouncedUpdateConfig = useMemo(() => debounce(updateConfig, 500), [
+    updateConfig
+  ])
+
   const useMo2 = mo2.use
   const mo2Instance = mo2.instance
   const loading = useStoreSelector(state => state.taskLoading)
@@ -31,24 +35,25 @@ const SettingsPage: React.FC = () => {
     actions.settingsPage.detectBadInstallation.start
   )
   const setGame = useCallback(
-    (game: GameType) => updateConfig({ gameType: game }),
-    [updateConfig]
+    (game: GameType) => debouncedUpdateConfig({ gameType: game }),
+    [debouncedUpdateConfig]
   )
   const setGameFolder = useCallback(
-    (path: string) => updateConfig({ gamePath: path }),
-    [updateConfig]
+    (path: string) => debouncedUpdateConfig({ gamePath: path }),
+    [debouncedUpdateConfig]
   )
   const setMo2 = useCallback(
-    (useMo2Updated: boolean) => updateConfig({ mo2: { use: useMo2Updated } }),
-    [updateConfig]
+    (useMo2Updated: boolean) =>
+      debouncedUpdateConfig({ mo2: { use: useMo2Updated } }),
+    [debouncedUpdateConfig]
   )
   const setMo2Instance = useCallback(
-    (instance?: string) => updateConfig({ mo2: { instance } }),
-    [updateConfig]
+    (instance?: string) => debouncedUpdateConfig({ mo2: { instance } }),
+    [debouncedUpdateConfig]
   )
   const setDisableMo2 = useCallback(
-    () => updateConfig({ mo2: { use: false, instance: undefined } }),
-    [updateConfig]
+    () => debouncedUpdateConfig({ mo2: { use: false, instance: undefined } }),
+    [debouncedUpdateConfig]
   )
   const setEmptyDetectedSourcesFolders = useAction(
     actions.settingsPage.mo2.detectSources.empty
