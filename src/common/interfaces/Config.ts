@@ -16,4 +16,5 @@ export interface Config {
   output: OutputPath
   compilerPath: CompilerPath
   groups: Group[]
+  __internal__: any
 }
