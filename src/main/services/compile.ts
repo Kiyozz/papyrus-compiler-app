@@ -34,11 +34,10 @@ export async function compile(scriptName: string): Promise<string> {
   const compilerPath = appStore.get('compilerPath')
   const dataDirectory = path.join(gamePath, 'Data')
   const gameSourcesAbsolute = path.join(dataDirectory, toSource(gameType))
-  const compilerPathAbsolute = path.join(gamePath, compilerPath)
   const mo2Config = appStore.get('mo2')
 
   const runner: Runner = {
-    exe: compilerPathAbsolute,
+    exe: compilerPath,
     imports: [gameSourcesAbsolute],
     cwd: gamePath,
     output: path.join(gamePath, appStore.get('output'))
@@ -50,16 +49,16 @@ export async function compile(scriptName: string): Promise<string> {
 
   log.info('Game executable is', gameExe)
 
-  if (!(await path.exists(compilerPathAbsolute))) {
+  if (!(await path.exists(compilerPath))) {
     log.error('Configuration is invalid, papyrus compiler does not exists in game directory')
 
-    throw new InvalidConfigurationException(gamePath, compilerPathAbsolute)
+    throw new InvalidConfigurationException(compilerPath)
   }
 
   if (!(await path.exists(gameExe))) {
     log.error('Configuration is invalid, game executable does not exists in game directory')
 
-    throw new InvalidConfigurationException(gamePath, gameExe)
+    throw new InvalidConfigurationException(gameExe)
   }
 
   log.info('Creating game sources folder if not')
@@ -110,7 +109,7 @@ export async function compile(scriptName: string): Promise<string> {
   try {
     const result = await executeCommand(cmd, runner.cwd)
 
-    log.info('Compilation result', result)
+    log.debug('Compilation result', result)
 
     checkCommandResult(scriptName, result)
 

@@ -4,6 +4,8 @@ import appStore from '../../common/appStore'
 import type { Config, PartialDeep } from '@common'
 import { HandlerInterface } from '../HandlerInterface'
 import Log from '../services/Log'
+import { join } from '../services/path'
+import { CONSTANTS } from '@common'
 
 const log = new Log('ConfigUpdateHandler')
 
@@ -20,15 +22,24 @@ export default class ConfigUpdateHandler implements HandlerInterface<ConfigUpdat
       throw new TypeError('Cannot update the configuration without arguments')
     }
 
-    Object.entries(args.config).forEach(([key, value]) => {
+    ;(Object.entries(args.config) as [keyof Config, unknown][]).forEach(([key, value]) => {
       log.debug('Updating key', key, 'with value', value)
+
+      if (!appStore.has(key)) {
+        return
+      }
+
+      if (key === 'gamePath' && is.string(value)) {
+        appStore.set('gamePath', value)
+        appStore.set('compilerPath', join(value, CONSTANTS.DEFAULT_COMPILER_PATH))
+      }
 
       if (args.override) {
         log.debug('Total overwrite of the previous value')
 
         appStore.set(key, value)
       } else {
-        const keyValue = appStore.get(key, value)
+        const keyValue = appStore.get(key)
 
         if (is.array(keyValue)) {
           appStore.set(key, value)

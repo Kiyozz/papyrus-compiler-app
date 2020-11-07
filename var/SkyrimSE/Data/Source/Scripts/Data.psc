@@ -1,4 +1,4 @@
-Scriptname Actor extends Quest
+Scriptname Data extends Quest
 
 Function test()
 
