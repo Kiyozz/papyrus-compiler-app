@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is'
 import { EventHandler } from '../EventHandler'
-import { Stats } from '@common/interfaces/Stats'
+import { Stats } from '@pca/common/interfaces/Stats'
 import { stat } from '../services/path'
 
 export class FilesStatsHandler implements EventHandler<string[]> {

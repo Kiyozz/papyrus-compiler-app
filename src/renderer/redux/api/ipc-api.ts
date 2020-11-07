@@ -1,5 +1,5 @@
-import { ipcRenderer } from '@common/ipc'
-import * as EVENTS from '@common/events'
+import { ipcRenderer } from '@pca/common/ipc'
+import * as EVENTS from '@pca/common/events'
 import { GithubReleaseModel, ScriptModel } from '../../models'
 
 const GITHUB_REPOSITORY =

@@ -1,6 +1,6 @@
-import * as EVENTS from '@common/events'
+import * as EVENTS from '@pca/common/events'
 import { is } from 'electron-util'
-import { appStore } from '@common/store'
+import { appStore } from '@pca/common/store'
 import { BadInstallationHandler } from './event-handlers/BadInstallationHandler'
 import { ScriptCompileHandler } from './event-handlers/ScriptCompileHandler'
 import { ConfigGetHandler } from './event-handlers/ConfigGetHandler'

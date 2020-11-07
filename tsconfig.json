@@ -7,7 +7,7 @@
     "experimentalDecorators": false,
     "baseUrl": "./",
     "paths": {
-      "@common/*": [
+      "@pca/common/*": [
         "./src/common/*"
       ]
     }

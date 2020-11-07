@@ -1,4 +1,4 @@
-import { ipcMain as ipc } from '@common/ipc'
+import { ipcMain as ipc } from '@pca/common/ipc'
 import { EventHandler } from './EventHandler'
 import { Logger } from './Logger'
 

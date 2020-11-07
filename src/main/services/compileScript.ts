@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is'
-import { appStore } from '@common/store'
-import { getExecutable, toOtherSource, toSource } from '@common/game'
+import { appStore } from '@pca/common/store'
+import { getExecutable, toOtherSource, toSource } from '@pca/common/game'
 import { ScriptCompilationException } from '../exceptions/ScriptCompilationException'
 import { ConfigurationException } from '../exceptions/ConfigurationException'
 import { Mo2InvalidConfigurationException } from '../exceptions/mo2/Mo2InvalidConfigurationException'

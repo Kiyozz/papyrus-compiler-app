@@ -1,4 +1,4 @@
-import { GITHUB_ISSUES_NEW } from '@common/constants'
+import { GITHUB_ISSUES_NEW } from '@pca/common/constants'
 import is from '@sindresorhus/is'
 import { app, dialog, shell } from 'electron'
 import { ReportData } from 'electron-log'
