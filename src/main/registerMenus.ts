@@ -6,7 +6,7 @@ import defaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem } from 'electron-util'
 import Log from './services/Log'
 import { exists } from './services/path'
-import appStore from '../common/appStore'
+import appStore, { defaultConfig } from '../common/appStore'
 
 interface RegisterMenusCallbacks {
   openLogFile: (file: string) => void
@@ -34,7 +34,7 @@ export async function registerMenus({ openLogFile }: RegisterMenusCallbacks) {
         {
           label: 'Reset',
           click() {
-            appStore.reset()
+            appStore.store = defaultConfig
             ipc.callFocusedRenderer(EVENTS.CONFIG_RESET)
           }
         }

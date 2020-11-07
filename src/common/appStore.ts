@@ -11,7 +11,7 @@ import { storeCheck } from './storeCheck'
 const jsonPath = is.development ? join(__dirname, '../..', 'package.json') : join(app.getAppPath(), 'package.json')
 const json = JSON.parse(fs.readFileSync(jsonPath).toString())
 
-const defaultConfig: Config = {
+export const defaultConfig: Config = {
   mo2: {
     use: false,
     output: 'overwrite\\Scripts',
@@ -22,7 +22,12 @@ const defaultConfig: Config = {
   flag: 'TESV_Papyrus_Flags.flg',
   compilerPath: '',
   output: 'Data\\Scripts',
-  groups: []
+  groups: [],
+  __internal__: {
+    migrations: {
+      version: json.version
+    }
+  }
 }
 
 const appStore = new Store<Config>({
