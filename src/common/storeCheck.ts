@@ -2,6 +2,8 @@ import { AppStore } from '@pca/common/store'
 import { Config } from '@pca/common/interfaces/Config'
 import is from '@sindresorhus/is'
 import { groupValidator } from './validators/groupValidator'
+import { join } from '../main/services/path'
+import { DEFAULT_COMPILER_PATH } from '@pca/common/constants'
 
 function checkMo2(appStore: AppStore, defaultConfig: Config) {
   const mo2 = appStore.get('mo2')
@@ -94,7 +96,7 @@ function checkOutput(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-function checkCompilerPath(appStore: AppStore, defaultConfig: Config) {
+function checkCompilerPath(appStore: AppStore) {
   const compilerPath = appStore.get('compilerPath')
   const gamePath = appStore.get('gamePath')
 
@@ -102,9 +104,7 @@ function checkCompilerPath(appStore: AppStore, defaultConfig: Config) {
     is.nullOrUndefined(compilerPath) ||
     (is.string(compilerPath) && is.emptyString(compilerPath.trim()))
   ) {
-    if (is.emptyString(gamePath)) {
-      appStore.set('compilerPath', defaultConfig.compilerPath)
-    }
+    appStore.set('compilerPath', join(gamePath, DEFAULT_COMPILER_PATH))
   }
 }
 
@@ -123,7 +123,7 @@ export function storeCheck(appStore: AppStore, defaultConfig: Config) {
   checkGameType(appStore, defaultConfig)
   checkGamePath(appStore)
   checkFlag(appStore)
-  checkCompilerPath(appStore, defaultConfig)
+  checkCompilerPath(appStore)
   checkOutput(appStore, defaultConfig)
   checkGroups(appStore, defaultConfig)
   checkNotSupportedKeys(appStore, defaultConfig)

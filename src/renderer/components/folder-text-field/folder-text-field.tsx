@@ -2,6 +2,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
 import FolderIcon from '@material-ui/icons/Folder'
 import FolderOpenIcon from '@material-ui/icons/FolderOpen'
+import cx from 'classnames'
 
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,6 +11,7 @@ import apiFactory from '../../redux/api/api-factory'
 import classes from './folder-text-field.module.scss'
 
 export interface Props {
+  className?: string
   error?: boolean
   label?: string
   defaultValue: string
@@ -20,7 +22,8 @@ const FolderTextField: React.FC<Props> = ({
   error = false,
   label,
   defaultValue,
-  onChange
+  onChange,
+  className = ''
 }) => {
   const { t } = useTranslation()
   const [value, setValue] = useState(defaultValue)
@@ -66,7 +69,7 @@ const FolderTextField: React.FC<Props> = ({
     <TextField
       error={error}
       fullWidth
-      className={classes.textField}
+      className={cx(classes.textField, { [className]: !!className })}
       value={value}
       onChange={onChangeInput}
       label={label}

@@ -9,7 +9,7 @@ import { usePageContext } from '../../components/page/page-context'
 import actions from '../../redux/actions'
 import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 import SettingsContextProvider from './settings-context'
-import SettingsGame from './settings-game'
+import { SettingsGame } from './settings-game'
 import SettingsMo2 from './settings-mo2'
 import classes from './settings-page.module.scss'
 import { debounce } from 'lodash-es'
@@ -35,25 +35,28 @@ const SettingsPage: React.FC = () => {
     actions.settingsPage.detectBadInstallation.start
   )
   const setGame = useCallback(
-    (game: GameType) => debouncedUpdateConfig({ gameType: game }),
-    [debouncedUpdateConfig]
+    (game: GameType) => updateConfig({ gameType: game }),
+    [updateConfig]
   )
   const setGameFolder = useCallback(
     (path: string) => debouncedUpdateConfig({ gamePath: path }),
     [debouncedUpdateConfig]
   )
-  const setMo2 = useCallback(
-    (useMo2Updated: boolean) =>
-      debouncedUpdateConfig({ mo2: { use: useMo2Updated } }),
+  const setCompilerPath = useCallback(
+    (path: string) => debouncedUpdateConfig({ compilerPath: path }),
     [debouncedUpdateConfig]
+  )
+  const setMo2 = useCallback(
+    (useMo2Updated: boolean) => updateConfig({ mo2: { use: useMo2Updated } }),
+    [updateConfig]
   )
   const setMo2Instance = useCallback(
     (instance?: string) => debouncedUpdateConfig({ mo2: { instance } }),
     [debouncedUpdateConfig]
   )
   const setDisableMo2 = useCallback(
-    () => debouncedUpdateConfig({ mo2: { use: false, instance: undefined } }),
-    [debouncedUpdateConfig]
+    () => updateConfig({ mo2: { use: false, instance: undefined } }),
+    [updateConfig]
   )
   const setEmptyDetectedSourcesFolders = useAction(
     actions.settingsPage.mo2.detectSources.empty
@@ -101,6 +104,13 @@ const SettingsPage: React.FC = () => {
       setGameFolder(value)
     },
     [setGameFolder]
+  )
+
+  const onChangeCompilerPath = useCallback(
+    (value: string) => {
+      setCompilerPath(value)
+    },
+    [setCompilerPath]
   )
 
   const onChangeMo2Instance = useCallback(
@@ -176,6 +186,7 @@ const SettingsPage: React.FC = () => {
             onClickRadio={onClickRadio}
             onChangeGameFolder={onChangeGameFolder}
             onClickRefreshInstallation={onClickRefreshInstallation}
+            onChangeCompilerPath={onChangeCompilerPath}
           />
 
           <SettingsMo2
