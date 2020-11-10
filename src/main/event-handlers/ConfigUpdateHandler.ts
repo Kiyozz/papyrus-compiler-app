@@ -3,10 +3,8 @@ import deepmerge from 'deepmerge'
 import { appStore } from '@pca/common/store'
 import { Config } from '@pca/common/interfaces/Config'
 import { PartialDeep } from '@pca/common/interfaces/PartialDeep'
-import * as CONSTANTS from '@pca/common/constants'
 import { EventHandler } from '../EventHandler'
 import { Logger } from '../Logger'
-import { join } from '../services/path'
 
 const logger = new Logger('ConfigUpdateHandler')
 
@@ -18,30 +16,24 @@ interface ConfigUpdateHandlerParams {
 export class ConfigUpdateHandler
   implements EventHandler<ConfigUpdateHandlerParams> {
   listen(args?: ConfigUpdateHandlerParams): Config {
-    logger.info('Updating the configuration')
+    logger.info('updating the configuration')
 
     if (is.undefined(args)) {
-      throw new TypeError('Cannot update the configuration without arguments')
+      throw new TypeError('cannot update the configuration without arguments')
     }
 
     ;(Object.entries(args.config) as [keyof Config, unknown][]).forEach(
       ([key, value]) => {
-        logger.debug('Updating key', key, 'with value', value)
+        logger.debug('updating key', key, 'with value', value)
 
         if (!appStore.has(key)) {
           return
         }
 
-        if (key === 'gamePath' && is.string(value)) {
-          appStore.set('gamePath', value)
-          appStore.set(
-            'compilerPath',
-            join(value, CONSTANTS.DEFAULT_COMPILER_PATH)
-          )
-        }
+        this.handleGamePath(key, value)
 
         if (args.override) {
-          logger.debug('Total overwrite of the previous value')
+          logger.debug('total overwrite of the previous value')
 
           appStore.set(key, value)
         } else {
@@ -63,5 +55,11 @@ export class ConfigUpdateHandler
     )
 
     return appStore.store
+  }
+
+  private handleGamePath(key: keyof Config, value: unknown) {
+    if (key === 'gamePath' && is.string(value)) {
+      appStore.set('gamePath', value)
+    }
   }
 }

@@ -48,6 +48,7 @@ export default {
       },
       game: 'Game',
       gameFolderInfo: '{{gameType}} folder (where {{exe}} is located)',
+      compilerPath: 'Where is the PapyrusCompiler.exe file located?',
       errors: {
         installationInvalid: 'Installation seems invalid:',
         installationInvalidInfo:

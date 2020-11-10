@@ -19,17 +19,19 @@ import classes from './settings-page.module.scss'
 interface Props {
   onClickRadio: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeGameFolder: (value: string) => void
+  onChangeCompilerPath: (value: string) => void
   onClickRefreshInstallation: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const SettingsGame: React.FC<Props> = ({
+export function SettingsGame({
   onChangeGameFolder,
   onClickRadio,
+  onChangeCompilerPath,
   onClickRefreshInstallation
-}) => {
+}: Props) {
   const { t } = useTranslation()
   const {
-    config: { gameType, gamePath }
+    config: { gameType, gamePath, compilerPath }
   } = usePageContext()
   const { installationIsBad } = useSettings()
   const exe = getExecutable(gameType)
@@ -81,8 +83,13 @@ const SettingsGame: React.FC<Props> = ({
           </Typography>
         </Alert>
       </Collapse>
+
+      <FolderTextField
+        label={t('page.settings.compilerPath')}
+        defaultValue={compilerPath}
+        onChange={onChangeCompilerPath}
+        className={classes.gap}
+      />
     </Paper>
   )
 }
-
-export default SettingsGame
