@@ -1,12 +1,12 @@
 import { app } from 'electron'
 import Store from 'electron-store'
 import { is } from 'electron-util'
-import { join } from '../main/services/path'
-import { Config } from './interfaces/Config'
+import { join } from '../main/services/path.service'
+import { Config } from './interfaces/config.interface'
 import * as fs from 'fs'
-import { Migration410 } from './migrations/Migration410'
-import { Migration420 } from './migrations/Migration420'
-import { storeCheck } from './storeCheck'
+import { migrate410 } from './migrations/4.1.0.migration'
+import { migrate420 } from './migrations/4.2.0.migration'
+import { checkStore } from './check-store'
 
 const jsonPath = is.development
   ? join(__dirname, '../..', 'package.json')
@@ -39,15 +39,15 @@ const appStore = new Store<Config>({
   projectVersion: json.version,
   migrations: {
     '4.1.0': (store: AppStore) => {
-      new Migration410().migrate(store)
+      migrate410(store)
     },
     '4.2.0': (store: AppStore) => {
-      new Migration420().migrate(store)
+      migrate420(store)
     }
   }
 } as any)
 
-storeCheck(appStore, defaultConfig)
+checkStore(appStore, defaultConfig)
 
 export type AppStore = Store<Config>
 

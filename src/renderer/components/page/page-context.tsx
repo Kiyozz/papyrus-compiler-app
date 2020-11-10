@@ -1,5 +1,5 @@
-import { Config } from '@pca/common/interfaces/Config'
-import { PartialDeep } from '@pca/common/interfaces/PartialDeep'
+import { Config } from '@pca/common/interfaces/config.interface'
+import { PartialDeep } from '@pca/common/interfaces/misc.interface'
 import * as EVENTS from '@pca/common/events'
 import is from '@sindresorhus/is'
 import { ipcRenderer } from '@pca/common/ipc'

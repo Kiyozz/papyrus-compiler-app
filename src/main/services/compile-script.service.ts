@@ -1,14 +1,14 @@
 import is from '@sindresorhus/is'
 import { appStore } from '@pca/common/store'
 import { getExecutable, toOtherSource, toSource } from '@pca/common/game'
-import { ScriptCompilationException } from '../exceptions/ScriptCompilationException'
-import { ConfigurationException } from '../exceptions/ConfigurationException'
-import { Mo2InvalidConfigurationException } from '../exceptions/mo2/Mo2InvalidConfigurationException'
-import { executeCommand } from './executeCommand'
-import { generateCompilerCmd } from './generateCompilerCmd'
-import { Logger } from '../Logger'
-import * as mo2 from './mo2'
-import * as path from './path'
+import { ScriptCompilationException } from '../exceptions/script-compilation.exception'
+import { ConfigurationException } from '../exceptions/configuration.exception'
+import { Mo2InvalidConfigurationException } from '../exceptions/mo2/mo2-invalid-configuration.exception'
+import { executeCommand } from './execute-command.service'
+import { generateCompilerCmd } from '../utils/generate-compiler-cmd.util'
+import { Logger } from '../logger'
+import * as mo2 from './mo2.service'
+import * as path from './path.service'
 
 interface Runner {
   exe: string
@@ -17,7 +17,7 @@ interface Runner {
   output: string
 }
 
-const logger = new Logger('Compile')
+const logger = new Logger('CompileScript')
 
 function checkCommandResult(
   script: string,
@@ -31,75 +31,73 @@ function checkCommandResult(
 }
 
 export async function compileScript(scriptName: string): Promise<string> {
-  logger.info('Compile script', scriptName)
+  logger.debug('compiling the file', scriptName)
   const gamePath = appStore.get('gamePath')
   const gameType = appStore.get('gameType')
   const compilerPath = appStore.get('compilerPath')
-  const dataDirectory = path.join(gamePath, 'Data')
-  const gameSourcesAbsolute = path.join(dataDirectory, toSource(gameType))
+  const dataFolder = path.join(gamePath, 'Data')
+  const gameSource = toSource(gameType)
+  const gameSourceAbsolute = path.join(dataFolder, gameSource)
   const mo2Config = appStore.get('mo2')
-
   const runner: Runner = {
     exe: compilerPath,
-    imports: [gameSourcesAbsolute],
+    imports: [gameSourceAbsolute],
     cwd: gamePath,
     output: path.join(gamePath, appStore.get('output'))
   }
 
-  logger.info('With config', runner)
-
-  const gameExe = path.join(gamePath, getExecutable(gameType))
-
-  logger.debug('Game executable is', gameExe)
+  logger.debug('runner', runner)
+  const gameExe = getExecutable(gameType)
+  const gameExeAbsolute = path.join(gamePath, gameExe)
+  logger.debug('game executable', gameExeAbsolute)
 
   if (!(await path.exists(compilerPath))) {
     logger.error(
-      'Configuration is invalid, papyrus compiler does not exists in game directory'
+      'the configuration is invalid, PapyrusCompiler.exe file does not exist in game folder'
     )
 
     throw new ConfigurationException(compilerPath)
   }
 
-  if (!(await path.exists(gameExe))) {
+  if (!(await path.exists(gameExeAbsolute))) {
     logger.error(
-      'Configuration is invalid, game executable does not exists in game directory'
+      `the configuration is invalid, ${gameExe} file does not exist in game folder`
     )
 
-    throw new ConfigurationException(gameExe)
+    throw new ConfigurationException(gameExeAbsolute)
   }
 
-  logger.info('Creating game sources folder if not')
+  logger.debug(`creation of folder ${gameSource} if it does not exist`)
 
-  await path.ensureDirs([gameSourcesAbsolute])
+  await path.ensureDirs([gameSourceAbsolute])
 
-  const otherSourceAbsolute = path.join(dataDirectory, toOtherSource(gameType))
+  const otherSource = toOtherSource(gameType)
+  const otherSourceAbsolute = path.join(dataFolder, otherSource)
 
-  logger.debug('Other game source', otherSourceAbsolute)
+  logger.debug('other game source', otherSourceAbsolute)
 
-  const hasOtherGameSource = await path.exists(otherSourceAbsolute)
-
-  if (hasOtherGameSource) {
-    logger.info('Other game sources found. Importing them')
+  if (await path.exists(otherSourceAbsolute)) {
+    logger.debug(`import of the ${otherSource} folder`)
 
     runner.imports = [otherSourceAbsolute, ...runner.imports]
   }
 
   if (mo2Config.instance?.length ?? 0 > 0) {
-    logger.info('Using MO2 support')
+    logger.debug('using MO2 support')
 
     if (!is.undefined(mo2Config.instance)) {
-      const imports = await mo2.generateImports({
+      const imports = await mo2.getImportsPath({
         gameType,
         mo2: {
           instance: mo2Config.instance
         }
       })
 
-      runner.cwd = await mo2.generateModsPath(mo2Config.instance)
-      runner.output = await mo2.generateOutput(mo2Config.instance)
+      runner.cwd = await mo2.getModsPath(mo2Config.instance)
+      runner.output = await mo2.getOutputPath(mo2Config.instance)
       runner.imports = [...runner.imports, ...imports]
 
-      logger.debug('(MO2) Final config', runner)
+      logger.debug('(MO2) final config', runner)
     } else {
       throw new Mo2InvalidConfigurationException(['instance', 'sources'])
     }
@@ -116,7 +114,7 @@ export async function compileScript(scriptName: string): Promise<string> {
   try {
     const result = await executeCommand(cmd, runner.cwd)
 
-    logger.debug('Compilation result', result)
+    logger.debug('compilation result', result)
 
     checkCommandResult(scriptName, result)
 
@@ -126,7 +124,7 @@ export async function compileScript(scriptName: string): Promise<string> {
       throw err
     }
 
-    logger.error('Compilation error', {
+    logger.error('compilation error', {
       message: err.message,
       stack: err.stack
     })

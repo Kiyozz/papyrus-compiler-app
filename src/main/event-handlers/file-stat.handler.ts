@@ -1,10 +1,15 @@
 import is from '@sindresorhus/is'
-import { EventHandler } from '../EventHandler'
-import { Stats } from '@pca/common/interfaces/Stats'
-import { stat } from '../services/path'
+import { EventHandler } from '../interfaces/event.handler'
+import { Stats } from '@pca/common/interfaces/misc.interface'
+import { stat } from '../services/path.service'
+import { Logger } from '../logger'
 
-export class FilesStatsHandler implements EventHandler<string[]> {
+export class FileStatHandler implements EventHandler<string[]> {
+  private logger = new Logger(FileStatHandler.name)
+
   async listen(files?: string[]): Promise<Map<string, Stats>> {
+    this.logger.debug('getting stat of', files)
+
     if (is.undefined(files)) {
       throw new TypeError('"files" is undefined.')
     }

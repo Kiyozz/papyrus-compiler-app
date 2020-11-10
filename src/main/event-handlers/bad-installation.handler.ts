@@ -2,12 +2,12 @@ import is from '@sindresorhus/is'
 import { appStore } from '@pca/common/store'
 import { toSlash } from '@pca/common/slash'
 import { getExecutable, toSource } from '@pca/common/game'
-import { Logger } from '../Logger'
-import * as path from '../services/path'
-import { EventHandler } from '../EventHandler'
+import { Logger } from '../logger'
+import * as path from '../services/path.service'
+import { EventHandler } from '../interfaces/event.handler'
 
 export class BadInstallationHandler implements EventHandler {
-  private readonly logger = new Logger('BadInstallationHandler')
+  private readonly logger = new Logger(BadInstallationHandler.name)
 
   async listen() {
     const gamePath = appStore.get('gamePath')
@@ -34,25 +34,19 @@ export class BadInstallationHandler implements EventHandler {
       return false
     }
 
-    this.logger.info('Checking in Mo2 folder')
+    this.logger.info('checking in mo2 folder')
 
     const sourcesFolder = toSource(gameType)
     const modsPath = path.join(mo2.instance, mo2.mods)
     const pathToChecks = [
       path.join(modsPath, '**', sourcesFolder, file),
       path.join(mo2.instance, 'overwrite', '**', sourcesFolder, file)
-    ]
-      .map(folder => toSlash(folder))
-      .map(folder => path.normalize(folder))
-
-    this.logger.debug('Checking that files', ...pathToChecks, 'exists')
+    ].map(folder => path.normalize(toSlash(folder)))
 
     const files = await path.getPathsInFolder([...pathToChecks], {
       absolute: true,
       deep: 4
     })
-
-    this.logger.debug('Found files: ', ...files)
 
     return files.length === 0 ? this.checksInGameDataFolder(file) : true
   }
@@ -60,7 +54,7 @@ export class BadInstallationHandler implements EventHandler {
   private async checksInGameDataFolder(file: string): Promise<boolean> {
     const gamePath = appStore.get('gamePath')
     const gameType = appStore.get('gameType')
-    this.logger.debug('Checking in Skyrim Data folder')
+    this.logger.debug('checking in Skyrim Data folder')
 
     const gameScriptsFolder = path.join(
       gamePath,
@@ -71,7 +65,7 @@ export class BadInstallationHandler implements EventHandler {
 
     const result = await path.exists(path.normalize(gameScriptsFolder))
 
-    this.logger.debug('Found folder', result)
+    this.logger.debug('folder found', result)
 
     return result
   }

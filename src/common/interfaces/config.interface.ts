@@ -1,5 +1,5 @@
 import { CompilerPath, Flag, GamePath, GameType, OutputPath } from '../game'
-import { Group } from './Group'
+import { Group } from './group.interface'
 
 interface ConfigMo2 {
   use: boolean
