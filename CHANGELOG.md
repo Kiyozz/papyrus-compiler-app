@@ -1,3 +1,12 @@
+## 4.4.0 (https://github.com/Kiyozz/papyrus-compiler-app/compare/v4.3.0...v4.4.0) (2020-11-12)
+
+### Features
+
+    * add compiler path configuration; reducing the font size of folder inputs (#56 (https://github.com/Kiyozz/papyrus-compiler-app/issues/56)) (13116a9 (https://github.com/Kiyozz/papyrus-compiler-app/commit/13116a94642f3e1329cf91753f7199959c378db9)), closes #55 (https://github.com/Kiyozz/papyrus-compiler-app/issues/55)
+    * better log message (#59 (https://github.com/Kiyozz/papyrus-compiler-app/issues/59)) (be6a905 (https://github.com/Kiyozz/papyrus-compiler-app/commit/be6a9059cd90e48eb9316950e4e4501c3a8dda4d)), closes #57 (https://github.com/Kiyozz/papyrus-compiler-app/issues/57) #58 (https://github.com/Kiyozz/papyrus-compiler-app/issues/58)
+    * more debug message with --debug (#59 (https://github.com/Kiyozz/papyrus-compiler-app/issues/59)) (be6a905 (https://github.com/Kiyozz/papyrus-compiler-app/commit/be6a9059cd90e48eb9316950e4e4501c3a8dda4d)), closes #57 (https://github.com/Kiyozz/papyrus-compiler-app/issues/57) #58 (https://github.com/Kiyozz/papyrus-compiler-app/issues/58)
+
+
 ## 4.3.0 (2020-11-07) (https://github.com/Kiyozz/papyrus-compiler-app/compare/v4.2.0...v4.3.0)
 
 ### Features

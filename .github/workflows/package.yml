@@ -47,8 +47,8 @@ jobs:
           # A file, directory or wildcard pattern that describes what to upload
           path: dist
       - name: Build SE
-          env:
-            ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrimspecialedition/mods/23852
+        env:
+          ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrimspecialedition/mods/23852
         run: pnpm build -- --no-progress
       - name: Upload SE
         uses: actions/upload-artifact@v2
