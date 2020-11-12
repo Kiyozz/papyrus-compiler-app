@@ -2,13 +2,13 @@ import { toSlash } from '@pca/common/slash'
 import { is } from 'electron-util'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
-import path from 'path'
-import { FileAccessException } from '../exceptions/files/FileAccessException'
-import { EnsureException } from '../exceptions/files/EnsureException'
-import { Logger } from '../Logger'
-import { pluralize } from './pluralize'
+import * as path from 'path'
+import { FileAccessException } from '../exceptions/files/file-access.exception'
+import { FileEnsureException } from '../exceptions/files/file-ensure.exception'
+import { Logger } from '../logger'
+import { pluralize } from '../utils/pluralize.util'
 
-const logger = new Logger('PathHelper')
+const logger = new Logger('Path')
 
 export function normalize(value: string): string {
   if (is.linux || is.macos) {
@@ -24,7 +24,7 @@ export const move = fs.move
 export const readFile = fs.readFile
 
 export async function stat(filename: string): Promise<fs.Stats> {
-  logger.debug('Getting statistics of the path', filename)
+  logger.debug('retrieving path statistics', filename)
 
   try {
     return await fs.stat(filename)
@@ -36,14 +36,14 @@ export async function stat(filename: string): Promise<fs.Stats> {
 export async function exists(fileOrFolder: string): Promise<boolean> {
   const result = await fs.pathExists(fileOrFolder)
 
-  logger.debug('Is the path exists?', fileOrFolder, result)
+  logger.debug('does the path exist?', fileOrFolder, result)
 
   return result
 }
 
 export async function ensureDirs(items: string[]): Promise<void> {
   logger.debug(
-    `Checking presence of director${pluralize(items, {
+    `checking presence of director${pluralize(items, {
       single: 'y',
       multiple: 'ies'
     })}`,
@@ -54,14 +54,14 @@ export async function ensureDirs(items: string[]): Promise<void> {
     try {
       await fs.ensureDir(item)
     } catch (e) {
-      throw new EnsureException(item)
+      throw new FileEnsureException(item)
     }
   }
 }
 
 export async function ensureFiles(items: string[]): Promise<void> {
   logger.debug(
-    `Checking presence of file${pluralize(items)}`,
+    `checking presence of file${pluralize(items)}`,
     ...items.map(i => `"${i}"`)
   )
 
@@ -69,7 +69,7 @@ export async function ensureFiles(items: string[]): Promise<void> {
     try {
       await fs.ensureFile(item)
     } catch (e) {
-      throw new EnsureException(item)
+      throw new FileEnsureException(item)
     }
   }
 }
@@ -78,7 +78,12 @@ export async function getPathsInFolder(
   fileNames: string[],
   options: fg.Options = {}
 ): Promise<string[]> {
-  logger.debug('Getting paths in folder', fileNames, 'with options', options)
+  logger.debug(
+    'retrieving paths from the folders',
+    fileNames,
+    'with options',
+    options
+  )
 
   const response = await fg(
     fileNames.map(file => toSlash(file)),
@@ -88,7 +93,7 @@ export async function getPathsInFolder(
     }
   )
 
-  logger.debug('Response of fast-glob', response)
+  logger.debug('response of fast-glob', response)
 
   return response
 }

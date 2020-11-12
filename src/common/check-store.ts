@@ -1,9 +1,9 @@
-import { AppStore } from '@pca/common/store'
-import { Config } from '@pca/common/interfaces/Config'
 import is from '@sindresorhus/is'
-import { groupValidator } from './validators/groupValidator'
-import { join } from '../main/services/path'
-import { DEFAULT_COMPILER_PATH } from '@pca/common/constants'
+import { AppStore } from './store'
+import { Config } from './interfaces/config.interface'
+import { validateGroup } from './validators/group.validator'
+import { join } from '../main/services/path.service'
+import { DEFAULT_COMPILER_PATH } from './constants'
 
 function checkMo2(appStore: AppStore, defaultConfig: Config) {
   const mo2 = appStore.get('mo2')
@@ -54,7 +54,7 @@ function checkFlag(appStore: AppStore) {
 function checkGroups(appStore: AppStore, defaultConfig: Config) {
   const groups = appStore.get('groups')
 
-  if (!is.array(groups) || !groups.every(groupValidator)) {
+  if (!is.array(groups) || !groups.every(validateGroup)) {
     appStore.set('groups', defaultConfig.groups)
   }
 }
@@ -118,7 +118,7 @@ function checkNotSupportedKeys(appStore: AppStore, defaultConfig: Config) {
   })
 }
 
-export function storeCheck(appStore: AppStore, defaultConfig: Config) {
+export function checkStore(appStore: AppStore, defaultConfig: Config) {
   checkMo2(appStore, defaultConfig)
   checkGameType(appStore, defaultConfig)
   checkGamePath(appStore)

@@ -1,12 +1,10 @@
 import is from '@sindresorhus/is'
 import deepmerge from 'deepmerge'
 import { appStore } from '@pca/common/store'
-import { Config } from '@pca/common/interfaces/Config'
-import { PartialDeep } from '@pca/common/interfaces/PartialDeep'
-import { EventHandler } from '../EventHandler'
-import { Logger } from '../Logger'
-
-const logger = new Logger('ConfigUpdateHandler')
+import { Config } from '@pca/common/interfaces/config.interface'
+import { PartialDeep } from '@pca/common/interfaces/misc.interface'
+import { EventHandler } from '../interfaces/event.handler'
+import { Logger } from '../logger'
 
 interface ConfigUpdateHandlerParams {
   config: PartialDeep<Config>
@@ -15,8 +13,10 @@ interface ConfigUpdateHandlerParams {
 
 export class ConfigUpdateHandler
   implements EventHandler<ConfigUpdateHandlerParams> {
+  private logger = new Logger(ConfigUpdateHandler.name)
+
   listen(args?: ConfigUpdateHandlerParams): Config {
-    logger.info('updating the configuration')
+    this.logger.debug('updating the configuration')
 
     if (is.undefined(args)) {
       throw new TypeError('cannot update the configuration without arguments')
@@ -24,7 +24,7 @@ export class ConfigUpdateHandler
 
     ;(Object.entries(args.config) as [keyof Config, unknown][]).forEach(
       ([key, value]) => {
-        logger.debug('updating key', key, 'with value', value)
+        this.logger.debug('updating key', key, 'with value', value)
 
         if (!appStore.has(key)) {
           return
@@ -33,7 +33,7 @@ export class ConfigUpdateHandler
         this.handleGamePath(key, value)
 
         if (args.override) {
-          logger.debug('total overwrite of the previous value')
+          this.logger.debug('total overwrite of the previous value')
 
           appStore.set(key, value)
         } else {
@@ -58,6 +58,8 @@ export class ConfigUpdateHandler
   }
 
   private handleGamePath(key: keyof Config, value: unknown) {
+    this.logger.debug('handling game path update')
+
     if (key === 'gamePath' && is.string(value)) {
       appStore.set('gamePath', value)
     }

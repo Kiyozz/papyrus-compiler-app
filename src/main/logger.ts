@@ -24,10 +24,6 @@ export class Logger {
     }
   }
 
-  log(...params: unknown[]): void {
-    log.log(`[${this.namespace}]`, params)
-  }
-
   info(...params: unknown[]): void {
     log.info(`[${this.namespace}]`, params)
   }
@@ -40,7 +36,13 @@ export class Logger {
     log.warn(`[${this.namespace}]`, params)
   }
 
+  deprecated(message: string): void {
+    if (this.isDebugEnabled()) {
+      log.debug(`[${this.namespace}] deprecated: ${message}`)
+    }
+  }
+
   isDebugEnabled(): boolean {
-    return is.development
+    return is.development || process.argv.includes('--debug')
   }
 }

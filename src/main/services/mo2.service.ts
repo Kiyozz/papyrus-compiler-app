@@ -1,10 +1,10 @@
 import { toAntiSlash } from '@pca/common/slash'
 import { GameType, toOtherSource, toSource } from '@pca/common/game'
 import { appStore } from '@pca/common/store'
-import { Mo2ModsPathExistsException } from '../exceptions/mo2/Mo2ModsPathExistsException'
-import { Mo2SourcesException } from '../exceptions/mo2/Mo2SourcesException'
-import { Logger } from '../Logger'
-import * as path from './path'
+import { Mo2ModsPathExistsException } from '../exceptions/mo2/mo2-mods-path-exists.exception'
+import { Mo2SourcesException } from '../exceptions/mo2/mo2-sources.exception'
+import { Logger } from '../logger'
+import * as path from './path.service'
 
 interface GenerateImportsOptions {
   gameType: GameType
@@ -13,9 +13,9 @@ interface GenerateImportsOptions {
   }
 }
 
-const logger = new Logger('Mo2Generate')
+const logger = new Logger('Mo2Service')
 
-async function getSources(gameType: GameType, instance: string) {
+async function getModsSourcesPath(gameType: GameType, instance: string) {
   const sourcesPath = toSource(gameType)
   const otherSourcesPath = toOtherSource(gameType)
   const modsPath = path.join(instance, appStore.get('mo2.mods'))
@@ -48,7 +48,7 @@ async function getSources(gameType: GameType, instance: string) {
     })
     .filter(f => !!f) as readonly string[]
 
-  logger.info('[MO2] DoubleSourceFolders', doubleSourceFolders)
+  logger.debug('[MO2] DoubleSourceFolders', doubleSourceFolders)
 
   files = files
     .filter(file => {
@@ -67,34 +67,30 @@ async function getSources(gameType: GameType, instance: string) {
     })
     .map(file => toAntiSlash(file))
 
-  logger.info('[MO2] Folders containing sources', files)
+  logger.debug('[MO2] Folders containing sources', files)
 
   files.sort()
 
   return files
 }
 
-export async function generateImports({
+export async function getImportsPath({
   gameType,
   mo2: { instance }
 }: GenerateImportsOptions): Promise<string[]> {
-  logger.info('Generating ModOrganizer imports')
+  logger.info('getting MO2 imports path')
 
-  const sourcesPath = toSource(gameType)
-  const otherSourcesPath = toOtherSource(gameType)
+  const sourcePath = toSource(gameType)
+  const otherSourcePath = toOtherSource(gameType)
   const modsPath = path.join(instance, appStore.get('mo2.mods'))
 
   try {
-    const sources = await getSources(gameType, instance)
-    const mo2OverwriteSourcesPath = path.join(
-      instance,
-      'overwrite',
-      sourcesPath
-    )
+    const sources = await getModsSourcesPath(gameType, instance)
+    const mo2OverwriteSourcesPath = path.join(instance, 'overwrite', sourcePath)
     const mo2OverwriteOtherSourcesPath = path.join(
       instance,
       'overwrite',
-      otherSourcesPath
+      otherSourcePath
     )
     const imports = [
       ...sources.map(folder => folder.replace(modsPath, '.')),
@@ -110,8 +106,8 @@ export async function generateImports({
   }
 }
 
-export async function generateModsPath(mo2Instance: string): Promise<string> {
-  logger.info('Generating ModOrganizer mods path')
+export async function getModsPath(mo2Instance: string): Promise<string> {
+  logger.info('getting MO2 mods path')
 
   const modsPath = path.join(
     mo2Instance,
@@ -126,8 +122,8 @@ export async function generateModsPath(mo2Instance: string): Promise<string> {
   return modsPath
 }
 
-export async function generateOutput(mo2Instance: string): Promise<string> {
-  logger.info('Generating ModOrganizer output directory')
+export async function getOutputPath(mo2Instance: string): Promise<string> {
+  logger.info('getting MO2 output path')
 
   const output = path.join(
     mo2Instance,

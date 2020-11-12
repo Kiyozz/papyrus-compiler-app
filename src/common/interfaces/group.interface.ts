@@ -1,4 +1,4 @@
-import { Script } from './Script'
+import { Script } from './script.interface'
 
 export interface Group {
   name: string

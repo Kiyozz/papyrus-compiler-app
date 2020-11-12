@@ -2,17 +2,17 @@ import is from '@sindresorhus/is'
 import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
 import defaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem } from 'electron-util'
-import { Logger } from './Logger'
-import { exists } from './services/path'
+import { Logger } from './logger'
+import { exists } from './services/path.service'
 import { appStore, defaultConfig } from '@pca/common/store'
 
 interface RegisterMenusCallbacks {
   openLogFile: (file: string) => void
 }
 
-const logger = new Logger('registerMenus')
+const logger = new Logger('RegisterMenu')
 
-export async function registerMenus({ openLogFile }: RegisterMenusCallbacks) {
+export async function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
   const nexusPath =
     process.env.APP_NEXUS_PATH ??
     'https://github.com/Kiyozz/papyrus-compiler-app'
@@ -84,7 +84,7 @@ export async function registerMenus({ openLogFile }: RegisterMenusCallbacks) {
     return m
   })
 
-  logger.log('Registering app menus')
+  logger.debug('registering menu')
 
   Menu.setApplicationMenu(Menu.buildFromTemplate([menu, ...defaultMenus]))
 }

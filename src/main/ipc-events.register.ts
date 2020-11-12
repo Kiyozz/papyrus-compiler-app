@@ -1,25 +1,25 @@
 import { ipcMain as ipc } from '@pca/common/ipc'
-import { EventHandler } from './EventHandler'
-import { Logger } from './Logger'
+import { EventHandler } from './interfaces/event.handler'
+import { Logger } from './logger'
 
-const logger = new Logger('registerIpcEvents')
+const logger = new Logger('RegisterIpcEvents')
 
 export function registerIpcEvents(handlers: Map<string, EventHandler>) {
   handlers.forEach((handler, name) => {
-    logger.info(`Register event "${name}".`)
+    logger.info(`register "${name}"`)
 
     ipc.handle(name, async (_, args) => {
-      logger.info(`Event "${name}" started.`)
+      logger.debug(`"${name}" started`)
 
       try {
         const payload = await handler.listen(args)
 
-        logger.info(`Event "${name}" succeeded.`)
-        logger.debug(`Payload "${name}"`, payload)
+        logger.info(`"${name}" succeeded`)
+        logger.debug(`payload "${name}"`, payload)
 
         return payload
       } catch (e) {
-        logger.error(`Event "${name}" failed.`)
+        logger.error(`"${name}" failed`)
         logger.error(`[${name}]`, e)
 
         throw e

@@ -1,5 +1,5 @@
 import { dialog } from 'electron'
-import { EventHandler } from '../EventHandler'
+import { EventHandler } from '../interfaces/event.handler'
 
 export class DialogHandler implements EventHandler {
   async listen(): Promise<any> {

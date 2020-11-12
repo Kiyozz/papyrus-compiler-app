@@ -1,4 +1,4 @@
-import { Logger } from '../Logger'
+import { Logger } from '../logger'
 
 interface GenerateCmdOptions {
   imports: string[]
@@ -8,7 +8,7 @@ interface GenerateCmdOptions {
   flag: string
 }
 
-const logger = new Logger('generateCompilerCmd')
+const logger = new Logger('GenerateCompilerCmd')
 
 export function generateCompilerCmd({
   imports,
@@ -21,7 +21,7 @@ export function generateCompilerCmd({
     ';'
   )}" -o="${output}" -f="${flag}"`
 
-  logger.debug('Generated command', cmd)
+  logger.debug('generated command', cmd)
 
   return cmd
 }

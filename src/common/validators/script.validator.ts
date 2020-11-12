@@ -1,5 +1,5 @@
 import is from '@sindresorhus/is'
-import { Script } from '@pca/common/interfaces/Script'
+import { Script } from '@pca/common/interfaces/script.interface'
 
 function hasValidValues(script: Script): boolean {
   return (
@@ -8,6 +8,6 @@ function hasValidValues(script: Script): boolean {
   )
 }
 
-export function scriptValidator(script: Script | null | undefined): boolean {
+export function validateScript(script: Script | null | undefined): boolean {
   return !is.nullOrUndefined(script) && hasValidValues(script)
 }

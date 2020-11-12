@@ -1,17 +1,17 @@
 import { app, BrowserWindow } from 'electron'
 import { debugInfo, is } from 'electron-util'
-import * as path from 'path'
+import { join } from './services/path.service'
 import { format } from 'url'
 import { initialize } from './initialize'
-import { Logger } from './Logger'
+import { Logger } from './logger'
 // import loadingHtmlFile from './loading.html'
-import { createReportDialog } from './services/createReportDialog'
+import { createReportDialog } from './services/create-report-dialog.service'
 
 const logger = new Logger('Main')
 let win: BrowserWindow | null = null
 
 function createWindow() {
-  logger.log(debugInfo())
+  logger.info(debugInfo())
 
   // const loading = new BrowserWindow({ width: 300, backgroundColor: '#303030', height: 200, show: false, frame: false })
 
@@ -45,7 +45,7 @@ function createWindow() {
   } else {
     win!.loadURL(
       format({
-        pathname: path.join(__dirname, 'index.html'),
+        pathname: join(__dirname, 'index.html'),
         protocol: 'file',
         slashes: true
       })
@@ -69,16 +69,16 @@ function createWindow() {
     // loading.hide()
     // loading.close()
 
-    setTimeout(() => {
-      win!.show()
-      win!.focus()
+    logger.debug('the window is ready to show')
 
-      if (isDev) {
-        win!.webContents.openDevTools({ mode: 'bottom' })
-      }
+    win!.show()
+    win!.focus()
 
-      setImmediate(() => win!.focus())
-    }, 300)
+    if (isDev) {
+      win!.webContents.openDevTools({ mode: 'bottom' })
+    }
+
+    setImmediate(() => win!.focus())
   })
 
   logger.catchErrors({

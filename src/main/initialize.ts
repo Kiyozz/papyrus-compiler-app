@@ -1,21 +1,21 @@
 import * as EVENTS from '@pca/common/events'
 import { is } from 'electron-util'
 import { appStore } from '@pca/common/store'
-import { BadInstallationHandler } from './event-handlers/BadInstallationHandler'
-import { ScriptCompileHandler } from './event-handlers/ScriptCompileHandler'
-import { ConfigGetHandler } from './event-handlers/ConfigGetHandler'
-import { ConfigUpdateHandler } from './event-handlers/ConfigUpdateHandler'
-import { DialogHandler } from './event-handlers/DialogHandler'
-import { FilesStatsHandler } from './event-handlers/FilesStatsHandler'
-import { GetVersionHandler } from './event-handlers/GetVersionHandler'
-import { InAppErrorHandler } from './event-handlers/InAppErrorHandler'
-import { Mo2ModsSourcesHandler } from './event-handlers/Mo2ModsSourcesHandler'
-import { OpenLogFileHandler } from './event-handlers/OpenLogFileHandler'
-import { EventHandler } from './EventHandler'
-import { registerMenus } from './registerMenus'
-import { Logger } from './Logger'
-import { ensureFiles, move } from './services/path'
-import { registerIpcEvents } from './registerIpcEvents'
+import { BadInstallationHandler } from './event-handlers/bad-installation.handler'
+import { ScriptCompileHandler } from './event-handlers/script-compile.handler'
+import { ConfigGetHandler } from './event-handlers/config-get.handler'
+import { ConfigUpdateHandler } from './event-handlers/config-update.handler'
+import { DialogHandler } from './event-handlers/dialog.handler'
+import { FileStatHandler } from './event-handlers/file-stat.handler'
+import { GetVersionHandler } from './event-handlers/get-version.handler'
+import { InAppErrorHandler } from './event-handlers/in-app-error.handler'
+import { Mo2ModsSourcesHandler } from './event-handlers/mo2-mods-sources.handler'
+import { OpenFileHandler } from './event-handlers/open-file.handler'
+import { EventHandler } from './interfaces/event.handler'
+import { registerMenu } from './menu.register'
+import { Logger } from './logger'
+import { ensureFiles, move } from './services/path.service'
+import { registerIpcEvents } from './ipc-events.register'
 
 const logger = new Logger('Initialize')
 
@@ -29,7 +29,7 @@ function installExtensions() {
 
     return Promise.all(
       extensions.map(name => installer.default(name))
-    ).catch(e => logger.log(e))
+    ).catch(e => logger.warn(e))
   }
 }
 
@@ -40,12 +40,12 @@ async function backupLogFile() {
   const logFile = logger.transports.file.getFile().path
 
   if (!logFile) {
-    logger.info('There is no log file')
+    logger.info('there is no log file')
 
     return
   }
 
-  logger.info('A log file exists, creation of a new one')
+  logger.info('a log file already exists, creation of a new one')
 
   await ensureFiles([logFile])
 
@@ -61,7 +61,7 @@ export async function initialize() {
   await backupLogFile()
   await installExtensions()
 
-  const openLogFileHandler = new OpenLogFileHandler()
+  const openFileHandler = new OpenFileHandler()
   const events = new Map<string, EventHandler>([
     [EVENTS.COMPILE_SCRIPT, new ScriptCompileHandler()],
     [EVENTS.OPEN_DIALOG, new DialogHandler()],
@@ -69,16 +69,16 @@ export async function initialize() {
     [EVENTS.BAD_INSTALLATION, new BadInstallationHandler()],
     [EVENTS.CONFIG_UPDATE, new ConfigUpdateHandler()],
     [EVENTS.CONFIG_GET, new ConfigGetHandler()],
-    [EVENTS.FILES_STATS, new FilesStatsHandler()],
+    [EVENTS.FILES_STATS, new FileStatHandler()],
     [EVENTS.GET_VERSION, new GetVersionHandler()],
     [EVENTS.IN_APP_ERROR, new InAppErrorHandler()]
   ])
 
   logger.debug(appStore.path)
 
-  await registerMenus({
+  await registerMenu({
     openLogFile: (file: string) => {
-      openLogFileHandler.listen(file)
+      openFileHandler.listen(file)
     }
   })
 

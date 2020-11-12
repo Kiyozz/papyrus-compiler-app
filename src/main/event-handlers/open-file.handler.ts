@@ -1,8 +1,13 @@
 import { shell } from 'electron'
-import { EventHandler } from '../EventHandler'
+import { EventHandler } from '../interfaces/event.handler'
+import { Logger } from '../logger'
 
-export class OpenLogFileHandler implements EventHandler {
+export class OpenFileHandler implements EventHandler {
+  private logger = new Logger(OpenFileHandler.name)
+
   async listen(file: string): Promise<void> {
+    this.logger.debug('opening the file', file)
+
     try {
       await shell.openExternal(file)
     } catch (e) {
