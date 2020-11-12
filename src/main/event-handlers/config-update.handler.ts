@@ -1,8 +1,8 @@
 import is from '@sindresorhus/is'
 import deepmerge from 'deepmerge'
-import { appStore } from '@pca/common/store'
-import { Config } from '@pca/common/interfaces/config.interface'
-import { PartialDeep } from '@pca/common/interfaces/misc.interface'
+import { appStore } from '../../common/store'
+import { Config } from '../../common/interfaces/config.interface'
+import { PartialDeep } from '../../common/interfaces/misc.interface'
 import { EventHandler } from '../interfaces/event.handler'
 import { Logger } from '../logger'
 

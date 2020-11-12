@@ -1,4 +1,4 @@
-import { toSlash } from '@pca/common/slash'
+import { toSlash } from '../../common/slash'
 import { is } from 'electron-util'
 import fg from 'fast-glob'
 import fs from 'fs-extra'

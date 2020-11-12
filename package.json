@@ -1,17 +1,13 @@
 {
   "name": "pca",
-  "version": "4.3.0",
+  "version": "4.3.1",
   "description": "Papyrus compiler app (PCA) by WushuLate",
   "private": true,
   "scripts": {
     "start": "electron-webpack dev",
-    "build": "pnpm build:le",
-    "prebuild:le": "rimraf dist",
-    "prebuild:se": "rimraf dist",
-    "build:le": "cross-env APP_VERSION=LE electron-webpack",
-    "build:se": "cross-env APP_VERSION=SE electron-webpack",
-    "package:le": "electron-builder -p=never --config.productName=\"PCA LE\"",
-    "package:se": "electron-builder -p=never --config.productName=\"PCA SE\"",
+    "prebuild": "rimraf dist",
+    "build": "electron-webpack",
+    "package": "electron-builder -p=never",
     "lint": "eslint src --ext .ts,.tsx",
     "release:dry": "semantic-release --dry-run --no-ci"
   },
@@ -66,7 +62,6 @@
     "cross-env": "~7.0.2",
     "css-loader": "~4.2.2",
     "date-fns": "~2.15.0",
-    "dotenv": "~8.2.0",
     "electron": "~10.1.5",
     "electron-builder": "~22.8.1",
     "electron-devtools-installer": "~3.1.1",
@@ -95,8 +90,7 @@
     "sass-loader": "~9.0.3",
     "semantic-release": "~17.1.2",
     "style-loader": "~1.2.1",
-    "ts-loader": "~8.0.9",
-    "tsconfig-paths-webpack-plugin": "~3.3.0",
+    "ts-loader": "~8.0.11",
     "typeface-roboto": "~0.0.75",
     "typeface-roboto-mono": "~0.0.75",
     "typescript": "~4.0.5",
@@ -105,9 +99,6 @@
   "electronWebpack": {
     "renderer": {
       "webpackConfig": "webpack.renderer.additions.js"
-    },
-    "main": {
-      "webpackConfig": "webpack.main.additions.js"
     }
   },
   "build": {

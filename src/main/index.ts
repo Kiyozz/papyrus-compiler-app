@@ -1,10 +1,9 @@
 import { app, BrowserWindow } from 'electron'
 import { debugInfo, is } from 'electron-util'
-import { join } from './services/path.service'
 import { format } from 'url'
+import { join } from './services/path.service'
 import { initialize } from './initialize'
 import { Logger } from './logger'
-// import loadingHtmlFile from './loading.html'
 import { createReportDialog } from './services/create-report-dialog.service'
 
 const logger = new Logger('Main')
@@ -12,12 +11,6 @@ let win: BrowserWindow | null = null
 
 function createWindow() {
   logger.info(debugInfo())
-
-  // const loading = new BrowserWindow({ width: 300, backgroundColor: '#303030', height: 200, show: false, frame: false })
-
-  // loading.on('ready-to-show', () => {
-  //   loading.show()
-  // })
 
   win = new BrowserWindow({
     width: 800,
@@ -31,14 +24,6 @@ function createWindow() {
   })
 
   const isDev = is.development
-
-  // loading.loadURL(
-  //   format({
-  //     pathname: path.resolve(__dirname, loadingHtmlFile),
-  //     protocol: 'file',
-  //     slashes: true
-  //   })
-  // )
 
   if (isDev) {
     win!.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)

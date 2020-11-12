@@ -1,6 +1,6 @@
-import * as EVENTS from '@pca/common/events'
+import * as EVENTS from '../common/events'
 import { is } from 'electron-util'
-import { appStore } from '@pca/common/store'
+import { appStore } from '../common/store'
 import { BadInstallationHandler } from './event-handlers/bad-installation.handler'
 import { ScriptCompileHandler } from './event-handlers/script-compile.handler'
 import { ConfigGetHandler } from './event-handlers/config-get.handler'
@@ -11,6 +11,7 @@ import { GetVersionHandler } from './event-handlers/get-version.handler'
 import { InAppErrorHandler } from './event-handlers/in-app-error.handler'
 import { Mo2ModsSourcesHandler } from './event-handlers/mo2-mods-sources.handler'
 import { OpenFileHandler } from './event-handlers/open-file.handler'
+import { IsProductionHandler } from './event-handlers/is-production.handler'
 import { EventHandler } from './interfaces/event.handler'
 import { registerMenu } from './menu.register'
 import { Logger } from './logger'
@@ -71,7 +72,8 @@ export async function initialize() {
     [EVENTS.CONFIG_GET, new ConfigGetHandler()],
     [EVENTS.FILES_STATS, new FileStatHandler()],
     [EVENTS.GET_VERSION, new GetVersionHandler()],
-    [EVENTS.IN_APP_ERROR, new InAppErrorHandler()]
+    [EVENTS.IN_APP_ERROR, new InAppErrorHandler()],
+    [EVENTS.IS_PRODUCTION, new IsProductionHandler()]
   ])
 
   logger.debug(appStore.path)

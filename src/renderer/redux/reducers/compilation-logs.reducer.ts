@@ -38,7 +38,7 @@ export default function compilationLogsReducer(
             ...state.logs,
             [
               payload[0],
-              'An error occured. For more info, checks the log file (CTRL + ALT + J when focused on the app).'
+              'An error occurred. For more info, checks the log file (CTRL + ALT + J when focused on the app).'
             ]
           ]
         }

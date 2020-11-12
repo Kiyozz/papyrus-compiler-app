@@ -1,13 +1,9 @@
 const path = require('path')
-const dotenv = require('dotenv')
-const TsconfigPathsWebpackPlugin = require('tsconfig-paths-webpack-plugin')
-const webpack = require('webpack')
-
-const appVersion = process.env.APP_VERSION || ''
-const { parsed } = dotenv.config({ path: path.resolve(__dirname, `.env.${appVersion ? appVersion.toLowerCase() : 'development'}`) })
 
 module.exports = config => {
-  const tsxRule = config.module.rules.find(r => r.test.toString() === '/\\.tsx?$/')
+  const tsxRule = config.module.rules.find(
+    r => r.test.toString() === '/\\.tsx?$/'
+  )
 
   // Change to our rules
   const myConfig = {
@@ -33,16 +29,18 @@ module.exports = config => {
       ]
     },
     resolve: {
-      extensions: ['.ts', '.tsx', '.js'],
-      plugins: [new TsconfigPathsWebpackPlugin()],
-      alias: {
-        '@common': path.resolve(__dirname, 'src/common/index.ts')
-      }
+      extensions: ['.ts', '.tsx', '.js']
     },
-    plugins: [...config.plugins, new webpack.EnvironmentPlugin(Object.keys(parsed))]
+    plugins: [...config.plugins]
   }
 
-  myConfig.plugins[config.mode === 'production' ? 0 : 1].options.template = path.join(__dirname, 'dist', '.renderer-index-template.html')
+  myConfig.plugins[
+    config.mode === 'production' ? 0 : 1
+  ].options.template = path.join(
+    __dirname,
+    'dist',
+    '.renderer-index-template.html'
+  )
 
   config.plugins = myConfig.plugins
   config.resolve = myConfig.resolve

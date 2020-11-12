@@ -1,6 +1,6 @@
-import * as EVENTS from '@pca/common/events'
+import * as EVENTS from '../common/events'
 import { LocationProvider } from '@reach/router'
-import { ipcRenderer } from '@pca/common/ipc'
+import { ipcRenderer } from '../common/ipc'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider as ReduxProvider } from 'react-redux'
@@ -11,6 +11,7 @@ import createRootStore from './redux/stores/root.store'
 import './translations'
 import ThemeProvider from './theme'
 import './index.scss'
+import { isProduction } from './utils/is-production'
 
 declare global {
   interface Window {
@@ -39,17 +40,19 @@ try {
   ipcRenderer.invoke(EVENTS.IN_APP_ERROR, e)
 }
 
-if (process.env.NODE_ENV === 'production') {
-  window.onerror = (
-    event: Event | string,
-    source?: string,
-    lineno?: number,
-    colno?: number,
-    error?: Error
-  ) => {
-    ipcRenderer.invoke(
-      EVENTS.IN_APP_ERROR,
-      new Error(`From ${source}: L${lineno}C${colno}. ERROR: ${error}`)
-    )
+isProduction().then(production => {
+  if (production) {
+    window.onerror = (
+      event: Event | string,
+      source?: string,
+      lineno?: number,
+      colno?: number,
+      error?: Error
+    ) => {
+      ipcRenderer.invoke(
+        EVENTS.IN_APP_ERROR,
+        new Error(`From ${source}: L${lineno}C${colno}. ERROR: ${error}`)
+      )
+    }
   }
-}
+})

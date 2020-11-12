@@ -33,14 +33,14 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1.4.4
         with:
-          node-version: 15.1.0
+          node-version: 12.19
       - name: Dependencies
         uses: pnpm/action-setup@v1.2.1
         with:
-          version: 5.10.2
+          version: 5.11.1
           run_install: |
             - args: [--shamefully-hoist]
       - name: Lint
         run: pnpm lint
       - name: Build
-        run: pnpm build -- -- --no-progress
+        run: pnpm build -- --no-progress

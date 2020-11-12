@@ -1,10 +1,13 @@
 import { AnyAction, Middleware } from 'redux'
 import { RootStore } from '../../stores/root.store'
+import { isProduction } from '../../../utils/is-production'
 
-const logMiddleware: Middleware<unknown, RootStore> = store => next => (
+const logMiddleware: Middleware<unknown, RootStore> = store => next => async (
   action: AnyAction
 ) => {
-  if (process.env.NODE_ENV !== 'development') {
+  const production = await isProduction()
+
+  if (production) {
     return next(action)
   }
 

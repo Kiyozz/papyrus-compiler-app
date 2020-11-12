@@ -1,5 +1,5 @@
-import { appStore } from '@pca/common/store'
-import { Config } from '@pca/common/interfaces/config.interface'
+import { appStore } from '../../common/store'
+import { Config } from '../../common/interfaces/config.interface'
 import { EventHandler } from '../interfaces/event.handler'
 import { Logger } from '../logger'
 

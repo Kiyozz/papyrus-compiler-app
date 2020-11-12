@@ -19,6 +19,7 @@ import classes from '../open-compilation-logs/open-compilation-logs.module.scss'
 
 import useOnKeyUp from '../../hooks/use-on-key-up'
 import { useStoreSelector } from '../../redux/use-store-selector'
+import { MOD_URL } from '../../../common/mod'
 
 interface Props {
   onClose: () => void
@@ -51,12 +52,6 @@ const Code: React.FC<{ value: string }> = ({ value }) => {
 const DialogChangelog: React.FC<Props> = ({ onClose }) => {
   const shell = useMemo(() => window.require('electron').shell, [])
   const { t } = useTranslation()
-  const releaseLink = useMemo(
-    () =>
-      process.env.APP_NEXUS_PATH ??
-      'https://www.nexusmods.com/skyrim/mods/96339?tab=files',
-    []
-  )
   const showNotes = useStoreSelector(store => store.changelog.showNotes)
   const notes = useStoreSelector(store => store.changelog.notes)
   const latestVersion = useStoreSelector(store => store.changelog.latestVersion)
@@ -67,9 +62,9 @@ const DialogChangelog: React.FC<Props> = ({ onClose }) => {
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
 
-      shell.openExternal(releaseLink)
+      shell.openExternal(MOD_URL)
     },
-    [releaseLink, shell]
+    [shell]
   )
 
   const onClickShowNotes = useCallback(() => {

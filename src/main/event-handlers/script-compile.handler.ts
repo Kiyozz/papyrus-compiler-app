@@ -2,8 +2,8 @@ import is from '@sindresorhus/is'
 import { EventHandler } from '../interfaces/event.handler'
 import { compileScript } from '../services/compile-script.service'
 import { Logger } from '../logger'
-import { checkStore } from '@pca/common/check-store'
-import { appStore, defaultConfig } from '@pca/common/store'
+import { checkStore } from '../../common/check-store'
+import { appStore, defaultConfig } from '../../common/store'
 
 export class ScriptCompileHandler implements EventHandler<string> {
   private readonly logger = new Logger(ScriptCompileHandler.name)

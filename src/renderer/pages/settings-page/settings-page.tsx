@@ -1,4 +1,4 @@
-import { Games, GameType } from '@pca/common/game'
+import { Games, GameType } from '../../../common/game'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'

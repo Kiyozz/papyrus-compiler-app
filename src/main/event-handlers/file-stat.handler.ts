@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is'
 import { EventHandler } from '../interfaces/event.handler'
-import { Stats } from '@pca/common/interfaces/misc.interface'
+import { Stats } from '../../common/interfaces/misc.interface'
 import { stat } from '../services/path.service'
 import { Logger } from '../logger'
 

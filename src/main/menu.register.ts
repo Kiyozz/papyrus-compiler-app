@@ -4,7 +4,7 @@ import defaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem } from 'electron-util'
 import { Logger } from './logger'
 import { exists } from './services/path.service'
-import { appStore, defaultConfig } from '@pca/common/store'
+import { appStore, defaultConfig } from '../common/store'
 
 interface RegisterMenusCallbacks {
   openLogFile: (file: string) => void

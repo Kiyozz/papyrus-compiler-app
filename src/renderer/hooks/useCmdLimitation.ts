@@ -1,5 +1,5 @@
-import { toAntiSlash } from '@pca/common/slash'
-import { toSource } from '@pca/common/game'
+import { toAntiSlash } from '../../common/slash'
+import { toSource } from '../../common/game'
 import { useMemo } from 'react'
 import { usePageContext } from '../components/page/page-context'
 

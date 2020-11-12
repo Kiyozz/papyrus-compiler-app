@@ -17,7 +17,6 @@ i18n
       }
     },
     fallbackLng: 'en',
-    debug: process.env.NODE_ENV !== 'production',
     interpolation: {
       escapeValue: false
     }

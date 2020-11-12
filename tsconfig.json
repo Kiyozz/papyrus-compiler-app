@@ -5,11 +5,6 @@
     "skipLibCheck": true,
     "noImplicitReturns": false,
     "experimentalDecorators": false,
-    "baseUrl": "./",
-    "paths": {
-      "@pca/common/*": [
-        "./src/common/*"
-      ]
-    }
+    "baseUrl": "./"
   }
 }
