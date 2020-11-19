@@ -1,10 +1,19 @@
 import { dialog } from 'electron'
 import { EventHandler } from '../interfaces/event.handler'
+import { DialogType } from '../../common/interfaces/dialog.interface'
 
-export class DialogHandler implements EventHandler {
-  async listen(): Promise<any> {
+interface DialogHandlerArgs {
+  type: DialogType
+}
+
+export class DialogHandler implements EventHandler<DialogHandlerArgs> {
+  async listen({ type }: DialogHandlerArgs): Promise<string | null> {
+    if (type !== 'folder' && type !== 'file') {
+      return null
+    }
+
     const result = await dialog.showOpenDialog({
-      properties: ['openDirectory']
+      properties: [type === 'folder' ? 'openDirectory' : 'openFile']
     })
 
     if (result.canceled) {

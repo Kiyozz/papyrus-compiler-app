@@ -2,7 +2,7 @@ import { AnyAction } from 'redux'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { ScriptModel } from '../../models'
 import actions, { CONSTANTS } from '../actions'
-import apiFactory from '../api/api-factory'
+import { apiFactory } from '../api/api-factory'
 
 function* startCompilation(action: AnyAction) {
   const api = apiFactory()

@@ -11,7 +11,7 @@ import Alert from '@material-ui/lab/Alert'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Games, getExecutable } from '../../../common/game'
-import FolderTextField from '../../components/folder-text-field/folder-text-field'
+import DialogTextField from '../../components/dialog-text-field/dialog-text-field'
 import { usePageContext } from '../../components/page/page-context'
 import { useSettings } from './settings-context'
 import classes from './settings-page.module.scss'
@@ -55,11 +55,12 @@ export function SettingsGame({
           />
         </RadioGroup>
       </FormControl>
-      <FolderTextField
+      <DialogTextField
         error={installationIsBad}
         label={t('page.settings.gameFolderInfo', { gameType, exe })}
         defaultValue={gamePath}
         onChange={onChangeGameFolder}
+        type="folder"
       />
 
       <Collapse in={installationIsBad}>
@@ -84,11 +85,12 @@ export function SettingsGame({
         </Alert>
       </Collapse>
 
-      <FolderTextField
+      <DialogTextField
         label={t('page.settings.compilerPath')}
         defaultValue={compilerPath}
         onChange={onChangeCompilerPath}
         className={classes.gap}
+        type="file"
       />
     </Paper>
   )

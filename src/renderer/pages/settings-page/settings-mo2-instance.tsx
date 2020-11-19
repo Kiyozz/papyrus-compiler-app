@@ -3,7 +3,7 @@ import Collapse from '@material-ui/core/Collapse'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import FolderTextField from '../../components/folder-text-field/folder-text-field'
+import DialogTextField from '../../components/dialog-text-field/dialog-text-field'
 import { usePageContext } from '../../components/page/page-context'
 
 interface Props {
@@ -18,10 +18,11 @@ const SettingsMo2Instance: React.FC<Props> = ({ onChangeMo2Instance }) => {
 
   return (
     <Collapse in={mo2.use}>
-      <FolderTextField
+      <DialogTextField
         defaultValue={mo2.instance ?? ''}
         label={t('page.settings.mo2.instance')}
         onChange={onChangeMo2Instance}
+        type="folder"
       />
     </Collapse>
   )

@@ -58,6 +58,7 @@ devDependencies:
   redux-actions: 2.6.5
   redux-saga: 1.1.3
   rimraf: 3.0.2
+  rxjs: 6.6.3
   sass: 1.26.11
   sass-loader: 9.0.3_sass@1.26.11+webpack@4.44.2
   semantic-release: 17.1.2
@@ -8545,6 +8546,14 @@ packages:
     dev: true
     resolution:
       integrity: sha1-6Eg5bwV9Ij8kOGkkYY4laUFh7Ec=
+  /rxjs/6.6.3:
+    dependencies:
+      tslib: 1.14.1
+    dev: true
+    engines:
+      npm: '>=2.0.0'
+    resolution:
+      integrity: sha512-trsQc+xYYXZ3urjOiJOuCOa5N3jAZ3eiSpQB5hIT8zGlL2QfnHLJ2r7GMkBGuIausdJN1OneaI6gQlsqNHHmZQ==
   /safe-buffer/5.1.2:
     dev: true
     resolution:
@@ -10539,6 +10548,7 @@ specifiers:
   redux-actions: ~2.6.5
   redux-saga: ~1.1.3
   rimraf: ~3.0.2
+  rxjs: ^6.6.3
   sass: ~1.26.11
   sass-loader: ~9.0.3
   semantic-release: ~17.1.2

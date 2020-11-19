@@ -1,7 +1,7 @@
 import { createHistory, createMemorySource } from '@reach/router'
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import logMiddleware from '../middlewares/log/log.middleware'
+import { logMiddleware } from '../middlewares/log/log.middleware'
 import changelogReducer, { ChangelogState } from '../reducers/changelog.reducer'
 import compilationLogsReducer, {
   CompilationLogsState
