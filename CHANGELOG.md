@@ -1,3 +1,13 @@
+## 4.5.0 (2020-11-19) [v4.4.0...v4.5.0](https://github.com/Kiyozz/papyrus-compiler-app/compare/v4.4.0...v4.5.0)
+
+### Features
+
+* refresh the configuration on "refresh" click ([#64](https://github.com/Kiyozz/papyrus-compiler-app/issues/64)) ([bc85baf](https://github.com/Kiyozz/papyrus-compiler-app/commit/bc85baf3a9bb614b14b1cc01f50015ae0e711814)), closes [#60](https://github.com/Kiyozz/papyrus-compiler-app/issues/60) [#61](https://github.com/Kiyozz/papyrus-compiler-app/issues/61)
+
+### Bug Fixes
+
+* change some env to new format ([#63](https://github.com/Kiyozz/papyrus-compiler-app/issues/63)) ([57dfca1](https://github.com/Kiyozz/papyrus-compiler-app/commit/57dfca126c03ec97b79779e5f9265d543c601858)), closes [#62](https://github.com/Kiyozz/papyrus-compiler-app/issues/62)
+
 ## 4.4.0 (2020-11-12) [v4.3.0...v4.4.0](https://github.com/Kiyozz/papyrus-compiler-app/compare/v4.3.0...v4.4.0)
 
 ### Features
