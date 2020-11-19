@@ -2,9 +2,10 @@ import { AnyAction, Middleware } from 'redux'
 import { RootStore } from '../../stores/root.store'
 import { isProduction } from '../../../utils/is-production'
 
-const logMiddleware: Middleware<unknown, RootStore> = store => next => async (
-  action: AnyAction
-) => {
+export const logMiddleware: Middleware<
+  unknown,
+  RootStore
+> = store => next => async (action: AnyAction) => {
   const production = await isProduction()
 
   if (production) {
@@ -24,5 +25,3 @@ const logMiddleware: Middleware<unknown, RootStore> = store => next => async (
 
   return result
 }
-
-export default logMiddleware

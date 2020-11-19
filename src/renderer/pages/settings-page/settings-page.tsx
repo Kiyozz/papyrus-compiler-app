@@ -18,7 +18,8 @@ const SettingsPage: React.FC = () => {
   const { t } = useTranslation()
   const {
     config: { gameType, gamePath, mo2 },
-    updateConfig
+    updateConfig,
+    refreshConfig
   } = usePageContext()
 
   const debouncedUpdateConfig = useMemo(() => debounce(updateConfig, 500), [
@@ -159,12 +160,15 @@ const SettingsPage: React.FC = () => {
     if (!!mo2Instance) {
       detectMo2SourcesFolder()
     }
+
+    refreshConfig()
   }, [
     loading,
-    detectBadInstallation,
-    detectMo2SourcesFolder,
     installationIsBad,
-    mo2Instance
+    mo2Instance,
+    refreshConfig,
+    detectBadInstallation,
+    detectMo2SourcesFolder
   ])
 
   return (

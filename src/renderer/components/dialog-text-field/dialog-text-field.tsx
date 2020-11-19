@@ -4,11 +4,13 @@ import FolderIcon from '@material-ui/icons/Folder'
 import FolderOpenIcon from '@material-ui/icons/FolderOpen'
 import cx from 'classnames'
 
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import apiFactory from '../../redux/api/api-factory'
+import { apiFactory } from '../../redux/api/api-factory'
 
-import classes from './folder-text-field.module.scss'
+import classes from './dialog-text-field.module.scss'
+import { DialogType } from '../../../common/interfaces/dialog.interface'
+import { usePageContext } from '../page/page-context'
 
 export interface Props {
   className?: string
@@ -16,15 +18,18 @@ export interface Props {
   label?: string
   defaultValue: string
   onChange: (value: string) => void
+  type: DialogType
 }
 
-const FolderTextField: React.FC<Props> = ({
+const DialogTextField: React.FC<Props> = ({
   error = false,
   label,
   defaultValue,
   onChange,
-  className = ''
+  className = '',
+  type
 }) => {
+  const { onRefreshConfig } = usePageContext()
   const { t } = useTranslation()
   const [value, setValue] = useState(defaultValue)
   const [isHover, setHover] = useState(false)
@@ -35,7 +40,7 @@ const FolderTextField: React.FC<Props> = ({
       e.currentTarget.blur()
 
       try {
-        const result = await api.openDialog()
+        const result = await api.openDialog({ type })
 
         if (typeof result !== 'undefined') {
           setValue(result)
@@ -45,8 +50,16 @@ const FolderTextField: React.FC<Props> = ({
         console.log(err?.message)
       }
     },
-    [api, onChange]
+    [api, onChange, type]
   )
+
+  useEffect(() => {
+    const sub = onRefreshConfig.subscribe(() => {
+      setValue(defaultValue)
+    })
+
+    return () => sub.unsubscribe()
+  }, [defaultValue, onRefreshConfig])
 
   const handleMouseEnter = useCallback(() => {
     setHover(true)
@@ -91,4 +104,4 @@ const FolderTextField: React.FC<Props> = ({
   )
 }
 
-export default FolderTextField
+export default DialogTextField

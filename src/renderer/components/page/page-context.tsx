@@ -3,12 +3,19 @@ import { PartialDeep } from '../../../common/interfaces/misc.interface'
 import * as EVENTS from '../../../common/events'
 import is from '@sindresorhus/is'
 import { ipcRenderer } from '../../../common/ipc'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import { Group } from '../../models'
 import { useStoreSelector } from '../../redux/use-store-selector'
 import DropFilesOverlay from '../drop-files-overlay/drop-files-overlay'
 import DropScripts, { OnDropFunction } from '../drop-scripts/drop-scripts'
+import { Observable, Subject } from 'rxjs'
 
 interface PageContextInterface {
   drawerOpen: boolean
@@ -20,6 +27,8 @@ interface PageContextInterface {
   config: Config
   groups: Group[]
   updateConfig: (config: PartialDeep<Config>, override?: boolean) => void
+  refreshConfig: () => void
+  onRefreshConfig: Observable<Config>
 }
 
 const PageContext = React.createContext({} as PageContextInterface)
@@ -57,6 +66,10 @@ const PageContextProvider: React.FC = ({ children }) => {
   )
   const version = useStoreSelector(state => state.changelog.version)
 
+  const refresh$ = useMemo(() => new Subject<Config>(), [])
+
+  const onRefreshConfig = useMemo(() => refresh$.asObservable(), [refresh$])
+
   const updateConfig = useCallback(
     (partialConfig: PartialDeep<Config>, override?: boolean) => {
       ipcRenderer
@@ -68,6 +81,14 @@ const PageContextProvider: React.FC = ({ children }) => {
     },
     []
   )
+
+  const refreshConfig = useCallback(() => {
+    ipcRenderer.invoke(EVENTS.CONFIG_GET).then((refreshedConfig: Config) => {
+      setConfig(refreshedConfig)
+      setGroups(selectGroups(refreshedConfig))
+      refresh$.next(refreshedConfig)
+    })
+  }, [refresh$])
 
   useEffect(() => {
     ipcRenderer.invoke(EVENTS.CONFIG_GET).then((initialConfig: Config) => {
@@ -94,11 +115,13 @@ const PageContextProvider: React.FC = ({ children }) => {
             groups,
             config,
             updateConfig,
+            refreshConfig,
             setDrawerOpen,
             addScriptsButton: Button,
             isDragActive,
             setOnDrop,
-            setAddScriptsButton
+            setAddScriptsButton,
+            onRefreshConfig
           }}
         >
           <DropFilesOverlay open={isDragActive && onDrop !== null} />

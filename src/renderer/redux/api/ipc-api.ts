@@ -1,13 +1,18 @@
 import { ipcRenderer } from '../../../common/ipc'
 import * as EVENTS from '../../../common/events'
 import { GithubReleaseModel, ScriptModel } from '../../models'
+import { DialogType } from '../../../common/interfaces/dialog.interface'
 
 const GITHUB_REPOSITORY =
   'https://api.github.com/repos/Kiyozz/papyrus-compiler-app'
 
-class IpcApi {
+export class IpcApi {
   compileScript = (script: ScriptModel) => {
     return ipcRenderer.invoke(EVENTS.COMPILE_SCRIPT, script.name)
+  }
+
+  getConfig = () => {
+    return ipcRenderer.invoke(EVENTS.CONFIG_GET)
   }
 
   getLatestNotes = async () => {
@@ -28,9 +33,13 @@ class IpcApi {
     return ipcRenderer.invoke<string>(EVENTS.GET_VERSION)
   }
 
-  openDialog = (): Promise<string | undefined> => {
+  openDialog = ({
+    type
+  }: {
+    type: DialogType
+  }): Promise<string | undefined> => {
     return ipcRenderer
-      .invoke<string | null>(EVENTS.OPEN_DIALOG)
+      .invoke<string | null>(EVENTS.OPEN_DIALOG, { type })
       .then(response => {
         if (response === null) {
           return
@@ -40,5 +49,3 @@ class IpcApi {
       })
   }
 }
-
-export default IpcApi

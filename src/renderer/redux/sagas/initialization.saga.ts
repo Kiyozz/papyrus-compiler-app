@@ -1,6 +1,6 @@
 import { call, put, take } from 'redux-saga/effects'
 import actions, { CONSTANTS } from '../actions'
-import apiFactory from '../api/api-factory'
+import { apiFactory } from '../api/api-factory'
 // import { SettingsState } from '../reducers/settings.reducer'
 // import { RootStore } from '../stores/root.store'
 
