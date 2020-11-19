@@ -19,7 +19,9 @@ export const defaultConfig: Config = {
     output: 'overwrite\\Scripts',
     mods: 'mods'
   },
-  gameType: (process.env.APP_NEXUS_PATH ?? '').includes('specialedition')
+  gameType: (process.env.ELECTRON_WEBPACK_APP_MOD_URL ?? '').includes(
+    'specialedition'
+  )
     ? 'Skyrim Special Edition'
     : 'Skyrim Legendary Edition',
   gamePath: '',

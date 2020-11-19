@@ -14,7 +14,7 @@ const logger = new Logger('RegisterMenu')
 
 export async function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
   const nexusPath =
-    process.env.APP_NEXUS_PATH ??
+    process.env.ELECTRON_WEBPACK_APP_MOD_URL ??
     'https://github.com/Kiyozz/papyrus-compiler-app'
 
   const menu = appMenu([
