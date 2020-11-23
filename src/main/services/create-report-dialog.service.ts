@@ -1,7 +1,7 @@
-import { GITHUB_ISSUES_NEW } from '../../common/constants'
 import is from '@sindresorhus/is'
 import { app, dialog, shell } from 'electron'
 import { ReportData } from 'electron-log'
+import { GITHUB_ISSUES_NEW } from '../../common/constants'
 
 export function createReportDialog(
   error: Error,

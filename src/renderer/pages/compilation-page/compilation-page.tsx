@@ -21,7 +21,7 @@ import GroupsLoader from './groups-loader'
 
 type Props = RouteComponentProps
 
-const CompilationPage: React.FC<Props> = () => {
+export const CompilationPage: React.FC<Props> = () => {
   const { t } = useTranslation()
   const { groups } = usePageContext()
   const isCompilationRunning = useStoreSelector(
@@ -141,5 +141,3 @@ const CompilationPage: React.FC<Props> = () => {
     </CompilationContextProvider>
   )
 }
-
-export default CompilationPage

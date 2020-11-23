@@ -1,7 +1,8 @@
-import { Games, GameType } from '../../../common/game'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { debounce } from 'lodash-es'
+import { Games, GameType } from '../../../common/game'
 
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
@@ -12,9 +13,8 @@ import SettingsContextProvider from './settings-context'
 import { SettingsGame } from './settings-game'
 import SettingsMo2 from './settings-mo2'
 import classes from './settings-page.module.scss'
-import { debounce } from 'lodash-es'
 
-const SettingsPage: React.FC = () => {
+export const SettingsPage: React.FC = () => {
   const { t } = useTranslation()
   const {
     config: { gameType, gamePath, mo2 },
@@ -202,5 +202,3 @@ const SettingsPage: React.FC = () => {
     </SettingsContextProvider>
   )
 }
-
-export default SettingsPage

@@ -1,12 +1,12 @@
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import CreateIcon from '@material-ui/icons/Create'
-import { RouteComponentProps } from '@reach/router'
 import is from '@sindresorhus/is'
 
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { RouteComponentProps } from '@reach/router'
 import GroupsDialog from '../../components/groups-dialog/groups-dialog'
 import Page from '../../components/page/page'
 import PageAppBar from '../../components/page/page-app-bar'
@@ -15,14 +15,14 @@ import { GroupModel } from '../../models'
 import GroupsListItem from './groups-list-item'
 import classes from './groups-page.module.scss'
 
-type Props = RouteComponentProps
-
 interface EditGroupParams {
   group: GroupModel
   lastGroupName: string
 }
 
-const GroupsPage: React.FC<Props> = () => {
+type Props = RouteComponentProps
+
+export const GroupsPage: React.FC<Props> = () => {
   const { t } = useTranslation()
   const { groups, updateConfig } = usePageContext()
   const addGroup = useCallback(
@@ -200,5 +200,3 @@ const GroupsPage: React.FC<Props> = () => {
     </>
   )
 }
-
-export default GroupsPage

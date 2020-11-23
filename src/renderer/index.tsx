@@ -1,9 +1,9 @@
-import * as EVENTS from '../common/events'
 import { LocationProvider } from '@reach/router'
-import { ipcRenderer } from '../common/ipc'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider as ReduxProvider } from 'react-redux'
+import { ipcRenderer } from '../common/ipc'
+import * as EVENTS from '../common/events'
 
 import App from './app'
 import { ElectronRuntimeException } from './redux/api/exceptions/electron-runtime.exception'

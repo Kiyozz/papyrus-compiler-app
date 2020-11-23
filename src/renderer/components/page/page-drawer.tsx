@@ -21,7 +21,7 @@ import { ActiveLink } from '../sidebar/sidebar-link'
 import { usePageContext } from './page-context'
 import classes from './page.module.scss'
 
-const PageDrawer: React.FC = () => {
+export function PageDrawer() {
   const { setDrawerOpen } = usePageContext()
   const { t } = useTranslation()
 
@@ -113,5 +113,3 @@ const PageDrawer: React.FC = () => {
     </nav>
   )
 }
-
-export default PageDrawer

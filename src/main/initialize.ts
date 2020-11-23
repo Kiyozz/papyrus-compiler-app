@@ -1,5 +1,5 @@
-import * as EVENTS from '../common/events'
 import { is } from 'electron-util'
+import * as EVENTS from '../common/events'
 import { appStore } from '../common/store'
 import { BadInstallationHandler } from './event-handlers/bad-installation.handler'
 import { ScriptCompileHandler } from './event-handlers/script-compile.handler'

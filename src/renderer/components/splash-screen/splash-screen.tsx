@@ -7,7 +7,7 @@ import { useStoreSelector } from '../../redux/use-store-selector'
 
 import classes from './splash-screen.module.scss'
 
-const SplashScreen: React.FC = () => {
+export const SplashScreen: React.FC = () => {
   const initialized = useStoreSelector(state => state.initialization)
 
   return (
@@ -18,5 +18,3 @@ const SplashScreen: React.FC = () => {
     </Fade>
   )
 }
-
-export default SplashScreen

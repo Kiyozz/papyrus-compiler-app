@@ -1,6 +1,6 @@
+import { format } from 'url'
 import { app, BrowserWindow } from 'electron'
 import { debugInfo, is } from 'electron-util'
-import { format } from 'url'
 import { join } from './services/path.service'
 import { initialize } from './initialize'
 import { Logger } from './logger'

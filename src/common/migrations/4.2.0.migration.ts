@@ -1,8 +1,8 @@
-import { toAntiSlash, toSlash } from '../slash'
-import { AppStore } from '../store'
+import * as path from 'path'
 import is from '@sindresorhus/is'
 import * as util from 'electron-util'
-import * as path from 'path'
+import { toAntiSlash, toSlash } from '../slash'
+import { AppStore } from '../store'
 
 export function migrate420(store: AppStore) {
   const gamePath = store.get('gamePath')

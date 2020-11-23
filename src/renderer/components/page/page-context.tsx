@@ -1,8 +1,4 @@
-import { Config } from '../../../common/interfaces/config.interface'
-import { PartialDeep } from '../../../common/interfaces/misc.interface'
-import * as EVENTS from '../../../common/events'
 import is from '@sindresorhus/is'
-import { ipcRenderer } from '../../../common/ipc'
 import React, {
   useCallback,
   useContext,
@@ -10,12 +6,16 @@ import React, {
   useMemo,
   useState
 } from 'react'
+import { Observable, Subject } from 'rxjs'
+import { Config } from '../../../common/interfaces/config.interface'
+import { PartialDeep } from '../../../common/interfaces/misc.interface'
+import * as EVENTS from '../../../common/events'
+import { ipcRenderer } from '../../../common/ipc'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import { Group } from '../../models'
 import { useStoreSelector } from '../../redux/use-store-selector'
 import DropFilesOverlay from '../drop-files-overlay/drop-files-overlay'
 import DropScripts, { OnDropFunction } from '../drop-scripts/drop-scripts'
-import { Observable, Subject } from 'rxjs'
 
 interface PageContextInterface {
   drawerOpen: boolean

@@ -8,9 +8,9 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { apiFactory } from '../../redux/api/api-factory'
 
-import classes from './dialog-text-field.module.scss'
 import { DialogType } from '../../../common/interfaces/dialog.interface'
 import { usePageContext } from '../page/page-context'
+import classes from './dialog-text-field.module.scss'
 
 export interface Props {
   className?: string
@@ -21,14 +21,14 @@ export interface Props {
   type: DialogType
 }
 
-const DialogTextField: React.FC<Props> = ({
+function DialogTextField({
   error = false,
   label,
   defaultValue,
   onChange,
   className = '',
   type
-}) => {
+}: Props) {
   const { onRefreshConfig } = usePageContext()
   const { t } = useTranslation()
   const [value, setValue] = useState(defaultValue)
