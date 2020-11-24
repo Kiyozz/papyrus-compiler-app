@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -15,8 +21,8 @@ import { useDrop } from '../../hooks/use-drop'
 import { GroupModel, ScriptModel } from '../../models'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
 import uniqScripts from '../../utils/scripts/uniq-scripts'
-import GroupsDialogActions from './groups-dialog-actions'
-import GroupsDialogList from './groups-dialog-list'
+import { GroupsDialogActions } from './groups-dialog-actions'
+import { GroupsDialogList } from './groups-dialog-list'
 import classes from './groups-dialog.module.scss'
 
 interface Props {
@@ -27,13 +33,13 @@ interface Props {
   open: boolean
 }
 
-const GroupsDialog: React.FC<Props> = ({
+export function GroupsDialog({
   onGroupAdd,
   onGroupEdit,
   open,
   onClose,
   group
-}) => {
+}: Props) {
   const { t } = useTranslation()
   const [name, setName] = useState('')
   const [scripts, setScripts] = useState<ScriptModel[]>([])
@@ -171,5 +177,3 @@ const GroupsDialog: React.FC<Props> = ({
     </Dialog>
   )
 }
-
-export default GroupsDialog

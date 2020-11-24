@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import * as path from 'path'
 import { is } from 'electron-util'
 import fg from 'fast-glob'

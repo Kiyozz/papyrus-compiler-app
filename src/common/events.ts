@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 export const FILES_STATS = 'app-files-stats'
 export const COMPILE_SCRIPT = 'app-compile-script'
 export const GET_VERSION = 'app-get-version'

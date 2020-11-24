@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import React from 'react'
 import { Router } from '@reach/router'
 import { CompilationPage } from './pages/compilation-page/compilation-page'

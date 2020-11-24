@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Button from '@material-ui/core/Button'
 import SearchIcon from '@material-ui/icons/Search'
 import { RouteComponentProps } from '@reach/router'
@@ -5,8 +11,8 @@ import { RouteComponentProps } from '@reach/router'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import Page from '../../components/page/page'
-import PageAppBar from '../../components/page/page-app-bar'
+import { Page } from '../../components/page/page'
+import { PageAppBar } from '../../components/page/page-app-bar'
 import { usePageContext } from '../../components/page/page-context'
 import { useDrop } from '../../hooks/use-drop'
 import { ScriptModel } from '../../models'

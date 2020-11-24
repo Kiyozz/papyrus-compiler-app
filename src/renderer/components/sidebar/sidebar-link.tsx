@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { Link, LinkProps } from '@reach/router'
 import cx from 'classnames'
 import React, { useCallback } from 'react'

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { ScriptStatus } from '../../enums/script-status.enum'
 import { ScriptModel } from '../../models'
 

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import CreateIcon from '@material-ui/icons/Create'
@@ -7,9 +13,9 @@ import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { RouteComponentProps } from '@reach/router'
-import GroupsDialog from '../../components/groups-dialog/groups-dialog'
-import Page from '../../components/page/page'
-import PageAppBar from '../../components/page/page-app-bar'
+import { GroupsDialog } from '../../components/groups-dialog/groups-dialog'
+import { Page } from '../../components/page/page'
+import { PageAppBar } from '../../components/page/page-app-bar'
 import { usePageContext } from '../../components/page/page-context'
 import { GroupModel } from '../../models'
 import GroupsListItem from './groups-list-item'

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Fade from '@material-ui/core/Fade'
 
 import React from 'react'

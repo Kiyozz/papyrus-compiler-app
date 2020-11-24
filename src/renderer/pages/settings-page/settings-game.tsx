@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Button from '@material-ui/core/Button'
 import Collapse from '@material-ui/core/Collapse'
 import FormControl from '@material-ui/core/FormControl'
@@ -11,7 +17,7 @@ import Alert from '@material-ui/lab/Alert'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Games, getExecutable } from '../../../common/game'
-import DialogTextField from '../../components/dialog-text-field/dialog-text-field'
+import { DialogTextField } from '../../components/dialog-text-field/dialog-text-field'
 import { usePageContext } from '../../components/page/page-context'
 import { useSettings } from './settings-context'
 import classes from './settings-page.module.scss'

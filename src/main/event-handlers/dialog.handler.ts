@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { dialog } from 'electron'
 import { EventHandler } from '../interfaces/event.handler'
 import { DialogType } from '../../common/interfaces/dialog.interface'

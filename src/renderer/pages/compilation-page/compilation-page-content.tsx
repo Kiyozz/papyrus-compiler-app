@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Typography from '@material-ui/core/Typography'
 
 import React, { useMemo } from 'react'

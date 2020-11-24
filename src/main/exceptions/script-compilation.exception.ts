@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import is from '@sindresorhus/is'
 
 export class ScriptCompilationException extends Error {

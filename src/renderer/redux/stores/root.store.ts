@@ -1,23 +1,19 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { createHistory, createMemorySource } from '@reach/router'
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { logger } from 'redux-logger'
 import changelogReducer, { ChangelogState } from '../reducers/changelog.reducer'
-import compilationLogsReducer, {
-  CompilationLogsState
-} from '../reducers/compilation-logs.reducer'
-import compilationReducer, {
-  CompilationState
-} from '../reducers/compilation.reducer'
-import initializationReducer, {
-  InitializationState
-} from '../reducers/initialization.reducer'
-import createSettingsReducer, {
-  SettingsState
-} from '../reducers/settings.reducer'
-import taskLoadingReducer, {
-  TaskLoadingState
-} from '../reducers/task-loading.reducer'
+import compilationLogsReducer, { CompilationLogsState } from '../reducers/compilation-logs.reducer'
+import compilationReducer, { CompilationState } from '../reducers/compilation.reducer'
+import initializationReducer, { InitializationState } from '../reducers/initialization.reducer'
+import createSettingsReducer, { SettingsState } from '../reducers/settings.reducer'
+import taskLoadingReducer, { TaskLoadingState } from '../reducers/task-loading.reducer'
 import rootSaga from '../sagas/root.saga'
 
 export interface RootStore {

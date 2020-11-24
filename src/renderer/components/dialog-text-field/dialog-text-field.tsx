@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
 import FolderIcon from '@material-ui/icons/Folder'
@@ -21,7 +27,7 @@ export interface Props {
   type: DialogType
 }
 
-function DialogTextField({
+export function DialogTextField({
   error = false,
   label,
   defaultValue,
@@ -103,5 +109,3 @@ function DialogTextField({
     />
   )
 }
-
-export default DialogTextField

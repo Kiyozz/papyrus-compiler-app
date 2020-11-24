@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { is } from 'electron-util'
 import { EventHandler } from '../interfaces/event.handler'
 

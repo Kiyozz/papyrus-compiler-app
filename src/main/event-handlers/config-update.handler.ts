@@ -1,8 +1,14 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import is from '@sindresorhus/is'
 import deepmerge from 'deepmerge'
+import { PartialDeep } from 'type-fest'
 import { appStore } from '../../common/store'
 import { Config } from '../../common/interfaces/config.interface'
-import { PartialDeep } from '../../common/interfaces/misc.interface'
 import { EventHandler } from '../interfaces/event.handler'
 import { Logger } from '../logger'
 

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 export type GameType = 'Skyrim Special Edition' | 'Skyrim Legendary Edition'
 export type GamePath = string
 export type CompilerPath = string

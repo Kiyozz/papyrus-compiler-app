@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { call, put, takeLatest } from 'redux-saga/effects'
 import actions, { CONSTANTS } from '../actions'
 import { apiFactory } from '../api/api-factory'

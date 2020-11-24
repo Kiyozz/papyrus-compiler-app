@@ -1,13 +1,11 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import compareVersions from 'compare-versions'
-import {
-  call,
-  delay,
-  put,
-  race,
-  select,
-  take,
-  takeLatest
-} from 'redux-saga/effects'
+import { call, delay, put, race, select, take, takeLatest } from 'redux-saga/effects'
 import { GithubReleaseModel } from '../../models'
 import actions, { CONSTANTS } from '../actions'
 import { apiFactory } from '../api/api-factory'

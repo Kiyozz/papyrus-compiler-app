@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
 import { OnDropFunction } from '../components/drop-scripts/drop-scripts'

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { ScriptModel } from '../../models'
 
 export default function buttonsDisable(

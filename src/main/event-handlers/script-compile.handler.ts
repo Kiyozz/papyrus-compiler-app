@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import is from '@sindresorhus/is'
 import { EventHandler } from '../interfaces/event.handler'
 import { compileScript } from '../services/compile-script.service'

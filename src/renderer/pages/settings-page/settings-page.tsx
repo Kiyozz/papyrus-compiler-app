@@ -1,11 +1,17 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import RefreshIcon from '@material-ui/icons/Refresh'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { debounce } from 'lodash-es'
 import { Games, GameType } from '../../../common/game'
 
-import Page from '../../components/page/page'
-import PageAppBar from '../../components/page/page-app-bar'
+import { Page } from '../../components/page/page'
+import { PageAppBar } from '../../components/page/page-app-bar'
 import { usePageContext } from '../../components/page/page-context'
 import actions from '../../redux/actions'
 import { useAction, useStoreSelector } from '../../redux/use-store-selector'

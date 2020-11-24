@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import React, { createContext, useContext } from 'react'
 import { ScriptModel } from '../../models'
 import { useStoreSelector } from '../../redux/use-store-selector'

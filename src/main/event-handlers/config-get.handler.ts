@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { appStore } from '../../common/store'
 import { Config } from '../../common/interfaces/config.interface'
 import { EventHandler } from '../interfaces/event.handler'

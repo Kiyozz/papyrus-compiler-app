@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { ipcRenderer } from '../../common/ipc'
 import { IS_PRODUCTION } from '../../common/events'
 

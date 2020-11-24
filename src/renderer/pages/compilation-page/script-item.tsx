@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade'

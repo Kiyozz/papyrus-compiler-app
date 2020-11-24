@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 

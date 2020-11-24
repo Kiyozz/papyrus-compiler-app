@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { shell } from 'electron'
 import { EventHandler } from '../interfaces/event.handler'
 import { Logger } from '../logger'

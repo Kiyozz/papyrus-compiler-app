@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import IconButton from '@material-ui/core/IconButton'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -16,26 +22,26 @@ interface Props {
   ) => (e: React.MouseEvent) => void
 }
 
-const GroupsDialogList: React.FC<Props> = ({
+export function GroupsDialogList({
   scripts,
   onClickRemoveScriptFromGroup
-}) => (
-  <List style={{ padding: '0' }}>
-    {scripts.map((script, index) => (
-      <ListItem key={script.id + index}>
-        <ListItemText>{script.name}</ListItemText>
-        <ListItemSecondaryAction>
-          <IconButton
-            edge="end"
-            aria-label="delete"
-            onClick={onClickRemoveScriptFromGroup(script)}
-          >
-            <DeleteIcon color="error" />
-          </IconButton>
-        </ListItemSecondaryAction>
-      </ListItem>
-    ))}
-  </List>
-)
-
-export default GroupsDialogList
+}: Props) {
+  return (
+    <List style={{ padding: '0' }}>
+      {scripts.map((script, index) => (
+        <ListItem key={script.id + index}>
+          <ListItemText>{script.name}</ListItemText>
+          <ListItemSecondaryAction>
+            <IconButton
+              edge="end"
+              aria-label="delete"
+              onClick={onClickRemoveScriptFromGroup(script)}
+            >
+              <DeleteIcon color="error" />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+      ))}
+    </List>
+  )
+}

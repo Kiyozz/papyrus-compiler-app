@@ -1,9 +1,15 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Collapse from '@material-ui/core/Collapse'
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import DialogTextField from '../../components/dialog-text-field/dialog-text-field'
+import { DialogTextField } from '../../components/dialog-text-field/dialog-text-field'
 import { usePageContext } from '../../components/page/page-context'
 
 interface Props {

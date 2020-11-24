@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon'
 import React from 'react'
 

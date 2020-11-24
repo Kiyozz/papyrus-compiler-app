@@ -1,8 +1,10 @@
-import {
-  ipcRenderer as baseIpcRenderer,
-  ipcMain as baseIpcMain,
-  IpcMainInvokeEvent
-} from 'electron'
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
+import { ipcMain as baseIpcMain, IpcMainInvokeEvent, ipcRenderer as baseIpcRenderer } from 'electron'
 
 type MainInvokeListener<Args> = (event: IpcMainInvokeEvent, args: Args) => void
 

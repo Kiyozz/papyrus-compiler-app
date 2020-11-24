@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import * as fs from 'fs'
 import { app } from 'electron'
 import Store from 'electron-store'

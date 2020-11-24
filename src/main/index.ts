@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { format } from 'url'
 import { app, BrowserWindow } from 'electron'
 import { debugInfo, is } from 'electron-util'

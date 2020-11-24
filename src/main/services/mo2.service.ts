@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { toAntiSlash } from '../../common/slash'
 import { GameType, toOtherSource, toSource } from '../../common/game'
 import { appStore } from '../../common/store'

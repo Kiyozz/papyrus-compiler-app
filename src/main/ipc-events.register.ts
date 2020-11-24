@@ -1,4 +1,10 @@
-import { ipcMain as ipc } from '../common/ipc'
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
+import { ipcMain } from '../common/ipc'
 import { EventHandler } from './interfaces/event.handler'
 import { Logger } from './logger'
 
@@ -8,7 +14,7 @@ export function registerIpcEvents(handlers: Map<string, EventHandler>) {
   handlers.forEach((handler, name) => {
     logger.info(`register "${name}"`)
 
-    ipc.handle(name, async (_, args) => {
+    ipcMain.handle(name, async (_, args) => {
       logger.debug(`"${name}" started`)
 
       try {

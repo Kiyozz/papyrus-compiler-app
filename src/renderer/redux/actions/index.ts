@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { createAction } from 'redux-actions'
 import { CompilationLogsModel, ScriptModel } from '../../models'
 import * as CONSTANTS from './constants'
