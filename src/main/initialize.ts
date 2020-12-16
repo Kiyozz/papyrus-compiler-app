@@ -44,7 +44,7 @@ function installExtensions() {
  * Rename the current log file to have previous session log file
  */
 async function backupLogFile() {
-  const logFile = logger.transports.file.getFile().path
+  const logFile = logger.file.path
 
   if (!logFile) {
     logger.info('there is no log file')

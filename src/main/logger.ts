@@ -4,20 +4,23 @@
  * All rights reserved.
  */
 
-import log from 'electron-log'
+import log, { LogFunctions } from 'electron-log'
 import { is } from 'electron-util'
 
 export class Logger {
+  private logger: LogFunctions
   catchErrors = log.catchErrors
 
-  constructor(private namespace: string) {}
+  constructor(namespace: string) {
+    this.logger = log.scope(namespace)
+  }
 
   get transports() {
     return log.transports
   }
 
   get file() {
-    return log.transports.file.getFile()
+    return this.transports.file.getFile()
   }
 
   get previousSessionFilePath() {
@@ -26,25 +29,25 @@ export class Logger {
 
   debug(...params: unknown[]): void {
     if (this.isDebugEnabled()) {
-      log.debug(`[${this.namespace}]`, params)
+      this.logger.debug(...params)
     }
   }
 
   info(...params: unknown[]): void {
-    log.info(`[${this.namespace}]`, params)
+    this.logger.info(...params)
   }
 
   error(...params: unknown[]): void {
-    log.error(`[${this.namespace}]`, params)
+    this.logger.error(...params)
   }
 
   warn(...params: unknown[]): void {
-    log.warn(`[${this.namespace}]`, params)
+    this.logger.warn(...params)
   }
 
   deprecated(message: string): void {
     if (this.isDebugEnabled()) {
-      log.debug(`[${this.namespace}] deprecated: ${message}`)
+      this.logger.debug(`deprecated: ${message}`)
     }
   }
 
