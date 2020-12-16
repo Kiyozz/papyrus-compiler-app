@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import {
   Button,
   Dialog,
@@ -25,7 +31,10 @@ interface Props {
   onClose: () => void
 }
 
-const Heading: React.FC<{ level: number }> = ({ children, level }) => {
+function Heading({
+  children,
+  level
+}: React.PropsWithChildren<{ level: number }>) {
   return (
     <Typography gutterBottom={true} variant={level === 2 ? 'h5' : 'h6'}>
       {children}
@@ -33,11 +42,11 @@ const Heading: React.FC<{ level: number }> = ({ children, level }) => {
   )
 }
 
-const Paragraph: React.FC = ({ children }) => {
+function Paragraph({ children }: React.PropsWithChildren<unknown>) {
   return <Typography variant="body2">{children}</Typography>
 }
 
-const Code: React.FC<{ value: string }> = ({ value }) => {
+function Code({ value }: { value: string }) {
   return (
     <code className={classes.logsContainer}>
       {value.split('\n').map((s, i) => (
@@ -49,7 +58,7 @@ const Code: React.FC<{ value: string }> = ({ value }) => {
   )
 }
 
-const DialogChangelog: React.FC<Props> = ({ onClose }) => {
+export function DialogChangelog({ onClose }: Props) {
   const shell = useMemo(() => window.require('electron').shell, [])
   const { t } = useTranslation()
   const showNotes = useStoreSelector(store => store.changelog.showNotes)
@@ -140,5 +149,3 @@ const DialogChangelog: React.FC<Props> = ({ onClose }) => {
     </>
   )
 }
-
-export default DialogChangelog

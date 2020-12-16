@@ -1,8 +1,14 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { shell } from 'electron'
-import { EventHandler } from '../interfaces/event.handler'
+import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { Logger } from '../logger'
 
-export class OpenFileHandler implements EventHandler {
+export class OpenFileHandler implements EventHandlerInterface {
   private logger = new Logger(OpenFileHandler.name)
 
   async listen(file: string): Promise<void> {

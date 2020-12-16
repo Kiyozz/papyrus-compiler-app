@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Button from '@material-ui/core/Button'
 
 import React from 'react'
@@ -12,12 +18,12 @@ interface Props {
   AddScriptsButton?: JSX.Element | null
 }
 
-const GroupsDialogActions: React.FC<Props> = ({
+export function GroupsDialogActions({
   name,
   AddScriptsButton,
   onClose,
   isEdit
-}) => {
+}: Props) {
   const { t } = useTranslation()
 
   return (
@@ -37,5 +43,3 @@ const GroupsDialogActions: React.FC<Props> = ({
     </>
   )
 }
-
-export default GroupsDialogActions

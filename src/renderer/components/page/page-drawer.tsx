@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Box from '@material-ui/core/Box'
 import Divider from '@material-ui/core/Divider'
 import Drawer from '@material-ui/core/Drawer'
@@ -14,14 +20,14 @@ import React, { useCallback, useMemo } from 'react'
 import { useLocation } from '@reach/router'
 import { useTranslation } from 'react-i18next'
 
-import AppIcon from '../../assets/logo/vector/app-icon'
+import { AppIcon } from '../../assets/logo/vector/app-icon'
 import { useStoreSelector } from '../../redux/use-store-selector'
-import OpenCompilationLogs from '../open-compilation-logs/open-compilation-logs'
-import { ActiveLink } from '../sidebar/sidebar-link'
+import { OpenCompilationLogs } from '../open-compilation-logs/open-compilation-logs'
+import { ActiveLink } from '../active-link/active-link'
 import { usePageContext } from './page-context'
 import classes from './page.module.scss'
 
-const PageDrawer: React.FC = () => {
+export function PageDrawer() {
   const { setDrawerOpen } = usePageContext()
   const { t } = useTranslation()
 
@@ -113,5 +119,3 @@ const PageDrawer: React.FC = () => {
     </nav>
   )
 }
-
-export default PageDrawer

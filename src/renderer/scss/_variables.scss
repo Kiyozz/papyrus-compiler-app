@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 // --- Colors palette
 
 $color-primary: hsl(202, 83%, 41%);
@@ -27,15 +33,11 @@ $color-success-800: hsl(168, 80%, 23%);
 
 $background-content: $color-secondary-200;
 $background-loading: $color-secondary-800;
-$background-sidebar: $color-secondary-300;
-$background-sidebar-link-active: $color-primary;
 $background-compilation-logs-popup: darken($background-content, 1);
 
 // --- Colors sections/elements
 
 $color-loading: $color-secondary-300;
-$color-sidebar-link: $color-secondary;
-$color-sidebar-link-active: $color-secondary-800;
 $color-title: $color-secondary-800;
 $color-subtitle: $color-secondary;
 $color-button: $color-primary;

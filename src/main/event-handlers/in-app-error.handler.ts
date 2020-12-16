@@ -1,9 +1,15 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import is from '@sindresorhus/is'
-import { EventHandler } from '../interfaces/event.handler'
+import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { createReportDialog } from '../services/create-report-dialog.service'
 import { Logger } from '../logger'
 
-export class InAppErrorHandler implements EventHandler<Error> {
+export class InAppErrorHandler implements EventHandlerInterface<Error> {
   private logger = new Logger(InAppErrorHandler.name)
 
   listen(args?: Error) {

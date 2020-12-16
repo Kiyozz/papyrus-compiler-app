@@ -1,8 +1,14 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import cx from 'classnames'
 import React, { useCallback, useRef } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { NodeService } from '../../services/node.service'
-import DropScriptsButton from './drop-scripts-button'
+import { HtmlNodeService } from '../../services/html-node.service'
+import { DropScriptsButton } from './drop-scripts-button'
 import classes from './drop-scripts.module.scss'
 
 type InputRef = React.RefObject<HTMLInputElement>
@@ -34,9 +40,9 @@ interface Props {
 export type AddScriptsButton = JSX.Element
 export type OnDropFunction = ((files: File[]) => void) | null
 
-const nodeService = new NodeService()
+const htmlNodeService = new HtmlNodeService()
 
-const DropScripts: React.FC<Props> = ({
+export function DropScripts({
   onDrop,
   onClick,
   className,
@@ -46,7 +52,7 @@ const DropScripts: React.FC<Props> = ({
   preventDropOnDocument = true,
   children,
   Button
-}) => {
+}: React.PropsWithChildren<Props>) {
   const {
     getRootProps,
     isDragActive,
@@ -65,7 +71,10 @@ const DropScripts: React.FC<Props> = ({
       if (onlyClickButton) {
         if (
           e.target !== buttonRef.current &&
-          !nodeService.isChildren(buttonRef.current, e.target as HTMLElement)
+          !htmlNodeService.isChildren(
+            buttonRef.current,
+            e.target as HTMLElement
+          )
         ) {
           e.stopPropagation()
 
@@ -98,5 +107,3 @@ const DropScripts: React.FC<Props> = ({
     </div>
   )
 }
-
-export default DropScripts

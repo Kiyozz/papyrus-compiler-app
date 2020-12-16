@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -18,30 +24,35 @@ import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 
 import classes from './open-compilation-logs.module.scss'
 
-const LogsListItem: React.FC<{ script: ScriptModel; logs: string }> = ({
+export function LogsListItem({
   script,
   logs
-}) => (
-  <div>
-    <Typography className={classes.logTitle} variant="h6" component="h3">
-      {script.name}
-    </Typography>
-    <code className={classes.logsContainer}>
-      {logs.split('\n').map((log, i) => (
-        <Typography
-          className={classes.logItem}
-          variant="caption"
-          component="span"
-          key={i}
-        >
-          {log} <br />
-        </Typography>
-      ))}
-    </code>
-  </div>
-)
+}: {
+  script: ScriptModel
+  logs: string
+}) {
+  return (
+    <div>
+      <Typography className={classes.logTitle} variant="h6" component="h3">
+        {script.name}
+      </Typography>
+      <code className={classes.logsContainer}>
+        {logs.split('\n').map((log, i) => (
+          <Typography
+            className={classes.logItem}
+            variant="caption"
+            component="span"
+            key={i}
+          >
+            {log} <br />
+          </Typography>
+        ))}
+      </code>
+    </div>
+  )
+}
 
-const OpenCompilationLogs: React.FC = () => {
+export function OpenCompilationLogs() {
   const { t } = useTranslation()
   const logs = useStoreSelector(state => state.compilationLogs.logs)
   const popupOpen = useStoreSelector(state => state.compilationLogs.popupOpen)
@@ -87,5 +98,3 @@ const OpenCompilationLogs: React.FC = () => {
     </>
   )
 }
-
-export default OpenCompilationLogs

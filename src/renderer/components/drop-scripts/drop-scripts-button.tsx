@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import cx from 'classnames'
 import React from 'react'
 import { DropzoneState } from 'react-dropzone'
@@ -11,13 +17,13 @@ interface Props {
   className?: string
 }
 
-const DropScriptsButton: React.FC<Props> = ({
+export function DropScriptsButton({
   getInputProps,
   children,
   buttonRef,
   Button,
   className
-}) => {
+}: React.PropsWithChildren<Props>) {
   return (
     <div ref={buttonRef} className={cx(className)}>
       {Button}
@@ -28,5 +34,3 @@ const DropScriptsButton: React.FC<Props> = ({
     </div>
   )
 }
-
-export default DropScriptsButton

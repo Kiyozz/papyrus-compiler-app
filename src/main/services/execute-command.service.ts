@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { exec as originalExec } from 'child_process'
 import { promisify } from 'util'
 import { Logger } from '../logger'

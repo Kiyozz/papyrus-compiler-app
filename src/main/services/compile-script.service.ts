@@ -1,12 +1,18 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import is from '@sindresorhus/is'
 import { appStore } from '../../common/store'
 import { getExecutable, toOtherSource, toSource } from '../../common/game'
 import { ScriptCompilationException } from '../exceptions/script-compilation.exception'
 import { ConfigurationException } from '../exceptions/configuration.exception'
 import { Mo2InvalidConfigurationException } from '../exceptions/mo2/mo2-invalid-configuration.exception'
-import { executeCommand } from './execute-command.service'
 import { generateCompilerCmd } from '../utils/generate-compiler-cmd.util'
 import { Logger } from '../logger'
+import { executeCommand } from './execute-command.service'
 import * as mo2 from './mo2.service'
 import * as path from './path.service'
 

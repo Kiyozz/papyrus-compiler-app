@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 export class Mo2ModsPathExistsException extends Error {
   constructor(mo2ModsPath: string) {
     super(

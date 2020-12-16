@@ -1,10 +1,16 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import is from '@sindresorhus/is'
-import { EventHandler } from '../interfaces/event.handler'
-import { Stats } from '../../common/interfaces/misc.interface'
+import { Stats } from 'fs-extra'
+import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { stat } from '../services/path.service'
 import { Logger } from '../logger'
 
-export class FileStatHandler implements EventHandler<string[]> {
+export class FileStatHandler implements EventHandlerInterface<string[]> {
   private logger = new Logger(FileStatHandler.name)
 
   async listen(files?: string[]): Promise<Map<string, Stats>> {

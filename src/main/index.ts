@@ -1,6 +1,12 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
+import { format } from 'url'
 import { app, BrowserWindow } from 'electron'
 import { debugInfo, is } from 'electron-util'
-import { format } from 'url'
 import { join } from './services/path.service'
 import { initialize } from './initialize'
 import { Logger } from './logger'
@@ -9,7 +15,7 @@ import { createReportDialog } from './services/create-report-dialog.service'
 const logger = new Logger('Main')
 let win: BrowserWindow | null = null
 
-function createWindow() {
+async function createWindow() {
   logger.info(debugInfo())
 
   win = new BrowserWindow({
@@ -26,9 +32,9 @@ function createWindow() {
   const isDev = is.development
 
   if (isDev) {
-    win!.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
+    win.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
   } else {
-    win!.loadURL(
+    win.loadURL(
       format({
         pathname: join(__dirname, 'index.html'),
         protocol: 'file',
@@ -37,20 +43,20 @@ function createWindow() {
     )
   }
 
-  initialize()
+  await initialize()
 
-  win!.on('closed', () => {
+  win.on('closed', () => {
     win = null
   })
 
-  win!.webContents.on('devtools-opened', () => {
+  win.webContents.on('devtools-opened', () => {
     win!.focus()
     setImmediate(() => {
       win!.focus()
     })
   })
 
-  win!.on('ready-to-show', () => {
+  win.on('ready-to-show', () => {
     // loading.hide()
     // loading.close()
 

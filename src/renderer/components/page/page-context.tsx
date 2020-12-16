@@ -1,8 +1,10 @@
-import { Config } from '../../../common/interfaces/config.interface'
-import { PartialDeep } from '../../../common/interfaces/misc.interface'
-import * as EVENTS from '../../../common/events'
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import is from '@sindresorhus/is'
-import { ipcRenderer } from '../../../common/ipc'
 import React, {
   useCallback,
   useContext,
@@ -10,12 +12,16 @@ import React, {
   useMemo,
   useState
 } from 'react'
+import { Observable, Subject } from 'rxjs'
+import { PartialDeep } from 'type-fest'
+import { Config } from '../../../common/interfaces/config.interface'
+import * as EVENTS from '../../../common/events'
+import { ipcRenderer } from '../../../common/ipc'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import { Group } from '../../models'
 import { useStoreSelector } from '../../redux/use-store-selector'
-import DropFilesOverlay from '../drop-files-overlay/drop-files-overlay'
-import DropScripts, { OnDropFunction } from '../drop-scripts/drop-scripts'
-import { Observable, Subject } from 'rxjs'
+import { DropFilesOverlay } from '../drop-files-overlay/drop-files-overlay'
+import { DropScripts, OnDropFunction } from '../drop-scripts/drop-scripts'
 
 interface PageContextInterface {
   drawerOpen: boolean
@@ -56,7 +62,9 @@ function selectGroups(config: Config): Group[] {
   )
 }
 
-const PageContextProvider: React.FC = ({ children }) => {
+export function PageContextProvider({
+  children
+}: React.PropsWithChildren<unknown>) {
   const [config, setConfig] = useState<Config>({} as Config)
   const [groups, setGroups] = useState<Group[]>([])
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -132,5 +140,3 @@ const PageContextProvider: React.FC = ({ children }) => {
     </DropScripts>
   )
 }
-
-export default PageContextProvider

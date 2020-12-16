@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Container from '@material-ui/core/Container'
 import Fade from '@material-ui/core/Fade'
 
@@ -11,7 +17,7 @@ interface Props {
   children: any
 }
 
-const Page: React.FC<Props> = ({ children, className }) => {
+export function Page({ children, className }: React.PropsWithChildren<Props>) {
   return (
     <Fade timeout={500} in appear exit={false} mountOnEnter unmountOnExit>
       <Container className={cx(classes.container, className)}>
@@ -20,5 +26,3 @@ const Page: React.FC<Props> = ({ children, className }) => {
     </Fade>
   )
 }
-
-export default Page

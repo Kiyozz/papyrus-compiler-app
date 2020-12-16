@@ -1,16 +1,22 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Box from '@material-ui/core/Box'
 import React, { useCallback, useEffect } from 'react'
 
 import classes from './app.module.scss'
-import DialogChangelog from './components/dialog-changelog/dialog-changelog'
-import PageContextProvider from './components/page/page-context'
-import PageDrawer from './components/page/page-drawer'
-import SplashScreen from './components/splash-screen/splash-screen'
+import { DialogChangelog } from './components/dialog-changelog/dialog-changelog'
+import { PageContextProvider } from './components/page/page-context'
+import { PageDrawer } from './components/page/page-drawer'
+import { SplashScreen } from './components/splash-screen/splash-screen'
 import actions from './redux/actions'
 import { useAction, useStoreSelector } from './redux/use-store-selector'
-import Routes from './routes'
+import { Routes } from './routes'
 
-const App: React.FC = () => {
+export function App() {
   const initialization = useAction(actions.initialization.start)
   const getLatestNotes = useAction(actions.changelog.latestNotes.start)
   const setShowNotes = useAction(actions.changelog.showNotes)
@@ -45,5 +51,3 @@ const App: React.FC = () => {
     </div>
   )
 }
-
-export default App

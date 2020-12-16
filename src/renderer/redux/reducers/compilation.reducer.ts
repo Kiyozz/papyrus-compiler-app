@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import find from 'lodash-es/find'
 import uniqBy from 'lodash-es/uniqBy'
 import { AnyAction } from 'redux'

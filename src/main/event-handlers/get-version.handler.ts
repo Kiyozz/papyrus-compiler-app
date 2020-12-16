@@ -1,10 +1,16 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { is } from 'electron-util'
 import { app } from 'electron'
 import { join, readFile } from '../services/path.service'
-import { EventHandler } from '../interfaces/event.handler'
+import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { Logger } from '../logger'
 
-export class GetVersionHandler implements EventHandler {
+export class GetVersionHandler implements EventHandlerInterface {
   private logger = new Logger(GetVersionHandler.name)
 
   async listen(): Promise<string> {

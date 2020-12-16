@@ -1,7 +1,13 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import {
-  ipcRenderer as baseIpcRenderer,
   ipcMain as baseIpcMain,
-  IpcMainInvokeEvent
+  IpcMainInvokeEvent,
+  ipcRenderer as baseIpcRenderer
 } from 'electron'
 
 type MainInvokeListener<Args> = (event: IpcMainInvokeEvent, args: Args) => void

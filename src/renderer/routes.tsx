@@ -1,21 +1,33 @@
-import React from 'react'
-import { Router } from '@reach/router'
-import CompilationPage from './pages/compilation-page/compilation-page'
-import GroupsPage from './pages/groups-page/groups-page'
-import SettingsPage from './pages/settings-page/settings-page'
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
 
-const routes = [
-  { path: '/', Component: CompilationPage, default: true },
-  { path: 'groups', Component: GroupsPage },
-  { path: 'settings', Component: SettingsPage }
+import React from 'react'
+import { Router, RouteComponentProps } from '@reach/router'
+import { Compilation } from './pages/index/compilation'
+import { Groups } from './pages/groups/groups'
+import { Settings } from './pages/settings/settings'
+
+interface Route {
+  path: string
+  Component: React.FC<RouteComponentProps & unknown>
+  default?: boolean
+}
+
+const routes: Route[] = [
+  { path: '/', Component: Compilation, default: true },
+  { path: 'groups', Component: Groups },
+  { path: 'settings', Component: Settings }
 ]
 
-const Routes = () => (
-  <Router>
-    {routes.map(({ path, Component, default: defaultPage }) => (
-      <Component key={path} path={path} default={defaultPage} />
-    ))}
-  </Router>
-)
-
-export default Routes
+export function Routes() {
+  return (
+    <Router>
+      {routes.map(({ path, Component, default: defaultPage }) => (
+        <Component key={path} path={path} default={defaultPage} />
+      ))}
+    </Router>
+  )
+}

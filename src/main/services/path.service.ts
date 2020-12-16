@@ -1,8 +1,14 @@
-import { toSlash } from '../../common/slash'
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
+import * as path from 'path'
 import { is } from 'electron-util'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
-import * as path from 'path'
+import { toSlash } from '../../common/slash'
 import { FileAccessException } from '../exceptions/files/file-access.exception'
 import { FileEnsureException } from '../exceptions/files/file-ensure.exception'
 import { Logger } from '../logger'

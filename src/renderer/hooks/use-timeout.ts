@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { useEffect, useRef } from 'react'
 
 type StartCallback = () => void

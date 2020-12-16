@@ -1,12 +1,18 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { dialog } from 'electron'
-import { EventHandler } from '../interfaces/event.handler'
+import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { DialogType } from '../../common/interfaces/dialog.interface'
 
 interface DialogHandlerArgs {
   type: DialogType
 }
 
-export class DialogHandler implements EventHandler<DialogHandlerArgs> {
+export class DialogHandler implements EventHandlerInterface<DialogHandlerArgs> {
   async listen({ type }: DialogHandlerArgs): Promise<string | null> {
     if (type !== 'folder' && type !== 'file') {
       return null

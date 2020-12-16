@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { createMuiTheme, ThemeProvider } from '@material-ui/core'
 import red from '@material-ui/core/colors/red'
 import React from 'react'
@@ -23,8 +29,6 @@ const theme = createMuiTheme({
   }
 })
 
-const Theme: React.FC = ({ children }) => {
+export function Theme({ children }: React.PropsWithChildren<unknown>) {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>
 }
-
-export default Theme

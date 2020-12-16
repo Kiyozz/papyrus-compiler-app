@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Backdrop from '@material-ui/core/Backdrop'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -8,7 +14,7 @@ interface Props {
   open: boolean
 }
 
-const DropFilesOverlay: React.FC<Props> = ({ open }) => {
+export function DropFilesOverlay({ open }: Props) {
   return (
     <Backdrop open={open} className={classes.background}>
       <Box className={classes.box} bgcolor="primary.main" color="text.primary">
@@ -19,5 +25,3 @@ const DropFilesOverlay: React.FC<Props> = ({ open }) => {
     </Backdrop>
   )
 }
-
-export default DropFilesOverlay

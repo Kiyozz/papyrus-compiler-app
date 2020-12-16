@@ -1,6 +1,12 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
+import { useMemo } from 'react'
 import { toAntiSlash } from '../../common/slash'
 import { toSource } from '../../common/game'
-import { useMemo } from 'react'
 import { usePageContext } from '../components/page/page-context'
 
 interface Out {

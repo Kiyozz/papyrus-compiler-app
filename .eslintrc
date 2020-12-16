@@ -5,7 +5,9 @@
     "prettier/@typescript-eslint",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:import/errors",
+    "plugin:import/typescript"
   ],
   "rules": {
     "@typescript-eslint/brace-style": [
@@ -87,6 +89,7 @@
     "guard-for-in": "error",
     "handle-callback-err": "error",
     "indent": "off",
+    "import/order": "error",
     "key-spacing": [
       "warn",
       {

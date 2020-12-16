@@ -1,5 +1,11 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react'
+import { useEffect } from 'react'
 import { OnDropFunction } from '../components/drop-scripts/drop-scripts'
 import { usePageContext } from '../components/page/page-context'
 
@@ -13,13 +19,13 @@ export const useDrop = (
 ): JSX.Element | undefined | null => {
   const { addScriptsButton, setAddScriptsButton, setOnDrop } = usePageContext()
 
-  React.useEffect(() => {
+  useEffect(() => {
     setAddScriptsButton(options.button)
 
     return () => setAddScriptsButton(null)
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     setOnDrop(() => options.onDrop)
 
     return () => setOnDrop(null)

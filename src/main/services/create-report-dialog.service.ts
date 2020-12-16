@@ -1,7 +1,13 @@
-import { GITHUB_ISSUES_NEW } from '../../common/constants'
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import is from '@sindresorhus/is'
 import { app, dialog, shell } from 'electron'
 import { ReportData } from 'electron-log'
+import { GITHUB_ISSUES_NEW } from '../../common/constants'
 
 export function createReportDialog(
   error: Error,

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import Fade from '@material-ui/core/Fade'
 
 import React from 'react'
@@ -7,7 +13,7 @@ import { useStoreSelector } from '../../redux/use-store-selector'
 
 import classes from './splash-screen.module.scss'
 
-const SplashScreen: React.FC = () => {
+export function SplashScreen() {
   const initialized = useStoreSelector(state => state.initialization)
 
   return (
@@ -18,5 +24,3 @@ const SplashScreen: React.FC = () => {
     </Fade>
   )
 }
-
-export default SplashScreen

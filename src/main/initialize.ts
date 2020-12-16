@@ -1,5 +1,11 @@
-import * as EVENTS from '../common/events'
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { is } from 'electron-util'
+import * as EVENTS from '../common/events'
 import { appStore } from '../common/store'
 import { BadInstallationHandler } from './event-handlers/bad-installation.handler'
 import { ScriptCompileHandler } from './event-handlers/script-compile.handler'
@@ -12,7 +18,7 @@ import { InAppErrorHandler } from './event-handlers/in-app-error.handler'
 import { Mo2ModsSourcesHandler } from './event-handlers/mo2-mods-sources.handler'
 import { OpenFileHandler } from './event-handlers/open-file.handler'
 import { IsProductionHandler } from './event-handlers/is-production.handler'
-import { EventHandler } from './interfaces/event.handler'
+import { EventHandlerInterface } from './interfaces/event-handler.interface'
 import { registerMenu } from './menu.register'
 import { Logger } from './logger'
 import { ensureFiles, move } from './services/path.service'
@@ -38,7 +44,7 @@ function installExtensions() {
  * Rename the current log file to have previous session log file
  */
 async function backupLogFile() {
-  const logFile = logger.transports.file.getFile().path
+  const logFile = logger.file.path
 
   if (!logFile) {
     logger.info('there is no log file')
@@ -63,7 +69,7 @@ export async function initialize() {
   await installExtensions()
 
   const openFileHandler = new OpenFileHandler()
-  const events = new Map<string, EventHandler>([
+  const events = new Map<string, EventHandlerInterface>([
     [EVENTS.COMPILE_SCRIPT, new ScriptCompileHandler()],
     [EVENTS.OPEN_DIALOG, new DialogHandler()],
     [EVENTS.MO2_MODS_SOURCES, new Mo2ModsSourcesHandler()],
@@ -72,7 +78,7 @@ export async function initialize() {
     [EVENTS.CONFIG_GET, new ConfigGetHandler()],
     [EVENTS.FILES_STATS, new FileStatHandler()],
     [EVENTS.GET_VERSION, new GetVersionHandler()],
-    [EVENTS.IN_APP_ERROR, new InAppErrorHandler()],
+    [EVENTS.ERROR, new InAppErrorHandler()],
     [EVENTS.IS_PRODUCTION, new IsProductionHandler()]
   ])
 

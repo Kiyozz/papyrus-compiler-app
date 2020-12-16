@@ -1,11 +1,17 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import is from '@sindresorhus/is'
-import { EventHandler } from '../interfaces/event.handler'
+import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { compileScript } from '../services/compile-script.service'
 import { Logger } from '../logger'
 import { checkStore } from '../../common/check-store'
 import { appStore, defaultConfig } from '../../common/store'
 
-export class ScriptCompileHandler implements EventHandler<string> {
+export class ScriptCompileHandler implements EventHandlerInterface<string> {
   private readonly logger = new Logger(ScriptCompileHandler.name)
 
   async listen(script?: string) {

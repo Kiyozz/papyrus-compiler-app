@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { AnyAction } from 'redux'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { ScriptModel } from '../../models'

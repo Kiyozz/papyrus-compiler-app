@@ -1,8 +1,14 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import is from '@sindresorhus/is'
+import { join } from '../main/services/path.service'
 import { AppStore } from './store'
 import { Config } from './interfaces/config.interface'
 import { validateGroup } from './validators/group.validator'
-import { join } from '../main/services/path.service'
 import { DEFAULT_COMPILER_PATH } from './constants'
 
 function checkMo2(appStore: AppStore, defaultConfig: Config) {

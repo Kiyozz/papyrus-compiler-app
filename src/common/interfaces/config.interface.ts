@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { CompilerPath, Flag, GamePath, GameType, OutputPath } from '../game'
 import { Group } from './group.interface'
 

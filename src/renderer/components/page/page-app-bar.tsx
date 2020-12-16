@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import AppBar from '@material-ui/core/AppBar'
 import Button, { ButtonProps } from '@material-ui/core/Button'
 import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
@@ -27,55 +33,51 @@ const isActionButton = (
   action: Action | ActionButton
 ): action is ActionButton => action.hasOwnProperty('button')
 
-const PageAppBar: React.FC<Props> = ({ title, actions = [] }) => {
+export function PageAppBar({ title, actions = [] }: Props) {
   return (
-    <>
-      <AppBar position="sticky">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            {title}
-          </Typography>
-          <div className={classes.flex}>
-            {actions.map((action, index) => {
-              if (isActionButton(action)) {
-                return (
-                  <React.Fragment key={index}>{action.button}</React.Fragment>
-                )
-              }
-
-              if (
-                typeof action.text === 'undefined' &&
-                typeof action.icon !== 'undefined'
-              ) {
-                return (
-                  <IconButton
-                    color="inherit"
-                    key={index}
-                    onClick={action.onClick}
-                    {...action.iconButtonProps}
-                  >
-                    {action.icon}
-                  </IconButton>
-                )
-              }
-
+    <AppBar position="sticky">
+      <Toolbar>
+        <Typography variant="h6" className={classes.title}>
+          {title}
+        </Typography>
+        <div className={classes.flex}>
+          {actions.map((action, index) => {
+            if (isActionButton(action)) {
               return (
-                <Button
-                  color="inherit"
-                  key={action.text}
-                  startIcon={action.icon}
-                  onClick={action.onClick}
-                  {...action.buttonProps}
-                >
-                  {action.text}
-                </Button>
+                <React.Fragment key={index}>{action.button}</React.Fragment>
               )
-            })}
-          </div>
-        </Toolbar>
-      </AppBar>
-    </>
+            }
+
+            if (
+              typeof action.text === 'undefined' &&
+              typeof action.icon !== 'undefined'
+            ) {
+              return (
+                <IconButton
+                  color="inherit"
+                  key={index}
+                  onClick={action.onClick}
+                  {...action.iconButtonProps}
+                >
+                  {action.icon}
+                </IconButton>
+              )
+            }
+
+            return (
+              <Button
+                color="inherit"
+                key={action.text}
+                startIcon={action.icon}
+                onClick={action.onClick}
+                {...action.buttonProps}
+              >
+                {action.text}
+              </Button>
+            )
+          })}
+        </div>
+      </Toolbar>
+    </AppBar>
   )
 }
-
-export default PageAppBar

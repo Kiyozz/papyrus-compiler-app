@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import { all, fork } from 'redux-saga/effects'
 import changelogSaga from './changelog.saga'
 import compilationSaga from './compilation.saga'

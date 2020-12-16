@@ -1,9 +1,15 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
+import * as fs from 'fs'
 import { app } from 'electron'
 import Store from 'electron-store'
 import { is } from 'electron-util'
 import { join } from '../main/services/path.service'
 import { Config } from './interfaces/config.interface'
-import * as fs from 'fs'
 import { migrate410 } from './migrations/4.1.0.migration'
 import { migrate420 } from './migrations/4.2.0.migration'
 import { checkStore } from './check-store'
