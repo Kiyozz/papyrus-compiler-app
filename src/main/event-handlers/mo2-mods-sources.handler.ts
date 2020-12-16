@@ -4,10 +4,10 @@
  * All rights reserved.
  */
 
-import { EventHandler } from '../interfaces/event.handler'
+import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { Logger } from '../logger'
 
-export class Mo2ModsSourcesHandler implements EventHandler {
+export class Mo2ModsSourcesHandler implements EventHandlerInterface {
   private logger = new Logger(Mo2ModsSourcesHandler.name)
 
   listen() {

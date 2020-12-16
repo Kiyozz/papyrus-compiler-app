@@ -15,12 +15,12 @@ import { PageAppBar } from '../../components/page/page-app-bar'
 import { usePageContext } from '../../components/page/page-context'
 import actions from '../../redux/actions'
 import { useAction, useStoreSelector } from '../../redux/use-store-selector'
-import SettingsContextProvider from './settings-context'
+import { SettingsContextProvider } from './settings-context'
 import { SettingsGame } from './settings-game'
-import SettingsMo2 from './settings-mo2'
+import { SettingsMo2 } from './settings-mo2'
 import classes from './settings-page.module.scss'
 
-export const SettingsPage: React.FC = () => {
+export function Settings() {
   const { t } = useTranslation()
   const {
     config: { gameType, gamePath, mo2 },

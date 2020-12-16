@@ -6,14 +6,7 @@
 
 import { Link, LinkProps } from '@reach/router'
 import cx from 'classnames'
-import React, { useCallback } from 'react'
-
-import classes from './sidebar-link.module.scss'
-
-interface Props {
-  to: string
-  exact?: boolean
-}
+import React from 'react'
 
 type LinkPropsAny = React.PropsWithoutRef<LinkProps<any>> &
   React.RefAttributes<HTMLAnchorElement>
@@ -24,12 +17,12 @@ interface ActiveLinkProps extends LinkPropsAny {
   activeClassName?: string
 }
 
-export const ActiveLink: React.FC<ActiveLinkProps> = ({
+export function ActiveLink({
   children,
   className,
   activeClassName,
   ...props
-}) => {
+}: ActiveLinkProps) {
   return (
     <Link
       {...props}
@@ -41,22 +34,3 @@ export const ActiveLink: React.FC<ActiveLinkProps> = ({
     </Link>
   )
 }
-
-const SidebarLink: React.FC<Props> = ({ to, children }) => {
-  const onClickLink = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    e.currentTarget.blur()
-  }, [])
-
-  return (
-    <ActiveLink
-      to={to}
-      className={classes.link}
-      activeClassName={classes.active}
-      onClick={onClickLink as any}
-    >
-      {children}
-    </ActiveLink>
-  )
-}
-
-export default SidebarLink

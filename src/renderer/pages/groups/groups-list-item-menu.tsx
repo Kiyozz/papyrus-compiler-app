@@ -22,7 +22,7 @@ interface Props {
   group: GroupModel
 }
 
-const GroupsListItemMenu: React.FC<Props> = ({ group, onDelete, onEdit }) => {
+export function GroupsListItemMenu({ group, onDelete, onEdit }: Props) {
   const { t } = useTranslation()
   const [anchorMenu, setAnchorMenu] = useState<HTMLElement | null>(null)
   const menuId = `group-${group.name}`
@@ -75,5 +75,3 @@ const GroupsListItemMenu: React.FC<Props> = ({ group, onDelete, onEdit }) => {
     </>
   )
 }
-
-export default GroupsListItemMenu

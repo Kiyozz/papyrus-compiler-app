@@ -29,14 +29,14 @@ interface Props {
   hovering: boolean
 }
 
-const ScriptItem: React.FC<Props> = ({
+export function ScriptItem({
   script,
   onMouseEnter,
   onMouseLeave,
   onMouseMove,
   onClickRemoveScript,
   hovering
-}) => {
+}: Props) {
   const { t } = useTranslation()
   const onClickRemove = useCallback(() => {
     onClickRemoveScript(script)
@@ -83,5 +83,3 @@ const ScriptItem: React.FC<Props> = ({
     </Paper>
   )
 }
-
-export default ScriptItem

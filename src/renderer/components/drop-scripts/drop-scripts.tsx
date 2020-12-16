@@ -7,7 +7,7 @@
 import cx from 'classnames'
 import React, { useCallback, useRef } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { NodeService } from '../../services/node.service'
+import { HtmlNodeService } from '../../services/html-node.service'
 import { DropScriptsButton } from './drop-scripts-button'
 import classes from './drop-scripts.module.scss'
 
@@ -40,7 +40,7 @@ interface Props {
 export type AddScriptsButton = JSX.Element
 export type OnDropFunction = ((files: File[]) => void) | null
 
-const nodeService = new NodeService()
+const htmlNodeService = new HtmlNodeService()
 
 export function DropScripts({
   onDrop,
@@ -71,7 +71,10 @@ export function DropScripts({
       if (onlyClickButton) {
         if (
           e.target !== buttonRef.current &&
-          !nodeService.isChildren(buttonRef.current, e.target as HTMLElement)
+          !htmlNodeService.isChildren(
+            buttonRef.current,
+            e.target as HTMLElement
+          )
         ) {
           e.stopPropagation()
 

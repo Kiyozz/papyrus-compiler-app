@@ -10,9 +10,9 @@ import { toSlash } from '../../common/slash'
 import { getExecutable, toSource } from '../../common/game'
 import { Logger } from '../logger'
 import * as path from '../services/path.service'
-import { EventHandler } from '../interfaces/event.handler'
+import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 
-export class BadInstallationHandler implements EventHandler {
+export class BadInstallationHandler implements EventHandlerInterface {
   private readonly logger = new Logger(BadInstallationHandler.name)
 
   async listen() {

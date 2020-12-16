@@ -20,7 +20,7 @@ interface Props {
   onChangeGroup: (groupName: string) => void
 }
 
-const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
+export function GroupsLoader({ groups, onChangeGroup }: Props) {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
 
@@ -78,5 +78,3 @@ const GroupsLoader: React.FC<Props> = ({ groups, onChangeGroup }) => {
     </div>
   )
 }
-
-export default GroupsLoader

@@ -4,6 +4,6 @@
  * All rights reserved.
  */
 
-export interface EventHandler<T = unknown> {
+export interface EventHandlerInterface<T = unknown> {
   listen(args?: T): unknown
 }

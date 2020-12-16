@@ -18,7 +18,10 @@ const SettingsContext = createContext({} as SettingsContextInterface)
 
 export const useSettings = () => useContext(SettingsContext)
 
-const SettingsContextProvider: React.FC = ({ children, ...props }) => {
+export function SettingsContextProvider({
+  children,
+  ...props
+}: React.PropsWithChildren<unknown>) {
   const state = useStoreSelector(({ settings, taskLoading }) => ({
     ...settings,
     loading: taskLoading
@@ -38,5 +41,3 @@ const SettingsContextProvider: React.FC = ({ children, ...props }) => {
     </SettingsContext.Provider>
   )
 }
-
-export default SettingsContextProvider

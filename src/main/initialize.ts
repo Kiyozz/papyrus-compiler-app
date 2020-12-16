@@ -18,7 +18,7 @@ import { InAppErrorHandler } from './event-handlers/in-app-error.handler'
 import { Mo2ModsSourcesHandler } from './event-handlers/mo2-mods-sources.handler'
 import { OpenFileHandler } from './event-handlers/open-file.handler'
 import { IsProductionHandler } from './event-handlers/is-production.handler'
-import { EventHandler } from './interfaces/event.handler'
+import { EventHandlerInterface } from './interfaces/event-handler.interface'
 import { registerMenu } from './menu.register'
 import { Logger } from './logger'
 import { ensureFiles, move } from './services/path.service'
@@ -69,7 +69,7 @@ export async function initialize() {
   await installExtensions()
 
   const openFileHandler = new OpenFileHandler()
-  const events = new Map<string, EventHandler>([
+  const events = new Map<string, EventHandlerInterface>([
     [EVENTS.COMPILE_SCRIPT, new ScriptCompileHandler()],
     [EVENTS.OPEN_DIALOG, new DialogHandler()],
     [EVENTS.MO2_MODS_SOURCES, new Mo2ModsSourcesHandler()],
@@ -78,7 +78,7 @@ export async function initialize() {
     [EVENTS.CONFIG_GET, new ConfigGetHandler()],
     [EVENTS.FILES_STATS, new FileStatHandler()],
     [EVENTS.GET_VERSION, new GetVersionHandler()],
-    [EVENTS.IN_APP_ERROR, new InAppErrorHandler()],
+    [EVENTS.ERROR, new InAppErrorHandler()],
     [EVENTS.IS_PRODUCTION, new IsProductionHandler()]
   ])
 

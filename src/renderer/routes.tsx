@@ -5,15 +5,21 @@
  */
 
 import React from 'react'
-import { Router } from '@reach/router'
-import { CompilationPage } from './pages/compilation-page/compilation-page'
-import { GroupsPage } from './pages/groups-page/groups-page'
-import { SettingsPage } from './pages/settings-page/settings-page'
+import { Router, RouteComponentProps } from '@reach/router'
+import { Compilation } from './pages/index/compilation'
+import { Groups } from './pages/groups/groups'
+import { Settings } from './pages/settings/settings'
 
-const routes = [
-  { path: '/', Component: CompilationPage, default: true },
-  { path: 'groups', Component: GroupsPage },
-  { path: 'settings', Component: SettingsPage }
+interface Route {
+  path: string
+  Component: React.FC<RouteComponentProps & unknown>
+  default?: boolean
+}
+
+const routes: Route[] = [
+  { path: '/', Component: Compilation, default: true },
+  { path: 'groups', Component: Groups },
+  { path: 'settings', Component: Settings }
 ]
 
 export function Routes() {

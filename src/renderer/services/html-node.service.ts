@@ -6,7 +6,7 @@
 
 import is from '@sindresorhus/is'
 
-export class NodeService {
+export class HtmlNodeService {
   isChildren(
     from: HTMLElement | ChildNode | undefined | null,
     child: HTMLElement

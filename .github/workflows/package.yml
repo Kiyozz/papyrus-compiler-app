@@ -28,7 +28,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1.4.4
         with:
-          node-version: 12.19
+          node-version: 12.18
       - name: Dependencies
         uses: pnpm/action-setup@v1.2.1
         with:

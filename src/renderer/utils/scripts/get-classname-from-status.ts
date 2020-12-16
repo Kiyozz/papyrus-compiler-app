@@ -6,7 +6,7 @@
 
 import { ScriptStatus } from '../../enums/script-status.enum'
 import { ScriptModel } from '../../models'
-import classes from '../../pages/compilation-page/compilation-page.module.scss'
+import classes from '../../pages/index/compilation-page.module.scss'
 
 export default function getClassNameFromStatus(script: ScriptModel): string {
   switch (script.status) {

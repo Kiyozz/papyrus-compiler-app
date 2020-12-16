@@ -11,10 +11,10 @@ import { useTranslation } from 'react-i18next'
 
 import { ScriptModel } from '../../models'
 import { useCompilationContext } from './compilation-context'
-import CompilationPageActions from './compilation-page-actions'
+import { CompilationPageActions } from './compilation-page-actions'
 import classes from './compilation-page.module.scss'
-import PlayButton from './play-button'
-import ScriptItem from './script-item'
+import { PlayButton } from './play-button'
+import { ScriptItem } from './script-item'
 
 interface Props {
   onClickRemoveScriptFromScript: (script: ScriptModel) => () => void
@@ -23,12 +23,12 @@ interface Props {
   onClickPlayPause: () => void
 }
 
-const CompilationPageContent: React.FC<Props> = ({
+export function CompilationPageContent({
   onClear,
   onClickPlayPause,
   onClickRemoveScriptFromScript,
   createOnMouseEvent
-}) => {
+}: Props) {
   const { t } = useTranslation()
   const { compilationScripts, hoveringScript } = useCompilationContext()
 
@@ -83,5 +83,3 @@ const CompilationPageContent: React.FC<Props> = ({
     </>
   )
 }
-
-export default CompilationPageContent

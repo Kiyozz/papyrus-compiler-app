@@ -13,7 +13,7 @@ import { useStoreSelector } from '../../redux/use-store-selector'
 
 import classes from './splash-screen.module.scss'
 
-export const SplashScreen: React.FC = () => {
+export function SplashScreen() {
   const initialized = useStoreSelector(state => state.initialization)
 
   return (

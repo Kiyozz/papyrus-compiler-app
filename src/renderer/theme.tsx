@@ -29,6 +29,6 @@ const theme = createMuiTheme({
   }
 })
 
-export const Theme: React.FC = ({ children }) => {
+export function Theme({ children }: React.PropsWithChildren<unknown>) {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>
 }

@@ -5,7 +5,13 @@
  */
 
 import is from '@sindresorhus/is'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 import { Observable, Subject } from 'rxjs'
 import { PartialDeep } from 'type-fest'
 import { Config } from '../../../common/interfaces/config.interface'

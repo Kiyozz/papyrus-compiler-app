@@ -5,9 +5,9 @@
  */
 
 import { is } from 'electron-util'
-import { EventHandler } from '../interfaces/event.handler'
+import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 
-export class IsProductionHandler implements EventHandler {
+export class IsProductionHandler implements EventHandlerInterface {
   listen(): boolean {
     return !is.development
   }

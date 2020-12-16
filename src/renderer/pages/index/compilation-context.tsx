@@ -23,10 +23,10 @@ export const CompilationContext = createContext({} as CompilationContextValue)
 export const useCompilationContext = () =>
   useContext(CompilationContext) as CompilationContextValue
 
-const Provider: React.FC<CompilationContextOwnProps> = ({
+function Provider({
   children,
   ...own
-}) => {
+}: React.PropsWithChildren<CompilationContextOwnProps>) {
   const contextValue = useStoreSelector(store => ({
     compilationScripts: store.compilation.compilationScripts,
     isCompilationRunning: store.compilation.isCompilationRunning,
@@ -41,7 +41,4 @@ const Provider: React.FC<CompilationContextOwnProps> = ({
   )
 }
 
-// noinspection UnnecessaryLocalVariableJS
-const CompilationContextProvider = Provider
-
-export default CompilationContextProvider
+export const CompilationContextProvider = Provider

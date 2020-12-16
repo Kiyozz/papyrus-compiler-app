@@ -16,7 +16,7 @@ interface Props {
   onChangeMo2Instance: (value: string) => void
 }
 
-const SettingsMo2Instance: React.FC<Props> = ({ onChangeMo2Instance }) => {
+export function SettingsMo2Instance({ onChangeMo2Instance }: Props) {
   const { t } = useTranslation()
   const {
     config: { mo2 }
@@ -33,5 +33,3 @@ const SettingsMo2Instance: React.FC<Props> = ({ onChangeMo2Instance }) => {
     </Collapse>
   )
 }
-
-export default SettingsMo2Instance

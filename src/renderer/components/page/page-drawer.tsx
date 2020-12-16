@@ -20,10 +20,10 @@ import React, { useCallback, useMemo } from 'react'
 import { useLocation } from '@reach/router'
 import { useTranslation } from 'react-i18next'
 
-import AppIcon from '../../assets/logo/vector/app-icon'
+import { AppIcon } from '../../assets/logo/vector/app-icon'
 import { useStoreSelector } from '../../redux/use-store-selector'
 import { OpenCompilationLogs } from '../open-compilation-logs/open-compilation-logs'
-import { ActiveLink } from '../sidebar/sidebar-link'
+import { ActiveLink } from '../active-link/active-link'
 import { usePageContext } from './page-context'
 import classes from './page.module.scss'
 

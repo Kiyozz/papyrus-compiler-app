@@ -9,7 +9,7 @@ import deepmerge from 'deepmerge'
 import { PartialDeep } from 'type-fest'
 import { appStore } from '../../common/store'
 import { Config } from '../../common/interfaces/config.interface'
-import { EventHandler } from '../interfaces/event.handler'
+import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { Logger } from '../logger'
 
 interface ConfigUpdateHandlerParams {
@@ -18,7 +18,7 @@ interface ConfigUpdateHandlerParams {
 }
 
 export class ConfigUpdateHandler
-  implements EventHandler<ConfigUpdateHandlerParams> {
+  implements EventHandlerInterface<ConfigUpdateHandlerParams> {
   private logger = new Logger(ConfigUpdateHandler.name)
 
   listen(args?: ConfigUpdateHandlerParams): Config {

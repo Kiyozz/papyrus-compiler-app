@@ -6,11 +6,8 @@
 
 import Button from '@material-ui/core/Button'
 import SearchIcon from '@material-ui/icons/Search'
-import { RouteComponentProps } from '@reach/router'
-
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { Page } from '../../components/page/page'
 import { PageAppBar } from '../../components/page/page-app-bar'
 import { usePageContext } from '../../components/page/page-context'
@@ -21,13 +18,11 @@ import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
 import reorderScripts from '../../utils/scripts/reorder-scripts'
 import uniqScripts from '../../utils/scripts/uniq-scripts'
-import CompilationContextProvider from './compilation-context'
-import CompilationPageContent from './compilation-page-content'
-import GroupsLoader from './groups-loader'
+import { CompilationContextProvider } from './compilation-context'
+import { CompilationPageContent } from './compilation-page-content'
+import { GroupsLoader } from './groups-loader'
 
-type Props = RouteComponentProps
-
-export const CompilationPage: React.FC<Props> = () => {
+export function Compilation() {
   const { t } = useTranslation()
   const { groups } = usePageContext()
   const isCompilationRunning = useStoreSelector(

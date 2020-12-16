@@ -11,7 +11,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Group, GroupModel } from '../../models'
-import GroupsListItemMenu from './groups-list-item-menu'
+import { GroupsListItemMenu } from './groups-list-item-menu'
 import classes from './groups-page.module.scss'
 
 interface Props {
@@ -20,7 +20,7 @@ interface Props {
   group: Group
 }
 
-const GroupsListItem: React.FC<Props> = ({ group, onDelete, onEdit }) => {
+export function GroupsListItem({ group, onDelete, onEdit }: Props) {
   const { t } = useTranslation()
 
   return (
@@ -51,5 +51,3 @@ const GroupsListItem: React.FC<Props> = ({ group, onDelete, onEdit }) => {
     </Paper>
   )
 }
-
-export default GroupsListItem

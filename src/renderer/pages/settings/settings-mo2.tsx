@@ -10,15 +10,15 @@ import Typography from '@material-ui/core/Typography'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import SettingsMo2Activation from './settings-mo2-activation'
-import SettingsMo2Instance from './settings-mo2-instance'
+import { SettingsMo2Activation } from './settings-mo2-activation'
+import { SettingsMo2Instance } from './settings-mo2-instance'
 
 interface Props {
   onChangeMo2: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeMo2Instance: (value: string) => void
 }
 
-const SettingsMo2: React.FC<Props> = ({ onChangeMo2, onChangeMo2Instance }) => {
+export function SettingsMo2({ onChangeMo2, onChangeMo2Instance }: Props) {
   const { t } = useTranslation()
 
   return (
@@ -36,5 +36,3 @@ const SettingsMo2: React.FC<Props> = ({ onChangeMo2, onChangeMo2Instance }) => {
     </Paper>
   )
 }
-
-export default SettingsMo2

@@ -20,10 +20,7 @@ interface Props {
   onClearScripts: () => void
 }
 
-const CompilationPageActions: React.FC<Props> = ({
-  hasScripts,
-  onClearScripts
-}) => {
+export function CompilationPageActions({ hasScripts, onClearScripts }: Props) {
   const { t } = useTranslation()
   const { compilationScripts, hoveringScript } = useCompilationContext()
 
@@ -50,5 +47,3 @@ const CompilationPageActions: React.FC<Props> = ({
     </Fade>
   )
 }
-
-export default CompilationPageActions
