@@ -112,14 +112,14 @@ export async function getImportsPath({
   }
 }
 
-export async function getModsPath(mo2Instance: string): Promise<string> {
+export function getModsPath(mo2Instance: string): string {
   logger.info('getting MO2 mods path')
 
   const modsPath = path.join(
     mo2Instance,
     appStore.get<string, string>('mo2.mods')
   )
-  const modsPathExists = await path.exists(modsPath)
+  const modsPathExists = path.exists(modsPath)
 
   if (!modsPathExists) {
     throw new Mo2ModsPathExistsException(modsPath)

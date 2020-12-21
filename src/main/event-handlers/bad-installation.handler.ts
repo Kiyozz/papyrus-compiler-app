@@ -20,7 +20,7 @@ export class BadInstallationHandler implements EventHandlerInterface {
     const gameType = appStore.get('gameType')
     const executable = getExecutable(gameType)
 
-    if (!(await path.exists(path.join(gamePath, executable)))) {
+    if (!path.exists(path.join(gamePath, executable))) {
       return false
     }
 
@@ -69,7 +69,7 @@ export class BadInstallationHandler implements EventHandlerInterface {
       file
     )
 
-    const result = await path.exists(path.normalize(gameScriptsFolder))
+    const result = path.exists(path.normalize(gameScriptsFolder))
 
     this.logger.debug('folder found', result)
 

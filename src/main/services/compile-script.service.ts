@@ -57,7 +57,7 @@ export async function compileScript(scriptName: string): Promise<string> {
   const gameExeAbsolute = path.join(gamePath, gameExe)
   logger.debug('game executable', gameExeAbsolute)
 
-  if (!(await path.exists(compilerPath))) {
+  if (!path.exists(compilerPath)) {
     logger.error(
       'the configuration is invalid, PapyrusCompiler.exe file does not exist in game folder'
     )
@@ -65,7 +65,7 @@ export async function compileScript(scriptName: string): Promise<string> {
     throw new ConfigurationException(compilerPath)
   }
 
-  if (!(await path.exists(gameExeAbsolute))) {
+  if (!path.exists(gameExeAbsolute)) {
     logger.error(
       `the configuration is invalid, ${gameExe} file does not exist in game folder`
     )
@@ -82,7 +82,7 @@ export async function compileScript(scriptName: string): Promise<string> {
 
   logger.debug('other game source', otherSourceAbsolute)
 
-  if (await path.exists(otherSourceAbsolute)) {
+  if (path.exists(otherSourceAbsolute)) {
     logger.debug(`import of the ${otherSource} folder`)
 
     runner.imports = [otherSourceAbsolute, ...runner.imports]
@@ -99,7 +99,7 @@ export async function compileScript(scriptName: string): Promise<string> {
         }
       })
 
-      runner.cwd = await mo2.getModsPath(mo2Config.instance)
+      runner.cwd = mo2.getModsPath(mo2Config.instance)
       runner.output = await mo2.getOutputPath(mo2Config.instance)
       runner.imports = [...runner.imports, ...imports]
 

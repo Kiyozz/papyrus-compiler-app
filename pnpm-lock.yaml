@@ -6,7 +6,7 @@ dependencies:
   electron-store: 6.0.1
   electron-util: 0.14.2
   fast-glob: 3.2.4
-  fs-extra: 9.0.1
+  move-file: 2.0.0
   source-map-support: 0.5.19
   type-fest: 0.16.0
 devDependencies:
@@ -2319,6 +2319,7 @@ packages:
     resolution:
       integrity: sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
   /at-least-node/1.0.0:
+    dev: true
     engines:
       node: '>= 4.0.0'
     resolution:
@@ -4930,6 +4931,7 @@ packages:
       graceful-fs: 4.2.4
       jsonfile: 6.1.0
       universalify: 1.0.0
+    dev: true
     engines:
       node: '>=10'
     resolution:
@@ -5219,6 +5221,7 @@ packages:
     resolution:
       integrity: sha512-R7eWptXuGYxwijs0eV+v3o6+XH1IqVK8dJOEecQfTmkncw9AV4dcw/Dhxi8MdlqPthxxpZyizMzyg8RTmEsG+Q==
   /graceful-fs/4.2.4:
+    dev: true
     resolution:
       integrity: sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
   /gud/1.0.0:
@@ -6285,6 +6288,7 @@ packages:
   /jsonfile/6.1.0:
     dependencies:
       universalify: 2.0.0
+    dev: true
     optionalDependencies:
       graceful-fs: 4.2.4
     resolution:
@@ -6978,6 +6982,14 @@ packages:
     dev: true
     resolution:
       integrity: sha1-viwAX9oy4LKa8fBdfEszIUxwH5I=
+  /move-file/2.0.0:
+    dependencies:
+      path-exists: 4.0.0
+    dev: false
+    engines:
+      node: '>=10.17'
+    resolution:
+      integrity: sha512-cdkdhNCgbP5dvS4tlGxZbD+nloio9GIimP57EjqFhwLcMjnU+XJKAZzlmg/TN/AK1LuNAdTSvm3CPPP4Xkv0iQ==
   /ms/2.0.0:
     dev: true
     resolution:
@@ -7757,7 +7769,6 @@ packages:
     resolution:
       integrity: sha1-zg6+ql94yxiSXqfYENe1mwEP1RU=
   /path-exists/4.0.0:
-    dev: true
     engines:
       node: '>=8'
     resolution:
@@ -10091,11 +10102,13 @@ packages:
     resolution:
       integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
   /universalify/1.0.0:
+    dev: true
     engines:
       node: '>= 10.0.0'
     resolution:
       integrity: sha512-rb6X1W158d7pRQBg5gkR8uPaSfiids68LTJQYOtEUhoJUWBdaQHsuT/EUduxXYxcrt4r5PJ4fuHW1MHT6p0qug==
   /universalify/2.0.0:
+    dev: true
     engines:
       node: '>= 10.0.0'
     resolution:
@@ -10735,10 +10748,10 @@ specifiers:
   eslint-plugin-react-hooks: ~4.2.0
   fast-glob: ~3.2.4
   file-loader: ~6.0.0
-  fs-extra: ~9.0.1
   i18next: ~19.7.0
   i18next-browser-languagedetector: ~6.0.1
   lodash-es: ~4.17.15
+  move-file: ~2.0.0
   prettier: ~2.0.5
   react: ~16.14.0
   react-dom: ~16.14.0

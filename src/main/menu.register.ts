@@ -68,7 +68,7 @@ export async function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
     ]
   }
 
-  if (await exists(logger.previousSessionFilePath)) {
+  if (exists(logger.previousSessionFilePath)) {
     if (is.array(helpMenu.submenu)) {
       helpMenu.submenu.push({
         label: 'Previous session logs',
