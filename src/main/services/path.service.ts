@@ -4,10 +4,12 @@
  * All rights reserved.
  */
 
+import fs from 'fs'
 import * as path from 'path'
+import { promisify } from 'util'
 import { is } from 'electron-util'
+import moveFile from 'move-file'
 import fg from 'fast-glob'
-import fs from 'fs-extra'
 import { toSlash } from '../../common/slash'
 import { FileAccessException } from '../exceptions/files/file-access.exception'
 import { FileEnsureException } from '../exceptions/files/file-ensure.exception'
@@ -25,26 +27,42 @@ export function normalize(value: string): string {
 }
 
 export const join = path.join
-export const move = fs.move
+export const move = moveFile
 
-export const readFile = fs.readFile
+export const readFile = promisify(fs.readFile)
+
+const fsMkDir = promisify(fs.mkdir)
+const fsWriteFile = promisify(fs.writeFile)
+const fsStat = promisify(fs.stat)
 
 export async function stat(filename: string): Promise<fs.Stats> {
   logger.debug('retrieving path statistics', filename)
 
   try {
-    return await fs.stat(filename)
+    return await fsStat(filename)
   } catch (e) {
     throw new FileAccessException(filename)
   }
 }
 
-export async function exists(fileOrFolder: string): Promise<boolean> {
-  const result = await fs.pathExists(fileOrFolder)
+export function exists(fileOrFolder: string): boolean {
+  const result = fs.existsSync(fileOrFolder)
 
   logger.debug('does the path exist?', fileOrFolder, result)
 
   return result
+}
+
+export async function ensureDir(item: string): Promise<void> {
+  if (!exists(item)) {
+    await fsMkDir(item)
+  }
+}
+
+export async function ensureFile(item: string): Promise<void> {
+  if (!exists(item)) {
+    await fsWriteFile(item, '')
+  }
 }
 
 export async function ensureDirs(items: string[]): Promise<void> {
@@ -58,7 +76,7 @@ export async function ensureDirs(items: string[]): Promise<void> {
 
   for (const item of items) {
     try {
-      await fs.ensureDir(item)
+      await ensureDir(item)
     } catch (e) {
       throw new FileEnsureException(item)
     }
@@ -73,7 +91,7 @@ export async function ensureFiles(items: string[]): Promise<void> {
 
   for (const item of items) {
     try {
-      await fs.ensureFile(item)
+      await ensureFile(item)
     } catch (e) {
       throw new FileEnsureException(item)
     }

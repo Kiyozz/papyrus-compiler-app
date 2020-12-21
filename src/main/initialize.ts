@@ -58,7 +58,7 @@ async function backupLogFile() {
 
   const logFilename = logFile.replace('.log', '')
 
-  await move(logFile, `${logFilename}.1.log`, { overwrite: true })
+  await move(logFile, `${logFilename}.1.log`)
   await ensureFiles([logFile])
 
   logger.info(`file ${logFilename}.1.log created`)

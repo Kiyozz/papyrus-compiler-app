@@ -33,7 +33,7 @@
     "electron-store": "~6.0.1",
     "electron-util": "~0.14.2",
     "fast-glob": "~3.2.4",
-    "fs-extra": "~9.0.1",
+    "move-file": "~2.0.0",
     "source-map-support": "~0.5.19",
     "type-fest": "~0.16.0"
   },
