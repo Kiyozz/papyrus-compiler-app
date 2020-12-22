@@ -18,7 +18,7 @@ interface RegisterMenusCallbacks {
 
 const logger = new Logger('RegisterMenu')
 
-export async function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
+export function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
   const nexusPath =
     process.env.ELECTRON_WEBPACK_APP_MOD_URL ??
     'https://github.com/Kiyozz/papyrus-compiler-app'
@@ -80,15 +80,11 @@ export async function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
     }
   }
 
-  let defaultMenus = defaultMenu(app, shell).filter((m, i) => i !== 0)
+  const defaultMenus = defaultMenu(app, shell)
 
-  defaultMenus = defaultMenus.map((m, i) => {
-    if (i === defaultMenus.length - 1) {
-      return helpMenu
-    }
-
-    return m
-  })
+  defaultMenus.shift()
+  defaultMenus.pop()
+  defaultMenus.push(helpMenu)
 
   logger.debug('registering menu')
 

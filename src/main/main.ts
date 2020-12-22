@@ -24,7 +24,8 @@ async function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       devTools: true,
-      enableRemoteModule: false
+      enableRemoteModule: false,
+      contextIsolation: false
     },
     show: false
   })
@@ -32,7 +33,7 @@ async function createWindow() {
   const isDev = is.development
 
   if (isDev) {
-    win.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
+    win.loadURL('http://localhost:9080')
   } else {
     win.loadURL(
       format({

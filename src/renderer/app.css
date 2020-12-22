@@ -1,0 +1,13 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
+body {
+  @apply h-screen;
+}
+
+#app {
+  @apply h-full;
+}

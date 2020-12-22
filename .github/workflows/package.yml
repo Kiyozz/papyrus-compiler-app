@@ -28,7 +28,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1.4.4
         with:
-          node-version: 12.18
+          node-version: 14.15
       - name: Dependencies
         uses: pnpm/action-setup@v1.2.1
         with:
@@ -38,7 +38,7 @@ jobs:
       - name: Build LE
         env:
           ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrim/mods/96339
-        run: pnpm build -- --no-progress
+        run: pnpm build
       - name: Upload LE
         uses: actions/upload-artifact@v2
         with:
@@ -49,7 +49,7 @@ jobs:
       - name: Build SE
         env:
           ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrimspecialedition/mods/23852
-        run: pnpm build -- --no-progress
+        run: pnpm build
       - name: Upload SE
         uses: actions/upload-artifact@v2
         with:
@@ -75,7 +75,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1.4.4
         with:
-          node-version: 12.19
+          node-version: 14.15
 
       - name: Dependencies
         uses: pnpm/action-setup@v1.2.1
@@ -90,7 +90,7 @@ jobs:
           name: build-le
           path: dist
       - name: Package LE
-        run: pnpm package
+        run: pnpm package -- --config.productName="PCA LE"
       - name: Upload LE package
         uses: actions/upload-artifact@v2
         with:
@@ -114,7 +114,7 @@ jobs:
           name: build-se
           path: dist
       - name: Package SE
-        run: pnpm package
+        run: pnpm package -- --config.productName="PCA SE"
       - name: Upload SE package
         uses: actions/upload-artifact@v2
         with:

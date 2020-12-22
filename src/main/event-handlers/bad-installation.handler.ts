@@ -15,13 +15,13 @@ import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 export class BadInstallationHandler implements EventHandlerInterface {
   private readonly logger = new Logger(BadInstallationHandler.name)
 
-  async listen() {
+  listen(): Promise<boolean> {
     const gamePath = appStore.get('gamePath')
     const gameType = appStore.get('gameType')
     const executable = getExecutable(gameType)
 
     if (!path.exists(path.join(gamePath, executable))) {
-      return false
+      return Promise.resolve(false)
     }
 
     const file = 'Actor.psc'
@@ -57,7 +57,7 @@ export class BadInstallationHandler implements EventHandlerInterface {
     return files.length === 0 ? this.checksInGameDataFolder(file) : true
   }
 
-  private async checksInGameDataFolder(file: string): Promise<boolean> {
+  private checksInGameDataFolder(file: string): Promise<boolean> {
     const gamePath = appStore.get('gamePath')
     const gameType = appStore.get('gameType')
     this.logger.debug('checking in Skyrim Data folder')
@@ -73,6 +73,6 @@ export class BadInstallationHandler implements EventHandlerInterface {
 
     this.logger.debug('folder found', result)
 
-    return result
+    return Promise.resolve(result)
   }
 }
