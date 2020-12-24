@@ -9,11 +9,7 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
 import ErrorIcon from '@material-ui/icons/Error'
-import Typography from '@material-ui/core/Typography'
 
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,8 +17,6 @@ import { useTranslation } from 'react-i18next'
 import { ScriptModel } from '../../models'
 import actions from '../../redux/actions'
 import { useAction, useStoreSelector } from '../../redux/use-store-selector'
-
-import classes from './open-compilation-logs.module.scss'
 
 export function LogsListItem({
   script,
@@ -33,19 +27,12 @@ export function LogsListItem({
 }) {
   return (
     <div>
-      <Typography className={classes.logTitle} variant="h6" component="h3">
-        {script.name}
-      </Typography>
-      <code className={classes.logsContainer}>
+      <h3 className="select-all">{script.name}</h3>
+      <code className="p-4 bg-gray-700 mt-2 block w-full rounded">
         {logs.split('\n').map((log, i) => (
-          <Typography
-            className={classes.logItem}
-            variant="caption"
-            component="span"
-            key={i}
-          >
+          <span className="font-mono break-words" key={i}>
             {log} <br />
-          </Typography>
+          </span>
         ))}
       </code>
     </div>
@@ -68,12 +55,13 @@ export function OpenCompilationLogs() {
 
   return (
     <>
-      <ListItem button onClick={onClickButtonOpenLogs}>
-        <ListItemIcon>
-          <ErrorIcon />
-        </ListItemIcon>
-        <ListItemText primary={t('common.logs.nav')} />
-      </ListItem>
+      <li
+        onClick={onClickButtonOpenLogs}
+        className="w-full px-4 py-2 flex hover:bg-gray-700 transition-colors cursor-pointer"
+      >
+        <ErrorIcon className="mr-6" />
+        <div>{t('common.logs.nav')}</div>
+      </li>
 
       <Dialog
         open={popupOpen}
@@ -81,13 +69,17 @@ export function OpenCompilationLogs() {
         maxWidth="lg"
         fullWidth
       >
-        <DialogTitle>{t('common.logs.title')}</DialogTitle>
+        <DialogTitle className="select-none">
+          {t('common.logs.title')}
+        </DialogTitle>
         <DialogContent>
-          {logs.length > 0
-            ? logs.map(([script, scriptLogs], index) => (
-                <LogsListItem key={index} script={script} logs={scriptLogs} />
-              ))
-            : t('common.logs.noLogs')}
+          {logs.length > 0 ? (
+            logs.map(([script, scriptLogs], index) => (
+              <LogsListItem key={index} script={script} logs={scriptLogs} />
+            ))
+          ) : (
+            <span className="select-none">{t('common.logs.noLogs')}</span>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={onClickButtonCloseLogs}>

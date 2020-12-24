@@ -16,7 +16,6 @@ import { ElectronRuntimeException } from './redux/api/exceptions/electron-runtim
 import createRootStore from './redux/stores/root.store'
 import './translations'
 import { Theme } from './theme'
-import './index.scss'
 import { isProduction } from './utils/is-production'
 
 declare global {

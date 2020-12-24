@@ -4,13 +4,8 @@
  * All rights reserved.
  */
 
-import Container from '@material-ui/core/Container'
-import Fade from '@material-ui/core/Fade'
-
 import cx from 'classnames'
 import React from 'react'
-
-import classes from './page.module.scss'
 
 interface Props {
   className?: string
@@ -19,10 +14,8 @@ interface Props {
 
 export function Page({ children, className }: React.PropsWithChildren<Props>) {
   return (
-    <Fade timeout={500} in appear exit={false} mountOnEnter unmountOnExit>
-      <Container className={cx(classes.container, className)}>
-        {children}
-      </Container>
-    </Fade>
+    <div className={cx('pb-20 container mx-auto px-6 pt-6 h-full', className)}>
+      {children}
+    </div>
   )
 }

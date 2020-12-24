@@ -4,80 +4,24 @@
  * All rights reserved.
  */
 
-import AppBar from '@material-ui/core/AppBar'
-import Button, { ButtonProps } from '@material-ui/core/Button'
-import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import React from 'react'
-import classes from './page.module.scss'
-
-interface Action {
-  text?: string
-  icon?: React.ReactNode
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-  buttonProps?: ButtonProps
-  iconButtonProps?: IconButtonProps
-}
-
-interface ActionButton {
-  button?: JSX.Element | null
-}
 
 interface Props {
   title?: string
-  actions?: (Action | ActionButton)[]
+  actions?: JSX.Element[]
 }
-
-const isActionButton = (
-  action: Action | ActionButton
-): action is ActionButton => action.hasOwnProperty('button')
 
 export function PageAppBar({ title, actions = [] }: Props) {
   return (
-    <AppBar position="sticky">
-      <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-          {title}
-        </Typography>
-        <div className={classes.flex}>
+    <div className="sticky top-0 w-full bg-purple-700 text-white select-none">
+      <div className="flex h-16 px-4 items-center">
+        <h2 className="text-xl font-bold font-nova">{title}</h2>
+        <div className="flex items-center ml-auto gap-2">
           {actions.map((action, index) => {
-            if (isActionButton(action)) {
-              return (
-                <React.Fragment key={index}>{action.button}</React.Fragment>
-              )
-            }
-
-            if (
-              typeof action.text === 'undefined' &&
-              typeof action.icon !== 'undefined'
-            ) {
-              return (
-                <IconButton
-                  color="inherit"
-                  key={index}
-                  onClick={action.onClick}
-                  {...action.iconButtonProps}
-                >
-                  {action.icon}
-                </IconButton>
-              )
-            }
-
-            return (
-              <Button
-                color="inherit"
-                key={action.text}
-                startIcon={action.icon}
-                onClick={action.onClick}
-                {...action.buttonProps}
-              >
-                {action.text}
-              </Button>
-            )
+            return <React.Fragment key={index}>{action}</React.Fragment>
           })}
         </div>
-      </Toolbar>
-    </AppBar>
+      </div>
+    </div>
   )
 }

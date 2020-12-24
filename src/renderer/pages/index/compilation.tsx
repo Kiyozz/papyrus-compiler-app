@@ -4,9 +4,8 @@
  * All rights reserved.
  */
 
-import Button from '@material-ui/core/Button'
 import SearchIcon from '@material-ui/icons/Search'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from '../../components/page/page'
 import { PageAppBar } from '../../components/page/page-app-bar'
@@ -25,9 +24,6 @@ import { GroupsLoader } from './groups-loader'
 export function Compilation() {
   const { t } = useTranslation()
   const { groups } = usePageContext()
-  const isCompilationRunning = useStoreSelector(
-    state => state.compilation.isCompilationRunning
-  )
   const compilationScripts = useStoreSelector(
     state => state.compilation.compilationScripts
   )
@@ -36,9 +32,6 @@ export function Compilation() {
   )
   const setCompilationScripts = useAction(actions.compilationPage.setScripts)
 
-  const [hoveringScript, setHoveringScript] = useState<ScriptModel | undefined>(
-    undefined
-  )
   const onClickRemoveScriptFromScript = useCallback(
     (script: ScriptModel) => {
       return () => {
@@ -50,20 +43,6 @@ export function Compilation() {
       }
     },
     [compilationScripts, setCompilationScripts]
-  )
-  const createOnMouseEvent = useCallback(
-    (script?: ScriptModel) => {
-      return () => {
-        if (isCompilationRunning) {
-          return
-        }
-
-        if (hoveringScript !== script) {
-          setHoveringScript(script)
-        }
-      }
-    },
-    [isCompilationRunning, hoveringScript]
   )
 
   const onClickPlayPause = useCallback(() => {
@@ -108,32 +87,38 @@ export function Compilation() {
 
   const addScriptsButton = useDrop({
     button: (
-      <Button color="inherit" startIcon={<SearchIcon />}>
+      <button className="btn">
+        <div className="icon">
+          <SearchIcon />
+        </div>
         {t('page.compilation.actions.searchScripts')}
-      </Button>
+      </button>
     ),
     onDrop
   })
 
+  const pageActions = useMemo(() => {
+    const possibleActions: JSX.Element[] = []
+
+    if (addScriptsButton) {
+      possibleActions.push(addScriptsButton)
+    }
+
+    if (groups.filter(group => !group.isEmpty()).length > 0) {
+      possibleActions.push(
+        <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
+      )
+    }
+
+    return possibleActions
+  }, [addScriptsButton, groups, onChangeGroup])
+
   return (
-    <CompilationContextProvider hoveringScript={hoveringScript}>
-      <PageAppBar
-        title={t('page.compilation.title')}
-        actions={[
-          {
-            button: addScriptsButton
-          },
-          {
-            button: (
-              <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
-            )
-          }
-        ]}
-      />
+    <CompilationContextProvider>
+      <PageAppBar title={t('page.compilation.title')} actions={pageActions} />
 
       <Page>
         <CompilationPageContent
-          createOnMouseEvent={createOnMouseEvent}
           onClickPlayPause={onClickPlayPause}
           onClickRemoveScriptFromScript={onClickRemoveScriptFromScript}
           onClear={onClearScripts}

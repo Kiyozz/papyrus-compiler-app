@@ -4,10 +4,8 @@
  * All rights reserved.
  */
 
-import Box from '@material-ui/core/Box'
 import React, { useCallback, useEffect } from 'react'
 
-import classes from './app.module.scss'
 import { DialogChangelog } from './components/dialog-changelog/dialog-changelog'
 import { PageContextProvider } from './components/page/page-context'
 import { PageDrawer } from './components/page/page-drawer'
@@ -36,7 +34,7 @@ export function App() {
   }, [setShowNotes])
 
   return (
-    <div className={classes.container}>
+    <div className="flex min-h-full">
       {initialized && <DialogChangelog onClose={onClickCloseChangelogPopup} />}
 
       <SplashScreen />
@@ -44,9 +42,9 @@ export function App() {
       <PageContextProvider>
         <PageDrawer />
 
-        <Box className={classes.content} bgcolor="background.default">
+        <div className="h-full w-full">
           <Routes />
-        </Box>
+        </div>
       </PageContextProvider>
     </div>
   )

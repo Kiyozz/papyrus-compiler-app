@@ -8,14 +8,10 @@ import React, { createContext, useContext } from 'react'
 import { ScriptModel } from '../../models'
 import { useStoreSelector } from '../../redux/use-store-selector'
 
-interface CompilationContextValue extends CompilationContextOwnProps {
+interface CompilationContextValue {
   isCompilationRunning: boolean
   compilationScripts: ScriptModel[]
   popupOpen: boolean
-}
-
-interface CompilationContextOwnProps {
-  hoveringScript: ScriptModel | undefined
 }
 
 export const CompilationContext = createContext({} as CompilationContextValue)
@@ -23,14 +19,10 @@ export const CompilationContext = createContext({} as CompilationContextValue)
 export const useCompilationContext = () =>
   useContext(CompilationContext) as CompilationContextValue
 
-function Provider({
-  children,
-  ...own
-}: React.PropsWithChildren<CompilationContextOwnProps>) {
+function Provider({ children }: React.PropsWithChildren<unknown>) {
   const contextValue = useStoreSelector(store => ({
     compilationScripts: store.compilation.compilationScripts,
     isCompilationRunning: store.compilation.isCompilationRunning,
-    hoveringScript: own.hoveringScript,
     popupOpen: store.compilationLogs.popupOpen
   }))
 

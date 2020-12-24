@@ -182,11 +182,12 @@ export function Settings() {
       <PageAppBar
         title={t('page.settings.title')}
         actions={[
-          {
-            text: t('page.settings.actions.refresh'),
-            icon: <RefreshIcon />,
-            onClick: onClickPageRefresh
-          }
+          <button key={1} onClick={onClickPageRefresh}>
+            <div>
+              <RefreshIcon />
+            </div>
+            {t('page.settings.actions.refresh')}
+          </button>
         ]}
       />
 

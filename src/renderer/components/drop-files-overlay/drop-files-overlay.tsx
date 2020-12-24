@@ -8,7 +8,6 @@ import Backdrop from '@material-ui/core/Backdrop'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import React from 'react'
-import classes from './drop-files-overlay.module.scss'
 
 interface Props {
   open: boolean
@@ -16,8 +15,15 @@ interface Props {
 
 export function DropFilesOverlay({ open }: Props) {
   return (
-    <Backdrop open={open} className={classes.background}>
-      <Box className={classes.box} bgcolor="primary.main" color="text.primary">
+    <Backdrop
+      open={open}
+      className="fixed z-10 top-0 right-0 bottom-0 left-0 w-full h-full flex justify-center items-center font-bold text-center text-4xl"
+    >
+      <Box
+        className="flex items-center justify-center h-full w-full"
+        bgcolor="primary.main"
+        color="text.primary"
+      >
         <Typography variant="h1" component="div">
           Drop files
         </Typography>

@@ -37,6 +37,7 @@ export default () => {
   ].filter(Boolean)
 
   const rendererSources = path.resolve('src', 'renderer')
+  const commonSources = path.resolve('src', 'common')
   const output = path.resolve('dist', 'renderer')
 
   /** @type {import('webpack').Configuration} */
@@ -44,7 +45,12 @@ export default () => {
     devtool: isProduction ? 'nosources-source-map' : 'eval-source-map',
     mode,
     entry: {
-      renderer: [path.join(rendererSources, 'test.tsx')]
+      renderer: [
+        path.join(rendererSources, 'index.tsx'),
+        path.join(rendererSources, 'tailwind.css'),
+        path.join(rendererSources, 'utilities.css'),
+        path.join(rendererSources, 'app.css')
+      ]
     },
     output: {
       filename: 'index.js',
@@ -68,7 +74,7 @@ export default () => {
         },
         {
           test: /\.tsx?$/,
-          include: rendererSources,
+          include: [rendererSources, commonSources],
           use: [
             {
               loader: 'babel-loader',
@@ -87,10 +93,13 @@ export default () => {
                   ]
                 ],
                 plugins: [
-                  mode !== 'production' && [
+                  !isProduction && [
                     'react-refresh/babel',
                     { skipEnvCheck: true }
-                  ]
+                  ],
+                  '@babel/plugin-proposal-optional-chaining',
+                  '@babel/plugin-proposal-nullish-coalescing-operator',
+                  '@babel/plugin-proposal-class-properties'
                 ].filter(Boolean)
               }
             }
@@ -98,29 +107,11 @@ export default () => {
         },
         {
           test: /\.png$/,
-          include: rendererSources,
-          use: [
-            {
-              loader: 'url-loader',
-              options: {
-                limit: 10240,
-                name: 'imgs/[name]--[folder].[ext]'
-              }
-            }
-          ]
+          use: ['url-loader']
         },
         {
           test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-          include: rendererSources,
-          use: [
-            {
-              loader: 'url-loader',
-              options: {
-                limit: 10240,
-                name: 'fonts/[name]--[folder].[ext]'
-              }
-            }
-          ]
+          use: ['url-loader']
         }
       ]
     },

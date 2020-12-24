@@ -6,17 +6,16 @@
 
 import { ScriptStatus } from '../../enums/script-status.enum'
 import { ScriptModel } from '../../models'
-import classes from '../../pages/index/compilation-page.module.scss'
 
 export default function getClassNameFromStatus(script: ScriptModel): string {
   switch (script.status) {
     case ScriptStatus.IDLE:
-      return classes.idle
+      return 'text-gray-500'
     case ScriptStatus.RUNNING:
-      return classes.running
+      return 'text-blue-800'
     case ScriptStatus.SUCCESS:
-      return classes.success
+      return 'text-green-500'
     default:
-      return classes.failed
+      return 'text-red-300'
   }
 }

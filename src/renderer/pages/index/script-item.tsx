@@ -4,82 +4,46 @@
  * All rights reserved.
  */
 
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import Fade from '@material-ui/core/Fade'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
 import DeleteIcon from '@material-ui/icons/Delete'
 
-import cx from 'classnames'
 import React, { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { ScriptModel } from '../../models'
 import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
 import getIconFromStatus from '../../utils/scripts/get-icon-from-status'
-import classes from './compilation-page.module.scss'
 
 interface Props {
   script: ScriptModel
-  onMouseEnter: () => void
-  onMouseLeave: () => void
-  onMouseMove: () => void
   onClickRemoveScript: (script: ScriptModel) => void
-  hovering: boolean
 }
 
-export function ScriptItem({
-  script,
-  onMouseEnter,
-  onMouseLeave,
-  onMouseMove,
-  onClickRemoveScript,
-  hovering
-}: Props) {
-  const { t } = useTranslation()
+export function ScriptItem({ script, onClickRemoveScript }: Props) {
   const onClickRemove = useCallback(() => {
     onClickRemoveScript(script)
   }, [script, onClickRemoveScript])
 
   return (
-    <Paper
-      className={classes.item}
-      elevation={hovering ? 4 : 1}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      onMouseMove={onMouseMove}
-      aria-label="script"
-    >
-      <Fade in={hovering}>
-        <Box
-          bgcolor="primary.main"
-          color="inherit"
-          className={classes.scriptHover}
-        >
-          <Button
-            aria-label="delete"
-            startIcon={<DeleteIcon />}
-            onClick={onClickRemove}
-          >
-            {t('page.compilation.scriptItem.removeFromList')}
-          </Button>
-        </Box>
-      </Fade>
-      <Typography variant="body1" component="div">
-        {script.name}
-      </Typography>
-      <Typography
-        variant="body2"
-        component="div"
-        className={classes.scriptPath}
+    <div className="flex gap-2 select-none">
+      <div
+        className="relative w-full flex paper overflow-hidden"
+        aria-label="script"
       >
-        <span
-          className={cx([classes.scriptStatus, getClassNameFromStatus(script)])}
+        <div>{script.name}</div>
+        <div
+          className={`ml-auto font-sm italic ${getClassNameFromStatus(script)}`}
         >
           {getIconFromStatus(script)}
-        </span>
-      </Typography>
-    </Paper>
+        </div>
+      </div>
+      <button
+        className="btn-icon btn-danger"
+        aria-label="delete"
+        onClick={onClickRemove}
+      >
+        <div className="icon">
+          <DeleteIcon />
+        </div>
+      </button>
+    </div>
   )
 }
