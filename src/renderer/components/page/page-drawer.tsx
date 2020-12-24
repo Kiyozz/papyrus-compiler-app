@@ -4,20 +4,11 @@
  * All rights reserved.
  */
 
-import Box from '@material-ui/core/Box'
-import Divider from '@material-ui/core/Divider'
-import Drawer from '@material-ui/core/Drawer'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Typography from '@material-ui/core/Typography'
 import CodeIcon from '@material-ui/icons/Code'
 import LayersIcon from '@material-ui/icons/Layers'
 import SettingsIcon from '@material-ui/icons/Settings'
 
 import React, { useCallback, useMemo } from 'react'
-import { useLocation } from '@reach/router'
 import { useTranslation } from 'react-i18next'
 
 import { AppIcon } from '../../assets/logo/vector/app-icon'
@@ -25,7 +16,6 @@ import { useStoreSelector } from '../../redux/use-store-selector'
 import { OpenCompilationLogs } from '../open-compilation-logs/open-compilation-logs'
 import { ActiveLink } from '../active-link/active-link'
 import { usePageContext } from './page-context'
-import classes from './page.module.scss'
 
 export function PageDrawer() {
   const { setDrawerOpen } = usePageContext()
@@ -54,68 +44,44 @@ export function PageDrawer() {
     [t]
   )
 
-  const { pathname } = useLocation()
   const version = useStoreSelector(state => state.changelog.version)
 
   return (
-    <nav>
-      <Drawer
-        anchor="left"
-        container={document.body}
-        variant="permanent"
-        onClose={() => setDrawerOpen(false)}
-        classes={{
-          paper: classes.drawer
-        }}
-      >
-        <Box bgcolor="background.default" className={classes.box}>
-          <div className={classes.drawerTop}>
-            <AppIcon fontSize="large" color="primary" />
-            <Typography
-              className={classes.titleApp}
-              variant="h5"
-              component="h1"
-            >
-              PCA
-              <Typography className={classes.titleAppVersion} component="span">
-                {version}
-              </Typography>
-            </Typography>
+    <nav className="h-screen w-64 select-none">
+      <div className="h-full flex flex-col bg-black">
+        <div className="h-16 flex items-center justify-center gap-6 app-icon">
+          <AppIcon fontSize="large" color="primary" />
+          <div className="flex flex-col items-center">
+            <h1 className="text-xl font-bold font-nova text-white">PCA</h1>
+            <span className="font-harmonia font-medium text-gray-300">
+              {version}
+            </span>
           </div>
-          <Divider />
-          <List>
-            {links.map(Link => {
-              const isActive = pathname === Link.path
-
-              return (
-                <ActiveLink
-                  tabIndex={-1}
-                  key={Link.path}
-                  activeClassName={classes.active}
-                  className={classes.link}
-                  to={Link.path}
-                  onClick={onClick}
-                >
-                  <Box
-                    bgcolor={isActive ? 'primary.main' : ''}
-                    className={classes.drawerLink}
-                  >
-                    <ListItem button disableRipple>
-                      <ListItemIcon color="inherit">
-                        <Link.Icon />
-                      </ListItemIcon>
-                      <ListItemText primary={Link.text} />
-                    </ListItem>
-                  </Box>
-                </ActiveLink>
-              )
-            })}
-          </List>
-          <List className={classes.listSecondary}>
-            <OpenCompilationLogs />
-          </List>
-        </Box>
-      </Drawer>
+        </div>
+        <hr className="h-0.5 border-gray-700" />
+        <ul className="mt-2 flex flex-col gap-2">
+          {links.map(Link => {
+            return (
+              <ActiveLink
+                tabIndex={-1}
+                key={Link.path}
+                activeClassName="text-white hover:text-white bg-gray-800"
+                className="flex hover:no-underline outline-none"
+                to={Link.path}
+                onClick={onClick}
+              >
+                <li className="w-full px-4 py-2 flex hover:bg-gray-700 transition-colors">
+                  <Link.Icon className="mr-6" />
+                  <div>{Link.text}</div>
+                </li>
+              </ActiveLink>
+            )
+          })}
+        </ul>
+        <ul className="mt-auto">
+          <OpenCompilationLogs />
+        </ul>
+      </div>
     </nav>
   )
 }

@@ -21,8 +21,6 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
 
-import classes from '../open-compilation-logs/open-compilation-logs.module.scss'
-
 import useOnKeyUp from '../../hooks/use-on-key-up'
 import { useStoreSelector } from '../../redux/use-store-selector'
 import { MOD_URL } from '../../../common/mod'
@@ -48,9 +46,9 @@ function Paragraph({ children }: React.PropsWithChildren<unknown>) {
 
 function Code({ value }: { value: string }) {
   return (
-    <code className={classes.logsContainer}>
+    <code className="p-4 bg-gray-700 mt-2 block w-full rounded">
       {value.split('\n').map((s, i) => (
-        <pre key={i} className={classes.pre}>
+        <pre key={i} className="mb-0">
           {s}
         </pre>
       ))}

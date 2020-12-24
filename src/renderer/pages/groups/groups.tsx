@@ -157,11 +157,12 @@ export function Groups() {
       <PageAppBar
         title={t('page.groups.title')}
         actions={[
-          {
-            text: t('page.groups.actions.create'),
-            icon: <CreateIcon />,
-            onClick: onClickAddButton
-          }
+          <button key={1} className="btn" onClick={onClickAddButton}>
+            <div className="icon">
+              <CreateIcon />
+            </div>
+            {t('page.groups.actions.create')}
+          </button>
         ]}
       />
 

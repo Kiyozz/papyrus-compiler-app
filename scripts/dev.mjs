@@ -25,8 +25,8 @@ function startMain() {
   }
 
   electronProcess = spawn(
-    path.resolve(__dirname, '../node_modules/.bin/electron'),
-    ['dist/main/index']
+    path.resolve(path.resolve('node_modules/.bin/electron')),
+    ['dist/main/main.js']
   )
 
   electronProcess.stdout.pipe(process.stdout)
@@ -47,11 +47,13 @@ async function dev() {
   const esbuildMainService = await esbuild.startService()
 
   function mainBuild() {
-    return esbuildMainService.build(esbuildMainConfig())
+    return esbuildMainService
+      .build(esbuildMainConfig())
+      .then(() => console.info('Main built'))
   }
 
   const mainWatcher = chokidar.watch(
-    `${path.join(__dirname, '../src', 'main') + path.sep}**${path.sep}*.ts`
+    `${path.resolve('src', 'main') + path.sep}**${path.sep}*.ts`
   )
 
   mainWatcher.on('ready', () => {
