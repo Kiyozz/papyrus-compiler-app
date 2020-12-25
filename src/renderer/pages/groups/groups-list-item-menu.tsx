@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import Typography from '@material-ui/core/Typography'
 import CreateIcon from '@material-ui/icons/Create'
 import DeleteIcon from '@material-ui/icons/Delete'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
@@ -59,17 +58,13 @@ export function GroupsListItemMenu({ group, onDelete, onEdit }: Props) {
           <ListItemIcon>
             <CreateIcon fontSize="small" color="primary" />
           </ListItemIcon>
-          <Typography variant="inherit">
-            {t('page.groups.actions.edit')}
-          </Typography>
+          <p>{t('page.groups.actions.edit')}</p>
         </MenuItem>
         <MenuItem onClick={onClickDelete}>
           <ListItemIcon>
             <DeleteIcon fontSize="small" color="error" />
           </ListItemIcon>
-          <Typography variant="inherit">
-            {t('page.groups.actions.remove')}
-          </Typography>
+          <p>{t('page.groups.actions.remove')}</p>
         </MenuItem>
       </Menu>
     </>

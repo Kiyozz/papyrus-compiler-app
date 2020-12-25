@@ -4,15 +4,11 @@
  * All rights reserved.
  */
 
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
-
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Group, GroupModel } from '../../models'
 import { GroupsListItemMenu } from './groups-list-item-menu'
-import classes from './groups-page.module.scss'
 
 interface Props {
   onEdit: (group: GroupModel) => () => void
@@ -24,18 +20,16 @@ export function GroupsListItem({ group, onDelete, onEdit }: Props) {
   const { t } = useTranslation()
 
   return (
-    <Paper key={group.name} className={classes.item}>
-      <div className={classes.actions}>
+    <div key={group.name} className="relative paper">
+      <div className="absolute top-1 right-1">
         <GroupsListItemMenu
           onEdit={onEdit(group)}
           onDelete={onDelete(group)}
           group={group}
         />
       </div>
-      <Typography variant="body1" component="div">
-        {group.name}
-      </Typography>
-      <Typography variant="body2" component="div" className={classes.scripts}>
+      <div>{group.name}</div>
+      <div className="text-sm italic">
         {!group.isEmpty() ? (
           <>
             {group.scripts
@@ -47,7 +41,7 @@ export function GroupsListItem({ group, onDelete, onEdit }: Props) {
         ) : (
           <>{t('page.groups.noScripts')}</>
         )}
-      </Typography>
-    </Paper>
+      </div>
+    </div>
   )
 }

@@ -32,8 +32,10 @@ function startMain() {
   electronProcess.stdout.pipe(process.stdout)
   electronProcess.stderr.pipe(process.stdout)
 
-  electronProcess.on('close', code => {
-    process.exit(code || 0)
+  electronProcess.on('close', (code, signal) => {
+    if (signal !== null) {
+      process.exit(code || 0)
+    }
   })
 }
 

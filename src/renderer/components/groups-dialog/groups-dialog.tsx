@@ -4,17 +4,14 @@
  * All rights reserved.
  */
 
-import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
 import SearchIcon from '@material-ui/icons/Search'
-import Paper from '@material-ui/core/Paper'
 
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useDrop } from '../../hooks/use-drop'
@@ -23,7 +20,6 @@ import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scrip
 import uniqScripts from '../../utils/scripts/uniq-scripts'
 import { GroupsDialogActions } from './groups-dialog-actions'
 import { GroupsDialogList } from './groups-dialog-list'
-import classes from './groups-dialog.module.scss'
 
 interface Props {
   onGroupAdd: (group: GroupModel) => void
@@ -45,40 +41,35 @@ export function GroupsDialog({
   const [scripts, setScripts] = useState<ScriptModel[]>([])
   const [isEdit, setEdit] = useState(false)
 
-  const empty = useCallback(() => {
-    setName('')
-    setScripts([])
-    setEdit(false)
-  }, [])
-
   const onDialogClose = useCallback(() => {
-    empty()
     onClose()
-  }, [empty, onClose])
+  }, [onClose])
 
-  React.useEffect(() => {
-    if (!group) {
-      empty()
+  useEffect(() => {
+    if (open) {
+      if (!group) {
+        setName('')
+        setScripts([])
+        setEdit(false)
 
-      return
+        return
+      }
+
+      setName(group.name)
+      setScripts(group.scripts)
+      setEdit(true)
     }
-
-    setName(group.name)
-    setScripts(group.scripts)
-    setEdit(true)
-  }, [group, empty])
+  }, [open, group])
 
   const onClickRemoveScriptFromGroup = useCallback((script: ScriptModel) => {
-    return (e: React.MouseEvent) => {
-      e.stopPropagation()
-
+    return () => {
       setScripts(s =>
         s.filter(scriptFromList => scriptFromList.name !== script.name)
       )
     }
   }, [])
 
-  const onSubmitAddGroup = useCallback(
+  const onSubmitGroup = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault()
 
@@ -92,8 +83,6 @@ export function GroupsDialog({
           scripts
         })
 
-        empty()
-
         return
       }
 
@@ -101,10 +90,8 @@ export function GroupsDialog({
         name: name.trim(),
         scripts
       })
-
-      empty()
     },
-    [name, isEdit, group, scripts, empty, onGroupAdd, onGroupEdit]
+    [name, isEdit, group, scripts, onGroupAdd, onGroupEdit]
   )
 
   const onChangeName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,9 +106,12 @@ export function GroupsDialog({
 
   const addScriptsButton = useDrop({
     button: (
-      <Button startIcon={<SearchIcon />} variant="text" color="secondary">
+      <button className="btn" type="button">
+        <div className="icon">
+          <SearchIcon />
+        </div>
         {t('page.groups.dialog.searchScripts')}
-      </Button>
+      </button>
     ),
     onDrop
   })
@@ -139,8 +129,8 @@ export function GroupsDialog({
           ? t('page.groups.dialog.editGroup')
           : t('page.groups.dialog.createGroup')}
       </DialogTitle>
-      <form onSubmit={onSubmitAddGroup}>
-        <DialogContent className={classes.scriptsContent}>
+      <form onSubmit={onSubmitGroup}>
+        <DialogContent className="px-10">
           <TextField
             fullWidth
             label={t('page.groups.dialog.name')}
@@ -151,17 +141,17 @@ export function GroupsDialog({
             onChange={onChangeName}
           />
           {scripts.length > 0 ? (
-            <Paper className={classes.content} elevation={3}>
+            <div className="paper overflow-auto max-h-36 h-full mt-4 outline-none">
               <GroupsDialogList
                 scripts={scripts}
                 onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup}
               />
-            </Paper>
+            </div>
           ) : (
-            <div className={classes.content}>
-              <DialogContentText>
+            <div className="paper overflow-auto max-h-36 h-full mt-4 outline-none">
+              <p className="text-gray-400">
                 {t('page.groups.dialog.dropScripts')}
-              </DialogContentText>
+              </p>
             </div>
           )}
         </DialogContent>
@@ -169,7 +159,7 @@ export function GroupsDialog({
           <GroupsDialogActions
             name={name}
             AddScriptsButton={addScriptsButton}
-            onClose={onClose}
+            onClose={onDialogClose}
             isEdit={isEdit}
           />
         </DialogActions>

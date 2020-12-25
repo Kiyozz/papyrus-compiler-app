@@ -39,8 +39,6 @@ function checkCommandResult(
 export async function compileScript(scriptName: string): Promise<string> {
   logger.debug('compiling the file', scriptName)
 
-  await new Promise(resolve => setTimeout(resolve, 3000))
-
   const gamePath = appStore.get('gamePath')
   const gameType = appStore.get('gameType')
   const compilerPath = appStore.get('compilerPath')

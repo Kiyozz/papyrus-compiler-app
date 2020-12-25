@@ -4,12 +4,8 @@
  * All rights reserved.
  */
 
-import Button from '@material-ui/core/Button'
-
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-
-import classes from './groups-dialog.module.scss'
 
 interface Props {
   name: string
@@ -28,18 +24,15 @@ export function GroupsDialogActions({
 
   return (
     <>
-      <div className={classes.auto}>{AddScriptsButton}</div>
-      <Button onClick={onClose}>{t('page.groups.dialog.close')}</Button>
-      <Button
-        type="submit"
-        color="primary"
-        variant="contained"
-        disabled={name === ''}
-      >
+      <div className="mr-auto">{AddScriptsButton}</div>
+      <button className="btn" type="button" onClick={onClose}>
+        {t('page.groups.dialog.close')}
+      </button>
+      <button className="btn btn-primary" type="submit" disabled={name === ''}>
         {isEdit
           ? t('page.groups.actions.edit')
           : t('page.groups.actions.create')}
-      </Button>
+      </button>
     </>
   )
 }

@@ -4,11 +4,6 @@
  * All rights reserved.
  */
 
-import IconButton from '@material-ui/core/IconButton'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import ListItemText from '@material-ui/core/ListItemText'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 import React from 'react'
@@ -27,21 +22,22 @@ export function GroupsDialogList({
   onClickRemoveScriptFromGroup
 }: Props) {
   return (
-    <List style={{ padding: '0' }}>
+    <ul className="flex flex-col gap-2">
       {scripts.map((script, index) => (
-        <ListItem key={script.id + index}>
-          <ListItemText>{script.name}</ListItemText>
-          <ListItemSecondaryAction>
-            <IconButton
-              edge="end"
+        <li className="flex items-center" key={script.id + index}>
+          <div className="w-full">{script.name}</div>
+          <div>
+            <button
+              className="btn-icon btn-danger"
+              type="button"
               aria-label="delete"
               onClick={onClickRemoveScriptFromGroup(script)}
             >
               <DeleteIcon color="error" />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
+            </button>
+          </div>
+        </li>
       ))}
-    </List>
+    </ul>
   )
 }
