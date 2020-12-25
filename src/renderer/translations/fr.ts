@@ -8,7 +8,8 @@ export default {
   nav: {
     compilation: 'Compilation',
     groups: 'Groupes',
-    settings: 'Paramètres'
+    settings: 'Paramètres',
+    closePanel: 'Fermer'
   },
   page: {
     compilation: {
@@ -64,7 +65,7 @@ export default {
       mo2: {
         enable: 'Activer',
         enableText:
-          "Activez cette option uniquement si l'application n'est pas lancé à partir de MO2.",
+          "uniquement si l'application n'est pas lancé à partir de MO2",
         instance: "Dossier de l'instance",
         limit: 'Limite {{limit}}',
         errorInstance:

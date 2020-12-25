@@ -10,11 +10,12 @@ import React from 'react'
 interface Props {
   fontSize: SvgIconProps['fontSize']
   color: SvgIconProps['color']
+  className?: string
 }
 
-export function AppIcon({ fontSize, color }: Props) {
+export function AppIcon({ fontSize, color, className }: Props) {
   return (
-    <SvgIcon fontSize={fontSize} color={color}>
+    <SvgIcon fontSize={fontSize} color={color} className={className ?? ''}>
       <g>
         <g>
           <g>

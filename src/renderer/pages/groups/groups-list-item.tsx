@@ -28,12 +28,12 @@ export function GroupsListItem({ group, onDelete, onEdit }: Props) {
           group={group}
         />
       </div>
-      <div>{group.name}</div>
-      <div className="text-sm italic">
+      <div className="text-white">{group.name}</div>
+      <div className="text-xs pl-2">
         {!group.isEmpty() ? (
           <>
             {group.scripts
-              .slice(0, 3)
+              .slice(0, 5)
               .map(script => script.name)
               .join(', ')}
             {group.scripts.length > 3 ? ', ...' : ''}

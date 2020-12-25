@@ -4,23 +4,17 @@
  * All rights reserved.
  */
 
-import Button from '@material-ui/core/Button'
-import Collapse from '@material-ui/core/Collapse'
 import FormControl from '@material-ui/core/FormControl'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Paper from '@material-ui/core/Paper'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
-import Typography from '@material-ui/core/Typography'
 import RefreshIcon from '@material-ui/icons/Refresh'
-import Alert from '@material-ui/lab/Alert'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Games, getExecutable } from '../../../common/game'
 import { DialogTextField } from '../../components/dialog-text-field/dialog-text-field'
 import { usePageContext } from '../../components/page/page-context'
 import { useSettings } from './settings-context'
-import classes from './settings-page.module.scss'
 
 interface Props {
   onClickRadio: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -43,61 +37,69 @@ export function SettingsGame({
   const exe = getExecutable(gameType)
 
   return (
-    <Paper>
-      <Typography variant="h5" component="h1">
-        {t('page.settings.game')}
-      </Typography>
+    <div className="paper">
+      <h1 className="text-2xl text-white mb-3">{t('page.settings.game')}</h1>
       <FormControl component="fieldset" fullWidth>
         <RadioGroup row value={gameType} onChange={onClickRadio}>
           <FormControlLabel
             value={Games.LE}
+            classes={{
+              label: 'text-white'
+            }}
             control={<Radio />}
             label={Games.LE}
           />
           <FormControlLabel
             value={Games.SE}
+            classes={{
+              label: 'text-white'
+            }}
             control={<Radio />}
             label={Games.SE}
           />
         </RadioGroup>
       </FormControl>
-      <DialogTextField
-        error={installationIsBad}
-        label={t('page.settings.gameFolderInfo', { gameType, exe })}
-        defaultValue={gamePath}
-        onChange={onChangeGameFolder}
-        type="folder"
-      />
 
-      <Collapse in={installationIsBad}>
-        <Alert
-          severity="error"
-          className={classes.alert}
-          action={
-            <Button
-              onClick={onClickRefreshInstallation}
-              startIcon={<RefreshIcon />}
-            >
+      <div className="mt-3">
+        <DialogTextField
+          error={installationIsBad}
+          label={t('page.settings.gameFolderInfo', { gameType, exe })}
+          defaultValue={gamePath}
+          onChange={onChangeGameFolder}
+          type="folder"
+        />
+      </div>
+
+      {installationIsBad && (
+        <div className="text-red-400 mt-3 text-sm flex p-2 items-center">
+          <div className="w-full">
+            <p className="select-text mb-2">
+              {t('page.settings.errors.installationInvalid')}
+            </p>
+
+            <p className="select-text">
+              {t('page.settings.errors.installationInvalidInfo', { exe })}
+            </p>
+          </div>
+          <div>
+            <button className="btn mr-2" onClick={onClickRefreshInstallation}>
+              <div className="icon">
+                <RefreshIcon />
+              </div>
               {t('page.settings.actions.refresh')}
-            </Button>
-          }
-        >
-          <Typography variant="body2" paragraph className="text-selectable">
-            {t('page.settings.errors.installationInvalid')}
-          </Typography>
-          <Typography variant="body2" className="text-selectable">
-            {t('page.settings.errors.installationInvalidInfo', { exe })}
-          </Typography>
-        </Alert>
-      </Collapse>
+            </button>
+          </div>
+        </div>
+      )}
 
-      <DialogTextField
-        label={t('page.settings.compilerPath')}
-        defaultValue={compilerPath}
-        onChange={onChangeCompilerPath}
-        className={classes.gap}
-        type="file"
-      />
-    </Paper>
+      <div className="mt-3">
+        <DialogTextField
+          label={t('page.settings.compilerPath')}
+          defaultValue={compilerPath}
+          onChange={onChangeCompilerPath}
+          type="file"
+        />
+      </div>
+    </div>
   )
 }

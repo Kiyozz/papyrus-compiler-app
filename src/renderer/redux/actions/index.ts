@@ -84,7 +84,8 @@ const actions = {
         ),
         empty: createAction(CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_EMPTY)
       }
-    }
+    },
+    setDrawerExpand: createAction<boolean>(CONSTANTS.APP_SETTINGS_IS_EXPAND_SET)
   },
   task: {
     loading: createAction<boolean>(CONSTANTS.APP_TASK_LOADING_SET)

@@ -45,7 +45,7 @@ export default function createRootStore() {
       initialization: initializationReducer,
       compilation: compilationReducer,
       compilationLogs: compilationLogsReducer,
-      settings: createSettingsReducer(),
+      settings: createSettingsReducer(PREFIX),
       changelog: changelogReducer(PREFIX),
       taskLoading: taskLoadingReducer
     }),

@@ -33,6 +33,10 @@ export function App() {
     setShowNotes(false)
   }, [setShowNotes])
 
+  const isDrawerExpand = useStoreSelector(
+    store => store.settings.isDrawerExpand
+  )
+
   return (
     <div className="flex min-h-full">
       {initialized && <DialogChangelog onClose={onClickCloseChangelogPopup} />}
@@ -42,7 +46,7 @@ export function App() {
       <PageContextProvider>
         <PageDrawer />
 
-        <div className="h-full w-full">
+        <div className={`h-full ${isDrawerExpand ? 'pl-48' : 'pl-14'} w-full`}>
           <Routes />
         </div>
       </PageContextProvider>

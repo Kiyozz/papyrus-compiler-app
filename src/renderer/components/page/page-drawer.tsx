@@ -7,19 +7,25 @@
 import CodeIcon from '@material-ui/icons/Code'
 import LayersIcon from '@material-ui/icons/Layers'
 import SettingsIcon from '@material-ui/icons/Settings'
-
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { AppIcon } from '../../assets/logo/vector/app-icon'
-import { useStoreSelector } from '../../redux/use-store-selector'
+import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 import { OpenCompilationLogs } from '../open-compilation-logs/open-compilation-logs'
 import { ActiveLink } from '../active-link/active-link'
+import actions from '../../redux/actions'
 import { usePageContext } from './page-context'
 
 export function PageDrawer() {
   const { setDrawerOpen } = usePageContext()
   const { t } = useTranslation()
+  const isDrawerExpand = useStoreSelector(
+    store => store.settings.isDrawerExpand
+  )
+  const setDrawerExpand = useAction(actions.settingsPage.setDrawerExpand)
 
   const onClick = useCallback(() => setDrawerOpen(false), [setDrawerOpen])
 
@@ -47,16 +53,27 @@ export function PageDrawer() {
   const version = useStoreSelector(state => state.changelog.version)
 
   return (
-    <nav className="h-screen w-64 select-none">
-      <div className="h-full flex flex-col bg-black">
+    <nav
+      className={`h-screen fixed left-0 top-0 ${
+        isDrawerExpand ? 'w-48' : 'w-14'
+      } bg-black select-none`}
+    >
+      <div className="h-full flex flex-col">
         <div className="h-16 flex items-center justify-center gap-6 app-icon">
-          <AppIcon fontSize="large" color="primary" />
-          <div className="flex flex-col items-center">
-            <h1 className="text-xl font-bold font-nova text-white">PCA</h1>
-            <span className="font-harmonia font-medium text-gray-300">
-              {version}
-            </span>
-          </div>
+          <AppIcon
+            className={!isDrawerExpand ? 'px-1' : ''}
+            fontSize="large"
+            color="primary"
+          />
+
+          {isDrawerExpand && (
+            <div className="flex flex-col items-center">
+              <h1 className="text-xl font-bold font-nova text-white">PCA</h1>
+              <span className="font-harmonia font-medium text-gray-300">
+                {version}
+              </span>
+            </div>
+          )}
         </div>
         <hr className="h-0.5 border-gray-700" />
         <ul className="mt-2 flex flex-col gap-2">
@@ -71,8 +88,8 @@ export function PageDrawer() {
                 onClick={onClick}
               >
                 <li className="w-full px-4 py-2 flex hover:bg-gray-700 transition-colors">
-                  <Link.Icon className="mr-6" />
-                  <div>{Link.text}</div>
+                  <Link.Icon />
+                  {isDrawerExpand && <div className="ml-6">{Link.text}</div>}
                 </li>
               </ActiveLink>
             )
@@ -80,6 +97,19 @@ export function PageDrawer() {
         </ul>
         <ul className="mt-auto">
           <OpenCompilationLogs />
+          <li
+            className="w-full px-4 py-2 flex hover:bg-gray-700 transition-colors cursor-pointer"
+            onClick={() => setDrawerExpand(!isDrawerExpand)}
+          >
+            {isDrawerExpand ? (
+              <>
+                <ChevronLeftIcon />
+                <div className="ml-6">{t('nav.closePanel')}</div>
+              </>
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </li>
         </ul>
       </div>
     </nav>
