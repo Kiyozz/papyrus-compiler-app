@@ -4,8 +4,6 @@
  * All rights reserved.
  */
 
-import Box from '@material-ui/core/Box'
-import Fade from '@material-ui/core/Fade'
 import CreateIcon from '@material-ui/icons/Create'
 import is from '@sindresorhus/is'
 import React, { useCallback, useState } from 'react'
@@ -16,7 +14,6 @@ import { PageAppBar } from '../../components/page/page-app-bar'
 import { usePageContext } from '../../components/page/page-context'
 import { GroupModel } from '../../models'
 import { GroupsListItem } from './groups-list-item'
-import classes from './groups-page.module.scss'
 
 interface EditGroupParams {
   group: GroupModel
@@ -107,9 +104,7 @@ export function Groups() {
   )
 
   const [showAddPopup, setShowPopup] = useState(false)
-  const [editingGroup, setEditingGroup] = useState<GroupModel | undefined>(
-    undefined
-  )
+  const [editingGroup, setEditingGroup] = useState<GroupModel | undefined>()
 
   const onClickRemoveGroup = useCallback(
     (group: GroupModel) => {
@@ -176,8 +171,8 @@ export function Groups() {
             onClose={onClosePopup}
           />
 
-          <Fade in={groups.length > 0}>
-            <div className={classes.groupsList}>
+          {groups.length > 0 ? (
+            <div className="relative">
               {groups.map(group => {
                 return (
                   <GroupsListItem
@@ -189,14 +184,12 @@ export function Groups() {
                 )
               })}
             </div>
-          </Fade>
-
-          <Fade in={groups.length === 0}>
-            <Box>
+          ) : (
+            <div>
               <p>{t('page.groups.createGroupText')}</p>
               <p>{t('page.groups.whatIsAGroup')}</p>
-            </Box>
-          </Fade>
+            </div>
+          )}
         </div>
       </Page>
     </>
