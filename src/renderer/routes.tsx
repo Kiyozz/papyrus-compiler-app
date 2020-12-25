@@ -8,7 +8,7 @@ import React from 'react'
 import { Router, RouteComponentProps } from '@reach/router'
 import { Compilation } from './pages/index/compilation'
 import { Groups } from './pages/groups/groups'
-// import { Settings } from './pages/settings/settings'
+import { Settings } from './pages/settings/settings'
 
 interface Route {
   path: string
@@ -18,8 +18,8 @@ interface Route {
 
 const routes: Route[] = [
   { path: '/', Component: Compilation, default: true },
-  { path: 'groups', Component: Groups }
-  // { path: 'settings', Component: Settings }
+  { path: 'groups', Component: Groups },
+  { path: 'settings', Component: Settings }
 ]
 
 export function Routes() {

@@ -14,7 +14,7 @@ interface Props {
 
 export function Page({ children, className }: React.PropsWithChildren<Props>) {
   return (
-    <div className={cx('pb-20 container mx-auto px-6 pt-6 h-full', className)}>
+    <div className={cx('container mx-auto px-6 pt-6 h-full', className)}>
       {children}
     </div>
   )

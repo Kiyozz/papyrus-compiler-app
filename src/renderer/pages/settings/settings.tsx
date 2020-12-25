@@ -18,7 +18,6 @@ import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 import { SettingsContextProvider } from './settings-context'
 import { SettingsGame } from './settings-game'
 import { SettingsMo2 } from './settings-mo2'
-import classes from './settings-page.module.scss'
 
 export function Settings() {
   const { t } = useTranslation()
@@ -182,8 +181,8 @@ export function Settings() {
       <PageAppBar
         title={t('page.settings.title')}
         actions={[
-          <button key={1} onClick={onClickPageRefresh}>
-            <div>
+          <button className="btn" key={1} onClick={onClickPageRefresh}>
+            <div className="icon">
               <RefreshIcon />
             </div>
             {t('page.settings.actions.refresh')}
@@ -192,7 +191,7 @@ export function Settings() {
       />
 
       <Page>
-        <div className={classes.page}>
+        <div className="pb-4">
           <SettingsGame
             onClickRadio={onClickRadio}
             onChangeGameFolder={onChangeGameFolder}

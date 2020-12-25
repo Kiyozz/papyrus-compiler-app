@@ -13,23 +13,38 @@ interface LocalSettings {
     sources: string[]
     sourcesError?: Error
   }
+  isDrawerExpand: boolean
 }
 
 export type SettingsState = LocalSettings
 
-const defaultInitial: LocalSettings = {
-  installationIsBad: false,
-  mo2: {
-    sources: []
-  }
-}
+export default function createSettingsReducer(prefix: string) {
+  const isDrawerExpandKey = `${prefix}/${CONSTANTS.APP_SETTINGS_IS_EXPAND_SET}`
+  const isDrawerExpandSaved =
+    (localStorage.getItem(isDrawerExpandKey) ?? 'true') === 'true'
 
-export default function createSettingsReducer() {
+  const defaultInitial: LocalSettings = {
+    installationIsBad: false,
+    mo2: {
+      sources: []
+    },
+    isDrawerExpand: isDrawerExpandSaved
+  }
+
   return function settingsReducer(
     state = defaultInitial,
     action: AnyAction
   ): SettingsState {
     switch (action.type) {
+      case CONSTANTS.APP_SETTINGS_IS_EXPAND_SET:
+        const drawerValue = action.payload ?? true
+
+        localStorage.setItem(isDrawerExpandKey, `${drawerValue}`)
+
+        return {
+          ...state,
+          isDrawerExpand: action.payload ?? true
+        }
       case CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS:
         return {
           ...state,

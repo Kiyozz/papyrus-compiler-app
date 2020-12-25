@@ -16,7 +16,6 @@ import { apiFactory } from '../../redux/api/api-factory'
 
 import { DialogType } from '../../../common/interfaces/dialog.interface'
 import { usePageContext } from '../page/page-context'
-import classes from './dialog-text-field.module.scss'
 
 export interface Props {
   className?: string
@@ -88,7 +87,7 @@ export function DialogTextField({
     <TextField
       error={error}
       fullWidth
-      className={cx(classes.textField, { [className]: !!className })}
+      className={cx('text-sm', { [className]: !!className })}
       value={value}
       onChange={onChangeInput}
       label={label}
@@ -98,7 +97,7 @@ export function DialogTextField({
           <InputAdornment
             position="start"
             onClick={onClickInput}
-            className={classes.icon}
+            className="cursor-pointer"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >

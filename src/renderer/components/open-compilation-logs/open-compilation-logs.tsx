@@ -4,7 +4,6 @@
  * All rights reserved.
  */
 
-import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -27,10 +26,10 @@ export function LogsListItem({
 }) {
   return (
     <div>
-      <h3 className="select-all">{script.name}</h3>
+      <h3 className="select-all inline">{script.name}</h3>
       <code className="p-4 bg-gray-700 mt-2 block w-full rounded">
         {logs.split('\n').map((log, i) => (
-          <span className="font-mono break-words" key={i}>
+          <span className="font-mono select-text break-words" key={i}>
             {log} <br />
           </span>
         ))}
@@ -41,6 +40,9 @@ export function LogsListItem({
 
 export function OpenCompilationLogs() {
   const { t } = useTranslation()
+  const isDrawerExpand = useStoreSelector(
+    state => state.settings.isDrawerExpand
+  )
   const logs = useStoreSelector(state => state.compilationLogs.logs)
   const popupOpen = useStoreSelector(state => state.compilationLogs.popupOpen)
   const popupToggle = useAction(actions.compilationPage.logs.popupToggle)
@@ -59,8 +61,8 @@ export function OpenCompilationLogs() {
         onClick={onClickButtonOpenLogs}
         className="w-full px-4 py-2 flex hover:bg-gray-700 transition-colors cursor-pointer"
       >
-        <ErrorIcon className="mr-6" />
-        <div>{t('common.logs.nav')}</div>
+        <ErrorIcon />
+        {isDrawerExpand && <div className="ml-6">{t('common.logs.nav')}</div>}
       </li>
 
       <Dialog
@@ -73,18 +75,20 @@ export function OpenCompilationLogs() {
           {t('common.logs.title')}
         </DialogTitle>
         <DialogContent>
-          {logs.length > 0 ? (
-            logs.map(([script, scriptLogs], index) => (
-              <LogsListItem key={index} script={script} logs={scriptLogs} />
-            ))
-          ) : (
-            <span className="select-none">{t('common.logs.noLogs')}</span>
-          )}
+          <div className="flex flex-col gap-4">
+            {logs.length > 0 ? (
+              logs.map(([script, scriptLogs], index) => (
+                <LogsListItem key={index} script={script} logs={scriptLogs} />
+              ))
+            ) : (
+              <span className="select-none">{t('common.logs.noLogs')}</span>
+            )}
+          </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClickButtonCloseLogs}>
+          <button className="btn" onClick={onClickButtonCloseLogs}>
             {t('common.logs.close')}
-          </Button>
+          </button>
         </DialogActions>
       </Dialog>
     </>

@@ -8,7 +8,8 @@ export default {
   nav: {
     compilation: 'Compilation',
     groups: 'Groups',
-    settings: 'Settings'
+    settings: 'Settings',
+    closePanel: 'Close panel'
   },
   page: {
     compilation: {
@@ -62,8 +63,7 @@ export default {
       },
       mo2: {
         enable: 'Enable',
-        enableText:
-          'Only enable this option when the app is not started from MO2.',
+        enableText: 'only if the app is not started from MO2',
         instance: 'Instance folder',
         limit: 'Limit {{limit}}',
         errorInstance:

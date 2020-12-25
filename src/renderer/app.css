@@ -22,17 +22,15 @@ button {
   @apply focus:outline-none px-2;
 }
 
+* {
+  @apply select-none;
+}
+
 *,
 *:focus,
 button,
 button:focus {
   @apply outline-none;
-}
-
-code,
-code span,
-.text-selectable {
-  @apply select-text;
 }
 
 body {
@@ -50,7 +48,7 @@ body {
   @apply rounded inline-flex items-center justify-center;
   @apply px-2 py-1.5;
   @apply transition-colors;
-  @apply bg-transparent hover:bg-white hover:bg-opacity-10 focus:bg-white focus:bg-opacity-20;
+  @apply bg-transparent hover:bg-white hover:bg-opacity-10 focus-within:bg-white focus-within:bg-opacity-20;
 }
 
 .icon {
@@ -66,11 +64,11 @@ body {
 }
 
 .btn-primary {
-  @apply bg-purple-700 hover:bg-purple-600 focus:bg-purple-500;
+  @apply bg-purple-700 hover:bg-purple-600 focus-within:bg-purple-500;
 }
 
 .btn-secondary {
-  @apply bg-green-600 hover:bg-green-500 focus:bg-green-400;
+  @apply bg-green-600 hover:bg-green-500 focus-within:bg-green-400;
 }
 
 .btn-danger {
@@ -85,18 +83,8 @@ body {
   @apply bg-gray-400 px-4 p-2 bg-opacity-20 rounded;
 }
 
-/** ----- MUI ----- */
-.MuiPaper-root:not(.MuiMenu-paper):not(.MuiAppBar-root):not(.MuiDrawer-paper) {
-  padding: 8px;
-}
-
-.MuiPaper-root:not(.MuiMenu-paper):not(.MuiAppBar-root):not(.MuiDrawer-paper)
-  + .MuiPaper-root:not(.MuiMenu-paper):not(.MuiAppBar-root):not(.MuiDrawer-paper) {
-  margin-top: 8px;
-}
-
-.MuiContainer-root {
-  margin-top: 16px;
+input.MuiInputBase-inputAdornedStart {
+  @apply text-sm;
 }
 
 /** ----- TRANSITIONS ----- */
