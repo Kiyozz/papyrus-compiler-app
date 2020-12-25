@@ -5,14 +5,10 @@
  */
 
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  IconButton,
-  Snackbar,
-  Typography
+  DialogTitle
 } from '@material-ui/core'
 import DownloadIcon from '@material-ui/icons/GetApp'
 import CloseIcon from '@material-ui/icons/Close'
@@ -29,19 +25,26 @@ interface Props {
   onClose: () => void
 }
 
+function Anchor({ children, href }: React.PropsWithChildren<{ href: string }>) {
+  const shell = useMemo(() => window.require('electron').shell, [])
+  const onClick = useCallback(() => shell.openExternal(href), [href, shell])
+
+  return <a onClick={onClick}>{children}</a>
+}
+
 function Heading({
   children,
   level
 }: React.PropsWithChildren<{ level: number }>) {
-  return (
-    <Typography gutterBottom={true} variant={level === 2 ? 'h5' : 'h6'}>
-      {children}
-    </Typography>
-  )
+  if (level === 2) {
+    return <h6 className="mb-2 text-2xl">{children}</h6>
+  }
+
+  return <h5 className="mb-2 text-xl">{children}</h5>
 }
 
 function Paragraph({ children }: React.PropsWithChildren<unknown>) {
-  return <Typography variant="body2">{children}</Typography>
+  return <p className="text-sm">{children}</p>
 }
 
 function Code({ value }: { value: string }) {
@@ -91,29 +94,25 @@ export function DialogChangelog({ onClose }: Props) {
 
   return (
     <>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left'
-        }}
-        open={showNotes && !isUserShowNotes}
-        autoHideDuration={10000}
-        message={t('changelog.available.message', { version: latestVersion })}
-        action={
-          <>
-            <Button color="primary" size="small" onClick={onClickShowNotes}>
+      {showNotes && !isUserShowNotes && (
+        <div className="fixed z-10 bottom-3 left-3 bg-gray-800 py-3 items-center rounded text-sm text-white flex">
+          <div className="px-2">
+            {t('changelog.available.message', { version: latestVersion })}
+          </div>
+          <div className="inline-flex gap-2 pr-2">
+            <button className="btn btn-primary" onClick={onClickShowNotes}>
               {t('changelog.available.view')}
-            </Button>
-            <IconButton
-              onClick={onCloseDialog}
+            </button>
+            <button
+              className="btn-icon text-xs"
               aria-label="close"
-              color="inherit"
+              onClick={onCloseDialog}
             >
               <CloseIcon fontSize="small" />
-            </IconButton>
-          </>
-        }
-      />
+            </button>
+          </div>
+        </div>
+      )}
 
       <Dialog
         open={isUserShowNotes}
@@ -123,25 +122,28 @@ export function DialogChangelog({ onClose }: Props) {
       >
         <DialogTitle>{t('changelog.newVersion')}</DialogTitle>
         <DialogContent>
-          <ReactMarkdown
-            source={notes}
-            renderers={{
-              paragraph: Paragraph,
-              heading: Heading,
-              code: Code
-            }}
-          />
+          <div className="changelog-container bg-gray-700 p-4 rounded text-gray-300 text-sm">
+            <ReactMarkdown
+              source={notes}
+              renderers={{
+                paragraph: Paragraph,
+                heading: Heading,
+                code: Code,
+                link: Anchor
+              }}
+            />
+          </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onCloseDialog}>Close</Button>
-          <Button
-            color="primary"
-            variant="contained"
-            startIcon={<DownloadIcon />}
-            onClick={onClickDownloadRelease}
-          >
+          <button className="btn" onClick={onCloseDialog}>
+            Close
+          </button>
+          <button className="btn btn-primary" onClick={onClickDownloadRelease}>
+            <div className="icon">
+              <DownloadIcon />
+            </div>
             Download
-          </Button>
+          </button>
         </DialogActions>
       </Dialog>
     </>

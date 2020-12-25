@@ -172,7 +172,7 @@ export function Groups() {
           />
 
           {groups.length > 0 ? (
-            <div className="relative">
+            <div className="relative flex flex-col gap-2">
               {groups.map(group => {
                 return (
                   <GroupsListItem
