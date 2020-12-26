@@ -4,12 +4,6 @@
  * All rights reserved.
  */
 
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle
-} from '@material-ui/core'
 import DownloadIcon from '@material-ui/icons/GetApp'
 import CloseIcon from '@material-ui/icons/Close'
 
@@ -20,6 +14,7 @@ import ReactMarkdown from 'react-markdown'
 import useOnKeyUp from '../hooks/use-on-key-up'
 import { useStoreSelector } from '../redux/use-store-selector'
 import { MOD_URL } from '../../common/mod'
+import { Dialog, DialogActions, DialogContent, DialogTitle } from './dialog'
 
 interface Props {
   onClose: () => void
@@ -117,7 +112,7 @@ export function DialogChangelog({ onClose }: Props) {
       <Dialog
         open={isUserShowNotes}
         fullWidth
-        maxWidth="sm"
+        maxWidth={70}
         onClose={onCloseDialog}
       >
         <DialogTitle>{t('changelog.newVersion')}</DialogTitle>

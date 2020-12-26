@@ -24,7 +24,7 @@ export function GroupsDialogList({
   return (
     <ul className="flex flex-col gap-2">
       {scripts.map((script, index) => (
-        <li className="flex items-center" key={script.id + index}>
+        <li className="flex items-center text-white" key={script.id + index}>
           <div className="w-full">{script.name}</div>
           <div>
             <button

@@ -4,10 +4,6 @@
  * All rights reserved.
  */
 
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import SearchIcon from '@material-ui/icons/Search'
 
 import React, { useCallback, useEffect, useState } from 'react'
@@ -20,6 +16,7 @@ import uniqScripts from '../utils/scripts/uniq-scripts'
 import { GroupsDialogActions } from './groups-dialog-actions'
 import { GroupsDialogList } from './groups-dialog-list'
 import { TextField } from './text-field'
+import { Dialog, DialogTitle, DialogContent, DialogActions } from './dialog'
 
 interface Props {
   onGroupAdd: (group: GroupModel) => void
@@ -117,20 +114,14 @@ export function GroupsDialog({
   })
 
   return (
-    <Dialog
-      open={open}
-      onClose={onDialogClose}
-      aria-labelledby="create-group-title"
-      maxWidth="lg"
-      fullWidth
-    >
-      <DialogTitle id="create-group-title">
+    <Dialog open={open} maxWidth={80} fullWidth onClose={onDialogClose}>
+      <DialogTitle>
         {isEdit
           ? t('page.groups.dialog.editGroup')
           : t('page.groups.dialog.createGroup')}
       </DialogTitle>
       <form onSubmit={onSubmitGroup}>
-        <DialogContent className="px-10">
+        <DialogContent>
           <TextField
             label={t('page.groups.dialog.name')}
             name="group-name"

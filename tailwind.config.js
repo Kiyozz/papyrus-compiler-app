@@ -13,7 +13,8 @@ module.exports = {
         sans: ['Roboto', '-apple-system', 'sans-serif'],
         nova: ['Proxima Nova', 'sans-serif'],
         harmonia: ['Harmonia Sans', 'sans-serif'],
-        mono: ['Roboto Mono', 'ui-monospace', 'monospace']
+        mono: ['Roboto Mono', 'ui-monospace', 'monospace'],
+        body: ['Roboto', '-apple-system', 'sans-serif']
       }
     }
   },
