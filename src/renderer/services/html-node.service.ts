@@ -4,8 +4,6 @@
  * All rights reserved.
  */
 
-import is from '@sindresorhus/is'
-
 export class HtmlNodeService {
   isChildren(
     from: HTMLElement | ChildNode | undefined | null,
@@ -15,7 +13,7 @@ export class HtmlNodeService {
   }
 
   deepChilds(element?: HTMLElement | ChildNode | null): ChildNode[] {
-    if (is.nullOrUndefined(element)) {
+    if (element === undefined || element === null) {
       return []
     }
 

@@ -12,8 +12,8 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Games, getExecutable } from '../../../common/game'
-import { DialogTextField } from '../../components/dialog-text-field/dialog-text-field'
-import { usePageContext } from '../../components/page/page-context'
+import { DialogTextField } from '../../components/dialog-text-field'
+import { usePageContext } from '../../components/page-context'
 import { useSettings } from './settings-context'
 
 interface Props {

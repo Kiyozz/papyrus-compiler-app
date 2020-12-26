@@ -13,9 +13,9 @@ import ErrorIcon from '@material-ui/icons/Error'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ScriptModel } from '../../models'
-import actions from '../../redux/actions'
-import { useAction, useStoreSelector } from '../../redux/use-store-selector'
+import { ScriptModel } from '../models'
+import actions from '../redux/actions'
+import { useAction, useStoreSelector } from '../redux/use-store-selector'
 
 export function LogsListItem({
   script,

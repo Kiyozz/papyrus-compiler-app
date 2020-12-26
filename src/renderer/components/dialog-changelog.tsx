@@ -17,9 +17,9 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
 
-import useOnKeyUp from '../../hooks/use-on-key-up'
-import { useStoreSelector } from '../../redux/use-store-selector'
-import { MOD_URL } from '../../../common/mod'
+import useOnKeyUp from '../hooks/use-on-key-up'
+import { useStoreSelector } from '../redux/use-store-selector'
+import { MOD_URL } from '../../common/mod'
 
 interface Props {
   onClose: () => void

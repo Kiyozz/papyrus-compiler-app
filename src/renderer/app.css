@@ -63,6 +63,10 @@ body {
   @apply rounded px-4 py-3;
 }
 
+.btn-justify-between {
+  @apply justify-between;
+}
+
 .btn-primary {
   @apply bg-purple-700 hover:bg-purple-600 focus:bg-purple-500;
 }
@@ -95,11 +99,23 @@ body {
   @apply underline text-blue-300 cursor-pointer;
 }
 
+/* ----- MUI ----- */
+
 input.MuiInputBase-inputAdornedStart {
   @apply text-sm;
 }
 
-/** ----- TRANSITIONS ----- */
+/* ----- COMPONENTS ----- */
+
+.menu {
+  @apply flex flex-col gap-1 py-1.5 bg-gray-700 rounded min-w-full;
+}
+
+.menu .item {
+  @apply w-full;
+}
+
+/* ----- TRANSITIONS ----- */
 .app-fade-enter {
   @apply opacity-0;
 }
@@ -116,7 +132,7 @@ input.MuiInputBase-inputAdornedStart {
   @apply opacity-0 transition-opacity;
 }
 
-/** ------ SCROLLBAR ----- */
+/* ------ SCROLLBAR ----- */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;

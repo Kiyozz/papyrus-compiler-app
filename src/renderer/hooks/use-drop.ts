@@ -6,8 +6,8 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react'
-import { OnDropFunction } from '../components/drop-scripts/drop-scripts'
-import { usePageContext } from '../components/page/page-context'
+import { OnDropFunction } from '../components/drop-scripts'
+import { usePageContext } from '../components/page-context'
 
 interface UseDropOptions {
   button: JSX.Element | null

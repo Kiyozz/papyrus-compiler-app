@@ -12,11 +12,11 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { AppIcon } from '../../assets/logo/vector/app-icon'
-import { useAction, useStoreSelector } from '../../redux/use-store-selector'
-import { OpenCompilationLogs } from '../open-compilation-logs/open-compilation-logs'
-import { ActiveLink } from '../active-link/active-link'
-import actions from '../../redux/actions'
+import { AppIcon } from '../assets/logo/vector/app-icon'
+import { useAction, useStoreSelector } from '../redux/use-store-selector'
+import actions from '../redux/actions'
+import { OpenCompilationLogs } from './open-compilation-logs'
+import { ActiveLink } from './active-link'
 import { usePageContext } from './page-context'
 
 export function PageDrawer() {

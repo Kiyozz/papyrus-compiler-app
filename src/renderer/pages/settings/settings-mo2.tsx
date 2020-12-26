@@ -7,7 +7,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { usePageContext } from '../../components/page/page-context'
+import { usePageContext } from '../../components/page-context'
 import { SettingsMo2Activation } from './settings-mo2-activation'
 import { SettingsMo2Instance } from './settings-mo2-instance'
 

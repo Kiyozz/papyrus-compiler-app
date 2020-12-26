@@ -6,10 +6,9 @@
 
 import React, { useCallback, useEffect } from 'react'
 
-import { DialogChangelog } from './components/dialog-changelog/dialog-changelog'
-import { PageContextProvider } from './components/page/page-context'
-import { PageDrawer } from './components/page/page-drawer'
-import { SplashScreen } from './components/splash-screen/splash-screen'
+import { DialogChangelog } from './components/dialog-changelog'
+import { PageContextProvider } from './components/page-context'
+import { PageDrawer } from './components/page-drawer'
 import actions from './redux/actions'
 import { useAction, useStoreSelector } from './redux/use-store-selector'
 import { Routes } from './routes'
@@ -40,8 +39,6 @@ export function App() {
   return (
     <div className="flex min-h-full">
       {initialized && <DialogChangelog onClose={onClickCloseChangelogPopup} />}
-
-      <SplashScreen />
 
       <PageContextProvider>
         <PageDrawer />
