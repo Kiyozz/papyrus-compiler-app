@@ -12,10 +12,10 @@ import cx from 'classnames'
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { apiFactory } from '../../redux/api/api-factory'
+import { apiFactory } from '../redux/api/api-factory'
 
-import { DialogType } from '../../../common/interfaces/dialog.interface'
-import { usePageContext } from '../page/page-context'
+import { DialogType } from '../../common/interfaces/dialog.interface'
+import { usePageContext } from './page-context'
 
 export interface Props {
   className?: string

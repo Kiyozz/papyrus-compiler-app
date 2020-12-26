@@ -8,7 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { usePageContext } from '../../components/page/page-context'
+import { usePageContext } from '../../components/page-context'
 
 interface Props {
   onChangeMo2: (e: React.ChangeEvent<HTMLInputElement>) => void

@@ -14,14 +14,14 @@ import React, {
 } from 'react'
 import { Observable, Subject } from 'rxjs'
 import { PartialDeep } from 'type-fest'
-import { Config } from '../../../common/interfaces/config.interface'
-import * as EVENTS from '../../../common/events'
-import { ipcRenderer } from '../../../common/ipc'
-import { ScriptStatus } from '../../enums/script-status.enum'
-import { Group } from '../../models'
-import { useStoreSelector } from '../../redux/use-store-selector'
-import { DropFilesOverlay } from '../drop-files-overlay/drop-files-overlay'
-import { DropScripts, OnDropFunction } from '../drop-scripts/drop-scripts'
+import { Config } from '../../common/interfaces/config.interface'
+import * as EVENTS from '../../common/events'
+import { ipcRenderer } from '../../common/ipc'
+import { ScriptStatus } from '../enums/script-status.enum'
+import { Group } from '../models'
+import { useStoreSelector } from '../redux/use-store-selector'
+import { DropFilesOverlay } from './drop-files-overlay'
+import { DropScripts, OnDropFunction } from './drop-scripts'
 
 interface PageContextInterface {
   drawerOpen: boolean

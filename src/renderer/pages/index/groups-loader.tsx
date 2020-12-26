@@ -4,11 +4,9 @@
  * All rights reserved.
  */
 
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
 import AddIcon from '@material-ui/icons/Add'
 
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Group } from '../../models'
@@ -22,6 +20,25 @@ export function GroupsLoader({ groups, onChangeGroup }: Props) {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
 
+  const onClickOut = useCallback(
+    (e: MouseEvent) => {
+      const clicked = e.target
+
+      if (anchor) {
+        if (anchor !== clicked) {
+          setAnchor(null)
+        }
+      }
+    },
+    [anchor]
+  )
+
+  useEffect(() => {
+    document.addEventListener('click', onClickOut)
+
+    return () => document.removeEventListener('click', onClickOut)
+  }, [onClickOut])
+
   const onClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget),
     []
@@ -30,49 +47,53 @@ export function GroupsLoader({ groups, onChangeGroup }: Props) {
 
   const groupSelectOptions = useMemo(() => {
     return groups
-      .filter(group => !group.isEmpty())
-      .map(group => {
-        const onClickGroup = () => {
-          onClose()
-          onChangeGroup(group.name)
-        }
+      .filter((group: Group): boolean => !group.isEmpty())
+      .map(
+        (group: Group): JSX.Element => {
+          const onClickGroup = () => {
+            onClose()
+            onChangeGroup(group.name)
+          }
 
-        return (
+          return (
+            <button
+              className="btn item"
+              key={group.name}
+              onClick={onClickGroup}
+            >
+              {group.name}
+            </button>
+          )
+
+          /*return (
           <MenuItem value={group.name} key={group.name} onClick={onClickGroup}>
             {group.name}
           </MenuItem>
-        )
-      })
+        )*/
+        }
+      )
   }, [groups, onChangeGroup, onClose])
 
-  const notEmptyGroups = groups.filter(group => !group.isEmpty())
+  const notEmptyGroups = groups.filter(
+    (group: Group): boolean => !group.isEmpty()
+  )
 
   return (
-    <div className="inline self-center">
+    <div className="inline self-center relative">
       {notEmptyGroups.length > 0 && (
         <>
-          <button
-            className="btn"
-            aria-controls="load-group-menu"
-            aria-haspopup="true"
-            onClick={onClick}
-          >
+          <button className="btn" aria-haspopup="true" onClick={onClick}>
             <div className="icon">
               <AddIcon />
             </div>
             {t('page.compilation.actions.loadGroup')}
           </button>
 
-          <Menu
-            id="load-group-menu"
-            keepMounted
-            className="w-full"
-            open={!!anchor}
-            onClose={onClose}
-            anchorEl={anchor}
-          >
-            {groupSelectOptions}
-          </Menu>
+          {anchor && (
+            <div className="menu absolute top-4 -left-4">
+              {groupSelectOptions}
+            </div>
+          )}
         </>
       )}
     </div>

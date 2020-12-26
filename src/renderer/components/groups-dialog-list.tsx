@@ -8,7 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 
 import React from 'react'
 
-import { ScriptModel } from '../../models'
+import { ScriptModel } from '../models'
 
 interface Props {
   scripts: ScriptModel[]
