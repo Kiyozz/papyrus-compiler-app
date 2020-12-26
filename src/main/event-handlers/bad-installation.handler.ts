@@ -37,7 +37,7 @@ export class BadInstallationHandler implements EventHandlerInterface {
     const mo2 = appStore.get('mo2')
 
     if (is.undefined(mo2.instance)) {
-      return false
+      return this.checksInGameDataFolder(file)
     }
 
     this.logger.info('checking in mo2 folder')

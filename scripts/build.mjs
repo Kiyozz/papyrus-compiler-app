@@ -10,6 +10,7 @@ import esbuild from 'esbuild'
 import webpack from 'webpack'
 import esbuildMainConfig from '../esbuild.main.mjs'
 import webpackRendererConfig from '../webpack.renderer.mjs'
+import { track } from './track.mjs'
 
 process.env.NODE_ENV = 'production'
 
@@ -18,9 +19,10 @@ function clean() {
 }
 
 async function build() {
+  console.info(track(), 'Start')
   clean()
 
-  console.info('Creating production build...')
+  console.info(track(), 'Creating production build...')
 
   const rendererCompiler = webpack(webpackRendererConfig())
   const esbuildService = await esbuild.startService()
@@ -28,16 +30,17 @@ async function build() {
   await Promise.all([
     esbuildService
       .build(esbuildMainConfig())
-      .then(() => console.info('Main built')),
+      .then(() => console.info(track(), 'Main built')),
     new Promise((resolve, reject) => {
       rendererCompiler.run(err => {
         if (err) {
+          console.error(track(), 'Error when building renderer')
           return reject(err)
         }
 
         resolve()
       })
-    }).then(() => console.info('Renderer built'))
+    }).then(() => console.info(track(), 'Renderer built'))
   ])
 
   process.exit(0)
