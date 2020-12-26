@@ -87,6 +87,10 @@ body {
   @apply text-red-400;
 }
 
+.input {
+  z-index: 0;
+}
+
 .input::before {
   content: '';
   z-index: -1;
@@ -104,6 +108,14 @@ body {
 
 .paper {
   @apply bg-gray-400 px-4 p-2 bg-opacity-20 rounded;
+}
+
+.paper.paper-darker {
+  background: #16161a;
+}
+
+.paper.p-0 {
+  padding: 0;
 }
 
 .changelog-container ul {

@@ -4,10 +4,6 @@
  * All rights reserved.
  */
 
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import ErrorIcon from '@material-ui/icons/Error'
 
 import React, { useCallback } from 'react'
@@ -16,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { ScriptModel } from '../models'
 import actions from '../redux/actions'
 import { useAction, useStoreSelector } from '../redux/use-store-selector'
+import { Dialog, DialogTitle, DialogContent, DialogActions } from './dialog'
 
 export function LogsListItem({
   script,
@@ -68,7 +65,7 @@ export function OpenCompilationLogs() {
       <Dialog
         open={popupOpen}
         onClose={onClickButtonCloseLogs}
-        maxWidth="lg"
+        maxWidth={80}
         fullWidth
       >
         <DialogTitle className="select-none">

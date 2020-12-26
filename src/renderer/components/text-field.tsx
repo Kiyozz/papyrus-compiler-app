@@ -74,7 +74,7 @@ export function TextField({
           id={id}
           name={name}
           placeholder={placeholder}
-          className="w-full text-sm text-white bg-transparent"
+          className="w-full text-white bg-transparent"
           value={value}
           onChange={onChangeInput}
         />
