@@ -4,20 +4,19 @@
  * All rights reserved.
  */
 
-import InputAdornment from '@material-ui/core/InputAdornment'
-import TextField from '@material-ui/core/TextField'
 import FolderIcon from '@material-ui/icons/Folder'
 import FolderOpenIcon from '@material-ui/icons/FolderOpen'
-import cx from 'classnames'
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { apiFactory } from '../redux/api/api-factory'
 
 import { DialogType } from '../../common/interfaces/dialog.interface'
+import { TextField } from './text-field'
 import { usePageContext } from './page-context'
 
 export interface Props {
+  id: string
   className?: string
   error?: boolean
   label?: string
@@ -28,10 +27,10 @@ export interface Props {
 
 export function DialogTextField({
   error = false,
+  id,
   label,
   defaultValue,
   onChange,
-  className = '',
   type
 }: Props) {
   const { onRefreshConfig } = usePageContext()
@@ -41,6 +40,7 @@ export function DialogTextField({
   const api = useMemo(() => apiFactory(), [])
   const onClickInput = useCallback(
     async (e: React.MouseEvent<HTMLDivElement>) => {
+      setHover(false)
       e.preventDefault()
       e.currentTarget.blur()
 
@@ -74,9 +74,7 @@ export function DialogTextField({
   }, [])
 
   const onChangeInput = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.currentTarget.value
-
+    (newValue: string) => {
       setValue(newValue)
       onChange(newValue)
     },
@@ -85,26 +83,16 @@ export function DialogTextField({
 
   return (
     <TextField
+      id={id}
       error={error}
-      fullWidth
-      className={cx('text-sm', { [className]: !!className })}
+      startIcon={isHover ? <FolderOpenIcon /> : <FolderIcon />}
       value={value}
       onChange={onChangeInput}
       label={label}
       placeholder={t('common.selectFolder')}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment
-            position="start"
-            onClick={onClickInput}
-            className="cursor-pointer"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            {isHover ? <FolderOpenIcon /> : <FolderIcon />}
-          </InputAdornment>
-        )
-      }}
+      iconOnMouseEnter={handleMouseEnter}
+      iconOnMouseLeave={handleMouseLeave}
+      iconOnClick={onClickInput}
     />
   )
 }

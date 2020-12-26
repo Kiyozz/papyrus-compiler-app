@@ -83,6 +83,25 @@ body {
   @apply pointer-events-none opacity-50;
 }
 
+.label-danger {
+  @apply text-red-400;
+}
+
+.input::before {
+  content: '';
+  z-index: -1;
+  @apply absolute left-0 top-0 w-full h-full border-b;
+}
+
+.input-danger::before {
+  @apply border-red-400;
+}
+
+.input:hover::before,
+.input:focus::before {
+  @apply border-b-2;
+}
+
 .paper {
   @apply bg-gray-400 px-4 p-2 bg-opacity-20 rounded;
 }
