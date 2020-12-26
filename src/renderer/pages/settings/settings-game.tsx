@@ -62,6 +62,7 @@ export function SettingsGame({
 
       <div className="mt-3">
         <DialogTextField
+          id="game-folder"
           error={installationIsBad}
           label={t('page.settings.gameFolderInfo', { gameType, exe })}
           defaultValue={gamePath}
@@ -71,7 +72,7 @@ export function SettingsGame({
       </div>
 
       {installationIsBad && (
-        <div className="text-red-400 mt-3 text-sm flex p-2 items-center">
+        <div className="text-red-400 mt-3 text-sm flex gap-2 p-2 items-center">
           <div className="w-full">
             <p className="select-text mb-2">
               {t('page.settings.errors.installationInvalid')}
@@ -94,6 +95,7 @@ export function SettingsGame({
 
       <div className="mt-3">
         <DialogTextField
+          id="compiler-path"
           label={t('page.settings.compilerPath')}
           defaultValue={compilerPath}
           onChange={onChangeCompilerPath}

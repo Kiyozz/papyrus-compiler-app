@@ -8,7 +8,6 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import TextField from '@material-ui/core/TextField'
 import SearchIcon from '@material-ui/icons/Search'
 
 import React, { useCallback, useEffect, useState } from 'react'
@@ -20,6 +19,7 @@ import { pscFilesToPscScripts } from '../utils/scripts/psc-files-to-psc-scripts'
 import uniqScripts from '../utils/scripts/uniq-scripts'
 import { GroupsDialogActions } from './groups-dialog-actions'
 import { GroupsDialogList } from './groups-dialog-list'
+import { TextField } from './text-field'
 
 interface Props {
   onGroupAdd: (group: GroupModel) => void
@@ -94,8 +94,8 @@ export function GroupsDialog({
     [name, isEdit, group, scripts, onGroupAdd, onGroupEdit]
   )
 
-  const onChangeName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.currentTarget.value)
+  const onChangeName = useCallback((e: string) => {
+    setName(e)
   }, [])
 
   const onDrop = useCallback((pscFiles: File[]) => {
@@ -132,7 +132,6 @@ export function GroupsDialog({
       <form onSubmit={onSubmitGroup}>
         <DialogContent className="px-10">
           <TextField
-            fullWidth
             label={t('page.groups.dialog.name')}
             name="group-name"
             id="group-name"

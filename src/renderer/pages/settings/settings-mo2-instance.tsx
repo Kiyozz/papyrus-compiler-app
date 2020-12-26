@@ -26,6 +26,7 @@ export function SettingsMo2Instance({ onChangeMo2Instance }: Props) {
 
   return (
     <DialogTextField
+      id="mo2-instance"
       defaultValue={mo2.instance ?? ''}
       label={t('page.settings.mo2.instance')}
       onChange={onChangeMo2Instance}
