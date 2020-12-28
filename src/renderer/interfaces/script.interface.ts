@@ -7,7 +7,7 @@
 import { Script } from '../../common/interfaces/script.interface'
 import { ScriptStatus } from '../enums/script-status.enum'
 
-export interface ScriptModel extends Script {
+export interface ScriptInterface extends Script {
   id: number
   status: ScriptStatus
 }

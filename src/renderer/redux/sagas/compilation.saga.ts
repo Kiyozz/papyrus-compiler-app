@@ -6,13 +6,13 @@
 
 import { AnyAction } from 'redux'
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { ScriptModel } from '../../models'
+import { ScriptInterface } from '../../interfaces'
 import actions, { CONSTANTS } from '../actions'
 import { apiFactory } from '../api/api-factory'
 
 function* startCompilation(action: AnyAction) {
   const api = apiFactory()
-  const scripts: ScriptModel[] = action.payload
+  const scripts: ScriptInterface[] = action.payload
 
   console.log('Starting compilation for', scripts)
 

@@ -57,9 +57,12 @@ export default {
       gameFolderInfo: '{{gameType}} folder (where {{exe}} is located)',
       compilerPath: 'Where is the PapyrusCompiler.exe file located?',
       errors: {
-        installationInvalid: 'Installation seems invalid:',
-        installationInvalidInfo:
-          'Check if you have extracted Scripts.zip from Creation Kit or the executable {{exe}} exists in your game.'
+        installationInvalid: 'Configuration seems invalid:',
+        scripts:
+          "Check that your Creation Kit installation is valid. The app checks the presence of Actor.psc file in Scripts\\Source or Source\\Scripts folders to validate your Creation Kit installation. If you're using the app MO2 integration, the folders overwrite and mods are also checked.",
+        game: 'Check that "{{exe}}" exists in the game folder.',
+        compiler: 'Check that "{{compilerExe}}" exists.',
+        mo2Instance: 'Check that instance folder "{{mo2Instance}}" exists.'
       },
       mo2: {
         enable: 'Enable',
@@ -82,14 +85,20 @@ export default {
   common: {
     selectFolder: 'Select a folder',
     logs: {
-      nav: 'Compilation logs',
+      nav: 'Logs',
       title: 'Compilation logs',
       noLogs: 'No logs',
       close: 'Close',
       scriptFailed: 'Script {{script}} failed to compile: {{message}}',
       scriptFailedCmd: 'Executed command: {{cmd}}',
-      invalidConfiguration:
-        '{{folder}} is a invalid Skyrim directory. The folder does not contains {{exe}}.'
+      invalidConfigurationGame:
+        '{{folder}} is an invalid game folder. The folder does not contains {{exe}}.',
+      invalidConfigurationCompiler:
+        '{{exe}} is a invalid compiler. This file does not exists.',
+      invalidConfigurationScripts:
+        "Your configuration is incorrect. Cannot validate Creation Kit installation. The app checks the presence of Actor.psc to validate your Creation Kit installation. Cannot find the file Actor.psc in Source\\Scripts or Scripts\\Source. If you're using the app MO2 integration, the folders overwrite and mods are also checked.",
+      invalidConfigurationMo2Instance:
+        'Your configuration is incorrect. The mo2 instance at {{instance}} does not exist.'
     }
   }
 }

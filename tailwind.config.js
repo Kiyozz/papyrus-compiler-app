@@ -5,7 +5,21 @@
  */
 
 module.exports = {
-  purge: ['./src/renderer/**/*.{tsx,ts}'],
+  purge: {
+    content: ['./src/renderer/**/*.{tsx,ts}'],
+    options: {
+      safelist: [
+        'px-5',
+        'text-gray-300',
+        'text-gray-500',
+        'text-blue-800',
+        'text-green-500',
+        'text-red-300',
+        'items-center',
+        'flex'
+      ]
+    }
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {

@@ -5,13 +5,13 @@
  */
 
 import { ScriptStatus } from '../../enums/script-status.enum'
-import { ScriptModel } from '../../models'
+import { ScriptInterface } from '../../interfaces'
 
 export default function findScriptInList(
-  scripts: ScriptModel[],
+  scripts: ScriptInterface[],
   id: number,
   status: ScriptStatus
-): ScriptModel | undefined {
+): ScriptInterface | undefined {
   const script = scripts.find(s => s.id === id)
 
   if (!script) {

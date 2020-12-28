@@ -7,14 +7,14 @@
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ScriptModel } from '../../models'
+import { ScriptInterface } from '../../interfaces'
 import { useCompilationContext } from './compilation-context'
 import { CompilationPageActions } from './compilation-page-actions'
 import { PlayButton } from './play-button'
 import { ScriptItem } from './script-item'
 
 interface Props {
-  onClickRemoveScriptFromScript: (script: ScriptModel) => () => void
+  onClickRemoveScriptFromScript: (script: ScriptInterface) => () => void
   onClear: () => void
   onClickPlayPause: () => void
 }

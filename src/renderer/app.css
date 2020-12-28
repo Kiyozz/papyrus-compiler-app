@@ -4,10 +4,7 @@
  * All rights reserved.
  */
 
-@import 'assets/fonts/proxima-nova/proxima-nova.css';
-@import 'assets/fonts/harmonia-sans/harmonia-sans.css';
-@import '~typeface-roboto/index.css';
-@import '~typeface-roboto-mono/index.css';
+@import 'assets/fonts/fonts.css';
 
 html,
 body {

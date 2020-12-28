@@ -1,0 +1,98 @@
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
+@import './proxima-nova/proxima-nova.css';
+@import './harmonia-sans/harmonia-sans.css';
+
+/* roboto-300normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src: local('Roboto Light '), local('Roboto-Light'),
+    url('~typeface-roboto/files/roboto-latin-300.woff2') format('woff2'); /* Super Modern Browsers */
+}
+
+/* roboto-300italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 300;
+  src: local('Roboto Light italic'), local('Roboto-Lightitalic'),
+    url('~typeface-roboto/files/roboto-latin-300italic.woff2') format('woff2'); /* Super Modern Browsers */
+}
+
+/* roboto-400normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: local('Roboto Regular '), local('Roboto-Regular'),
+    url('~typeface-roboto/files/roboto-latin-400.woff2') format('woff2'); /* Super Modern Browsers */
+}
+
+/* roboto-400italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: local('Roboto Regular italic'), local('Roboto-Regularitalic'),
+    url('~typeface-roboto/files/roboto-latin-400italic.woff2') format('woff2'); /* Super Modern Browsers */
+}
+
+/* roboto-500normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: local('Roboto Medium '), local('Roboto-Medium'),
+    url('~typeface-roboto/files/roboto-latin-500.woff2') format('woff2'); /* Super Modern Browsers */
+}
+
+/* roboto-500italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 500;
+  src: local('Roboto Medium italic'), local('Roboto-Mediumitalic'),
+    url('~typeface-roboto/files/roboto-latin-500italic.woff2') format('woff2'); /* Super Modern Browsers */
+}
+
+/* roboto-700normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: local('Roboto Bold '), local('Roboto-Bold'),
+    url('~typeface-roboto/files/roboto-latin-700.woff2') format('woff2'); /* Super Modern Browsers */
+}
+
+/* roboto-700italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: local('Roboto Bold italic'), local('Roboto-Bolditalic'),
+    url('~typeface-roboto/files/roboto-latin-700italic.woff2') format('woff2'); /* Super Modern Browsers */
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: local('Roboto Mono Medium '), local('Roboto Mono-Medium'),
+    url('~typeface-roboto-mono/files/roboto-mono-latin-500.woff2')
+      format('woff2'); /* Super Modern Browsers */
+}

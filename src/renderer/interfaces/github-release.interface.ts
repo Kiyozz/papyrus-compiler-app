@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-export interface GithubReleaseModel {
+export interface GithubReleaseInterface {
   id: number
   tag_name: string
   body: string

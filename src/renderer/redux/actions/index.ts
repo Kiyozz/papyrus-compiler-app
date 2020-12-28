@@ -5,7 +5,7 @@
  */
 
 import { createAction } from 'redux-actions'
-import { CompilationLogsModel, ScriptModel } from '../../models'
+import { CompilationLogsInterface, ScriptInterface } from '../../interfaces'
 import * as CONSTANTS from './constants'
 
 const actions = {
@@ -31,28 +31,28 @@ const actions = {
     }
   },
   compilationPage: {
-    setScripts: createAction<ScriptModel[]>(
+    setScripts: createAction<ScriptInterface[]>(
       CONSTANTS.APP_COMPILATION_SET_COMPILATION_SCRIPTS
     ),
     compilation: {
-      startWholeCompilation: createAction<ScriptModel[]>(
+      startWholeCompilation: createAction<ScriptInterface[]>(
         CONSTANTS.APP_COMPILATION_START_COMPILATION
       ),
       script: {
-        start: createAction<ScriptModel>(
+        start: createAction<ScriptInterface>(
           CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_START
         ),
-        success: createAction<[ScriptModel, string]>(
+        success: createAction<[ScriptInterface, string]>(
           CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_SUCCESS
         ),
-        failed: createAction<[ScriptModel, string]>(
+        failed: createAction<[ScriptInterface, string]>(
           CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_FAILED
         )
       },
       finish: createAction(CONSTANTS.APP_COMPILATION_START_COMPILATION_FINISH)
     },
     logs: {
-      set: createAction<CompilationLogsModel>(
+      set: createAction<CompilationLogsInterface>(
         CONSTANTS.APP_COMPILATION_LOGS_SET_LOGS
       ),
       popupToggle: createAction<boolean>(
@@ -72,18 +72,6 @@ const actions = {
       failed: createAction<Error>(
         CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION_FAILED
       )
-    },
-    mo2: {
-      detectSources: {
-        start: createAction(CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS),
-        success: createAction<string[]>(
-          CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS
-        ),
-        failed: createAction<Error>(
-          CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_FAILED
-        ),
-        empty: createAction(CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_EMPTY)
-      }
     },
     setDrawerExpand: createAction<boolean>(CONSTANTS.APP_SETTINGS_IS_EXPAND_SET)
   },

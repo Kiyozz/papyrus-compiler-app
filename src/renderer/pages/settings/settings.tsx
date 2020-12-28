@@ -7,7 +7,7 @@
 import RefreshIcon from '@material-ui/icons/Refresh'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { debounce } from 'lodash-es'
+import debounce from 'debounce-fn'
 import { Games, GameType } from '../../../common/game'
 
 import { Page } from '../../components/page'
@@ -22,20 +22,24 @@ import { SettingsMo2 } from './settings-mo2'
 export function Settings() {
   const { t } = useTranslation()
   const {
-    config: { gameType, gamePath, mo2 },
+    config: {
+      gameType,
+      gamePath,
+      compilerPath,
+      mo2: { instance: mo2Instance }
+    },
     updateConfig,
     refreshConfig
   } = usePageContext()
 
-  const debouncedUpdateConfig = useMemo(() => debounce(updateConfig, 500), [
-    updateConfig
-  ])
+  const debouncedUpdateConfig = useMemo(
+    () => debounce(updateConfig, { wait: 500 }),
+    [updateConfig]
+  )
 
-  const useMo2 = mo2.use
-  const mo2Instance = mo2.instance
   const loading = useStoreSelector(state => state.taskLoading)
-  const installationIsBad = useStoreSelector(
-    state => state.settings.installationIsBad
+  const isInstallationBad = useStoreSelector(
+    state => state.settings.isInstallationBad
   )
   const detectBadInstallation = useAction(
     actions.settingsPage.detectBadInstallation.start
@@ -64,22 +68,16 @@ export function Settings() {
     () => updateConfig({ mo2: { use: false, instance: undefined } }),
     [updateConfig]
   )
-  const setEmptyDetectedSourcesFolders = useAction(
-    actions.settingsPage.mo2.detectSources.empty
-  )
-  const detectMo2SourcesFolder = useAction(
-    actions.settingsPage.mo2.detectSources.start
-  )
-  const setInstallationIsBad = useAction(actions.settingsPage.installationIsBad)
+  const setIsInstallationBad = useAction(actions.settingsPage.installationIsBad)
 
   const debouncedDetectBadInstallation = useMemo(
-    () => debounce(detectBadInstallation, 500),
+    () => debounce(detectBadInstallation, { wait: 500 }),
     [detectBadInstallation]
   )
 
   const onClickRadio = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInstallationIsBad(false)
+      setIsInstallationBad(false)
       const value = e.target.value as GameType
 
       if (![Games.LE, Games.SE].includes(value)) {
@@ -88,22 +86,25 @@ export function Settings() {
 
       setGame(value)
     },
-    [setGame, setInstallationIsBad]
+    [setGame, setIsInstallationBad]
   )
 
   useEffect(() => {
-    if (!gameType || !gamePath || (useMo2 && !mo2Instance)) {
+    setIsInstallationBad(false)
+
+    if (!gameType || !gamePath || !compilerPath || !mo2Instance) {
       return
     }
 
     debouncedDetectBadInstallation()
-  }, [debouncedDetectBadInstallation, gamePath, gameType, useMo2, mo2Instance])
-
-  useEffect(() => {
-    if (useMo2 && !!mo2Instance && !!gameType) {
-      detectMo2SourcesFolder()
-    }
-  }, [detectMo2SourcesFolder, useMo2, mo2Instance, gameType])
+  }, [
+    debouncedDetectBadInstallation,
+    gamePath,
+    gameType,
+    compilerPath,
+    mo2Instance,
+    setIsInstallationBad
+  ])
 
   const onChangeGameFolder = useCallback(
     (value: string) => {
@@ -134,14 +135,9 @@ export function Settings() {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const checked = e.currentTarget.checked
 
-      if (checked) {
-        setMo2(checked)
-      } else {
-        setDisableMo2()
-        setEmptyDetectedSourcesFolders()
-      }
+      checked ? setMo2(checked) : setDisableMo2()
     },
-    [setDisableMo2, setEmptyDetectedSourcesFolders, setMo2]
+    [setDisableMo2, setMo2]
   )
 
   const onClickRefreshInstallation = useCallback(
@@ -158,23 +154,12 @@ export function Settings() {
       return
     }
 
-    if (installationIsBad) {
+    if (isInstallationBad) {
       detectBadInstallation()
     }
 
-    if (!!mo2Instance) {
-      detectMo2SourcesFolder()
-    }
-
     refreshConfig()
-  }, [
-    loading,
-    installationIsBad,
-    mo2Instance,
-    refreshConfig,
-    detectBadInstallation,
-    detectMo2SourcesFolder
-  ])
+  }, [loading, isInstallationBad, refreshConfig, detectBadInstallation])
 
   return (
     <SettingsContextProvider>
@@ -202,6 +187,7 @@ export function Settings() {
           <SettingsMo2
             onChangeMo2={onChangeMo2}
             onChangeMo2Instance={onChangeMo2Instance}
+            onClickRefreshInstallation={onClickRefreshInstallation}
           />
         </div>
       </Page>

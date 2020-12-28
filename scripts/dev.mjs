@@ -10,6 +10,7 @@ import chokidar from 'chokidar'
 import webpack from 'webpack'
 import esbuild from 'esbuild'
 import WebpackDevServer from 'webpack-dev-server'
+import debounce from 'debounce-fn'
 import webpackRendererConfig from '../webpack.renderer.mjs'
 import esbuildMainConfig from '../esbuild.main.mjs'
 import { track } from './track.mjs'
@@ -50,14 +51,22 @@ async function dev() {
     overlay: true
   })
 
-  const esbuildMainService = await esbuild.startService()
+  let mainBuilder
 
-  function mainBuild() {
-    console.info(track(), 'Started main')
+  async function mainBuild() {
+    console.info(track(), 'Building main')
 
-    return esbuildMainService
-      .build(esbuildMainConfig())
-      .then(() => console.info(track(), 'Main built'))
+    if (mainBuilder) {
+      await mainBuilder.rebuild()
+
+      console.info(track(), 'Main built')
+
+      return
+    }
+
+    mainBuilder = await esbuild.build(esbuildMainConfig({ incremental: true }))
+
+    console.info(track(), 'Main built')
   }
 
   const mainWatcher = chokidar.watch(
@@ -65,13 +74,19 @@ async function dev() {
   )
 
   mainWatcher.on('ready', () => {
-    mainWatcher.on('all', async () => {
-      await mainBuild()
-      startMain()
-    })
+    mainWatcher.on(
+      'all',
+      debounce(
+        async () => {
+          await mainBuild()
+          startMain()
+        },
+        { wait: 200 }
+      )
+    )
   })
   rendererServer.listen(9080, 'localhost', () => {
-    console.info(track(), 'Started renderer')
+    console.info(track(), 'Building renderer')
   })
 
   await Promise.all([

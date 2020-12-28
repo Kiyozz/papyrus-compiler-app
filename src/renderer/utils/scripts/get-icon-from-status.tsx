@@ -10,9 +10,11 @@ import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty'
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder'
 import React from 'react'
 import { ScriptStatus } from '../../enums/script-status.enum'
-import { ScriptModel } from '../../models'
+import { ScriptInterface } from '../../interfaces'
 
-export default function getIconFromStatus(script: ScriptModel): JSX.Element {
+export default function getIconFromStatus(
+  script: ScriptInterface
+): JSX.Element {
   switch (script.status) {
     case ScriptStatus.IDLE:
       return <QueryBuilderIcon />

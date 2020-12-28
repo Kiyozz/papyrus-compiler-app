@@ -58,9 +58,13 @@ export default {
       gameFolderInfo: 'Dossier de {{gameType}} (où {{exe}} se trouve)',
       compilerPath: 'Où se trouve le fichier PapyrusCompiler.exe ?',
       errors: {
-        installationInvalid: 'Le dossier semble invalide :',
-        installationInvalidInfo:
-          'Vérifiez que vous avez extrait le fichier Scripts.zip de Creation Kit ou que {{exe}} existe dans le dossier.'
+        installationInvalid: 'La configuration semble invalide :',
+        scripts:
+          "Vérifiez que votre installation de Creation Kit est valide. L'application vérifie la présence du fichier Actor.psc dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de l'application, les dossiers overwrite et mods sont également vérifiés.",
+        game: 'Vérifiez que "{{exe}}" existe dans le dossier du jeu.',
+        compiler: 'Vérifiez que "{{compilerExe}}" existe.',
+        mo2Instance:
+          'Vérifiez que le dossier de l\'instance "{{mo2Instance}}" existe.'
       },
       mo2: {
         enable: 'Activer',
@@ -89,9 +93,13 @@ export default {
       noLogs: 'Aucun logs',
       close: 'Fermer',
       scriptFailed: 'Problème avec le script {{script}} : {{message}}',
-      scriptFailedCmd: 'Commande : {{cmd}}',
-      invalidConfiguration:
-        'Le dossier "{{folder}}" n\'est pas valide. Il ne contient pas "{{exe}}".'
+      scriptFailedCmd: 'Commande éxécutée : {{cmd}}',
+      invalidConfigurationGame:
+        "Le dossier {{folder}} n'est pas un dossier de jeu valide. Il ne contient pas {{exe}}.",
+      invalidConfigurationCompiler:
+        "{{exe}} n'est pas un compilateur valide. Le fichier n'existe pas.",
+      invalidConfigurationScripts:
+        "Votre configuration n'est pas valide. Impossible de valider l'installation du Creation Kit. L'application vérifie la présence du fichier Actor.psc pour valider votre installation du Creation Kit. Impossible de trouver le fichier Actor.psc dans les dossiers Source\\Scripts ou Scripts\\Source. Si vous utilisez l'integration MO2 de l'application, les dossiers overwrite et mods sont également vérifiés."
     }
   }
 }

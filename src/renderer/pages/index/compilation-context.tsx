@@ -5,12 +5,12 @@
  */
 
 import React, { createContext, useContext } from 'react'
-import { ScriptModel } from '../../models'
+import { ScriptInterface } from '../../interfaces'
 import { useStoreSelector } from '../../redux/use-store-selector'
 
 interface CompilationContextValue {
   isCompilationRunning: boolean
-  compilationScripts: ScriptModel[]
+  compilationScripts: ScriptInterface[]
   popupOpen: boolean
 }
 

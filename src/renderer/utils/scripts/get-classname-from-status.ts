@@ -5,9 +5,11 @@
  */
 
 import { ScriptStatus } from '../../enums/script-status.enum'
-import { ScriptModel } from '../../models'
+import { ScriptInterface } from '../../interfaces'
 
-export default function getClassNameFromStatus(script: ScriptModel): string {
+export default function getClassNameFromStatus(
+  script: ScriptInterface
+): string {
   switch (script.status) {
     case ScriptStatus.IDLE:
       return 'text-gray-500'

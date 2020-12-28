@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { Games, getExecutable } from '../../../common/game'
 import { DialogTextField } from '../../components/dialog-text-field'
 import { usePageContext } from '../../components/page-context'
+import { Alert } from '../../components/alert'
 import { useSettings } from './settings-context'
 
 interface Props {
@@ -33,7 +34,7 @@ export function SettingsGame({
   const {
     config: { gameType, gamePath, compilerPath }
   } = usePageContext()
-  const { installationIsBad } = useSettings()
+  const { isInstallationBad } = useSettings()
   const exe = getExecutable(gameType)
 
   return (
@@ -63,7 +64,7 @@ export function SettingsGame({
       <div className="mt-3">
         <DialogTextField
           id="game-folder"
-          error={installationIsBad}
+          error={isInstallationBad === 'game'}
           label={t('page.settings.gameFolderInfo', { gameType, exe })}
           defaultValue={gamePath}
           onChange={onChangeGameFolder}
@@ -71,15 +72,33 @@ export function SettingsGame({
         />
       </div>
 
-      {installationIsBad && (
-        <div className="text-red-400 mt-3 text-sm flex gap-2 p-2 items-center">
+      <div className="mt-3">
+        <DialogTextField
+          id="compiler-path"
+          error={isInstallationBad === 'compiler'}
+          label={t('page.settings.compilerPath')}
+          defaultValue={compilerPath}
+          onChange={onChangeCompilerPath}
+          type="file"
+        />
+      </div>
+
+      {isInstallationBad !== false && isInstallationBad !== 'mo2-instance' && (
+        <Alert>
           <div className="w-full">
             <p className="select-text mb-2">
               {t('page.settings.errors.installationInvalid')}
             </p>
 
             <p className="select-text">
-              {t('page.settings.errors.installationInvalidInfo', { exe })}
+              {isInstallationBad === 'game' &&
+                t('page.settings.errors.game', { exe })}
+              {isInstallationBad === 'compiler' &&
+                t('page.settings.errors.compiler', {
+                  compilerExe: compilerPath
+                })}
+              {isInstallationBad === 'scripts' &&
+                t('page.settings.errors.scripts')}
             </p>
           </div>
           <div>
@@ -90,18 +109,8 @@ export function SettingsGame({
               {t('page.settings.actions.refresh')}
             </button>
           </div>
-        </div>
+        </Alert>
       )}
-
-      <div className="mt-3">
-        <DialogTextField
-          id="compiler-path"
-          label={t('page.settings.compilerPath')}
-          defaultValue={compilerPath}
-          onChange={onChangeCompilerPath}
-          type="file"
-        />
-      </div>
     </div>
   )
 }

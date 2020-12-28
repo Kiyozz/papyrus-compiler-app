@@ -5,11 +5,11 @@
  */
 
 import { AnyAction } from 'redux'
-import { CompilationLogsModel, ScriptModel } from '../../models'
+import { CompilationLogsInterface, ScriptInterface } from '../../interfaces'
 import { CONSTANTS } from '../actions'
 
 export interface CompilationLogsState {
-  logs: CompilationLogsModel
+  logs: CompilationLogsInterface
   popupOpen: boolean
 }
 
@@ -35,7 +35,7 @@ export default function compilationLogsReducer(
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_SUCCESS:
     case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_FAILED:
-      const payload: [ScriptModel, string] = action.payload
+      const payload: [ScriptInterface, string] = action.payload
 
       if (typeof payload[1] !== 'string') {
         return {

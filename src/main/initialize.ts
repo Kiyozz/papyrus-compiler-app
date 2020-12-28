@@ -15,13 +15,12 @@ import { DialogHandler } from './event-handlers/dialog.handler'
 import { FileStatHandler } from './event-handlers/file-stat.handler'
 import { GetVersionHandler } from './event-handlers/get-version.handler'
 import { InAppErrorHandler } from './event-handlers/in-app-error.handler'
-import { Mo2ModsSourcesHandler } from './event-handlers/mo2-mods-sources.handler'
 import { OpenFileHandler } from './event-handlers/open-file.handler'
 import { IsProductionHandler } from './event-handlers/is-production.handler'
 import { EventHandlerInterface } from './interfaces/event-handler.interface'
 import { registerMenu } from './menu.register'
 import { Logger } from './logger'
-import { ensureFiles, move } from './services/path.service'
+import { ensureFiles, move, writeFile } from './services/path.service'
 import { registerIpcEvents } from './ipc-events.register'
 
 const logger = new Logger('Initialize')
@@ -52,14 +51,12 @@ async function backupLogFile() {
     return
   }
 
-  logger.info('a log file already exists, creation of a new one')
-
   await ensureFiles([logFile])
 
   const logFilename = logFile.replace('.log', '')
 
   await move(logFile, `${logFilename}.1.log`)
-  await ensureFiles([logFile])
+  await writeFile(logFile, '', { encoding: 'utf8' })
 
   logger.info(`file ${logFilename}.1.log created`)
 }
@@ -72,7 +69,6 @@ export async function initialize() {
   const events = new Map<string, EventHandlerInterface>([
     [EVENTS.COMPILE_SCRIPT, new ScriptCompileHandler()],
     [EVENTS.OPEN_DIALOG, new DialogHandler()],
-    [EVENTS.MO2_MODS_SOURCES, new Mo2ModsSourcesHandler()],
     [EVENTS.BAD_INSTALLATION, new BadInstallationHandler()],
     [EVENTS.CONFIG_UPDATE, new ConfigUpdateHandler()],
     [EVENTS.CONFIG_GET, new ConfigGetHandler()],

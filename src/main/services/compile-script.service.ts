@@ -7,9 +7,8 @@
 import is from '@sindresorhus/is'
 import { appStore } from '../../common/store'
 import { getExecutable, toOtherSource, toSource } from '../../common/game'
-import { ScriptCompilationException } from '../exceptions/script-compilation.exception'
+import { CompilationException } from '../exceptions/compilationException'
 import { ConfigurationException } from '../exceptions/configuration.exception'
-import { Mo2InvalidConfigurationException } from '../exceptions/mo2/mo2-invalid-configuration.exception'
 import { generateCompilerCmd } from '../utils/generate-compiler-cmd.util'
 import { Logger } from '../logger'
 import { executeCommand } from './execute-command.service'
@@ -32,7 +31,7 @@ function checkCommandResult(
   const isSuccess = /0 failed/.test(result.stdout)
 
   if (!isSuccess) {
-    throw new ScriptCompilationException(script, result.stderr)
+    throw new CompilationException(script, result.stderr)
   }
 }
 
@@ -60,21 +59,21 @@ export async function compileScript(scriptName: string): Promise<string> {
 
   if (!path.exists(compilerPath)) {
     logger.error(
-      'the configuration is invalid, PapyrusCompiler.exe file does not exist in game folder'
+      `the configuration is invalid (compiler), ${compilerPath} file does not exist`
     )
 
-    throw new ConfigurationException(compilerPath)
+    throw new ConfigurationException(`${compilerPath} does not exist`)
   }
 
   if (!path.exists(gameExeAbsolute)) {
     logger.error(
-      `the configuration is invalid, ${gameExe} file does not exist in game folder`
+      `the configuration is invalid (game), ${gameExe} file does not exist in game folder`
     )
 
-    throw new ConfigurationException(gameExeAbsolute)
+    throw new ConfigurationException(`${gameExeAbsolute} does not exist`)
   }
 
-  logger.debug(`creation of folder ${gameSource} if it does not exist`)
+  logger.debug(`ensure ${gameSource} exist`)
 
   await path.ensureDirs([gameSourceAbsolute])
 
@@ -106,7 +105,7 @@ export async function compileScript(scriptName: string): Promise<string> {
 
       logger.debug('(MO2) final config', runner)
     } else {
-      throw new Mo2InvalidConfigurationException(['instance', 'sources'])
+      throw new ConfigurationException('missing mo2 instance configuration')
     }
   }
 
@@ -127,7 +126,7 @@ export async function compileScript(scriptName: string): Promise<string> {
 
     return result.stdout.trim()
   } catch (err) {
-    if (err instanceof ScriptCompilationException) {
+    if (err instanceof CompilationException) {
       throw err
     }
 
@@ -139,10 +138,9 @@ export async function compileScript(scriptName: string): Promise<string> {
     const outputStdErr = err.stderr.replace('<unknown>', 'unknown')
     const outputStdOut = err.stdout.replace('<unknown>', 'unknown')
 
-    throw new ScriptCompilationException(
+    throw new CompilationException(
       scriptName,
-      !outputStdErr ? outputStdOut : outputStdErr,
-      cmd
+      !outputStdErr ? outputStdOut : outputStdErr
     )
   }
 }

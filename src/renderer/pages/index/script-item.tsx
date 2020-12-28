@@ -8,13 +8,13 @@ import DeleteIcon from '@material-ui/icons/Delete'
 
 import React, { useCallback } from 'react'
 
-import { ScriptModel } from '../../models'
+import { ScriptInterface } from '../../interfaces'
 import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
 import getIconFromStatus from '../../utils/scripts/get-icon-from-status'
 
 interface Props {
-  script: ScriptModel
-  onClickRemoveScript: (script: ScriptModel) => void
+  script: ScriptInterface
+  onClickRemoveScript: (script: ScriptInterface) => void
 }
 
 export function ScriptItem({ script, onClickRemoveScript }: Props) {
