@@ -12,7 +12,7 @@ import { checkStore } from '../../common/check-store'
 import { appStore, defaultConfig } from '../../common/store'
 
 export class ScriptCompileHandler implements EventHandlerInterface<string> {
-  private readonly logger = new Logger(ScriptCompileHandler.name)
+  private readonly logger = new Logger('ScriptCompileHandler')
 
   async listen(script?: string) {
     if (is.undefined(script)) {

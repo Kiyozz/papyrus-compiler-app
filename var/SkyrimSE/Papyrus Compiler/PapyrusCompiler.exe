@@ -1,3 +1,23 @@
-#!/usr/bin/env bash
+/*
+ * Copyright (c) 2020 Kiyozz.
+ *
+ * All rights reserved.
+ */
 
-echo '0 failed'
+#!/usr/bin/env node
+
+const fs = require('fs')
+const path = require('path')
+
+console.log('0 failed')
+
+const outReg = /-o=(.*)/
+const filename = process.argv[2].replace('.psc', '.pex')
+
+const outIndex = process.argv.findIndex(arg => outReg.test(arg))
+
+if (outIndex !== -1) {
+  const out = process.argv[outIndex].match(outReg)[1]
+
+  fs.writeFileSync(path.join(out, filename), '', { encoding: 'utf8' })
+}

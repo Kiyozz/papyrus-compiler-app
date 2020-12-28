@@ -10,7 +10,7 @@ import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { Logger } from '../logger'
 
 export class ConfigGetHandler implements EventHandlerInterface {
-  private logger = new Logger(ConfigGetHandler.name)
+  private logger = new Logger('ConfigGetHandler')
 
   listen(): Config {
     this.logger.debug('getting configuration')

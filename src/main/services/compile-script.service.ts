@@ -88,7 +88,7 @@ export async function compileScript(scriptName: string): Promise<string> {
     runner.imports = [otherSourceAbsolute, ...runner.imports]
   }
 
-  if (mo2Config.instance?.length ?? 0 > 0) {
+  if (mo2Config.use) {
     logger.debug('using MO2 support')
 
     if (!is.undefined(mo2Config.instance)) {

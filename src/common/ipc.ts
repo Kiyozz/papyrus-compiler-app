@@ -12,9 +12,24 @@ import {
 
 type MainInvokeListener<Args> = (event: IpcMainInvokeEvent, args: Args) => void
 
+class IpcException extends Error {
+  constructor(message: string) {
+    super(
+      message.replace(
+        /Error invoking remote method ('.*'): Error: (.*)/,
+        (s, event: string, errorMessage: string) => errorMessage
+      )
+    )
+  }
+}
+
 class IpcRenderer {
   invoke<Result = any>(channel: string, args?: any): Promise<Result> {
-    return baseIpcRenderer.invoke(channel, args) as Promise<Result>
+    return (baseIpcRenderer.invoke(channel, args) as Promise<Result>).catch(
+      e => {
+        throw new IpcException(e.message)
+      }
+    )
   }
 }
 

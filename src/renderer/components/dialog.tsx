@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 interface DialogProps {
@@ -12,6 +12,9 @@ interface DialogProps {
   maxWidth?: number
   fullWidth?: boolean
   onClose?: () => void
+  actions?: JSX.Element
+  title?: JSX.Element
+  content?: (props: React.PropsWithChildren<unknown>) => JSX.Element
 }
 
 export function Dialog({
@@ -19,6 +22,9 @@ export function Dialog({
   maxWidth,
   fullWidth = false,
   onClose,
+  actions,
+  title,
+  content: Content,
   children
 }: React.PropsWithChildren<DialogProps>) {
   const container = useRef<HTMLDivElement | null>(null)
@@ -41,52 +47,47 @@ export function Dialog({
     }
   }, [onDialogClose])
 
+  const dialogContent = useMemo(
+    () => (
+      <>
+        {title && (
+          <div className="sticky top-0 w-full h-full flex text-xl font-medium py-4 px-5">
+            {title}
+          </div>
+        )}
+        <div className="w-full h-full overflow-auto">
+          <div className="py-2 px-5">{children}</div>
+        </div>
+        {actions && (
+          <div className="w-full h-full flex p-2 gap-2 justify-end">
+            {actions}
+          </div>
+        )}
+      </>
+    ),
+    [actions, children, title]
+  )
+
   return createPortal(
     open ? (
       <div
         ref={container}
-        className={`fixed top-0 left-0 flex justify-center items-center${
+        className={`fixed top-0 left-0 flex justify-center items-center ${
           fullWidth ? ' w-full text-white' : ''
-        } h-full bg-black bg-opacity-70`}
+        } h-screen bg-black bg-opacity-70`}
       >
         <div
-          className="paper paper-darker p-0 w-full"
-          style={maxWidth !== undefined ? { maxWidth: `${maxWidth}%` } : {}}
+          className="paper paper-darker p-0 w-full flex flex-col"
+          style={
+            maxWidth !== undefined
+              ? { maxWidth: `${maxWidth}%`, maxHeight: `${maxWidth}%` }
+              : {}
+          }
         >
-          {children}
+          {Content ? <Content>{dialogContent}</Content> : dialogContent}
         </div>
       </div>
     ) : null,
     document.body
   )
-}
-
-export function DialogTitle({
-  children,
-  className
-}: React.PropsWithChildren<{ className?: string }>) {
-  return (
-    <h1
-      className={`text-xl font-medium py-4 px-5${
-        className ? ` ${className}` : ''
-      }`}
-    >
-      {children}
-    </h1>
-  )
-}
-
-export function DialogContent({
-  children,
-  className
-}: React.PropsWithChildren<{ className?: string }>) {
-  return (
-    <div className={`py-2 px-5${className ? ` ${className}` : ''}`}>
-      {children}
-    </div>
-  )
-}
-
-export function DialogActions({ children }: React.PropsWithChildren<unknown>) {
-  return <div className="p-2 flex gap-2 justify-end">{children}</div>
 }

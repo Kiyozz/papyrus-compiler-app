@@ -14,7 +14,7 @@ import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { BadErrorType } from '../../common/interfaces/bad-error.type'
 
 export class BadInstallationHandler implements EventHandlerInterface {
-  private readonly logger = new Logger(BadInstallationHandler.name)
+  private readonly logger = new Logger('BadInstallationHandler')
 
   async listen(): Promise<BadErrorType> {
     const hasGameExe = await this.checkGameExe()

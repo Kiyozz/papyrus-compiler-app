@@ -9,7 +9,7 @@ import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { Logger } from '../logger'
 
 export class OpenFileHandler implements EventHandlerInterface {
-  private logger = new Logger(OpenFileHandler.name)
+  private logger = new Logger('OpenFileHandler')
 
   async listen(file: string): Promise<void> {
     this.logger.debug('opening the file', file)

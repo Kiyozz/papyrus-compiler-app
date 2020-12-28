@@ -30,7 +30,7 @@ function startMain() {
   console.info(track(), 'Start main')
   electronProcess = spawn(
     path.resolve(path.resolve('node_modules/.bin/electron')),
-    ['dist/main/main.js']
+    ['dist/main/main.js', '--inspect']
   )
 
   electronProcess.stdout.pipe(process.stdout)

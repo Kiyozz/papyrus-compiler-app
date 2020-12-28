@@ -80,7 +80,6 @@ devDependencies:
   rimraf: 3.0.2
   rxjs: 6.6.3
   semantic-release: 17.1.2
-  source-map-support: 0.5.19
   speed-measure-webpack-plugin: 1.3.3_webpack@4.44.2
   tailwindcss: 2.0.2_80f3d67eed96b2b2e18887ea575f44dd
   terser-webpack-plugin: 4.2.3_webpack@4.44.2
@@ -11831,7 +11830,6 @@ specifiers:
   rimraf: ~3.0.2
   rxjs: ~6.6.3
   semantic-release: ~17.1.2
-  source-map-support: ~0.5.19
   speed-measure-webpack-plugin: ~1.3.3
   tailwindcss: ~2.0.2
   terser-webpack-plugin: ~4.2.3

@@ -16,7 +16,7 @@ import uniqScripts from '../utils/scripts/uniq-scripts'
 import { GroupsDialogActions } from './groups-dialog-actions'
 import { GroupsDialogList } from './groups-dialog-list'
 import { TextField } from './text-field'
-import { Dialog, DialogTitle, DialogContent, DialogActions } from './dialog'
+import { Dialog } from './dialog'
 
 interface Props {
   onGroupAdd: (group: GroupInterface) => void
@@ -116,46 +116,57 @@ export function GroupsDialog({
     onDrop
   })
 
+  const dialogContent = useCallback(
+    ({ children }: React.PropsWithChildren<unknown>) => (
+      <form onSubmit={onSubmitGroup}>{children}</form>
+    ),
+    [onSubmitGroup]
+  )
+
   return (
-    <Dialog open={open} maxWidth={80} fullWidth onClose={onDialogClose}>
-      <DialogTitle>
-        {isEdit
+    <Dialog
+      open={open}
+      maxWidth={80}
+      fullWidth
+      onClose={onDialogClose}
+      actions={
+        <GroupsDialogActions
+          name={name}
+          AddScriptsButton={addScriptsButton}
+          onClose={onDialogClose}
+          isEdit={isEdit}
+        />
+      }
+      title={
+        isEdit
           ? t('page.groups.dialog.editGroup')
-          : t('page.groups.dialog.createGroup')}
-      </DialogTitle>
+          : t('page.groups.dialog.createGroup')
+      }
+      content={dialogContent}
+    >
       <form onSubmit={onSubmitGroup}>
-        <DialogContent>
-          <TextField
-            label={t('page.groups.dialog.name')}
-            name="group-name"
-            id="group-name"
-            autoFocus
-            value={name}
-            onChange={onChangeName}
-          />
-          {scripts.length > 0 ? (
-            <div className="paper overflow-auto max-h-36 h-full mt-4 outline-none">
-              <GroupsDialogList
-                scripts={scripts}
-                onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup}
-              />
-            </div>
-          ) : (
-            <div className="paper overflow-auto max-h-36 h-full mt-4 outline-none">
-              <p className="text-gray-400">
-                {t('page.groups.dialog.dropScripts')}
-              </p>
-            </div>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <GroupsDialogActions
-            name={name}
-            AddScriptsButton={addScriptsButton}
-            onClose={onDialogClose}
-            isEdit={isEdit}
-          />
-        </DialogActions>
+        <TextField
+          label={t('page.groups.dialog.name')}
+          name="group-name"
+          id="group-name"
+          autoFocus
+          value={name}
+          onChange={onChangeName}
+        />
+        {scripts.length > 0 ? (
+          <div className="paper overflow-auto max-h-36 h-full mt-4 outline-none">
+            <GroupsDialogList
+              scripts={scripts}
+              onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup}
+            />
+          </div>
+        ) : (
+          <div className="paper overflow-auto max-h-36 h-full mt-4 outline-none">
+            <p className="text-gray-400">
+              {t('page.groups.dialog.dropScripts')}
+            </p>
+          </div>
+        )}
       </form>
     </Dialog>
   )

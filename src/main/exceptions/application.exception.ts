@@ -6,6 +6,6 @@
 
 export class ApplicationException extends Error {
   constructor(message: string) {
-    super(`Application error: ${message}. Please report to PCA author.`)
+    super(`ApplicationException: Please report to PCA author. ${message}.`)
   }
 }

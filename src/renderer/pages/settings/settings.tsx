@@ -92,7 +92,7 @@ export function Settings() {
   useEffect(() => {
     setIsInstallationBad(false)
 
-    if (!gameType || !gamePath || !compilerPath || !mo2Instance) {
+    if (!gameType || !gamePath || !compilerPath) {
       return
     }
 

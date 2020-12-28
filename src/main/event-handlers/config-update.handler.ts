@@ -19,7 +19,7 @@ interface ConfigUpdateHandlerParams {
 
 export class ConfigUpdateHandler
   implements EventHandlerInterface<ConfigUpdateHandlerParams> {
-  private logger = new Logger(ConfigUpdateHandler.name)
+  private logger = new Logger('ConfigUpdateHandler')
 
   listen(args?: ConfigUpdateHandlerParams): Config {
     this.logger.debug('updating the configuration')
