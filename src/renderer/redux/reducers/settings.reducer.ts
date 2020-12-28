@@ -6,13 +6,10 @@
 
 import { AnyAction } from 'redux'
 import { CONSTANTS } from '../actions'
+import { BadErrorType } from '../../../common/interfaces/bad-error.type'
 
 interface LocalSettings {
-  installationIsBad: boolean
-  mo2: {
-    sources: string[]
-    sourcesError?: Error
-  }
+  isInstallationBad: BadErrorType
   isDrawerExpand: boolean
 }
 
@@ -24,10 +21,7 @@ export default function createSettingsReducer(prefix: string) {
     (localStorage.getItem(isDrawerExpandKey) ?? 'true') === 'true'
 
   const defaultInitial: LocalSettings = {
-    installationIsBad: false,
-    mo2: {
-      sources: []
-    },
+    isInstallationBad: false,
     isDrawerExpand: isDrawerExpandSaved
   }
 
@@ -45,39 +39,15 @@ export default function createSettingsReducer(prefix: string) {
           ...state,
           isDrawerExpand: action.payload ?? true
         }
-      case CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_SUCCESS:
-        return {
-          ...state,
-          mo2: {
-            sources: action.payload ?? [],
-            sourcesError: undefined
-          }
-        }
-      case CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_FAILED:
-        return {
-          ...state,
-          mo2: {
-            sources: [],
-            sourcesError: action.payload
-          }
-        }
-      case CONSTANTS.APP_SETTINGS_DETECT_SOURCES_FOLDERS_EMPTY:
-        return {
-          ...state,
-          mo2: {
-            sources: [],
-            sourcesError: undefined
-          }
-        }
       case CONSTANTS.APP_SETTINGS_DETECT_BAD_INSTALLATION_SUCCESS:
         return {
           ...state,
-          installationIsBad: !(action.payload ?? true)
+          isInstallationBad: action.payload ?? false
         }
       case CONSTANTS.APP_SETTINGS_INSTALLATION_IS_BAD:
         return {
           ...state,
-          installationIsBad: action.payload ?? false
+          isInstallationBad: action.payload ?? false
         }
       default:
         return state

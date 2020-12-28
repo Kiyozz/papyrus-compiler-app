@@ -10,7 +10,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useDrop } from '../hooks/use-drop'
-import { GroupModel, ScriptModel } from '../models'
+import { GroupInterface, ScriptInterface } from '../interfaces'
 import { pscFilesToPscScripts } from '../utils/scripts/psc-files-to-psc-scripts'
 import uniqScripts from '../utils/scripts/uniq-scripts'
 import { GroupsDialogActions } from './groups-dialog-actions'
@@ -19,10 +19,10 @@ import { TextField } from './text-field'
 import { Dialog, DialogTitle, DialogContent, DialogActions } from './dialog'
 
 interface Props {
-  onGroupAdd: (group: GroupModel) => void
-  onGroupEdit: (lastGroupName: string, group: GroupModel) => void
+  onGroupAdd: (group: GroupInterface) => void
+  onGroupEdit: (lastGroupName: string, group: GroupInterface) => void
   onClose: () => void
-  group?: GroupModel
+  group?: GroupInterface
   open: boolean
 }
 
@@ -35,7 +35,7 @@ export function GroupsDialog({
 }: Props) {
   const { t } = useTranslation()
   const [name, setName] = useState('')
-  const [scripts, setScripts] = useState<ScriptModel[]>([])
+  const [scripts, setScripts] = useState<ScriptInterface[]>([])
   const [isEdit, setEdit] = useState(false)
 
   const onDialogClose = useCallback(() => {
@@ -58,13 +58,16 @@ export function GroupsDialog({
     }
   }, [open, group])
 
-  const onClickRemoveScriptFromGroup = useCallback((script: ScriptModel) => {
-    return () => {
-      setScripts(s =>
-        s.filter(scriptFromList => scriptFromList.name !== script.name)
-      )
-    }
-  }, [])
+  const onClickRemoveScriptFromGroup = useCallback(
+    (script: ScriptInterface) => {
+      return () => {
+        setScripts(s =>
+          s.filter(scriptFromList => scriptFromList.name !== script.name)
+        )
+      }
+    },
+    []
+  )
 
   const onSubmitGroup = useCallback(
     (e: React.FormEvent) => {

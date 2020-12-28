@@ -14,7 +14,7 @@ import {
   take,
   takeLatest
 } from 'redux-saga/effects'
-import { GithubReleaseModel } from '../../models'
+import { GithubReleaseInterface } from '../../interfaces'
 import actions, { CONSTANTS } from '../actions'
 import { apiFactory } from '../api/api-factory'
 import { RootStore } from '../stores/root.store'
@@ -28,12 +28,12 @@ function* getLatestRelease() {
 
   try {
     const result: [
-      GithubReleaseModel[] | undefined,
+      GithubReleaseInterface[] | undefined,
       boolean | undefined
     ] = yield race([call(api.getLatestNotes), delay(5000)])
 
     if (typeof result[1] === 'undefined' && typeof result[0] !== 'undefined') {
-      const [release] = result[0] as [GithubReleaseModel]
+      const [release] = result[0] as [GithubReleaseInterface]
 
       if (typeof release !== 'undefined') {
         if (compareVersions.compare(release.tag_name, version, '>')) {

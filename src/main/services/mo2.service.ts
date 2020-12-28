@@ -7,9 +7,9 @@
 import { toAntiSlash } from '../../common/slash'
 import { GameType, toOtherSource, toSource } from '../../common/game'
 import { appStore } from '../../common/store'
-import { Mo2ModsPathExistsException } from '../exceptions/mo2/mo2-mods-path-exists.exception'
-import { Mo2SourcesException } from '../exceptions/mo2/mo2-sources.exception'
 import { Logger } from '../logger'
+import { ConfigurationException } from '../exceptions/configuration.exception'
+import { ApplicationException } from '../exceptions/application.exception'
 import * as path from './path.service'
 
 interface GenerateImportsOptions {
@@ -104,11 +104,14 @@ export async function getImportsPath({
       mo2OverwriteSourcesPath
     ]
 
-    await path.ensureDirs([mo2OverwriteSourcesPath])
+    await path.ensureDirs([
+      mo2OverwriteSourcesPath,
+      mo2OverwriteOtherSourcesPath
+    ])
 
     return imports
   } catch (e) {
-    throw new Mo2SourcesException(e.message)
+    throw new ApplicationException(e.message)
   }
 }
 
@@ -122,7 +125,7 @@ export function getModsPath(mo2Instance: string): string {
   const modsPathExists = path.exists(modsPath)
 
   if (!modsPathExists) {
-    throw new Mo2ModsPathExistsException(modsPath)
+    throw new ConfigurationException(`${modsPath} does not exist`)
   }
 
   return modsPath

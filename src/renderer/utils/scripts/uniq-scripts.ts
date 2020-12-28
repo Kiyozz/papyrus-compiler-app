@@ -4,9 +4,11 @@
  * All rights reserved.
  */
 
-import uniqBy from 'lodash-es/uniqBy'
-import { ScriptModel } from '../../models'
+import { ScriptInterface } from '../../interfaces'
+import { uniqArray } from '../uniq-array'
 
-export default function uniqScripts(scripts: ScriptModel[]): ScriptModel[] {
-  return uniqBy(scripts, 'name')
+export default function uniqScripts(
+  scripts: ScriptInterface[]
+): ScriptInterface[] {
+  return uniqArray(scripts, ['name'])
 }

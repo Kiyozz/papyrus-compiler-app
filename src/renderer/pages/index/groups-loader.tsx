@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/Add'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Group } from '../../models'
+import { Group } from '../../interfaces'
 
 interface Props {
   groups: Group[]

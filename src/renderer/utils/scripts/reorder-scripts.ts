@@ -4,8 +4,10 @@
  * All rights reserved.
  */
 
-import { ScriptModel } from '../../models'
+import { ScriptInterface } from '../../interfaces'
 
-export default function reorderScripts(scripts: ScriptModel[]): ScriptModel[] {
+export default function reorderScripts(
+  scripts: ScriptInterface[]
+): ScriptInterface[] {
   return scripts.map((script, index) => ({ ...script, id: index }))
 }

@@ -4,16 +4,15 @@
  * All rights reserved.
  */
 
-import find from 'lodash-es/find'
-import uniqBy from 'lodash-es/uniqBy'
 import { AnyAction } from 'redux'
 import { ScriptStatus } from '../../enums/script-status.enum'
-import { ScriptModel } from '../../models'
+import { ScriptInterface } from '../../interfaces'
 import findScriptInList from '../../utils/scripts/find-script-in-list'
 import { CONSTANTS } from '../actions'
+import { uniqArray } from '../../utils/uniq-array'
 
 export interface CompilationState {
-  compilationScripts: ScriptModel[]
+  compilationScripts: ScriptInterface[]
   isCompilationRunning: boolean
 }
 
@@ -33,7 +32,9 @@ export default function compilationReducer(
         compilationScripts: action.payload || []
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_START:
-      const script = find(state.compilationScripts, { id: action.payload.id })
+      const script = state.compilationScripts.find(
+        s => s.id === action.payload.id
+      )
 
       if (!script) {
         return state
@@ -43,7 +44,10 @@ export default function compilationReducer(
 
       return {
         ...state,
-        compilationScripts: uniqBy([...state.compilationScripts, script], 'id')
+        compilationScripts: uniqArray(
+          [...state.compilationScripts, script],
+          ['id']
+        )
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION:
       const scripts = state.compilationScripts.map(s => {
@@ -70,9 +74,9 @@ export default function compilationReducer(
 
       return {
         ...state,
-        compilationScripts: uniqBy(
+        compilationScripts: uniqArray(
           [...state.compilationScripts, scriptSuccessAction],
-          'id'
+          ['id']
         )
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_FAILED:
@@ -88,9 +92,9 @@ export default function compilationReducer(
 
       return {
         ...state,
-        compilationScripts: uniqBy(
+        compilationScripts: uniqArray(
           [...state.compilationScripts, scriptFailedAction],
-          'id'
+          ['id']
         )
       }
     case CONSTANTS.APP_COMPILATION_START_COMPILATION_FINISH:

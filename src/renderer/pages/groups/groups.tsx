@@ -12,11 +12,11 @@ import { GroupsDialog } from '../../components/groups-dialog'
 import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
 import { usePageContext } from '../../components/page-context'
-import { GroupModel } from '../../models'
+import { GroupInterface } from '../../interfaces'
 import { GroupsListItem } from './groups-list-item'
 
 interface EditGroupParams {
-  group: GroupModel
+  group: GroupInterface
   lastGroupName: string
 }
 
@@ -24,7 +24,7 @@ export function Groups() {
   const { t } = useTranslation()
   const { groups, updateConfig } = usePageContext()
   const addGroup = useCallback(
-    (group: GroupModel) => {
+    (group: GroupInterface) => {
       if (
         !is.undefined(
           groups.find(
@@ -80,7 +80,7 @@ export function Groups() {
     [groups, updateConfig]
   )
   const removeGroup = useCallback(
-    (group: GroupModel) => {
+    (group: GroupInterface) => {
       if (
         is.undefined(
           groups.find(
@@ -104,10 +104,10 @@ export function Groups() {
   )
 
   const [showAddPopup, setShowPopup] = useState(false)
-  const [editingGroup, setEditingGroup] = useState<GroupModel | undefined>()
+  const [editingGroup, setEditingGroup] = useState<GroupInterface | undefined>()
 
   const onClickRemoveGroup = useCallback(
-    (group: GroupModel) => {
+    (group: GroupInterface) => {
       return () => {
         removeGroup(group)
       }
@@ -115,7 +115,7 @@ export function Groups() {
     [removeGroup]
   )
 
-  const onClickEditGroup = useCallback((group: GroupModel) => {
+  const onClickEditGroup = useCallback((group: GroupInterface) => {
     return () => {
       setEditingGroup(group)
       setShowPopup(true)
@@ -128,15 +128,15 @@ export function Groups() {
   }, [])
 
   const onGroupAdd = useCallback(
-    (group: Partial<GroupModel>) => {
+    (group: Partial<GroupInterface>) => {
       setShowPopup(false)
-      addGroup(group as GroupModel)
+      addGroup(group as GroupInterface)
     },
     [setShowPopup, addGroup]
   )
 
   const onGroupEdit = useCallback(
-    (lastGroupName: string, group: GroupModel) => {
+    (lastGroupName: string, group: GroupInterface) => {
       setShowPopup(false)
       editGroup({ group, lastGroupName })
     },

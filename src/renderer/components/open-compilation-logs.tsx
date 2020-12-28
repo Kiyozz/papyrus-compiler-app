@@ -9,7 +9,7 @@ import ErrorIcon from '@material-ui/icons/Error'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ScriptModel } from '../models'
+import { ScriptInterface } from '../interfaces'
 import actions from '../redux/actions'
 import { useAction, useStoreSelector } from '../redux/use-store-selector'
 import { Dialog, DialogTitle, DialogContent, DialogActions } from './dialog'
@@ -18,7 +18,7 @@ export function LogsListItem({
   script,
   logs
 }: {
-  script: ScriptModel
+  script: ScriptInterface
   logs: string
 }) {
   return (

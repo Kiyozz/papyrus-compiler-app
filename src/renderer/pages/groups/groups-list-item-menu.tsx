@@ -9,7 +9,6 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { GroupModel } from '../../models'
 
 interface Props {
   onEdit: () => void

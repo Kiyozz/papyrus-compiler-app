@@ -14,9 +14,14 @@ import { SettingsMo2Instance } from './settings-mo2-instance'
 interface Props {
   onChangeMo2: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeMo2Instance: (value: string) => void
+  onClickRefreshInstallation: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-export function SettingsMo2({ onChangeMo2, onChangeMo2Instance }: Props) {
+export function SettingsMo2({
+  onChangeMo2,
+  onChangeMo2Instance,
+  onClickRefreshInstallation
+}: Props) {
   const { t } = useTranslation()
   const {
     config: { mo2 }
@@ -34,7 +39,10 @@ export function SettingsMo2({ onChangeMo2, onChangeMo2Instance }: Props) {
       </h1>
 
       <SettingsMo2Activation onChangeMo2={onChangeMo2} />
-      <SettingsMo2Instance onChangeMo2Instance={onChangeMo2Instance} />
+      <SettingsMo2Instance
+        onChangeMo2Instance={onChangeMo2Instance}
+        onClickRefreshInstallation={onClickRefreshInstallation}
+      />
     </div>
   )
 }

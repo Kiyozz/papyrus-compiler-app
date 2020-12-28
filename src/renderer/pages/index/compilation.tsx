@@ -11,7 +11,7 @@ import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
 import { usePageContext } from '../../components/page-context'
 import { useDrop } from '../../hooks/use-drop'
-import { ScriptModel } from '../../models'
+import { ScriptInterface } from '../../interfaces'
 import actions from '../../redux/actions'
 import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
@@ -33,7 +33,7 @@ export function Compilation() {
   const setCompilationScripts = useAction(actions.compilationPage.setScripts)
 
   const onClickRemoveScriptFromScript = useCallback(
-    (script: ScriptModel) => {
+    (script: ScriptInterface) => {
       return () => {
         const newListOfScripts = compilationScripts.filter(
           compilationScript => compilationScript !== script
@@ -55,7 +55,7 @@ export function Compilation() {
 
   const onDrop = useCallback(
     (pscFiles: File[]) => {
-      const pscScripts: ScriptModel[] = pscFilesToPscScripts(
+      const pscScripts: ScriptInterface[] = pscFilesToPscScripts(
         pscFiles,
         compilationScripts
       )

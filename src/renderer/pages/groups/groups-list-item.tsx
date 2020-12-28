@@ -7,12 +7,12 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Group, GroupModel } from '../../models'
+import { Group, GroupInterface } from '../../interfaces'
 import { GroupsListItemMenu } from './groups-list-item-menu'
 
 interface Props {
-  onEdit: (group: GroupModel) => () => void
-  onDelete: (group: GroupModel) => () => void
+  onEdit: (group: GroupInterface) => () => void
+  onDelete: (group: GroupInterface) => () => void
   group: Group
 }
 

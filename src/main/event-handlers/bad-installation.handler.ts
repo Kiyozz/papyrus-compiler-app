@@ -7,46 +7,82 @@
 import is from '@sindresorhus/is'
 import { appStore } from '../../common/store'
 import { toSlash } from '../../common/slash'
-import { getExecutable, toSource } from '../../common/game'
+import { getExecutable, toOtherSource, toSource } from '../../common/game'
 import { Logger } from '../logger'
 import * as path from '../services/path.service'
 import { EventHandlerInterface } from '../interfaces/event-handler.interface'
+import { BadErrorType } from '../../common/interfaces/bad-error.type'
 
 export class BadInstallationHandler implements EventHandlerInterface {
   private readonly logger = new Logger(BadInstallationHandler.name)
 
-  listen(): Promise<boolean> {
-    const gamePath = appStore.get('gamePath')
-    const gameType = appStore.get('gameType')
-    const executable = getExecutable(gameType)
+  async listen(): Promise<BadErrorType> {
+    const hasGameExe = await this.checkGameExe()
 
-    if (!path.exists(path.join(gamePath, executable))) {
-      return Promise.resolve(false)
+    if (hasGameExe !== false) {
+      return hasGameExe
+    }
+
+    const hasCompiler = await this.checkCompiler()
+
+    if (hasCompiler !== false) {
+      return hasCompiler
     }
 
     const file = 'Actor.psc'
     const isUsingMo2: boolean = appStore.get('mo2.use')
 
-    return isUsingMo2
-      ? this.checksInMo2(file)
-      : this.checksInGameDataFolder(file)
+    if (isUsingMo2) {
+      const hasMo2Instance = await this.checkMo2Instance()
+
+      if (hasMo2Instance !== false) {
+        return hasMo2Instance
+      }
+    }
+
+    return isUsingMo2 ? this.checkInMo2(file) : this.checkInGameDataFolder(file)
   }
 
-  private async checksInMo2(file: string): Promise<boolean> {
+  private checkGameExe(): Promise<BadErrorType> {
+    this.logger.debug('checking game exe')
+
+    const gamePath = appStore.get('gamePath')
+    const gameType = appStore.get('gameType')
+    const executable = getExecutable(gameType)
+
+    return Promise.resolve(
+      path.exists(path.join(gamePath, executable)) ? false : 'game'
+    )
+  }
+
+  private checkMo2Instance(): Promise<BadErrorType> {
+    const mo2Use: boolean = appStore.get('mo2.use')
+    const mo2Instance: string = appStore.get('mo2.instance')
+
+    return Promise.resolve(
+      mo2Use ? (!path.exists(mo2Instance) ? 'mo2-instance' : false) : false
+    )
+  }
+
+  private async checkInMo2(file: string): Promise<BadErrorType> {
     const gameType = appStore.get('gameType')
     const mo2 = appStore.get('mo2')
 
     if (is.undefined(mo2.instance)) {
-      return this.checksInGameDataFolder(file)
+      return this.checkInGameDataFolder(file)
     }
 
     this.logger.info('checking in mo2 folder')
 
     const sourcesFolder = toSource(gameType)
+    const otherSourcesFolder = toOtherSource(gameType)
     const modsPath = path.join(mo2.instance, mo2.mods)
+
     const pathToChecks = [
       path.join(modsPath, '**', sourcesFolder, file),
-      path.join(mo2.instance, 'overwrite', '**', sourcesFolder, file)
+      path.join(modsPath, '**', otherSourcesFolder, file),
+      path.join(mo2.instance, 'overwrite', sourcesFolder, file),
+      path.join(mo2.instance, 'overwrite', otherSourcesFolder, file)
     ].map(folder => path.normalize(toSlash(folder)))
 
     const files = await path.getPathsInFolder([...pathToChecks], {
@@ -54,13 +90,13 @@ export class BadInstallationHandler implements EventHandlerInterface {
       deep: 4
     })
 
-    return files.length === 0 ? this.checksInGameDataFolder(file) : true
+    return files.length === 0 ? this.checkInGameDataFolder(file) : false
   }
 
-  private checksInGameDataFolder(file: string): Promise<boolean> {
+  private checkInGameDataFolder(file: string): Promise<BadErrorType> {
     const gamePath = appStore.get('gamePath')
     const gameType = appStore.get('gameType')
-    this.logger.debug('checking in Skyrim Data folder')
+    this.logger.debug('checking in game Data folder')
 
     const gameScriptsFolder = path.join(
       gamePath,
@@ -71,8 +107,33 @@ export class BadInstallationHandler implements EventHandlerInterface {
 
     const result = path.exists(path.normalize(gameScriptsFolder))
 
-    this.logger.debug('folder found', result)
+    if (!result) {
+      const otherGameScriptsFolder = path.join(
+        gamePath,
+        'Data',
+        toOtherSource(gameType),
+        file
+      )
 
-    return Promise.resolve(result)
+      const otherResult = path.exists(path.normalize(otherGameScriptsFolder))
+
+      if (otherResult) {
+        return Promise.resolve(false)
+      }
+
+      return Promise.resolve('scripts')
+    }
+
+    return Promise.resolve(false)
+  }
+
+  private checkCompiler(): Promise<BadErrorType> {
+    this.logger.debug('checking compiler path')
+
+    const compilerPath = appStore.get('compilerPath')
+
+    return Promise.resolve(
+      path.exists(path.normalize(compilerPath)) ? false : 'compiler'
+    )
   }
 }

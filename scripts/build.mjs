@@ -25,11 +25,10 @@ async function build() {
   console.info(track(), 'Creating production build...')
 
   const rendererCompiler = webpack(webpackRendererConfig())
-  const esbuildService = await esbuild.startService()
 
   await Promise.all([
-    esbuildService
-      .build(esbuildMainConfig())
+    await esbuild
+      .build(esbuildMainConfig({ sourcemap: false }))
       .then(() => console.info(track(), 'Main built')),
     new Promise((resolve, reject) => {
       rendererCompiler.run(err => {

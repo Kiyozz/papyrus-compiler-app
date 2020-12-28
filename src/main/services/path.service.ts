@@ -27,13 +27,24 @@ export function normalize(value: string): string {
 }
 
 export const join = path.join
-export const move = moveFile
+export const move = (from: string, to: string): ReturnType<typeof moveFile> => {
+  logger.debug('move file', from, 'to', to)
+  return moveFile(from, to)
+}
 
 export const readFile = promisify(fs.readFile)
 
 const fsMkDir = promisify(fs.mkdir)
 const fsWriteFile = promisify(fs.writeFile)
 const fsStat = promisify(fs.stat)
+
+export const writeFile = (
+  ...args: Parameters<typeof fsWriteFile>
+): ReturnType<typeof fsWriteFile> => {
+  logger.debug('write file', args[0])
+
+  return fsWriteFile(...args)
+}
 
 export async function stat(filename: string): Promise<fs.Stats> {
   logger.debug('retrieving path statistics', filename)
@@ -67,10 +78,7 @@ export async function ensureFile(item: string): Promise<void> {
 
 export async function ensureDirs(items: string[]): Promise<void> {
   logger.debug(
-    `checking presence of director${pluralize(items, {
-      single: 'y',
-      multiple: 'ies'
-    })}`,
+    `checking presence of folder${pluralize(items)}`,
     ...items.map(i => `"${i}"`)
   )
 

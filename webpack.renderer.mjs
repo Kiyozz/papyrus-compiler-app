@@ -10,8 +10,8 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
+import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin'
 import webpack from 'webpack'
-import SpeedMeasureWebpackPlugin from 'speed-measure-webpack-plugin'
 
 /**
  * @return {import('webpack').Configuration}
@@ -28,7 +28,6 @@ export default () => {
       inject: 'head',
       scriptLoading: 'defer'
     }),
-    !isProduction && new SpeedMeasureWebpackPlugin(),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
       ELECTRON_WEBPACK_APP_MOD_URL:
@@ -42,7 +41,7 @@ export default () => {
 
   /** @type {import('webpack').Configuration} */
   const myNewConfig = {
-    devtool: isProduction ? 'nosources-source-map' : 'eval-source-map',
+    devtool: isProduction ? 'cheap-module-source-map' : 'eval-source-map',
     mode,
     entry: {
       renderer: [
@@ -66,11 +65,11 @@ export default () => {
           test: /\.css$/,
           include: rendererSources,
           use: [
-            'css-hot-loader',
+            !isProduction && 'css-hot-loader',
             MiniCssExtractPlugin.loader,
             'css-loader',
             'postcss-loader'
-          ]
+          ].filter(Boolean)
         },
         {
           test: /\.tsx?$/,
@@ -85,9 +84,6 @@ export default () => {
                   [
                     '@babel/preset-env',
                     {
-                      targets: {
-                        chrome: 86
-                      },
                       useBuiltIns: false
                     }
                   ]
@@ -107,11 +103,25 @@ export default () => {
         },
         {
           test: /\.png$/,
-          use: ['url-loader']
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                limit: 1024
+              }
+            }
+          ]
         },
         {
           test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-          use: ['url-loader']
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                limit: 1024
+              }
+            }
+          ]
         }
       ]
     },
@@ -121,7 +131,28 @@ export default () => {
   if (isProduction) {
     myNewConfig.optimization = {
       minimize: true,
-      minimizer: [new TerserPlugin()]
+      minimizer: [new TerserPlugin(), new CssMinimizerWebpackPlugin()],
+      runtimeChunk: 'single',
+      splitChunks: {
+        chunks: 'all',
+        maxInitialRequests: Infinity,
+        minSize: 0,
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name(module) {
+              // get the name. E.g. node_modules/packageName/not/this/part.js
+              // or node_modules/packageName
+              const packageName = module.context.match(
+                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+              )[1]
+
+              // npm package names are URL-safe, but some servers don't like @ symbols
+              return `npm.${packageName.replace('@', '')}`
+            }
+          }
+        }
+      }
     }
   } else {
     myNewConfig.plugins.push(

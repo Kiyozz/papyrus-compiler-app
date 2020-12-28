@@ -8,12 +8,12 @@ import DeleteIcon from '@material-ui/icons/Delete'
 
 import React from 'react'
 
-import { ScriptModel } from '../models'
+import { ScriptInterface } from '../interfaces'
 
 interface Props {
-  scripts: ScriptModel[]
+  scripts: ScriptInterface[]
   onClickRemoveScriptFromGroup: (
-    script: ScriptModel
+    script: ScriptInterface
   ) => (e: React.MouseEvent) => void
 }
 

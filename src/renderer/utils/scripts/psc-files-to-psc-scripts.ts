@@ -5,12 +5,12 @@
  */
 
 import { ScriptStatus } from '../../enums/script-status.enum'
-import { ScriptModel } from '../../models'
+import { ScriptInterface } from '../../interfaces'
 
 export function pscFilesToPscScripts(
   pscFiles: File[],
-  actualList?: ScriptModel[]
-): ScriptModel[] {
+  actualList?: ScriptInterface[]
+): ScriptInterface[] {
   return pscFiles.map(({ name, path }, index) => {
     return {
       id: (actualList?.length ?? 0) + index,
