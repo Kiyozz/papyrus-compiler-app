@@ -11,7 +11,7 @@ import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { Logger } from '../logger'
 
 export class GetVersionHandler implements EventHandlerInterface {
-  private logger = new Logger(GetVersionHandler.name)
+  private logger = new Logger('GetVersionHandler')
 
   async listen(): Promise<string> {
     this.logger.debug('getting the app version')

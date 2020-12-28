@@ -39,6 +39,10 @@ body {
   @apply h-full;
 }
 
+.bg-darker {
+  background: #16161a;
+}
+
 .btn,
 .btn-icon {
   @apply text-white uppercase select-none font-medium text-sm tracking-wide;

@@ -11,7 +11,7 @@ import { stat } from '../services/path.service'
 import { Logger } from '../logger'
 
 export class FileStatHandler implements EventHandlerInterface<string[]> {
-  private logger = new Logger(FileStatHandler.name)
+  private logger = new Logger('FileStatHandler')
 
   async listen(files?: string[]): Promise<Map<string, Stats>> {
     this.logger.debug('getting stat of', files)

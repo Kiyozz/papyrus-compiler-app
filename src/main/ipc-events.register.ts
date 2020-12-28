@@ -28,7 +28,7 @@ export function registerIpcEvents(
         return payload
       } catch (e) {
         logger.error(`"${name}" failed`)
-        logger.error(`"${name}"`, e.message)
+        logger.error(`"${name}"`, e.stack)
 
         throw e
       }

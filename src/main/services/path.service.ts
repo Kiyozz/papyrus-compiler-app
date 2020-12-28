@@ -52,7 +52,7 @@ export async function stat(filename: string): Promise<fs.Stats> {
   try {
     return await fsStat(filename)
   } catch (e) {
-    throw new FileAccessException(filename)
+    throw new FileAccessException(filename, e)
   }
 }
 
@@ -66,7 +66,8 @@ export function exists(fileOrFolder: string): boolean {
 
 export async function ensureDir(item: string): Promise<void> {
   if (!exists(item)) {
-    await fsMkDir(item)
+    console.log(item)
+    await fsMkDir(item, { recursive: true })
   }
 }
 
@@ -86,7 +87,7 @@ export async function ensureDirs(items: string[]): Promise<void> {
     try {
       await ensureDir(item)
     } catch (e) {
-      throw new FileEnsureException(item)
+      throw new FileEnsureException(item, e)
     }
   }
 }

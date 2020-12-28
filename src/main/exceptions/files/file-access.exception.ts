@@ -5,7 +5,7 @@
  */
 
 export class FileAccessException extends Error {
-  constructor(file: string) {
-    super(`Cannot access file "${file}"`)
+  constructor(file: string, err?: unknown) {
+    super(`Cannot access file "${file}"${err ? `: ${err}` : ''}`)
   }
 }

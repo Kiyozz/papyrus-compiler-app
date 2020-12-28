@@ -17,10 +17,6 @@ export class IpcApi {
     return ipcRenderer.invoke(EVENTS.COMPILE_SCRIPT, script.name)
   }
 
-  getConfig = () => {
-    return ipcRenderer.invoke(EVENTS.CONFIG_GET)
-  }
-
   getLatestNotes = async () => {
     const response = await fetch(`${GITHUB_REPOSITORY}/releases`)
 

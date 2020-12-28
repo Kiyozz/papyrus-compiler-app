@@ -28,10 +28,7 @@ const logger = new Logger('Initialize')
 function installExtensions() {
   if (is.development) {
     const installer = require('electron-devtools-installer')
-    const extensions = [
-      installer.REACT_DEVELOPER_TOOLS,
-      installer.REDUX_DEVTOOLS
-    ]
+    const extensions = [installer.REACT_DEVELOPER_TOOLS]
 
     return Promise.all(
       extensions.map(name => installer.default(name))

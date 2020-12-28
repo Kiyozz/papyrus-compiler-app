@@ -4,7 +4,8 @@
  * All rights reserved.
  */
 
-import { toAntiSlash } from '../../common/slash'
+import { is } from 'electron-util'
+import { toAntiSlash, toSlash } from '../../common/slash'
 import { GameType, toOtherSource, toSource } from '../../common/game'
 import { appStore } from '../../common/store'
 import { Logger } from '../logger'
@@ -71,7 +72,9 @@ async function getModsSourcesPath(gameType: GameType, instance: string) {
 
       return doubleSourceFolders.includes(file)
     })
-    .map(file => toAntiSlash(file))
+    .map(file =>
+      path.normalize(is.linux || is.macos ? toSlash(file) : toAntiSlash(file))
+    )
 
   logger.debug('[MO2] Folders containing sources', files)
 
@@ -92,11 +95,12 @@ export async function getImportsPath({
 
   try {
     const sources = await getModsSourcesPath(gameType, instance)
-    const mo2OverwriteSourcesPath = path.join(instance, 'overwrite', sourcePath)
-    const mo2OverwriteOtherSourcesPath = path.join(
-      instance,
-      'overwrite',
-      otherSourcePath
+    const overwritePath = path.join(instance, 'overwrite')
+    const mo2OverwriteSourcesPath = path.normalize(
+      path.join(overwritePath, sourcePath)
+    )
+    const mo2OverwriteOtherSourcesPath = path.normalize(
+      path.join(overwritePath, otherSourcePath)
     )
     const imports = [
       ...sources.map(folder => folder.replace(modsPath, '.')),
@@ -134,10 +138,12 @@ export function getModsPath(mo2Instance: string): string {
 export async function getOutputPath(mo2Instance: string): Promise<string> {
   logger.info('getting MO2 output path')
 
-  const output = path.join(
-    mo2Instance,
-    appStore.get<string, string>('mo2.output')
+  const outputRaw = path.normalize(
+    path.join(mo2Instance, appStore.get<string, string>('mo2.output'))
   )
+
+  const output =
+    is.macos || is.linux ? toSlash(outputRaw) : toAntiSlash(outputRaw)
 
   await path.ensureDirs([output])
 

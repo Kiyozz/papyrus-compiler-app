@@ -22,9 +22,9 @@ async function build() {
   console.info(track(), 'Start')
   clean()
 
-  console.info(track(), 'Creating production build...')
-
   const rendererCompiler = webpack(webpackRendererConfig())
+
+  console.info(track(), 'Creating production build...')
 
   await Promise.all([
     await esbuild

@@ -14,7 +14,7 @@ import ReactMarkdown from 'react-markdown'
 import useOnKeyUp from '../hooks/use-on-key-up'
 import { useStoreSelector } from '../redux/use-store-selector'
 import { MOD_URL } from '../../common/mod'
-import { Dialog, DialogActions, DialogContent, DialogTitle } from './dialog'
+import { Dialog } from './dialog'
 
 interface Props {
   onClose: () => void
@@ -114,32 +114,35 @@ export function DialogChangelog({ onClose }: Props) {
         fullWidth
         maxWidth={70}
         onClose={onCloseDialog}
+        actions={
+          <>
+            <button className="btn" onClick={onCloseDialog}>
+              Close
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={onClickDownloadRelease}
+            >
+              <div className="icon">
+                <DownloadIcon />
+              </div>
+              Download
+            </button>
+          </>
+        }
+        title={t('changelog.newVersion')}
       >
-        <DialogTitle>{t('changelog.newVersion')}</DialogTitle>
-        <DialogContent>
-          <div className="changelog-container bg-gray-700 p-4 rounded text-gray-300 text-sm">
-            <ReactMarkdown
-              source={notes}
-              renderers={{
-                paragraph: Paragraph,
-                heading: Heading,
-                code: Code,
-                link: Anchor
-              }}
-            />
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <button className="btn" onClick={onCloseDialog}>
-            Close
-          </button>
-          <button className="btn btn-primary" onClick={onClickDownloadRelease}>
-            <div className="icon">
-              <DownloadIcon />
-            </div>
-            Download
-          </button>
-        </DialogActions>
+        <div className="changelog-container bg-gray-700 p-4 rounded text-gray-300 text-sm">
+          <ReactMarkdown
+            source={notes}
+            renderers={{
+              paragraph: Paragraph,
+              heading: Heading,
+              code: Code,
+              link: Anchor
+            }}
+          />
+        </div>
       </Dialog>
     </>
   )

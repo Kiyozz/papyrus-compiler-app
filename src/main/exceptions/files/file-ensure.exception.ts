@@ -5,7 +5,7 @@
  */
 
 export class FileEnsureException extends Error {
-  constructor(item: string) {
-    super(`"${item}" cannot be created`)
+  constructor(item: string, err?: unknown) {
+    super(`"${item}" cannot be created${err ? `: ${err}` : ''}`)
   }
 }

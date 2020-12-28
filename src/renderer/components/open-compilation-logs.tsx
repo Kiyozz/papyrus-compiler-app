@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { ScriptInterface } from '../interfaces'
 import actions from '../redux/actions'
 import { useAction, useStoreSelector } from '../redux/use-store-selector'
-import { Dialog, DialogTitle, DialogContent, DialogActions } from './dialog'
+import { Dialog } from './dialog'
 
 export function LogsListItem({
   script,
@@ -23,8 +23,8 @@ export function LogsListItem({
 }) {
   return (
     <div>
-      <h3 className="select-all inline">{script.name}</h3>
-      <code className="p-4 bg-gray-700 mt-2 block w-full rounded">
+      <h3 className="select-all sticky bg-darker top-0 pb-2">{script.name}</h3>
+      <code className="p-4 bg-gray-700 block w-full rounded">
         {logs.split('\n').map((log, i) => (
           <span className="font-mono select-text break-words" key={i}>
             {log} <br />
@@ -67,26 +67,22 @@ export function OpenCompilationLogs() {
         onClose={onClickButtonCloseLogs}
         maxWidth={80}
         fullWidth
-      >
-        <DialogTitle className="select-none">
-          {t('common.logs.title')}
-        </DialogTitle>
-        <DialogContent>
-          <div className="flex flex-col gap-4">
-            {logs.length > 0 ? (
-              logs.map(([script, scriptLogs], index) => (
-                <LogsListItem key={index} script={script} logs={scriptLogs} />
-              ))
-            ) : (
-              <span className="select-none">{t('common.logs.noLogs')}</span>
-            )}
-          </div>
-        </DialogContent>
-        <DialogActions>
+        actions={
           <button className="btn" onClick={onClickButtonCloseLogs}>
             {t('common.logs.close')}
           </button>
-        </DialogActions>
+        }
+        title={<h1 className="select-none">{t('common.logs.title')}</h1>}
+      >
+        <div className="flex flex-col gap-4">
+          {logs.length > 0 ? (
+            logs.map(([script, scriptLogs], index) => (
+              <LogsListItem key={index} script={script} logs={scriptLogs} />
+            ))
+          ) : (
+            <span className="select-none">{t('common.logs.noLogs')}</span>
+          )}
+        </div>
       </Dialog>
     </>
   )
