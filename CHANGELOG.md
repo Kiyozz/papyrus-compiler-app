@@ -1,3 +1,13 @@
+## 5.0.0 (2020-12-30) [v4.5.0...v5.0.0](https://github.com/Kiyozz/papyrus-compiler-app/compare/v4.5.0...v5.0.0)
+
+### Features
+
+* design overall, general optimization ([#69](https://github.com/Kiyozz/papyrus-compiler-app/pull/69))
+* use the app in debug mode ([110102c](https://github.com/Kiyozz/papyrus-compiler-app/commit/110102cdcf7a77d3cda1304c1a91a4e70e86ff71))
+* better configuration error explanation ([26c1e21](https://github.com/Kiyozz/papyrus-compiler-app/commit/26c1e215857c6b1aa071981643ce6e32da4c3952))
+* better mo2 compilation ([66e6ac1](https://github.com/Kiyozz/papyrus-compiler-app/commit/66e6ac10b89240d83ccb84592a30a666fe2fd841))
+* add the left panel expand ([839aff2](https://github.com/Kiyozz/papyrus-compiler-app/commit/839aff26c8d99bc103dca5d71b921000aae9d92b))
+
 ## 4.5.0 (2020-11-19) [v4.4.0...v4.5.0](https://github.com/Kiyozz/papyrus-compiler-app/compare/v4.4.0...v4.5.0)
 
 ### Features
