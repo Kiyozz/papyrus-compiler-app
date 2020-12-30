@@ -90,6 +90,7 @@ devDependencies:
   url-loader: 4.1.1_file-loader@6.2.0+webpack@4.44.2
   webpack: 4.44.2
   webpack-dev-server: 3.11.0_webpack@4.44.2
+  windows-shortcuts: 0.1.6
 lockfileVersion: 5.2
 packages:
   /7zip-bin/5.0.3:
@@ -11573,6 +11574,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-NsmoXalsWVDMGupxZ5R08ka9flZjjiLvHVAWYOKtiKM8ujtZWr9cRffak+uSE48+Ob8ObalXpwyeUiyDD6QFgg==
+  /windows-shortcuts/0.1.6:
+    dev: true
+    resolution:
+      integrity: sha1-J5cMXDRv/YGCHD4SUowLq8oKWpk=
   /word-wrap/1.2.3:
     dev: true
     engines:
@@ -11840,3 +11845,4 @@ specifiers:
   url-loader: ~4.1.1
   webpack: ~4.44.2
   webpack-dev-server: ~3.11.0
+  windows-shortcuts: ^0.1.6

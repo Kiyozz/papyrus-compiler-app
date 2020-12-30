@@ -118,7 +118,8 @@
     "typescript": "~4.1.3",
     "url-loader": "~4.1.1",
     "webpack": "~4.44.2",
-    "webpack-dev-server": "~3.11.0"
+    "webpack-dev-server": "~3.11.0",
+    "windows-shortcuts": "^0.1.6"
   },
   "electronWebpack": {
     "renderer": {
@@ -129,6 +130,7 @@
     "appId": "io.kiyozz.pca",
     "productName": "PCA",
     "copyright": "Copyright © WushuLate",
+    "afterPack": "./build/after-pack.js",
     "extraMetadata": {
       "name": "PCA",
       "main": "main.js"
