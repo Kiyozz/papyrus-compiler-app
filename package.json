@@ -11,7 +11,8 @@
     "release:dry": "semantic-release --dry-run --no-ci"
   },
   "engines": {
-    "node": "~14.15.3"
+    "node": "~14.15.0",
+    "pnpm": "~5.14.1"
   },
   "repository": {
     "type": "git",
@@ -129,6 +130,7 @@
     "appId": "io.kiyozz.pca",
     "productName": "PCA",
     "copyright": "Copyright © WushuLate",
+    "afterPack": "./build/after-pack.js",
     "extraMetadata": {
       "name": "PCA",
       "main": "main.js"

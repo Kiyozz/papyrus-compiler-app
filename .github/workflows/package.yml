@@ -90,7 +90,7 @@ jobs:
           name: build-le
           path: dist
       - name: Package LE
-        run: pnpm package -- --config.productName="PCA LE"
+        run: pnpm package -- --config.productName="PCA LE" --config.extraMetadata.name="PCA LE"
       - name: Upload LE package
         uses: actions/upload-artifact@v2
         with:
@@ -114,7 +114,7 @@ jobs:
           name: build-se
           path: dist
       - name: Package SE
-        run: pnpm package -- --config.productName="PCA SE"
+        run: pnpm package -- --config.productName="PCA SE" --config.extraMetadata.name="PCA SE"
       - name: Upload SE package
         uses: actions/upload-artifact@v2
         with:
