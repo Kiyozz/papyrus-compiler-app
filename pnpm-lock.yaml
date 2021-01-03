@@ -11,9 +11,9 @@ devDependencies:
   '@material-ui/lab': 4.0.0-alpha.57_5f7e236a0620727151fd33898ac49c8d
   '@pmmmwh/react-refresh-webpack-plugin': 0.4.3_2b39e4be25cb58e3fe57f9dc46d5e6aa
   '@reach/router': 1.3.4_react-dom@16.14.0+react@16.14.0
-  '@semantic-release/changelog': 5.0.1_semantic-release@17.1.2
-  '@semantic-release/git': 9.0.0_semantic-release@17.1.2
-  '@semantic-release/release-notes-generator': 9.0.1_semantic-release@17.1.2
+  '@semantic-release/changelog': 5.0.1_semantic-release@17.3.1
+  '@semantic-release/git': 9.0.0_semantic-release@17.3.1
+  '@semantic-release/release-notes-generator': 9.0.1_semantic-release@17.3.1
   '@sindresorhus/is': 3.1.2
   '@types/classnames': 2.2.11
   '@types/electron-devtools-installer': 2.2.0
@@ -79,7 +79,7 @@ devDependencies:
   redux-saga: 1.1.3
   rimraf: 3.0.2
   rxjs: 6.6.3
-  semantic-release: 17.1.2
+  semantic-release: 17.3.1
   speed-measure-webpack-plugin: 1.3.3_webpack@4.44.2
   tailwindcss: 2.0.2_80f3d67eed96b2b2e18887ea575f44dd
   terser-webpack-plugin: 4.2.3_webpack@4.44.2
@@ -1386,7 +1386,7 @@ packages:
       integrity: sha512-Uv6h1sT+0DrblvIrolFtbvM1FgWm+/sy4B3pvLp67Zys+thcukzS5ekn7HsZFGpWP4Q3fYJCljbWQE/XivMRLw==
   /@octokit/auth-token/2.4.4:
     dependencies:
-      '@octokit/types': 6.1.1
+      '@octokit/types': 6.1.2
     dev: true
     resolution:
       integrity: sha512-LNfGu3Ro9uFAYh10MUZVaT7X2CnNm2C8IDQmabx+3DygYIQjs9FwzFAHN/0t6mu5HEPhxcb1XOuxdpY82vCg2Q==
@@ -1395,7 +1395,7 @@ packages:
       '@octokit/auth-token': 2.4.4
       '@octokit/graphql': 4.5.8
       '@octokit/request': 5.4.12
-      '@octokit/types': 6.1.1
+      '@octokit/types': 6.1.2
       before-after-hook: 2.1.0
       universal-user-agent: 6.0.0
     dev: true
@@ -1403,7 +1403,7 @@ packages:
       integrity: sha512-d9dTsqdePBqOn7aGkyRFe7pQpCXdibSJ5SFnrTr0axevObZrpz3qkWm7t/NjYv5a66z6vhfteriaq4FRz3e0Qg==
   /@octokit/endpoint/6.0.10:
     dependencies:
-      '@octokit/types': 6.1.1
+      '@octokit/types': 6.1.2
       is-plain-object: 5.0.0
       universal-user-agent: 6.0.0
     dev: true
@@ -1412,19 +1412,19 @@ packages:
   /@octokit/graphql/4.5.8:
     dependencies:
       '@octokit/request': 5.4.12
-      '@octokit/types': 6.1.1
+      '@octokit/types': 6.1.2
       universal-user-agent: 6.0.0
     dev: true
     resolution:
       integrity: sha512-WnCtNXWOrupfPJgXe+vSmprZJUr0VIu14G58PMlkWGj3cH+KLZEfKMmbUQ6C3Wwx6fdhzVW1CD5RTnBdUHxhhA==
-  /@octokit/openapi-types/2.0.0:
+  /@octokit/openapi-types/2.0.1:
     dev: true
     resolution:
-      integrity: sha512-J4bfM7lf8oZvEAdpS71oTvC1ofKxfEZgU5vKVwzZKi4QPiL82udjpseJwxPid9Pu2FNmyRQOX4iEj6W1iOSnPw==
+      integrity: sha512-9AuC04PUnZrjoLiw3uPtwGh9FE4Q3rTqs51oNlQ0rkwgE8ftYsOC+lsrQyvCvWm85smBbSc0FNRKKumvGyb44Q==
   /@octokit/plugin-paginate-rest/2.6.2_@octokit+core@3.2.4:
     dependencies:
       '@octokit/core': 3.2.4
-      '@octokit/types': 6.1.1
+      '@octokit/types': 6.1.2
     dev: true
     peerDependencies:
       '@octokit/core': '>=2'
@@ -1441,7 +1441,7 @@ packages:
   /@octokit/plugin-rest-endpoint-methods/4.4.1_@octokit+core@3.2.4:
     dependencies:
       '@octokit/core': 3.2.4
-      '@octokit/types': 6.1.1
+      '@octokit/types': 6.1.2
       deprecation: 2.3.1
     dev: true
     peerDependencies:
@@ -1450,7 +1450,7 @@ packages:
       integrity: sha512-+v5PcvrUcDeFXf8hv1gnNvNLdm4C0+2EiuWt9EatjjUmfriM1pTMM+r4j1lLHxeBQ9bVDmbywb11e3KjuavieA==
   /@octokit/request-error/2.0.4:
     dependencies:
-      '@octokit/types': 6.1.1
+      '@octokit/types': 6.1.2
       deprecation: 2.3.1
       once: 1.4.0
     dev: true
@@ -1460,7 +1460,7 @@ packages:
     dependencies:
       '@octokit/endpoint': 6.0.10
       '@octokit/request-error': 2.0.4
-      '@octokit/types': 6.1.1
+      '@octokit/types': 6.1.2
       deprecation: 2.3.1
       is-plain-object: 5.0.0
       node-fetch: 2.6.1
@@ -1478,13 +1478,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-hNRCZfKPpeaIjOVuNJzkEL6zacfZlBPV8vw8ReNeyUkVvbuCvvrrx8K8Gw2eyHHsmd4dPlAxIXIZ9oHhJfkJpw==
-  /@octokit/types/6.1.1:
+  /@octokit/types/6.1.2:
     dependencies:
-      '@octokit/openapi-types': 2.0.0
-      '@types/node': 14.14.14
+      '@octokit/openapi-types': 2.0.1
+      '@types/node': 14.14.19
     dev: true
     resolution:
-      integrity: sha512-btm3D6S7VkRrgyYF31etUtVY/eQ1KzrNRqhFt25KSe2mKlXuLXJilglRC6eDA2P6ou94BUnk/Kz5MPEolXgoiw==
+      integrity: sha512-LPCpcLbcky7fWfHCTuc7tMiSHFpFlrThJqVdaHgowBTMS0ijlZFfonQC/C1PrZOjD4xRCYgBqH9yttEATGE/nw==
   /@pmmmwh/react-refresh-webpack-plugin/0.4.3_2b39e4be25cb58e3fe57f9dc46d5e6aa:
     dependencies:
       ansi-html: 0.0.7
@@ -1576,13 +1576,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-afmTuJrylUU/0OtqzaRkbyYFFNgCF73Bvel/sw90pvGrWIZ+vyoIJqA6eMSoA6+nb443kTmulmBtC9NerXboNg==
-  /@semantic-release/changelog/5.0.1_semantic-release@17.1.2:
+  /@semantic-release/changelog/5.0.1_semantic-release@17.3.1:
     dependencies:
       '@semantic-release/error': 2.2.0
       aggregate-error: 3.1.0
       fs-extra: 9.0.1
       lodash: 4.17.20
-      semantic-release: 17.1.2
+      semantic-release: 17.3.1
     dev: true
     engines:
       node: '>=10.18'
@@ -1590,7 +1590,7 @@ packages:
       semantic-release: '>=15.8.0 <18.0.0'
     resolution:
       integrity: sha512-unvqHo5jk4dvAf2nZ3aw4imrlwQ2I50eVVvq9D47Qc3R+keNqepx1vDYwkjF8guFXnOYaYcR28yrZWno1hFbiw==
-  /@semantic-release/commit-analyzer/8.0.1_semantic-release@17.1.2:
+  /@semantic-release/commit-analyzer/8.0.1_semantic-release@17.3.1:
     dependencies:
       conventional-changelog-angular: 5.0.12
       conventional-commits-filter: 2.0.7
@@ -1599,7 +1599,7 @@ packages:
       import-from: 3.0.0
       lodash: 4.17.20
       micromatch: 4.0.2
-      semantic-release: 17.1.2
+      semantic-release: 17.3.1
     dev: true
     engines:
       node: '>=10.18'
@@ -1611,7 +1611,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-9Tj/qn+y2j+sjCI3Jd+qseGtHjOAeg7dU2/lVcqIQ9TV3QDaDXDYXcoOHU+7o2Hwh8L8ymL4gfuO7KxDs3q2zg==
-  /@semantic-release/git/9.0.0_semantic-release@17.1.2:
+  /@semantic-release/git/9.0.0_semantic-release@17.3.1:
     dependencies:
       '@semantic-release/error': 2.2.0
       aggregate-error: 3.1.0
@@ -1621,7 +1621,7 @@ packages:
       lodash: 4.17.20
       micromatch: 4.0.2
       p-reduce: 2.1.0
-      semantic-release: 17.1.2
+      semantic-release: 17.3.1
     dev: true
     engines:
       node: '>=10.18'
@@ -1629,7 +1629,7 @@ packages:
       semantic-release: '>=16.0.0 <18.0.0'
     resolution:
       integrity: sha512-AZ4Zha5NAPAciIJH3ipzw/WU9qLAn8ENaoVAhD6srRPxTpTzuV3NhNh14rcAo8Paj9dO+5u4rTKcpetOBluYVw==
-  /@semantic-release/github/7.2.0_semantic-release@17.1.2:
+  /@semantic-release/github/7.2.0_semantic-release@17.3.1:
     dependencies:
       '@octokit/rest': 18.0.12
       '@semantic-release/error': 2.2.0
@@ -1643,10 +1643,10 @@ packages:
       https-proxy-agent: 5.0.0
       issue-parser: 6.0.0
       lodash: 4.17.20
-      mime: 2.4.6
+      mime: 2.4.7
       p-filter: 2.1.0
       p-retry: 4.2.0
-      semantic-release: 17.1.2
+      semantic-release: 17.3.1
       url-join: 4.0.1
     dev: true
     engines:
@@ -1655,7 +1655,7 @@ packages:
       semantic-release: '>=16.0.0 <18.0.0'
     resolution:
       integrity: sha512-tMRnWiiWb43whRHvbDGXq4DGEbKRi56glDpXDJZit4PIiwDPX7Kx3QzmwRtDOcG+8lcpGjpdPabYZ9NBxoI2mw==
-  /@semantic-release/npm/7.0.9_semantic-release@17.1.2:
+  /@semantic-release/npm/7.0.9_semantic-release@17.3.1:
     dependencies:
       '@semantic-release/error': 2.2.0
       aggregate-error: 3.1.0
@@ -1664,11 +1664,11 @@ packages:
       lodash: 4.17.20
       nerf-dart: 1.0.0
       normalize-url: 5.3.0
-      npm: 6.14.9
+      npm: 6.14.10
       rc: 1.2.8
       read-pkg: 5.2.0
       registry-auth-token: 4.2.1
-      semantic-release: 17.1.2
+      semantic-release: 17.3.1
       semver: 7.3.4
       tempy: 1.0.0
     dev: true
@@ -1678,7 +1678,7 @@ packages:
       semantic-release: '>=16.0.0 <18.0.0'
     resolution:
       integrity: sha512-VsmmQF3/n7mDbm6AGL0yPD3QNTGsHdinBtkyyerN1eLgvhdGJ/vEeAvmDMARiuf5Ev9cFeCheF0wLyUZNlAkeA==
-  /@semantic-release/release-notes-generator/9.0.1_semantic-release@17.1.2:
+  /@semantic-release/release-notes-generator/9.0.1_semantic-release@17.3.1:
     dependencies:
       conventional-changelog-angular: 5.0.12
       conventional-changelog-writer: 4.0.18
@@ -1690,7 +1690,7 @@ packages:
       into-stream: 5.1.1
       lodash: 4.17.20
       read-pkg-up: 7.0.1
-      semantic-release: 17.1.2
+      semantic-release: 17.3.1
     dev: true
     engines:
       node: '>=10.18'
@@ -1861,6 +1861,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-naXYePhweTi+BMv11TgioE2/FXU4fSl29HAH1ffxVciNsH3rYXjNP2yM8wqmSm7jS20gM8TIklKiTen+1iVncw==
+  /@types/node/14.14.19:
+    dev: true
+    resolution:
+      integrity: sha512-4nhBPStMK04rruRVtVc6cDqhu7S9GZai0fpXgPXrFpcPX6Xul8xnrjSdGB4KPBVYG/R5+fXWdCM8qBoiULWGPQ==
   /@types/normalize-package-data/2.4.0:
     dev: true
     resolution:
@@ -5317,14 +5321,14 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==
-  /find-versions/3.2.0:
+  /find-versions/4.0.0:
     dependencies:
-      semver-regex: 2.0.0
+      semver-regex: 3.1.2
     dev: true
     engines:
-      node: '>=6'
+      node: '>=10'
     resolution:
-      integrity: sha512-P8WRou2S+oe222TOCHitLy8zj+SIsVJh52VP4lvXkaFVnOFFdoWv1H1Jjvel1aI6NCFOAaeAVm8qrI0odiLcww==
+      integrity: sha512-wgpWy002tA+wgmO27buH/9KzyEOQnKsG/R0yrcjPT9BOFm0zRBVQbZ95nRGXWMywS8YR5knRbpohio0bcJABxQ==
   /flat-cache/2.0.1:
     dependencies:
       flatted: 2.0.2
@@ -7194,13 +7198,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-8z4efJYk43E0upd0NbVXwgSTQs6cT3T06etieCMEg7dRbzCbxUCK/GHlX8mhHRDcp+OLlHkPKsvqQTCvsRl2cg==
-  /marked-terminal/4.1.0_marked@1.2.6:
+  /marked-terminal/4.1.0_marked@1.2.7:
     dependencies:
       ansi-escapes: 4.3.1
       cardinal: 2.1.1
       chalk: 4.1.0
       cli-table: 0.3.4
-      marked: 1.2.6
+      marked: 1.2.7
       node-emoji: 1.10.0
       supports-hyperlinks: 2.1.0
     dev: true
@@ -7208,13 +7212,13 @@ packages:
       marked: '>=0.4.0 <2.0.0'
     resolution:
       integrity: sha512-5KllfAOW02WS6hLRQ7cNvGOxvKW1BKuXELH4EtbWfyWgxQhROoMxEvuQ/3fTgkNjledR0J48F4HbapvYp1zWkQ==
-  /marked/1.2.6:
+  /marked/1.2.7:
     dev: true
     engines:
       node: '>= 8.16.2'
     hasBin: true
     resolution:
-      integrity: sha512-7vVuSEZ8g/HH3hK/BH/+7u/NJj7x9VY4EHzujLDcqAQLiOUeFJYAsfSAyoWtR17lKrx7b08qyIno4lffwrzTaA==
+      integrity: sha512-No11hFYcXr/zkBvL6qFmAp1z6BKY3zqLMHny/JN/ey+al7qwCM2+CMBL9BOgqMxZU36fz4cCWfn2poWIf7QRXA==
   /matcher/3.0.0:
     dependencies:
       escape-string-regexp: 4.0.0
@@ -7809,7 +7813,7 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==
-  /npm/6.14.9:
+  /npm/6.14.10:
     bundledDependencies:
       - abbrev
       - ansicolors
@@ -7939,7 +7943,7 @@ packages:
       node: 6 >=6.2.0 || 8 || >=9.3.0
     hasBin: true
     resolution:
-      integrity: sha512-yHi1+i9LyAZF1gAmgyYtVk+HdABlLy94PMIDoK1TRKWvmFQAt5z3bodqVwKvzY0s6dLqQPVsRLiwhJfNtiHeCg==
+      integrity: sha512-FT23Qy/JMA+qxEYReMOr1MY7642fKn8Onn+72LASPi872Owvmw0svm+/DXTHOC3yO9CheEO+EslyXEpdBdRtIA==
   /nth-check/1.0.2:
     dependencies:
       boolbase: 1.0.0
@@ -9828,27 +9832,27 @@ packages:
     dev: true
     resolution:
       integrity: sha512-2P4PtieJeEwVgTU9QEcwIRDQ/mXJLX8/+I3ur+Pg16nS8oNbrGxEso9NyYWy8NAmXiNl4dlAp5MwoNeCWzON4w==
-  /semantic-release/17.1.2:
+  /semantic-release/17.3.1:
     dependencies:
-      '@semantic-release/commit-analyzer': 8.0.1_semantic-release@17.1.2
+      '@semantic-release/commit-analyzer': 8.0.1_semantic-release@17.3.1
       '@semantic-release/error': 2.2.0
-      '@semantic-release/github': 7.2.0_semantic-release@17.1.2
-      '@semantic-release/npm': 7.0.9_semantic-release@17.1.2
-      '@semantic-release/release-notes-generator': 9.0.1_semantic-release@17.1.2
+      '@semantic-release/github': 7.2.0_semantic-release@17.3.1
+      '@semantic-release/npm': 7.0.9_semantic-release@17.3.1
+      '@semantic-release/release-notes-generator': 9.0.1_semantic-release@17.3.1
       aggregate-error: 3.1.0
       cosmiconfig: 6.0.0
       debug: 4.3.1
       env-ci: 5.0.2
       execa: 4.1.0
       figures: 3.2.0
-      find-versions: 3.2.0
+      find-versions: 4.0.0
       get-stream: 5.2.0
       git-log-parser: 1.2.0
       hook-std: 2.0.0
       hosted-git-info: 3.0.7
       lodash: 4.17.20
-      marked: 1.2.6
-      marked-terminal: 4.1.0_marked@1.2.6
+      marked: 1.2.7
+      marked-terminal: 4.1.0_marked@1.2.7
       micromatch: 4.0.2
       p-each-series: 2.2.0
       p-reduce: 2.1.0
@@ -9863,7 +9867,7 @@ packages:
       node: '>=10.18'
     hasBin: true
     resolution:
-      integrity: sha512-szYBXm10QjQO5Tb1S2PSkvOBW3MajWJat5EWtx+MzaVT/jquuxf9o+Zn8FC1j157xvJ5p9r1d/MZGslgs7oQQg==
+      integrity: sha512-NSdxvnBTklrRBYRexVUx44Hri9sTu9b8x+1HfWDGIWemDTFQfWOTbT1N3oy5l8WcZHodhRvtyI7gm50SfAa3Fg==
   /semver-compare/1.0.0:
     dev: true
     optional: true
@@ -9877,12 +9881,12 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-GX0Ix/CJcHyB8c4ykpHGIAvLyOwOobtM/8d+TQkAd81/bEjgPHrfba41Vpesr7jX/t8Uh+R3EX9eAS5be+jQYg==
-  /semver-regex/2.0.0:
+  /semver-regex/3.1.2:
     dev: true
     engines:
-      node: '>=6'
+      node: '>=8'
     resolution:
-      integrity: sha512-mUdIBBvdn0PLOeP3TEkMH7HHeUP3GjsXCwKarjv/kGmUFOYg1VqEemKhoQpWMu6X2I8kHeuVdGibLGkVK+/5Qw==
+      integrity: sha512-bXWyL6EAKOJa81XG1OZ/Yyuq+oT0b2YLlxx7c+mrdYPaPbnj6WgVULXhinMIeZGufuUBu/eVRqXEhiv4imfwxA==
   /semver/5.7.1:
     dev: true
     hasBin: true
@@ -11829,7 +11833,7 @@ specifiers:
   redux-saga: ~1.1.3
   rimraf: ~3.0.2
   rxjs: ~6.6.3
-  semantic-release: ~17.1.2
+  semantic-release: ~17.3.1
   speed-measure-webpack-plugin: ~1.3.3
   tailwindcss: ~2.0.2
   terser-webpack-plugin: ~4.2.3
