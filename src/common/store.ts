@@ -12,6 +12,7 @@ import { join } from '../main/services/path.service'
 import { Config } from './interfaces/config.interface'
 import { migrate410 } from './migrations/4.1.0.migration'
 import { migrate420 } from './migrations/4.2.0.migration'
+import { migrate510 } from './migrations/5.1.0.migration'
 import { checkStore } from './check-store'
 
 const jsonPath = is.development
@@ -28,8 +29,8 @@ export const defaultConfig: Config = {
   gameType: (process.env.ELECTRON_WEBPACK_APP_MOD_URL ?? '').includes(
     'specialedition'
   )
-    ? 'Skyrim Special Edition'
-    : 'Skyrim Legendary Edition',
+    ? 'Skyrim SE'
+    : 'Skyrim LE',
   gamePath: '',
   flag: 'TESV_Papyrus_Flags.flg',
   compilerPath: '',
@@ -51,6 +52,9 @@ const appStore = new Store<Config>({
     },
     '4.2.0': (store: AppStore) => {
       migrate420(store)
+    },
+    '5.1.0': (store: AppStore) => {
+      migrate510(store)
     }
   }
 } as any)

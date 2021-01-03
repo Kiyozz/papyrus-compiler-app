@@ -6,6 +6,7 @@
 
 import is from '@sindresorhus/is'
 import { join } from '../main/services/path.service'
+import { Games } from './game'
 import { AppStore } from './store'
 import { Config } from './interfaces/config.interface'
 import { validateGroup } from './validators/group.validator'
@@ -73,10 +74,7 @@ function checkGameType(appStore: AppStore, defaultConfig: Config) {
     resetGameType()
   }
 
-  if (
-    gameType !== 'Skyrim Legendary Edition' &&
-    gameType !== 'Skyrim Special Edition'
-  ) {
+  if (gameType !== Games.LE && gameType !== Games.SE && gameType !== Games.VR) {
     resetGameType()
   }
 }

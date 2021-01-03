@@ -80,7 +80,7 @@ export function Settings() {
       setIsInstallationBad(false)
       const value = e.target.value as GameType
 
-      if (![Games.LE, Games.SE].includes(value)) {
+      if (![Games.LE, Games.SE, Games.VR].includes(value)) {
         return
       }
 

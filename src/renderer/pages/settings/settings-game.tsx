@@ -58,6 +58,14 @@ export function SettingsGame({
             control={<Radio />}
             label={Games.SE}
           />
+          <FormControlLabel
+            value={Games.VR}
+            classes={{
+              label: 'text-white'
+            }}
+            control={<Radio />}
+            label={Games.VR}
+          />
         </RadioGroup>
       </FormControl>
 
