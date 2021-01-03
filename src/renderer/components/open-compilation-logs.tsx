@@ -26,7 +26,7 @@ export function LogsListItem({
       <h3 className="select-all sticky bg-darker top-0 pb-2">{script.name}</h3>
       <code className="p-4 bg-gray-700 block w-full rounded">
         {logs.split('\n').map((log, i) => (
-          <span className="font-mono select-text break-words" key={i}>
+          <span className="font-mono text-xs select-text break-words" key={i}>
             {log} <br />
           </span>
         ))}
