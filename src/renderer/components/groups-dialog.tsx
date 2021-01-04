@@ -144,30 +144,26 @@ export function GroupsDialog({
       }
       content={dialogContent}
     >
-      <form onSubmit={onSubmitGroup}>
-        <TextField
-          label={t('page.groups.dialog.name')}
-          name="group-name"
-          id="group-name"
-          autoFocus
-          value={name}
-          onChange={onChangeName}
-        />
-        {scripts.length > 0 ? (
-          <div className="paper overflow-auto max-h-36 h-full mt-4 outline-none">
-            <GroupsDialogList
-              scripts={scripts}
-              onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup}
-            />
-          </div>
-        ) : (
-          <div className="paper overflow-auto max-h-36 h-full mt-4 outline-none">
-            <p className="text-gray-400">
-              {t('page.groups.dialog.dropScripts')}
-            </p>
-          </div>
-        )}
-      </form>
+      <TextField
+        label={t('page.groups.dialog.name')}
+        name="group-name"
+        id="group-name"
+        autoFocus
+        value={name}
+        onChange={onChangeName}
+      />
+      {scripts.length > 0 ? (
+        <div className="paper overflow-auto max-h-36 h-full mt-4 outline-none">
+          <GroupsDialogList
+            scripts={scripts}
+            onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup}
+          />
+        </div>
+      ) : (
+        <div className="paper overflow-auto max-h-36 h-full mt-4 outline-none">
+          <p className="text-gray-400">{t('page.groups.dialog.dropScripts')}</p>
+        </div>
+      )}
     </Dialog>
   )
 }

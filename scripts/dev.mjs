@@ -69,9 +69,8 @@ async function dev() {
     console.info(track(), 'Main built')
   }
 
-  const mainWatcher = chokidar.watch(
-    `${path.resolve('src', 'main') + path.sep}**${path.sep}*.ts`
-  )
+  const mainSources = path.join(path.resolve('src/main'), '**', '*.ts')
+  const mainWatcher = chokidar.watch(mainSources)
 
   mainWatcher.on('ready', () => {
     mainWatcher.on(

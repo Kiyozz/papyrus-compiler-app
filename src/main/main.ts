@@ -58,9 +58,6 @@ async function createWindow() {
   })
 
   win.on('ready-to-show', () => {
-    // loading.hide()
-    // loading.close()
-
     logger.debug('the window is ready to show')
 
     win!.show()
