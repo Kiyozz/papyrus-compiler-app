@@ -5,6 +5,7 @@
  */
 
 export default {
+  loading: 'Loading',
   nav: {
     compilation: 'Compilation',
     groups: 'Groups',

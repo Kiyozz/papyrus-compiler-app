@@ -18,6 +18,7 @@ import { track } from './track.mjs'
 process.env.NODE_ENV = 'development'
 
 let electronProcess
+const electronBin = process.platform === 'win32' ? 'electron.cmd' : 'electron'
 
 function startMain() {
   if (electronProcess) {
@@ -29,7 +30,7 @@ function startMain() {
 
   console.info(track(), 'Start main')
   electronProcess = spawn(
-    path.resolve(path.resolve('node_modules/.bin/electron')),
+    path.resolve(path.resolve(`node_modules/.bin/${electronBin}`)),
     ['dist/main/main.js', '--inspect']
   )
 

@@ -141,6 +141,7 @@ input.MuiInputBase-inputAdornedStart {
 
 .menu {
   @apply flex flex-col gap-1 py-1.5 bg-gray-700 rounded min-w-full;
+  z-index: 1;
 }
 
 .menu .item {

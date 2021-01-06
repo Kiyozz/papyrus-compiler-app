@@ -5,6 +5,7 @@
  */
 
 export default {
+  loading: 'Chargement',
   nav: {
     compilation: 'Compilation',
     groups: 'Groupes',

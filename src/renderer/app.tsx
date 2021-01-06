@@ -6,6 +6,7 @@
 
 import React, { useCallback, useEffect } from 'react'
 
+import { useTranslation } from 'react-i18next'
 import { DialogChangelog } from './components/dialog-changelog'
 import { PageContextProvider } from './components/page-context'
 import { PageDrawer } from './components/page-drawer'
@@ -18,6 +19,7 @@ export function App() {
   const getLatestNotes = useAction(actions.changelog.latestNotes.start)
   const setShowNotes = useAction(actions.changelog.showNotes)
   const initialized = useStoreSelector(state => state.initialization)
+  const { t } = useTranslation()
 
   useEffect(() => {
     initialization()
@@ -37,16 +39,26 @@ export function App() {
   )
 
   return (
-    <div className="flex min-h-full">
-      {initialized && <DialogChangelog onClose={onClickCloseChangelogPopup} />}
-
-      <PageContextProvider>
-        <PageDrawer />
-
-        <div className={`h-full ${isDrawerExpand ? 'pl-48' : 'pl-14'} w-full`}>
-          <Routes />
+    <>
+      {!initialized && (
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-darker z-10">
+          <div className="text-center text-4xl">{t('loading')}</div>
         </div>
-      </PageContextProvider>
-    </div>
+      )}
+
+      <div className={`flex min-h-full ${!initialized ? 'opacity-0' : ''}`}>
+        <DialogChangelog onClose={onClickCloseChangelogPopup} />
+
+        <PageContextProvider>
+          <PageDrawer />
+
+          <div
+            className={`h-full ${isDrawerExpand ? 'pl-48' : 'pl-14'} w-full`}
+          >
+            <Routes />
+          </div>
+        </PageContextProvider>
+      </div>
+    </>
   )
 }
