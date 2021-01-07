@@ -1,3 +1,14 @@
+## 5.1.0 (2021-01-07) [v5.0.0...v5.1.0](https://github.com/Kiyozz/papyrus-compiler-app/compare/v5.0.0...v5.1.0) 
+
+### Features
+
+* add skyrim vr support ([c64d642](https://github.com/Kiyozz/papyrus-compiler-app/commit/c64d64284429243893f22a269deaee842410cb64))
+* smaller text in compilation logs ([32a000a](https://github.com/Kiyozz/papyrus-compiler-app/commit/32a000ae792c05b94d07bb3e3d30b5525340b0bd))
+
+### Bug Fixes
+
+* menu transparent, loading indicator ([9af41b0](https://github.com/Kiyozz/papyrus-compiler-app/commit/9af41b076dddd2007e73f165983de78e981371e4))
+
 ## 5.0.0 (2020-12-30) [v4.5.0...v5.0.0](https://github.com/Kiyozz/papyrus-compiler-app/compare/v4.5.0...v5.0.0)
 
 ### Features
