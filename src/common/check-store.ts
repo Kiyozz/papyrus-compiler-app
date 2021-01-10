@@ -106,7 +106,9 @@ function checkCompilerPath(appStore: AppStore) {
 
   if (
     is.nullOrUndefined(compilerPath) ||
-    (is.string(compilerPath) && is.emptyString(compilerPath.trim()))
+    (is.string(compilerPath) &&
+      is.emptyString(compilerPath.trim()) &&
+      is.nonEmptyString(gamePath))
   ) {
     appStore.set('compilerPath', join(gamePath, DEFAULT_COMPILER_PATH))
   }
