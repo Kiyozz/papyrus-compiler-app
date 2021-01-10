@@ -57,7 +57,9 @@ export function TextField({
         </label>
       )}
       <div
-        className={`relative input pb-0.5 flex${error ? ' input-danger' : ''}`}
+        className={`relative text-sm input pb-0.5 flex${
+          error ? ' input-danger' : ''
+        }`}
       >
         {startIcon && (
           <div

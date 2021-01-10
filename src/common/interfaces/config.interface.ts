@@ -14,6 +14,10 @@ interface ConfigMo2 {
   mods: string
 }
 
+interface Tutorials {
+  settings: boolean
+}
+
 export interface Config {
   mo2: ConfigMo2
   gameType: GameType
@@ -22,5 +26,6 @@ export interface Config {
   output: OutputPath
   compilerPath: CompilerPath
   groups: Group[]
+  tutorials: Tutorials
   __internal__: any
 }
