@@ -14,6 +14,7 @@ import { migrate410 } from './migrations/4.1.0.migration'
 import { migrate420 } from './migrations/4.2.0.migration'
 import { migrate510 } from './migrations/5.1.0.migration'
 import { checkStore } from './check-store'
+import { migrate520 } from './migrations/5.2.0.migration'
 
 const jsonPath = is.development
   ? join(__dirname, '../..', 'package.json')
@@ -36,6 +37,9 @@ export const defaultConfig: Config = {
   compilerPath: '',
   output: 'Data\\Scripts',
   groups: [],
+  tutorials: {
+    settings: true
+  },
   __internal__: {
     migrations: {
       version: json.version
@@ -55,6 +59,9 @@ const appStore = new Store<Config>({
     },
     '5.1.0': (store: AppStore) => {
       migrate510(store)
+    },
+    '5.2.0': (store: AppStore) => {
+      migrate520(store)
     }
   }
 } as any)

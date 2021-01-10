@@ -131,6 +131,26 @@ body {
   @apply underline text-blue-300 cursor-pointer;
 }
 
+.tooltip {
+  @apply absolute text-sm p-2 rounded text-white shadow-2xl flex gap-4 items-center z-20;
+}
+
+.tooltip::after {
+  content: '';
+  @apply absolute bottom-0 left-1/2;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #16161a;
+  transform: translate3d(-50%, 50%, 0);
+}
+
+.tooltip.tooltip-left::after {
+  @apply left-0;
+  transform: translate3d(0, 50%, 0);
+}
+
 /* ----- MUI ----- */
 
 input.MuiInputBase-inputAdornedStart {

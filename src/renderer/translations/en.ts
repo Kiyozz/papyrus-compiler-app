@@ -101,5 +101,28 @@ export default {
       invalidConfigurationMo2Instance:
         'Your configuration is incorrect. The mo2 instance at {{instance}} does not exist.'
     }
+  },
+  tutorials: {
+    close: 'Close',
+    ok: 'OK',
+    settings: {
+      ask: {
+        title: 'Setup the application',
+        text:
+          'This is the first time you start the application. Do you need help?',
+        needHelp: 'I need help'
+      },
+      game: {
+        text: 'Here, you can register your game information'
+      },
+      compiler: {
+        text:
+          'Here, you can register your papyrus compiler. Available after Creation Kit installation'
+      },
+      mo2: {
+        text:
+          "Here, you can register your MO2 configuration. Useless if you're using the app through MO2"
+      }
+    }
   }
 }

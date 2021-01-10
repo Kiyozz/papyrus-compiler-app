@@ -12,9 +12,9 @@ import { AppStore } from '../store'
 
 export function migrate420(store: AppStore) {
   const gamePath = store.get('gamePath')
+  const compilerPath = store.get('compilerPath')
 
-  if (is.nonEmptyString(gamePath)) {
-    const compilerPath = store.get('compilerPath')
+  if (is.nonEmptyString(gamePath) && is.nonEmptyString(compilerPath)) {
     const slashFunc = util.is.linux || util.is.macos ? toSlash : toAntiSlash
 
     store.set('compilerPath', slashFunc(path.join(gamePath, compilerPath)))
