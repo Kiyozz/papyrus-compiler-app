@@ -15,7 +15,7 @@ export function isProduction(): Promise<boolean> {
     return Promise.resolve(isProductionSaved)
   }
 
-  return ipcRenderer.invoke(IS_PRODUCTION).then(isProd => {
+  return ipcRenderer.invoke<boolean>(IS_PRODUCTION).then(isProd => {
     if (!isProductionRegistered) {
       isProductionRegistered = true
       isProductionSaved = isProd
