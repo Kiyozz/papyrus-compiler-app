@@ -81,8 +81,11 @@ export function PageContextProvider({
   const updateConfig = useCallback(
     (partialConfig: PartialDeep<Config>, override?: boolean) => {
       ipcRenderer
-        .invoke(EVENTS.CONFIG_UPDATE, { config: partialConfig, override })
-        .then((updatedConfig: Config) => {
+        .invoke<Config>(EVENTS.CONFIG_UPDATE, {
+          config: partialConfig,
+          override
+        })
+        .then(updatedConfig => {
           setConfig(updatedConfig)
           setGroups(selectGroups(updatedConfig))
         })
@@ -91,7 +94,7 @@ export function PageContextProvider({
   )
 
   const refreshConfig = useCallback(() => {
-    ipcRenderer.invoke(EVENTS.CONFIG_GET).then((refreshedConfig: Config) => {
+    ipcRenderer.invoke<Config>(EVENTS.CONFIG_GET).then(refreshedConfig => {
       setConfig(refreshedConfig)
       setGroups(selectGroups(refreshedConfig))
       refresh$.next(refreshedConfig)
@@ -99,7 +102,7 @@ export function PageContextProvider({
   }, [refresh$])
 
   useEffect(() => {
-    ipcRenderer.invoke(EVENTS.CONFIG_GET).then((initialConfig: Config) => {
+    ipcRenderer.invoke<Config>(EVENTS.CONFIG_GET).then(initialConfig => {
       setConfig(initialConfig)
       setGroups(selectGroups(initialConfig))
     })

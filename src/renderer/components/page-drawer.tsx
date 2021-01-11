@@ -69,7 +69,7 @@ export function PageDrawer() {
           {isDrawerExpand && (
             <div className="flex flex-col items-center">
               <h1 className="text-xl font-bold font-nova text-white">PCA</h1>
-              <span className="font-harmonia font-medium text-gray-300">
+              <span className="font-nova font-medium text-gray-300">
                 {version}
               </span>
             </div>
