@@ -22,6 +22,7 @@ import { registerMenu } from './menu.register'
 import { Logger } from './logger'
 import { ensureFiles, move, writeFile } from './services/path.service'
 import { registerIpcEvents } from './ipc-events.register'
+import { ClipboardCopyHandler } from './event-handlers/clipboard-copy.handler'
 
 const logger = new Logger('Initialize')
 
@@ -72,7 +73,8 @@ export async function initialize() {
     [EVENTS.FILES_STATS, new FileStatHandler()],
     [EVENTS.GET_VERSION, new GetVersionHandler()],
     [EVENTS.ERROR, new InAppErrorHandler()],
-    [EVENTS.IS_PRODUCTION, new IsProductionHandler()]
+    [EVENTS.IS_PRODUCTION, new IsProductionHandler()],
+    [EVENTS.CLIPBOARD_COPY, new ClipboardCopyHandler()]
   ])
 
   logger.debug(appStore.path)

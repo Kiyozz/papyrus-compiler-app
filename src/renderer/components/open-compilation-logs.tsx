@@ -13,6 +13,7 @@ import { ScriptInterface } from '../interfaces'
 import actions from '../redux/actions'
 import { useAction, useStoreSelector } from '../redux/use-store-selector'
 import { Dialog } from './dialog'
+import { usePageContext } from './page-context'
 
 export function LogsListItem({
   script,
@@ -21,12 +22,22 @@ export function LogsListItem({
   script: ScriptInterface
   logs: string
 }) {
+  const { copyToClipboard } = usePageContext()
+  const onClickCopyLogs = useCallback(() => {
+    copyToClipboard(`${script.name}\n\n${logs}\n`)
+  }, [copyToClipboard, logs, script.name])
+
   return (
     <div>
-      <h3 className="select-all sticky bg-darker top-0 pb-2">{script.name}</h3>
+      <div className="flex items-center justify-between bg-darker gap-4 pb-2 sticky top-0">
+        <h3 className="select-all">{script.name}</h3>
+        <button className="btn" onClick={onClickCopyLogs}>
+          Copy
+        </button>
+      </div>
       <code className="p-4 bg-gray-700 block w-full rounded">
         {logs.split('\n').map((log, i) => (
-          <span className="font-mono text-xs select-text break-words" key={i}>
+          <span className="font-mono text-xs break-words" key={i}>
             {log} <br />
           </span>
         ))}
