@@ -120,7 +120,7 @@ export async function compileScript(scriptName: string): Promise<string> {
   try {
     const result = await executeCommand(cmd, runner.cwd)
 
-    logger.debug('compilation result', result)
+    logger.debug('compilation result', scriptName, result)
 
     checkCommandResult(scriptName, result)
 

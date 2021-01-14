@@ -90,7 +90,7 @@ export function DialogChangelog({ onClose }: Props) {
   return (
     <>
       {showNotes && !isUserShowNotes && (
-        <div className="fixed z-10 bottom-3 left-3 bg-gray-800 py-3 items-center rounded text-sm text-white flex">
+        <div className="fixed z-20 bottom-3 left-3 bg-gray-800 py-3 items-center rounded text-sm text-white flex">
           <div className="px-2">
             {t('changelog.available.message', { version: latestVersion })}
           </div>

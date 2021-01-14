@@ -101,7 +101,7 @@ function MO2SettingsStep({ next }: { next: Next }) {
 
 function Overlay() {
   return (
-    <div className="fixed z-10 bg-black bg-opacity-60 top-0 left-0 right-0 bottom-0" />
+    <div className="fixed z-20 bg-black bg-opacity-60 top-0 left-0 right-0 bottom-0" />
   )
 }
 
@@ -159,7 +159,7 @@ export function TutorialSettings() {
     <>
       <Overlay />
       {step === Step.ASK && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black z-10 flex flex-col justify-center items-center">
+        <div className="fixed top-0 left-0 w-full h-full bg-black z-20 flex flex-col justify-center items-center">
           <div className="text-3xl">{t('tutorials.settings.ask.title')}</div>
           <div className="m-6 text-xl text-center">
             {t('tutorials.settings.ask.text')}

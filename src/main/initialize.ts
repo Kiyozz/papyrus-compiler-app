@@ -8,7 +8,6 @@ import { is } from 'electron-util'
 import * as EVENTS from '../common/events'
 import { appStore } from '../common/store'
 import { BadInstallationHandler } from './event-handlers/bad-installation.handler'
-import { ScriptCompileHandler } from './event-handlers/script-compile.handler'
 import { ConfigGetHandler } from './event-handlers/config-get.handler'
 import { ConfigUpdateHandler } from './event-handlers/config-update.handler'
 import { DialogHandler } from './event-handlers/dialog.handler'
@@ -23,6 +22,8 @@ import { Logger } from './logger'
 import { ensureFiles, move, writeFile } from './services/path.service'
 import { registerIpcEvents } from './ipc-events.register'
 import { ClipboardCopyHandler } from './event-handlers/clipboard-copy.handler'
+import { EventInterface } from './interfaces/event.interface'
+import { ScriptCompileEvent } from './event-handlers/script-compile.event'
 
 const logger = new Logger('Initialize')
 
@@ -64,8 +65,7 @@ export async function initialize() {
   await installExtensions()
 
   const openFileHandler = new OpenFileHandler()
-  const events = new Map<string, EventHandlerInterface>([
-    [EVENTS.COMPILE_SCRIPT, new ScriptCompileHandler()],
+  const handlers = new Map<string, EventHandlerInterface>([
     [EVENTS.OPEN_DIALOG, new DialogHandler()],
     [EVENTS.BAD_INSTALLATION, new BadInstallationHandler()],
     [EVENTS.CONFIG_UPDATE, new ConfigUpdateHandler()],
@@ -76,6 +76,9 @@ export async function initialize() {
     [EVENTS.IS_PRODUCTION, new IsProductionHandler()],
     [EVENTS.CLIPBOARD_COPY, new ClipboardCopyHandler()]
   ])
+  const events = new Map<string, EventInterface>([
+    [EVENTS.COMPILE_SCRIPT_START, new ScriptCompileEvent()]
+  ])
 
   logger.debug(appStore.path)
 
@@ -85,5 +88,5 @@ export async function initialize() {
     }
   })
 
-  registerIpcEvents(events)
+  registerIpcEvents(handlers, events)
 }

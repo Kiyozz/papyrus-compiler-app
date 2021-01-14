@@ -6,11 +6,13 @@
 
 import {
   ipcMain as baseIpcMain,
+  IpcMainEvent,
   IpcMainInvokeEvent,
   ipcRenderer as baseIpcRenderer
 } from 'electron'
 
 type MainInvokeListener<Args> = (event: IpcMainInvokeEvent, args: Args) => void
+type MainListener<Args> = (event: IpcMainEvent, args: Args) => void
 
 class IpcException extends Error {
   constructor(message: string) {
@@ -31,11 +33,28 @@ class IpcRenderer {
       }
     )
   }
+
+  send<Params = any>(channel: string, ...args: Params[]): void {
+    baseIpcRenderer.send(channel, ...(args ?? []))
+  }
+
+  once<Result = unknown>(
+    channel: string,
+    listener: (args: Result) => void
+  ): void {
+    baseIpcRenderer.once(channel, (event, args: Result) => {
+      listener(args)
+    })
+  }
 }
 
 class IpcMain {
   handle<Result = any>(channel: string, listener: MainInvokeListener<Result>) {
     return baseIpcMain.handle(channel, listener)
+  }
+
+  on<Args = unknown>(channel: string, listener: MainListener<Args>) {
+    baseIpcMain.on(channel, listener)
   }
 }
 

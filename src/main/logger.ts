@@ -7,6 +7,13 @@
 import log, { LogFunctions } from 'electron-log'
 import { is } from 'electron-util'
 
+const isDev = is.development
+const isDebug = process.argv.includes('--debug')
+
+if (!isDev && !isDebug) {
+  log.transports.console.level = false
+}
+
 export class Logger {
   private logger: LogFunctions
   catchErrors = log.catchErrors
@@ -45,13 +52,7 @@ export class Logger {
     this.logger.warn(...params)
   }
 
-  deprecated(message: string): void {
-    if (this.isDebugEnabled()) {
-      this.logger.debug(`deprecated: ${message}`)
-    }
-  }
-
   isDebugEnabled(): boolean {
-    return is.development || process.argv.includes('--debug')
+    return is.development || isDebug
   }
 }

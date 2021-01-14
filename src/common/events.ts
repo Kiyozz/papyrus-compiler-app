@@ -5,7 +5,8 @@
  */
 
 export const FILES_STATS = 'app-files-stats'
-export const COMPILE_SCRIPT = 'app-compile-script'
+export const COMPILE_SCRIPT_START = 'app-compile-script-start'
+export const COMPILE_SCRIPT_FINISH = 'app-compile-script-finish'
 export const GET_VERSION = 'app-get-version'
 export const BAD_INSTALLATION = 'app-bad-installation'
 export const OPEN_DIALOG = 'app-open-dialog'
