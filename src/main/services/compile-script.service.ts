@@ -6,7 +6,7 @@
 
 import is from '@sindresorhus/is'
 import { appStore } from '../../common/store'
-import { getExecutable, toOtherSource, toSource } from '../../common/game'
+import { toExecutable, toOtherSource, toSource } from '../../common/game'
 import { CompilationException } from '../exceptions/compilationException'
 import { ConfigurationException } from '../exceptions/configuration.exception'
 import { generateCompilerCmd } from '../utils/generate-compiler-cmd.util'
@@ -53,7 +53,7 @@ export async function compileScript(scriptName: string): Promise<string> {
   }
 
   logger.debug('runner', runner)
-  const gameExe = getExecutable(gameType)
+  const gameExe = toExecutable(gameType)
   const gameExeAbsolute = path.join(gamePath, gameExe)
   logger.debug('game executable', gameExeAbsolute)
 

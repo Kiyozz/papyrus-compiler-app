@@ -8,7 +8,7 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import debounce from 'debounce-fn'
-import { Games, GameType } from '../../../common/game'
+import { Game } from '../../../common/game'
 
 import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
@@ -45,7 +45,7 @@ export function Settings() {
     actions.settingsPage.detectBadInstallation.start
   )
   const setGame = useCallback(
-    (game: GameType) => updateConfig({ gameType: game }),
+    (game: Game) => updateConfig({ gameType: game }),
     [updateConfig]
   )
   const setGameFolder = useCallback(
@@ -78,9 +78,9 @@ export function Settings() {
   const onClickRadio = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setIsInstallationBad(false)
-      const value = e.target.value as GameType
+      const value = e.target.value as Game
 
-      if (![Games.LE, Games.SE, Games.VR].includes(value)) {
+      if (![Game.Le, Game.Se, Game.Vr].includes(value)) {
         return
       }
 

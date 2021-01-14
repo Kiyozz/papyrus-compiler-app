@@ -122,7 +122,7 @@ export default {
       },
       mo2: {
         text:
-          "Ici, vous pouvez enregistrer vos informations MO2. Inutile si vous utilisez l'application à travers MO2"
+          "Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez l'application à travers MO2"
       }
     }
   }

@@ -15,6 +15,7 @@ import { migrate420 } from './migrations/4.2.0.migration'
 import { migrate510 } from './migrations/5.1.0.migration'
 import { checkStore } from './check-store'
 import { migrate520 } from './migrations/5.2.0.migration'
+import { Game } from './game'
 
 const jsonPath = is.development
   ? join(__dirname, '../..', 'package.json')
@@ -30,8 +31,8 @@ export const defaultConfig: Config = {
   gameType: (process.env.ELECTRON_WEBPACK_APP_MOD_URL ?? '').includes(
     'specialedition'
   )
-    ? 'Skyrim SE'
-    : 'Skyrim LE',
+    ? Game.Se
+    : Game.Le,
   gamePath: '',
   flag: 'TESV_Papyrus_Flags.flg',
   compilerPath: '',
