@@ -34,6 +34,7 @@ interface PageContextInterface {
   groups: Group[]
   updateConfig: (config: PartialDeep<Config>, override?: boolean) => void
   refreshConfig: () => void
+  copyToClipboard: (text: string) => void
   onRefreshConfig: Observable<Config>
 }
 
@@ -93,6 +94,10 @@ export function PageContextProvider({
     []
   )
 
+  const copyToClipboard = useCallback(async (text: string) => {
+    await ipcRenderer.invoke(EVENTS.CLIPBOARD_COPY, { text })
+  }, [])
+
   const refreshConfig = useCallback(() => {
     ipcRenderer.invoke<Config>(EVENTS.CONFIG_GET).then(refreshedConfig => {
       setConfig(refreshedConfig)
@@ -132,7 +137,8 @@ export function PageContextProvider({
             isDragActive,
             setOnDrop,
             setAddScriptsButton,
-            onRefreshConfig
+            onRefreshConfig,
+            copyToClipboard
           }}
         >
           <DropFilesOverlay open={isDragActive && onDrop !== null} />
