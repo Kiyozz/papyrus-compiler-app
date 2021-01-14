@@ -102,28 +102,5 @@ export default {
       invalidConfigurationScripts:
         "Votre configuration n'est pas valide. Impossible de valider l'installation du Creation Kit. L'application vérifie la présence du fichier Actor.psc pour valider votre installation du Creation Kit. Impossible de trouver le fichier Actor.psc dans les dossiers Source\\Scripts ou Scripts\\Source. Si vous utilisez l'integration MO2 de l'application, les dossiers overwrite et mods sont également vérifiés."
     }
-  },
-  tutorials: {
-    close: 'Fermer',
-    ok: 'OK',
-    settings: {
-      ask: {
-        title: "Configurer l'application",
-        text:
-          "C'est la première fois que vous lancez l'application. Suivre le tutoriel ?",
-        needHelp: "J'ai besoin d'aide"
-      },
-      game: {
-        text: 'Ici, vous pouvez enregistrer les informations de votre jeu'
-      },
-      compiler: {
-        text:
-          "Ici, vous pouvez enregistrer le chemin vers le compilateur Papyrus. Disponible après l'installation de Creation Kit"
-      },
-      mo2: {
-        text:
-          "Ici, vous pouvez enregistrer vos informations MO2. Inutile si vous utilisez l'application à travers MO2"
-      }
-    }
   }
 }
