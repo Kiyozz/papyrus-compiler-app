@@ -48,8 +48,8 @@ export function TextField({
     <>
       {label && (
         <label
-          className={`text-xs block text-gray-300 ${
-            error ? 'label-danger' : ''
+          className={`text-xs block text-gray-300${
+            error ? ' label-danger' : ''
           }`}
           htmlFor={id}
         >

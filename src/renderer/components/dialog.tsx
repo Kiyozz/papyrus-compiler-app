@@ -73,7 +73,7 @@ export function Dialog({
       <div
         ref={container}
         className={`fixed top-0 left-0 flex justify-center items-center ${
-          fullWidth ? 'w-full text-white' : ''
+          fullWidth ? ' w-full text-white' : ''
         } h-screen bg-black bg-opacity-70`}
       >
         <div
