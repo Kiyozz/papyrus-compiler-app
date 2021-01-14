@@ -43,10 +43,6 @@ export class ScriptCompileEvent implements EventInterface<string> {
 
     const endEvent = `${EVENTS.COMPILE_SCRIPT_FINISH}-${script}`
 
-    if (script === 'Action.psc') {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-    }
-
     try {
       const result = this.cleanSuccessLog(script, await compileScript(script))
 
