@@ -11,7 +11,7 @@ import RadioGroup from '@material-ui/core/RadioGroup'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Games, getExecutable } from '../../../common/game'
+import { Game, toExecutable } from '../../../common/game'
 import { DialogTextField } from '../../components/dialog-text-field'
 import { usePageContext } from '../../components/page-context'
 import { Alert } from '../../components/alert'
@@ -35,7 +35,7 @@ export function SettingsGame({
     config: { gameType, gamePath, compilerPath }
   } = usePageContext()
   const { isInstallationBad } = useSettings()
-  const exe = getExecutable(gameType)
+  const exe = toExecutable(gameType)
 
   return (
     <div className="paper relative" id="settings-game">
@@ -43,28 +43,28 @@ export function SettingsGame({
       <FormControl component="fieldset" fullWidth>
         <RadioGroup row value={gameType} onChange={onClickRadio}>
           <FormControlLabel
-            value={Games.LE}
+            value={Game.Le}
             classes={{
               label: 'text-white'
             }}
             control={<Radio />}
-            label={Games.LE}
+            label={Game.Le}
           />
           <FormControlLabel
-            value={Games.SE}
+            value={Game.Se}
             classes={{
               label: 'text-white'
             }}
             control={<Radio />}
-            label={Games.SE}
+            label={Game.Se}
           />
           <FormControlLabel
-            value={Games.VR}
+            value={Game.Vr}
             classes={{
               label: 'text-white'
             }}
             control={<Radio />}
-            label={Games.VR}
+            label={Game.Vr}
           />
         </RadioGroup>
       </FormControl>

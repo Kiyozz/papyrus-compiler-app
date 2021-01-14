@@ -7,7 +7,7 @@
 import is from '@sindresorhus/is'
 import { appStore } from '../../common/store'
 import { toSlash } from '../../common/slash'
-import { getExecutable, toOtherSource, toSource } from '../../common/game'
+import { toExecutable, toOtherSource, toSource } from '../../common/game'
 import { Logger } from '../logger'
 import * as path from '../services/path.service'
 import { EventHandlerInterface } from '../interfaces/event-handler.interface'
@@ -48,7 +48,7 @@ export class BadInstallationHandler implements EventHandlerInterface {
 
     const gamePath = appStore.get('gamePath')
     const gameType = appStore.get('gameType')
-    const executable = getExecutable(gameType)
+    const executable = toExecutable(gameType)
 
     return Promise.resolve(
       path.exists(path.join(gamePath, executable)) ? false : 'game'

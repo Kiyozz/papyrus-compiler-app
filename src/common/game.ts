@@ -4,43 +4,45 @@
  * All rights reserved.
  */
 
-export type GameType = 'Skyrim SE' | 'Skyrim LE' | 'Skyrim VR'
 export type GamePath = string
 export type CompilerPath = string
 export type OutputPath = string
-export type GameSource = 'Source/Scripts' | 'Scripts/Source'
-export type Executable = 'SkyrimSE.exe' | 'TESV.exe' | 'SkyrimVR.exe'
 export type Flag = 'TESV_Papyrus_Flags.flg'
 
-interface Games {
-  LE: GameType
-  SE: GameType
-  VR: GameType
+export enum GameSource {
+  Le = 'Scripts/Source',
+  Se = 'Source/Scripts'
 }
 
-export const Games: Games = {
-  LE: 'Skyrim LE',
-  SE: 'Skyrim SE',
-  VR: 'Skyrim VR'
+export enum Executable {
+  Se = 'SkyrimSE.exe',
+  Le = 'TESV.exe',
+  Vr = 'SkyrimVR.exe'
 }
 
-export function toSource(game: GameType): GameSource {
-  return game === Games.LE ? 'Scripts/Source' : 'Source/Scripts'
+export enum Game {
+  Le = 'Skyrim LE',
+  Se = 'Skyrim SE',
+  Vr = 'Skyrim VR'
 }
 
-export function toOtherSource(game: GameType): GameSource {
-  return game === Games.LE ? 'Source/Scripts' : 'Scripts/Source'
+export function toSource(game: Game): GameSource {
+  return game === Game.Le ? GameSource.Le : GameSource.Se
 }
 
-export function getExecutable(game: GameType): Executable {
+export function toOtherSource(game: Game): GameSource {
+  return game === Game.Le ? GameSource.Se : GameSource.Le
+}
+
+export function toExecutable(game: Game): Executable {
   switch (game) {
-    case Games.LE:
-      return 'TESV.exe'
-    case Games.SE:
-      return 'SkyrimSE.exe'
-    case Games.VR:
-      return 'SkyrimVR.exe'
+    case Game.Le:
+      return Executable.Le
+    case Game.Se:
+      return Executable.Se
+    case Game.Vr:
+      return Executable.Vr
     default:
-      return 'SkyrimSE.exe'
+      return Executable.Se
   }
 }

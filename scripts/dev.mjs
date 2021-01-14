@@ -54,10 +54,10 @@ function startMain() {
   )
 
   electronProcess.stdout.on('data', data => {
-    console.log(track(), data.toString())
+    console.log(track(), data.toString().trim())
   })
   electronProcess.stderr.on('data', data => {
-    console.log(track(), 'STDERR', data.toString())
+    console.log(track(), 'STDERR', data.toString().trim())
   })
 
   electronProcess.on('close', (code, signal) => {

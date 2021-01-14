@@ -121,7 +121,7 @@ export default {
       },
       mo2: {
         text:
-          "Here, you can register your MO2 configuration. Useless if you're using the app through MO2"
+          'Here, you can register your MO2 configuration. Ignore this if you are running the app through MO2'
       }
     }
   }

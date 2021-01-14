@@ -6,7 +6,7 @@
 
 import is from '@sindresorhus/is'
 import { join } from '../main/services/path.service'
-import { Games } from './game'
+import { Game } from './game'
 import { AppStore } from './store'
 import { Config } from './interfaces/config.interface'
 import { validateGroup } from './validators/group.validator'
@@ -74,7 +74,7 @@ function checkGameType(appStore: AppStore, defaultConfig: Config) {
     resetGameType()
   }
 
-  if (gameType !== Games.LE && gameType !== Games.SE && gameType !== Games.VR) {
+  if (gameType !== Game.Le && gameType !== Game.Se && gameType !== Game.Vr) {
     resetGameType()
   }
 }

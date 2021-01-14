@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { CompilerPath, Flag, GamePath, GameType, OutputPath } from '../game'
+import { CompilerPath, Flag, Game, GamePath, OutputPath } from '../game'
 import { Group } from './group.interface'
 
 interface ConfigMo2 {
@@ -20,7 +20,7 @@ interface Tutorials {
 
 export interface Config {
   mo2: ConfigMo2
-  gameType: GameType
+  gameType: Game
   gamePath: GamePath
   flag: Flag
   output: OutputPath

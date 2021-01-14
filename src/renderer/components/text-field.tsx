@@ -72,6 +72,7 @@ export function TextField({
           </div>
         )}
         <input
+          spellCheck={false}
           autoFocus={autoFocus}
           id={id}
           name={name}
