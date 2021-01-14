@@ -13,7 +13,6 @@ import { PageDrawer } from './components/page-drawer'
 import actions from './redux/actions'
 import { useAction, useStoreSelector } from './redux/use-store-selector'
 import { Routes } from './routes'
-import { TutorialSettings } from './components/tutorials/tutorial-settings'
 
 export function App() {
   const initialization = useAction(actions.initialization.start)
@@ -42,7 +41,7 @@ export function App() {
   return (
     <>
       {!initialized && (
-        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-darker z-20">
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-darker z-10">
           <div className="text-center text-4xl">{t('loading')}</div>
         </div>
       )}
@@ -52,8 +51,6 @@ export function App() {
 
         <PageContextProvider>
           <PageDrawer />
-
-          {initialized && <TutorialSettings />}
 
           <div
             className={`h-full ${isDrawerExpand ? 'pl-48' : 'pl-14'} w-full`}

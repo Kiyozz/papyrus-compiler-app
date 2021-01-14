@@ -40,13 +40,7 @@ export function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
         {
           label: 'Reset',
           click() {
-            appStore.store = {
-              ...defaultConfig,
-              tutorials: {
-                ...defaultConfig.tutorials,
-                settings: false
-              }
-            }
+            appStore.store = defaultConfig
           }
         }
       ]

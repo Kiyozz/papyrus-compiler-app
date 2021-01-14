@@ -38,7 +38,7 @@ export function SettingsGame({
   const exe = getExecutable(gameType)
 
   return (
-    <div className="paper relative" id="settings-game">
+    <div className="paper">
       <h1 className="text-2xl text-white mb-3">{t('page.settings.game')}</h1>
       <FormControl component="fieldset" fullWidth>
         <RadioGroup row value={gameType} onChange={onClickRadio}>
@@ -80,7 +80,7 @@ export function SettingsGame({
         />
       </div>
 
-      <div className="mt-3 relative" id="settings-compiler">
+      <div className="mt-3">
         <DialogTextField
           id="compiler-path"
           error={isInstallationBad === 'compiler'}
