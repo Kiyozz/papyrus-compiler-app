@@ -69,7 +69,6 @@
     "date-fns": "~2.15.0",
     "debounce-fn": "~4.0.0",
     "deepmerge": "~4.2.2",
-    "dependency-tree": "~8.0.0",
     "electron": "~11.1.1",
     "electron-builder": "~22.8.1",
     "electron-default-menu": "~1.0.2",
