@@ -124,6 +124,34 @@ function checkNotSupportedKeys(appStore: AppStore, defaultConfig: Config) {
   })
 }
 
+function checkTutorials(appStore: AppStore, defaultConfig: Config) {
+  const tutorials = appStore.get('tutorials')
+
+  if (is.nullOrUndefined(tutorials)) {
+    appStore.set('tutorials', defaultConfig.tutorials)
+  } else if (!is.boolean(tutorials.settings)) {
+    appStore.set('tutorials.settings', defaultConfig.tutorials.settings)
+  }
+}
+
+function checkCompilation(appStore: AppStore, defaultConfig: Config) {
+  const compilation = appStore.get('compilation')
+
+  if (is.nullOrUndefined(compilation)) {
+    appStore.set('compilation', defaultConfig.compilation)
+  } else if (is.numericString(compilation.concurrentScripts)) {
+    appStore.set(
+      'compilation.concurrentScripts',
+      parseInt(compilation.concurrentScripts, 10)
+    )
+  } else if (!is.number(compilation.concurrentScripts)) {
+    appStore.set(
+      'compilation.concurrentScripts',
+      defaultConfig.compilation.concurrentScripts
+    )
+  }
+}
+
 export function checkStore(appStore: AppStore, defaultConfig: Config) {
   checkMo2(appStore, defaultConfig)
   checkGameType(appStore, defaultConfig)
@@ -132,5 +160,7 @@ export function checkStore(appStore: AppStore, defaultConfig: Config) {
   checkCompilerPath(appStore)
   checkOutput(appStore, defaultConfig)
   checkGroups(appStore, defaultConfig)
+  checkTutorials(appStore, defaultConfig)
+  checkCompilation(appStore, defaultConfig)
   checkNotSupportedKeys(appStore, defaultConfig)
 }

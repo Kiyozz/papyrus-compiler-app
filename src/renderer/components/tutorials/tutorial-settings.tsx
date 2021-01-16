@@ -4,18 +4,20 @@
  * All rights reserved.
  */
 
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useNavigate } from '@reach/router'
 import { useTranslation } from 'react-i18next'
 import { usePageContext } from '../page-context'
 
 enum Step {
-  ASK,
-  GAME,
-  COMPILER,
-  MO2,
-  END
+  Waiting,
+  Ask,
+  Game,
+  Compiler,
+  Mo2,
+  Concurrent,
+  End
 }
 
 type Next = () => void
@@ -28,8 +30,12 @@ function getCompilerSettingsAnchor() {
   return document.querySelector('#settings-compiler')
 }
 
-function getMO2SettingsAnchor() {
+function getMo2SettingsAnchor() {
   return document.querySelector('#settings-mo2')
+}
+
+function getConcurrentSettingsAnchor() {
+  return document.querySelector('#compilation-concurrentScripts')
 }
 
 function GameSettingsStep({ next }: { next: Next }) {
@@ -77,9 +83,9 @@ function CompilerSettingsStep({ next }: { next: Next }) {
   )
 }
 
-function MO2SettingsStep({ next }: { next: Next }) {
+function Mo2SettingsStep({ next }: { next: Next }) {
   const { t } = useTranslation()
-  const stepAnchor = useMemo(() => getMO2SettingsAnchor(), [])
+  const stepAnchor = useMemo(() => getMo2SettingsAnchor(), [])
   const onClickOk = useCallback(() => next(), [next])
 
   if (!stepAnchor) {
@@ -89,6 +95,28 @@ function MO2SettingsStep({ next }: { next: Next }) {
   return createPortal(
     <div className="bg-darker -top-12 tooltip tooltip-left">
       <div>{t('tutorials.settings.mo2.text')}</div>
+      <div>
+        <button className="btn btn-primary" onClick={onClickOk}>
+          {t('tutorials.ok')}
+        </button>
+      </div>
+    </div>,
+    stepAnchor
+  )
+}
+
+function ConcurrentSettingsStep({ next }: { next: Next }) {
+  const { t } = useTranslation()
+  const stepAnchor = useMemo(() => getConcurrentSettingsAnchor(), [])
+  const onClickOk = useCallback(() => next(), [next])
+
+  if (!stepAnchor) {
+    return null
+  }
+
+  return createPortal(
+    <div className="bg-darker -top-12 tooltip">
+      <div>{t('tutorials.settings.compilation.concurrent.text')}</div>
       <div>
         <button className="btn btn-primary" onClick={onClickOk}>
           {t('tutorials.ok')}
@@ -117,7 +145,7 @@ export function TutorialSettings() {
   const { t } = useTranslation()
   const { config, updateConfig } = usePageContext()
   const navigate = useNavigate()
-  const [step, setStep] = useState(Step.ASK)
+  const [step, setStep] = useState(Step.Waiting)
 
   const onClickClose = useCallback(() => {
     updateConfig({
@@ -130,26 +158,38 @@ export function TutorialSettings() {
 
   const onClickNeedHelp = useCallback(() => {
     navigate('/settings').then(() => {
-      setStep(Step.GAME)
+      setStep(Step.Game)
     })
   }, [navigate])
 
-  const onNextStepOne = useCallback(() => {
-    setStep(Step.COMPILER)
+  const onNextStepGame = useCallback(() => {
+    setStep(Step.Compiler)
   }, [])
 
-  const onNextStepTwo = useCallback(() => {
-    setStep(Step.MO2)
+  const onNextStepCompiler = useCallback(() => {
+    setStep(Step.Concurrent)
   }, [])
 
-  const onNextStepThree = useCallback(() => {
-    setStep(Step.END)
+  const onNextStepConcurrent = useCallback(() => {
+    setStep(Step.Mo2)
+  }, [])
+
+  const onNextStepMo2 = useCallback(() => {
+    setStep(Step.End)
     updateConfig({
       tutorials: {
         settings: false
       }
     })
   }, [updateConfig])
+
+  useEffect(() => {
+    const time = setTimeout(() => {
+      setStep(Step.Ask)
+    }, 1000)
+
+    return () => clearTimeout(time)
+  }, [])
 
   if (!config.tutorials.settings) {
     return null
@@ -158,28 +198,42 @@ export function TutorialSettings() {
   return (
     <>
       <Overlay />
-      {step === Step.ASK && (
+      {(step === Step.Ask || step === Step.Waiting) && (
         <div className="fixed top-0 left-0 w-full h-full bg-black z-20 flex flex-col justify-center items-center">
           <div className="text-3xl">{t('tutorials.settings.ask.title')}</div>
           <div className="m-6 text-xl text-center">
             {t('tutorials.settings.ask.text')}
           </div>
           <div className="flex gap-4">
-            <button className="btn btn-primary" onClick={onClickNeedHelp}>
+            <button
+              className="btn btn-primary"
+              onClick={onClickNeedHelp}
+              disabled={step === Step.Waiting}
+            >
               {t('tutorials.settings.ask.needHelp')}
             </button>
-            <button className="btn" onClick={onClickClose}>
+            <button
+              className="btn"
+              onClick={onClickClose}
+              disabled={step === Step.Waiting}
+            >
               {t('tutorials.close')}
             </button>
           </div>
         </div>
       )}
 
-      {step === Step.GAME && <GameSettingsStep next={onNextStepOne} />}
+      {step === Step.Game && <GameSettingsStep next={onNextStepGame} />}
 
-      {step === Step.COMPILER && <CompilerSettingsStep next={onNextStepTwo} />}
+      {step === Step.Compiler && (
+        <CompilerSettingsStep next={onNextStepCompiler} />
+      )}
 
-      {step === Step.MO2 && <MO2SettingsStep next={onNextStepThree} />}
+      {step === Step.Concurrent && (
+        <ConcurrentSettingsStep next={onNextStepConcurrent} />
+      )}
+
+      {step === Step.Mo2 && <Mo2SettingsStep next={onNextStepMo2} />}
     </>
   )
 }

@@ -9,6 +9,7 @@ import FolderOpenIcon from '@material-ui/icons/FolderOpen'
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import is from '@sindresorhus/is'
 import { apiFactory } from '../redux/api/api-factory'
 
 import { DialogType } from '../../common/interfaces/dialog.interface'
@@ -74,9 +75,11 @@ export function DialogTextField({
   }, [])
 
   const onChangeInput = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      onChange(newValue)
+    (newValue: string | number) => {
+      if (is.string(newValue)) {
+        setValue(newValue)
+        onChange(newValue)
+      }
     },
     [onChange]
   )
@@ -93,6 +96,7 @@ export function DialogTextField({
       iconOnMouseEnter={handleMouseEnter}
       iconOnMouseLeave={handleMouseLeave}
       iconOnClick={onClickInput}
+      inputClassName="text-xs"
     />
   )
 }

@@ -18,6 +18,7 @@ import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 import { SettingsContextProvider } from './settings-context'
 import { SettingsGame } from './settings-game'
 import { SettingsMo2 } from './settings-mo2'
+import { SettingsCompilation } from './settings-compilation'
 
 export function Settings() {
   const { t } = useTranslation()
@@ -183,6 +184,8 @@ export function Settings() {
             onClickRefreshInstallation={onClickRefreshInstallation}
             onChangeCompilerPath={onChangeCompilerPath}
           />
+
+          <SettingsCompilation />
 
           <SettingsMo2
             onChangeMo2={onChangeMo2}

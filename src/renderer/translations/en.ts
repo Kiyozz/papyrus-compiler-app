@@ -73,6 +73,13 @@ export default {
         errorInstance:
           'The folder "{{folder}}" does not contains {{requiredFolders}} folders.'
       },
+      compilation: {
+        title: 'Compilation',
+        concurrentScripts: {
+          label: 'Number of concurrently compiled scripts',
+          info: 'Reduce if you experience latency when starting the compilation'
+        }
+      },
       version: 'Version {{version}}'
     }
   },
@@ -118,6 +125,12 @@ export default {
       compiler: {
         text:
           'Here, you can register your papyrus compiler. Available after Creation Kit installation'
+      },
+      compilation: {
+        concurrent: {
+          text:
+            'Here, you can register how many scripts that are concurrently compiled.'
+        }
       },
       mo2: {
         text:

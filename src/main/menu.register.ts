@@ -6,7 +6,7 @@
 
 import is from '@sindresorhus/is'
 import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
-import defaultMenu from 'electron-default-menu'
+import createDefaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem } from 'electron-util'
 import { appStore, defaultConfig } from '../common/store'
 import { Logger } from './logger'
@@ -17,13 +17,14 @@ interface RegisterMenusCallbacks {
 }
 
 const logger = new Logger('RegisterMenu')
+const githubUrl = 'https://github.com/Kiyozz/papyrus-compiler-app'
 
 export function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
-  const nexusPath =
-    process.env.ELECTRON_WEBPACK_APP_MOD_URL ??
-    'https://github.com/Kiyozz/papyrus-compiler-app'
+  const nexusPath = process.env.ELECTRON_WEBPACK_APP_MOD_URL ?? githubUrl
 
-  const menu = appMenu([
+  const menu = appMenu()
+
+  const appSubmenu: MenuItemConstructorOptions[] = [
     {
       label: 'Preferences...',
       submenu: [
@@ -54,8 +55,24 @@ export function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
     openUrlMenuItem({
       label: 'Check for updates',
       url: nexusPath
+    }),
+    openUrlMenuItem({
+      label: 'GitHub',
+      url: githubUrl
     })
-  ])
+  ]
+
+  const usedAppMenu = (menu.submenu as MenuItemConstructorOptions[]).filter(
+    submenu => submenu.role === 'quit' || submenu.role === 'about'
+  ) as [MenuItemConstructorOptions, MenuItemConstructorOptions]
+
+  menu.submenu = [
+    usedAppMenu[0],
+    { type: 'separator' },
+    ...appSubmenu,
+    { type: 'separator' },
+    usedAppMenu[1]
+  ]
 
   const helpMenu: MenuItemConstructorOptions = {
     label: 'Help',
@@ -86,11 +103,19 @@ export function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
     }
   }
 
-  const defaultMenus = defaultMenu(app, shell)
+  const defaultMenus = createDefaultMenu(app, shell)
 
-  defaultMenus.shift()
-  defaultMenus.pop()
+  defaultMenus.shift() // Remove default app menu
+  defaultMenus.pop() // Remove default help menu
   defaultMenus.push(helpMenu)
+
+  const windowMenuIndex = defaultMenus.findIndex(
+    defaultMenu => defaultMenu.label === 'Window'
+  )
+
+  if (windowMenuIndex !== -1) {
+    defaultMenus.splice(windowMenuIndex, 1)
+  }
 
   logger.debug('registering menu')
 

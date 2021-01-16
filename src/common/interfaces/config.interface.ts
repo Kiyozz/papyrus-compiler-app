@@ -18,6 +18,10 @@ interface Tutorials {
   settings: boolean
 }
 
+interface Compilation {
+  concurrentScripts: number
+}
+
 export interface Config {
   mo2: ConfigMo2
   gameType: Game
@@ -27,5 +31,6 @@ export interface Config {
   compilerPath: CompilerPath
   groups: Group[]
   tutorials: Tutorials
+  compilation: Compilation
   __internal__: any
 }

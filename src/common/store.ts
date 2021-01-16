@@ -41,6 +41,9 @@ export const defaultConfig: Config = {
   tutorials: {
     settings: true
   },
+  compilation: {
+    concurrentScripts: 15
+  },
   __internal__: {
     migrations: {
       version: json.version

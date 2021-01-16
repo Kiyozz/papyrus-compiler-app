@@ -58,7 +58,7 @@ export function App() {
           <div
             className={`h-full ${isDrawerExpand ? 'pl-48' : 'pl-14'} w-full`}
           >
-            <Routes />
+            {initialized && <Routes />}
           </div>
         </PageContextProvider>
       </div>

@@ -76,6 +76,14 @@ export default {
         errorInstance:
           'Le dossier "{{folder}}" ne contient pas les dossiers {{requiredFolders}}.'
       },
+      compilation: {
+        title: 'Compilation',
+        concurrentScripts: {
+          label: 'Nombre de scripts compilés simultanéments',
+          info:
+            'Réduisez si vous rencontrez des blocages quand vous lancez la compilation'
+        }
+      },
       version: 'Version {{version}}'
     }
   },
@@ -119,6 +127,12 @@ export default {
       compiler: {
         text:
           "Ici, vous pouvez enregistrer le chemin vers le compilateur Papyrus. Disponible après l'installation de Creation Kit"
+      },
+      compilation: {
+        concurrent: {
+          text:
+            'Ici, vous pouvez enregistrer le nombre de scripts compilés simultanéments.'
+        }
       },
       mo2: {
         text:

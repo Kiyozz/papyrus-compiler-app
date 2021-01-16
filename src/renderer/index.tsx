@@ -28,36 +28,40 @@ if (typeof window.require === 'undefined') {
   throw new ElectronRuntimeException()
 }
 
-try {
-  const { store, history } = createRootStore()
+async function start() {
+  try {
+    const { store, history } = await createRootStore()
 
-  render(
-    <ReduxProvider store={store}>
-      <Theme>
-        <LocationProvider history={history}>
-          <App />
-        </LocationProvider>
-      </Theme>
-    </ReduxProvider>,
-    document.getElementById('app')
-  )
-} catch (e) {
-  ipcRenderer.invoke(EVENTS.ERROR, e)
+    render(
+      <ReduxProvider store={store}>
+        <Theme>
+          <LocationProvider history={history}>
+            <App />
+          </LocationProvider>
+        </Theme>
+      </ReduxProvider>,
+      document.getElementById('app')
+    )
+  } catch (e) {
+    ipcRenderer.invoke(EVENTS.ERROR, e)
+  }
+
+  isProduction().then(production => {
+    if (production) {
+      window.onerror = (
+        event: Event | string,
+        source?: string,
+        lineno?: number,
+        colno?: number,
+        error?: Error
+      ) => {
+        ipcRenderer.invoke(
+          EVENTS.ERROR,
+          new Error(`From ${source}: L${lineno}C${colno}. ERROR: ${error}`)
+        )
+      }
+    }
+  })
 }
 
-isProduction().then(production => {
-  if (production) {
-    window.onerror = (
-      event: Event | string,
-      source?: string,
-      lineno?: number,
-      colno?: number,
-      error?: Error
-    ) => {
-      ipcRenderer.invoke(
-        EVENTS.ERROR,
-        new Error(`From ${source}: L${lineno}C${colno}. ERROR: ${error}`)
-      )
-    }
-  }
-})
+start()

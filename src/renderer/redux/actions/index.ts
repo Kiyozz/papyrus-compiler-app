@@ -35,9 +35,10 @@ const actions = {
       CONSTANTS.APP_COMPILATION_SET_COMPILATION_SCRIPTS
     ),
     compilation: {
-      startWholeCompilation: createAction<ScriptInterface[]>(
-        CONSTANTS.APP_COMPILATION_START_COMPILATION
-      ),
+      startWholeCompilation: createAction<{
+        allScripts: ScriptInterface[]
+        concurrentScripts: number
+      }>(CONSTANTS.APP_COMPILATION_START_COMPILATION),
       script: {
         start: createAction<ScriptInterface>(
           CONSTANTS.APP_COMPILATION_START_COMPILATION_SCRIPT_START

@@ -5,6 +5,7 @@
  */
 
 import React, { useCallback } from 'react'
+import is from '@sindresorhus/is'
 
 interface Props {
   autoFocus?: boolean
@@ -12,9 +13,11 @@ interface Props {
   error?: boolean
   id: string
   label?: string
-  value: string
+  value: string | number
   placeholder?: string
-  onChange: (value: string) => void
+  infoText?: string
+  inputClassName?: string
+  onChange: (value: string | number) => void
   startIcon?: JSX.Element
   iconOnMouseEnter?: () => void
   iconOnMouseLeave?: () => void
@@ -33,7 +36,9 @@ export function TextField({
   startIcon,
   iconOnMouseEnter,
   iconOnMouseLeave,
-  iconOnClick
+  iconOnClick,
+  inputClassName = '',
+  infoText
 }: Props) {
   const onChangeInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,11 +82,14 @@ export function TextField({
           id={id}
           name={name}
           placeholder={placeholder}
-          className="w-full text-white bg-transparent"
+          className={`w-full text-white bg-transparent ${inputClassName}`}
           value={value}
           onChange={onChangeInput}
         />
       </div>
+      {is.string(infoText) && (
+        <div className="text-xs mt-1 text-gray-600">{infoText}</div>
+      )}
     </>
   )
 }

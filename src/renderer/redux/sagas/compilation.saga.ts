@@ -62,11 +62,20 @@ function* compileScript(scripts: ScriptInterface[]) {
 }
 
 function* startCompilation(action: AnyAction) {
-  const allScripts: ScriptInterface[] = action.payload
+  const {
+    allScripts,
+    concurrentScripts
+  }: {
+    allScripts: ScriptInterface[]
+    concurrentScripts: number
+  } = action.payload
 
   console.log('Starting compilation for', allScripts)
 
-  const scriptsOfScripts = chunk(allScripts, 15)
+  const scriptsOfScripts = chunk(
+    allScripts,
+    (concurrentScripts ?? 0) === 0 ? 1 : concurrentScripts
+  )
 
   for (const scripts of scriptsOfScripts) {
     yield call(compileScript, scripts)

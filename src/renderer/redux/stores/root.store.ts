@@ -5,7 +5,13 @@
  */
 
 import { createHistory, createMemorySource } from '@reach/router'
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
+import {
+  applyMiddleware,
+  combineReducers,
+  compose,
+  createStore,
+  Middleware
+} from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { logger } from 'redux-logger'
 import changelogReducer, { ChangelogState } from '../reducers/changelog.reducer'
@@ -25,6 +31,7 @@ import taskLoadingReducer, {
   TaskLoadingState
 } from '../reducers/task-loading.reducer'
 import rootSaga from '../sagas/root.saga'
+import { isProduction } from '../../utils/is-production'
 
 export interface RootStore {
   initialization: InitializationState
@@ -37,9 +44,15 @@ export interface RootStore {
 
 const PREFIX = 'papyrus-compiler-app'
 
-export default function createRootStore() {
-  const history = createHistory(createMemorySource('/'))
+export default async function createRootStore() {
   const sagaMiddleware = createSagaMiddleware()
+  const middlewares: Middleware[] = [sagaMiddleware]
+
+  if (!(await isProduction())) {
+    middlewares.push(logger)
+  }
+
+  const history = createHistory(createMemorySource('/'))
   const store = createStore(
     combineReducers({
       initialization: initializationReducer,
@@ -49,7 +62,7 @@ export default function createRootStore() {
       changelog: changelogReducer(PREFIX),
       taskLoading: taskLoadingReducer
     }),
-    compose(applyMiddleware(sagaMiddleware, logger))
+    compose(applyMiddleware(...middlewares))
   )
 
   sagaMiddleware.run(rootSaga)

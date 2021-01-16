@@ -23,7 +23,10 @@ import { GroupsLoader } from './groups-loader'
 
 export function Compilation() {
   const { t } = useTranslation()
-  const { groups } = usePageContext()
+  const {
+    groups,
+    config: { compilation }
+  } = usePageContext()
   const compilationScripts = useStoreSelector(
     state => state.compilation.compilationScripts
   )
@@ -50,8 +53,11 @@ export function Compilation() {
       return
     }
 
-    startCompilation(compilationScripts)
-  }, [compilationScripts, startCompilation])
+    startCompilation({
+      allScripts: compilationScripts,
+      concurrentScripts: compilation.concurrentScripts
+    })
+  }, [compilation.concurrentScripts, compilationScripts, startCompilation])
 
   const onDrop = useCallback(
     (pscFiles: File[]) => {
