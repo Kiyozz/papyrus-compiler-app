@@ -5,7 +5,7 @@
  */
 
 import { ipcRenderer } from '../../common/ipc'
-import { IS_PRODUCTION } from '../../common/events'
+import * as Events from '../../common/events'
 
 let isProductionRegistered = false
 let isProductionSaved = false
@@ -15,7 +15,7 @@ export function isProduction(): Promise<boolean> {
     return Promise.resolve(isProductionSaved)
   }
 
-  return ipcRenderer.invoke<boolean>(IS_PRODUCTION).then(isProd => {
+  return ipcRenderer.invoke<boolean>(Events.IsProduction).then(isProd => {
     if (!isProductionRegistered) {
       isProductionRegistered = true
       isProductionSaved = isProd

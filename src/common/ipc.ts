@@ -42,7 +42,13 @@ class IpcRenderer {
     channel: string,
     listener: (args: Result) => void
   ): void {
-    baseIpcRenderer.once(channel, (event, args: Result) => {
+    baseIpcRenderer.once(channel, (_, args: Result) => {
+      listener(args)
+    })
+  }
+
+  on<Result = unknown>(channel: string, listener: (args: Result) => void) {
+    baseIpcRenderer.on(channel, (_, args: Result) => {
       listener(args)
     })
   }

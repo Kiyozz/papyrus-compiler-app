@@ -17,7 +17,7 @@ import { TutorialSettings } from './components/tutorials/tutorial-settings'
 
 export function App() {
   const initialization = useAction(actions.initialization.start)
-  const getLatestNotes = useAction(actions.changelog.latestNotes.start)
+  const getLatestNotes = useAction(actions.changelog.latestNotes.initialize)
   const setShowNotes = useAction(actions.changelog.showNotes)
   const initialized = useStoreSelector(state => state.initialization)
   const { t } = useTranslation()

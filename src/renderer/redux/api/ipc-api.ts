@@ -16,14 +16,14 @@ const GITHUB_REPOSITORY =
 export class IpcApi {
   sendCompileScript = (scripts: ScriptInterface[]) => {
     for (const script of scripts) {
-      ipcRenderer.send(EVENTS.COMPILE_SCRIPT_START, script.name)
+      ipcRenderer.send(EVENTS.CompileScriptStart, script.name)
     }
   }
 
   whenCompileScript = (script: string): Promise<CompilationResultInterface> => {
     return new Promise<CompilationResultInterface>((resolve, reject) => {
       ipcRenderer.once<CompilationResultInterface>(
-        `${EVENTS.COMPILE_SCRIPT_FINISH}-${script}`,
+        `${EVENTS.CompileScriptFinish}-${script}`,
         result => {
           if (result.success) {
             resolve(result)
@@ -42,11 +42,11 @@ export class IpcApi {
   }
 
   detectBadInstallation = () => {
-    return ipcRenderer.invoke(EVENTS.BAD_INSTALLATION)
+    return ipcRenderer.invoke(EVENTS.BadInstallation)
   }
 
   getVersion = () => {
-    return ipcRenderer.invoke<string>(EVENTS.GET_VERSION)
+    return ipcRenderer.invoke<string>(EVENTS.GetVersion)
   }
 
   openDialog = ({
@@ -55,7 +55,7 @@ export class IpcApi {
     type: DialogType
   }): Promise<string | undefined> => {
     return ipcRenderer
-      .invoke<string | null>(EVENTS.OPEN_DIALOG, { type })
+      .invoke<string | null>(EVENTS.OpenDialog, { type })
       .then(response => {
         if (response === null) {
           return

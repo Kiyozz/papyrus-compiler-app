@@ -4,14 +4,21 @@
  * All rights reserved.
  */
 
-export const FILES_STATS = 'app-files-stats'
-export const COMPILE_SCRIPT_START = 'app-compile-script-start'
-export const COMPILE_SCRIPT_FINISH = 'app-compile-script-finish'
-export const GET_VERSION = 'app-get-version'
-export const BAD_INSTALLATION = 'app-bad-installation'
-export const OPEN_DIALOG = 'app-open-dialog'
-export const CONFIG_UPDATE = 'app-config-update'
-export const CONFIG_GET = 'app-config-get'
-export const CLIPBOARD_COPY = 'app-clipboard-copy'
-export const ERROR = 'app-error'
-export const IS_PRODUCTION = 'app-is-production'
+export const FilesStats = 'app-files-stats'
+
+export const CompileScriptStart = 'app-compile-script-start'
+export const CompileScriptFinish = 'app-compile-script-finish'
+
+export const BadInstallation = 'app-bad-installation'
+
+export const ConfigUpdate = 'app-config-update'
+export const ConfigGet = 'app-config-get'
+
+export const ClipboardCopy = 'app-clipboard-copy'
+
+export const AppError = 'app-error'
+export const OpenDialog = 'app-open-dialog'
+export const IsProduction = 'app-is-production'
+export const GetVersion = 'app-get-version'
+
+export const Changelog = 'app-changelog'

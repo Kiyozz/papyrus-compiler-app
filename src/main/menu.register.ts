@@ -9,19 +9,20 @@ import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
 import createDefaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem } from 'electron-util'
 import { appStore, defaultConfig } from '../common/store'
+import * as Events from '../common/events'
 import { Logger } from './logger'
 import { exists } from './services/path.service'
 
 interface RegisterMenusCallbacks {
   openLogFile: (file: string) => void
+  win: Electron.BrowserWindow
 }
 
 const logger = new Logger('RegisterMenu')
 const githubUrl = 'https://github.com/Kiyozz/papyrus-compiler-app'
+const reportBugUrl = 'https://github.com/Kiyozz/papyrus-compiler-app/issues/new'
 
-export function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
-  const nexusPath = process.env.ELECTRON_WEBPACK_APP_MOD_URL ?? githubUrl
-
+export function registerMenu({ win, openLogFile }: RegisterMenusCallbacks) {
   const menu = appMenu()
 
   const appSubmenu: MenuItemConstructorOptions[] = [
@@ -52,10 +53,12 @@ export function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
         }
       ]
     },
-    openUrlMenuItem({
+    {
       label: 'Check for updates',
-      url: nexusPath
-    }),
+      click() {
+        win.webContents.send(Events.Changelog)
+      }
+    },
     openUrlMenuItem({
       label: 'GitHub',
       url: githubUrl
@@ -79,7 +82,7 @@ export function registerMenu({ openLogFile }: RegisterMenusCallbacks) {
     submenu: [
       openUrlMenuItem({
         label: 'Report bug',
-        url: 'https://github.com/Kiyozz/papyrus-compiler-app/issues/new'
+        url: reportBugUrl
       }),
       {
         label: 'Logs',

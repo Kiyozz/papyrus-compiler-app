@@ -82,7 +82,7 @@ export function PageContextProvider({
   const updateConfig = useCallback(
     (partialConfig: PartialDeep<Config>, override?: boolean) => {
       ipcRenderer
-        .invoke<Config>(EVENTS.CONFIG_UPDATE, {
+        .invoke<Config>(EVENTS.ConfigUpdate, {
           config: partialConfig,
           override
         })
@@ -95,11 +95,11 @@ export function PageContextProvider({
   )
 
   const copyToClipboard = useCallback(async (text: string) => {
-    await ipcRenderer.invoke(EVENTS.CLIPBOARD_COPY, { text })
+    await ipcRenderer.invoke(EVENTS.ClipboardCopy, { text })
   }, [])
 
   const refreshConfig = useCallback(() => {
-    ipcRenderer.invoke<Config>(EVENTS.CONFIG_GET).then(refreshedConfig => {
+    ipcRenderer.invoke<Config>(EVENTS.ConfigGet).then(refreshedConfig => {
       setConfig(refreshedConfig)
       setGroups(selectGroups(refreshedConfig))
       refresh$.next(refreshedConfig)
@@ -107,7 +107,7 @@ export function PageContextProvider({
   }, [refresh$])
 
   useEffect(() => {
-    ipcRenderer.invoke<Config>(EVENTS.CONFIG_GET).then(initialConfig => {
+    ipcRenderer.invoke<Config>(EVENTS.ConfigGet).then(initialConfig => {
       setConfig(initialConfig)
       setGroups(selectGroups(initialConfig))
     })

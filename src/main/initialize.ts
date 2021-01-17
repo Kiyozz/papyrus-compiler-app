@@ -60,29 +60,30 @@ async function backupLogFile() {
   logger.info(`file ${logFilename}.1.log created`)
 }
 
-export async function initialize() {
+export async function initialize(win: Electron.BrowserWindow) {
   await backupLogFile()
   await installExtensions()
 
   const openFileHandler = new OpenFileHandler()
   const handlers = new Map<string, EventHandlerInterface>([
-    [EVENTS.OPEN_DIALOG, new DialogHandler()],
-    [EVENTS.BAD_INSTALLATION, new BadInstallationHandler()],
-    [EVENTS.CONFIG_UPDATE, new ConfigUpdateHandler()],
-    [EVENTS.CONFIG_GET, new ConfigGetHandler()],
-    [EVENTS.FILES_STATS, new FileStatHandler()],
-    [EVENTS.GET_VERSION, new GetVersionHandler()],
-    [EVENTS.ERROR, new InAppErrorHandler()],
-    [EVENTS.IS_PRODUCTION, new IsProductionHandler()],
-    [EVENTS.CLIPBOARD_COPY, new ClipboardCopyHandler()]
+    [EVENTS.OpenDialog, new DialogHandler()],
+    [EVENTS.BadInstallation, new BadInstallationHandler()],
+    [EVENTS.ConfigUpdate, new ConfigUpdateHandler()],
+    [EVENTS.ConfigGet, new ConfigGetHandler()],
+    [EVENTS.FilesStats, new FileStatHandler()],
+    [EVENTS.GetVersion, new GetVersionHandler()],
+    [EVENTS.AppError, new InAppErrorHandler()],
+    [EVENTS.IsProduction, new IsProductionHandler()],
+    [EVENTS.ClipboardCopy, new ClipboardCopyHandler()]
   ])
   const events = new Map<string, EventInterface>([
-    [EVENTS.COMPILE_SCRIPT_START, new ScriptCompileEvent()]
+    [EVENTS.CompileScriptStart, new ScriptCompileEvent()]
   ])
 
   logger.debug(appStore.path)
 
-  await registerMenu({
+  registerMenu({
+    win,
     openLogFile: (file: string) => {
       openFileHandler.listen(file)
     }

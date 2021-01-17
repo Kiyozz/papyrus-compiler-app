@@ -21,6 +21,9 @@ const actions = {
     ),
     version: createAction<string>(CONSTANTS.APP_CHANGELOG_SET_VERSION),
     latestNotes: {
+      initialize: createAction(
+        CONSTANTS.APP_CHANGELOG_GET_LATEST_NOTES_INITIALIZE
+      ),
       start: createAction(CONSTANTS.APP_CHANGELOG_GET_LATEST_NOTES),
       success: createAction<string>(
         CONSTANTS.APP_CHANGELOG_GET_LATEST_NOTES_SUCCESS

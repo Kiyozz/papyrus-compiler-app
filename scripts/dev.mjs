@@ -42,7 +42,12 @@ function getDeps(file) {
 function startMain() {
   if (electronProcess) {
     console.info(track(), 'Kill latest main')
-    killProcess(electronProcess.pid)
+
+    try {
+      killProcess(electronProcess.pid)
+    } catch (e) {
+      console.error('Error occured while killing latest main', e)
+    }
 
     electronProcess = undefined
   }

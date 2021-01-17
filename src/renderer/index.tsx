@@ -43,7 +43,7 @@ async function start() {
       document.getElementById('app')
     )
   } catch (e) {
-    ipcRenderer.invoke(EVENTS.ERROR, e)
+    ipcRenderer.invoke(EVENTS.AppError, e)
   }
 
   isProduction().then(production => {
@@ -56,7 +56,7 @@ async function start() {
         error?: Error
       ) => {
         ipcRenderer.invoke(
-          EVENTS.ERROR,
+          EVENTS.AppError,
           new Error(`From ${source}: L${lineno}C${colno}. ERROR: ${error}`)
         )
       }

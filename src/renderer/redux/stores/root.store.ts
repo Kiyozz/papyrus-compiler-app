@@ -32,6 +32,9 @@ import taskLoadingReducer, {
 } from '../reducers/task-loading.reducer'
 import rootSaga from '../sagas/root.saga'
 import { isProduction } from '../../utils/is-production'
+import { ipcRenderer } from '../../../common/ipc'
+import * as Events from '../../../common/events'
+import actions from '../actions'
 
 export interface RootStore {
   initialization: InitializationState
@@ -66,6 +69,10 @@ export default async function createRootStore() {
   )
 
   sagaMiddleware.run(rootSaga)
+
+  ipcRenderer.on(Events.Changelog, () => {
+    store.dispatch(actions.changelog.latestNotes.start())
+  })
 
   return {
     store,

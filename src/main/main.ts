@@ -46,7 +46,7 @@ async function createWindow() {
     )
   }
 
-  await initialize()
+  await initialize(win)
 
   win.on('closed', () => {
     win = null
