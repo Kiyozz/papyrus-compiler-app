@@ -20,27 +20,27 @@ export enum Executable {
   Vr = 'SkyrimVR.exe'
 }
 
-export enum Game {
+export enum GameType {
   Le = 'Skyrim LE',
   Se = 'Skyrim SE',
   Vr = 'Skyrim VR'
 }
 
-export function toSource(game: Game): GameSource {
-  return game === Game.Le ? GameSource.Le : GameSource.Se
+export function toSource(game: GameType): GameSource {
+  return game === GameType.Le ? GameSource.Le : GameSource.Se
 }
 
-export function toOtherSource(game: Game): GameSource {
-  return game === Game.Le ? GameSource.Se : GameSource.Le
+export function toOtherSource(game: GameType): GameSource {
+  return game === GameType.Le ? GameSource.Se : GameSource.Le
 }
 
-export function toExecutable(game: Game): Executable {
+export function toExecutable(game: GameType): Executable {
   switch (game) {
-    case Game.Le:
+    case GameType.Le:
       return Executable.Le
-    case Game.Se:
+    case GameType.Se:
       return Executable.Se
-    case Game.Vr:
+    case GameType.Vr:
       return Executable.Vr
     default:
       return Executable.Se

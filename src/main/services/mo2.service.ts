@@ -6,7 +6,7 @@
 
 import { is } from 'electron-util'
 import { toAntiSlash, toSlash } from '../../common/slash'
-import { Game, toOtherSource, toSource } from '../../common/game'
+import { GameType, toOtherSource, toSource } from '../../common/game'
 import { appStore } from '../../common/store'
 import { Logger } from '../logger'
 import { ConfigurationException } from '../exceptions/configuration.exception'
@@ -14,7 +14,7 @@ import { ApplicationException } from '../exceptions/application.exception'
 import * as path from './path.service'
 
 interface GenerateImportsOptions {
-  gameType: Game
+  gameType: GameType
   mo2: {
     instance: string
   }
@@ -22,7 +22,7 @@ interface GenerateImportsOptions {
 
 const logger = new Logger('Mo2Service')
 
-async function getModsSourcesPath(gameType: Game, instance: string) {
+async function getModsSourcesPath(gameType: GameType, instance: string) {
   const sourcesPath = toSource(gameType)
   const otherSourcesPath = toOtherSource(gameType)
   const modsPath = path.join(instance, appStore.get('mo2.mods'))

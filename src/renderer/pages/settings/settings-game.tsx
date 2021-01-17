@@ -11,7 +11,7 @@ import RadioGroup from '@material-ui/core/RadioGroup'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Game, toExecutable } from '../../../common/game'
+import { GameType, toExecutable } from '../../../common/game'
 import { DialogTextField } from '../../components/dialog-text-field'
 import { usePageContext } from '../../components/page-context'
 import { Alert } from '../../components/alert'
@@ -32,39 +32,39 @@ export function SettingsGame({
 }: Props) {
   const { t } = useTranslation()
   const {
-    config: { gameType, gamePath, compilerPath }
+    config: { game, compilation }
   } = usePageContext()
   const { isInstallationBad } = useSettings()
-  const exe = toExecutable(gameType)
+  const exe = toExecutable(game.type)
 
   return (
     <div className="paper relative" id="settings-game">
       <h1 className="text-2xl text-white mb-3">{t('page.settings.game')}</h1>
       <FormControl component="fieldset" fullWidth>
-        <RadioGroup row value={gameType} onChange={onClickRadio}>
+        <RadioGroup row value={game.type} onChange={onClickRadio}>
           <FormControlLabel
-            value={Game.Le}
+            value={GameType.Le}
             classes={{
               label: 'text-white'
             }}
             control={<Radio />}
-            label={Game.Le}
+            label={GameType.Le}
           />
           <FormControlLabel
-            value={Game.Se}
+            value={GameType.Se}
             classes={{
               label: 'text-white'
             }}
             control={<Radio />}
-            label={Game.Se}
+            label={GameType.Se}
           />
           <FormControlLabel
-            value={Game.Vr}
+            value={GameType.Vr}
             classes={{
               label: 'text-white'
             }}
             control={<Radio />}
-            label={Game.Vr}
+            label={GameType.Vr}
           />
         </RadioGroup>
       </FormControl>
@@ -73,8 +73,11 @@ export function SettingsGame({
         <DialogTextField
           id="game-folder"
           error={isInstallationBad === 'game'}
-          label={t('page.settings.gameFolderInfo', { gameType, exe })}
-          defaultValue={gamePath}
+          label={t('page.settings.gameFolderInfo', {
+            gameType: game.type,
+            exe
+          })}
+          defaultValue={game.path}
           onChange={onChangeGameFolder}
           type="folder"
         />
@@ -85,7 +88,7 @@ export function SettingsGame({
           id="compiler-path"
           error={isInstallationBad === 'compiler'}
           label={t('page.settings.compilerPath')}
-          defaultValue={compilerPath}
+          defaultValue={compilation.compilerPath}
           onChange={onChangeCompilerPath}
           type="file"
         />
@@ -103,7 +106,7 @@ export function SettingsGame({
                 t('page.settings.errors.game', { exe })}
               {isInstallationBad === 'compiler' &&
                 t('page.settings.errors.compiler', {
-                  compilerExe: compilerPath
+                  compilerExe: compilation.compilerPath
                 })}
               {isInstallationBad === 'scripts' &&
                 t('page.settings.errors.scripts')}

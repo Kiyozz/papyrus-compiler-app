@@ -39,7 +39,7 @@ function* getLatestRelease() {
       const [release] = result[0] as [GithubReleaseInterface]
 
       if (typeof release !== 'undefined') {
-        if (compareVersions.compare(release.tag_name, version, '=')) {
+        if (compareVersions.compare(release.tag_name, version, '>')) {
           yield put(actions.changelog.latestVersion(release.tag_name))
           yield put(actions.changelog.showNotes(true))
           yield put(actions.changelog.latestNotes.success(release.body))

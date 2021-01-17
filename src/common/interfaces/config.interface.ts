@@ -4,8 +4,24 @@
  * All rights reserved.
  */
 
-import { CompilerPath, Flag, Game, GamePath, OutputPath } from '../game'
+import { CompilerPath, Flag, GameType, GamePath, OutputPath } from '../game'
 import { Group } from './group.interface'
+
+interface Game {
+  type: GameType
+  path: GamePath
+}
+
+interface Compilation {
+  concurrentScripts: number
+  compilerPath: CompilerPath
+  flag: Flag
+  output: OutputPath
+}
+
+interface Tutorials {
+  settings: boolean
+}
 
 interface ConfigMo2 {
   use: boolean
@@ -14,23 +30,11 @@ interface ConfigMo2 {
   mods: string
 }
 
-interface Tutorials {
-  settings: boolean
-}
-
-interface Compilation {
-  concurrentScripts: number
-}
-
 export interface Config {
-  mo2: ConfigMo2
-  gameType: Game
-  gamePath: GamePath
-  flag: Flag
-  output: OutputPath
-  compilerPath: CompilerPath
-  groups: Group[]
-  tutorials: Tutorials
+  game: Game
   compilation: Compilation
+  tutorials: Tutorials
+  mo2: ConfigMo2
+  groups: Group[]
   __internal__: any
 }

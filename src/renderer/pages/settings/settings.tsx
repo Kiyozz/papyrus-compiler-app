@@ -8,7 +8,7 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import debounce from 'debounce-fn'
-import { Game } from '../../../common/game'
+import { GameType } from '../../../common/game'
 
 import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
@@ -24,9 +24,8 @@ export function Settings() {
   const { t } = useTranslation()
   const {
     config: {
-      gameType,
-      gamePath,
-      compilerPath,
+      game,
+      compilation,
       mo2: { instance: mo2Instance }
     },
     updateConfig,
@@ -46,15 +45,16 @@ export function Settings() {
     actions.settingsPage.detectBadInstallation.start
   )
   const setGame = useCallback(
-    (game: Game) => updateConfig({ gameType: game }),
+    (gameType: GameType) => updateConfig({ game: { type: gameType } }),
     [updateConfig]
   )
   const setGameFolder = useCallback(
-    (path: string) => debouncedUpdateConfig({ gamePath: path }),
+    (gamePath: string) => debouncedUpdateConfig({ game: { path: gamePath } }),
     [debouncedUpdateConfig]
   )
   const setCompilerPath = useCallback(
-    (path: string) => debouncedUpdateConfig({ compilerPath: path }),
+    (compilerPath: string) =>
+      debouncedUpdateConfig({ compilation: { compilerPath } }),
     [debouncedUpdateConfig]
   )
   const setMo2 = useCallback(
@@ -79,9 +79,9 @@ export function Settings() {
   const onClickRadio = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setIsInstallationBad(false)
-      const value = e.target.value as Game
+      const value = e.target.value as GameType
 
-      if (![Game.Le, Game.Se, Game.Vr].includes(value)) {
+      if (![GameType.Le, GameType.Se, GameType.Vr].includes(value)) {
         return
       }
 
@@ -93,16 +93,16 @@ export function Settings() {
   useEffect(() => {
     setIsInstallationBad(false)
 
-    if (!gameType || !gamePath || !compilerPath) {
+    if (!game.type || !game.path || !compilation.compilerPath) {
       return
     }
 
     debouncedDetectBadInstallation()
   }, [
+    compilation.compilerPath,
     debouncedDetectBadInstallation,
-    gamePath,
-    gameType,
-    compilerPath,
+    game.path,
+    game.type,
     mo2Instance,
     setIsInstallationBad
   ])

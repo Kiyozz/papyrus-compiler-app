@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { usePageContext } from '../../components/page-context'
 import { TextField } from '../../components/text-field'
 
-const maxConcurrentCompilationScripts = 50
+const maxConcurrentCompilationScripts = 100
 
 export function SettingsCompilation() {
   const { t } = useTranslation()

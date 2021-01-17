@@ -36,8 +36,6 @@ export class ConfigUpdateHandler
           return
         }
 
-        this.handleGamePath(key, value)
-
         if (args.override) {
           this.logger.debug('total overwrite of the previous value')
 
@@ -61,13 +59,5 @@ export class ConfigUpdateHandler
     )
 
     return appStore.store
-  }
-
-  private handleGamePath(key: keyof Config, value: unknown) {
-    this.logger.debug('handling game path update')
-
-    if (key === 'gamePath' && is.string(value)) {
-      appStore.set('gamePath', value)
-    }
   }
 }

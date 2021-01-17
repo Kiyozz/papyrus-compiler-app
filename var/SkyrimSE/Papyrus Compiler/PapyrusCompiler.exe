@@ -3,7 +3,7 @@
 const fs = require('fs')
 const path = require('path')
 
-console.log('0 failed')
+console.log('Batch compile of 1 files finished. 1 succeeded, 0 failed.')
 
 const outReg = /-o=(.*)/
 const filename = process.argv[2].replace('.psc', '.pex')

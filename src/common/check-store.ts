@@ -6,7 +6,7 @@
 
 import is from '@sindresorhus/is'
 import { join } from '../main/services/path.service'
-import { Game } from './game'
+import { GameType } from './game'
 import { AppStore } from './store'
 import { Config } from './interfaces/config.interface'
 import { validateGroup } from './validators/group.validator'
@@ -48,13 +48,13 @@ function checkMo2(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-function checkFlag(appStore: AppStore) {
-  const flag = appStore.get('flag')
+function checkFlag(appStore: AppStore, defaultConfig: Config) {
+  const flag = appStore.get('compilation.flag')
 
   if (flag !== 'TESV_Papyrus_Flags.flg') {
     console.warn('only TESV_Papyrus_Flags.flg flag is supported')
 
-    appStore.set('flag', 'TESV_Papyrus_Flags.flg')
+    appStore.set('compilation.flag', defaultConfig.compilation.flag)
   }
 }
 
@@ -67,42 +67,42 @@ function checkGroups(appStore: AppStore, defaultConfig: Config) {
 }
 
 function checkGameType(appStore: AppStore, defaultConfig: Config) {
-  const gameType = appStore.get('gameType')
-  const resetGameType = () => appStore.set('gameType', defaultConfig.gameType)
+  const gameType: GameType = appStore.get('game.type')
+  const resetGameType = () => appStore.set('game.type', defaultConfig.game.type)
 
   if (!is.string(gameType)) {
     resetGameType()
   }
 
-  if (gameType !== Game.Le && gameType !== Game.Se && gameType !== Game.Vr) {
+  if (
+    gameType !== GameType.Le &&
+    gameType !== GameType.Se &&
+    gameType !== GameType.Vr
+  ) {
     resetGameType()
   }
 }
 
-function checkGamePath(appStore: AppStore) {
-  const gamePath = appStore.get('gamePath')
-  const resetGamePath = () => appStore.set('gamePath', '')
+function checkGamePath(appStore: AppStore, defaultConfig: Config) {
+  const gamePath: string = appStore.get('game.path')
+  const resetGamePath = () => appStore.set('game.path', defaultConfig.game.path)
 
   if (!is.string(gamePath)) {
-    resetGamePath()
-  }
-
-  if (is.emptyString(gamePath.trim())) {
     resetGamePath()
   }
 }
 
 function checkOutput(appStore: AppStore, defaultConfig: Config) {
-  const output = appStore.get('output')
+  const output = appStore.get('compilation.output')
 
   if (!is.string(output) || is.emptyString(output.trim())) {
-    appStore.set('output', defaultConfig.output)
+    appStore.set('compilation.output', defaultConfig.compilation.output)
   }
 }
 
 function checkCompilerPath(appStore: AppStore) {
-  const compilerPath = appStore.get('compilerPath')
-  const gamePath = appStore.get('gamePath')
+  const compilerPath = appStore.get('compilation.compilerPath')
+  const gamePath: string = appStore.get('game.path')
 
   if (
     is.nullOrUndefined(compilerPath) ||
@@ -110,7 +110,10 @@ function checkCompilerPath(appStore: AppStore) {
       is.emptyString(compilerPath.trim()) &&
       is.nonEmptyString(gamePath))
   ) {
-    appStore.set('compilerPath', join(gamePath, DEFAULT_COMPILER_PATH))
+    appStore.set(
+      'compilation.compilerPath',
+      join(gamePath, DEFAULT_COMPILER_PATH)
+    )
   }
 }
 
@@ -155,8 +158,8 @@ function checkCompilation(appStore: AppStore, defaultConfig: Config) {
 export function checkStore(appStore: AppStore, defaultConfig: Config) {
   checkMo2(appStore, defaultConfig)
   checkGameType(appStore, defaultConfig)
-  checkGamePath(appStore)
-  checkFlag(appStore)
+  checkGamePath(appStore, defaultConfig)
+  checkFlag(appStore, defaultConfig)
   checkCompilerPath(appStore)
   checkOutput(appStore, defaultConfig)
   checkGroups(appStore, defaultConfig)

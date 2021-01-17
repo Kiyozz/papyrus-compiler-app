@@ -7,7 +7,12 @@
 import is from '@sindresorhus/is'
 import { appStore } from '../../common/store'
 import { toSlash } from '../../common/slash'
-import { toExecutable, toOtherSource, toSource } from '../../common/game'
+import {
+  GameType,
+  toExecutable,
+  toOtherSource,
+  toSource
+} from '../../common/game'
 import { Logger } from '../logger'
 import * as path from '../services/path.service'
 import { EventHandlerInterface } from '../interfaces/event-handler.interface'
@@ -46,8 +51,9 @@ export class BadInstallationHandler implements EventHandlerInterface {
   private checkGameExe(): Promise<BadErrorType> {
     this.logger.debug('checking game exe')
 
-    const gamePath = appStore.get('gamePath')
-    const gameType = appStore.get('gameType')
+    const game = appStore.get('game')
+    const gamePath = game.path
+    const gameType = game.type
     const executable = toExecutable(gameType)
 
     return Promise.resolve(
@@ -65,7 +71,7 @@ export class BadInstallationHandler implements EventHandlerInterface {
   }
 
   private async checkInMo2(file: string): Promise<BadErrorType> {
-    const gameType = appStore.get('gameType')
+    const gameType: GameType = appStore.get('game.type')
     const mo2 = appStore.get('mo2')
 
     if (is.undefined(mo2.instance)) {
@@ -94,8 +100,8 @@ export class BadInstallationHandler implements EventHandlerInterface {
   }
 
   private checkInGameDataFolder(file: string): Promise<BadErrorType> {
-    const gamePath = appStore.get('gamePath')
-    const gameType = appStore.get('gameType')
+    const gamePath: string = appStore.get('game.path')
+    const gameType: GameType = appStore.get('game.type')
     this.logger.debug('checking in game Data folder')
 
     const gameScriptsFolder = path.join(
@@ -130,7 +136,7 @@ export class BadInstallationHandler implements EventHandlerInterface {
   private checkCompiler(): Promise<BadErrorType> {
     this.logger.debug('checking compiler path')
 
-    const compilerPath = appStore.get('compilerPath')
+    const compilerPath: string = appStore.get('compilation.compilerPath')
 
     return Promise.resolve(
       path.exists(path.normalize(compilerPath)) ? false : 'compiler'

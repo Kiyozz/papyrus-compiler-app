@@ -15,7 +15,7 @@ import { migrate420 } from './migrations/4.2.0.migration'
 import { migrate510 } from './migrations/5.1.0.migration'
 import { checkStore } from './check-store'
 import { migrate520 } from './migrations/5.2.0.migration'
-import { Game } from './game'
+import { GameType } from './game'
 
 const jsonPath = is.development
   ? join(__dirname, '../..', 'package.json')
@@ -23,27 +23,29 @@ const jsonPath = is.development
 const json = JSON.parse(fs.readFileSync(jsonPath).toString())
 
 export const defaultConfig: Config = {
+  game: {
+    path: '',
+    type: (process.env.ELECTRON_WEBPACK_APP_MOD_URL ?? '').includes(
+      'specialedition'
+    )
+      ? GameType.Se
+      : GameType.Le
+  },
+  compilation: {
+    concurrentScripts: 15,
+    compilerPath: '',
+    flag: 'TESV_Papyrus_Flags.flg',
+    output: 'Data\\Scripts'
+  },
+  tutorials: {
+    settings: true
+  },
   mo2: {
     use: false,
     output: 'overwrite\\Scripts',
     mods: 'mods'
   },
-  gameType: (process.env.ELECTRON_WEBPACK_APP_MOD_URL ?? '').includes(
-    'specialedition'
-  )
-    ? Game.Se
-    : Game.Le,
-  gamePath: '',
-  flag: 'TESV_Papyrus_Flags.flg',
-  compilerPath: '',
-  output: 'Data\\Scripts',
   groups: [],
-  tutorials: {
-    settings: true
-  },
-  compilation: {
-    concurrentScripts: 15
-  },
   __internal__: {
     migrations: {
       version: json.version
@@ -55,18 +57,10 @@ const appStore = new Store<Config>({
   defaults: defaultConfig,
   projectVersion: json.version,
   migrations: {
-    '4.1.0': (store: AppStore) => {
-      migrate410(store)
-    },
-    '4.2.0': (store: AppStore) => {
-      migrate420(store)
-    },
-    '5.1.0': (store: AppStore) => {
-      migrate510(store)
-    },
-    '5.2.0': (store: AppStore) => {
-      migrate520(store)
-    }
+    '4.1.0': migrate410,
+    '4.2.0': migrate420,
+    '5.1.0': migrate510,
+    '5.2.0': migrate520
   }
 } as any)
 
