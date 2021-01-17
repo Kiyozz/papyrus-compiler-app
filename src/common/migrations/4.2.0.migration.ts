@@ -11,12 +11,15 @@ import { toAntiSlash, toSlash } from '../slash'
 import { AppStore } from '../store'
 
 export function migrate420(store: AppStore) {
-  const gamePath = store.get('gamePath')
-  const compilerPath = store.get('compilerPath')
+  const gamePath = store.get('game.path')
+  const compilerPath = store.get('compilation.compilerPath')
 
   if (is.nonEmptyString(gamePath) && is.nonEmptyString(compilerPath)) {
     const slashFunc = util.is.linux || util.is.macos ? toSlash : toAntiSlash
 
-    store.set('compilerPath', slashFunc(path.join(gamePath, compilerPath)))
+    store.set(
+      'compilation.compilerPath',
+      slashFunc(path.join(gamePath, compilerPath))
+    )
   }
 }

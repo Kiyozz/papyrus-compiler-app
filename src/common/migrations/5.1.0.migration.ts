@@ -2,7 +2,7 @@ import { GameType } from '../game'
 import { AppStore } from '../store'
 
 export function migrate510(store: AppStore) {
-  const gameType: string = store.get('gameType')
+  const gameType: string = store.get('game.type')
 
   if (
     gameType === GameType.Se ||
@@ -14,12 +14,12 @@ export function migrate510(store: AppStore) {
 
   switch (gameType) {
     case 'Skyrim Special Edition':
-      store.set('gameType', GameType.Se)
+      store.set('game.type', GameType.Se)
       break
     case 'Skyrim Legendary Edition':
-      store.set('gameType', GameType.Le)
+      store.set('game.type', GameType.Le)
       break
     default:
-      store.set('gameType', GameType.Se)
+      store.set('game.type', GameType.Se)
   }
 }
