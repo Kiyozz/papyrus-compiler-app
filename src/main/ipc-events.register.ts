@@ -8,12 +8,14 @@ import { ipcMain } from '../common/ipc'
 import { EventHandlerInterface } from './interfaces/event-handler.interface'
 import { Logger } from './logger'
 import { EventInterface } from './interfaces/event.interface'
+import { EventSyncInterface } from './interfaces/event.sync.interface'
 
 const logger = new Logger('RegisterIpcEvents')
 
 export function registerIpcEvents(
   handlers: Map<string, EventHandlerInterface>,
-  events: Map<string, EventInterface>
+  events: Map<string, EventInterface>,
+  syncs: Map<string, EventSyncInterface>
 ) {
   handlers.forEach((handler, name) => {
     logger.info(`register "${name}"`)
@@ -40,12 +42,27 @@ export function registerIpcEvents(
   events.forEach((event, name) => {
     logger.info(`register "${name}"`)
 
-    ipcMain.on(name, async (ipcEvent, args) => {
+    ipcMain.on(name, (ipcEvent, args) => {
       logger.debug(`"${name}" started`)
 
-      await event.on(ipcEvent, args)
+      event.on(ipcEvent, args)
 
       logger.debug(`"${name}" end`)
+    })
+  })
+
+  syncs.forEach((event, name) => {
+    logger.info(`register "${name}"`)
+
+    ipcMain.on(name, (ipcEvent, args) => {
+      logger.debug(`"${name}" started`)
+
+      const result = event.onSync(ipcEvent, args)
+
+      logger.debug(`"${name}" payload`, result)
+      logger.debug(`"${name}" end`)
+
+      ipcEvent.returnValue = result
     })
   })
 }

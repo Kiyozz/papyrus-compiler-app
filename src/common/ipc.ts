@@ -34,6 +34,13 @@ class IpcRenderer {
     )
   }
 
+  sendSync<Result = any, Params = any>(
+    channel: string,
+    ...args: Params[]
+  ): Result {
+    return baseIpcRenderer.sendSync(channel, ...(args ?? []))
+  }
+
   send<Params = any>(channel: string, ...args: Params[]): void {
     baseIpcRenderer.send(channel, ...(args ?? []))
   }
@@ -51,6 +58,10 @@ class IpcRenderer {
     baseIpcRenderer.on(channel, (_, args: Result) => {
       listener(args)
     })
+  }
+
+  off(channel: string, listener: (args: any) => void) {
+    baseIpcRenderer.off(channel, listener)
   }
 }
 

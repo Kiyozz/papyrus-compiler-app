@@ -24,7 +24,7 @@ const routes: Route[] = [
 
 export function Routes() {
   return (
-    <Router className="min-h-screen flex flex-col">
+    <Router className="flex flex-col w-full">
       {routes.map(({ path, Component, default: defaultPage }) => (
         <Component key={path} path={path} default={defaultPage} />
       ))}

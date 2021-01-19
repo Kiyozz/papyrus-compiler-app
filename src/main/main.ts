@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Kiyozz.
+ * Copyright (c) 2021 Kiyozz.
  *
  * All rights reserved.
  */
@@ -26,9 +26,10 @@ async function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       devTools: true,
-      enableRemoteModule: false,
+      enableRemoteModule: true,
       contextIsolation: false
     },
+    titleBarStyle: 'hidden',
     show: false
   })
 

@@ -35,10 +35,6 @@ export function App() {
     setShowNotes(false)
   }, [setShowNotes])
 
-  const isDrawerExpand = useStoreSelector(
-    store => store.settings.isDrawerExpand
-  )
-
   return (
     <>
       {!initialized && (
@@ -47,20 +43,21 @@ export function App() {
         </div>
       )}
 
-      <div className={`flex min-h-full ${!initialized ? 'opacity-0' : ''}`}>
-        <DialogChangelog onClose={onClickCloseChangelogPopup} />
+      <div className={`flex flex-col ${!initialized ? 'opacity-0' : ''}`}>
+        <div className="flex">
+          <DialogChangelog onClose={onClickCloseChangelogPopup} />
 
-        <PageContextProvider>
-          <PageDrawer />
+          <PageContextProvider>
+            <PageDrawer />
 
-          {initialized && <TutorialSettings />}
-
-          <div
-            className={`h-full ${isDrawerExpand ? 'pl-48' : 'pl-14'} w-full`}
-          >
-            {initialized && <Routes />}
-          </div>
-        </PageContextProvider>
+            {initialized && (
+              <>
+                <TutorialSettings />
+                <Routes />
+              </>
+            )}
+          </PageContextProvider>
+        </div>
       </div>
     </>
   )

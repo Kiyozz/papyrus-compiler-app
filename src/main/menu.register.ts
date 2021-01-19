@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Kiyozz.
+ * Copyright (c) 2021 Kiyozz.
  *
  * All rights reserved.
  */
@@ -30,14 +30,11 @@ export function registerMenu({ win, openLogFile }: RegisterMenusCallbacks) {
       label: 'Preferences...',
       submenu: [
         {
-          label: 'Configuration',
+          label: 'Open',
           click() {
             appStore.openInEditor()
           },
           accelerator: 'CommandOrControl+,'
-        },
-        {
-          type: 'separator'
         },
         {
           label: 'Reset',
@@ -58,11 +55,7 @@ export function registerMenu({ win, openLogFile }: RegisterMenusCallbacks) {
       click() {
         win.webContents.send(Events.Changelog)
       }
-    },
-    openUrlMenuItem({
-      label: 'GitHub',
-      url: githubUrl
-    })
+    }
   ]
 
   const usedAppMenu = (menu.submenu as MenuItemConstructorOptions[]).filter(
@@ -80,23 +73,27 @@ export function registerMenu({ win, openLogFile }: RegisterMenusCallbacks) {
   const helpMenu: MenuItemConstructorOptions = {
     label: 'Help',
     submenu: [
-      openUrlMenuItem({
-        label: 'Report bug',
-        url: reportBugUrl
-      }),
       {
         label: 'Logs',
         click() {
           openLogFile(logger.file.path)
         },
         accelerator: 'CommandOrControl+Alt+J'
-      }
+      },
+      openUrlMenuItem({
+        label: 'Report bug',
+        url: reportBugUrl
+      }),
+      openUrlMenuItem({
+        label: 'GitHub',
+        url: githubUrl
+      })
     ]
   }
 
   if (exists(logger.previousSessionFilePath)) {
     if (is.array(helpMenu.submenu)) {
-      helpMenu.submenu.push({
+      helpMenu.submenu.splice(-2, 0, {
         label: 'Previous session logs',
         click() {
           openLogFile(logger.previousSessionFilePath)

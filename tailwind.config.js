@@ -23,7 +23,12 @@ module.exports = {
         sans: ['Roboto', '-apple-system', 'sans-serif'],
         nova: ['Proxima Nova', 'sans-serif'],
         mono: ['Roboto Mono', 'ui-monospace', 'monospace'],
-        body: ['Roboto', '-apple-system', 'sans-serif']
+        body: ['Roboto', '-apple-system', 'sans-serif'],
+        segoe: ['"Segoe UI"', 'Roboto']
+      },
+      height: {
+        'screen-titlebar': 'calc(100vh - theme("height.8"))',
+        'screen-appbar': 'calc(100vh - theme("height.8") - theme("height.16"))'
       }
     }
   },

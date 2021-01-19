@@ -102,7 +102,7 @@ export default () => {
           ]
         },
         {
-          test: /\.png$/,
+          test: /\.(png|svg)$/,
           use: [
             {
               loader: 'url-loader',
