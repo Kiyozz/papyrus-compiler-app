@@ -22,3 +22,9 @@ export const IsProduction = 'app-is-production'
 export const GetVersion = 'app-get-version'
 
 export const Changelog = 'app-changelog'
+
+export const WindowIsMaximized = 'app-window-is-maximized'
+export const WindowMinimize = 'app-window-minimize'
+export const WindowMaximize = 'app-window-maximize'
+export const WindowUnmaximize = 'app-window-unmaximize'
+export const WindowClose = 'app-window-close'

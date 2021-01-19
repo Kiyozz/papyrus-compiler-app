@@ -55,7 +55,7 @@ export function Dialog({
             {title}
           </div>
         )}
-        <div className="w-full h-full overflow-auto">
+        <div className="w-full h-full overflow-overlay">
           <div className="py-2 px-5">{children}</div>
         </div>
         {actions && (

@@ -12,7 +12,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { AppIcon } from '../assets/logo/vector/app-icon'
 import { useAction, useStoreSelector } from '../redux/use-store-selector'
 import actions from '../redux/actions'
 import { OpenCompilationLogs } from './open-compilation-logs'
@@ -50,32 +49,18 @@ export function PageDrawer() {
     [t]
   )
 
-  const version = useStoreSelector(state => state.changelog.version)
+  const onDrawerExpandClick = useCallback(
+    () => setDrawerExpand(!isDrawerExpand),
+    [setDrawerExpand, isDrawerExpand]
+  )
 
   return (
     <nav
-      className={`h-screen fixed left-0 top-0 ${
+      className={`h-screen-appbar fixed left-0 top-24 ${
         isDrawerExpand ? 'w-48' : 'w-14'
       } bg-black select-none`}
     >
       <div className="h-full flex flex-col">
-        <div className="h-16 flex items-center justify-center gap-6 app-icon">
-          <AppIcon
-            className={!isDrawerExpand ? 'px-1' : ''}
-            fontSize="large"
-            color="primary"
-          />
-
-          {isDrawerExpand && (
-            <div className="flex flex-col items-center">
-              <h1 className="text-xl font-bold font-nova text-white">PCA</h1>
-              <span className="font-nova font-medium text-gray-300">
-                {version}
-              </span>
-            </div>
-          )}
-        </div>
-        <hr className="h-0.5 border-gray-700" />
         <ul className="mt-2 flex flex-col gap-2">
           {links.map(Link => {
             return (
@@ -99,7 +84,7 @@ export function PageDrawer() {
           <OpenCompilationLogs />
           <li
             className="w-full px-4 py-2 flex hover:bg-gray-700 transition-colors cursor-pointer"
-            onClick={() => setDrawerExpand(!isDrawerExpand)}
+            onClick={onDrawerExpandClick}
           >
             {isDrawerExpand ? (
               <>

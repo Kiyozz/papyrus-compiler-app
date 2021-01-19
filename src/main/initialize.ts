@@ -24,6 +24,12 @@ import { registerIpcEvents } from './ipc-events.register'
 import { ClipboardCopyHandler } from './event-handlers/clipboard-copy.handler'
 import { EventInterface } from './interfaces/event.interface'
 import { ScriptCompileEvent } from './event-handlers/script-compile.event'
+import { EventSyncInterface } from './interfaces/event.sync.interface'
+import { MaximizeWindowSync } from './event-handlers/maximize-window.sync'
+import { UnmaximizeWindowSync } from './event-handlers/unmaximize-window.sync'
+import { MinimizeWindowSync } from './event-handlers/minimize-window.sync'
+import { CloseWindowSync } from './event-handlers/close-windows.sync'
+import { IsMaximizedWindowSync } from './event-handlers/is-maximized-window.sync'
 
 const logger = new Logger('Initialize')
 
@@ -79,6 +85,13 @@ export async function initialize(win: Electron.BrowserWindow) {
   const events = new Map<string, EventInterface>([
     [Events.CompileScriptStart, new ScriptCompileEvent()]
   ])
+  const syncs = new Map<string, EventSyncInterface>([
+    [Events.WindowMaximize, new MaximizeWindowSync(win)],
+    [Events.WindowUnmaximize, new UnmaximizeWindowSync(win)],
+    [Events.WindowMinimize, new MinimizeWindowSync(win)],
+    [Events.WindowClose, new CloseWindowSync(win)],
+    [Events.WindowIsMaximized, new IsMaximizedWindowSync(win)]
+  ])
 
   logger.debug(appStore.path)
 
@@ -89,5 +102,5 @@ export async function initialize(win: Electron.BrowserWindow) {
     }
   })
 
-  registerIpcEvents(handlers, events)
+  registerIpcEvents(handlers, events, syncs)
 }

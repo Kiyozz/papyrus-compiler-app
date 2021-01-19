@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Kiyozz.
+ * Copyright (c) 2021 Kiyozz.
  *
  * All rights reserved.
  */
@@ -49,7 +49,7 @@ function GameSettingsStep({ next }: { next: Next }) {
   }
 
   return createPortal(
-    <div className="bg-darker -top-12 tooltip tooltip-left">
+    <div className="bg-darker top-0 left-24 tooltip tooltip-left">
       <div>{t('tutorials.settings.game.text')}</div>
       <div>
         <button className="btn btn-primary" onClick={onClickOk}>
@@ -93,7 +93,7 @@ function Mo2SettingsStep({ next }: { next: Next }) {
   }
 
   return createPortal(
-    <div className="bg-darker -top-12 tooltip tooltip-left">
+    <div className="bg-darker -top-12 tooltip tooltip-bottom-left">
       <div>{t('tutorials.settings.mo2.text')}</div>
       <div>
         <button className="btn btn-primary" onClick={onClickOk}>

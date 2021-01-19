@@ -3,6 +3,7 @@
  *
  * All rights reserved.
  */
+
 import { clipboard } from 'electron'
 import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { Logger } from '../logger'

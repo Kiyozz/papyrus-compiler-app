@@ -1,15 +1,10 @@
 /*
- * Copyright (c) 2020 Kiyozz.
+ * Copyright (c) 2021 Kiyozz.
  *
  * All rights reserved.
  */
 
 @import 'assets/fonts/fonts.css';
-
-html,
-body {
-  @apply h-full;
-}
 
 img {
   @apply pointer-events-none;
@@ -31,12 +26,22 @@ button:focus {
 }
 
 body {
-  @apply h-full overflow-x-hidden antialiased text-gray-400 bg-black;
-  overflow-y: overlay;
+  @apply overflow-hidden antialiased text-gray-400 bg-black;
 }
 
 #app {
-  @apply h-full;
+}
+
+.container {
+  max-height: calc(100vh - theme('height.8') - theme('height.16'));
+}
+
+.overflow-overlay {
+  overflow: overlay;
+}
+
+.w-controls {
+  width: 46px;
 }
 
 .bg-darker {
@@ -146,9 +151,22 @@ body {
   transform: translate3d(-50%, 50%, 0);
 }
 
-.tooltip.tooltip-left::after {
+.tooltip.tooltip-bottom-left::after {
   @apply left-0;
   transform: translate3d(0, 50%, 0);
+}
+
+.tooltip.tooltip-left::after {
+  @apply -left-2 top-0;
+  transform: rotate(90deg) scale(0.8) translate3d(50%, 100%, 0);
+}
+
+[role='menubar'] {
+  font-size: 12px;
+}
+
+.menubar-menu-container {
+  overflow-y: visible;
 }
 
 /* ----- MUI ----- */
@@ -168,23 +186,6 @@ input.MuiInputBase-inputAdornedStart {
   @apply w-full;
 }
 
-/* ----- TRANSITIONS ----- */
-.app-fade-enter {
-  @apply opacity-0;
-}
-
-.app-fade-enter-active {
-  @apply opacity-100 transition-opacity;
-}
-
-.app-fade-exit {
-  @apply opacity-100;
-}
-
-.app-fade-exit-active {
-  @apply opacity-0 transition-opacity;
-}
-
 /* ------ SCROLLBAR ----- */
 ::-webkit-scrollbar {
   width: 7px;
@@ -199,7 +200,7 @@ input.MuiInputBase-inputAdornedStart {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: #6a6e72;
+  @apply bg-white bg-opacity-20;
 }
 
 ::-webkit-scrollbar-track {

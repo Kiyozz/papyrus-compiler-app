@@ -36,6 +36,7 @@ devDependencies:
   css-hot-loader: 1.4.4
   css-loader: 5.0.1_webpack@4.44.2
   css-minimizer-webpack-plugin: 1.1.5_webpack@4.44.2
+  custom-electron-titlebar: 3.2.6
   date-fns: 2.15.0
   debounce-fn: 4.0.0
   deepmerge: 4.2.2
@@ -3968,6 +3969,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-+ZAmfyWMT7TiIlzdqJgjMb7S4f1beorDbWbsocyK4RaiqA5RTX3K14bnBWmmA9QEM0gRdsjyyrEmcyga8Zsxmw==
+  /custom-electron-titlebar/3.2.6:
+    dev: true
+    resolution:
+      integrity: sha512-P3ZGEr0eouUHqhdBBXllpuy2bFhfSmp+32HQBPcwzujjIsUhQxQj/nCpJiFa4SUGAEp1ifu/icuZdDKNNX72Tw==
   /cyclist/1.0.1:
     dev: true
     resolution:
@@ -12094,6 +12099,7 @@ specifiers:
   css-hot-loader: ~1.4.4
   css-loader: ~5.0.1
   css-minimizer-webpack-plugin: ~1.1.5
+  custom-electron-titlebar: ~3.2.6
   date-fns: ~2.15.0
   debounce-fn: ~4.0.0
   deepmerge: ~4.2.2
