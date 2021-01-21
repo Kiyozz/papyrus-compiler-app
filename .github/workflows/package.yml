@@ -33,16 +33,12 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          # Artifact name
           name: package-se
-          # A file, directory or wildcard pattern that describes what to upload
           path: dist/PCA*.7z
 
       - uses: actions/upload-artifact@v2
         with:
-          # Artifact name
           name: setup-se
-          # A file, directory or wildcard pattern that describes what to upload
           path: dist/PCA*.exe
 
       - name: Generate LE
@@ -52,14 +48,10 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          # Artifact name
           name: package-le
-          # A file, directory or wildcard pattern that describes what to upload
           path: dist/PCA*.7z
 
       - uses: actions/upload-artifact@v2
         with:
-          # Artifact name
           name: setup-le
-          # A file, directory or wildcard pattern that describes what to upload
           path: dist/PCA*.exe
