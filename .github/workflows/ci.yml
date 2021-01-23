@@ -7,6 +7,7 @@ on:
       - '**.js'
       - '**.mjs'
       - '**.tsx'
+  workflow_dispatch:
 
 jobs:
   ci:
