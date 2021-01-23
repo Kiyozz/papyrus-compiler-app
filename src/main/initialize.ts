@@ -5,7 +5,7 @@
  */
 
 import { is } from 'electron-util'
-import * as EVENTS from '../common/events'
+import * as Events from '../common/events'
 import { appStore } from '../common/store'
 import { BadInstallationHandler } from './event-handlers/bad-installation.handler'
 import { ConfigGetHandler } from './event-handlers/config-get.handler'
@@ -66,18 +66,18 @@ export async function initialize(win: Electron.BrowserWindow) {
 
   const openFileHandler = new OpenFileHandler()
   const handlers = new Map<string, EventHandlerInterface>([
-    [EVENTS.OpenDialog, new DialogHandler()],
-    [EVENTS.BadInstallation, new BadInstallationHandler()],
-    [EVENTS.ConfigUpdate, new ConfigUpdateHandler()],
-    [EVENTS.ConfigGet, new ConfigGetHandler()],
-    [EVENTS.FilesStats, new FileStatHandler()],
-    [EVENTS.GetVersion, new GetVersionHandler()],
-    [EVENTS.AppError, new InAppErrorHandler()],
-    [EVENTS.IsProduction, new IsProductionHandler()],
-    [EVENTS.ClipboardCopy, new ClipboardCopyHandler()]
+    [Events.OpenDialog, new DialogHandler()],
+    [Events.BadInstallation, new BadInstallationHandler()],
+    [Events.ConfigUpdate, new ConfigUpdateHandler()],
+    [Events.ConfigGet, new ConfigGetHandler()],
+    [Events.FilesStats, new FileStatHandler()],
+    [Events.GetVersion, new GetVersionHandler()],
+    [Events.AppError, new InAppErrorHandler()],
+    [Events.IsProduction, new IsProductionHandler()],
+    [Events.ClipboardCopy, new ClipboardCopyHandler()]
   ])
   const events = new Map<string, EventInterface>([
-    [EVENTS.CompileScriptStart, new ScriptCompileEvent()]
+    [Events.CompileScriptStart, new ScriptCompileEvent()]
   ])
 
   logger.debug(appStore.path)

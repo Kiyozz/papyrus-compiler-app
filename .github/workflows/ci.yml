@@ -2,7 +2,6 @@ name: CI
 
 on:
   push:
-    branches: [master]
     paths:
       - '**.ts'
       - '**.js'
@@ -20,7 +19,6 @@ jobs:
         with:
           path: '**/node_modules'
           key: "${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.yaml') }}"
-
       - uses: actions/setup-node@v1.4.4
         with:
           node-version: 14.15
@@ -28,15 +26,11 @@ jobs:
       - name: Dependencies
         uses: pnpm/action-setup@v1.2.1
         with:
-          version: 5.15.2
+          version: 5.15.3
+          run_install: true
 
       - name: Lint
         run: pnpm lint
 
       - name: Build
         run: pnpm build
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: dist

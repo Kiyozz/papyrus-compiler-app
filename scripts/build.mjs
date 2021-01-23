@@ -28,7 +28,7 @@ async function build() {
 
   await Promise.all([
     await esbuild
-      .build(esbuildMainConfig({ sourcemap: false }))
+      .build(esbuildMainConfig())
       .then(() => console.info(track(), 'Main built')),
     new Promise((resolve, reject) => {
       rendererCompiler.run(err => {

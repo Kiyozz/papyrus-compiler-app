@@ -4,8 +4,8 @@
  * All rights reserved.
  */
 
+import { Stats } from 'fs'
 import is from '@sindresorhus/is'
-import { Stats } from 'fs-extra'
 import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { stat } from '../services/path.service'
 import { Logger } from '../logger'

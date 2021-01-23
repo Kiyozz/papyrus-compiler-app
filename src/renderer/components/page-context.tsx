@@ -15,7 +15,7 @@ import React, {
 import { Observable, Subject } from 'rxjs'
 import { PartialDeep } from 'type-fest'
 import { Config } from '../../common/interfaces/config.interface'
-import * as EVENTS from '../../common/events'
+import * as Events from '../../common/events'
 import { ipcRenderer } from '../../common/ipc'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { Group } from '../interfaces'
@@ -82,7 +82,7 @@ export function PageContextProvider({
   const updateConfig = useCallback(
     (partialConfig: PartialDeep<Config>, override?: boolean) => {
       ipcRenderer
-        .invoke<Config>(EVENTS.ConfigUpdate, {
+        .invoke<Config>(Events.ConfigUpdate, {
           config: partialConfig,
           override
         })
@@ -95,11 +95,11 @@ export function PageContextProvider({
   )
 
   const copyToClipboard = useCallback(async (text: string) => {
-    await ipcRenderer.invoke(EVENTS.ClipboardCopy, { text })
+    await ipcRenderer.invoke(Events.ClipboardCopy, { text })
   }, [])
 
   const refreshConfig = useCallback(() => {
-    ipcRenderer.invoke<Config>(EVENTS.ConfigGet).then(refreshedConfig => {
+    ipcRenderer.invoke<Config>(Events.ConfigGet).then(refreshedConfig => {
       setConfig(refreshedConfig)
       setGroups(selectGroups(refreshedConfig))
       refresh$.next(refreshedConfig)
@@ -107,7 +107,7 @@ export function PageContextProvider({
   }, [refresh$])
 
   useEffect(() => {
-    ipcRenderer.invoke<Config>(EVENTS.ConfigGet).then(initialConfig => {
+    ipcRenderer.invoke<Config>(Events.ConfigGet).then(initialConfig => {
       setConfig(initialConfig)
       setGroups(selectGroups(initialConfig))
     })

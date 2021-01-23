@@ -5,7 +5,7 @@
  */
 
 import { ipcRenderer } from '../../../common/ipc'
-import * as EVENTS from '../../../common/events'
+import * as Events from '../../../common/events'
 import { GithubReleaseInterface, ScriptInterface } from '../../interfaces'
 import { DialogType } from '../../../common/interfaces/dialog.interface'
 import { CompilationResultInterface } from '../../../common/interfaces/compilation-result.interface'
@@ -16,14 +16,14 @@ const GITHUB_REPOSITORY =
 export class IpcApi {
   sendCompileScript = (scripts: ScriptInterface[]) => {
     for (const script of scripts) {
-      ipcRenderer.send(EVENTS.CompileScriptStart, script.name)
+      ipcRenderer.send(Events.CompileScriptStart, script.name)
     }
   }
 
   whenCompileScript = (script: string): Promise<CompilationResultInterface> => {
     return new Promise<CompilationResultInterface>((resolve, reject) => {
       ipcRenderer.once<CompilationResultInterface>(
-        `${EVENTS.CompileScriptFinish}-${script}`,
+        `${Events.CompileScriptFinish}-${script}`,
         result => {
           if (result.success) {
             resolve(result)
@@ -42,11 +42,11 @@ export class IpcApi {
   }
 
   detectBadInstallation = () => {
-    return ipcRenderer.invoke(EVENTS.BadInstallation)
+    return ipcRenderer.invoke(Events.BadInstallation)
   }
 
   getVersion = () => {
-    return ipcRenderer.invoke<string>(EVENTS.GetVersion)
+    return ipcRenderer.invoke<string>(Events.GetVersion)
   }
 
   openDialog = ({
@@ -55,7 +55,7 @@ export class IpcApi {
     type: DialogType
   }): Promise<string | undefined> => {
     return ipcRenderer
-      .invoke<string | null>(EVENTS.OpenDialog, { type })
+      .invoke<string | null>(Events.OpenDialog, { type })
       .then(response => {
         if (response === null) {
           return

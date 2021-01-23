@@ -17,7 +17,7 @@ export default (merge = {}) => {
 
   return {
     platform: 'node',
-    entryPoints: [path.resolve('src', 'main', 'main.ts')],
+    entryPoints: [path.resolve('src/main/main.ts')],
     bundle: true,
     target: 'node12.18.4',
     external: ['electron', ...module.builtinModules],
@@ -25,8 +25,8 @@ export default (merge = {}) => {
       '.ts': 'ts'
     },
     minify: isProduction,
-    sourcemap: isProduction ? 'external' : 'inline',
-    outfile: path.resolve('dist', 'main', 'main.js'),
+    sourcemap: false,
+    outfile: path.resolve('dist/main/main.js'),
     plugins: [],
     define: {
       'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`,

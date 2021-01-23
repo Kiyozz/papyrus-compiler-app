@@ -9,24 +9,13 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider as ReduxProvider } from 'react-redux'
 import { ipcRenderer } from '../common/ipc'
-import * as EVENTS from '../common/events'
+import * as Events from '../common/events'
 
 import { App } from './app'
-import { ElectronRuntimeException } from './redux/api/exceptions/electron-runtime.exception'
 import createRootStore from './redux/stores/root.store'
 import './translations'
 import { Theme } from './theme'
 import { isProduction } from './utils/is-production'
-
-declare global {
-  interface Window {
-    require: any
-  }
-}
-
-if (typeof window.require === 'undefined') {
-  throw new ElectronRuntimeException()
-}
 
 async function start() {
   try {
@@ -43,7 +32,7 @@ async function start() {
       document.getElementById('app')
     )
   } catch (e) {
-    ipcRenderer.invoke(EVENTS.AppError, e)
+    ipcRenderer.invoke(Events.AppError, e)
   }
 
   isProduction().then(production => {
@@ -56,7 +45,7 @@ async function start() {
         error?: Error
       ) => {
         ipcRenderer.invoke(
-          EVENTS.AppError,
+          Events.AppError,
           new Error(`From ${source}: L${lineno}C${colno}. ERROR: ${error}`)
         )
       }
