@@ -1,4 +1,18 @@
-## 5.1.0 (2021-01-07) [v5.0.0...v5.1.0](https://github.com/Kiyozz/papyrus-compiler-app/compare/v5.0.0...v5.1.0) 
+## 5.2.0 (2021-01-27) [v5.1.0...v5.2.0](https://github.com/Kiyozz/papyrus-compiler-app/compare/v5.1.0...v5.2.0)
+
+### Features
+
+* multi thread compilation ([b4b2102](https://github.com/Kiyozz/papyrus-compiler-app/commit/b4b21027052416ca1dd06a373a2efa50ddece8ee))
+* tutorial ([07556a2](https://github.com/Kiyozz/papyrus-compiler-app/commit/07556a259bae04f22edc9541774c2c9267a6d898))
+* copy compilation logs ([2a581bf](https://github.com/Kiyozz/papyrus-compiler-app/commit/2a581bff60e3201e77ab9f90111d8bf5f111dc8e))
+* change version indication design and drop files overlay design ([d2c6d67](https://github.com/Kiyozz/papyrus-compiler-app/commit/d2c6d67ecbd79f98fa66198fe1f0ecbaac61834c))
+* check for updates in menu ([6cd97ac](https://github.com/Kiyozz/papyrus-compiler-app/commit/6cd97ac34d2c8828c61319d09ca97f333217821b)), closes [#77](https://github.com/Kiyozz/papyrus-compiler-app/issues/77)
+
+### Bug Fixes
+
+* config migrations ([40ed565](https://github.com/Kiyozz/papyrus-compiler-app/commit/40ed5650bf5c630e2e9f080dc4141fdada533413))
+
+## 5.1.0 (2021-01-07) [v5.0.0...v5.1.0](https://github.com/Kiyozz/papyrus-compiler-app/compare/v5.0.0...v5.1.0)
 
 ### Features
 
