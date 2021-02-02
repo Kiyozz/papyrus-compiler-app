@@ -41,7 +41,7 @@ devDependencies:
   debounce-fn: 4.0.0
   deepmerge: 4.2.2
   dependency-tree: 8.0.0
-  electron: 11.2.0
+  electron: 11.2.1
   electron-builder: 22.8.1
   electron-default-menu: 1.0.2
   electron-devtools-installer: 3.1.1
@@ -4599,7 +4599,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-pnnRJiWajDcTtEAS33RgP3XVO+9cJjOlBA0BKk6cABjcPxihgCwiGWplCOHc0lH43f68ZJZweiunwomJC+TWng==
-  /electron/11.2.0:
+  /electron/11.2.1:
     dependencies:
       '@electron/get': 1.12.2
       '@types/node': 12.19.14
@@ -4610,7 +4610,7 @@ packages:
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-weszOPAJPoPu6ozL7vR9enXmaDSqH+KE9iZODfbGdnFgtVfVdfyedjlvEGIUJkLMPXM1y/QWwCl2dINzr0Jq5Q==
+      integrity: sha512-Im1y29Bnil+Nzs+FCTq01J1OtLbs+2ZGLLllaqX/9n5GgpdtDmZhS/++JHBsYZ+4+0n7asO+JKQgJD+CqPClzg==
   /elliptic/6.5.3:
     dependencies:
       bn.js: 4.11.9
@@ -12104,7 +12104,7 @@ specifiers:
   debounce-fn: ~4.0.0
   deepmerge: ~4.2.2
   dependency-tree: ~8.0.0
-  electron: ~11.2.0
+  electron: ~11.2.1
   electron-builder: ~22.8.1
   electron-default-menu: ~1.0.2
   electron-devtools-installer: ~3.1.1
