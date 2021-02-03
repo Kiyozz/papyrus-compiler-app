@@ -1,13 +1,12 @@
 name: Generate release
 
 on:
-  workflow_dispatch:
   push:
     tags:
       - v*
 
 jobs:
-  package:
+  release:
     runs-on: windows-latest
 
     steps:
@@ -33,27 +32,18 @@ jobs:
         env:
           ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrim/mods/96339
         run: |
-          pnpm build -- --no-clean
           pnpm package
 
       - uses: actions/create-release@v1
         id: create_release
-        name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: PCA ${{ github.ref }}
           draft: true
+          body: ${{ github.ref }}
           prerelease: false
-
-      - uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: './dist/PCA LE.7z'
-          asset_name: PCA LE.7z
 
       - uses: actions/upload-release-asset@v1
         env:
@@ -62,6 +52,7 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: './dist/PCA LE.Setup.exe'
           asset_name: PCA LE.Setup.exe
+          asset_content_type: application/octet-stream
 
       - uses: actions/upload-release-asset@v1
         env:
@@ -70,6 +61,16 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: './dist/PCA SE.Setup.exe'
           asset_name: PCA SE.Setup.exe
+          asset_content_type: application/octet-stream
+
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: './dist/PCA LE.7z'
+          asset_name: PCA LE.7z
+          asset_content_type: application/x-7z-compressed
 
       - uses: actions/upload-release-asset@v1
         env:
@@ -78,3 +79,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: './dist/PCA SE.7z'
           asset_name: PCA SE.7z
+          asset_content_type: application/x-7z-compressed
