@@ -20,7 +20,10 @@ function clean() {
 
 async function build() {
   console.info(track(), 'Start')
-  clean()
+
+  if (process.argv[2] !== '--no-clean') {
+    clean()
+  }
 
   const rendererCompiler = webpack(webpackRendererConfig())
 
