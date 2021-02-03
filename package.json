@@ -130,11 +130,12 @@
   },
   "build": {
     "appId": "io.kiyozz.pca",
-    "productName": "PCA",
+    "productName": "PCA LE",
     "copyright": "Copyright © WushuLate",
     "afterPack": "./build/after-pack.js",
+    "artifactName": "${productName}.${ext}",
     "extraMetadata": {
-      "name": "PCA",
+      "name": "PCA LE",
       "main": "main.js"
     },
     "files": [
@@ -153,7 +154,8 @@
     ],
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "${productName}.Setup.${ext}"
     },
     "win": {
       "target": [
