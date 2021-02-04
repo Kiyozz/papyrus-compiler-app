@@ -1,3 +1,9 @@
+## 5.3.0 (2021-02-04) ([v5.2.0...v5.3.0](https://github.com/Kiyozz/papyrus-compiler-app/compare/v5.2.0...v5.3.0))
+
+### Features
+
+* titlebar ([09b1f5d](https://github.com/Kiyozz/papyrus-compiler-app/commit/09b1f5dd8e85272e49ca29c438209d738ea87e8b))
+
 ## 5.2.0 (2021-01-27) [v5.1.0...v5.2.0](https://github.com/Kiyozz/papyrus-compiler-app/compare/v5.1.0...v5.2.0)
 
 ### Features
