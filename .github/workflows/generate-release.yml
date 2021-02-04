@@ -37,7 +37,7 @@ jobs:
       - name: Extract changelog
         id: extract_changelog
         run: |
-          node scripts/extract-changelog.mjs
+          node scripts/extract-changelog.mjs ${{ github.ref }}
 
       - uses: actions/create-release@v1
         id: create_release
