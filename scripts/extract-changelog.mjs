@@ -1,11 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 
-const version = process.argv[2]
+let version = process.argv[2]
 
 if (!version) {
   process.exit(0)
 }
+
+version = version.replace('refs/tags/', '')
 
 const versionWithoutV = version.replace('v', '')
 
@@ -24,4 +26,4 @@ if (typeof extracted === 'undefined') {
   process.exit(0)
 }
 
-console.log(extracted)
+console.log(extracted.trim())
