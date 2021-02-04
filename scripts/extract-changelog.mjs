@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import fs from 'fs'
 import path from 'path'
 
