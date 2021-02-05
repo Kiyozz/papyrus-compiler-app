@@ -5,7 +5,7 @@
  */
 
 import { format } from 'url'
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron'
 import { debugInfo, is } from 'electron-util'
 import { join } from './services/path.service'
 import { initialize } from './initialize'
@@ -18,7 +18,7 @@ let win: BrowserWindow | null = null
 async function createWindow() {
   logger.info(debugInfo())
 
-  win = new BrowserWindow({
+  const windowOptions: BrowserWindowConstructorOptions = {
     width: 800,
     height: 820,
     minHeight: 600,
@@ -29,9 +29,16 @@ async function createWindow() {
       enableRemoteModule: true,
       contextIsolation: false
     },
-    titleBarStyle: 'hidden',
     show: false
-  })
+  }
+
+  if (is.macos) {
+    windowOptions.titleBarStyle = 'hidden'
+  } else {
+    windowOptions.frame = false
+  }
+
+  win = new BrowserWindow(windowOptions)
 
   const isDev = is.development
 

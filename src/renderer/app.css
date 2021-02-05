@@ -166,7 +166,7 @@ body {
 }
 
 .menubar-menu-container {
-  overflow-y: visible;
+  overflow-y: visible !important;
 }
 
 /* ----- MUI ----- */
