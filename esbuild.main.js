@@ -4,15 +4,15 @@
  * All rights reserved.
  */
 
-import path from 'path'
-import module from 'module'
+const path = require('path')
+const modules = require('module')
 
 /**
  * @param {Partial<import('esbuild').BuildOptions>} merge
  *
  * @return {import('esbuild').BuildOptions}
  */
-export default (merge = {}) => {
+module.exports = (merge = {}) => {
   const isProduction = process.env.NODE_ENV === 'production'
 
   return {
@@ -20,7 +20,7 @@ export default (merge = {}) => {
     entryPoints: [path.resolve('src/main/main.ts')],
     bundle: true,
     target: 'node12.18.4',
-    external: ['electron', ...module.builtinModules],
+    external: ['electron', ...modules.builtinModules],
     loader: {
       '.ts': 'ts'
     },

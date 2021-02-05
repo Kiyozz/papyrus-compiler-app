@@ -1,0 +1,2 @@
+esbuildMainConfig: esbuild.main.js
+webpackRendererConfig: webpack.renderer.js

@@ -4,19 +4,21 @@
  * All rights reserved.
  */
 
-import path from 'path'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
-import TerserPlugin from 'terser-webpack-plugin'
-import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin'
-import webpack from 'webpack'
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
+const webpack = require('webpack')
 
 /**
+ * @param {Partial<import('webpack').Configuration>} merge
+ *
  * @return {import('webpack').Configuration}
  */
-export default () => {
+module.exports = merge => {
   const isProduction = process.env.NODE_ENV === 'production'
   const mode = isProduction ? 'production' : 'development'
 
@@ -149,5 +151,8 @@ export default () => {
     myNewConfig.entry.renderer.unshift('css-hot-loader/hotModuleReplacement')
   }
 
-  return myNewConfig
+  return {
+    ...myNewConfig,
+    ...merge
+  }
 }
