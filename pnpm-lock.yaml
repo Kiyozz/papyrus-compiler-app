@@ -12205,7 +12205,7 @@ specifiers:
   electron-builder: ~22.8.1
   electron-default-menu: ~1.0.2
   electron-devtools-installer: ~3.1.1
-  electron-esbuild: ^1.0.2
+  electron-esbuild: ~1.0.2
   electron-log: ~4.2.4
   electron-store: ~6.0.1
   electron-util: ~0.14.2
