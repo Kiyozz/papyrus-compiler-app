@@ -7,6 +7,7 @@
 import React, { useCallback, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { Titlebar } from 'custom-electron-titlebar'
 import { DialogChangelog } from './components/dialog-changelog'
 import { PageContextProvider } from './components/page-context'
 import { PageDrawer } from './components/page-drawer'
@@ -15,7 +16,11 @@ import { useAction, useStoreSelector } from './redux/use-store-selector'
 import { Routes } from './routes'
 import { TutorialSettings } from './components/tutorials/tutorial-settings'
 
-export function App() {
+interface Props {
+  titlebar: Titlebar
+}
+
+export function App({ titlebar }: Props) {
   const initialization = useAction(actions.initialization.start)
   const getLatestNotes = useAction(actions.changelog.latestNotes.initialize)
   const setShowNotes = useAction(actions.changelog.showNotes)
@@ -47,7 +52,7 @@ export function App() {
         <div className="flex">
           <DialogChangelog onClose={onClickCloseChangelogPopup} />
 
-          <PageContextProvider>
+          <PageContextProvider titlebar={titlebar}>
             <PageDrawer />
 
             {initialized && (

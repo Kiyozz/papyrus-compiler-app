@@ -25,7 +25,7 @@ const reportBugUrl = 'https://github.com/Kiyozz/papyrus-compiler-app/issues/new'
 export function registerMenu({ win, openLogFile }: RegisterMenusCallbacks) {
   const menu = appMenu()
 
-  const appSubmenu: MenuItemConstructorOptions[] = [
+  menu.submenu = [
     {
       label: 'Preferences...',
       submenu: [
@@ -56,18 +56,6 @@ export function registerMenu({ win, openLogFile }: RegisterMenusCallbacks) {
         win.webContents.send(Events.Changelog)
       }
     }
-  ]
-
-  const usedAppMenu = (menu.submenu as MenuItemConstructorOptions[]).filter(
-    submenu => submenu.role === 'quit' || submenu.role === 'about'
-  ) as [MenuItemConstructorOptions, MenuItemConstructorOptions]
-
-  menu.submenu = [
-    usedAppMenu[0],
-    { type: 'separator' },
-    ...appSubmenu,
-    { type: 'separator' },
-    usedAppMenu[1]
   ]
 
   const helpMenu: MenuItemConstructorOptions = {

@@ -14,6 +14,7 @@ import React, {
 } from 'react'
 import { Observable, Subject } from 'rxjs'
 import { PartialDeep } from 'type-fest'
+import { Titlebar } from 'custom-electron-titlebar'
 import { Config } from '../../common/interfaces/config.interface'
 import * as Events from '../../common/events'
 import { ipcRenderer } from '../../common/ipc'
@@ -36,6 +37,10 @@ interface PageContextInterface {
   refreshConfig: () => void
   copyToClipboard: (text: string) => void
   onRefreshConfig: Observable<Config>
+}
+
+interface Props {
+  titlebar: Titlebar
 }
 
 const PageContext = React.createContext({} as PageContextInterface)
@@ -64,8 +69,9 @@ function selectGroups(config: Config): Group[] {
 }
 
 export function PageContextProvider({
-  children
-}: React.PropsWithChildren<unknown>) {
+  children,
+  titlebar
+}: React.PropsWithChildren<Props>) {
   const [config, setConfig] = useState<Config>({} as Config)
   const [groups, setGroups] = useState<Group[]>([])
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -105,6 +111,10 @@ export function PageContextProvider({
       refresh$.next(refreshedConfig)
     })
   }, [refresh$])
+
+  useEffect(() => {
+    titlebar.updateTitle(`PCA ${version}`)
+  }, [titlebar, version])
 
   useEffect(() => {
     ipcRenderer.invoke<Config>(Events.ConfigGet).then(initialConfig => {

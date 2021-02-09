@@ -20,7 +20,7 @@ import { isProduction } from './utils/is-production'
 import appIcon from './assets/logo/vector/isolated-layout.svg'
 
 async function start() {
-  new Titlebar({
+  const titlebar = new Titlebar({
     backgroundColor: Color.fromHex('#5b21b6'),
     icon: appIcon
   })
@@ -32,7 +32,7 @@ async function start() {
       <ReduxProvider store={store}>
         <Theme>
           <LocationProvider history={history}>
-            <App />
+            <App titlebar={titlebar} />
           </LocationProvider>
         </Theme>
       </ReduxProvider>,
