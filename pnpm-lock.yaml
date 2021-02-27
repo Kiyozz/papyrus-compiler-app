@@ -74,12 +74,8 @@ devDependencies:
   react-dropzone: 11.0.3_react@16.14.0
   react-i18next: 11.7.4_i18next@19.7.0+react@16.14.0
   react-markdown: 4.3.1_react@16.14.0
-  react-redux: 7.2.1_bbabd8c34ea235719dc50e75b43f85a4
   react-refresh: 0.9.0
-  redux: 4.0.5
-  redux-actions: 2.6.5
-  redux-logger: 3.0.6
-  redux-saga: 1.1.3
+  react-use-localstorage: 3.5.3_react@16.14.0
   rimraf: 3.0.2
   rxjs: 6.6.3
   semantic-release: 17.3.7
@@ -1490,44 +1486,6 @@ packages:
       react-dom: 15.x || 16.x || 16.4.0-alpha.0911da3
     resolution:
       integrity: sha512-+mtn9wjlB9NN2CNnnC/BRYtwdKBfSyyasPYraNAyvaV1occr/5NnB4CVzjEZipNHwYebQwcndGUmpFzxAUoqSA==
-  /@redux-saga/core/1.1.3:
-    dependencies:
-      '@babel/runtime': 7.12.13
-      '@redux-saga/deferred': 1.1.2
-      '@redux-saga/delay-p': 1.1.2
-      '@redux-saga/is': 1.1.2
-      '@redux-saga/symbols': 1.1.2
-      '@redux-saga/types': 1.1.0
-      redux: 4.0.5
-      typescript-tuple: 2.2.1
-    dev: true
-    resolution:
-      integrity: sha512-8tInBftak8TPzE6X13ABmEtRJGjtK17w7VUs7qV17S8hCO5S3+aUTWZ/DBsBJPdE8Z5jOPwYALyvofgq1Ws+kg==
-  /@redux-saga/deferred/1.1.2:
-    dev: true
-    resolution:
-      integrity: sha512-908rDLHFN2UUzt2jb4uOzj6afpjgJe3MjICaUNO3bvkV/kN/cNeI9PMr8BsFXB/MR8WTAZQq/PlTq8Kww3TBSQ==
-  /@redux-saga/delay-p/1.1.2:
-    dependencies:
-      '@redux-saga/symbols': 1.1.2
-    dev: true
-    resolution:
-      integrity: sha512-ojc+1IoC6OP65Ts5+ZHbEYdrohmIw1j9P7HS9MOJezqMYtCDgpkoqB5enAAZrNtnbSL6gVCWPHaoaTY5KeO0/g==
-  /@redux-saga/is/1.1.2:
-    dependencies:
-      '@redux-saga/symbols': 1.1.2
-      '@redux-saga/types': 1.1.0
-    dev: true
-    resolution:
-      integrity: sha512-OLbunKVsCVNTKEf2cH4TYyNbbPgvmZ52iaxBD4I1fTif4+MTXMa4/Z07L83zW/hTCXwpSZvXogqMqLfex2Tg6w==
-  /@redux-saga/symbols/1.1.2:
-    dev: true
-    resolution:
-      integrity: sha512-EfdGnF423glv3uMwLsGAtE6bg+R9MdqlHEzExnfagXPrIiuxwr3bdiAwz3gi+PsrQ3yBlaBpfGLtDG8rf3LgQQ==
-  /@redux-saga/types/1.1.0:
-    dev: true
-    resolution:
-      integrity: sha512-afmTuJrylUU/0OtqzaRkbyYFFNgCF73Bvel/sw90pvGrWIZ+vyoIJqA6eMSoA6+nb443kTmulmBtC9NerXboNg==
   /@semantic-release/changelog/5.0.1_semantic-release@17.3.7:
     dependencies:
       '@semantic-release/error': 2.2.0
@@ -4076,10 +4034,6 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-gKTdMjdIOEv6JICDYirt7Jgq3/M=
-  /deep-diff/0.3.8:
-    dev: true
-    resolution:
-      integrity: sha1-wB3mPvsO7JeYgB1Ax+Da4ltYLIQ=
   /deep-equal/1.1.1:
     dependencies:
       is-arguments: 1.1.0
@@ -7100,10 +7054,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-WRtu7TPCmYePR1nazfrtuF216cIVon/3GWOvHS9QR5bIwSbnxtdpma6un3jyGGNhHsKCSzn5Ypk+EkDRvTGiFA==
-  /just-curry-it/3.1.0:
-    dev: true
-    resolution:
-      integrity: sha512-mjzgSOFzlrurlURaHVjnQodyPNvrHrf1TbQP2XU9NSqBtHQPuHZ+Eb6TAJP7ASeJN9h9K0KXoRTs8u6ouHBKvg==
   /keyv/3.1.0:
     dependencies:
       json-buffer: 3.0.0
@@ -9558,29 +9508,6 @@ packages:
       react: ^15.0.0 || ^16.0.0
     resolution:
       integrity: sha512-HQlWFTbDxTtNY6bjgp3C3uv1h2xcjCSi1zAEzfBW9OwJJvENSYiLXWNXN5hHLsoqai7RnZiiHzcnWdXk2Splzw==
-  /react-redux/7.2.1_bbabd8c34ea235719dc50e75b43f85a4:
-    dependencies:
-      '@babel/runtime': 7.12.13
-      hoist-non-react-statics: 3.3.2
-      loose-envify: 1.4.0
-      prop-types: 15.7.2
-      react: 16.14.0
-      react-dom: 16.14.0_react@16.14.0
-      react-is: 16.13.1
-      redux: 4.0.5
-    dev: true
-    peerDependencies:
-      react: ^16.8.3
-      react-dom: '*'
-      react-native: '*'
-      redux: ^2.0.0 || ^3.0.0 || ^4.0.0-0
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-    resolution:
-      integrity: sha512-T+VfD/bvgGTUA74iW9d2i5THrDQWbweXP0AVNI8tNd1Rk5ch1rnMiJkDD67ejw7YBKM4+REvcvqRuWJb7BLuEg==
   /react-refresh/0.9.0:
     dev: true
     engines:
@@ -9601,6 +9528,14 @@ packages:
       react-dom: '>=16.6.0'
     resolution:
       integrity: sha512-Djqr7OQ2aPUiYurhPalTrVy9ddmFCCzwhqQmtN+J3+3DzLO209Fdr70QrN8Z3DsglWql6iY1lDWAfpFiBtuKGw==
+  /react-use-localstorage/3.5.3_react@16.14.0:
+    dependencies:
+      react: 16.14.0
+    dev: true
+    peerDependencies:
+      react: '>=16.8.1'
+    resolution:
+      integrity: sha512-1oNvJmo72G4v5P9ytJZZTb6ywD3UzWBiainTtfbNlb+U08hc+SOD5HqgiLTKUF0MxGcIR9JSnZGmBttNLXaQYA==
   /react/16.14.0:
     dependencies:
       loose-envify: 1.4.0
@@ -9725,32 +9660,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-8liAVezDmUcH+tdzoEGrhfbGcP7nOV4NkGE3a74+qqvE7nt9i4sKLGBuZNOnpI4WiGksiNPklZxva80061QiPg==
-  /reduce-reducers/0.4.3:
-    dev: true
-    resolution:
-      integrity: sha512-+CNMnI8QhgVMtAt54uQs3kUxC3Sybpa7Y63HR14uGLgI9/QR5ggHvpxwhGGe3wmx5V91YwqQIblN9k5lspAmGw==
-  /redux-actions/2.6.5:
-    dependencies:
-      invariant: 2.2.4
-      just-curry-it: 3.1.0
-      loose-envify: 1.4.0
-      reduce-reducers: 0.4.3
-      to-camel-case: 1.0.0
-    dev: true
-    resolution:
-      integrity: sha512-pFhEcWFTYNk7DhQgxMGnbsB1H2glqhQJRQrtPb96kD3hWiZRzXHwwmFPswg6V2MjraXRXWNmuP9P84tvdLAJmw==
-  /redux-logger/3.0.6:
-    dependencies:
-      deep-diff: 0.3.8
-    dev: true
-    resolution:
-      integrity: sha1-91VZZvMJjzyIYExEnPC69XeCdL8=
-  /redux-saga/1.1.3:
-    dependencies:
-      '@redux-saga/core': 1.1.3
-    dev: true
-    resolution:
-      integrity: sha512-RkSn/z0mwaSa5/xH/hQLo8gNf4tlvT18qXDNvedihLcfzh+jMchDgaariQoehCpgRltEm4zHKJyINEz6aqswTw==
   /redux/4.0.5:
     dependencies:
       loose-envify: 1.4.0
@@ -11138,22 +11047,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-fSKbH8xjfkZsoIEYCDanqr/4P0M=
-  /to-camel-case/1.0.0:
-    dependencies:
-      to-space-case: 1.0.0
-    dev: true
-    resolution:
-      integrity: sha1-GlYFSy+daWKYzmamCJcyK29CPkY=
   /to-fast-properties/2.0.0:
     dev: true
     engines:
       node: '>=4'
     resolution:
       integrity: sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=
-  /to-no-case/1.0.2:
-    dev: true
-    resolution:
-      integrity: sha1-xyKQcWTvaxeBMsjmmTAhLRtKoWo=
   /to-object-path/0.3.0:
     dependencies:
       kind-of: 3.2.2
@@ -11196,12 +11095,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-FWtleNAtZ/Ki2qtqej2CXTOayOH9bHDQF+Q48VpWyDXjbYxA4Yz8iDB31zXOBUlOHHKidDbqGVrTUvQMPmBGBw==
-  /to-space-case/1.0.0:
-    dependencies:
-      to-no-case: 1.0.2
-    dev: true
-    resolution:
-      integrity: sha1-sFLar7Gysp3HcM6gFj5ewOvJ/Bc=
   /toidentifier/1.0.0:
     dev: true
     engines:
@@ -11379,22 +11272,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-VrR/IiH00Z1tFP4vDGfwZ1esNqTiDMchBEXYY9kilT6wRGgFoCAlgkEUMHb1E3mB0FsfZhv756IF0+R+SFPfdg==
-  /typescript-compare/0.0.2:
-    dependencies:
-      typescript-logic: 0.0.0
-    dev: true
-    resolution:
-      integrity: sha512-8ja4j7pMHkfLJQO2/8tut7ub+J3Lw2S3061eJLFQcvs3tsmJKp8KG5NtpLn7KcY2w08edF74BSVN7qJS0U6oHA==
-  /typescript-logic/0.0.0:
-    dev: true
-    resolution:
-      integrity: sha512-zXFars5LUkI3zP492ls0VskH3TtdeHCqu0i7/duGt60i5IGPIpAHE/DWo5FqJ6EjQ15YKXrt+AETjv60Dat34Q==
-  /typescript-tuple/2.2.1:
-    dependencies:
-      typescript-compare: 0.0.2
-    dev: true
-    resolution:
-      integrity: sha512-Zcr0lbt8z5ZdEzERHAMAniTiIKerFCMgd7yjq1fPnDJ43et/k9twIFQMUYff9k5oXcsQ0WpvFcgzK2ZKASoW6Q==
   /typescript/3.9.7:
     dev: true
     engines:
@@ -12234,12 +12111,8 @@ specifiers:
   react-dropzone: ~11.0.3
   react-i18next: ~11.7.4
   react-markdown: ~4.3.1
-  react-redux: 7.2.1
   react-refresh: ~0.9.0
-  redux: ~4.0.5
-  redux-actions: ~2.6.5
-  redux-logger: ~3.0.6
-  redux-saga: ~1.1.3
+  react-use-localstorage: ^3.5.3
   rimraf: ~3.0.2
   rxjs: ~6.6.3
   semantic-release: ~17.3.7

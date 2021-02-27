@@ -10,7 +10,7 @@ import { Logger } from '../logger'
 import { checkStore } from '../../common/check-store'
 import { appStore, defaultConfig } from '../../common/store'
 import { compileScript } from '../services/compile-script.service'
-import * as Events from '../../common/events'
+import { Events } from '../../common/events'
 import { CompilationResultInterface } from '../../common/interfaces/compilation-result.interface'
 
 export class ScriptCompileEvent implements EventInterface<string> {

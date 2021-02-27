@@ -4,38 +4,47 @@
  * All rights reserved.
  */
 
-import { LocationProvider } from '@reach/router'
+import {
+  createHistory,
+  createMemorySource,
+  LocationProvider
+} from '@reach/router'
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider as ReduxProvider } from 'react-redux'
 import { Titlebar, Color } from 'custom-electron-titlebar'
 import { ipcRenderer } from '../common/ipc'
-import * as Events from '../common/events'
+import { Events } from '../common/events'
 
 import { App } from './app'
-import createRootStore from './redux/stores/root.store'
 import './translations'
 import { Theme } from './theme'
 import { isProduction } from './utils/is-production'
 import appIcon from './assets/logo/vector/isolated-layout.svg'
+import { AppProvider } from './hooks/use-app'
+import { CompilationProvider } from './hooks/use-compilation'
+import { SettingsProvider } from './pages/settings/settings-context'
 
-async function start() {
+function start() {
   const titlebar = new Titlebar({
     backgroundColor: Color.fromHex('#5b21b6'),
     icon: appIcon
   })
 
   try {
-    const { store, history } = await createRootStore()
+    const history = createHistory(createMemorySource('/'))
 
     render(
-      <ReduxProvider store={store}>
-        <Theme>
-          <LocationProvider history={history}>
-            <App titlebar={titlebar} />
-          </LocationProvider>
-        </Theme>
-      </ReduxProvider>,
+      <Theme>
+        <LocationProvider history={history}>
+          <AppProvider titlebar={titlebar}>
+            <CompilationProvider>
+              <SettingsProvider>
+                <App />
+              </SettingsProvider>
+            </CompilationProvider>
+          </AppProvider>
+        </LocationProvider>
+      </Theme>,
       document.getElementById('app')
     )
   } catch (e) {

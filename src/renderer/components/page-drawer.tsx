@@ -12,19 +12,13 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useAction, useStoreSelector } from '../redux/use-store-selector'
-import actions from '../redux/actions'
+import { useApp } from '../hooks/use-app'
 import { OpenCompilationLogs } from './open-compilation-logs'
 import { ActiveLink } from './active-link'
-import { usePageContext } from './page-context'
 
 export function PageDrawer() {
-  const { setDrawerOpen } = usePageContext()
+  const { setDrawerOpen, isDrawerExpand, setDrawerExpand } = useApp()
   const { t } = useTranslation()
-  const isDrawerExpand = useStoreSelector(
-    store => store.settings.isDrawerExpand
-  )
-  const setDrawerExpand = useAction(actions.settingsPage.setDrawerExpand)
 
   const onClick = useCallback(() => setDrawerOpen(false), [setDrawerOpen])
 

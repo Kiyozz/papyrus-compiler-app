@@ -6,7 +6,7 @@
 
 import cx from 'classnames'
 import React from 'react'
-import { useStoreSelector } from '../redux/use-store-selector'
+import { useApp } from '../hooks/use-app'
 
 interface Props {
   className?: string
@@ -14,19 +14,17 @@ interface Props {
 }
 
 export function Page({ children, className }: React.PropsWithChildren<Props>) {
-  const isDrawerExpand = useStoreSelector(
-    store => store.settings.isDrawerExpand
-  )
+  const { isDrawerExpand } = useApp()
 
   return (
     <div
       className={cx(
-        'container mx-auto p-6 overflow-overlay',
+        'page h-screen w-screen p-6 overflow-overlay',
         className,
         isDrawerExpand ? 'pl-48' : 'pl-14'
       )}
     >
-      {children}
+      <main>{children}</main>
     </div>
   )
 }

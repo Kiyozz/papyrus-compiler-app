@@ -7,7 +7,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { usePageContext } from '../../components/page-context'
+import { useApp } from '../../hooks/use-app'
 import { SettingsMo2Activation } from './settings-mo2-activation'
 import { SettingsMo2Instance } from './settings-mo2-instance'
 
@@ -25,7 +25,7 @@ export function SettingsMo2({
   const { t } = useTranslation()
   const {
     config: { mo2 }
-  } = usePageContext()
+  } = useApp()
 
   return (
     <div className="paper mt-4 relative" id="settings-mo2">

@@ -7,7 +7,7 @@
 import cx from 'classnames'
 import React, { useCallback, useRef } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { HtmlNodeService } from '../services/html-node.service'
+import { HtmlNodeService } from '../../services/html-node.service'
 import { DropScriptsButton } from './drop-scripts-button'
 
 type InputRef = React.RefObject<HTMLInputElement>
@@ -97,7 +97,7 @@ export function DropScripts({
 
   return (
     <div
-      className={cx('w-full h-full flex', className)}
+      className={cx('w-full h-full', className)}
       {...getRootProps({
         onClick: onClickRoot
       })}

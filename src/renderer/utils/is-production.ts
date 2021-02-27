@@ -5,7 +5,7 @@
  */
 
 import { ipcRenderer } from '../../common/ipc'
-import * as Events from '../../common/events'
+import { Events } from '../../common/events'
 
 let isProductionRegistered = false
 let isProductionSaved = false

@@ -12,8 +12,8 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { GameType, toExecutable } from '../../../common/game'
-import { DialogTextField } from '../../components/dialog-text-field'
-import { usePageContext } from '../../components/page-context'
+import { DialogTextField } from '../../components/dialog/dialog-text-field'
+import { useApp } from '../../hooks/use-app'
 import { Alert } from '../../components/alert'
 import { useSettings } from './settings-context'
 
@@ -33,8 +33,8 @@ export function SettingsGame({
   const { t } = useTranslation()
   const {
     config: { game, compilation }
-  } = usePageContext()
-  const { isInstallationBad } = useSettings()
+  } = useApp()
+  const { isBadInstallation } = useSettings()
   const exe = toExecutable(game.type)
 
   return (
@@ -72,7 +72,7 @@ export function SettingsGame({
       <div className="mt-3">
         <DialogTextField
           id="game-folder"
-          error={isInstallationBad === 'game'}
+          error={isBadInstallation === 'game'}
           label={t('page.settings.gameFolderInfo', {
             gameType: game.type,
             exe
@@ -86,7 +86,7 @@ export function SettingsGame({
       <div className="mt-3 relative" id="settings-compiler">
         <DialogTextField
           id="compiler-path"
-          error={isInstallationBad === 'compiler'}
+          error={isBadInstallation === 'compiler'}
           label={t('page.settings.compilerPath')}
           defaultValue={compilation.compilerPath}
           onChange={onChangeCompilerPath}
@@ -94,7 +94,7 @@ export function SettingsGame({
         />
       </div>
 
-      {isInstallationBad !== false && isInstallationBad !== 'mo2-instance' && (
+      {isBadInstallation !== false && isBadInstallation !== 'mo2-instance' && (
         <Alert>
           <div className="w-full">
             <p className="select-text mb-2">
@@ -102,13 +102,13 @@ export function SettingsGame({
             </p>
 
             <p className="select-text">
-              {isInstallationBad === 'game' &&
+              {isBadInstallation === 'game' &&
                 t('page.settings.errors.game', { exe })}
-              {isInstallationBad === 'compiler' &&
+              {isBadInstallation === 'compiler' &&
                 t('page.settings.errors.compiler', {
                   compilerExe: compilation.compilerPath
                 })}
-              {isInstallationBad === 'scripts' &&
+              {isBadInstallation === 'scripts' &&
                 t('page.settings.errors.scripts')}
             </p>
           </div>

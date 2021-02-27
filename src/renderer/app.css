@@ -32,8 +32,12 @@ body {
 #app {
 }
 
-.container {
-  max-height: calc(100vh - theme('height.8') - theme('height.16'));
+.page {
+  @apply h-screen-appbar;
+}
+
+.page > main {
+  @apply pl-4 pr-4;
 }
 
 .overflow-overlay {

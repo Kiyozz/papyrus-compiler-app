@@ -9,67 +9,53 @@ import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
-import { usePageContext } from '../../components/page-context'
+import { useApp } from '../../hooks/use-app'
 import { useDrop } from '../../hooks/use-drop'
 import { ScriptInterface } from '../../interfaces'
-import actions from '../../redux/actions'
-import { useAction, useStoreSelector } from '../../redux/use-store-selector'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
 import reorderScripts from '../../utils/scripts/reorder-scripts'
 import uniqScripts from '../../utils/scripts/uniq-scripts'
-import { CompilationContextProvider } from './compilation-context'
+import { useCompilation } from '../../hooks/use-compilation'
 import { CompilationPageContent } from './compilation-page-content'
 import { GroupsLoader } from './groups-loader'
 
 export function Compilation() {
   const { t } = useTranslation()
-  const {
-    groups,
-    config: { compilation }
-  } = usePageContext()
-  const compilationScripts = useStoreSelector(
-    state => state.compilation.compilationScripts
-  )
-  const startCompilation = useAction(
-    actions.compilationPage.compilation.startWholeCompilation
-  )
-  const setCompilationScripts = useAction(actions.compilationPage.setScripts)
+  const { groups } = useApp()
+  const { scripts, start, setScripts } = useCompilation()
 
   const onClickRemoveScriptFromScript = useCallback(
     (script: ScriptInterface) => {
       return () => {
-        const newListOfScripts = compilationScripts.filter(
-          compilationScript => compilationScript !== script
+        setScripts(scriptsList =>
+          scriptsList.filter((cs: ScriptInterface) => cs !== script)
         )
-
-        setCompilationScripts(newListOfScripts)
       }
     },
-    [compilationScripts, setCompilationScripts]
+    [setScripts]
   )
 
-  const onClickPlayPause = useCallback(() => {
-    if (compilationScripts.length === 0) {
+  const onClickStart = useCallback(() => {
+    if (scripts.length === 0) {
       return
     }
 
-    startCompilation({
-      allScripts: compilationScripts,
-      concurrentScripts: compilation.concurrentScripts
-    })
-  }, [compilation.concurrentScripts, compilationScripts, startCompilation])
+    start({ scripts })
+  }, [scripts, start])
 
   const onDrop = useCallback(
     (pscFiles: File[]) => {
-      const pscScripts: ScriptInterface[] = pscFilesToPscScripts(
-        pscFiles,
-        compilationScripts
-      )
-      const newScripts = uniqScripts([...compilationScripts, ...pscScripts])
+      setScripts((scriptsList: ScriptInterface[]) => {
+        const pscScripts: ScriptInterface[] = pscFilesToPscScripts(
+          pscFiles,
+          scriptsList
+        )
+        const newScripts = uniqScripts([...scriptsList, ...pscScripts])
 
-      setCompilationScripts(reorderScripts(newScripts))
+        return reorderScripts(newScripts)
+      })
     },
-    [compilationScripts, setCompilationScripts]
+    [setScripts]
   )
 
   const onChangeGroup = useCallback(
@@ -80,16 +66,16 @@ export function Compilation() {
         return
       }
 
-      setCompilationScripts(
-        reorderScripts(uniqScripts([...compilationScripts, ...group.scripts]))
+      setScripts(scriptList =>
+        reorderScripts(uniqScripts([...scriptList, ...group.scripts]))
       )
     },
-    [setCompilationScripts, compilationScripts, groups]
+    [setScripts, groups]
   )
 
   const onClearScripts = useCallback(() => {
-    setCompilationScripts([])
-  }, [setCompilationScripts])
+    setScripts(() => [])
+  }, [setScripts])
 
   const addScriptsButton = useDrop({
     button: (
@@ -120,16 +106,16 @@ export function Compilation() {
   }, [addScriptsButton, groups, onChangeGroup])
 
   return (
-    <CompilationContextProvider>
+    <>
       <PageAppBar title={t('page.compilation.title')} actions={pageActions} />
 
       <Page>
         <CompilationPageContent
-          onClickPlayPause={onClickPlayPause}
+          onClickStart={onClickStart}
           onClickRemoveScriptFromScript={onClickRemoveScriptFromScript}
           onClear={onClearScripts}
         />
       </Page>
-    </CompilationContextProvider>
+    </>
   )
 }

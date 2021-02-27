@@ -4,9 +4,6 @@
  * All rights reserved.
  */
 
-export enum ScriptStatus {
-  Success,
-  Failed,
-  Running,
-  Idle
+export enum LocalStorage {
+  DrawerExpand = 'drawer-expand'
 }

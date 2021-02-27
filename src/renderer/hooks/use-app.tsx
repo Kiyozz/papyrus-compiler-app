@@ -15,25 +15,36 @@ import React, {
 import { Observable, Subject } from 'rxjs'
 import { PartialDeep } from 'type-fest'
 import { Titlebar } from 'custom-electron-titlebar'
+import useLocalStorage from 'react-use-localstorage'
 import { Config } from '../../common/interfaces/config.interface'
-import * as Events from '../../common/events'
+import { Events } from '../../common/events'
 import { ipcRenderer } from '../../common/ipc'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { Group } from '../interfaces'
-import { useStoreSelector } from '../redux/use-store-selector'
-import { DropFilesOverlay } from './drop-files-overlay'
-import { DropScripts, OnDropFunction } from './drop-scripts'
+import { LocalStorage } from '../enums/local-storage.enum'
+import { DropFilesOverlay } from '../components/drop/drop-files-overlay'
+import { DropScripts, OnDropFunction } from '../components/drop/drop-scripts'
 
-interface PageContextInterface {
-  drawerOpen: boolean
+interface AppContextInterface {
+  setVersion: (version: string) => void
+  setLatestVersion: (version: string) => void
+  setShowChangelog: (show: boolean) => void
+  setChangelog: (changelog: string) => void
   setDrawerOpen: (open: boolean) => void
-  setOnDrop: (on: (() => OnDropFunction) | null) => void
-  addScriptsButton?: JSX.Element
   setAddScriptsButton: (button: JSX.Element | null) => void
-  isDragActive: boolean
+  setConfig: (config: PartialDeep<Config>, override?: boolean) => void
+  setDrawerExpand: (expand: boolean) => void
+  setOnDrop: (on: (() => OnDropFunction) | null) => void
+  version: string
+  latestVersion: string
+  isShowChangelog: boolean
+  changelog: string
+  drawerOpen: boolean
+  addScriptsButton?: JSX.Element
   config: Config
+  isDrawerExpand: boolean
+  isDragActive: boolean
   groups: Group[]
-  updateConfig: (config: PartialDeep<Config>, override?: boolean) => void
   refreshConfig: () => void
   copyToClipboard: (text: string) => void
   onRefreshConfig: Observable<Config>
@@ -43,9 +54,9 @@ interface Props {
   titlebar: Titlebar
 }
 
-const PageContext = React.createContext({} as PageContextInterface)
+const AppContext = React.createContext({} as AppContextInterface)
 
-export const usePageContext = () => useContext(PageContext)
+export const useApp = () => useContext(AppContext)
 
 function selectGroups(config: Config): Group[] {
   if (config.groups.length === 0) {
@@ -58,7 +69,7 @@ function selectGroups(config: Config): Group[] {
         g.name,
         g.scripts.map((s, i) => {
           return {
-            status: ScriptStatus.IDLE,
+            status: ScriptStatus.Idle,
             id: i,
             name: s.name,
             path: s.path
@@ -68,7 +79,7 @@ function selectGroups(config: Config): Group[] {
   )
 }
 
-export function PageContextProvider({
+export function AppProvider({
   children,
   titlebar
 }: React.PropsWithChildren<Props>) {
@@ -79,9 +90,23 @@ export function PageContextProvider({
   const [AddScriptsButton, setAddScriptsButton] = useState<JSX.Element | null>(
     null
   )
-  const version = useStoreSelector(state => state.changelog.version)
-
   const refresh$ = useMemo(() => new Subject<Config>(), [])
+  const [version, setVersion] = useState('')
+  const [latestVersion, setLatestVersion] = useState('')
+  const [isShowChangelog, setShowChangelog] = useState(false)
+  const [changelog, setChangelog] = useState('')
+  const [isDrawerExpandLS, setDrawerExpandLS] = useLocalStorage(
+    LocalStorage.DrawerExpand,
+    'false'
+  )
+
+  const isDrawerExpand = useMemo(() => isDrawerExpandLS === 'true', [
+    isDrawerExpandLS
+  ])
+  const setDrawerExpand = useCallback(
+    (drawerExpand: boolean) => setDrawerExpandLS(`${drawerExpand}`),
+    [setDrawerExpandLS]
+  )
 
   const onRefreshConfig = useMemo(() => refresh$.asObservable(), [refresh$])
 
@@ -135,26 +160,36 @@ export function PageContextProvider({
       Button={AddScriptsButton}
     >
       {({ Button, isDragActive }) => (
-        <PageContext.Provider
+        <AppContext.Provider
           value={{
-            drawerOpen,
-            groups,
-            config,
-            updateConfig,
-            refreshConfig,
+            setVersion,
+            setLatestVersion,
+            setShowChangelog,
+            setChangelog,
             setDrawerOpen,
-            addScriptsButton: Button,
-            isDragActive,
-            setOnDrop,
             setAddScriptsButton,
-            onRefreshConfig,
-            copyToClipboard
+            setConfig: updateConfig,
+            setDrawerExpand,
+            setOnDrop,
+            version,
+            latestVersion,
+            isShowChangelog,
+            changelog,
+            drawerOpen,
+            addScriptsButton: Button,
+            config,
+            isDrawerExpand,
+            isDragActive,
+            groups,
+            refreshConfig,
+            copyToClipboard,
+            onRefreshConfig
           }}
         >
           <DropFilesOverlay open={isDragActive && onDrop !== null} />
 
           {children}
-        </PageContext.Provider>
+        </AppContext.Provider>
       )}
     </DropScripts>
   )

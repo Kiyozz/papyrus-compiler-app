@@ -9,7 +9,7 @@ import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
 import createDefaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem } from 'electron-util'
 import { appStore, defaultConfig } from '../common/store'
-import * as Events from '../common/events'
+import { Events } from '../common/events'
 import { Logger } from './logger'
 import { exists } from './services/path.service'
 

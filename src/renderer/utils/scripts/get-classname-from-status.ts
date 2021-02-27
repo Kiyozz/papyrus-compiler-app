@@ -11,11 +11,11 @@ export default function getClassNameFromStatus(
   script: ScriptInterface
 ): string {
   switch (script.status) {
-    case ScriptStatus.IDLE:
+    case ScriptStatus.Idle:
       return 'text-gray-500'
-    case ScriptStatus.RUNNING:
+    case ScriptStatus.Running:
       return 'text-blue-800'
-    case ScriptStatus.SUCCESS:
+    case ScriptStatus.Success:
       return 'text-green-500'
     default:
       return 'text-red-300'

@@ -21,12 +21,12 @@ jobs:
           key: "${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.yaml') }}"
       - uses: actions/setup-node@v1.4.4
         with:
-          node-version: 14.15
+          node-version: 14.16
 
       - name: Dependencies
         uses: pnpm/action-setup@v1.2.1
         with:
-          version: 5.17.1
+          version: 5.17.3
           run_install: true
 
       - name: Lint

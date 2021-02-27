@@ -16,11 +16,11 @@ export default function getIconFromStatus(
   script: ScriptInterface
 ): JSX.Element {
   switch (script.status) {
-    case ScriptStatus.IDLE:
+    case ScriptStatus.Idle:
       return <QueryBuilderIcon />
-    case ScriptStatus.RUNNING:
+    case ScriptStatus.Running:
       return <HourglassEmptyIcon />
-    case ScriptStatus.SUCCESS:
+    case ScriptStatus.Success:
       return <CheckCircleIcon />
     default:
       return <ErrorIcon />

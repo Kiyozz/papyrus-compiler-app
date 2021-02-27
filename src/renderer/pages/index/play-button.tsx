@@ -7,7 +7,7 @@
 import PlayIcon from '@material-ui/icons/PlayCircleFilled'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useCompilationContext } from './compilation-context'
+import { useCompilation } from '../../hooks/use-compilation'
 
 interface Props {
   onClick: () => void
@@ -15,7 +15,7 @@ interface Props {
 
 export function PlayButton({ onClick }: Props) {
   const { t } = useTranslation()
-  const { isCompilationRunning, compilationScripts } = useCompilationContext()
+  const { isRunning, scripts } = useCompilation()
 
   const Icon = useMemo(
     () =>
@@ -29,7 +29,7 @@ export function PlayButton({ onClick }: Props) {
     <button
       className="btn btn-primary"
       onClick={onClick}
-      disabled={compilationScripts.length === 0 || isCompilationRunning}
+      disabled={scripts.length === 0 || isRunning}
     >
       <div className="icon">
         <Icon />

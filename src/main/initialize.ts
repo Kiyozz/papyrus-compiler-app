@@ -5,9 +5,9 @@
  */
 
 import { is } from 'electron-util'
-import * as Events from '../common/events'
+import { Events } from '../common/events'
 import { appStore } from '../common/store'
-import { BadInstallationHandler } from './event-handlers/bad-installation.handler'
+import { CheckInstallationHandler } from './event-handlers/check-installation.handler'
 import { ConfigGetHandler } from './event-handlers/config-get.handler'
 import { ConfigUpdateHandler } from './event-handlers/config-update.handler'
 import { DialogHandler } from './event-handlers/dialog.handler'
@@ -68,7 +68,7 @@ export async function initialize(win: Electron.BrowserWindow) {
   const openFileHandler = new OpenFileHandler()
   const handlers = new Map<string, EventHandlerInterface>([
     [Events.OpenDialog, new DialogHandler()],
-    [Events.BadInstallation, new BadInstallationHandler()],
+    [Events.CheckInstallation, new CheckInstallationHandler()],
     [Events.ConfigUpdate, new ConfigUpdateHandler()],
     [Events.ConfigGet, new ConfigGetHandler()],
     [Events.FilesStats, new FileStatHandler()],

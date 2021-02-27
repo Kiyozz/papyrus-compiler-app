@@ -8,7 +8,7 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ScriptInterface } from '../../interfaces'
-import { useCompilationContext } from './compilation-context'
+import { useCompilation } from '../../hooks/use-compilation'
 import { CompilationPageActions } from './compilation-page-actions'
 import { PlayButton } from './play-button'
 import { ScriptItem } from './script-item'
@@ -16,19 +16,19 @@ import { ScriptItem } from './script-item'
 interface Props {
   onClickRemoveScriptFromScript: (script: ScriptInterface) => () => void
   onClear: () => void
-  onClickPlayPause: () => void
+  onClickStart: () => void
 }
 
 export function CompilationPageContent({
   onClear,
-  onClickPlayPause,
+  onClickStart,
   onClickRemoveScriptFromScript
 }: Props) {
   const { t } = useTranslation()
-  const { compilationScripts } = useCompilationContext()
+  const { scripts } = useCompilation()
 
   const scriptsList: JSX.Element[] = useMemo(() => {
-    return compilationScripts.map(script => {
+    return scripts.map(script => {
       return (
         <ScriptItem
           key={script.id}
@@ -37,20 +37,17 @@ export function CompilationPageContent({
         />
       )
     })
-  }, [compilationScripts, onClickRemoveScriptFromScript])
+  }, [scripts, onClickRemoveScriptFromScript])
 
   return (
     <>
-      <div className="flex mb-4 gap-2">
-        <PlayButton onClick={onClickPlayPause} />
+      <div className="flex pb-4 gap-2">
+        <PlayButton onClick={onClickStart} />
 
-        <CompilationPageActions
-          hasScripts={scriptsList.length > 0}
-          onClearScripts={onClear}
-        />
+        <CompilationPageActions onClearScripts={onClear} />
       </div>
 
-      {compilationScripts.length > 0 ? (
+      {scripts.length > 0 ? (
         <div className="flex flex-col gap-2">{scriptsList}</div>
       ) : (
         <>

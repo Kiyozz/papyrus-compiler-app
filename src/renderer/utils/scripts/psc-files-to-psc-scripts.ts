@@ -16,7 +16,7 @@ export function pscFilesToPscScripts(
       id: (actualList?.length ?? 0) + index,
       name,
       path,
-      status: ScriptStatus.IDLE
+      status: ScriptStatus.Idle
     }
   })
 }

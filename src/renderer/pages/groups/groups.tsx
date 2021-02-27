@@ -8,11 +8,11 @@ import CreateIcon from '@material-ui/icons/Create'
 import is from '@sindresorhus/is'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { GroupsDialog } from '../../components/groups-dialog'
+import { GroupsDialog } from '../../components/groups/groups-dialog'
 import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
-import { usePageContext } from '../../components/page-context'
-import { GroupInterface } from '../../interfaces'
+import { useApp } from '../../hooks/use-app'
+import { Group, GroupInterface } from '../../interfaces'
 import { GroupsListItem } from './groups-list-item'
 
 interface EditGroupParams {
@@ -22,7 +22,7 @@ interface EditGroupParams {
 
 export function Groups() {
   const { t } = useTranslation()
-  const { groups, updateConfig } = usePageContext()
+  const { groups, setConfig } = useApp()
   const addGroup = useCallback(
     (group: GroupInterface) => {
       if (
@@ -35,7 +35,7 @@ export function Groups() {
         return
       }
 
-      updateConfig({
+      setConfig({
         groups: [
           ...groups,
           {
@@ -45,7 +45,7 @@ export function Groups() {
         ]
       })
     },
-    [updateConfig, groups]
+    [setConfig, groups]
   )
   const editGroup = useCallback(
     ({ group, lastGroupName }: EditGroupParams) => {
@@ -61,8 +61,8 @@ export function Groups() {
         return
       }
 
-      updateConfig({
-        groups: groups.map(g => {
+      setConfig({
+        groups: groups.map((g: Group) => {
           if (g.name === lastGroupName) {
             return {
               scripts: group.scripts.map(s => ({ name: s.name, path: s.path })),
@@ -77,7 +77,7 @@ export function Groups() {
         })
       })
     },
-    [groups, updateConfig]
+    [groups, setConfig]
   )
   const removeGroup = useCallback(
     (group: GroupInterface) => {
@@ -91,7 +91,7 @@ export function Groups() {
         return
       }
 
-      updateConfig(
+      setConfig(
         {
           groups: groups
             .map(g => ({ name: g.name, scripts: g.scripts }))
@@ -100,7 +100,7 @@ export function Groups() {
         true
       )
     },
-    [groups, updateConfig]
+    [groups, setConfig]
   )
 
   const [showAddPopup, setShowPopup] = useState(false)
@@ -162,7 +162,7 @@ export function Groups() {
       />
 
       <Page>
-        <div>
+        <>
           <GroupsDialog
             group={editingGroup}
             open={showAddPopup}
@@ -190,7 +190,7 @@ export function Groups() {
               <p>{t('page.groups.whatIsAGroup')}</p>
             </div>
           )}
-        </div>
+        </>
       </Page>
     </>
   )

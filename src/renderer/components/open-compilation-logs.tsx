@@ -6,14 +6,13 @@
 
 import ErrorIcon from '@material-ui/icons/Error'
 
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ScriptInterface } from '../interfaces'
-import actions from '../redux/actions'
-import { useAction, useStoreSelector } from '../redux/use-store-selector'
-import { Dialog } from './dialog'
-import { usePageContext } from './page-context'
+import { useCompilation } from '../hooks/use-compilation'
+import { useApp } from '../hooks/use-app'
+import { Dialog } from './dialog/dialog'
 
 export function LogsListItem({
   script,
@@ -22,7 +21,7 @@ export function LogsListItem({
   script: ScriptInterface
   logs: string
 }) {
-  const { copyToClipboard } = usePageContext()
+  const { copyToClipboard } = useApp()
   const onClickCopyLogs = useCallback(() => {
     copyToClipboard(`${script.name}\n\n${logs}\n`)
   }, [copyToClipboard, logs, script.name])
@@ -48,20 +47,17 @@ export function LogsListItem({
 
 export function OpenCompilationLogs() {
   const { t } = useTranslation()
-  const isDrawerExpand = useStoreSelector(
-    state => state.settings.isDrawerExpand
-  )
-  const logs = useStoreSelector(state => state.compilationLogs.logs)
-  const popupOpen = useStoreSelector(state => state.compilationLogs.popupOpen)
-  const popupToggle = useAction(actions.compilationPage.logs.popupToggle)
+  const { isDrawerExpand } = useApp()
+  const { logs } = useCompilation()
+  const [isDialogOpen, setDialogOpen] = useState(false)
 
   const onClickButtonOpenLogs = useCallback(() => {
-    popupToggle(true)
-  }, [popupToggle])
+    setDialogOpen(true)
+  }, [])
 
   const onClickButtonCloseLogs = useCallback(() => {
-    popupToggle(false)
-  }, [popupToggle])
+    setDialogOpen(false)
+  }, [])
 
   return (
     <>
@@ -74,7 +70,7 @@ export function OpenCompilationLogs() {
       </li>
 
       <Dialog
-        open={popupOpen}
+        open={isDialogOpen}
         onClose={onClickButtonCloseLogs}
         maxWidth={80}
         fullWidth

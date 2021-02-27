@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useNavigate } from '@reach/router'
 import { useTranslation } from 'react-i18next'
-import { usePageContext } from '../page-context'
+import { useApp } from '../../hooks/use-app'
 
 enum Step {
   Waiting,
@@ -143,18 +143,18 @@ function Overlay() {
  */
 export function TutorialSettings() {
   const { t } = useTranslation()
-  const { config, updateConfig } = usePageContext()
+  const { config, setConfig } = useApp()
   const navigate = useNavigate()
   const [step, setStep] = useState(Step.Waiting)
 
   const onClickClose = useCallback(() => {
-    updateConfig({
+    setConfig({
       tutorials: {
         ...config.tutorials,
         settings: false
       }
     })
-  }, [config.tutorials, updateConfig])
+  }, [config.tutorials, setConfig])
 
   const onClickNeedHelp = useCallback(() => {
     navigate('/settings').then(() => {
@@ -176,12 +176,12 @@ export function TutorialSettings() {
 
   const onNextStepMo2 = useCallback(() => {
     setStep(Step.End)
-    updateConfig({
+    setConfig({
       tutorials: {
         settings: false
       }
     })
-  }, [updateConfig])
+  }, [setConfig])
 
   useEffect(() => {
     const time = setTimeout(() => {

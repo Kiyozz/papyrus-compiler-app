@@ -8,8 +8,8 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import RefreshIcon from '@material-ui/icons/Refresh'
-import { DialogTextField } from '../../components/dialog-text-field'
-import { usePageContext } from '../../components/page-context'
+import { DialogTextField } from '../../components/dialog/dialog-text-field'
+import { useApp } from '../../hooks/use-app'
 import { Alert } from '../../components/alert'
 import { useSettings } from './settings-context'
 
@@ -25,8 +25,8 @@ export function SettingsMo2Instance({
   const { t } = useTranslation()
   const {
     config: { mo2 }
-  } = usePageContext()
-  const { isInstallationBad } = useSettings()
+  } = useApp()
+  const { isBadInstallation } = useSettings()
 
   if (!mo2.use) {
     return null
@@ -36,14 +36,14 @@ export function SettingsMo2Instance({
     <>
       <DialogTextField
         id="mo2-instance"
-        error={isInstallationBad === 'mo2-instance'}
+        error={isBadInstallation === 'mo2-instance'}
         defaultValue={mo2.instance ?? ''}
         label={t('page.settings.mo2.instance')}
         onChange={onChangeMo2Instance}
         type="folder"
       />
 
-      {isInstallationBad === 'mo2-instance' && (
+      {isBadInstallation === 'mo2-instance' && (
         <Alert>
           <div className="w-full">
             <p className="select-text mb-2">

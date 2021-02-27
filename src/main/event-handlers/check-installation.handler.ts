@@ -18,8 +18,8 @@ import * as path from '../services/path.service'
 import { EventHandlerInterface } from '../interfaces/event-handler.interface'
 import { BadErrorType } from '../../common/interfaces/bad-error.type'
 
-export class BadInstallationHandler implements EventHandlerInterface {
-  private readonly logger = new Logger('BadInstallationHandler')
+export class CheckInstallationHandler implements EventHandlerInterface {
+  private readonly logger = new Logger('CheckInstallationHandler')
 
   async listen(): Promise<BadErrorType> {
     const hasGameExe = await this.checkGameExe()
@@ -56,18 +56,28 @@ export class BadInstallationHandler implements EventHandlerInterface {
     const gameType = game.type
     const executable = toExecutable(gameType)
 
-    return Promise.resolve(
+    const result: Promise<BadErrorType> = Promise.resolve(
       path.exists(path.join(gamePath, executable)) ? false : 'game'
     )
+
+    this.logger.debug('checking game exe - done')
+
+    return result
   }
 
   private checkMo2Instance(): Promise<BadErrorType> {
+    this.logger.debug('checking mo2 instance')
+
     const mo2Use: boolean = appStore.get('mo2.use')
     const mo2Instance: string = appStore.get('mo2.instance')
 
-    return Promise.resolve(
+    const result: Promise<BadErrorType> = Promise.resolve(
       mo2Use ? (!path.exists(mo2Instance) ? 'mo2-instance' : false) : false
     )
+
+    this.logger.debug('checking mo2 instance - done')
+
+    return result
   }
 
   private async checkInMo2(file: string): Promise<BadErrorType> {
@@ -130,6 +140,8 @@ export class BadInstallationHandler implements EventHandlerInterface {
       return Promise.resolve('scripts')
     }
 
+    this.logger.debug('checking in game Data folder - done')
+
     return Promise.resolve(false)
   }
 
@@ -138,8 +150,12 @@ export class BadInstallationHandler implements EventHandlerInterface {
 
     const compilerPath: string = appStore.get('compilation.compilerPath')
 
-    return Promise.resolve(
+    const result: Promise<BadErrorType> = Promise.resolve(
       path.exists(path.normalize(compilerPath)) ? false : 'compiler'
     )
+
+    this.logger.debug('checking compiler path - done')
+
+    return result
   }
 }

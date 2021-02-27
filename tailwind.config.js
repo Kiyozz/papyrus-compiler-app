@@ -28,7 +28,8 @@ module.exports = {
       },
       height: {
         'screen-titlebar': 'calc(100vh - theme("height.8"))',
-        'screen-appbar': 'calc(100vh - theme("height.8") - theme("height.16"))'
+        'screen-appbar':
+          'calc(100vh - theme("height.8") - theme("height.16") + 4px)'
       }
     }
   },

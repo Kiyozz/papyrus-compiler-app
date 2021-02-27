@@ -12,10 +12,9 @@ import { GameType } from '../../../common/game'
 
 import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
-import { usePageContext } from '../../components/page-context'
-import actions from '../../redux/actions'
-import { useAction, useStoreSelector } from '../../redux/use-store-selector'
-import { SettingsContextProvider } from './settings-context'
+import { useApp } from '../../hooks/use-app'
+import { useLoading } from '../../hooks/use-loading'
+import { useSettings } from './settings-context'
 import { SettingsGame } from './settings-game'
 import { SettingsMo2 } from './settings-mo2'
 import { SettingsCompilation } from './settings-compilation'
@@ -28,25 +27,24 @@ export function Settings() {
       compilation,
       mo2: { instance: mo2Instance }
     },
-    updateConfig,
+    setConfig,
     refreshConfig
-  } = usePageContext()
+  } = useApp()
+  const {
+    checkInstallation,
+    isBadInstallation,
+    resetBadInstallation
+  } = useSettings()
+  const { isLoading } = useLoading()
 
   const debouncedUpdateConfig = useMemo(
-    () => debounce(updateConfig, { wait: 500 }),
-    [updateConfig]
+    () => debounce(setConfig, { wait: 500 }),
+    [setConfig]
   )
 
-  const loading = useStoreSelector(state => state.taskLoading)
-  const isInstallationBad = useStoreSelector(
-    state => state.settings.isInstallationBad
-  )
-  const detectBadInstallation = useAction(
-    actions.settingsPage.detectBadInstallation.start
-  )
   const setGame = useCallback(
-    (gameType: GameType) => updateConfig({ game: { type: gameType } }),
-    [updateConfig]
+    (gameType: GameType) => setConfig({ game: { type: gameType } }),
+    [setConfig]
   )
   const setGameFolder = useCallback(
     (gamePath: string) => debouncedUpdateConfig({ game: { path: gamePath } }),
@@ -58,27 +56,25 @@ export function Settings() {
     [debouncedUpdateConfig]
   )
   const setMo2 = useCallback(
-    (useMo2Updated: boolean) => updateConfig({ mo2: { use: useMo2Updated } }),
-    [updateConfig]
+    (useMo2Updated: boolean) => setConfig({ mo2: { use: useMo2Updated } }),
+    [setConfig]
   )
   const setMo2Instance = useCallback(
     (instance?: string) => debouncedUpdateConfig({ mo2: { instance } }),
     [debouncedUpdateConfig]
   )
   const setDisableMo2 = useCallback(
-    () => updateConfig({ mo2: { use: false, instance: undefined } }),
-    [updateConfig]
+    () => setConfig({ mo2: { use: false, instance: undefined } }),
+    [setConfig]
   )
-  const setIsInstallationBad = useAction(actions.settingsPage.installationIsBad)
-
-  const debouncedDetectBadInstallation = useMemo(
-    () => debounce(detectBadInstallation, { wait: 500 }),
-    [detectBadInstallation]
+  const debouncedcheckInstallation = useMemo(
+    () => debounce(checkInstallation, { wait: 500 }),
+    [checkInstallation]
   )
 
   const onClickRadio = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setIsInstallationBad(false)
+      resetBadInstallation()
       const value = e.target.value as GameType
 
       if (![GameType.Le, GameType.Se, GameType.Vr].includes(value)) {
@@ -87,24 +83,24 @@ export function Settings() {
 
       setGame(value)
     },
-    [setGame, setIsInstallationBad]
+    [resetBadInstallation, setGame]
   )
 
   useEffect(() => {
-    setIsInstallationBad(false)
+    resetBadInstallation()
 
     if (!game.type || !game.path || !compilation.compilerPath) {
       return
     }
 
-    debouncedDetectBadInstallation()
+    debouncedcheckInstallation()
   }, [
     compilation.compilerPath,
-    debouncedDetectBadInstallation,
+    debouncedcheckInstallation,
     game.path,
     game.type,
     mo2Instance,
-    setIsInstallationBad
+    resetBadInstallation
   ])
 
   const onChangeGameFolder = useCallback(
@@ -145,25 +141,25 @@ export function Settings() {
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
 
-      detectBadInstallation()
+      checkInstallation()
     },
-    [detectBadInstallation]
+    [checkInstallation]
   )
 
   const onClickPageRefresh = useCallback(() => {
-    if (loading) {
+    if (isLoading) {
       return
     }
 
-    if (isInstallationBad) {
-      detectBadInstallation()
+    if (isBadInstallation) {
+      checkInstallation()
     }
 
     refreshConfig()
-  }, [loading, isInstallationBad, refreshConfig, detectBadInstallation])
+  }, [isLoading, isBadInstallation, refreshConfig, checkInstallation])
 
   return (
-    <SettingsContextProvider>
+    <>
       <PageAppBar
         title={t('page.settings.title')}
         actions={[
@@ -177,23 +173,21 @@ export function Settings() {
       />
 
       <Page>
-        <div className="pb-4">
-          <SettingsGame
-            onClickRadio={onClickRadio}
-            onChangeGameFolder={onChangeGameFolder}
-            onClickRefreshInstallation={onClickRefreshInstallation}
-            onChangeCompilerPath={onChangeCompilerPath}
-          />
+        <SettingsGame
+          onClickRadio={onClickRadio}
+          onChangeGameFolder={onChangeGameFolder}
+          onClickRefreshInstallation={onClickRefreshInstallation}
+          onChangeCompilerPath={onChangeCompilerPath}
+        />
 
-          <SettingsCompilation />
+        <SettingsCompilation />
 
-          <SettingsMo2
-            onChangeMo2={onChangeMo2}
-            onChangeMo2Instance={onChangeMo2Instance}
-            onClickRefreshInstallation={onClickRefreshInstallation}
-          />
-        </div>
+        <SettingsMo2
+          onChangeMo2={onChangeMo2}
+          onChangeMo2Instance={onChangeMo2Instance}
+          onClickRefreshInstallation={onClickRefreshInstallation}
+        />
       </Page>
-    </SettingsContextProvider>
+    </>
   )
 }

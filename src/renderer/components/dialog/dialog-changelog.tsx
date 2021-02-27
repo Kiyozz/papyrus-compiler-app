@@ -11,14 +11,10 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
 
-import useOnKeyUp from '../hooks/use-on-key-up'
-import { useStoreSelector } from '../redux/use-store-selector'
-import { MOD_URL } from '../../common/mod'
+import useOnKeyUp from '../../hooks/use-on-key-up'
+import { MOD_URL } from '../../../common/mod'
+import { useApp } from '../../hooks/use-app'
 import { Dialog } from './dialog'
-
-interface Props {
-  onClose: () => void
-}
 
 function Anchor({ children, href }: React.PropsWithChildren<{ href: string }>) {
   const shell = useMemo(() => window.require('electron').shell, [])
@@ -54,12 +50,15 @@ function Code({ value }: { value: string }) {
   )
 }
 
-export function DialogChangelog({ onClose }: Props) {
+export function DialogChangelog() {
   const shell = useMemo(() => window.require('electron').shell, [])
   const { t } = useTranslation()
-  const showNotes = useStoreSelector(store => store.changelog.showNotes)
-  const notes = useStoreSelector(store => store.changelog.notes)
-  const latestVersion = useStoreSelector(store => store.changelog.latestVersion)
+  const {
+    isShowChangelog,
+    changelog,
+    latestVersion,
+    setShowChangelog
+  } = useApp()
 
   const [isUserShowNotes, setUserShowNotes] = useState(false)
 
@@ -73,23 +72,23 @@ export function DialogChangelog({ onClose }: Props) {
   )
 
   const onClickShowNotes = useCallback(() => {
-    if (showNotes) {
+    if (isShowChangelog) {
       setUserShowNotes(true)
     }
-  }, [showNotes])
+  }, [isShowChangelog])
 
   const onCloseDialog = useCallback(() => {
     setUserShowNotes(false)
-    onClose()
-  }, [onClose])
+    setShowChangelog(false)
+  }, [setShowChangelog])
 
   useOnKeyUp('Escape', () => {
-    onClose()
+    setShowChangelog(false)
   })
 
   return (
     <>
-      {showNotes && !isUserShowNotes && (
+      {isShowChangelog && !isUserShowNotes && (
         <div className="fixed z-20 bottom-3 left-3 bg-gray-800 py-3 items-center rounded text-sm text-white flex">
           <div className="px-2">
             {t('changelog.available.message', { version: latestVersion })}
@@ -134,7 +133,7 @@ export function DialogChangelog({ onClose }: Props) {
       >
         <div className="changelog-container bg-gray-700 p-4 rounded text-gray-300 text-sm">
           <ReactMarkdown
-            source={notes}
+            source={changelog}
             renderers={{
               paragraph: Paragraph,
               heading: Heading,

@@ -7,7 +7,7 @@
 import React, { useCallback } from 'react'
 import is from '@sindresorhus/is'
 import { useTranslation } from 'react-i18next'
-import { usePageContext } from '../../components/page-context'
+import { useApp } from '../../hooks/use-app'
 import { TextField } from '../../components/text-field'
 
 const maxConcurrentCompilationScripts = 100
@@ -16,8 +16,8 @@ export function SettingsCompilation() {
   const { t } = useTranslation()
   const {
     config: { compilation },
-    updateConfig
-  } = usePageContext()
+    setConfig
+  } = useApp()
 
   const onChangeConcurrentScripts = useCallback(
     (value: string | number) => {
@@ -36,10 +36,10 @@ export function SettingsCompilation() {
           parsedValue = 1
         }
 
-        updateConfig({ compilation: { concurrentScripts: parsedValue } })
+        setConfig({ compilation: { concurrentScripts: parsedValue } })
       }
     },
-    [updateConfig]
+    [setConfig]
   )
 
   return (

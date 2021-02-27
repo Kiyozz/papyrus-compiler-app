@@ -7,14 +7,15 @@
 import FolderIcon from '@material-ui/icons/Folder'
 import FolderOpenIcon from '@material-ui/icons/FolderOpen'
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import is from '@sindresorhus/is'
-import { apiFactory } from '../redux/api/api-factory'
 
-import { DialogType } from '../../common/interfaces/dialog.interface'
-import { TextField } from './text-field'
-import { usePageContext } from './page-context'
+import { DialogType } from '../../../common/interfaces/dialog.interface'
+import { ipcRenderer } from '../../../common/ipc'
+import { Events } from '../../../common/events'
+import { useApp } from '../../hooks/use-app'
+import { TextField } from '../text-field'
 
 export interface Props {
   id: string
@@ -34,11 +35,10 @@ export function DialogTextField({
   onChange,
   type
 }: Props) {
-  const { onRefreshConfig } = usePageContext()
+  const { onRefreshConfig } = useApp()
   const { t } = useTranslation()
   const [value, setValue] = useState(defaultValue)
   const [isHover, setHover] = useState(false)
-  const api = useMemo(() => apiFactory(), [])
   const onClickInput = useCallback(
     async (e: React.MouseEvent<HTMLDivElement>) => {
       setHover(false)
@@ -46,7 +46,15 @@ export function DialogTextField({
       e.currentTarget.blur()
 
       try {
-        const result = await api.openDialog({ type })
+        const result = await ipcRenderer
+          .invoke<string | null>(Events.OpenDialog, { type })
+          .then(response => {
+            if (response === null) {
+              return
+            }
+
+            return response
+          })
 
         if (typeof result !== 'undefined') {
           setValue(result)
@@ -56,7 +64,7 @@ export function DialogTextField({
         console.log(err?.message)
       }
     },
-    [api, onChange, type]
+    [onChange, type]
   )
 
   useEffect(() => {

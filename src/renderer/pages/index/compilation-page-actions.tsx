@@ -8,16 +8,15 @@ import ClearIcon from '@material-ui/icons/Clear'
 
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useCompilationContext } from './compilation-context'
+import { useCompilation } from '../../hooks/use-compilation'
 
 interface Props {
-  hasScripts: boolean
   onClearScripts: () => void
 }
 
-export function CompilationPageActions({ hasScripts, onClearScripts }: Props) {
+export function CompilationPageActions({ onClearScripts }: Props) {
   const { t } = useTranslation()
-  const { isCompilationRunning } = useCompilationContext()
+  const { isRunning, scripts } = useCompilation()
 
   const onClickEmpty = useCallback(() => {
     onClearScripts()
@@ -27,7 +26,7 @@ export function CompilationPageActions({ hasScripts, onClearScripts }: Props) {
     <button
       className="btn btn-secondary"
       onClick={onClickEmpty}
-      disabled={isCompilationRunning || !hasScripts}
+      disabled={isRunning || scripts.length === 0}
     >
       <ClearIcon className="mr-2" /> {t('page.compilation.actions.clearList')}
     </button>

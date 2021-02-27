@@ -6,8 +6,8 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react'
-import { OnDropFunction } from '../components/drop-scripts'
-import { usePageContext } from '../components/page-context'
+import { OnDropFunction } from '../components/drop/drop-scripts'
+import { useApp } from './use-app'
 
 interface UseDropOptions {
   button: JSX.Element | null
@@ -17,7 +17,7 @@ interface UseDropOptions {
 export const useDrop = (
   options: UseDropOptions
 ): JSX.Element | undefined | null => {
-  const { addScriptsButton, setAddScriptsButton, setOnDrop } = usePageContext()
+  const { addScriptsButton, setAddScriptsButton, setOnDrop } = useApp()
 
   useEffect(() => {
     setAddScriptsButton(options.button)

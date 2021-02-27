@@ -10,14 +10,14 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import is from '@sindresorhus/is'
-import { useDrop } from '../hooks/use-drop'
-import { GroupInterface, ScriptInterface } from '../interfaces'
-import { pscFilesToPscScripts } from '../utils/scripts/psc-files-to-psc-scripts'
-import uniqScripts from '../utils/scripts/uniq-scripts'
+import { useDrop } from '../../hooks/use-drop'
+import { GroupInterface, ScriptInterface } from '../../interfaces'
+import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
+import uniqScripts from '../../utils/scripts/uniq-scripts'
+import { TextField } from '../text-field'
+import { Dialog } from '../dialog/dialog'
 import { GroupsDialogActions } from './groups-dialog-actions'
 import { GroupsDialogList } from './groups-dialog-list'
-import { TextField } from './text-field'
-import { Dialog } from './dialog'
 
 interface Props {
   onGroupAdd: (group: GroupInterface) => void
