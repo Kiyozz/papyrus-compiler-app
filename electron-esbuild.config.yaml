@@ -1,2 +1,10 @@
-esbuildMainConfig: esbuild.main.js
-webpackRendererConfig: webpack.renderer.js
+mainConfig:
+  type: esbuild
+  path: esbuild.main.js
+  src: src/main/main.ts
+  output: dist/main
+rendererConfig:
+  type: webpack
+  path: webpack.renderer.js
+  src: src/renderer/index.tsx
+  output: dist/renderer

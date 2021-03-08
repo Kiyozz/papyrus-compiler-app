@@ -137,6 +137,7 @@ module.exports = merge => {
     }
   } else {
     myNewConfig.plugins.push(
+      new webpack.HotModuleReplacementPlugin(),
       new ForkTsCheckerWebpackPlugin(),
       new ReactRefreshWebpackPlugin()
     )

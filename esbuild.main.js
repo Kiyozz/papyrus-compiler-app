@@ -5,7 +5,6 @@
  */
 
 const path = require('path')
-const modules = require('module')
 
 /**
  * @param {Partial<import('esbuild').BuildOptions>} merge
@@ -13,21 +12,14 @@ const modules = require('module')
  * @return {import('esbuild').BuildOptions}
  */
 module.exports = (merge = {}) => {
-  const isProduction = process.env.NODE_ENV === 'production'
-
   return {
     platform: 'node',
     entryPoints: [path.resolve('src/main/main.ts')],
     bundle: true,
-    target: 'node12.18.4',
-    external: ['electron', ...modules.builtinModules],
+    target: 'node14.16.0',
     loader: {
       '.ts': 'ts'
     },
-    minify: isProduction,
-    sourcemap: false,
-    outfile: path.resolve('dist/main/main.js'),
-    plugins: [],
     define: {
       'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`,
       'process.env.ELECTRON_WEBPACK_APP_MOD_URL': `'${

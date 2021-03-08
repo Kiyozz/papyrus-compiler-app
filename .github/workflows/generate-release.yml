@@ -18,7 +18,7 @@ jobs:
       - name: Dependencies
         uses: pnpm/action-setup@v1.2.1
         with:
-          version: 5.17.3
+          version: 5.18.3
           run_install: true
 
       - name: Generate SE
