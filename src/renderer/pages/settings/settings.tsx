@@ -43,7 +43,17 @@ export function Settings() {
   )
 
   const setGame = useCallback(
-    (gameType: GameType) => setConfig({ game: { type: gameType } }),
+    (gameType: GameType) => {
+      setConfig({
+        game: { type: gameType },
+        compilation: {
+          flag:
+            gameType === GameType.Fo4
+              ? 'Institute_Papyrus_Flags.flg'
+              : 'TESV_Papyrus_Flags.flg'
+        }
+      })
+    },
     [setConfig]
   )
   const setGameFolder = useCallback(
@@ -77,7 +87,9 @@ export function Settings() {
       resetBadInstallation()
       const value = e.target.value as GameType
 
-      if (![GameType.Le, GameType.Se, GameType.Vr].includes(value)) {
+      if (
+        ![GameType.Le, GameType.Se, GameType.Vr, GameType.Fo4].includes(value)
+      ) {
         return
       }
 

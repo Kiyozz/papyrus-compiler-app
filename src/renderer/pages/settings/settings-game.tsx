@@ -66,6 +66,14 @@ export function SettingsGame({
             control={<Radio />}
             label={GameType.Vr}
           />
+          <FormControlLabel
+            value={GameType.Fo4}
+            classes={{
+              label: 'text-white'
+            }}
+            control={<Radio />}
+            label={GameType.Fo4}
+          />
         </RadioGroup>
       </FormControl>
 
