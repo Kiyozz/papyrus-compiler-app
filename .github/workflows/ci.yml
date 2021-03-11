@@ -7,6 +7,8 @@ on:
       - '**.js'
       - '**.mjs'
       - '**.tsx'
+      - '**.yml'
+      - '**.yaml'
 
 jobs:
   ci:
