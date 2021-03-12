@@ -40,13 +40,15 @@ export function SettingsGame({
 
   return (
     <div className="paper relative" id="settings-game">
-      <h1 className="text-2xl text-white mb-3">{t('page.settings.game')}</h1>
+      <h1 className="text-2xl dark:text-white mb-3">
+        {t('page.settings.game')}
+      </h1>
       <FormControl component="fieldset" fullWidth>
         <RadioGroup row value={game.type} onChange={onClickRadio}>
           <FormControlLabel
             value={GameType.Le}
             classes={{
-              label: 'text-white'
+              label: 'dark:text-white'
             }}
             control={<Radio />}
             label={GameType.Le}
@@ -54,7 +56,7 @@ export function SettingsGame({
           <FormControlLabel
             value={GameType.Se}
             classes={{
-              label: 'text-white'
+              label: 'dark:text-white'
             }}
             control={<Radio />}
             label={GameType.Se}
@@ -62,7 +64,7 @@ export function SettingsGame({
           <FormControlLabel
             value={GameType.Vr}
             classes={{
-              label: 'text-white'
+              label: 'dark:text-white'
             }}
             control={<Radio />}
             label={GameType.Vr}
@@ -70,7 +72,7 @@ export function SettingsGame({
           <FormControlLabel
             value={GameType.Fo4}
             classes={{
-              label: 'text-white'
+              label: 'dark:text-white'
             }}
             control={<Radio />}
             label={GameType.Fo4}

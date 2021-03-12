@@ -39,7 +39,7 @@ function Paragraph({ children }: React.PropsWithChildren<unknown>) {
 
 function Code({ value }: { value: string }) {
   return (
-    <code className="p-4 bg-gray-700 mt-2 block w-full rounded">
+    <code className="p-4 dark:bg-gray-700 mt-2 block w-full rounded">
       {value.split('\n').map((s, i) => (
         <pre key={i} className="mb-0">
           {s}
@@ -88,7 +88,7 @@ export function DialogChangelog(): JSX.Element {
   return (
     <>
       {isShowChangelog && !isUserShowNotes && (
-        <div className="fixed z-20 bottom-3 left-3 bg-gray-800 py-3 items-center rounded text-sm text-white flex">
+        <div className="fixed z-20 bottom-3 left-3 dark:bg-gray-800 py-3 items-center rounded text-sm dark:text-white flex">
           <div className="px-2">
             {t('changelog.available.message', { version: latestVersion })}
           </div>
@@ -109,7 +109,6 @@ export function DialogChangelog(): JSX.Element {
 
       <Dialog
         open={isUserShowNotes}
-        fullWidth
         maxWidth={70}
         onClose={onCloseDialog}
         actions={
@@ -130,7 +129,7 @@ export function DialogChangelog(): JSX.Element {
         }
         title={t('changelog.newVersion')}
       >
-        <div className="changelog-container bg-gray-700 p-4 rounded text-gray-300 text-sm">
+        <div className="changelog-container dark:bg-gray-700 p-4 rounded dark:text-gray-300 text-sm">
           <ReactMarkdown
             source={changelog}
             renderers={{

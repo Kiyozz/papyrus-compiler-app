@@ -3,10 +3,10 @@
  *
  * All rights reserved.
  */
-const path = require('path')
-const fs = require('fs')
-const { promisify } = require('util')
 const { Platform } = require('electron-builder')
+const fs = require('fs')
+const path = require('path')
+const { promisify } = require('util')
 
 const writeFile = promisify(fs.writeFile)
 const readFile = promisify(fs.readFile)

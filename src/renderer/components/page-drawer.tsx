@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useApp } from '../hooks/use-app'
 import { ActiveLink } from './active-link'
+import { NavItem } from './nav-item'
 import { OpenCompilationLogs } from './open-compilation-logs'
 
 export function PageDrawer(): JSX.Element {
@@ -52,7 +53,7 @@ export function PageDrawer(): JSX.Element {
     <nav
       className={`h-screen-appbar fixed left-0 top-24 ${
         isDrawerExpand ? 'w-48' : 'w-14'
-      } bg-black select-none`}
+      } bg-light-600 dark:bg-black-800 select-none`}
     >
       <div className="h-full flex flex-col">
         <ul className="mt-2 flex flex-col gap-2">
@@ -61,25 +62,23 @@ export function PageDrawer(): JSX.Element {
               <ActiveLink
                 tabIndex={-1}
                 key={Link.path}
-                activeClassName="text-white hover:text-white bg-gray-800"
-                className="flex hover:no-underline outline-none"
+                activeClassName="link-active"
+                activeUnfocusClassName="link-active-unfocus"
+                className="link"
                 to={Link.path}
                 onClick={onClick}
               >
-                <li className="w-full px-4 py-2 flex hover:bg-gray-700 transition-colors">
+                <NavItem>
                   <Link.Icon />
                   {isDrawerExpand && <div className="ml-6">{Link.text}</div>}
-                </li>
+                </NavItem>
               </ActiveLink>
             )
           })}
         </ul>
         <ul className="mt-auto">
           <OpenCompilationLogs />
-          <li
-            className="w-full px-4 py-2 flex hover:bg-gray-700 transition-colors cursor-pointer"
-            onClick={onDrawerExpandClick}
-          >
+          <NavItem className="link" onClick={onDrawerExpandClick}>
             {isDrawerExpand ? (
               <>
                 <ChevronLeftIcon />
@@ -88,7 +87,7 @@ export function PageDrawer(): JSX.Element {
             ) : (
               <ChevronRightIcon />
             )}
-          </li>
+          </NavItem>
         </ul>
       </div>
     </nav>

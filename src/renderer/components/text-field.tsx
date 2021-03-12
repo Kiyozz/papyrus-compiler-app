@@ -53,7 +53,7 @@ export function TextField({
     <>
       {label && (
         <label
-          className={`text-xs block text-gray-300 ${
+          className={`text-xs block text-black-400 dark:text-gray-300 ${
             error ? 'label-danger' : ''
           }`}
           htmlFor={id}
@@ -62,13 +62,13 @@ export function TextField({
         </label>
       )}
       <div
-        className={`relative text-sm input pb-0.5 flex${
-          error ? ' input-danger' : ''
+        className={`relative text-sm input pb-0.5 flex ${
+          error ? 'input-danger' : ''
         }`}
       >
         {startIcon && (
           <div
-            className="text-white mr-2 cursor-pointer"
+            className="text-black-400 dark:text-white mr-2 cursor-pointer"
             onMouseEnter={iconOnMouseEnter}
             onMouseLeave={iconOnMouseLeave}
             onClick={iconOnClick}
@@ -82,13 +82,15 @@ export function TextField({
           id={id}
           name={name}
           placeholder={placeholder}
-          className={`w-full text-white bg-transparent ${inputClassName}`}
+          className={`w-full text-black-400 dark:text-white bg-transparent ${inputClassName}`}
           value={value}
           onChange={onChangeInput}
         />
       </div>
       {is.string(infoText) && (
-        <div className="text-xs mt-1 text-gray-600">{infoText}</div>
+        <div className="text-xs mt-1 text-black-400 dark:text-light-800">
+          {infoText}
+        </div>
       )}
     </>
   )

@@ -45,7 +45,7 @@ export function SettingsCompilation(): JSX.Element {
 
   return (
     <div className="paper mt-4 relative">
-      <h1 className="text-2xl text-white mb-3 flex items-center flex-wrap">
+      <h1 className="text-2xl dark:text-white mb-3 flex items-center flex-wrap">
         Compilation
       </h1>
 

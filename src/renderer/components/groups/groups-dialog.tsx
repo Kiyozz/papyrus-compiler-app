@@ -129,7 +129,6 @@ export function GroupsDialog({
     <Dialog
       open={open}
       maxWidth={80}
-      fullWidth
       onClose={onDialogClose}
       actions={
         <GroupsDialogActions
@@ -154,18 +153,18 @@ export function GroupsDialog({
         value={name}
         onChange={onChangeName}
       />
-      {scripts.length > 0 ? (
-        <div className="paper overflow-overlay max-h-36 h-full mt-4 outline-none">
+      <div className="paper paper-darker overflow-overlay max-h-36 h-full mt-4 outline-none">
+        {scripts.length > 0 ? (
           <GroupsDialogList
             scripts={scripts}
             onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup}
           />
-        </div>
-      ) : (
-        <div className="paper overflow-overlay max-h-36 h-full mt-4 outline-none">
-          <p className="text-gray-400">{t('page.groups.dialog.dropScripts')}</p>
-        </div>
-      )}
+        ) : (
+          <p className="dark:text-gray-400">
+            {t('page.groups.dialog.dropScripts')}
+          </p>
+        )}
+      </div>
     </Dialog>
   )
 }

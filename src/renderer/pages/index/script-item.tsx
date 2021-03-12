@@ -9,8 +9,10 @@ import React, { useCallback } from 'react'
 
 import { useCompilation } from '../../hooks/use-compilation'
 import { ScriptInterface } from '../../interfaces'
-import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
-import getIconFromStatus from '../../utils/scripts/get-icon-from-status'
+import {
+  getClassNameFromStatus,
+  getIconFromStatus
+} from '../../utils/scripts/from-status'
 
 interface Props {
   script: ScriptInterface
@@ -27,7 +29,7 @@ export function ScriptItem({
   }, [script, onClickRemoveScript])
 
   return (
-    <div className="flex gap-2 select-none">
+    <div className="flex gap-2 select-none text-current dark:text-white">
       <div
         className="relative w-full flex paper overflow-hidden"
         aria-label="script"

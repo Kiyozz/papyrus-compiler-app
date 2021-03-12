@@ -20,14 +20,49 @@ import './translations'
 import appIcon from './assets/logo/vector/isolated-layout.svg'
 import { AppProvider } from './hooks/use-app'
 import { CompilationProvider } from './hooks/use-compilation'
+import { FocusProvider } from './hooks/use-focus'
 import { SettingsProvider } from './pages/settings/settings-context'
 import { Theme } from './theme'
+import { isDark, onDarkPreferenceChanges } from './utils/dark'
 import { isProduction } from './utils/is-production'
 
 function start() {
+  const darkColor = Color.fromHex('#282425')
+  const darkColorUnfocus = Color.fromHex('#444041')
+  const lightColor = Color.fromHex('#f6f0f1')
+  const lightColorUnfocus = Color.fromHex('#eae5e6')
   const titlebar = new Titlebar({
-    backgroundColor: Color.fromHex('#5b21b6'),
-    icon: appIcon
+    backgroundColor: isDark() ? darkColor : lightColor,
+    icon: appIcon,
+    unfocusEffect: false
+  })
+
+  function onBlur(dark: boolean | undefined = undefined) {
+    const usedIsDark = dark ?? isDark()
+    const usedColor = usedIsDark ? darkColorUnfocus : lightColorUnfocus
+    titlebar.updateBackground(usedColor)
+  }
+
+  function onFocus(dark: boolean | undefined = undefined) {
+    const usedIsDark = dark ?? isDark()
+    const usedColor = usedIsDark ? darkColor : lightColor
+    titlebar.updateBackground(usedColor)
+  }
+
+  onDarkPreferenceChanges(matches => {
+    if (document.hasFocus()) {
+      onFocus(matches)
+    } else {
+      onBlur(matches)
+    }
+  })
+
+  window.addEventListener('blur', () => {
+    onBlur()
+  })
+
+  window.addEventListener('focus', () => {
+    onFocus()
   })
 
   try {
@@ -39,7 +74,9 @@ function start() {
           <AppProvider titlebar={titlebar}>
             <CompilationProvider>
               <SettingsProvider>
-                <App />
+                <FocusProvider>
+                  <App />
+                </FocusProvider>
               </SettingsProvider>
             </CompilationProvider>
           </AppProvider>

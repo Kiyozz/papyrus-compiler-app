@@ -7,10 +7,11 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
+import useOnKeyUp from '../../hooks/use-on-key-up'
+
 interface DialogProps {
   open: boolean
   maxWidth?: number
-  fullWidth?: boolean
   onClose?: () => void
   actions?: JSX.Element
   title?: JSX.Element
@@ -20,7 +21,6 @@ interface DialogProps {
 export function Dialog({
   open,
   maxWidth,
-  fullWidth = false,
   onClose,
   actions,
   title,
@@ -38,6 +38,12 @@ export function Dialog({
     },
     [onClose]
   )
+
+  const onEscape = useCallback(() => {
+    onClose?.()
+  }, [onClose])
+
+  useOnKeyUp('Escape', onEscape)
 
   useEffect(() => {
     document.addEventListener('click', onDialogClose)
@@ -70,23 +76,24 @@ export function Dialog({
 
   return createPortal(
     open ? (
-      <div
-        ref={container}
-        className={`fixed top-0 left-0 z-10 flex justify-center items-center ${
-          fullWidth ? 'w-full text-white' : ''
-        } h-screen bg-black bg-opacity-70`}
-      >
+      <>
+        <div className="fixed top-0 left-0 z-10 w-full h-screen bg-black-800 bg-opacity-50 dark:bg-opacity-70" />
         <div
-          className="paper paper-darker p-0 w-full flex flex-col"
-          style={
-            maxWidth !== undefined
-              ? { maxWidth: `${maxWidth}%`, maxHeight: `${maxWidth}%` }
-              : {}
-          }
+          ref={container}
+          className={`fixed top-0 left-0 z-10 flex justify-center items-center w-full h-screen`}
         >
-          {Content ? <Content>{dialogContent}</Content> : dialogContent}
+          <div
+            className="paper text-black-400 dark:text-light-400 p-0 w-full flex flex-col"
+            style={
+              maxWidth !== undefined
+                ? { maxWidth: `${maxWidth}%`, maxHeight: `${maxWidth}%` }
+                : {}
+            }
+          >
+            {Content ? <Content>{dialogContent}</Content> : dialogContent}
+          </div>
         </div>
-      </div>
+      </>
     ) : null,
     document.body
   )

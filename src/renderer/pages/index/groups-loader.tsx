@@ -56,7 +56,7 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
 
           return (
             <button
-              className="btn item"
+              className="btn item btn-no-rounded"
               key={group.name}
               onClick={onClickGroup}
             >

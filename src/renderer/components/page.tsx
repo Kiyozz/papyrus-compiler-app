@@ -22,7 +22,7 @@ export function Page({
   return (
     <div
       className={cx(
-        'page h-screen w-screen p-6 overflow-overlay',
+        'page h-screen w-screen p-6 overflow-overlay bg-light-600 dark:bg-black-800',
         className,
         isDrawerExpand ? 'pl-48' : 'pl-14'
       )}

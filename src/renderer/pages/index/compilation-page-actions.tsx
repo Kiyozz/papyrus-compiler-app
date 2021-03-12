@@ -24,7 +24,7 @@ export function CompilationPageActions({ onClearScripts }: Props): JSX.Element {
 
   return (
     <button
-      className="btn btn-secondary"
+      className="btn"
       onClick={onClickEmpty}
       disabled={isRunning || scripts.length === 0}
     >

@@ -59,13 +59,19 @@ export function GroupsListItemMenu({ onDelete, onEdit }: Props): JSX.Element {
       </button>
       {anchor !== null && (
         <div className="menu absolute top-4 right-4">
-          <button className="btn btn-justify-between" onClick={onClickEdit}>
+          <button
+            className="btn btn-no-rounded btn-justify-between"
+            onClick={onClickEdit}
+          >
             <div className="icon">
               <CreateIcon fontSize="small" color="primary" />
             </div>
             <div className="ml-4">{t('page.groups.actions.edit')}</div>
           </button>
-          <button className="btn btn-justify-between" onClick={onClickDelete}>
+          <button
+            className="btn btn-no-rounded btn-justify-between"
+            onClick={onClickDelete}
+          >
             <div className="icon">
               <DeleteIcon fontSize="small" color="error" />
             </div>

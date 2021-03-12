@@ -32,7 +32,7 @@ export function SettingsMo2Activation({ onChangeMo2 }: Props): JSX.Element {
         />
       }
       label={
-        <span className="text-white">{t('page.settings.mo2.enable')}</span>
+        <span className="dark:text-white">{t('page.settings.mo2.enable')}</span>
       }
     />
   )

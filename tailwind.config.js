@@ -12,11 +12,12 @@ module.exports = {
         'text-gray-500',
         'text-blue-800',
         'text-green-500',
-        'text-red-300'
+        'text-red-300',
+        'text-black-400'
       ]
     }
   },
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {
       fontFamily: {
@@ -30,6 +31,31 @@ module.exports = {
         'screen-titlebar': 'calc(100vh - theme("height.8"))',
         'screen-appbar':
           'calc(100vh - theme("height.8") - theme("height.16") + 4px)'
+      },
+      colors: {
+        darker: '#16161a',
+        light: {
+          300: '#faf7f7',
+          400: '#f6f0f1',
+          600: '#eae5e6',
+          700: '#dddada',
+          800: '#cac4c4'
+        },
+        black: {
+          400: '#444041',
+          600: '#282425',
+          800: '#000'
+        },
+        primary: {
+          400: '#539dff',
+          500: '#418aea',
+          600: '#3279d7'
+        },
+        secondary: {
+          400: '#3fc68e',
+          500: '#35bc84',
+          600: '#27a571'
+        }
       }
     }
   },

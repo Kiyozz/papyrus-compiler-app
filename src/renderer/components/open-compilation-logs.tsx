@@ -12,6 +12,7 @@ import { useApp } from '../hooks/use-app'
 import { useCompilation } from '../hooks/use-compilation'
 import { ScriptInterface } from '../interfaces'
 import { Dialog } from './dialog/dialog'
+import { NavItem } from './nav-item'
 
 export function LogsListItem({
   script,
@@ -27,15 +28,15 @@ export function LogsListItem({
 
   return (
     <div>
-      <div className="flex items-center justify-between bg-darker gap-4 pb-2 sticky top-0">
+      <div className="flex items-center justify-between bg-light-300 dark:bg-black-600 gap-4 pb-2 sticky top-0">
         <h3 className="select-all">{script.name}</h3>
         <button className="btn" onClick={onClickCopyLogs}>
           Copy
         </button>
       </div>
-      <code className="p-4 bg-gray-700 block w-full rounded">
+      <code className="p-4 paper-darker block w-full rounded">
         {logs.split('\n').map((log, i) => (
-          <span className="font-mono text-xs break-words" key={i}>
+          <span className="font-mono text-xs break-words select-text" key={i}>
             {log} <br />
           </span>
         ))}
@@ -60,19 +61,15 @@ export function OpenCompilationLogs(): JSX.Element {
 
   return (
     <>
-      <li
-        onClick={onClickButtonOpenLogs}
-        className="w-full px-4 py-2 flex hover:bg-gray-700 transition-colors cursor-pointer"
-      >
+      <NavItem onClick={onClickButtonOpenLogs} className="link">
         <ErrorIcon />
         {isDrawerExpand && <div className="ml-6">{t('common.logs.nav')}</div>}
-      </li>
+      </NavItem>
 
       <Dialog
         open={isDialogOpen}
         onClose={onClickButtonCloseLogs}
         maxWidth={80}
-        fullWidth
         actions={
           <button className="btn" onClick={onClickButtonCloseLogs}>
             {t('common.logs.close')}

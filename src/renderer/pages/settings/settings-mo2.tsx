@@ -29,10 +29,10 @@ export function SettingsMo2({
 
   return (
     <div className="paper mt-4 relative" id="settings-mo2">
-      <h1 className="text-2xl text-white mb-3 flex items-center flex-wrap">
+      <h1 className="text-2xl dark:text-white mb-3 flex items-center flex-wrap">
         <span className="inline-block mr-2">Mod Organizer 2</span>
         {!mo2.use && (
-          <span className="text-xs text-gray-400">
+          <span className="text-xs dark:text-light-800">
             ({t('page.settings.mo2.enableText')})
           </span>
         )}

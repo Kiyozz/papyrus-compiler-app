@@ -24,10 +24,10 @@ export function GroupsListItem({
   const { t } = useTranslation()
 
   return (
-    <div key={group.name} className="paper flex items-center">
+    <div className="paper flex items-center">
       <div className="w-full">
-        <div className="text-white">{group.name}</div>
-        <div className="text-xs pl-2">
+        <div className="text-black-800 dark:text-white">{group.name}</div>
+        <div className="text-xs pl-2 text-black-400 dark:text-white">
           {!group.isEmpty() ? (
             <>
               {group.scripts
