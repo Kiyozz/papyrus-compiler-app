@@ -7,7 +7,13 @@
 @import 'assets/fonts/fonts.css';
 
 :root {
-  --bg-darker: theme('colors.darker');
+  --bg-darker: theme('colors.light.800');
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-darker: theme('colors.darker');
+  }
 }
 
 img {

@@ -10,6 +10,7 @@ import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 
 import { useApp } from '../../hooks/use-app'
+import { useFocus } from '../../hooks/use-focus'
 
 enum Step {
   Waiting,
@@ -50,7 +51,7 @@ function GameSettingsStep({ next }: { next: Next }) {
   }
 
   return createPortal(
-    <div className="bg-darker top-0 left-24 tooltip tooltip-left">
+    <div className="bg-light-800 dark:bg-darker shadow top-0 left-24 tooltip tooltip-left">
       <div>{t('tutorials.settings.game.text')}</div>
       <div>
         <button className="btn btn-primary" onClick={onClickOk}>
@@ -72,7 +73,7 @@ function CompilerSettingsStep({ next }: { next: Next }) {
   }
 
   return createPortal(
-    <div className="bg-darker -top-14 tooltip">
+    <div className="bg-light-800 dark:bg-darker -top-14 tooltip">
       <div>{t('tutorials.settings.compiler.text')}</div>
       <div>
         <button className="btn btn-primary" onClick={onClickOk}>
@@ -94,7 +95,7 @@ function Mo2SettingsStep({ next }: { next: Next }) {
   }
 
   return createPortal(
-    <div className="bg-darker -top-12 tooltip tooltip-bottom-left">
+    <div className="bg-light-800 dark:bg-darker -top-12 tooltip tooltip-bottom-left">
       <div>{t('tutorials.settings.mo2.text')}</div>
       <div>
         <button className="btn btn-primary" onClick={onClickOk}>
@@ -116,7 +117,7 @@ function ConcurrentSettingsStep({ next }: { next: Next }) {
   }
 
   return createPortal(
-    <div className="bg-darker -top-12 tooltip">
+    <div className="bg-light-800 dark:bg-darker -top-12 tooltip">
       <div>{t('tutorials.settings.compilation.concurrent.text')}</div>
       <div>
         <button className="btn btn-primary" onClick={onClickOk}>
@@ -130,7 +131,7 @@ function ConcurrentSettingsStep({ next }: { next: Next }) {
 
 function Overlay() {
   return (
-    <div className="fixed z-20 dark:bg-black-800 bg-opacity-60 top-0 left-0 right-0 bottom-0" />
+    <div className="fixed z-20 bg-black-800 bg-opacity-60 top-0 left-0 right-0 bottom-0" />
   )
 }
 
@@ -147,6 +148,7 @@ export function TutorialSettings(): JSX.Element | null {
   const { config, setConfig } = useApp()
   const navigate = useNavigate()
   const [step, setStep] = useState(Step.Waiting)
+  const isFocus = useFocus()
 
   const onClickClose = useCallback(() => {
     setConfig({
@@ -200,8 +202,16 @@ export function TutorialSettings(): JSX.Element | null {
     <>
       <Overlay />
       {(step === Step.Ask || step === Step.Waiting) && (
-        <div className="fixed top-0 left-0 w-full h-full dark:bg-black-800 z-20 flex flex-col justify-center items-center">
-          <div className="text-3xl">{t('tutorials.settings.ask.title')}</div>
+        <div
+          className={`fixed top-0 left-0 w-full h-full ${
+            isFocus
+              ? 'bg-light-400 dark:bg-black-800'
+              : 'bg-light-600 dark:bg-black-600'
+          } z-20 flex flex-col justify-center items-center`}
+        >
+          <div className="text-3xl font-bold">
+            {t('tutorials.settings.ask.title')}
+          </div>
           <div className="m-6 text-xl text-center">
             {t('tutorials.settings.ask.text')}
           </div>
