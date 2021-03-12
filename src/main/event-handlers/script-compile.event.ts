@@ -44,6 +44,8 @@ export class ScriptCompileEvent implements Event<string> {
 
     const endEvent = `${Events.CompileScriptFinish}-${script}`
 
+    this.logger.debug('current store values checked')
+
     try {
       const result = this.cleanSuccessLog(script, await compile(script))
 
@@ -59,7 +61,5 @@ export class ScriptCompileEvent implements Event<string> {
         script
       } as CompilationResult)
     }
-
-    ipcEvent.reply(endEvent)
   }
 }

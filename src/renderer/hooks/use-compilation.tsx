@@ -124,6 +124,18 @@ export function CompilationProvider({
                 return [...cl, [s, result.output]]
               })
             } catch (e) {
+              setCompilationScripts((cs: ScriptInterface[]) => {
+                const found = cs.findIndex(incs => incs.id === s.id)
+
+                if (found === -1) {
+                  return cs
+                }
+
+                cs[found].status = ScriptStatus.Failed
+
+                return cs
+              })
+
               setCompilationLogs(cl => {
                 return [...cl, [s, e.message]]
               })
