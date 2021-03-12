@@ -21,7 +21,7 @@ export function SettingsMo2({
   onChangeMo2,
   onChangeMo2Instance,
   onClickRefreshInstallation
-}: Props) {
+}: Props): JSX.Element {
   const { t } = useTranslation()
   const {
     config: { mo2 }

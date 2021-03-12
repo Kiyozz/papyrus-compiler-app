@@ -5,15 +5,16 @@
  */
 
 import { IpcMainEvent } from 'electron'
-import { EventInterface } from '../interfaces/event.interface'
-import { Logger } from '../logger'
-import { checkStore } from '../../common/check-store'
-import { appStore, defaultConfig } from '../../common/store'
-import { compileScript } from '../services/compile-script.service'
-import { Events } from '../../common/events'
-import { CompilationResultInterface } from '../../common/interfaces/compilation-result.interface'
 
-export class ScriptCompileEvent implements EventInterface<string> {
+import { checkStore } from '../../common/check-store'
+import { Events } from '../../common/events'
+import { CompilationResult } from '../../common/interfaces/compilation-result'
+import { appStore, defaultConfig } from '../../common/store'
+import { compile } from '../compilation/compile'
+import { Event } from '../interfaces/event'
+import { Logger } from '../logger'
+
+export class ScriptCompileEvent implements Event<string> {
   private logger = new Logger('ScriptCompileEvent')
 
   private cleanSuccessLog(script: string, log: string): string {
@@ -35,7 +36,7 @@ export class ScriptCompileEvent implements EventInterface<string> {
     return log.replace(`Script ${script} failed to compile: `, '').trim()
   }
 
-  async on(ipcEvent: IpcMainEvent, script: string) {
+  async on(ipcEvent: IpcMainEvent, script: string): Promise<void> {
     this.logger.info('start compilation of scripts', script)
     this.logger.debug('checking the current store values')
 
@@ -44,19 +45,19 @@ export class ScriptCompileEvent implements EventInterface<string> {
     const endEvent = `${Events.CompileScriptFinish}-${script}`
 
     try {
-      const result = this.cleanSuccessLog(script, await compileScript(script))
+      const result = this.cleanSuccessLog(script, await compile(script))
 
       ipcEvent.reply(endEvent, {
         success: true,
         output: result,
         script
-      } as CompilationResultInterface)
+      } as CompilationResult)
     } catch (e) {
       ipcEvent.reply(endEvent, {
         success: false,
         output: this.cleanErrorLog(script, e.message),
         script
-      } as CompilationResultInterface)
+      } as CompilationResult)
     }
 
     ipcEvent.reply(endEvent)

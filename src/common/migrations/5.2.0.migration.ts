@@ -5,9 +5,11 @@
  */
 
 import is from '@sindresorhus/is'
-import { AppStore } from '../store'
 
-export function migrate520(store: AppStore) {
+import type { Config } from '../interfaces/config'
+import type { AppStore } from '../store'
+
+export function migrate520(store: AppStore): void {
   const tutorials = store.get('tutorials')
 
   if (is.undefined(tutorials)) {
@@ -22,26 +24,26 @@ export function migrate520(store: AppStore) {
 
   if (!is.nullOrUndefined(oldGameType)) {
     store.set('game.type', oldGameType)
-    store.delete('gameType' as any)
+    store.delete('gameType' as keyof Config)
   }
 
   if (!is.nullOrUndefined(oldGamePath)) {
     store.set('game.path', oldGamePath)
-    store.delete('gamePath' as any)
+    store.delete('gamePath' as keyof Config)
   }
 
   if (!is.nullOrUndefined(oldCompilerPath)) {
     store.set('compilation.compilerPath', oldCompilerPath)
-    store.delete('compilerPath' as any)
+    store.delete('compilerPath' as keyof Config)
   }
 
   if (!is.nullOrUndefined(oldFlag)) {
     store.set('compilation.flag', oldFlag)
-    store.delete('flag' as any)
+    store.delete('flag' as keyof Config)
   }
 
   if (!is.nullOrUndefined(oldOutput)) {
     store.set('compilation.output', oldOutput)
-    store.delete('output' as any)
+    store.delete('output' as keyof Config)
   }
 }

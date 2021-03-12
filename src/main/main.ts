@@ -4,13 +4,14 @@
  * All rights reserved.
  */
 
-import { format } from 'url'
 import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron'
 import { debugInfo, is } from 'electron-util'
-import { join } from './services/path.service'
+import { format, URL } from 'url'
+
 import { initialize } from './initialize'
 import { Logger } from './logger'
-import { createReportDialog } from './services/create-report-dialog.service'
+import { join } from './path/path'
+import { createReportDialog } from './report/create-report-dialog'
 
 const logger = new Logger('Main')
 let win: BrowserWindow | null = null
@@ -45,13 +46,8 @@ async function createWindow() {
   if (isDev) {
     win.loadURL('http://localhost:9080')
   } else {
-    win.loadURL(
-      format({
-        pathname: join(__dirname, 'index.html'),
-        protocol: 'file',
-        slashes: true
-      })
-    )
+    const url = new URL(`file://${join(__dirname, 'index.html')}`)
+    win.loadURL(format(url))
   }
 
   await initialize(win)
@@ -61,23 +57,23 @@ async function createWindow() {
   })
 
   win.webContents.on('devtools-opened', () => {
-    win!.focus()
+    win?.focus()
     setImmediate(() => {
-      win!.focus()
+      win?.focus()
     })
   })
 
   win.on('ready-to-show', () => {
     logger.debug('the window is ready to show')
 
-    win!.show()
-    win!.focus()
+    win?.show()
+    win?.focus()
 
     if (isDev) {
-      win!.webContents.openDevTools({ mode: 'bottom' })
+      win?.webContents.openDevTools({ mode: 'bottom' })
     }
 
-    setImmediate(() => win!.focus())
+    setImmediate(() => win?.focus())
   })
 
   logger.catchErrors({

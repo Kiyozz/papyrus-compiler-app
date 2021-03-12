@@ -5,12 +5,13 @@
  */
 
 import is from '@sindresorhus/is'
-import { join } from '../main/services/path.service'
-import { GameType } from './game'
-import { AppStore } from './store'
-import { Config } from './interfaces/config.interface'
-import { validateGroup } from './validators/group.validator'
+
+import { join } from '../main/path/path'
 import { DEFAULT_COMPILER_PATH } from './constants'
+import { GameType } from './game'
+import type { Config } from './interfaces/config'
+import type { AppStore } from './store'
+import { validateGroup } from './validators/group.validator'
 
 function checkMo2(appStore: AppStore, defaultConfig: Config) {
   const mo2 = appStore.get('mo2')
@@ -122,7 +123,7 @@ function checkNotSupportedKeys(appStore: AppStore, defaultConfig: Config) {
 
   Object.keys(appStore.store).forEach(key => {
     if (!supportedKeys.includes(key)) {
-      appStore.delete(key as any)
+      appStore.delete(key as keyof Config)
     }
   })
 }
@@ -155,7 +156,7 @@ function checkCompilation(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-export function checkStore(appStore: AppStore, defaultConfig: Config) {
+export function checkStore(appStore: AppStore, defaultConfig: Config): void {
   checkMo2(appStore, defaultConfig)
   checkGameType(appStore, defaultConfig)
   checkGamePath(appStore, defaultConfig)

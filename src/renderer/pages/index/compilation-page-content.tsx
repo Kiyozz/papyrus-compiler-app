@@ -7,8 +7,8 @@
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ScriptInterface } from '../../interfaces'
 import { useCompilation } from '../../hooks/use-compilation'
+import { ScriptInterface } from '../../interfaces'
 import { CompilationPageActions } from './compilation-page-actions'
 import { PlayButton } from './play-button'
 import { ScriptItem } from './script-item'
@@ -23,7 +23,7 @@ export function CompilationPageContent({
   onClear,
   onClickStart,
   onClickRemoveScriptFromScript
-}: Props) {
+}: Props): JSX.Element {
   const { t } = useTranslation()
   const { scripts } = useCompilation()
 

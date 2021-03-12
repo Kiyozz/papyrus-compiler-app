@@ -16,7 +16,7 @@ export default function useOnKeyUp(
   key: string,
   action: () => void,
   options?: UseOnKeyUpOptions
-) {
+): void {
   const onKeyUp = useCallback(
     (e: KeyboardEvent) => {
       if (e.key !== key) {

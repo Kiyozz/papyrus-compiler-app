@@ -5,17 +5,16 @@
  */
 
 import SearchIcon from '@material-ui/icons/Search'
-
+import is from '@sindresorhus/is'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import is from '@sindresorhus/is'
 import { useDrop } from '../../hooks/use-drop'
 import { GroupInterface, ScriptInterface } from '../../interfaces'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
 import uniqScripts from '../../utils/scripts/uniq-scripts'
-import { TextField } from '../text-field'
 import { Dialog } from '../dialog/dialog'
+import { TextField } from '../text-field'
 import { GroupsDialogActions } from './groups-dialog-actions'
 import { GroupsDialogList } from './groups-dialog-list'
 
@@ -33,7 +32,7 @@ export function GroupsDialog({
   open,
   onClose,
   group
-}: Props) {
+}: Props): JSX.Element {
   const { t } = useTranslation()
   const [name, setName] = useState('')
   const [scripts, setScripts] = useState<ScriptInterface[]>([])

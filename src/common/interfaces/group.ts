@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { Script } from './script.interface'
+import { Script } from './script'
 
 export interface Group {
   name: string

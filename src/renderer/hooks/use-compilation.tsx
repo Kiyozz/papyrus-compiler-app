@@ -11,12 +11,13 @@ import React, {
   useMemo,
   useState
 } from 'react'
+
+import { Events } from '../../common/events'
+import { CompilationResult } from '../../common/interfaces/compilation-result'
+import { ipcRenderer } from '../../common/ipc'
+import { ScriptStatus } from '../enums/script-status.enum'
 import { ScriptInterface } from '../interfaces'
 import { chunk } from '../utils/chunk'
-import { ScriptStatus } from '../enums/script-status.enum'
-import { ipcRenderer } from '../../common/ipc'
-import { Events } from '../../common/events'
-import { CompilationResultInterface } from '../../common/interfaces/compilation-result.interface'
 import { useApp } from './use-app'
 
 interface StartOptions {
@@ -33,11 +34,9 @@ interface CompilationContextInterface {
 
 const CompilationContext = createContext({} as CompilationContextInterface)
 
-function whenCompileScriptFinish(
-  script: string
-): Promise<CompilationResultInterface> {
-  return new Promise<CompilationResultInterface>((resolve, reject) => {
-    ipcRenderer.once<CompilationResultInterface>(
+function whenCompileScriptFinish(script: string): Promise<CompilationResult> {
+  return new Promise<CompilationResult>((resolve, reject) => {
+    ipcRenderer.once<CompilationResult>(
       `${Events.CompileScriptFinish}-${script}`,
       result => {
         if (result.success) {
@@ -56,7 +55,7 @@ export function useCompilation(): CompilationContextInterface {
 
 export function CompilationProvider({
   children
-}: React.PropsWithChildren<unknown>) {
+}: React.PropsWithChildren<unknown>): JSX.Element {
   const [isRunning, setRunning] = useState(false)
   const [compilationScripts, setCompilationScripts] = useState<
     ScriptInterface[]
@@ -103,7 +102,7 @@ export function CompilationProvider({
         await Promise.all(
           partialScripts.map(async (s: ScriptInterface) => {
             try {
-              const result: CompilationResultInterface = await whenCompileScriptFinish(
+              const result: CompilationResult = await whenCompileScriptFinish(
                 s.name
               )
 

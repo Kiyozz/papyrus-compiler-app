@@ -7,13 +7,14 @@
 import is from '@sindresorhus/is'
 import { app, dialog, shell } from 'electron'
 import { ReportData } from 'electron-log'
+
 import { GITHUB_ISSUES_NEW } from '../../common/constants'
 
 export function createReportDialog(
   error: Error,
   versions?: { app: string; electron: string; os: string },
-  submitIssue?: (url: string, data: ReportData | any) => void
-) {
+  submitIssue?: (url: string, data: ReportData | unknown) => void
+): void {
   const message = error.message.split('\n').map(s => s.trim())
   const stack = error.stack?.split('\n').map(s => s.trim())
 

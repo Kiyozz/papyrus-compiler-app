@@ -8,10 +8,11 @@ import is from '@sindresorhus/is'
 import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
 import createDefaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem } from 'electron-util'
-import { appStore, defaultConfig } from '../common/store'
+
 import { Events } from '../common/events'
+import { appStore, defaultConfig } from '../common/store'
 import { Logger } from './logger'
-import { exists } from './services/path.service'
+import { exists } from './path/path'
 
 interface RegisterMenusCallbacks {
   openLogFile: (file: string) => void
@@ -22,7 +23,10 @@ const logger = new Logger('RegisterMenu')
 const githubUrl = 'https://github.com/Kiyozz/papyrus-compiler-app'
 const reportBugUrl = 'https://github.com/Kiyozz/papyrus-compiler-app/issues/new'
 
-export function registerMenu({ win, openLogFile }: RegisterMenusCallbacks) {
+export function registerMenu({
+  win,
+  openLogFile
+}: RegisterMenusCallbacks): void {
   const menu = appMenu()
 
   menu.submenu = [

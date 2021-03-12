@@ -5,10 +5,11 @@
  */
 
 import { shell } from 'electron'
-import { EventHandlerInterface } from '../interfaces/event-handler.interface'
+
+import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 
-export class OpenFileHandler implements EventHandlerInterface {
+export class OpenFileHandler implements EventHandler {
   private logger = new Logger('OpenFileHandler')
 
   async listen(file: string): Promise<void> {

@@ -4,13 +4,14 @@
  * All rights reserved.
  */
 
-import { Stats } from 'fs'
 import is from '@sindresorhus/is'
-import { EventHandlerInterface } from '../interfaces/event-handler.interface'
-import { stat } from '../services/path.service'
-import { Logger } from '../logger'
+import { Stats } from 'fs'
 
-export class FileStatHandler implements EventHandlerInterface<string[]> {
+import { EventHandler } from '../interfaces/event-handler'
+import { Logger } from '../logger'
+import { stat } from '../path/path'
+
+export class FileStatHandler implements EventHandler<string[]> {
   private logger = new Logger('FileStatHandler')
 
   async listen(files?: string[]): Promise<Map<string, Stats>> {

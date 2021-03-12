@@ -5,20 +5,22 @@
  */
 
 import DeleteIcon from '@material-ui/icons/Delete'
-
 import React, { useCallback } from 'react'
 
+import { useCompilation } from '../../hooks/use-compilation'
 import { ScriptInterface } from '../../interfaces'
 import getClassNameFromStatus from '../../utils/scripts/get-classname-from-status'
 import getIconFromStatus from '../../utils/scripts/get-icon-from-status'
-import { useCompilation } from '../../hooks/use-compilation'
 
 interface Props {
   script: ScriptInterface
   onClickRemoveScript: (script: ScriptInterface) => void
 }
 
-export function ScriptItem({ script, onClickRemoveScript }: Props) {
+export function ScriptItem({
+  script,
+  onClickRemoveScript
+}: Props): JSX.Element {
   const { isRunning } = useCompilation()
   const onClickRemove = useCallback(() => {
     onClickRemoveScript(script)

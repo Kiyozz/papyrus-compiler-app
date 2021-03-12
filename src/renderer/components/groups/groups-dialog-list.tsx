@@ -5,7 +5,6 @@
  */
 
 import DeleteIcon from '@material-ui/icons/Delete'
-
 import React from 'react'
 
 import { ScriptInterface } from '../../interfaces'
@@ -20,7 +19,7 @@ interface Props {
 export function GroupsDialogList({
   scripts,
   onClickRemoveScriptFromGroup
-}: Props) {
+}: Props): JSX.Element {
   return (
     <ul className="flex flex-col gap-2">
       {scripts.map((script, index) => (

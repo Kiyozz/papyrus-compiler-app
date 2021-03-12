@@ -4,12 +4,12 @@
  * All rights reserved.
  */
 
+import { Config } from '../../common/interfaces/config'
 import { appStore } from '../../common/store'
-import { Config } from '../../common/interfaces/config.interface'
-import { EventHandlerInterface } from '../interfaces/event-handler.interface'
+import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 
-export class ConfigGetHandler implements EventHandlerInterface {
+export class ConfigGetHandler implements EventHandler {
   private logger = new Logger('ConfigGetHandler')
 
   listen(): Config {

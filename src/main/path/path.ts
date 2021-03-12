@@ -4,12 +4,12 @@
  * All rights reserved.
  */
 
-import fs from 'fs'
-import * as path from 'path'
-import { promisify } from 'util'
 import { is } from 'electron-util'
-import moveFile from 'move-file'
 import fg from 'fast-glob'
+import { promises as fs, existsSync, Stats } from 'fs'
+import moveFile from 'move-file'
+import * as path from 'path'
+
 import { toSlash } from '../../common/slash'
 import { FileAccessException } from '../exceptions/files/file-access.exception'
 import { FileEnsureException } from '../exceptions/files/file-ensure.exception'
@@ -27,37 +27,33 @@ export function normalize(value: string): string {
 }
 
 export const join = path.join
-export const move = (from: string, to: string): ReturnType<typeof moveFile> => {
+export const move = (from: string, to: string): Promise<void> => {
   logger.debug('move file', from, 'to', to)
   return moveFile(from, to)
 }
 
-export const readFile = promisify(fs.readFile)
-
-const fsMkDir = promisify(fs.mkdir)
-const fsWriteFile = promisify(fs.writeFile)
-const fsStat = promisify(fs.stat)
+export const readFile = fs.readFile
 
 export const writeFile = (
-  ...args: Parameters<typeof fsWriteFile>
-): ReturnType<typeof fsWriteFile> => {
+  ...args: Parameters<typeof fs['writeFile']>
+): Promise<void> => {
   logger.debug('write file', args[0])
 
-  return fsWriteFile(...args)
+  return fs.writeFile(...args)
 }
 
-export async function stat(filename: string): Promise<fs.Stats> {
+export async function stat(filename: string): Promise<Stats> {
   logger.debug('retrieving path statistics', filename)
 
   try {
-    return await fsStat(filename)
+    return await fs.stat(filename)
   } catch (e) {
     throw new FileAccessException(filename, e)
   }
 }
 
 export function exists(fileOrFolder: string): boolean {
-  const result = fs.existsSync(fileOrFolder)
+  const result = existsSync(fileOrFolder)
 
   logger.debug('does the path exist?', fileOrFolder, result)
 
@@ -67,13 +63,13 @@ export function exists(fileOrFolder: string): boolean {
 export async function ensureDir(item: string): Promise<void> {
   if (!exists(item)) {
     console.log(item)
-    await fsMkDir(item, { recursive: true })
+    await fs.mkdir(item, { recursive: true })
   }
 }
 
 export async function ensureFile(item: string): Promise<void> {
   if (!exists(item)) {
-    await fsWriteFile(item, '')
+    await fs.writeFile(item, '')
   }
 }
 

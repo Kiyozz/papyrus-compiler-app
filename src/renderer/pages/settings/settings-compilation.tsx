@@ -4,15 +4,16 @@
  * All rights reserved.
  */
 
-import React, { useCallback } from 'react'
 import is from '@sindresorhus/is'
+import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useApp } from '../../hooks/use-app'
+
 import { TextField } from '../../components/text-field'
+import { useApp } from '../../hooks/use-app'
 
 const maxConcurrentCompilationScripts = 100
 
-export function SettingsCompilation() {
+export function SettingsCompilation(): JSX.Element {
   const { t } = useTranslation()
   const {
     config: { compilation },

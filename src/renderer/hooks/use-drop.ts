@@ -3,9 +3,10 @@
  *
  * All rights reserved.
  */
-
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import { useEffect } from 'react'
+
 import { OnDropFunction } from '../components/drop/drop-scripts'
 import { useApp } from './use-app'
 
@@ -29,7 +30,7 @@ export const useDrop = (
     setOnDrop(() => options.onDrop)
 
     return () => setOnDrop(null)
-  }, [options.onDrop])
+  }, [])
 
   return addScriptsButton
 }

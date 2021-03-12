@@ -5,21 +5,21 @@
  */
 
 import RefreshIcon from '@material-ui/icons/Refresh'
+import debounce from 'debounce-fn'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import debounce from 'debounce-fn'
-import { GameType } from '../../../common/game'
 
+import { GameType } from '../../../common/game'
 import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
 import { useApp } from '../../hooks/use-app'
 import { useLoading } from '../../hooks/use-loading'
+import { SettingsCompilation } from './settings-compilation'
 import { useSettings } from './settings-context'
 import { SettingsGame } from './settings-game'
 import { SettingsMo2 } from './settings-mo2'
-import { SettingsCompilation } from './settings-compilation'
 
-export function Settings() {
+export function Settings(): JSX.Element {
   const { t } = useTranslation()
   const {
     config: {

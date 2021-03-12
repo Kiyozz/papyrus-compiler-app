@@ -4,16 +4,15 @@
  * All rights reserved.
  */
 
-import DownloadIcon from '@material-ui/icons/GetApp'
 import CloseIcon from '@material-ui/icons/Close'
-
+import DownloadIcon from '@material-ui/icons/GetApp'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
 
-import useOnKeyUp from '../../hooks/use-on-key-up'
 import { MOD_URL } from '../../../common/mod'
 import { useApp } from '../../hooks/use-app'
+import useOnKeyUp from '../../hooks/use-on-key-up'
 import { Dialog } from './dialog'
 
 function Anchor({ children, href }: React.PropsWithChildren<{ href: string }>) {
@@ -50,7 +49,7 @@ function Code({ value }: { value: string }) {
   )
 }
 
-export function DialogChangelog() {
+export function DialogChangelog(): JSX.Element {
   const shell = useMemo(() => window.require('electron').shell, [])
   const { t } = useTranslation()
   const {

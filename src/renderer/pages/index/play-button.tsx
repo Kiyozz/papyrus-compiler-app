@@ -7,13 +7,14 @@
 import PlayIcon from '@material-ui/icons/PlayCircleFilled'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import { useCompilation } from '../../hooks/use-compilation'
 
 interface Props {
   onClick: () => void
 }
 
-export function PlayButton({ onClick }: Props) {
+export function PlayButton({ onClick }: Props): JSX.Element {
   const { t } = useTranslation()
   const { isRunning, scripts } = useCompilation()
 

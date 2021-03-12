@@ -5,7 +5,7 @@
  */
 
 import { CompilerPath, Flag, GameType, GamePath, OutputPath } from '../game'
-import { Group } from './group.interface'
+import { Group } from './group'
 
 interface Game {
   type: GameType
@@ -36,5 +36,5 @@ export interface Config {
   tutorials: Tutorials
   mo2: ConfigMo2
   groups: Group[]
-  __internal__: any
+  __internal__: unknown
 }

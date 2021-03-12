@@ -26,7 +26,7 @@ export function Dialog({
   title,
   content: Content,
   children
-}: React.PropsWithChildren<DialogProps>) {
+}: React.PropsWithChildren<DialogProps>): JSX.Element {
   const container = useRef<HTMLDivElement | null>(null)
   const onDialogClose = useCallback(
     (e: MouseEvent) => {

@@ -7,7 +7,8 @@
 import cx from 'classnames'
 import React, { useCallback, useRef } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { HtmlNodeService } from '../../services/html-node.service'
+
+import { isChildren } from '../../html/is-child'
 import { DropScriptsButton } from './drop-scripts-button'
 
 type InputRef = React.RefObject<HTMLInputElement>
@@ -39,8 +40,6 @@ interface Props {
 export type AddScriptsButton = JSX.Element
 export type OnDropFunction = ((files: File[]) => void) | null
 
-const htmlNodeService = new HtmlNodeService()
-
 export function DropScripts({
   onDrop,
   onClick,
@@ -51,7 +50,7 @@ export function DropScripts({
   preventDropOnDocument = true,
   children,
   Button
-}: React.PropsWithChildren<Props>) {
+}: React.PropsWithChildren<Props>): JSX.Element {
   const {
     getRootProps,
     isDragActive,
@@ -70,10 +69,7 @@ export function DropScripts({
       if (onlyClickButton) {
         if (
           e.target !== buttonRef.current &&
-          !htmlNodeService.isChildren(
-            buttonRef.current,
-            e.target as HTMLElement
-          )
+          !isChildren(buttonRef.current, e.target as HTMLElement)
         ) {
           e.stopPropagation()
 

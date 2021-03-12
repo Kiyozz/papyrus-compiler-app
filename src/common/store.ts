@@ -4,25 +4,28 @@
  * All rights reserved.
  */
 
-import * as fs from 'fs'
 import { app } from 'electron'
 import Store from 'electron-store'
 import { is } from 'electron-util'
-import { join } from '../main/services/path.service'
-import { Config } from './interfaces/config.interface'
+import * as fs from 'fs'
+
+import { join } from '../main/path/path'
+import { checkStore } from './check-store'
+import { GameType } from './game'
+import { Config } from './interfaces/config'
 import { migrate410 } from './migrations/4.1.0.migration'
 import { migrate420 } from './migrations/4.2.0.migration'
 import { migrate510 } from './migrations/5.1.0.migration'
-import { checkStore } from './check-store'
 import { migrate520 } from './migrations/5.2.0.migration'
-import { GameType } from './game'
 
 const jsonPath = is.development
   ? join(__dirname, '../..', 'package.json')
   : join(app.getAppPath(), 'package.json')
-const json = JSON.parse(fs.readFileSync(jsonPath).toString())
+const json: { version: string } = JSON.parse(
+  fs.readFileSync(jsonPath).toString()
+)
 
-export const defaultConfig: Config = {
+const defaultConfig: Config = {
   game: {
     path: '',
     type: (process.env.ELECTRON_WEBPACK_APP_MOD_URL ?? '').includes(
@@ -62,10 +65,10 @@ const appStore = new Store<Config>({
     '5.1.0': migrate510,
     '5.2.0': migrate520
   }
-} as any)
+} as never)
 
 checkStore(appStore, defaultConfig)
 
 export type AppStore = Store<Config>
 
-export { appStore }
+export { appStore, defaultConfig }

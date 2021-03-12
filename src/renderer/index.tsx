@@ -9,20 +9,20 @@ import {
   createMemorySource,
   LocationProvider
 } from '@reach/router'
+import { Titlebar, Color } from 'custom-electron-titlebar'
 import React from 'react'
 import { render } from 'react-dom'
-import { Titlebar, Color } from 'custom-electron-titlebar'
-import { ipcRenderer } from '../common/ipc'
-import { Events } from '../common/events'
 
+import { Events } from '../common/events'
+import { ipcRenderer } from '../common/ipc'
 import { App } from './app'
 import './translations'
-import { Theme } from './theme'
-import { isProduction } from './utils/is-production'
 import appIcon from './assets/logo/vector/isolated-layout.svg'
 import { AppProvider } from './hooks/use-app'
 import { CompilationProvider } from './hooks/use-compilation'
 import { SettingsProvider } from './pages/settings/settings-context'
+import { Theme } from './theme'
+import { isProduction } from './utils/is-production'
 
 function start() {
   const titlebar = new Titlebar({

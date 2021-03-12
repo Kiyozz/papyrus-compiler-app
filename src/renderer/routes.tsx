@@ -4,10 +4,11 @@
  * All rights reserved.
  */
 
-import React from 'react'
 import { Router, RouteComponentProps } from '@reach/router'
-import { Compilation } from './pages/index/compilation'
+import React from 'react'
+
 import { Groups } from './pages/groups/groups'
+import { Compilation } from './pages/index/compilation'
 import { Settings } from './pages/settings/settings'
 
 interface Route {
@@ -22,7 +23,7 @@ const routes: Route[] = [
   { path: 'settings', Component: Settings }
 ]
 
-export function Routes() {
+export function Routes(): JSX.Element {
   return (
     <Router className="flex flex-col w-full">
       {routes.map(({ path, Component, default: defaultPage }) => (

@@ -5,13 +5,12 @@
  */
 
 import ErrorIcon from '@material-ui/icons/Error'
-
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ScriptInterface } from '../interfaces'
-import { useCompilation } from '../hooks/use-compilation'
 import { useApp } from '../hooks/use-app'
+import { useCompilation } from '../hooks/use-compilation'
+import { ScriptInterface } from '../interfaces'
 import { Dialog } from './dialog/dialog'
 
 export function LogsListItem({
@@ -20,7 +19,7 @@ export function LogsListItem({
 }: {
   script: ScriptInterface
   logs: string
-}) {
+}): JSX.Element {
   const { copyToClipboard } = useApp()
   const onClickCopyLogs = useCallback(() => {
     copyToClipboard(`${script.name}\n\n${logs}\n`)
@@ -45,7 +44,7 @@ export function LogsListItem({
   )
 }
 
-export function OpenCompilationLogs() {
+export function OpenCompilationLogs(): JSX.Element {
   const { t } = useTranslation()
   const { isDrawerExpand } = useApp()
   const { logs } = useCompilation()

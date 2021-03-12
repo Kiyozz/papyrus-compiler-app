@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { Script } from '../../common/interfaces/script.interface'
+import { Script } from '../../common/interfaces/script'
 import { ScriptStatus } from '../enums/script-status.enum'
 
 export interface ScriptInterface extends Script {

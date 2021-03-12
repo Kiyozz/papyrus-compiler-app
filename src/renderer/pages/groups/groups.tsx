@@ -8,6 +8,7 @@ import CreateIcon from '@material-ui/icons/Create'
 import is from '@sindresorhus/is'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import { GroupsDialog } from '../../components/groups/groups-dialog'
 import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
@@ -20,7 +21,7 @@ interface EditGroupParams {
   lastGroupName: string
 }
 
-export function Groups() {
+export function Groups(): JSX.Element {
   const { t } = useTranslation()
   const { groups, setConfig } = useApp()
   const addGroup = useCallback(

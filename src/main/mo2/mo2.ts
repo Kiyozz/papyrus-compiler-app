@@ -5,13 +5,14 @@
  */
 
 import { is } from 'electron-util'
-import { toAntiSlash, toSlash } from '../../common/slash'
+
 import { GameType, toOtherSource, toSource } from '../../common/game'
+import { toAntiSlash, toSlash } from '../../common/slash'
 import { appStore } from '../../common/store'
-import { Logger } from '../logger'
-import { ConfigurationException } from '../exceptions/configuration.exception'
 import { ApplicationException } from '../exceptions/application.exception'
-import * as path from './path.service'
+import { ConfigurationException } from '../exceptions/configuration.exception'
+import { Logger } from '../logger'
+import * as path from '../path/path'
 
 interface GenerateImportsOptions {
   gameType: GameType

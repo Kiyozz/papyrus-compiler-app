@@ -5,7 +5,8 @@
  */
 
 import is from '@sindresorhus/is'
-import { Script } from '../interfaces/script.interface'
+
+import { Script } from '../interfaces/script'
 
 function hasValidValues(script: Script): boolean {
   return (

@@ -8,10 +8,10 @@ import { Link, LinkProps } from '@reach/router'
 import cx from 'classnames'
 import React from 'react'
 
-type LinkPropsAny = React.PropsWithoutRef<LinkProps<any>> &
+type LinkPropsUnknown = React.PropsWithoutRef<LinkProps<unknown>> &
   React.RefAttributes<HTMLAnchorElement>
 
-interface ActiveLinkProps extends LinkPropsAny {
+interface ActiveLinkProps extends LinkPropsUnknown {
   to: string
   className?: string
   activeClassName?: string
@@ -22,7 +22,7 @@ export function ActiveLink({
   className,
   activeClassName,
   ...props
-}: ActiveLinkProps) {
+}: ActiveLinkProps): JSX.Element {
   return (
     <Link
       {...props}

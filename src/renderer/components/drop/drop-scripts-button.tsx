@@ -23,7 +23,7 @@ export function DropScriptsButton({
   buttonRef,
   Button,
   className
-}: React.PropsWithChildren<Props>) {
+}: React.PropsWithChildren<Props>): JSX.Element {
   return (
     <div ref={buttonRef} className={cx(className)}>
       {Button}

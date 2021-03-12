@@ -7,19 +7,20 @@
 import SearchIcon from '@material-ui/icons/Search'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
 import { useApp } from '../../hooks/use-app'
+import { useCompilation } from '../../hooks/use-compilation'
 import { useDrop } from '../../hooks/use-drop'
 import { ScriptInterface } from '../../interfaces'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
 import reorderScripts from '../../utils/scripts/reorder-scripts'
 import uniqScripts from '../../utils/scripts/uniq-scripts'
-import { useCompilation } from '../../hooks/use-compilation'
 import { CompilationPageContent } from './compilation-page-content'
 import { GroupsLoader } from './groups-loader'
 
-export function Compilation() {
+export function Compilation(): JSX.Element {
   const { t } = useTranslation()
   const { groups } = useApp()
   const { scripts, start, setScripts } = useCompilation()

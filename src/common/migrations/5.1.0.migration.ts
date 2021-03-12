@@ -1,7 +1,13 @@
-import { GameType } from '../game'
-import { AppStore } from '../store'
+/*
+ * Copyright (c) 2021 Kiyozz.
+ *
+ * All rights reserved.
+ */
 
-export function migrate510(store: AppStore) {
+import { GameType } from '../game'
+import type { AppStore } from '../store'
+
+export function migrate510(store: AppStore): void {
   const gameType: string = store.get('game.type')
 
   if (

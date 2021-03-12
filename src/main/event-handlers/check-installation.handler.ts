@@ -5,23 +5,24 @@
  */
 
 import is from '@sindresorhus/is'
-import { appStore } from '../../common/store'
-import { toSlash } from '../../common/slash'
+
 import {
   GameType,
   toExecutable,
   toOtherSource,
   toSource
 } from '../../common/game'
+import { BadError } from '../../common/interfaces/bad-error'
+import { toSlash } from '../../common/slash'
+import { appStore } from '../../common/store'
+import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
-import * as path from '../services/path.service'
-import { EventHandlerInterface } from '../interfaces/event-handler.interface'
-import { BadErrorType } from '../../common/interfaces/bad-error.type'
+import * as path from '../path/path'
 
-export class CheckInstallationHandler implements EventHandlerInterface {
+export class CheckInstallationHandler implements EventHandler {
   private readonly logger = new Logger('CheckInstallationHandler')
 
-  async listen(): Promise<BadErrorType> {
+  async listen(): Promise<BadError> {
     const hasGameExe = await this.checkGameExe()
 
     if (hasGameExe !== false) {
@@ -48,7 +49,7 @@ export class CheckInstallationHandler implements EventHandlerInterface {
     return isUsingMo2 ? this.checkInMo2(file) : this.checkInGameDataFolder(file)
   }
 
-  private checkGameExe(): Promise<BadErrorType> {
+  private checkGameExe(): Promise<BadError> {
     this.logger.debug('checking game exe')
 
     const game = appStore.get('game')
@@ -56,7 +57,7 @@ export class CheckInstallationHandler implements EventHandlerInterface {
     const gameType = game.type
     const executable = toExecutable(gameType)
 
-    const result: Promise<BadErrorType> = Promise.resolve(
+    const result: Promise<BadError> = Promise.resolve(
       path.exists(path.join(gamePath, executable)) ? false : 'game'
     )
 
@@ -65,13 +66,13 @@ export class CheckInstallationHandler implements EventHandlerInterface {
     return result
   }
 
-  private checkMo2Instance(): Promise<BadErrorType> {
+  private checkMo2Instance(): Promise<BadError> {
     this.logger.debug('checking mo2 instance')
 
     const mo2Use: boolean = appStore.get('mo2.use')
     const mo2Instance: string = appStore.get('mo2.instance')
 
-    const result: Promise<BadErrorType> = Promise.resolve(
+    const result: Promise<BadError> = Promise.resolve(
       mo2Use ? (!path.exists(mo2Instance) ? 'mo2-instance' : false) : false
     )
 
@@ -80,7 +81,7 @@ export class CheckInstallationHandler implements EventHandlerInterface {
     return result
   }
 
-  private async checkInMo2(file: string): Promise<BadErrorType> {
+  private async checkInMo2(file: string): Promise<BadError> {
     const gameType: GameType = appStore.get('game.type')
     const mo2 = appStore.get('mo2')
 
@@ -109,7 +110,7 @@ export class CheckInstallationHandler implements EventHandlerInterface {
     return files.length === 0 ? this.checkInGameDataFolder(file) : false
   }
 
-  private checkInGameDataFolder(file: string): Promise<BadErrorType> {
+  private checkInGameDataFolder(file: string): Promise<BadError> {
     const gamePath: string = appStore.get('game.path')
     const gameType: GameType = appStore.get('game.type')
     this.logger.debug('checking in game Data folder')
@@ -145,12 +146,12 @@ export class CheckInstallationHandler implements EventHandlerInterface {
     return Promise.resolve(false)
   }
 
-  private checkCompiler(): Promise<BadErrorType> {
+  private checkCompiler(): Promise<BadError> {
     this.logger.debug('checking compiler path')
 
     const compilerPath: string = appStore.get('compilation.compilerPath')
 
-    const result: Promise<BadErrorType> = Promise.resolve(
+    const result: Promise<BadError> = Promise.resolve(
       path.exists(path.normalize(compilerPath)) ? false : 'compiler'
     )
 

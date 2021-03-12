@@ -15,7 +15,7 @@ interface Props {
   onDelete: () => void
 }
 
-export function GroupsListItemMenu({ onDelete, onEdit }: Props) {
+export function GroupsListItemMenu({ onDelete, onEdit }: Props): JSX.Element {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
 

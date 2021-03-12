@@ -4,13 +4,14 @@
  * All rights reserved.
  */
 
-import { is } from 'electron-util'
 import { app } from 'electron'
-import { join, readFile } from '../services/path.service'
-import { EventHandlerInterface } from '../interfaces/event-handler.interface'
-import { Logger } from '../logger'
+import { is } from 'electron-util'
 
-export class GetVersionHandler implements EventHandlerInterface {
+import { EventHandler } from '../interfaces/event-handler'
+import { Logger } from '../logger'
+import { join, readFile } from '../path/path'
+
+export class GetVersionHandler implements EventHandler {
   private logger = new Logger('GetVersionHandler')
 
   async listen(): Promise<string> {

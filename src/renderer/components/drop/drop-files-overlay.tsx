@@ -10,7 +10,7 @@ interface Props {
   open: boolean
 }
 
-export function DropFilesOverlay({ open }: Props) {
+export function DropFilesOverlay({ open }: Props): JSX.Element | null {
   if (!open) {
     return null
   }

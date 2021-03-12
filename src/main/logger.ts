@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import log, { LogFunctions } from 'electron-log'
+import log, { LogFile, LogFunctions, Transports } from 'electron-log'
 import { is } from 'electron-util'
 
 const isDev = is.development
@@ -22,15 +22,15 @@ export class Logger {
     this.logger = log.scope(namespace)
   }
 
-  get transports() {
+  get transports(): Transports {
     return log.transports
   }
 
-  get file() {
+  get file(): LogFile {
     return this.transports.file.getFile()
   }
 
-  get previousSessionFilePath() {
+  get previousSessionFilePath(): string {
     return this.file.path.replace('.log', '.1.log')
   }
 

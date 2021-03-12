@@ -5,7 +5,8 @@
  */
 
 import is from '@sindresorhus/is'
-import { Group } from '../interfaces/group.interface'
+
+import { Group } from '../interfaces/group'
 import { validateScript } from './script.validator'
 
 function hasValidValues(group: Group): boolean {

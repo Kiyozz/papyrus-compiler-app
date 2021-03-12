@@ -11,12 +11,13 @@ import React, {
   useMemo,
   useState
 } from 'react'
-import { ipcRenderer } from '../../../common/ipc'
-import { BadErrorType } from '../../../common/interfaces/bad-error.type'
+
 import { Events } from '../../../common/events'
+import { BadError } from '../../../common/interfaces/bad-error'
+import { ipcRenderer } from '../../../common/ipc'
 
 interface StateProps {
-  isBadInstallation: BadErrorType
+  isBadInstallation: BadError
   checkInstallation: () => void
   resetBadInstallation: () => void
 }
@@ -25,15 +26,16 @@ type SettingsContextInterface = StateProps
 
 const SettingsContext = createContext({} as SettingsContextInterface)
 
-export const useSettings = () => useContext(SettingsContext)
+export const useSettings = (): SettingsContextInterface =>
+  useContext(SettingsContext)
 
 export function SettingsProvider({
   children
-}: React.PropsWithChildren<unknown>) {
-  const [isBadInstallation, setBadInstallation] = useState<BadErrorType>(false)
+}: React.PropsWithChildren<unknown>): JSX.Element {
+  const [isBadInstallation, setBadInstallation] = useState<BadError>(false)
 
   const detectBadInstallation = useCallback(async () => {
-    const fileExists = await ipcRenderer.invoke<BadErrorType>(
+    const fileExists = await ipcRenderer.invoke<BadError>(
       Events.CheckInstallation
     )
 

@@ -4,13 +4,14 @@
  * All rights reserved.
  */
 
-import * as path from 'path'
 import is from '@sindresorhus/is'
 import * as util from 'electron-util'
-import { toAntiSlash, toSlash } from '../slash'
-import { AppStore } from '../store'
+import * as path from 'path'
 
-export function migrate420(store: AppStore) {
+import { toAntiSlash, toSlash } from '../slash'
+import type { AppStore } from '../store'
+
+export function migrate420(store: AppStore): void {
   const gamePath = store.get('game.path')
   const compilerPath = store.get('compilation.compilerPath')
 

@@ -5,26 +5,27 @@
  */
 
 import { is } from 'electron-util'
+
 import { Events } from '../common/events'
 import { appStore } from '../common/store'
 import { CheckInstallationHandler } from './event-handlers/check-installation.handler'
+import { ClipboardCopyHandler } from './event-handlers/clipboard-copy.handler'
 import { ConfigGetHandler } from './event-handlers/config-get.handler'
 import { ConfigUpdateHandler } from './event-handlers/config-update.handler'
 import { DialogHandler } from './event-handlers/dialog.handler'
 import { FileStatHandler } from './event-handlers/file-stat.handler'
 import { GetVersionHandler } from './event-handlers/get-version.handler'
 import { InAppErrorHandler } from './event-handlers/in-app-error.handler'
-import { OpenFileHandler } from './event-handlers/open-file.handler'
 import { IsProductionHandler } from './event-handlers/is-production.handler'
-import { EventHandlerInterface } from './interfaces/event-handler.interface'
-import { registerMenu } from './menu.register'
-import { Logger } from './logger'
-import { ensureFiles, move, writeFile } from './services/path.service'
-import { registerIpcEvents } from './ipc-events.register'
-import { ClipboardCopyHandler } from './event-handlers/clipboard-copy.handler'
-import { EventInterface } from './interfaces/event.interface'
+import { OpenFileHandler } from './event-handlers/open-file.handler'
 import { ScriptCompileEvent } from './event-handlers/script-compile.event'
-import { EventSyncInterface } from './interfaces/event.sync.interface'
+import { Event } from './interfaces/event'
+import { EventHandler } from './interfaces/event-handler'
+import { EventSync } from './interfaces/event-sync'
+import { registerIpcEvents } from './ipc-events.register'
+import { Logger } from './logger'
+import { registerMenu } from './menu.register'
+import { ensureFiles, move, writeFile } from './path/path'
 
 const logger = new Logger('Initialize')
 
@@ -61,12 +62,12 @@ async function backupLogFile() {
   logger.info(`file ${logFilename}.1.log created`)
 }
 
-export async function initialize(win: Electron.BrowserWindow) {
+export async function initialize(win: Electron.BrowserWindow): Promise<void> {
   await backupLogFile()
   await installExtensions()
 
   const openFileHandler = new OpenFileHandler()
-  const handlers = new Map<string, EventHandlerInterface>([
+  const handlers = new Map<string, EventHandler>([
     [Events.OpenDialog, new DialogHandler()],
     [Events.CheckInstallation, new CheckInstallationHandler()],
     [Events.ConfigUpdate, new ConfigUpdateHandler()],
@@ -77,10 +78,10 @@ export async function initialize(win: Electron.BrowserWindow) {
     [Events.IsProduction, new IsProductionHandler()],
     [Events.ClipboardCopy, new ClipboardCopyHandler()]
   ])
-  const events = new Map<string, EventInterface>([
+  const events = new Map<string, Event>([
     [Events.CompileScriptStart, new ScriptCompileEvent()]
   ])
-  const syncs = new Map<string, EventSyncInterface>([])
+  const syncs = new Map<string, EventSync>([])
 
   logger.debug(appStore.path)
 

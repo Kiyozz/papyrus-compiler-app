@@ -4,8 +4,8 @@
  * All rights reserved.
  */
 
-import { ipcRenderer } from '../../common/ipc'
 import { Events } from '../../common/events'
+import { ipcRenderer } from '../../common/ipc'
 
 let isProductionRegistered = false
 let isProductionSaved = false

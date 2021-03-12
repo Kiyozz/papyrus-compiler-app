@@ -5,15 +5,15 @@
  */
 
 import React from 'react'
-
 import { useTranslation } from 'react-i18next'
+
 import { DialogChangelog } from './components/dialog/dialog-changelog'
 import { PageDrawer } from './components/page-drawer'
-import { Routes } from './routes'
 import { TutorialSettings } from './components/tutorials/tutorial-settings'
 import { useInitialization } from './hooks/use-initialization'
+import { Routes } from './routes'
 
-export function App() {
+export function App(): JSX.Element {
   const { t } = useTranslation()
   const { done } = useInitialization()
 

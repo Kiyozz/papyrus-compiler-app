@@ -6,14 +6,13 @@
 
 import FolderIcon from '@material-ui/icons/Folder'
 import FolderOpenIcon from '@material-ui/icons/FolderOpen'
-
+import is from '@sindresorhus/is'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import is from '@sindresorhus/is'
 
-import { DialogType } from '../../../common/interfaces/dialog.interface'
-import { ipcRenderer } from '../../../common/ipc'
 import { Events } from '../../../common/events'
+import { DialogType } from '../../../common/interfaces/dialog'
+import { ipcRenderer } from '../../../common/ipc'
 import { useApp } from '../../hooks/use-app'
 import { TextField } from '../text-field'
 
@@ -34,7 +33,7 @@ export function DialogTextField({
   defaultValue,
   onChange,
   type
-}: Props) {
+}: Props): JSX.Element {
   const { onRefreshConfig } = useApp()
   const { t } = useTranslation()
   const [value, setValue] = useState(defaultValue)

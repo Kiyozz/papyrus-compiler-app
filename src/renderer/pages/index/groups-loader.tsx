@@ -5,7 +5,6 @@
  */
 
 import AddIcon from '@material-ui/icons/Add'
-
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -16,7 +15,7 @@ interface Props {
   onChangeGroup: (groupName: string) => void
 }
 
-export function GroupsLoader({ groups, onChangeGroup }: Props) {
+export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
 

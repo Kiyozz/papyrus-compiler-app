@@ -14,7 +14,7 @@ export interface GroupInterface {
 export class Group {
   constructor(public name: string, public scripts: ScriptInterface[]) {}
 
-  isEmpty() {
+  isEmpty(): boolean {
     return this.scripts.length === 0
   }
 }

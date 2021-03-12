@@ -4,8 +4,8 @@
  * All rights reserved.
  */
 
-import React, { useCallback } from 'react'
 import is from '@sindresorhus/is'
+import React, { useCallback } from 'react'
 
 interface Props {
   autoFocus?: boolean
@@ -39,7 +39,7 @@ export function TextField({
   iconOnClick,
   inputClassName = '',
   infoText
-}: Props) {
+}: Props): JSX.Element {
   const onChangeInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.currentTarget.value

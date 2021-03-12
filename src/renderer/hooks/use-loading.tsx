@@ -15,13 +15,13 @@ const LoadingContext = createContext<LoadingContextInterface>({
   isLoading: false
 } as LoadingContextInterface)
 
-export function useLoading() {
+export function useLoading(): LoadingContextInterface {
   return useContext(LoadingContext)
 }
 
 export function LoadingProvider({
   children
-}: React.PropsWithChildren<unknown>) {
+}: React.PropsWithChildren<unknown>): JSX.Element {
   const [isLoading, setLoading] = useState(false)
 
   return (

@@ -11,10 +11,11 @@ import RadioGroup from '@material-ui/core/RadioGroup'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+
 import { GameType, toExecutable } from '../../../common/game'
+import { Alert } from '../../components/alert'
 import { DialogTextField } from '../../components/dialog/dialog-text-field'
 import { useApp } from '../../hooks/use-app'
-import { Alert } from '../../components/alert'
 import { useSettings } from './settings-context'
 
 interface Props {
@@ -29,7 +30,7 @@ export function SettingsGame({
   onClickRadio,
   onChangeCompilerPath,
   onClickRefreshInstallation
-}: Props) {
+}: Props): JSX.Element {
   const { t } = useTranslation()
   const {
     config: { game, compilation }

@@ -5,15 +5,16 @@
  */
 
 import is from '@sindresorhus/is'
-import { appStore } from '../../common/store'
+
 import { toExecutable, toOtherSource, toSource } from '../../common/game'
+import { appStore } from '../../common/store'
+import { executeCommand } from '../command/execute'
 import { CompilationException } from '../exceptions/compilationException'
 import { ConfigurationException } from '../exceptions/configuration.exception'
-import { generateCompilerCmd } from '../utils/generate-compiler-cmd.util'
 import { Logger } from '../logger'
-import { executeCommand } from './execute-command.service'
-import * as mo2 from './mo2.service'
-import * as path from './path.service'
+import * as mo2 from '../mo2/mo2'
+import * as path from '../path/path'
+import { generateCompilerCmd } from '../utils/generate-compiler-cmd.util'
 
 interface Runner {
   exe: string
@@ -35,7 +36,7 @@ function checkCommandResult(
   }
 }
 
-export async function compileScript(scriptName: string): Promise<string> {
+export async function compile(scriptName: string): Promise<string> {
   logger.debug('compiling the file', scriptName)
 
   const game = appStore.get('game')

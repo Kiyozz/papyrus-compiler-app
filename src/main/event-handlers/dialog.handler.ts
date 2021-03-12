@@ -5,14 +5,15 @@
  */
 
 import { dialog } from 'electron'
-import { EventHandlerInterface } from '../interfaces/event-handler.interface'
-import { DialogType } from '../../common/interfaces/dialog.interface'
+
+import { DialogType } from '../../common/interfaces/dialog'
+import { EventHandler } from '../interfaces/event-handler'
 
 interface DialogHandlerArgs {
   type: DialogType
 }
 
-export class DialogHandler implements EventHandlerInterface<DialogHandlerArgs> {
+export class DialogHandler implements EventHandler<DialogHandlerArgs> {
   async listen({ type }: DialogHandlerArgs): Promise<string | null> {
     if (type !== 'folder' && type !== 'file') {
       return null

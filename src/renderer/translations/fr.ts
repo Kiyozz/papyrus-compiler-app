@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-export default {
+const fr = {
   loading: 'Chargement',
   nav: {
     compilation: 'Compilation',
@@ -141,3 +141,5 @@ export default {
     }
   }
 }
+
+export default fr

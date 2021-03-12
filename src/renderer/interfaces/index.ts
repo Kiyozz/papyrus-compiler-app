@@ -4,6 +4,6 @@
  * All rights reserved.
  */
 
-export * from './group.interface'
+export * from './group'
 export * from './script.interface'
-export * from './github-release.interface'
+export * from './github-release'

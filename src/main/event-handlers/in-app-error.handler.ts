@@ -5,14 +5,15 @@
  */
 
 import is from '@sindresorhus/is'
-import { EventHandlerInterface } from '../interfaces/event-handler.interface'
-import { createReportDialog } from '../services/create-report-dialog.service'
-import { Logger } from '../logger'
 
-export class InAppErrorHandler implements EventHandlerInterface<Error> {
+import { EventHandler } from '../interfaces/event-handler'
+import { Logger } from '../logger'
+import { createReportDialog } from '../report/create-report-dialog'
+
+export class InAppErrorHandler implements EventHandler<Error> {
   private logger = new Logger('InAppErrorHandler')
 
-  listen(args?: Error) {
+  listen(args?: Error): void {
     this.logger.error('an error occurred', args)
 
     if (is.undefined(args)) {

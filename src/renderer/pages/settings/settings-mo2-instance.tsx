@@ -4,13 +4,13 @@
  * All rights reserved.
  */
 
+import RefreshIcon from '@material-ui/icons/Refresh'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import RefreshIcon from '@material-ui/icons/Refresh'
+import { Alert } from '../../components/alert'
 import { DialogTextField } from '../../components/dialog/dialog-text-field'
 import { useApp } from '../../hooks/use-app'
-import { Alert } from '../../components/alert'
 import { useSettings } from './settings-context'
 
 interface Props {
@@ -21,7 +21,7 @@ interface Props {
 export function SettingsMo2Instance({
   onChangeMo2Instance,
   onClickRefreshInstallation
-}: Props) {
+}: Props): JSX.Element | null {
   const { t } = useTranslation()
   const {
     config: { mo2 }

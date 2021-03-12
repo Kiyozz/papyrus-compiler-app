@@ -16,7 +16,11 @@ interface Props {
   group: Group
 }
 
-export function GroupsListItem({ group, onDelete, onEdit }: Props) {
+export function GroupsListItem({
+  group,
+  onDelete,
+  onEdit
+}: Props): JSX.Element {
   const { t } = useTranslation()
 
   return (

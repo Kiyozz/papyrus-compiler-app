@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-export interface CompilationResultInterface {
+export interface CompilationResult {
   script: string
   output: string
   success: boolean

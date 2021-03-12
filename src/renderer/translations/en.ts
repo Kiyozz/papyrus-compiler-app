@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-export default {
+const en = {
   loading: 'Loading',
   nav: {
     compilation: 'Compilation',
@@ -139,3 +139,5 @@ export default {
     }
   }
 }
+
+export default en

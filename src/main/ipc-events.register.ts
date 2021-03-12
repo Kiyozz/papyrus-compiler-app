@@ -5,18 +5,18 @@
  */
 
 import { ipcMain } from '../common/ipc'
-import { EventHandlerInterface } from './interfaces/event-handler.interface'
+import { Event } from './interfaces/event'
+import { EventHandler } from './interfaces/event-handler'
+import { EventSync } from './interfaces/event-sync'
 import { Logger } from './logger'
-import { EventInterface } from './interfaces/event.interface'
-import { EventSyncInterface } from './interfaces/event.sync.interface'
 
 const logger = new Logger('RegisterIpcEvents')
 
 export function registerIpcEvents(
-  handlers: Map<string, EventHandlerInterface>,
-  events: Map<string, EventInterface>,
-  syncs: Map<string, EventSyncInterface>
-) {
+  handlers: Map<string, EventHandler>,
+  events: Map<string, Event>,
+  syncs: Map<string, EventSync>
+): void {
   handlers.forEach((handler, name) => {
     logger.info(`register "${name}"`)
 

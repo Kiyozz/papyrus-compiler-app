@@ -26,7 +26,7 @@ class IpcException extends Error {
 }
 
 class IpcRenderer {
-  invoke<Result = any>(channel: string, args?: any): Promise<Result> {
+  invoke<Result = unknown>(channel: string, args?: unknown): Promise<Result> {
     return (baseIpcRenderer.invoke(channel, args) as Promise<Result>).catch(
       e => {
         throw new IpcException(e.message)
@@ -34,14 +34,7 @@ class IpcRenderer {
     )
   }
 
-  sendSync<Result = any, Params = any>(
-    channel: string,
-    ...args: Params[]
-  ): Result {
-    return baseIpcRenderer.sendSync(channel, ...(args ?? []))
-  }
-
-  send<Params = any>(channel: string, ...args: Params[]): void {
+  send<Params = unknown>(channel: string, ...args: Params[]): void {
     baseIpcRenderer.send(channel, ...(args ?? []))
   }
 
@@ -60,13 +53,16 @@ class IpcRenderer {
     })
   }
 
-  off(channel: string, listener: (args: any) => void) {
+  off(channel: string, listener: (args: unknown) => void) {
     baseIpcRenderer.off(channel, listener)
   }
 }
 
 class IpcMain {
-  handle<Result = any>(channel: string, listener: MainInvokeListener<Result>) {
+  handle<Result = unknown>(
+    channel: string,
+    listener: MainInvokeListener<Result>
+  ) {
     return baseIpcMain.handle(channel, listener)
   }
 

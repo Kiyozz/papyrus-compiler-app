@@ -4,10 +4,11 @@
  * All rights reserved.
  */
 
+import { useNavigate } from '@reach/router'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useNavigate } from '@reach/router'
 import { useTranslation } from 'react-i18next'
+
 import { useApp } from '../../hooks/use-app'
 
 enum Step {
@@ -141,7 +142,7 @@ function Overlay() {
  * 3. Show required settings
  * 4. Information about MO2
  */
-export function TutorialSettings() {
+export function TutorialSettings(): JSX.Element | null {
   const { t } = useTranslation()
   const { config, setConfig } = useApp()
   const navigate = useNavigate()

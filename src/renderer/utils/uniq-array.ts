@@ -13,6 +13,7 @@ export function uniqArray<T>(
       `Expected an array for arrayInput, got ${typeof arrayInput}`
     )
   }
+
   if (!Array.isArray(keys)) {
     throw new TypeError(`Expected an array for keys, got ${typeof keys}`)
   }
@@ -22,6 +23,7 @@ export function uniqArray<T>(
     return [key, value]
   })
 
-  const kvMap = new Map<keyof T, T>(keyValues as any)
+  const kvMap = new Map<keyof T, T>(keyValues as [keyof T, T][])
+
   return [...kvMap.values()]
 }

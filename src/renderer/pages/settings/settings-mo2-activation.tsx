@@ -8,13 +8,14 @@ import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+
 import { useApp } from '../../hooks/use-app'
 
 interface Props {
   onChangeMo2: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export function SettingsMo2Activation({ onChangeMo2 }: Props) {
+export function SettingsMo2Activation({ onChangeMo2 }: Props): JSX.Element {
   const { t } = useTranslation()
   const {
     config: { mo2 }

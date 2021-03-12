@@ -4,11 +4,12 @@
  * All rights reserved.
  */
 
-import { useCallback, useEffect, useState } from 'react'
 import compareVersions from 'compare-versions'
-import { ipcRenderer } from '../../common/ipc'
+import { useCallback, useEffect, useState } from 'react'
+
 import { Events } from '../../common/events'
-import { GithubReleaseInterface } from '../interfaces'
+import { ipcRenderer } from '../../common/ipc'
+import { GithubRelease } from '../interfaces'
 import { useApp } from './use-app'
 
 interface Result {
@@ -31,7 +32,7 @@ export function useInitialization(): Result {
     ipcRenderer.invoke<string>(Events.GetVersion).then(async version => {
       setVersion(version)
       const response = await fetch(`${GITHUB_REPOSITORY}/releases`)
-      const [release]: GithubReleaseInterface[] = await response.json()
+      const [release]: GithubRelease[] = await response.json()
 
       if (typeof release !== 'undefined') {
         if (compareVersions.compare(release.tag_name, version, '>')) {

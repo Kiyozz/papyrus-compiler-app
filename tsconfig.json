@@ -5,11 +5,12 @@
     "module": "esnext",
     "moduleResolution": "node",
     "strict": true,
-    "sourceMap": true,
+    "noEmit": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "noImplicitReturns": false,
     "experimentalDecorators": false,
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "isolatedModules": true
   }
 }

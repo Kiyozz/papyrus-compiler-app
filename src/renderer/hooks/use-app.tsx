@@ -5,6 +5,7 @@
  */
 
 import is from '@sindresorhus/is'
+import { Titlebar } from 'custom-electron-titlebar'
 import React, {
   useCallback,
   useContext,
@@ -12,18 +13,18 @@ import React, {
   useMemo,
   useState
 } from 'react'
+import useLocalStorage from 'react-use-localstorage'
 import { Observable, Subject } from 'rxjs'
 import { PartialDeep } from 'type-fest'
-import { Titlebar } from 'custom-electron-titlebar'
-import useLocalStorage from 'react-use-localstorage'
-import { Config } from '../../common/interfaces/config.interface'
+
 import { Events } from '../../common/events'
+import { Config } from '../../common/interfaces/config'
 import { ipcRenderer } from '../../common/ipc'
-import { ScriptStatus } from '../enums/script-status.enum'
-import { Group } from '../interfaces'
-import { LocalStorage } from '../enums/local-storage.enum'
 import { DropFilesOverlay } from '../components/drop/drop-files-overlay'
 import { DropScripts, OnDropFunction } from '../components/drop/drop-scripts'
+import { LocalStorage } from '../enums/local-storage.enum'
+import { ScriptStatus } from '../enums/script-status.enum'
+import { Group } from '../interfaces'
 
 interface AppContextInterface {
   setVersion: (version: string) => void
@@ -56,8 +57,6 @@ interface Props {
 
 const AppContext = React.createContext({} as AppContextInterface)
 
-export const useApp = () => useContext(AppContext)
-
 function selectGroups(config: Config): Group[] {
   if (config.groups.length === 0) {
     return []
@@ -79,10 +78,12 @@ function selectGroups(config: Config): Group[] {
   )
 }
 
+export const useApp = (): AppContextInterface => useContext(AppContext)
+
 export function AppProvider({
   children,
   titlebar
-}: React.PropsWithChildren<Props>) {
+}: React.PropsWithChildren<Props>): JSX.Element | null {
   const [config, setConfig] = useState<Config>({} as Config)
   const [groups, setGroups] = useState<Group[]>([])
   const [drawerOpen, setDrawerOpen] = useState(false)

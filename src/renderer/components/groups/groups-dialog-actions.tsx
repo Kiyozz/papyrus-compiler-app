@@ -19,7 +19,7 @@ export function GroupsDialogActions({
   AddScriptsButton,
   onClose,
   isEdit
-}: Props) {
+}: Props): JSX.Element {
   const { t } = useTranslation()
 
   return (
