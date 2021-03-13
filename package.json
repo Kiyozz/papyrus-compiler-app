@@ -6,9 +6,8 @@
   "scripts": {
     "dev": "electron-esbuild dev",
     "build": "electron-esbuild build",
-    "package": "electron-builder -p=never",
-    "lint": "eslint src --ext .ts,.tsx",
-    "release:dry": "semantic-release --dry-run --no-ci"
+    "package": "electron-builder",
+    "lint": "eslint src --ext .ts,.tsx"
   },
   "engines": {
     "node": "^15.11.0",
@@ -43,9 +42,6 @@
     "@material-ui/lab": "~4.0.0-alpha.57",
     "@pmmmwh/react-refresh-webpack-plugin": "~0.4.3",
     "@reach/router": "~1.3.4",
-    "@semantic-release/changelog": "~5.0.1",
-    "@semantic-release/git": "~9.0.0",
-    "@semantic-release/release-notes-generator": "~9.0.2",
     "@sindresorhus/is": "~4.0.0",
     "@types/classnames": "~2.2.11",
     "@types/electron-devtools-installer": "~2.2.0",
@@ -111,7 +107,6 @@
     "react-use-localstorage": "^3.5.3",
     "rimraf": "~3.0.2",
     "rxjs": "~6.6.6",
-    "semantic-release": "~17.3.9",
     "speed-measure-webpack-plugin": "~1.3.3",
     "tailwindcss": "~2.0.3",
     "terser-webpack-plugin": "~4.2.3",
@@ -123,12 +118,12 @@
   },
   "build": {
     "appId": "io.kiyozz.pca",
-    "productName": "PCA LE",
+    "productName": "PCA",
     "copyright": "Copyright © WushuLate",
     "afterPack": "./build/after-pack.js",
     "artifactName": "${productName}.${ext}",
     "extraMetadata": {
-      "name": "PCA LE",
+      "name": "PCA",
       "main": "main.js"
     },
     "files": [
@@ -168,7 +163,8 @@
     },
     "directories": {
       "buildResources": "resources"
-    }
+    },
+    "publish": null
   },
   "husky": {
     "hooks": {
@@ -179,7 +175,7 @@
     "*.{md,json}": [
       "prettier --write"
     ],
-    "*.{ts,tsx}": [
+    "*.{ts,tsx,js,mjs}": [
       "eslint --fix"
     ]
   }

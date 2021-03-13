@@ -32,7 +32,7 @@ jobs:
         env:
           ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrim/mods/96339
         run: |
-          pnpm package
+          pnpm package -- --config.productName="PCA LE" --config.extraMetadata.name="PCA LE"
 
       - name: Extract changelog
         id: extract_changelog

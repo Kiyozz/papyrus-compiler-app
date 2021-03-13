@@ -37,6 +37,16 @@
     "import/no-useless-path-segments": "error",
     "import/no-cycle": "error"
   },
+  "overrides": [
+    {
+      "files": [
+        "scripts/**/*.{js,mjs}"
+      ],
+      "rules": {
+        "@typescript-eslint/explicit-module-boundary-types": "off"
+      }
+    }
+  ],
   "settings": {
     "react": {
       "version": "16.13"
