@@ -4,13 +4,13 @@
  * All rights reserved.
  */
 
-const path = require('path')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
-const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
 const webpack = require('webpack')
 
 /**
