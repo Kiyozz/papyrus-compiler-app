@@ -31,11 +31,11 @@ export class ConfigUpdateHandler
 
     ;(Object.entries(args.config) as [keyof Config, unknown][]).forEach(
       ([key, value]) => {
-        this.logger.debug('updating key', key, 'with value', value)
-
         if (!appStore.has(key)) {
           return
         }
+
+        this.logger.debug('updating key', key, 'with value', value)
 
         if (args.override) {
           this.logger.debug('total overwrite of the previous value')

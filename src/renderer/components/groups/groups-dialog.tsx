@@ -9,7 +9,9 @@ import is from '@sindresorhus/is'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { TelemetryEvents } from '../../../common/telemetry-events'
 import { useDrop } from '../../hooks/use-drop'
+import { useTelemetry } from '../../hooks/use-telemetry'
 import { GroupInterface, ScriptInterface } from '../../interfaces'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
 import uniqScripts from '../../utils/scripts/uniq-scripts'
@@ -37,6 +39,7 @@ export function GroupsDialog({
   const [name, setName] = useState('')
   const [scripts, setScripts] = useState<ScriptInterface[]>([])
   const [isEdit, setEdit] = useState(false)
+  const { send } = useTelemetry()
 
   const onDialogClose = useCallback(() => {
     onClose()
@@ -100,11 +103,15 @@ export function GroupsDialog({
     }
   }, [])
 
-  const onDrop = useCallback((pscFiles: File[]) => {
-    const pscScripts = pscFilesToPscScripts(pscFiles)
+  const onDrop = useCallback(
+    (pscFiles: File[]) => {
+      const pscScripts = pscFilesToPscScripts(pscFiles)
 
-    setScripts(s => uniqScripts([...s, ...pscScripts]))
-  }, [])
+      send(TelemetryEvents.GroupDropScripts, { scripts: pscScripts.length })
+      setScripts(s => uniqScripts([...s, ...pscScripts]))
+    },
+    [send]
+  )
 
   const addScriptsButton = useDrop({
     button: (

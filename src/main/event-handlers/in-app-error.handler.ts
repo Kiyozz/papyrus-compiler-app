@@ -5,21 +5,38 @@
  */
 
 import is from '@sindresorhus/is'
+import { dialog } from 'electron'
+import { debugInfo } from 'electron-util'
 
 import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
-import { createReportDialog } from '../report/create-report-dialog'
+import { Telemetry } from '../telemetry/telemetry'
 
 export class InAppErrorHandler implements EventHandler<Error> {
   private logger = new Logger('InAppErrorHandler')
 
-  listen(args?: Error): void {
+  constructor(private telemetry: Telemetry) {}
+
+  async listen(args?: Error): Promise<void> {
     this.logger.error('an error occurred', args)
 
     if (is.undefined(args)) {
       return
     }
 
-    createReportDialog(args)
+    await this.telemetry.exception({
+      properties: {
+        error: args.message,
+        stack:
+          `[${args.stack?.length}] ${args.stack?.slice(0, 600)}` ?? 'unknown'
+      }
+    })
+
+    dialog.showErrorBox(
+      'A JavaScript error occurred in the renderer process.',
+      `${debugInfo()}
+      
+      ${args ?? 'unknown error'}`
+    )
   }
 }

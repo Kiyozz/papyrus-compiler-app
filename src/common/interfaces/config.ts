@@ -21,6 +21,7 @@ interface Compilation {
 
 interface Tutorials {
   settings: boolean
+  telemetry: boolean
 }
 
 interface ConfigMo2 {
@@ -30,11 +31,16 @@ interface ConfigMo2 {
   mods: string
 }
 
+interface Telemetry {
+  active: boolean
+}
+
 export interface Config {
   game: Game
   compilation: Compilation
   tutorials: Tutorials
   mo2: ConfigMo2
   groups: Group[]
+  telemetry: Telemetry
   __internal__: unknown
 }

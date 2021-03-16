@@ -9,8 +9,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 
+import { TelemetryEvents } from '../../../common/telemetry-events'
 import { useApp } from '../../hooks/use-app'
 import { useFocus } from '../../hooks/use-focus'
+import { useTelemetry } from '../../hooks/use-telemetry'
 
 enum Step {
   Waiting,
@@ -142,6 +144,7 @@ function Overlay() {
  * 2. Go to settings
  * 3. Show required settings
  * 4. Information about MO2
+ * 5. Show concurrent scripts
  */
 export function TutorialSettings(): JSX.Element | null {
   const { t } = useTranslation()
@@ -149,15 +152,17 @@ export function TutorialSettings(): JSX.Element | null {
   const navigate = useNavigate()
   const [step, setStep] = useState(Step.Waiting)
   const isFocus = useFocus()
+  const { send } = useTelemetry()
 
   const onClickClose = useCallback(() => {
+    send(TelemetryEvents.TutorialsSettingsDeny, {})
     setConfig({
       tutorials: {
         ...config.tutorials,
         settings: false
       }
     })
-  }, [config.tutorials, setConfig])
+  }, [config.tutorials, setConfig, send])
 
   const onClickNeedHelp = useCallback(() => {
     navigate('/settings').then(() => {
@@ -185,6 +190,16 @@ export function TutorialSettings(): JSX.Element | null {
       }
     })
   }, [setConfig])
+
+  useEffect(() => {
+    if (step === Step.Waiting) {
+      send(TelemetryEvents.AppFirstLoaded, {})
+    }
+
+    if (step === Step.End) {
+      send(TelemetryEvents.TutorialsSettingsEnd, {})
+    }
+  }, [step, send])
 
   useEffect(() => {
     const time = setTimeout(() => {

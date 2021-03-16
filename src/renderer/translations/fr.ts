@@ -84,6 +84,10 @@ const fr = {
             'Réduisez si vous rencontrez des blocages quand vous lancez la compilation'
         }
       },
+      telemetry: {
+        title: "Données d'utilisation",
+        enable: 'Activer'
+      },
       version: 'Version {{version}}'
     }
   },
@@ -138,6 +142,14 @@ const fr = {
         text:
           "Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez l'application à travers MO2"
       }
+    },
+    telemetry: {
+      text:
+        "<0>À partir de la version 5.5.0, PCA collectera des données de télémétrie dans le but d'analyser les fonctionnalités utilisées et d'améliorer les fonctionnalités pertinentes.</0>" +
+        '<1>Toutes les données transmises sont anonymes.</1>' +
+        "<2>Des exemples de données collectées comprennent les données de groupe et de compilation et les horodatages de divers événements d'application.</2>" +
+        '<3>Les données de télémétrie sont désactivables dans les paramètres.</3>',
+      close: "J'ai compris"
     }
   }
 }

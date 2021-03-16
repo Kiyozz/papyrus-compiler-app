@@ -1,3 +1,9 @@
+## Unreleased
+
+### Features
+
+- Add anonymous telemetry data (can be disabled)
+
 ## 5.4.0 (2021-03-13)
 
 ### Features

@@ -11,10 +11,15 @@ import { format, URL } from 'url'
 import { initialize } from './initialize'
 import { Logger } from './logger'
 import { join } from './path/path'
-import { createReportDialog } from './report/create-report-dialog'
+import { unhandled } from './unhandled'
 
 const logger = new Logger('Main')
 let win: BrowserWindow | null = null
+
+unhandled(() => {
+  win?.close()
+  win = null
+})
 
 async function createWindow() {
   logger.info(debugInfo())
@@ -74,16 +79,6 @@ async function createWindow() {
     }
 
     setImmediate(() => win?.focus())
-  })
-
-  logger.catchErrors({
-    showDialog: false,
-    onError(error, versions, submitIssue) {
-      createReportDialog(error, versions, submitIssue)
-
-      win?.close()
-      win = null
-    }
   })
 }
 

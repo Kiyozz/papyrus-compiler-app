@@ -8,6 +8,8 @@ import AddIcon from '@material-ui/icons/Add'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { TelemetryEvents } from '../../../common/telemetry-events'
+import { useTelemetry } from '../../hooks/use-telemetry'
 import { Group } from '../../interfaces'
 
 interface Props {
@@ -18,6 +20,7 @@ interface Props {
 export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
+  const { send } = useTelemetry()
 
   const onClickOut = useCallback(
     (e: MouseEvent) => {
@@ -50,6 +53,9 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
       .map(
         (group: Group): JSX.Element => {
           const onClickGroup = () => {
+            send(TelemetryEvents.CompilationGroupLoaded, {
+              groups: groups.length
+            })
             onClose()
             onChangeGroup(group.name)
           }
@@ -63,15 +69,9 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
               {group.name}
             </button>
           )
-
-          /*return (
-          <MenuItem value={group.name} key={group.name} onClick={onClickGroup}>
-            {group.name}
-          </MenuItem>
-        )*/
         }
       )
-  }, [groups, onChangeGroup, onClose])
+  }, [groups, onChangeGroup, onClose, send])
 
   const notEmptyGroups = groups.filter(
     (group: Group): boolean => !group.isEmpty()

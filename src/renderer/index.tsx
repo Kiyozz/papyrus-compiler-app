@@ -9,7 +9,8 @@ import {
   createMemorySource,
   LocationProvider
 } from '@reach/router'
-import { Titlebar, Color } from 'custom-electron-titlebar'
+import { Color, Titlebar } from 'custom-electron-titlebar'
+import debounce from 'debounce-fn'
 import React from 'react'
 import { render } from 'react-dom'
 
@@ -21,6 +22,7 @@ import appIcon from './assets/logo/vector/isolated-layout.svg'
 import { AppProvider } from './hooks/use-app'
 import { CompilationProvider } from './hooks/use-compilation'
 import { FocusProvider } from './hooks/use-focus'
+import { TelemetryProvider } from './hooks/use-telemetry'
 import { SettingsProvider } from './pages/settings/settings-context'
 import { Theme } from './theme'
 import { isDark, onDarkPreferenceChanges } from './utils/dark'
@@ -75,7 +77,9 @@ function start() {
             <CompilationProvider>
               <SettingsProvider>
                 <FocusProvider>
-                  <App />
+                  <TelemetryProvider>
+                    <App />
+                  </TelemetryProvider>
                 </FocusProvider>
               </SettingsProvider>
             </CompilationProvider>
@@ -85,23 +89,36 @@ function start() {
       document.getElementById('app')
     )
   } catch (e) {
-    ipcRenderer.invoke(Events.AppError, e)
+    ipcRenderer.invoke(Events.AppError, e instanceof Error ? e : new Error(e))
   }
 
+  function sendIsOnline(event: Events): void {
+    ipcRenderer.send(event, { online: navigator.onLine })
+  }
+
+  sendIsOnline(Events.Online)
+
+  window.addEventListener('online', () => sendIsOnline(Events.Online))
+  window.addEventListener('offline', () => sendIsOnline(Events.Online))
+
   isProduction().then(production => {
-    if (production) {
-      window.onerror = (
-        event: Event | string,
-        source?: string,
-        lineno?: number,
-        colno?: number,
-        error?: Error
-      ) => {
-        ipcRenderer.invoke(
-          Events.AppError,
-          new Error(`From ${source}: L${lineno}C${colno}. ERROR: ${error}`)
-        )
-      }
+    if (!production) {
+      const handle = debounce(
+        (error: Error) => {
+          ipcRenderer.invoke(Events.AppError, error)
+        },
+        { wait: 200 }
+      )
+
+      window.addEventListener('error', event => {
+        event.preventDefault()
+        handle(event.error || event)
+      })
+
+      window.addEventListener('unhandledrejection', event => {
+        event.preventDefault()
+        handle(event.reason || event)
+      })
     }
   })
 }

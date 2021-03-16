@@ -13,11 +13,24 @@ import type { Config } from './interfaces/config'
 import type { AppStore } from './store'
 import { validateGroup } from './validators/group.validator'
 
+function checkTelemetry(appStore: AppStore, defaultConfig: Config) {
+  const telemetry = appStore.get('telemetry')
+
+  if (
+    is.nullOrUndefined(telemetry) ||
+    !is.object(telemetry) ||
+    is.emptyObject(telemetry) ||
+    !is.boolean(telemetry.active)
+  ) {
+    appStore.set('telemetry', defaultConfig.telemetry)
+  }
+}
+
 function checkMo2(appStore: AppStore, defaultConfig: Config) {
   const mo2 = appStore.get('mo2')
   const resetMo2Config = () => appStore.set('mo2', defaultConfig.mo2)
 
-  if (is.nullOrUndefined(mo2) && !is.object(mo2)) {
+  if (is.nullOrUndefined(mo2) || !is.object(mo2)) {
     resetMo2Config()
   }
 
@@ -133,8 +146,14 @@ function checkTutorials(appStore: AppStore, defaultConfig: Config) {
 
   if (is.nullOrUndefined(tutorials)) {
     appStore.set('tutorials', defaultConfig.tutorials)
-  } else if (!is.boolean(tutorials.settings)) {
-    appStore.set('tutorials.settings', defaultConfig.tutorials.settings)
+  } else {
+    if (!is.boolean(tutorials.settings)) {
+      appStore.set('tutorials.settings', defaultConfig.tutorials.settings)
+    }
+
+    if (!is.boolean(tutorials.telemetry)) {
+      appStore.set('tutorials.telemetry', defaultConfig.tutorials.telemetry)
+    }
   }
 }
 
@@ -167,4 +186,5 @@ export function checkStore(appStore: AppStore, defaultConfig: Config): void {
   checkTutorials(appStore, defaultConfig)
   checkCompilation(appStore, defaultConfig)
   checkNotSupportedKeys(appStore, defaultConfig)
+  checkTelemetry(appStore, defaultConfig)
 }

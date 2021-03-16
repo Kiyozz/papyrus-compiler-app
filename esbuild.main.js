@@ -25,6 +25,12 @@ module.exports = (merge = {}) => {
       'process.env.ELECTRON_WEBPACK_APP_MOD_URL': `'${
         process.env.ELECTRON_WEBPACK_APP_MOD_URL ??
         'https://www.nexusmods.com/skyrimspecialedition/mods/23852'
+      }'`,
+      'process.env.ELECTRON_TELEMETRY_API': `'${
+        process.env.ELECTRON_TELEMETRY_API ?? ''
+      }'`,
+      'process.env.ELECTRON_TELEMETRY_API_KEY': `'${
+        process.env.ELECTRON_TELEMETRY_API_KEY ?? ''
       }'`
     },
     ...merge

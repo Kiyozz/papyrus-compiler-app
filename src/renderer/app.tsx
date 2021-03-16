@@ -4,18 +4,33 @@
  * All rights reserved.
  */
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { TelemetryEvents } from '../common/telemetry-events'
 import { DialogChangelog } from './components/dialog/dialog-changelog'
 import { PageDrawer } from './components/page-drawer'
 import { TutorialSettings } from './components/tutorials/tutorial-settings'
+import { TutorialTelemetry } from './components/tutorials/tutorial-telemetry'
+import { useApp } from './hooks/use-app'
 import { useInitialization } from './hooks/use-initialization'
+import { useTelemetry } from './hooks/use-telemetry'
 import { Routes } from './routes'
 
 export function App(): JSX.Element {
   const { t } = useTranslation()
   const { done } = useInitialization()
+  const { send } = useTelemetry()
+  const {
+    config: { tutorials }
+  } = useApp()
+
+  useEffect(() => {
+    if (done) {
+      send(TelemetryEvents.AppLoaded, {})
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [done])
 
   return (
     <>
@@ -31,7 +46,10 @@ export function App(): JSX.Element {
 
         {done && (
           <>
-            <TutorialSettings />
+            {tutorials.settings && <TutorialSettings />}
+            {tutorials.telemetry && !tutorials.settings && (
+              <TutorialTelemetry />
+            )}
             <Routes />
           </>
         )}

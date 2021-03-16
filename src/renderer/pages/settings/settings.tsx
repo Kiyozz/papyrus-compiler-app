@@ -10,14 +10,17 @@ import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { GameType } from '../../../common/game'
+import { TelemetryEvents } from '../../../common/telemetry-events'
 import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
 import { useApp } from '../../hooks/use-app'
 import { useLoading } from '../../hooks/use-loading'
+import { useTelemetry } from '../../hooks/use-telemetry'
 import { SettingsCompilation } from './settings-compilation'
 import { useSettings } from './settings-context'
 import { SettingsGame } from './settings-game'
 import { SettingsMo2 } from './settings-mo2'
+import { SettingsTelemetry } from './settings-telemetry'
 
 export function Settings(): JSX.Element {
   const { t } = useTranslation()
@@ -36,6 +39,7 @@ export function Settings(): JSX.Element {
     resetBadInstallation
   } = useSettings()
   const { isLoading } = useLoading()
+  const { send } = useTelemetry()
 
   const debouncedUpdateConfig = useMemo(
     () => debounce(setConfig, { wait: 500 }),
@@ -93,9 +97,10 @@ export function Settings(): JSX.Element {
         return
       }
 
+      send(TelemetryEvents.SettingsGame, { game: value })
       setGame(value)
     },
-    [resetBadInstallation, setGame]
+    [resetBadInstallation, setGame, send]
   )
 
   useEffect(() => {
@@ -144,18 +149,20 @@ export function Settings(): JSX.Element {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const checked = e.currentTarget.checked
 
+      send(TelemetryEvents.ModOrganizerActive, { active: checked })
       checked ? setMo2(checked) : setDisableMo2()
     },
-    [setDisableMo2, setMo2]
+    [setDisableMo2, setMo2, send]
   )
 
   const onClickRefreshInstallation = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
 
+      send(TelemetryEvents.SettingsRefresh, {})
       checkInstallation()
     },
-    [checkInstallation]
+    [checkInstallation, send]
   )
 
   const onClickPageRefresh = useCallback(() => {
@@ -168,7 +175,8 @@ export function Settings(): JSX.Element {
     }
 
     refreshConfig()
-  }, [isLoading, isBadInstallation, refreshConfig, checkInstallation])
+    send(TelemetryEvents.SettingsRefresh, {})
+  }, [isLoading, isBadInstallation, refreshConfig, checkInstallation, send])
 
   return (
     <>
@@ -199,6 +207,8 @@ export function Settings(): JSX.Element {
           onChangeMo2Instance={onChangeMo2Instance}
           onClickRefreshInstallation={onClickRefreshInstallation}
         />
+
+        <SettingsTelemetry />
       </Page>
     </>
   )
