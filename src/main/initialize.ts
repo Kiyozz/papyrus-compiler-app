@@ -7,6 +7,7 @@
 import { is } from 'electron-util'
 
 import { Events } from '../common/events'
+import { ipcMain } from '../common/ipc'
 import { appStore } from '../common/store'
 import { CheckInstallationHandler } from './event-handlers/check-installation.handler'
 import { ClipboardCopyHandler } from './event-handlers/clipboard-copy.handler'
@@ -19,6 +20,8 @@ import { InAppErrorHandler } from './event-handlers/in-app-error.handler'
 import { IsProductionHandler } from './event-handlers/is-production.handler'
 import { OpenFileHandler } from './event-handlers/open-file.handler'
 import { ScriptCompileEvent } from './event-handlers/script-compile.event'
+import { TelemetryActiveHandler } from './event-handlers/telemetry-active.handler'
+import { TelemetryHandler } from './event-handlers/telemetry.handler'
 import { Event } from './interfaces/event'
 import { EventHandler } from './interfaces/event-handler'
 import { EventSync } from './interfaces/event-sync'
@@ -26,6 +29,7 @@ import { registerIpcEvents } from './ipc-events.register'
 import { Logger } from './logger'
 import { registerMenu } from './menu.register'
 import { ensureFiles, move, writeFile } from './path/path'
+import { Telemetry } from './telemetry/telemetry'
 
 const logger = new Logger('Initialize')
 
@@ -66,6 +70,22 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
   await backupLogFile()
   await installExtensions()
 
+  const telemetryActive = appStore.get('telemetry.active') as boolean
+  const telemetry = new Telemetry(
+    telemetryActive,
+    process.env.ELECTRON_TELEMETRY_API ?? '',
+    process.env.ELECTRON_TELEMETRY_API_KEY ?? '',
+    true
+  )
+
+  ipcMain.on(Events.Online, (e, args: { online: boolean }) => {
+    logger.info(
+      'network status changes.',
+      `Internet is ${args.online ? 'online' : 'offline'}`
+    )
+    telemetry.setOnline(args.online)
+  })
+
   const openFileHandler = new OpenFileHandler()
   const handlers = new Map<string, EventHandler>([
     [Events.OpenDialog, new DialogHandler()],
@@ -74,9 +94,11 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
     [Events.ConfigGet, new ConfigGetHandler()],
     [Events.FilesStats, new FileStatHandler()],
     [Events.GetVersion, new GetVersionHandler()],
-    [Events.AppError, new InAppErrorHandler()],
+    [Events.AppError, new InAppErrorHandler(telemetry)],
     [Events.IsProduction, new IsProductionHandler()],
-    [Events.ClipboardCopy, new ClipboardCopyHandler()]
+    [Events.ClipboardCopy, new ClipboardCopyHandler()],
+    [Events.Telemetry, new TelemetryHandler(telemetry)],
+    [Events.TelemetryActive, new TelemetryActiveHandler(telemetry)]
   ])
   const events = new Map<string, Event>([
     [Events.CompileScriptStart, new ScriptCompileEvent()]

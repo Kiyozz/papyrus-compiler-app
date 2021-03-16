@@ -16,5 +16,8 @@ export enum Events {
   OpenDialog = 'event-open-dialog',
   IsProduction = 'event-is-production',
   GetVersion = 'event-get-version',
-  Changelog = 'event-changelog'
+  Changelog = 'event-changelog',
+  Telemetry = 'event-telemetry',
+  TelemetryActive = 'event-telemetry-active',
+  Online = 'event-is-online'
 }

@@ -80,6 +80,10 @@ const en = {
           info: 'Reduce if you experience latency when starting the compilation'
         }
       },
+      telemetry: {
+        title: 'Telemetry',
+        enable: 'Enable'
+      },
       version: 'Version {{version}}'
     }
   },
@@ -136,6 +140,14 @@ const en = {
         text:
           'Here, you can register your MO2 configuration. Ignore this if you are running the app through MO2'
       }
+    },
+    telemetry: {
+      text:
+        '<0>Starting with version 5.5.0, PCA will collect telemetry data for the purpose of analyzing used functionality and improving relevant features.</0>' +
+        '<1>All transmitted data is anonymous.</1>' +
+        '<2>Examples of collected data include group and compilation data, and timestamps of various app events.</2>' +
+        '<3>Data telemetry can be disabled in the settings.</3>',
+      close: 'I get it'
     }
   }
 }

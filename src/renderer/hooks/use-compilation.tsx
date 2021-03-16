@@ -28,6 +28,7 @@ interface CompilationContextInterface {
   start: (options: StartOptions) => void
   isRunning: boolean
   scripts: ScriptInterface[]
+  concurrentScripts: number
   logs: [ScriptInterface, string][]
   setScripts: (fn: (scripts: ScriptInterface[]) => ScriptInterface[]) => void
 }
@@ -156,7 +157,8 @@ export function CompilationProvider({
         isRunning,
         scripts: compilationScripts,
         logs: compilationLogs,
-        setScripts: setCompilationScripts
+        setScripts: setCompilationScripts,
+        concurrentScripts
       }}
     >
       {children}

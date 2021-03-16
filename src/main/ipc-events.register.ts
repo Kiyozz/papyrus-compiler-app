@@ -27,7 +27,10 @@ export function registerIpcEvents(
         const payload = await handler.listen(args)
 
         logger.info(`"${name}" succeeded`)
-        logger.debug(`payload "${name}"`, payload)
+
+        if (payload) {
+          logger.debug(`payload "${name}"`, payload)
+        }
 
         return payload
       } catch (e) {
@@ -57,12 +60,15 @@ export function registerIpcEvents(
     ipcMain.on(name, (ipcEvent, args) => {
       logger.debug(`"${name}" started`)
 
-      const result = event.onSync(ipcEvent, args)
+      const payload = event.onSync(ipcEvent, args)
 
-      logger.debug(`"${name}" payload`, result)
+      if (payload) {
+        logger.debug(`"${name}" payload`, payload)
+      }
+
       logger.debug(`"${name}" end`)
 
-      ipcEvent.returnValue = result
+      ipcEvent.returnValue = payload
     })
   })
 }

@@ -8,7 +8,9 @@ import ClearIcon from '@material-ui/icons/Clear'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { TelemetryEvents } from '../../../common/telemetry-events'
 import { useCompilation } from '../../hooks/use-compilation'
+import { useTelemetry } from '../../hooks/use-telemetry'
 
 interface Props {
   onClearScripts: () => void
@@ -17,10 +19,12 @@ interface Props {
 export function CompilationPageActions({ onClearScripts }: Props): JSX.Element {
   const { t } = useTranslation()
   const { isRunning, scripts } = useCompilation()
+  const { send } = useTelemetry()
 
   const onClickEmpty = useCallback(() => {
+    send(TelemetryEvents.CompilationListEmpty, { scripts: scripts.length })
     onClearScripts()
-  }, [onClearScripts])
+  }, [onClearScripts, send, scripts])
 
   return (
     <button

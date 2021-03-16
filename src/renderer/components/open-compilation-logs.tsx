@@ -8,8 +8,10 @@ import ErrorIcon from '@material-ui/icons/Error'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { TelemetryEvents } from '../../common/telemetry-events'
 import { useApp } from '../hooks/use-app'
 import { useCompilation } from '../hooks/use-compilation'
+import { useTelemetry } from '../hooks/use-telemetry'
 import { ScriptInterface } from '../interfaces'
 import { Dialog } from './dialog/dialog'
 import { NavItem } from './nav-item'
@@ -22,9 +24,11 @@ export function LogsListItem({
   logs: string
 }): JSX.Element {
   const { copyToClipboard } = useApp()
+  const { send } = useTelemetry()
   const onClickCopyLogs = useCallback(() => {
+    send(TelemetryEvents.CompilationLogsCopy, {})
     copyToClipboard(`${script.name}\n\n${logs}\n`)
-  }, [copyToClipboard, logs, script.name])
+  }, [copyToClipboard, logs, script.name, send])
 
   return (
     <div>

@@ -18,26 +18,34 @@ jobs:
       - name: Dependencies
         uses: pnpm/action-setup@v1.2.1
         with:
-          version: 5.18.6
+          version: 5.18.7
           run_install: true
 
       - name: Generate SE
         env:
+          NODE_ENV: production
           ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrimspecialedition/mods/23852
+          ELECTRON_TELEMETRY_API_KEY: ${{ secrets.ELECTRON_TELEMETRY_API_KEY_SE }}
+          ELECTRON_TELEMETRY_API: ${{ secrets.ELECTRON_TELEMETRY_API }}
         run: |
           pnpm build
           pnpm package -- --config.productName="PCA SE" --config.extraMetadata.name="PCA SE"
 
       - name: Generate LE
         env:
+          NODE_ENV: production
           ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrim/mods/96339
+          ELECTRON_TELEMETRY_API_KEY: ${{ secrets.ELECTRON_TELEMETRY_API_KEY_LE }}
+          ELECTRON_TELEMETRY_API: ${{ secrets.ELECTRON_TELEMETRY_API }}
         run: |
+          pnpm build -- --no-clean
           pnpm package -- --config.productName="PCA LE" --config.extraMetadata.name="PCA LE"
 
       - name: Extract changelog
         id: extract_changelog
         run: |
-          node scripts/extract-changelog.mjs ${{ github.ref }}
+          echo "::set-output name=content::$(node scripts/extract-changelog.mjs ${{ github.ref }})"
+        shell: bash
 
       - uses: actions/create-release@v1
         id: create_release

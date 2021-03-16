@@ -10,6 +10,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { TelemetryEvents } from '../../../common/telemetry-events'
+import { useTelemetry } from '../../hooks/use-telemetry'
+
 interface Props {
   onEdit: () => void
   onDelete: () => void
@@ -18,6 +21,7 @@ interface Props {
 export function GroupsListItemMenu({ onDelete, onEdit }: Props): JSX.Element {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
+  const { send } = useTelemetry()
 
   const onClickOut = useCallback(
     (e: MouseEvent) => {
@@ -48,9 +52,10 @@ export function GroupsListItemMenu({ onDelete, onEdit }: Props): JSX.Element {
   }, [onClose, onEdit])
 
   const onClickDelete = useCallback(() => {
+    send(TelemetryEvents.GroupDeleted, {})
     onClose()
     onDelete()
-  }, [onDelete, onClose])
+  }, [onDelete, onClose, send])
 
   return (
     <div className="relative">

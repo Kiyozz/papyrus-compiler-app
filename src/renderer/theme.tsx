@@ -38,6 +38,13 @@ export function Theme({
             color: '#539dff'
           }
         }
+      },
+      MuiCheckbox: {
+        root: {
+          '&$checked$colorSecondary': {
+            color: '#539dff'
+          }
+        }
       }
     }
   })

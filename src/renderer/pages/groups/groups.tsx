@@ -9,10 +9,12 @@ import is from '@sindresorhus/is'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { TelemetryEvents } from '../../../common/telemetry-events'
 import { GroupsDialog } from '../../components/groups/groups-dialog'
 import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
 import { useApp } from '../../hooks/use-app'
+import { useTelemetry } from '../../hooks/use-telemetry'
 import { Group, GroupInterface } from '../../interfaces'
 import { GroupsListItem } from './groups-list-item'
 
@@ -24,6 +26,8 @@ interface EditGroupParams {
 export function Groups(): JSX.Element {
   const { t } = useTranslation()
   const { groups, setConfig } = useApp()
+  const { send } = useTelemetry()
+
   const addGroup = useCallback(
     (group: GroupInterface) => {
       if (
@@ -36,6 +40,7 @@ export function Groups(): JSX.Element {
         return
       }
 
+      send(TelemetryEvents.GroupCreated, { scripts: group.scripts.length })
       setConfig({
         groups: [
           ...groups,
@@ -46,7 +51,7 @@ export function Groups(): JSX.Element {
         ]
       })
     },
-    [setConfig, groups]
+    [setConfig, groups, send]
   )
   const editGroup = useCallback(
     ({ group, lastGroupName }: EditGroupParams) => {
@@ -62,6 +67,7 @@ export function Groups(): JSX.Element {
         return
       }
 
+      send(TelemetryEvents.GroupEdited, { scripts: group.scripts.length })
       setConfig({
         groups: groups.map((g: Group) => {
           if (g.name === lastGroupName) {
@@ -78,7 +84,7 @@ export function Groups(): JSX.Element {
         })
       })
     },
-    [groups, setConfig]
+    [groups, setConfig, send]
   )
   const removeGroup = useCallback(
     (group: GroupInterface) => {
