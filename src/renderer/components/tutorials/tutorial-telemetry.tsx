@@ -38,10 +38,10 @@ export function TutorialTelemetry(): JSX.Element {
     >
       <div className="px-8">
         <Trans i18nKey="tutorials.telemetry.text">
-          <div className="text-xl font-medium" />
+          <div className="text-md" />
           <div className="mt-2" />
-          <div />
-          <div className="text-sm mt-4" />
+          <div className="mt-2" />
+          <div className="text-sm mt-6" />
         </Trans>
       </div>
       <button
