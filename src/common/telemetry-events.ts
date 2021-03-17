@@ -7,25 +7,25 @@
 import { GameType } from './game'
 
 export enum TelemetryEvents {
-  AppFirstLoaded = 'app-first-loaded',
-  AppLoaded = 'app-loaded',
-  CompilationDropScripts = 'compilation-drop-scripts',
-  CompilationGroupLoaded = 'compilation-group-loaded',
-  CompilationListEmpty = 'compilation-list-empty',
-  CompilationLogsCopy = 'compilation-logs-copy',
-  CompilationPlay = 'compilation-play',
-  CompilationRemoveScript = 'compilation-remove-script',
-  Exception = 'exception',
-  GroupCreated = 'group-created',
-  GroupDeleted = 'group-deleted',
-  GroupDropScripts = 'group-drop-scripts',
-  GroupEdited = 'group-edited',
-  ModOrganizerActive = 'mod-organizer-active',
-  SettingsGame = 'settings-game',
-  SettingsRefresh = 'settings-refresh',
-  TelemetryEnabled = 'telemetry-enabled',
-  TutorialsSettingsEnd = 'tutorials-settings-end',
-  TutorialsSettingsDeny = 'tutorials-settings-deny'
+  AppFirstLoaded = 'App.FirstLoaded',
+  AppLoaded = 'App.Loaded',
+  CompilationDropScripts = 'Compilation.DropScripts',
+  CompilationGroupLoaded = 'Compilation.GroupLoaded',
+  CompilationListEmpty = 'Compilation.ListEmpty',
+  CompilationLogsCopy = 'Compilation.LogsCopy',
+  CompilationPlay = 'Compilation.Play',
+  CompilationRemoveScript = 'Compilation.RemoveScript',
+  Exception = 'Exception',
+  GroupCreated = 'Group.Created',
+  GroupDeleted = 'Group.Deleted',
+  GroupDropScripts = 'Group.DropScripts',
+  GroupEdited = 'Group.Edited',
+  ModOrganizerActive = 'ModOrganizer.Active',
+  SettingsGame = 'Settings.Game',
+  SettingsRefresh = 'Settings.Refresh',
+  TelemetryEnabled = 'Telemetry.Enabled',
+  TutorialsSettingsEnd = 'Tutorials.SettingsEnd',
+  TutorialsSettingsDeny = 'Tutorials.SettingsDeny'
 }
 
 export interface TelemetryEventsProperties {

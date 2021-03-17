@@ -107,6 +107,10 @@ export class Telemetry {
         "can't send telemetry data",
         error instanceof Error ? error.message : error
       )
+      this.logger.info(
+        'disabling telemetry for this session because api is either unreacheable or an error has occurred'
+      )
+      this.setActive(false)
     }
   }
 
