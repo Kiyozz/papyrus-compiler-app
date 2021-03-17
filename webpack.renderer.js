@@ -14,13 +14,10 @@ const TerserPlugin = require('terser-webpack-plugin')
 const webpack = require('webpack')
 
 /**
- * @param {Partial<import('webpack').Configuration>} merge
- *
- * @return {import('webpack').Configuration}
+ * @return {Partial<webpack.Configuration>}
  */
-module.exports = merge => {
+const createConfig = () => {
   const isProduction = process.env.NODE_ENV === 'production'
-  const mode = isProduction ? 'production' : 'development'
 
   const plugins = [
     new MiniCssExtractPlugin(),
@@ -41,10 +38,8 @@ module.exports = merge => {
   const commonSources = path.resolve('src', 'common')
   const output = path.resolve('dist', 'renderer')
 
-  /** @type {import('webpack').Configuration} */
-  const myNewConfig = {
-    devtool: isProduction ? false : 'eval-source-map',
-    mode,
+  /** @var {webpack.Configuration} */
+  const configuration = {
     entry: {
       renderer: [
         path.join(rendererSources, 'index.tsx'),
@@ -131,29 +126,28 @@ module.exports = merge => {
   }
 
   if (isProduction) {
-    myNewConfig.optimization = {
+    configuration.optimization = {
       minimize: true,
       minimizer: [new TerserPlugin(), new CssMinimizerWebpackPlugin()]
     }
   } else {
-    myNewConfig.plugins.push(
+    configuration.plugins.push(
       new webpack.HotModuleReplacementPlugin(),
       new ForkTsCheckerWebpackPlugin(),
       new ReactRefreshWebpackPlugin()
     )
 
-    myNewConfig.devServer = {
+    configuration.devServer = {
       host: 'localhost',
       port: '9080',
       hot: true,
       overlay: true
     }
 
-    myNewConfig.entry.renderer.unshift('css-hot-loader/hotModuleReplacement')
+    configuration.entry.renderer.unshift('css-hot-loader/hotModuleReplacement')
   }
 
-  return {
-    ...myNewConfig,
-    ...merge
-  }
+  return configuration
 }
+
+module.exports = createConfig()
