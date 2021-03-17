@@ -8,15 +8,11 @@ import { useEffect, useState } from 'react'
 
 import { isDark, onDarkPreferenceChanges } from '../utils/dark'
 
-export function useDarkPreference(): boolean {
+export function useSystemDarkPreference(): boolean {
   const [isUsingDark, setDark] = useState(isDark)
 
   useEffect(() => {
-    function onChange(matches: boolean) {
-      setDark(matches)
-    }
-
-    const unsubscribe = onDarkPreferenceChanges(onChange)
+    const unsubscribe = onDarkPreferenceChanges(matches => setDark(matches))
 
     return () => unsubscribe()
   }, [])

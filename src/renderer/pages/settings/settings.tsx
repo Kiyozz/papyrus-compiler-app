@@ -21,6 +21,7 @@ import { useSettings } from './settings-context'
 import { SettingsGame } from './settings-game'
 import { SettingsMo2 } from './settings-mo2'
 import { SettingsTelemetry } from './settings-telemetry'
+import { SettingsTheme } from './settings-theme'
 
 export function Settings(): JSX.Element {
   const { t } = useTranslation()
@@ -207,6 +208,8 @@ export function Settings(): JSX.Element {
           onChangeMo2Instance={onChangeMo2Instance}
           onClickRefreshInstallation={onClickRefreshInstallation}
         />
+
+        <SettingsTheme />
 
         <SettingsTelemetry />
       </Page>

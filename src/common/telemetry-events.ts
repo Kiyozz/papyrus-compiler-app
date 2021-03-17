@@ -22,6 +22,7 @@ export enum TelemetryEvents {
   GroupEdited = 'Group.Edited',
   ModOrganizerActive = 'ModOrganizer.Active',
   SettingsGame = 'Settings.Game',
+  SettingsTheme = 'Settings.Theme',
   SettingsRefresh = 'Settings.Refresh',
   TelemetryEnabled = 'Telemetry.Enabled',
   TutorialsSettingsEnd = 'Tutorials.SettingsEnd',
@@ -69,6 +70,9 @@ export interface TelemetryEventsProperties {
     game: GameType
   }
   [TelemetryEvents.SettingsRefresh]: Record<string, never>
+  [TelemetryEvents.SettingsTheme]: {
+    theme: string
+  }
   [TelemetryEvents.TelemetryEnabled]: Record<string, never>
   [TelemetryEvents.TutorialsSettingsEnd]: Record<string, never>
   [TelemetryEvents.TutorialsSettingsDeny]: Record<string, never>

@@ -221,7 +221,7 @@ export function TutorialSettings(): JSX.Element | null {
           className={`fixed top-0 left-0 w-full h-full ${
             isFocus
               ? 'bg-light-400 dark:bg-black-800'
-              : 'bg-light-600 dark:bg-black-600'
+              : 'bg-light-600 dark:bg-black-400'
           } z-20 flex flex-col justify-center items-center`}
         >
           <div className="text-3xl font-bold">

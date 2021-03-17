@@ -16,11 +16,11 @@ import { ScriptInterface } from '../../interfaces'
 export function getClassNameFromStatus(script: ScriptInterface): string {
   switch (script.status) {
     case ScriptStatus.Idle:
-      return 'text-black-400 dark:text-gray-500'
+      return 'text-black-600 dark:text-gray-500'
     case ScriptStatus.Running:
-      return 'text-blue-800'
+      return 'text-blue-800 dark:text-blue-600'
     case ScriptStatus.Success:
-      return 'text-green-500'
+      return 'text-green-500 dark:text-green-400'
     default:
       return 'text-red-300'
   }

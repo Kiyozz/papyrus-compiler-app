@@ -84,7 +84,15 @@ const en = {
         title: 'Telemetry',
         enable: 'Enable'
       },
-      version: 'Version {{version}}'
+      version: 'Version {{version}}',
+      theme: {
+        title: 'Theme',
+        options: {
+          system: 'System',
+          light: 'Light',
+          dark: 'Dark'
+        }
+      }
     }
   },
   changelog: {

@@ -5,6 +5,7 @@
  */
 
 import { CompilerPath, Flag, GameType, GamePath, OutputPath } from '../game'
+import type { Theme } from '../theme'
 import { Group } from './group'
 
 interface Game {
@@ -42,5 +43,6 @@ export interface Config {
   mo2: ConfigMo2
   groups: Group[]
   telemetry: Telemetry
+  theme: Theme
   __internal__: unknown
 }

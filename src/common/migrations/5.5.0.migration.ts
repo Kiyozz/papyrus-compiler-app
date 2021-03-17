@@ -7,10 +7,12 @@
 import is from '@sindresorhus/is'
 
 import type { AppStore } from '../store'
+import { Theme } from '../theme'
 
 export function migrate550(store: AppStore): void {
   const telemetry = store.get('telemetry')
   const tutorials = store.get('tutorials')
+  const theme = store.get('theme')
 
   if (is.undefined(telemetry)) {
     store.set('telemetry', { active: true })
@@ -18,5 +20,9 @@ export function migrate550(store: AppStore): void {
 
   if (is.undefined(tutorials.telemetry)) {
     store.set('tutorials.telemetry', true)
+  }
+
+  if (is.undefined(theme)) {
+    store.set('theme', Theme.System)
   }
 }

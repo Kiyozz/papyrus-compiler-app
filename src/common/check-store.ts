@@ -11,7 +11,16 @@ import { DEFAULT_COMPILER_PATH } from './constants'
 import { GameType } from './game'
 import type { Config } from './interfaces/config'
 import type { AppStore } from './store'
+import { Theme } from './theme'
 import { validateGroup } from './validators/group.validator'
+
+function checkTheme(appStore: AppStore, defaultConfig: Config) {
+  const theme = appStore.get('theme')
+
+  if (![Theme.System, Theme.Light, Theme.Dark].includes(theme)) {
+    appStore.set('theme', defaultConfig.theme)
+  }
+}
 
 function checkTelemetry(appStore: AppStore, defaultConfig: Config) {
   const telemetry = appStore.get('telemetry')
@@ -187,4 +196,5 @@ export function checkStore(appStore: AppStore, defaultConfig: Config): void {
   checkCompilation(appStore, defaultConfig)
   checkNotSupportedKeys(appStore, defaultConfig)
   checkTelemetry(appStore, defaultConfig)
+  checkTheme(appStore, defaultConfig)
 }
