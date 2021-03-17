@@ -14,6 +14,7 @@ import { TutorialSettings } from './components/tutorials/tutorial-settings'
 import { TutorialTelemetry } from './components/tutorials/tutorial-telemetry'
 import { useApp } from './hooks/use-app'
 import { useInitialization } from './hooks/use-initialization'
+import { useSyncHtmlTheme } from './hooks/use-sync-html-theme'
 import { useTelemetry } from './hooks/use-telemetry'
 import { Routes } from './routes'
 
@@ -24,6 +25,8 @@ export function App(): JSX.Element {
   const {
     config: { tutorials }
   } = useApp()
+
+  useSyncHtmlTheme()
 
   useEffect(() => {
     if (done) {

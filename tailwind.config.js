@@ -11,13 +11,15 @@ module.exports = {
       safelist: [
         'text-gray-500',
         'text-blue-800',
+        'text-blue-600',
         'text-green-500',
+        'text-green-400',
         'text-red-300',
         'text-black-400'
       ]
     }
   },
-  darkMode: 'media', // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
       fontFamily: {
@@ -41,8 +43,8 @@ module.exports = {
           800: '#cac4c4'
         },
         black: {
-          400: '#444041',
-          600: '#282425',
+          400: '#403e41',
+          600: '#2e292d',
           800: '#000'
         },
         primary: {

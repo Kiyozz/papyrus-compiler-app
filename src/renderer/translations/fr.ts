@@ -88,7 +88,15 @@ const fr = {
         title: "Données d'utilisation",
         enable: 'Activer'
       },
-      version: 'Version {{version}}'
+      version: 'Version {{version}}',
+      theme: {
+        title: 'Thème',
+        options: {
+          system: 'Système',
+          light: 'Clair',
+          dark: 'Sombre'
+        }
+      }
     }
   },
   changelog: {

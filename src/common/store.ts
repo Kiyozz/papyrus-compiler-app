@@ -18,6 +18,7 @@ import { migrate420 } from './migrations/4.2.0.migration'
 import { migrate510 } from './migrations/5.1.0.migration'
 import { migrate520 } from './migrations/5.2.0.migration'
 import { migrate550 } from './migrations/5.5.0.migration'
+import { Theme } from './theme'
 
 const jsonPath = is.development
   ? join(__dirname, '../..', 'package.json')
@@ -54,6 +55,7 @@ const defaultConfig: Config = {
   telemetry: {
     active: true
   },
+  theme: Theme.System,
   __internal__: {
     migrations: {
       version: json.version
@@ -69,7 +71,7 @@ const appStore = new Store<Config>({
     '4.2.0': migrate420,
     '5.1.0': migrate510,
     '5.2.0': migrate520,
-    '5.4.0': migrate550
+    '5.5.0': migrate550
   }
 } as never)
 

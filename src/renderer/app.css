@@ -10,10 +10,8 @@
   --bg-darker: theme('colors.light.800');
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-darker: theme('colors.darker');
-  }
+.dark {
+  --bg-darker: theme('colors.darker');
 }
 
 img {
@@ -50,7 +48,8 @@ body {
   @apply pl-4 pr-4;
 }
 
-.overflow-overlay, .container-after-titlebar {
+.overflow-overlay,
+.container-after-titlebar {
   /*noinspection CssInvalidPropertyValue*/
   overflow: overlay !important;
 }
@@ -61,11 +60,11 @@ body {
 
 .btn,
 .btn-icon {
-  @apply text-black-400 select-none font-medium text-sm tracking-wide dark:text-white;
+  @apply text-black-600 select-none font-medium text-sm tracking-wide dark:text-white;
   @apply rounded inline-flex items-center justify-center;
   @apply px-2 py-1.5;
   @apply transition-colors;
-  @apply bg-transparent hover:bg-black-400 focus:bg-black-800 hover:bg-opacity-10 focus:bg-opacity-20 dark:hover:bg-white dark:focus:bg-light-400;
+  @apply bg-transparent hover:bg-black-600 focus:bg-black-800 hover:bg-opacity-10 focus:bg-opacity-20 dark:hover:bg-darker dark:focus:bg-black-600;
 }
 
 .icon {
@@ -89,15 +88,15 @@ body {
 }
 
 .btn-primary {
-  @apply bg-primary-400 text-light-400 hover:bg-primary-500 focus:bg-primary-600;
+  @apply bg-primary-400 text-light-400 hover:bg-primary-500 focus:bg-primary-600 dark:hover:bg-primary-500 dark:focus:bg-primary-600;
 }
 
 .btn-secondary {
-  @apply bg-green-600 text-light-400 hover:bg-green-500 focus:bg-green-400;
+  @apply bg-green-600 text-light-400 hover:bg-green-500 focus:bg-green-400 dark:text-light-400 dark:hover:bg-green-500 dark:focus:bg-green-400;
 }
 
 .btn-danger {
-  @apply text-red-400;
+  @apply text-red-400 dark:text-red-400;
 }
 
 .btn:disabled {
@@ -128,19 +127,19 @@ body {
 }
 
 .link {
-  @apply text-black-400 hover:bg-light-700 dark:hover:bg-black-400 dark:text-light-600 flex hover:no-underline outline-none transition-colors cursor-pointer;
+  @apply text-black-600 hover:bg-light-700 dark:hover:bg-black-600 dark:text-light-600 flex hover:no-underline outline-none transition-colors cursor-pointer;
 }
 
 .link-active {
-  @apply bg-light-800 hover:bg-light-800 dark:text-white dark:hover:text-white dark:bg-black-600 dark:hover:bg-black-600;
+  @apply bg-light-800 hover:bg-light-800 dark:text-white dark:hover:text-white dark:bg-black-400 dark:hover:bg-black-400;
 }
 
 .link-active-unfocus {
-  @apply dark:bg-black-400;
+  @apply dark:bg-black-600;
 }
 
 .paper {
-  @apply bg-light-300 dark:bg-black-600 px-4 p-2 rounded;
+  @apply bg-light-300 dark:bg-black-400 px-4 p-2 rounded;
 }
 
 .paper-darker {
@@ -205,7 +204,7 @@ input.MuiInputBase-inputAdornedStart {
 /* ----- COMPONENTS ----- */
 
 .menu {
-  @apply bg-white shadow flex flex-col gap-1 py-1.5 dark:bg-black-400 rounded min-w-full;
+  @apply bg-white shadow flex flex-col gap-1 py-1.5 dark:bg-black-600 rounded min-w-full;
   z-index: 1;
 }
 

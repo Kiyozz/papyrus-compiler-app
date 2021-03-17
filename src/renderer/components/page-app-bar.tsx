@@ -20,8 +20,8 @@ export function PageAppBar({ title, actions = [] }: Props): JSX.Element {
     <div
       className={`sticky w-full z-10 ${
         isFocus
-          ? 'bg-light-400 dark:bg-black-600'
-          : 'bg-light-600 dark:bg-black-400'
+          ? 'bg-light-400 dark:bg-black-400'
+          : 'bg-light-600 dark:bg-black-600'
       } shadow text-black select-none  dark:text-white`}
     >
       <div className="flex h-16 px-4 items-center">

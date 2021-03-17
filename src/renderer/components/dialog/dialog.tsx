@@ -83,7 +83,7 @@ export function Dialog({
           className={`fixed top-0 left-0 z-10 flex justify-center items-center w-full h-screen`}
         >
           <div
-            className="paper text-black-400 dark:text-light-400 p-0 w-full flex flex-col"
+            className="paper text-black-600 dark:text-light-400 p-0 w-full flex flex-col"
             style={
               maxWidth !== undefined
                 ? { maxWidth: `${maxWidth}%`, maxHeight: `${maxWidth}%` }

@@ -32,7 +32,7 @@ export function LogsListItem({
 
   return (
     <div>
-      <div className="flex items-center justify-between bg-light-300 dark:bg-black-600 gap-4 pb-2 sticky top-0">
+      <div className="flex items-center justify-between bg-light-300 dark:bg-black-400 gap-4 pb-2 sticky top-0">
         <h3 className="select-all">{script.name}</h3>
         <button className="btn" onClick={onClickCopyLogs}>
           Copy

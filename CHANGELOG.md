@@ -3,6 +3,7 @@
 ### Features
 
 - Add anonymous telemetry data (can be disabled)
+- Choose which theme to use, from your system, light, or dark
 
 ## 5.4.0 (2021-03-13)
 

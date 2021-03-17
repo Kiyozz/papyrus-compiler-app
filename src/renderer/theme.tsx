@@ -8,16 +8,26 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core'
 import red from '@material-ui/core/colors/red'
 import React from 'react'
 
-import { useDarkPreference } from './hooks/use-dark-preference'
+import { Theme as SettingsTheme } from '../common/theme'
+import { useSystemDarkPreference } from './hooks/use-system-dark-preference'
+import { useTheme } from './hooks/use-theme'
 
 export function Theme({
   children
 }: React.PropsWithChildren<unknown>): JSX.Element {
-  const isDark = useDarkPreference()
+  const isDark = useSystemDarkPreference()
+  const [currentTheme] = useTheme()
 
   const theme = createMuiTheme({
     palette: {
-      type: isDark ? 'dark' : 'light',
+      type:
+        currentTheme === SettingsTheme.System
+          ? isDark
+            ? 'dark'
+            : 'light'
+          : currentTheme === SettingsTheme.Dark
+          ? 'dark'
+          : 'light',
       primary: {
         main: '#539dff',
         light: '#539dff'
