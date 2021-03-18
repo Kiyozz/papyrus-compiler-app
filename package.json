@@ -146,18 +146,17 @@
     },
     "win": {
       "target": [
-        "nsis",
         "7z"
       ]
     },
     "mac": {
       "target": [
-        "zip"
+        "dir"
       ]
     },
     "linux": {
       "target": [
-        "zip"
+        "dir"
       ]
     },
     "directories": {

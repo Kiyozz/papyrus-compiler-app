@@ -35,7 +35,7 @@ export function TelemetryProvider({
     (event: TelemetryEvents, properties: Record<string, unknown>) => {
       if (
         config.telemetry?.active &&
-        process.env.ELECTRON_TELEMETRY_FEATURE === 'true'
+        (process.env.ELECTRON_TELEMETRY_FEATURE ?? 'false') === 'true'
       ) {
         ipcRenderer
           .invoke(Events.Telemetry, { name: event, properties })

@@ -30,7 +30,9 @@ const createConfig = () => {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
       ELECTRON_WEBPACK_APP_MOD_URL:
-        'https://www.nexusmods.com/skyrimspecialedition/mods/23852'
+        'https://www.nexusmods.com/skyrimspecialedition/mods/23852',
+      ELECTRON_TELEMETRY_FEATURE:
+        process.env.ELECTRON_TELEMETRY_FEATURE ?? 'false'
     })
   ].filter(Boolean)
 
