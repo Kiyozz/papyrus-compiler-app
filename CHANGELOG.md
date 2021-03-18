@@ -1,3 +1,9 @@
+## 5.5.1 (2021-03-18)
+
+### Bug fixes
+
+- Fixes a bug with telemetry
+
 ## 5.5.0 (2021-03-17)
 
 ### Features

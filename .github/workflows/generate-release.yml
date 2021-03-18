@@ -27,6 +27,7 @@ jobs:
           ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrimspecialedition/mods/23852
           ELECTRON_TELEMETRY_API_KEY: ${{ secrets.ELECTRON_TELEMETRY_API_KEY_SE }}
           ELECTRON_TELEMETRY_API: ${{ secrets.ELECTRON_TELEMETRY_API }}
+          ELECTRON_TELEMETRY_FEATURE: true
         run: |
           pnpm build
           pnpm package -- --config.productName="PCA SE" --config.extraMetadata.name="PCA SE"
@@ -37,6 +38,7 @@ jobs:
           ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrim/mods/96339
           ELECTRON_TELEMETRY_API_KEY: ${{ secrets.ELECTRON_TELEMETRY_API_KEY_LE }}
           ELECTRON_TELEMETRY_API: ${{ secrets.ELECTRON_TELEMETRY_API }}
+          ELECTRON_TELEMETRY_FEATURE: true
         run: |
           pnpm build -- --no-clean
           pnpm package -- --config.productName="PCA LE" --config.extraMetadata.name="PCA LE"

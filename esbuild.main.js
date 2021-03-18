@@ -26,6 +26,9 @@ module.exports = {
     }'`,
     'process.env.ELECTRON_TELEMETRY_API_KEY': `'${
       process.env.ELECTRON_TELEMETRY_API_KEY ?? ''
+    }'`,
+    'process.env.ELECTRON_TELEMETRY_FEATURE': `'${
+      process.env.ELECTRON_TELEMETRY_FEATURE ?? 'false'
     }'`
   }
 }

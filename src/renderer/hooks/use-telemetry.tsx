@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import React, { createContext, useCallback, useContext, useMemo } from 'react'
+import React, { createContext, useCallback, useContext } from 'react'
 
 import { Events } from '../../common/events'
 import { ipcRenderer } from '../../common/ipc'
@@ -12,7 +12,6 @@ import {
   TelemetryEvents,
   TelemetryEventsProperties
 } from '../../common/telemetry-events'
-import { isProduction } from '../utils/is-production'
 import { useApp } from './use-app'
 
 interface TelemetryContextInterface {
@@ -31,26 +30,24 @@ export const useTelemetry = (): TelemetryContextInterface =>
 export function TelemetryProvider({
   children
 }: React.PropsWithChildren<unknown>): JSX.Element {
-  const production = useMemo(() => isProduction(), [])
   const { config } = useApp()
   const sendTelemetry = useCallback(
     (event: TelemetryEvents, properties: Record<string, unknown>) => {
-      if (config.telemetry?.active) {
-        production.then(p => {
-          if (!p) {
-            ipcRenderer
-              .invoke(Events.Telemetry, { name: event, properties })
-              .catch(e =>
-                console.error(
-                  "can't send telemetry event to main process",
-                  e.message || e
-                )
-              )
-          }
-        })
+      if (
+        config.telemetry?.active &&
+        process.env.ELECTRON_TELEMETRY_FEATURE === 'true'
+      ) {
+        ipcRenderer
+          .invoke(Events.Telemetry, { name: event, properties })
+          .catch(e =>
+            console.error(
+              "can't send telemetry event to main process",
+              e.message || e
+            )
+          )
       }
     },
-    [config.telemetry, production]
+    [config.telemetry]
   )
   const setActive = useCallback((active: boolean) => {
     ipcRenderer.invoke(Events.TelemetryActive, active)
