@@ -67,26 +67,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: './dist/PCA LE.Setup.exe'
-          asset_name: PCA LE.Setup.exe
-          asset_content_type: application/octet-stream
-
-      - uses: actions/upload-release-asset@v1
-        if: success()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: './dist/PCA SE.Setup.exe'
-          asset_name: PCA SE.Setup.exe
-          asset_content_type: application/octet-stream
-
-      - uses: actions/upload-release-asset@v1
-        if: success()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: './dist/PCA LE.7z'
           asset_name: PCA LE.7z
           asset_content_type: application/x-7z-compressed
