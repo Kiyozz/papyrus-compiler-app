@@ -1,3 +1,9 @@
+## Unreleased
+
+### Bug fixes
+
+- Fix the new version popup background in light theme
+
 ## 5.5.1 (2021-03-18)
 
 ### Bug fixes

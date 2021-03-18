@@ -88,7 +88,7 @@ export function DialogChangelog(): JSX.Element {
   return (
     <>
       {isShowChangelog && !isUserShowNotes && (
-        <div className="fixed z-20 bottom-3 left-3 dark:bg-gray-800 py-3 items-center rounded text-sm dark:text-white flex">
+        <div className="fixed z-20 bottom-3 left-3 bg-light-800 dark:bg-gray-800 py-3 items-center rounded text-sm dark:text-white flex">
           <div className="px-2">
             {t('changelog.available.message', { version: latestVersion })}
           </div>
