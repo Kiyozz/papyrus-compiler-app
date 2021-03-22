@@ -1,5 +1,3 @@
-dependencies:
-  electron-fetch: 1.7.3
 devDependencies:
   '@babel/core': 7.13.10
   '@babel/plugin-proposal-class-properties': 7.13.0_@babel+core@7.13.10
@@ -13,7 +11,7 @@ devDependencies:
   '@material-ui/core': 4.11.3_9f48369ed4321469d5d721870f4dbdbc
   '@material-ui/icons': 4.11.2_0d762b53e6ef0e32f5c62d92bee63937
   '@material-ui/lab': 4.0.0-alpha.57_0d762b53e6ef0e32f5c62d92bee63937
-  '@pmmmwh/react-refresh-webpack-plugin': 0.4.3_7c90fca27c2d9c24170becfb3444aee3
+  '@pmmmwh/react-refresh-webpack-plugin': 0.4.3_d93b8852f8a58937d5718a5d35b9aa1d
   '@reach/router': 1.3.4_react-dom@16.14.0+react@16.14.0
   '@sindresorhus/is': 4.0.0
   '@types/classnames': 2.2.11
@@ -44,15 +42,16 @@ devDependencies:
   electron-builder: 22.10.5
   electron-default-menu: 1.0.2
   electron-devtools-installer: 3.1.1
-  electron-esbuild: 1.2.3_esbuild@0.9.3+webpack@4.46.0
+  electron-esbuild: 1.2.3_esbuild@0.9.5+webpack@4.46.0
+  electron-fetch: 1.7.3
   electron-log: 4.3.2
   electron-store: 7.0.2
   electron-util: 0.14.2
-  esbuild: 0.9.3
+  esbuild: 0.9.5
   eslint: 7.22.0
   eslint-config-prettier: 8.1.0_eslint@7.22.0
   eslint-plugin-import: 2.22.1_eslint@7.22.0
-  eslint-plugin-prettier: 3.3.1_4924ba08040120093262ef67c808c3c1
+  eslint-plugin-prettier: 3.3.1_44b94358ac15c7c093df3d5421ccc811
   eslint-plugin-react: 7.22.0_eslint@7.22.0
   eslint-plugin-react-hooks: 4.2.0_eslint@7.22.0
   fast-glob: 3.2.5
@@ -61,7 +60,7 @@ devDependencies:
   fork-ts-checker-webpack-plugin: 4.1.6
   html-webpack-plugin: 4.5.2_webpack@4.46.0
   husky: 4.3.8
-  i18next: 19.7.0
+  i18next: 19.9.2
   i18next-browser-languagedetector: 6.0.1
   lint-staged: 10.5.4
   lodash-es: 4.17.21
@@ -69,20 +68,20 @@ devDependencies:
   move-file: 2.0.0
   postcss: 8.2.8
   postcss-loader: 4.1.0_postcss@8.2.8+webpack@4.46.0
-  prettier: 2.0.5
+  prettier: 2.2.1
   react: 16.14.0
   react-dom: 16.14.0_react@16.14.0
   react-dropzone: 11.0.3_react@16.14.0
-  react-i18next: 11.7.4_i18next@19.7.0+react@16.14.0
+  react-i18next: 11.8.10_i18next@19.9.2+react@16.14.0
   react-markdown: 4.3.1_react@16.14.0
   react-refresh: 0.9.0
   react-use-localstorage: 3.5.3_react@16.14.0
   rimraf: 3.0.2
   rxjs: 6.6.6
   speed-measure-webpack-plugin: 1.3.3_webpack@4.46.0
-  tailwindcss: 2.0.3_caf414ac65a978d0d57907a0ec9fb41e
+  tailwindcss: 2.0.4_caf414ac65a978d0d57907a0ec9fb41e
   terser-webpack-plugin: 4.2.3_webpack@4.46.0
-  type-fest: 0.13.1
+  type-fest: 0.21.3
   typescript: 4.2.3
   url-loader: 4.1.1_file-loader@6.2.0+webpack@4.46.0
   webpack: 4.46.0
@@ -400,8 +399,8 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-w4zOPKUFPX1mgvTmL/fcEqy34hrQ1CRcGxdphBc6snDnnqJ47EZDIyop6IwXzAC8G916hsIuXB2ZMBCExC5k7Q==
-  /@babel/plugin-proposal-logical-assignment-operators/7.13.8_@babel+core@7.13.10:
-    dependencies:
+  ? /@babel/plugin-proposal-logical-assignment-operators/7.13.8_@babel+core@7.13.10
+  : dependencies:
       '@babel/core': 7.13.10
       '@babel/helper-plugin-utils': 7.13.0
       '@babel/plugin-syntax-logical-assignment-operators': 7.10.4_@babel+core@7.13.10
@@ -410,8 +409,8 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-aul6znYB4N4HGweImqKn59Su9RS8lbUIqxtXTOcAGtNIDczoEFv+l1EhmX8rUBp3G1jMjKJm8m0jXVp63ZpS4A==
-  /@babel/plugin-proposal-nullish-coalescing-operator/7.13.8_@babel+core@7.13.10:
-    dependencies:
+  ? /@babel/plugin-proposal-nullish-coalescing-operator/7.13.8_@babel+core@7.13.10
+  : dependencies:
       '@babel/core': 7.13.10
       '@babel/helper-plugin-utils': 7.13.0
       '@babel/plugin-syntax-nullish-coalescing-operator': 7.8.3_@babel+core@7.13.10
@@ -740,8 +739,8 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-FW+WPjSR7hiUxMcKqyNjP05tQ2kmBCdpEpZHY1ARm96tGQCCBvXKnpjILtDplUnJ/eHZ0lALLM+d2lMFSpYJrQ==
-  /@babel/plugin-transform-member-expression-literals/7.12.13_@babel+core@7.13.10:
-    dependencies:
+  ? /@babel/plugin-transform-member-expression-literals/7.12.13_@babel+core@7.13.10
+  : dependencies:
       '@babel/core': 7.13.10
       '@babel/helper-plugin-utils': 7.13.0
     dev: true
@@ -795,8 +794,8 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-D/ILzAh6uyvkWjKKyFE/W0FzWwasv6vPTSqPcjxFqn6QpX3u8DjRVliq4F2BamO2Wee/om06Vyy+vPkNrd4wxw==
-  /@babel/plugin-transform-named-capturing-groups-regex/7.12.13_@babel+core@7.13.10:
-    dependencies:
+  ? /@babel/plugin-transform-named-capturing-groups-regex/7.12.13_@babel+core@7.13.10
+  : dependencies:
       '@babel/core': 7.13.10
       '@babel/helper-create-regexp-features-plugin': 7.12.17_@babel+core@7.13.10
     dev: true
@@ -1401,7 +1400,7 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-1SUf/Cg2GzGDyaf15aR9St9TWlb+XvbZXWpDx8YKs7MLzMH/BCeopv+y9vzrzgkfykCGuWOlSu3mZhj2+FQcrg==
-  /@pmmmwh/react-refresh-webpack-plugin/0.4.3_7c90fca27c2d9c24170becfb3444aee3:
+  /@pmmmwh/react-refresh-webpack-plugin/0.4.3_d93b8852f8a58937d5718a5d35b9aa1d:
     dependencies:
       ansi-html: 0.0.7
       error-stack-parser: 2.0.6
@@ -1410,7 +1409,7 @@ packages:
       react-refresh: 0.9.0
       schema-utils: 2.7.1
       source-map: 0.7.3
-      type-fest: 0.13.1
+      type-fest: 0.21.3
       webpack: 4.46.0
       webpack-dev-server: 3.11.2_webpack@4.46.0
     dev: true
@@ -4457,7 +4456,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-g2D4J6APbpsiIcnLkFMyKZ6bOpEJ0Ltcc2m66F7oKUymyGAt628OWeU9nRZoh1cNmUs/a6Cls2UfOmsZtE496Q==
-  /electron-esbuild/1.2.3_esbuild@0.9.3+webpack@4.46.0:
+  /electron-esbuild/1.2.3_esbuild@0.9.5+webpack@4.46.0:
     dependencies:
       chokidar: 3.5.1
       compression: 1.7.4
@@ -4465,7 +4464,7 @@ packages:
       debounce-fn: 4.0.0
       deepmerge: 4.2.2
       dependency-tree-81: 8.1.2
-      esbuild: 0.9.3
+      esbuild: 0.9.5
       http-proxy: 1.18.1
       joi: 17.4.0
       js-yaml: 4.0.0
@@ -4489,7 +4488,7 @@ packages:
   /electron-fetch/1.7.3:
     dependencies:
       encoding: 0.1.13
-    dev: false
+    dev: true
     engines:
       node: '>=6'
     resolution:
@@ -4580,7 +4579,7 @@ packages:
   /encoding/0.1.13:
     dependencies:
       iconv-lite: 0.6.2
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==
   /end-of-stream/1.4.4:
@@ -4693,12 +4692,12 @@ packages:
     optional: true
     resolution:
       integrity: sha512-Um/+FxMr9CISWh0bi5Zv0iOD+4cFh5qLeks1qhAopKVAJw3drgKbKySikp7wGhDL0HPeaja0P5ULZrxLkniUVg==
-  /esbuild/0.9.3:
+  /esbuild/0.9.5:
     dev: true
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-G8k0olucZp3LJ7I/p8y388t+IEyb2Y78nHrLeIxuqZqh6TYqDYP/B/7drAvYKfh83CGwKal9txVP+FTypsPJug==
+      integrity: sha512-ZBOtZX9HxgSdwkAroVifEUgylWqbOjqbu1i1ohRvhoaYt6aj81dxbizODx419gwDAupqut44ehFVwUq7WRN/OA==
   /escalade/3.1.1:
     dev: true
     engines:
@@ -4790,11 +4789,11 @@ packages:
       eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0
     resolution:
       integrity: sha512-8K7JjINHOpH64ozkAhpT3sd+FswIZTfMZTjdx052pnWrgRCVfp8op9tbjpAk3DdUeI/Ba4C8OjdC0r90erHEOw==
-  /eslint-plugin-prettier/3.3.1_4924ba08040120093262ef67c808c3c1:
+  /eslint-plugin-prettier/3.3.1_44b94358ac15c7c093df3d5421ccc811:
     dependencies:
       eslint: 7.22.0
       eslint-config-prettier: 8.1.0_eslint@7.22.0
-      prettier: 2.0.5
+      prettier: 2.2.1
       prettier-linter-helpers: 1.0.0
     dev: true
     engines:
@@ -6115,12 +6114,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-3H+OsNQn3FciomUU0d4zPFHsvJv4X66lBelXk9hnIDYDsveIgT7dWZ3/VvcSlpKk9lvCK770blRZ/CwHMXZqWw==
-  /i18next/19.7.0:
+  /i18next/19.9.2:
     dependencies:
       '@babel/runtime': 7.13.10
     dev: true
     resolution:
-      integrity: sha512-sxZhj6u7HbEYOMx81oGwq5MiXISRBVg2wRY3n6YIbe+HtU8ydzlGzv6ErHdrRKYxATBFssVXYbc3lNZoyB4vfA==
+      integrity: sha512-0i6cuo6ER6usEOtKajUUDj92zlG+KArFia0857xxiEHAQcUwh/RtOQocui1LPJwunSYT574Pk64aNva1kwtxZg==
   /iconv-corefoundation/1.1.5:
     dependencies:
       cli-truncate: 1.1.0
@@ -6144,6 +6143,7 @@ packages:
   /iconv-lite/0.6.2:
     dependencies:
       safer-buffer: 2.1.2
+    dev: true
     engines:
       node: '>=0.10.0'
     resolution:
@@ -9020,13 +9020,13 @@ packages:
       node: '>=6.0.0'
     resolution:
       integrity: sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==
-  /prettier/2.0.5:
+  /prettier/2.2.1:
     dev: true
     engines:
       node: '>=10.13.0'
     hasBin: true
     resolution:
-      integrity: sha512-7PtVymN48hGcO4fGjybyBSIWDsLU4H4XlvOHfq91pz9kkGlonzwTfYkaIEwiRg/dAJF9YlbsduBAgtYLi+8cFg==
+      integrity: sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
   /pretty-error/2.1.2:
     dependencies:
       lodash: 4.17.21
@@ -9274,18 +9274,18 @@ packages:
       react: '>= 16.8'
     resolution:
       integrity: sha512-+MoMOoKZfkZ9i1+qEFl2ZU29AB/c9K2bFxyACqGynguJunmqO+k2PJ2AcuiH51xVNl9R7q/x5QdBaIWb6RtoSw==
-  /react-i18next/11.7.4_i18next@19.7.0+react@16.14.0:
+  /react-i18next/11.8.10_i18next@19.9.2+react@16.14.0:
     dependencies:
       '@babel/runtime': 7.13.10
       html-parse-stringify2: 2.0.1
-      i18next: 19.7.0
+      i18next: 19.9.2
       react: 16.14.0
     dev: true
     peerDependencies:
       i18next: '>= 19.0.0'
       react: '>= 16.8.0'
     resolution:
-      integrity: sha512-Aq0+QVW7NMYuAtk0Stcwp4jWeNTd1p5XefAfBPcjs/4c/2duG3v3G3zdtn8fC8L4EyA/coKLwdULHI+lYTbF8w==
+      integrity: sha512-ckjNzMjYkmx4fQ8zzuaYTosYN3Co6ebrgCQJzuZCcGFYSR/kGHZzSu0xw9VhtnbjJVKx0gEMV3DLRvzi4xDZUw==
   /react-is/16.13.1:
     dev: true
     resolution:
@@ -9797,6 +9797,7 @@ packages:
     resolution:
       integrity: sha1-QKNmnzsHfR6UPURinhV91IAjvy4=
   /safer-buffer/2.1.2:
+    dev: true
     resolution:
       integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
   /sanitize-filename/1.6.3:
@@ -10609,7 +10610,7 @@ packages:
       node: '>=10.0.0'
     resolution:
       integrity: sha512-rxZevLGTUzWna/qBLObOe16kB2RTnnbhciwgPbMMlazz1yZGVEgnZK762xyVdVznhqxrfCeBMmMkgOOaPwjH7g==
-  /tailwindcss/2.0.3_caf414ac65a978d0d57907a0ec9fb41e:
+  /tailwindcss/2.0.4_caf414ac65a978d0d57907a0ec9fb41e:
     dependencies:
       '@fullhuman/postcss-purgecss': 3.1.3
       autoprefixer: 10.2.5_postcss@8.2.8
@@ -10641,7 +10642,7 @@ packages:
       autoprefixer: ^10.0.2
       postcss: ^8.0.9
     resolution:
-      integrity: sha512-s8NEqdLBiVbbdL0a5XwTb8jKmIonOuI4RMENEcKLR61jw6SdKvBss7NWZzwCaD+ZIjlgmesv8tmrjXEp7C0eAQ==
+      integrity: sha512-WhgR0oiBxGOZ9jY0yVfaJCHnckR7U74Fs/BMsYxGdwGJQ5Hd/HlaKD26bEJFZOvYScJo0QcUj2ImldzedsG7Bw==
   /tapable/1.1.3:
     dev: true
     engines:
@@ -10933,6 +10934,7 @@ packages:
     dev: true
     engines:
       node: '>=10'
+    optional: true
     resolution:
       integrity: sha512-34R7HTnG0XIJcBSn5XhDd7nNFPRcXYRZrBB2O2jdKqYODldSzBAqzsWoZYYvduky73toYS/ESqxPvkDf/F0XMg==
   /type-fest/0.18.1:
@@ -10947,6 +10949,12 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==
+  /type-fest/0.21.3:
+    dev: true
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==
   /type-fest/0.6.0:
     dev: true
     engines:
@@ -11820,7 +11828,7 @@ specifiers:
   electron-log: ~4.3.2
   electron-store: ~7.0.2
   electron-util: ~0.14.2
-  esbuild: 0.9.3
+  esbuild: ~0.9.5
   eslint: ~7.22.0
   eslint-config-prettier: ~8.1.0
   eslint-plugin-import: ~2.22.1
@@ -11833,7 +11841,7 @@ specifiers:
   fork-ts-checker-webpack-plugin: ~4.1.6
   html-webpack-plugin: ~4.5.2
   husky: ~4.3.8
-  i18next: ~19.7.0
+  i18next: ~19.9.2
   i18next-browser-languagedetector: ~6.0.1
   lint-staged: ~10.5.4
   lodash-es: ~4.17.21
@@ -11841,20 +11849,20 @@ specifiers:
   move-file: ~2.0.0
   postcss: ~8.2.8
   postcss-loader: ~4.1.0
-  prettier: ~2.0.5
+  prettier: ~2.2.1
   react: ~16.14.0
   react-dom: ~16.14.0
   react-dropzone: ~11.0.3
-  react-i18next: ~11.7.4
+  react-i18next: ~11.8.10
   react-markdown: ~4.3.1
   react-refresh: ~0.9.0
   react-use-localstorage: ^3.5.3
   rimraf: ~3.0.2
   rxjs: ~6.6.6
   speed-measure-webpack-plugin: ~1.3.3
-  tailwindcss: ~2.0.3
+  tailwindcss: ~2.0.4
   terser-webpack-plugin: ~4.2.3
-  type-fest: ~0.13.1
+  type-fest: ~0.21.3
   typescript: ~4.2.3
   url-loader: ~4.1.1
   webpack: ~4.46.0
