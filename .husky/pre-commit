@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Copyright (c) 2021 Kiyozz.
+#
+# All rights reserved.
+#
+
+. "$(dirname "$0")/_/husky.sh"
+
+pnpx --no-install lint-staged

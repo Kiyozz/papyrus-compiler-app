@@ -122,7 +122,6 @@ export function Compilation(): JSX.Element {
   return (
     <>
       <PageAppBar title={t('page.compilation.title')} actions={pageActions} />
-
       <Page>
         <CompilationPageContent
           onClickStart={onClickStart}
