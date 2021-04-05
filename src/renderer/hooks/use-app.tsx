@@ -32,16 +32,15 @@ interface AppContextInterface {
   setShowChangelog: (show: boolean) => void
   setChangelog: (changelog: string) => void
   setDrawerOpen: (open: boolean) => void
-  setAddScriptsButton: (button: JSX.Element | null) => void
   setConfig: (config: PartialDeep<Config>, override?: boolean) => void
   setDrawerExpand: (expand: boolean) => void
   setOnDrop: (on: (() => OnDropFunction) | null) => void
+  openDrop: () => void
   version: string
   latestVersion: string
   isShowChangelog: boolean
   changelog: string
   drawerOpen: boolean
-  addScriptsButton?: JSX.Element
   config: Config
   isDrawerExpand: boolean
   isDragActive: boolean
@@ -88,9 +87,6 @@ export function AppProvider({
   const [groups, setGroups] = useState<Group[]>([])
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [onDrop, setOnDrop] = useState<OnDropFunction | null>(null)
-  const [AddScriptsButton, setAddScriptsButton] = useState<JSX.Element | null>(
-    null
-  )
   const refresh$ = useMemo(() => new Subject<Config>(), [])
   const [version, setVersion] = useState('')
   const [latestVersion, setLatestVersion] = useState('')
@@ -154,13 +150,8 @@ export function AppProvider({
   }
 
   return (
-    <DropScripts
-      accept=".psc"
-      onlyClickButton
-      onDrop={onDrop}
-      Button={AddScriptsButton}
-    >
-      {({ Button, isDragActive }) => (
+    <DropScripts onDrop={onDrop}>
+      {({ isDragActive, open }) => (
         <AppContext.Provider
           value={{
             setVersion,
@@ -168,16 +159,15 @@ export function AppProvider({
             setShowChangelog,
             setChangelog,
             setDrawerOpen,
-            setAddScriptsButton,
             setConfig: updateConfig,
             setDrawerExpand,
             setOnDrop,
+            openDrop: open,
             version,
             latestVersion,
             isShowChangelog,
             changelog,
             drawerOpen,
-            addScriptsButton: Button,
             config,
             isDrawerExpand,
             isDragActive,

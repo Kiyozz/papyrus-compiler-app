@@ -5,11 +5,13 @@
  */
 
 import AddIcon from '@material-ui/icons/Add'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TelemetryEvents } from '../../../common/telemetry-events'
+import { useDocumentClick } from '../../hooks/use-document-click'
 import { useTelemetry } from '../../hooks/use-telemetry'
+import { isChildren } from '../../html/is-child'
 import { Group } from '../../interfaces'
 
 interface Props {
@@ -22,30 +24,17 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const { send } = useTelemetry()
 
-  const onClickOut = useCallback(
-    (e: MouseEvent) => {
-      const clicked = e.target
-
-      if (anchor) {
-        if (anchor !== clicked) {
-          setAnchor(null)
-        }
-      }
+  useDocumentClick(
+    () => {
+      setAnchor(null)
     },
-    [anchor]
+    clicked =>
+      ((anchor && clicked !== anchor) ?? false) && !isChildren(anchor, clicked)
   )
 
-  useEffect(() => {
-    document.addEventListener('click', onClickOut)
-
-    return () => document.removeEventListener('click', onClickOut)
-  }, [onClickOut])
-
-  const onClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget),
-    []
-  )
-  const onClose = useCallback(() => setAnchor(null), [])
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchor(e.currentTarget)
+  }
 
   const groupSelectOptions = useMemo(() => {
     return groups
@@ -56,7 +45,7 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
             send(TelemetryEvents.CompilationGroupLoaded, {
               groups: groups.length
             })
-            onClose()
+            setAnchor(null)
             onChangeGroup(group.name)
           }
 
@@ -71,7 +60,7 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
           )
         }
       )
-  }, [groups, onChangeGroup, onClose, send])
+  }, [groups, onChangeGroup, send])
 
   const notEmptyGroups = groups.filter(
     (group: Group): boolean => !group.isEmpty()

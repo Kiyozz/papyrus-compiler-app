@@ -24,7 +24,7 @@ import { GroupsLoader } from './groups-loader'
 
 export function Compilation(): JSX.Element {
   const { t } = useTranslation()
-  const { groups } = useApp()
+  const { groups, openDrop } = useApp()
   const { scripts, start, setScripts, concurrentScripts } = useCompilation()
   const { send } = useTelemetry()
 
@@ -91,33 +91,35 @@ export function Compilation(): JSX.Element {
     setScripts(() => [])
   }, [setScripts])
 
-  const addScriptsButton = useDrop({
-    button: (
-      <button className="btn">
+  useDrop(onDrop)
+
+  const searchButton = useMemo(
+    () => (
+      <button className="btn" onClick={openDrop} key="search">
         <div className="icon">
           <SearchIcon />
         </div>
         {t('page.compilation.actions.searchScripts')}
       </button>
     ),
-    onDrop
-  })
+    [t, openDrop]
+  )
 
   const pageActions = useMemo(() => {
-    const possibleActions: JSX.Element[] = []
-
-    if (addScriptsButton) {
-      possibleActions.push(addScriptsButton)
-    }
+    const possibleActions: JSX.Element[] = [searchButton]
 
     if (groups.filter(group => !group.isEmpty()).length > 0) {
       possibleActions.push(
-        <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
+        <GroupsLoader
+          groups={groups}
+          onChangeGroup={onChangeGroup}
+          key="groups"
+        />
       )
     }
 
     return possibleActions
-  }, [addScriptsButton, groups, onChangeGroup])
+  }, [groups, searchButton, onChangeGroup])
 
   return (
     <>

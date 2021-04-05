@@ -10,27 +10,14 @@ import { useEffect } from 'react'
 import { OnDropFunction } from '../components/drop/drop-scripts'
 import { useApp } from './use-app'
 
-interface UseDropOptions {
-  button: JSX.Element | null
-  onDrop: OnDropFunction | null
-}
+type UseDropOptions = OnDropFunction | null
 
-export const useDrop = (
-  options: UseDropOptions
-): JSX.Element | undefined | null => {
-  const { addScriptsButton, setAddScriptsButton, setOnDrop } = useApp()
+export const useDrop = (onDrop: UseDropOptions): void => {
+  const { setOnDrop } = useApp()
 
   useEffect(() => {
-    setAddScriptsButton(options.button)
-
-    return () => setAddScriptsButton(null)
-  }, [])
-
-  useEffect(() => {
-    setOnDrop(() => options.onDrop)
+    setOnDrop(() => onDrop)
 
     return () => setOnDrop(null)
   }, [])
-
-  return addScriptsButton
 }

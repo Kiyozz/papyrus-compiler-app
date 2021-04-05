@@ -4,11 +4,6 @@
  * All rights reserved.
  */
 
-import {
-  createHistory,
-  createMemorySource,
-  LocationProvider
-} from '@reach/router'
 import { Titlebar } from 'custom-electron-titlebar'
 import debounce from 'debounce-fn'
 import React from 'react'
@@ -38,25 +33,21 @@ function start() {
   })
 
   try {
-    const history = createHistory(createMemorySource('/'))
-
     render(
       <TitlebarProvider titlebar={titlebar}>
-        <LocationProvider history={history}>
-          <AppProvider titlebar={titlebar}>
-            <CompilationProvider>
-              <SettingsProvider>
-                <FocusProvider>
-                  <Theme>
-                    <TelemetryProvider>
-                      <App />
-                    </TelemetryProvider>
-                  </Theme>
-                </FocusProvider>
-              </SettingsProvider>
-            </CompilationProvider>
-          </AppProvider>
-        </LocationProvider>
+        <AppProvider titlebar={titlebar}>
+          <CompilationProvider>
+            <SettingsProvider>
+              <FocusProvider>
+                <Theme>
+                  <TelemetryProvider>
+                    <App />
+                  </TelemetryProvider>
+                </Theme>
+              </FocusProvider>
+            </SettingsProvider>
+          </CompilationProvider>
+        </AppProvider>
       </TitlebarProvider>,
       document.getElementById('app')
     )

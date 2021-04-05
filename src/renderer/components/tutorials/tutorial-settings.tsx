@@ -4,10 +4,10 @@
  * All rights reserved.
  */
 
-import { useNavigate } from '@reach/router'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router-dom'
 
 import { TelemetryEvents } from '../../../common/telemetry-events'
 import { useApp } from '../../hooks/use-app'
@@ -149,7 +149,7 @@ function Overlay() {
 export function TutorialSettings(): JSX.Element | null {
   const { t } = useTranslation()
   const { config, setConfig } = useApp()
-  const navigate = useNavigate()
+  const history = useHistory()
   const [step, setStep] = useState(Step.Waiting)
   const isFocus = useFocus()
   const { send } = useTelemetry()
@@ -165,10 +165,9 @@ export function TutorialSettings(): JSX.Element | null {
   }, [config.tutorials, setConfig, send])
 
   const onClickNeedHelp = useCallback(() => {
-    navigate('/settings').then(() => {
-      setStep(Step.Game)
-    })
-  }, [navigate])
+    history.push('/settings')
+    setStep(Step.Game)
+  }, [history])
 
   const onNextStepGame = useCallback(() => {
     setStep(Step.Compiler)

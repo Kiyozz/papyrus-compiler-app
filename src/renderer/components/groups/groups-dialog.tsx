@@ -113,17 +113,7 @@ export function GroupsDialog({
     [send]
   )
 
-  const addScriptsButton = useDrop({
-    button: (
-      <button className="btn" type="button">
-        <div className="icon">
-          <SearchIcon />
-        </div>
-        {t('page.groups.dialog.searchScripts')}
-      </button>
-    ),
-    onDrop
-  })
+  useDrop(onDrop)
 
   const dialogContent = useCallback(
     ({ children }: React.PropsWithChildren<unknown>) => (
@@ -140,7 +130,6 @@ export function GroupsDialog({
       actions={
         <GroupsDialogActions
           name={name}
-          AddScriptsButton={addScriptsButton}
           onClose={onDialogClose}
           isEdit={isEdit}
         />

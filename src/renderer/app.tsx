@@ -6,6 +6,7 @@
 
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { MemoryRouter as Router } from 'react-router-dom'
 
 import { TelemetryEvents } from '../common/telemetry-events'
 import { DialogChangelog } from './components/dialog/dialog-changelog'
@@ -45,17 +46,19 @@ export function App(): JSX.Element {
 
       <div className={`${!done ? 'opacity-0' : ''}`}>
         <DialogChangelog />
-        <PageDrawer />
+        <Router>
+          <PageDrawer />
 
-        {done && (
-          <>
-            {tutorials.settings && <TutorialSettings />}
-            {tutorials.telemetry && !tutorials.settings && (
-              <TutorialTelemetry />
-            )}
-            <Routes />
-          </>
-        )}
+          {done && (
+            <>
+              {tutorials.settings && <TutorialSettings />}
+              {tutorials.telemetry && !tutorials.settings && (
+                <TutorialTelemetry />
+              )}
+              <Routes />
+            </>
+          )}
+        </Router>
       </div>
     </>
   )

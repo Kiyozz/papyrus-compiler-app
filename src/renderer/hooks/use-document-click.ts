@@ -1,0 +1,28 @@
+/*
+ * Copyright (c) 2021 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
+import { useCallback, useEffect } from 'react'
+
+export function useDocumentClick(
+  cb: () => void,
+  check: (clicked: HTMLElement | null) => boolean
+): void {
+  const onClickOut = useCallback(
+    (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null
+      if (check(target)) {
+        cb()
+      }
+    },
+    [check, cb]
+  )
+
+  useEffect(() => {
+    document.addEventListener('click', onClickOut)
+
+    return () => document.removeEventListener('click', onClickOut)
+  }, [onClickOut])
+}

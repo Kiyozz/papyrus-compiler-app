@@ -25,10 +25,10 @@ export function LogsListItem({
 }): JSX.Element {
   const { copyToClipboard } = useApp()
   const { send } = useTelemetry()
-  const onClickCopyLogs = useCallback(() => {
+  const onClickCopyLogs = () => {
     send(TelemetryEvents.CompilationLogsCopy, {})
     copyToClipboard(`${script.name}\n\n${logs}\n`)
-  }, [copyToClipboard, logs, script.name, send])
+  }
 
   return (
     <div>

@@ -7,11 +7,13 @@
 import CreateIcon from '@material-ui/icons/Create'
 import DeleteIcon from '@material-ui/icons/Delete'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TelemetryEvents } from '../../../common/telemetry-events'
+import { useDocumentClick } from '../../hooks/use-document-click'
 import { useTelemetry } from '../../hooks/use-telemetry'
+import { isChildren } from '../../html/is-child'
 
 interface Props {
   onEdit: () => void
@@ -23,39 +25,25 @@ export function GroupsListItemMenu({ onDelete, onEdit }: Props): JSX.Element {
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const { send } = useTelemetry()
 
-  const onClickOut = useCallback(
-    (e: MouseEvent) => {
-      const clicked = e.target
-
-      if (anchor && anchor !== clicked) {
-        setAnchor(null)
-      }
-    },
-    [anchor]
+  useDocumentClick(
+    () => setAnchor(null),
+    clicked =>
+      ((anchor && anchor !== clicked) ?? false) && !isChildren(anchor, clicked)
   )
 
-  useEffect(() => {
-    document.addEventListener('click', onClickOut)
+  const onOpen = (e: React.MouseEvent<HTMLElement>) =>
+    setAnchor(e.currentTarget)
 
-    return () => document.removeEventListener('click', onClickOut)
-  }, [onClickOut])
-
-  const onOpen = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => setAnchor(e.currentTarget),
-    []
-  )
-  const onClose = useCallback(() => setAnchor(null), [])
-
-  const onClickEdit = useCallback(() => {
-    onClose()
+  const onClickEdit = () => {
+    setAnchor(null)
     onEdit()
-  }, [onClose, onEdit])
+  }
 
-  const onClickDelete = useCallback(() => {
+  const onClickDelete = () => {
     send(TelemetryEvents.GroupDeleted, {})
-    onClose()
+    setAnchor(null)
     onDelete()
-  }, [onDelete, onClose, send])
+  }
 
   return (
     <div className="relative">

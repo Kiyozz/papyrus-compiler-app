@@ -4,9 +4,10 @@
  * All rights reserved.
  */
 
-import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
+import { useDocumentClick } from '../../hooks/use-document-click'
 import useOnKeyUp from '../../hooks/use-on-key-up'
 
 interface DialogProps {
@@ -28,15 +29,12 @@ export function Dialog({
   children
 }: React.PropsWithChildren<DialogProps>): JSX.Element {
   const container = useRef<HTMLDivElement | null>(null)
-  const onDialogClose = useCallback(
-    (e: MouseEvent) => {
-      const clicked = e.target as HTMLElement | null
 
-      if (clicked === container.current) {
-        onClose?.()
-      }
+  useDocumentClick(
+    () => {
+      onClose?.()
     },
-    [onClose]
+    clicked => clicked === container.current
   )
 
   const onEscape = useCallback(() => {
@@ -44,14 +42,6 @@ export function Dialog({
   }, [onClose])
 
   useOnKeyUp('Escape', onEscape)
-
-  useEffect(() => {
-    document.addEventListener('click', onDialogClose)
-
-    return () => {
-      document.removeEventListener('click', onDialogClose)
-    }
-  }, [onDialogClose])
 
   const dialogContent = useMemo(
     () => (

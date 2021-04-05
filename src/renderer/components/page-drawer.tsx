@@ -28,7 +28,7 @@ export function PageDrawer(): JSX.Element {
       {
         Icon: CodeIcon,
         text: t('nav.compilation'),
-        path: '/'
+        path: '/compilation'
       },
       {
         Icon: LayersIcon,

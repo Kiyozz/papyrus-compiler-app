@@ -4,16 +4,13 @@
  * All rights reserved.
  */
 
-import { Link, LinkProps } from '@reach/router'
 import cx from 'classnames'
 import React from 'react'
+import { NavLink, NavLinkProps } from 'react-router-dom'
 
 import { useFocus } from '../hooks/use-focus'
 
-type LinkPropsUnknown = React.PropsWithoutRef<LinkProps<unknown>> &
-  React.RefAttributes<HTMLAnchorElement>
-
-interface ActiveLinkProps extends LinkPropsUnknown {
+interface ActiveLinkProps extends NavLinkProps {
   to: string
   className?: string
   activeClassName?: string
@@ -30,19 +27,12 @@ export function ActiveLink({
   const isFocus = useFocus()
 
   return (
-    <Link
+    <NavLink
       {...props}
-      getProps={({ isCurrent }) => ({
-        className: cx(
-          {
-            [activeClassName ?? '']: isCurrent,
-            [activeUnfocusClassName ?? '']: !isFocus && isCurrent
-          },
-          className
-        )
-      })}
+      className={className}
+      activeClassName={cx(activeClassName, !isFocus && activeUnfocusClassName)}
     >
       {children}
-    </Link>
+    </NavLink>
   )
 }
