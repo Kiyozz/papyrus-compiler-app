@@ -5,7 +5,9 @@
  */
 
 import { Titlebar } from 'custom-electron-titlebar'
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
+
+import { useVersion } from './use-version'
 
 interface TitlebarContextInterface {
   titlebar: Titlebar
@@ -23,6 +25,12 @@ export function TitlebarProvider({
   children,
   titlebar
 }: React.PropsWithChildren<{ titlebar: Titlebar }>): JSX.Element {
+  const [version] = useVersion()
+
+  useEffect(() => {
+    titlebar.updateTitle(`PCA ${version}`)
+  }, [titlebar, version])
+
   return (
     <TitlebarContext.Provider value={{ titlebar }}>
       {children}

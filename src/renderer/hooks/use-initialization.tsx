@@ -5,28 +5,40 @@
  */
 
 import compareVersions from 'compare-versions'
-import { useCallback, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
 
 import { Events } from '../../common/events'
 import { ipcRenderer } from '../../common/ipc'
 import { GithubRelease } from '../interfaces'
 import { useApp } from './use-app'
-
-interface Result {
-  done: boolean
-}
+import { useVersion } from './use-version'
 
 const GITHUB_REPOSITORY =
   'https://api.github.com/repos/Kiyozz/papyrus-compiler-app'
 
-export function useInitialization(): Result {
+interface Context {
+  latestVersion: string
+  done: boolean
+}
+
+const InitializationContext = createContext({} as Context)
+
+export const useInitialization = (): Context =>
+  useContext(InitializationContext)
+
+export function InitializationProvider({
+  children
+}: React.PropsWithChildren<unknown>): JSX.Element {
   const [done, setDone] = useState(false)
-  const {
-    setVersion,
-    setLatestVersion,
-    setShowChangelog,
-    setChangelog
-  } = useApp()
+  const [latestVersion, setLatestVersion] = useState('')
+  const { setShowChangelog, setChangelog } = useApp()
+  const [, setVersion] = useVersion()
 
   const checkUpdates = useCallback(() => {
     ipcRenderer.invoke<string>(Events.GetVersion).then(async version => {
@@ -57,8 +69,9 @@ export function useInitialization(): Result {
 
     return () => ipcRenderer.off(Events.Changelog, checkUpdates)
   }, [checkUpdates])
-
-  return {
-    done
-  }
+  return (
+    <InitializationContext.Provider value={{ done, latestVersion }}>
+      {children}
+    </InitializationContext.Provider>
+  )
 }

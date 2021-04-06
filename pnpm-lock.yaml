@@ -77,6 +77,7 @@ devDependencies:
   react-refresh: 0.9.0
   react-router-dom: 5.2.0_react@17.0.2
   react-use-localstorage: 3.5.3_react@17.0.2
+  recoil: 0.2.0_react-dom@17.0.2+react@17.0.2
   rimraf: 3.0.2
   rxjs: 6.6.7
   tailwindcss: 2.0.4_0bca15301caac8bc71ea0ad94045571f
@@ -5570,6 +5571,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-TK+tdrxi8C+gObL5Tpo906ORpyU=
+  /hamt_plus/1.0.2:
+    dev: true
+    resolution:
+      integrity: sha1-4hwlKWjH4zsg9qGwlM2FeHomVgE=
   /handle-thing/2.0.1:
     dev: true
     resolution:
@@ -9179,6 +9184,23 @@ packages:
       node: '>=8.10.0'
     resolution:
       integrity: sha512-cMhu7c/8rdhkHXWsY+osBhfSy0JikwpHK/5+imo+LpeasTF8ouErHrlYkwT0++njiyuDvc7OFY5T3ukvZ8qmFQ==
+  /recoil/0.2.0_react-dom@17.0.2+react@17.0.2:
+    dependencies:
+      hamt_plus: 1.0.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: true
+    peerDependencies:
+      react: '>=16.13.1'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    resolution:
+      integrity: sha512-VOJfYVQ3VgmfS7L5tV9QdOR+AJhvll8yGr1+3nJPCqADulImuScGZ2sJtejPps3zfTu/o98y5kO4lje8Tx6XHw==
   /redent/3.0.0:
     dependencies:
       indent-string: 4.0.0
@@ -11412,6 +11434,7 @@ specifiers:
   react-refresh: ^0.9.0
   react-router-dom: ^5.2.0
   react-use-localstorage: ^3.5.3
+  recoil: ^0.2.0
   rimraf: ~3.0.2
   rxjs: ~6.6.7
   tailwindcss: ~2.0.4

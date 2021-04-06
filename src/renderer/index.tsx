@@ -16,9 +16,13 @@ import './translations'
 import appIcon from './assets/logo/vector/isolated-layout.svg'
 import { AppProvider } from './hooks/use-app'
 import { CompilationProvider } from './hooks/use-compilation'
+import { DrawerProvider } from './hooks/use-drawer'
+import { DropProvider } from './hooks/use-drop'
 import { FocusProvider } from './hooks/use-focus'
+import { InitializationProvider } from './hooks/use-initialization'
 import { TelemetryProvider } from './hooks/use-telemetry'
 import { TitlebarProvider } from './hooks/use-titlebar'
+import { VersionProvider } from './hooks/use-version'
 import { SettingsProvider } from './pages/settings/settings-context'
 import { Theme } from './theme'
 import { darkColor, lightColor } from './utils/color'
@@ -34,21 +38,29 @@ function start() {
 
   try {
     render(
-      <TitlebarProvider titlebar={titlebar}>
-        <AppProvider titlebar={titlebar}>
-          <CompilationProvider>
-            <SettingsProvider>
-              <FocusProvider>
-                <Theme>
-                  <TelemetryProvider>
-                    <App />
-                  </TelemetryProvider>
-                </Theme>
-              </FocusProvider>
-            </SettingsProvider>
-          </CompilationProvider>
-        </AppProvider>
-      </TitlebarProvider>,
+      <VersionProvider>
+        <TitlebarProvider titlebar={titlebar}>
+          <AppProvider titlebar={titlebar}>
+            <InitializationProvider>
+              <CompilationProvider>
+                <SettingsProvider>
+                  <FocusProvider>
+                    <Theme>
+                      <TelemetryProvider>
+                        <DrawerProvider>
+                          <DropProvider>
+                            <App />
+                          </DropProvider>
+                        </DrawerProvider>
+                      </TelemetryProvider>
+                    </Theme>
+                  </FocusProvider>
+                </SettingsProvider>
+              </CompilationProvider>
+            </InitializationProvider>
+          </AppProvider>
+        </TitlebarProvider>
+      </VersionProvider>,
       document.getElementById('app')
     )
   } catch (e) {

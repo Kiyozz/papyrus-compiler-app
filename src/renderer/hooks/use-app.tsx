@@ -6,44 +6,23 @@
 
 import is from '@sindresorhus/is'
 import { Titlebar } from 'custom-electron-titlebar'
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from 'react'
-import useLocalStorage from 'react-use-localstorage'
+import React, { useContext, useEffect, useState } from 'react'
 import { Observable, Subject } from 'rxjs'
 import { PartialDeep } from 'type-fest'
 
 import { Events } from '../../common/events'
 import { Config } from '../../common/interfaces/config'
 import { ipcRenderer } from '../../common/ipc'
-import { DropFilesOverlay } from '../components/drop/drop-files-overlay'
-import { DropScripts, OnDropFunction } from '../components/drop/drop-scripts'
-import { LocalStorage } from '../enums/local-storage.enum'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { Group } from '../interfaces'
 
-interface AppContextInterface {
-  setVersion: (version: string) => void
-  setLatestVersion: (version: string) => void
+interface Context {
   setShowChangelog: (show: boolean) => void
   setChangelog: (changelog: string) => void
-  setDrawerOpen: (open: boolean) => void
   setConfig: (config: PartialDeep<Config>, override?: boolean) => void
-  setDrawerExpand: (expand: boolean) => void
-  setOnDrop: (on: (() => OnDropFunction) | null) => void
-  openDrop: () => void
-  version: string
-  latestVersion: string
   isShowChangelog: boolean
   changelog: string
-  drawerOpen: boolean
   config: Config
-  isDrawerExpand: boolean
-  isDragActive: boolean
   groups: Group[]
   refreshConfig: () => void
   copyToClipboard: (text: string) => void
@@ -54,7 +33,7 @@ interface Props {
   titlebar: Titlebar
 }
 
-const AppContext = React.createContext({} as AppContextInterface)
+const AppContext = React.createContext({} as Context)
 
 function selectGroups(config: Config): Group[] {
   if (config.groups.length === 0) {
@@ -77,66 +56,44 @@ function selectGroups(config: Config): Group[] {
   )
 }
 
-export const useApp = (): AppContextInterface => useContext(AppContext)
+const refresh$ = new Subject<Config>()
+const onRefreshConfig = refresh$.asObservable()
+
+export const useApp = (): Context => useContext(AppContext)
 
 export function AppProvider({
-  children,
-  titlebar
+  children
 }: React.PropsWithChildren<Props>): JSX.Element | null {
   const [config, setConfig] = useState<Config>({} as Config)
   const [groups, setGroups] = useState<Group[]>([])
-  const [drawerOpen, setDrawerOpen] = useState(false)
-  const [onDrop, setOnDrop] = useState<OnDropFunction | null>(null)
-  const refresh$ = useMemo(() => new Subject<Config>(), [])
-  const [version, setVersion] = useState('')
-  const [latestVersion, setLatestVersion] = useState('')
   const [isShowChangelog, setShowChangelog] = useState(false)
   const [changelog, setChangelog] = useState('')
-  const [isDrawerExpandLS, setDrawerExpandLS] = useLocalStorage(
-    LocalStorage.DrawerExpand,
-    'false'
-  )
 
-  const isDrawerExpand = useMemo(() => isDrawerExpandLS === 'true', [
-    isDrawerExpandLS
-  ])
-  const setDrawerExpand = useCallback(
-    (drawerExpand: boolean) => setDrawerExpandLS(`${drawerExpand}`),
-    [setDrawerExpandLS]
-  )
+  const updateConfig = (
+    partialConfig: PartialDeep<Config>,
+    override?: boolean
+  ) => {
+    ipcRenderer
+      .invoke<Config>(Events.ConfigUpdate, {
+        config: partialConfig,
+        override
+      })
+      .then(updatedConfig => {
+        setConfig(updatedConfig)
+        setGroups(selectGroups(updatedConfig))
+      })
+  }
 
-  const onRefreshConfig = useMemo(() => refresh$.asObservable(), [refresh$])
-
-  const updateConfig = useCallback(
-    (partialConfig: PartialDeep<Config>, override?: boolean) => {
-      ipcRenderer
-        .invoke<Config>(Events.ConfigUpdate, {
-          config: partialConfig,
-          override
-        })
-        .then(updatedConfig => {
-          setConfig(updatedConfig)
-          setGroups(selectGroups(updatedConfig))
-        })
-    },
-    []
-  )
-
-  const copyToClipboard = useCallback(async (text: string) => {
+  const copyToClipboard = async (text: string) => {
     await ipcRenderer.invoke(Events.ClipboardCopy, { text })
-  }, [])
+  }
 
-  const refreshConfig = useCallback(() => {
+  const refreshConfig = () =>
     ipcRenderer.invoke<Config>(Events.ConfigGet).then(refreshedConfig => {
       setConfig(refreshedConfig)
       setGroups(selectGroups(refreshedConfig))
       refresh$.next(refreshedConfig)
     })
-  }, [refresh$])
-
-  useEffect(() => {
-    titlebar.updateTitle(`PCA ${version}`)
-  }, [titlebar, version])
 
   useEffect(() => {
     ipcRenderer.invoke<Config>(Events.ConfigGet).then(initialConfig => {
@@ -145,43 +102,26 @@ export function AppProvider({
     })
   }, [])
 
-  if (is.undefined(config) || is.undefined(version)) {
+  if (is.undefined(config)) {
     return null
   }
 
   return (
-    <DropScripts onDrop={onDrop}>
-      {({ isDragActive, open }) => (
-        <AppContext.Provider
-          value={{
-            setVersion,
-            setLatestVersion,
-            setShowChangelog,
-            setChangelog,
-            setDrawerOpen,
-            setConfig: updateConfig,
-            setDrawerExpand,
-            setOnDrop,
-            openDrop: open,
-            version,
-            latestVersion,
-            isShowChangelog,
-            changelog,
-            drawerOpen,
-            config,
-            isDrawerExpand,
-            isDragActive,
-            groups,
-            refreshConfig,
-            copyToClipboard,
-            onRefreshConfig
-          }}
-        >
-          <DropFilesOverlay open={isDragActive && onDrop !== null} />
-
-          {children}
-        </AppContext.Provider>
-      )}
-    </DropScripts>
+    <AppContext.Provider
+      value={{
+        setShowChangelog,
+        setChangelog,
+        setConfig: updateConfig,
+        isShowChangelog,
+        changelog,
+        config,
+        groups,
+        refreshConfig,
+        copyToClipboard,
+        onRefreshConfig
+      }}
+    >
+      {children}
+    </AppContext.Provider>
   )
 }

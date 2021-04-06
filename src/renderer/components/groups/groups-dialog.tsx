@@ -10,14 +10,13 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TelemetryEvents } from '../../../common/telemetry-events'
-import { useDrop } from '../../hooks/use-drop'
+import { useDrop, useSetDrop } from '../../hooks/use-drop'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { GroupInterface, ScriptInterface } from '../../interfaces'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
 import uniqScripts from '../../utils/scripts/uniq-scripts'
 import { Dialog } from '../dialog/dialog'
 import { TextField } from '../text-field'
-import { GroupsDialogActions } from './groups-dialog-actions'
 import { GroupsDialogList } from './groups-dialog-list'
 
 interface Props {
@@ -40,6 +39,7 @@ export function GroupsDialog({
   const [scripts, setScripts] = useState<ScriptInterface[]>([])
   const [isEdit, setEdit] = useState(false)
   const { send } = useTelemetry()
+  const { drop } = useDrop()
 
   const onDialogClose = useCallback(() => {
     onClose()
@@ -113,7 +113,7 @@ export function GroupsDialog({
     [send]
   )
 
-  useDrop(onDrop)
+  useSetDrop(onDrop)
 
   const dialogContent = useCallback(
     ({ children }: React.PropsWithChildren<unknown>) => (
@@ -128,11 +128,28 @@ export function GroupsDialog({
       maxWidth={80}
       onClose={onDialogClose}
       actions={
-        <GroupsDialogActions
-          name={name}
-          onClose={onDialogClose}
-          isEdit={isEdit}
-        />
+        <>
+          <div className="mr-auto">
+            <button type="button" className="btn" onClick={drop}>
+              <div className="icon">
+                <SearchIcon />
+              </div>
+              {t('page.compilation.actions.searchScripts')}
+            </button>
+          </div>
+          <button className="btn" type="button" onClick={onClose}>
+            {t('page.groups.dialog.close')}
+          </button>
+          <button
+            className="btn btn-primary"
+            type="submit"
+            disabled={name === ''}
+          >
+            {isEdit
+              ? t('page.groups.actions.edit')
+              : t('page.groups.actions.create')}
+          </button>
+        </>
       }
       title={
         isEdit

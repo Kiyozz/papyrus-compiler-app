@@ -28,6 +28,9 @@ export function Groups(): JSX.Element {
   const { groups, setConfig } = useApp()
   const { send } = useTelemetry()
 
+  const [showAddPopup, setShowPopup] = useState(false)
+  const [editingGroup, setEditingGroup] = useState<GroupInterface | undefined>()
+
   const addGroup = useCallback(
     (group: GroupInterface) => {
       if (
@@ -109,9 +112,6 @@ export function Groups(): JSX.Element {
     },
     [groups, setConfig]
   )
-
-  const [showAddPopup, setShowPopup] = useState(false)
-  const [editingGroup, setEditingGroup] = useState<GroupInterface | undefined>()
 
   const onClickRemoveGroup = useCallback(
     (group: GroupInterface) => {

@@ -7,7 +7,7 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { useApp } from '../hooks/use-app'
+import { useDrawer } from '../hooks/use-drawer'
 
 interface Props {
   className?: string
@@ -17,7 +17,7 @@ export function Page({
   children,
   className
 }: React.PropsWithChildren<Props>): JSX.Element {
-  const { isDrawerExpand } = useApp()
+  const [isDrawerExpand] = useDrawer()
 
   return (
     <div

@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { TelemetryEvents } from '../../common/telemetry-events'
 import { useApp } from '../hooks/use-app'
 import { useCompilation } from '../hooks/use-compilation'
+import { useDrawer } from '../hooks/use-drawer'
 import { useTelemetry } from '../hooks/use-telemetry'
 import { ScriptInterface } from '../interfaces'
 import { Dialog } from './dialog/dialog'
@@ -51,7 +52,7 @@ export function LogsListItem({
 
 export function OpenCompilationLogs(): JSX.Element {
   const { t } = useTranslation()
-  const { isDrawerExpand } = useApp()
+  const [isDrawerExpand] = useDrawer()
   const { logs } = useCompilation()
   const [isDialogOpen, setDialogOpen] = useState(false)
 

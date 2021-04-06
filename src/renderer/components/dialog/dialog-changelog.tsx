@@ -12,6 +12,7 @@ import ReactMarkdown from 'react-markdown'
 
 import { MOD_URL } from '../../../common/mod'
 import { useApp } from '../../hooks/use-app'
+import { useInitialization } from '../../hooks/use-initialization'
 import useOnKeyUp from '../../hooks/use-on-key-up'
 import { Dialog } from './dialog'
 
@@ -52,12 +53,8 @@ function Code({ value }: { value: string }) {
 export function DialogChangelog(): JSX.Element {
   const shell = useMemo(() => window.require('electron').shell, [])
   const { t } = useTranslation()
-  const {
-    isShowChangelog,
-    changelog,
-    latestVersion,
-    setShowChangelog
-  } = useApp()
+  const { isShowChangelog, changelog, setShowChangelog } = useApp()
+  const { latestVersion } = useInitialization()
 
   const [isUserShowNotes, setUserShowNotes] = useState(false)
 

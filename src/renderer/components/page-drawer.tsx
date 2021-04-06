@@ -9,19 +9,19 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import CodeIcon from '@material-ui/icons/Code'
 import LayersIcon from '@material-ui/icons/Layers'
 import SettingsIcon from '@material-ui/icons/Settings'
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useApp } from '../hooks/use-app'
+import { useDrawer } from '../hooks/use-drawer'
 import { ActiveLink } from './active-link'
 import { NavItem } from './nav-item'
 import { OpenCompilationLogs } from './open-compilation-logs'
 
 export function PageDrawer(): JSX.Element {
-  const { setDrawerOpen, isDrawerExpand, setDrawerExpand } = useApp()
+  const [isDrawerExpand, setDrawerExpand] = useDrawer()
   const { t } = useTranslation()
 
-  const onClick = useCallback(() => setDrawerOpen(false), [setDrawerOpen])
+  const onClick = () => setDrawerExpand(false)
 
   const links = useMemo(
     () => [
@@ -44,10 +44,7 @@ export function PageDrawer(): JSX.Element {
     [t]
   )
 
-  const onDrawerExpandClick = useCallback(
-    () => setDrawerExpand(!isDrawerExpand),
-    [setDrawerExpand, isDrawerExpand]
-  )
+  const onDrawerExpandClick = () => setDrawerExpand(c => !c)
 
   return (
     <nav
