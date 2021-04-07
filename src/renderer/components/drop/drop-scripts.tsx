@@ -31,7 +31,8 @@ export function DropScripts({
     onDrop: files => onDrop?.(files),
     accept: '.psc',
     preventDropOnDocument: true,
-    noClick: true
+    noClick: true,
+    noKeyboard: true
   })
 
   return (
