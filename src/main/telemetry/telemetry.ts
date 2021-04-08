@@ -85,10 +85,10 @@ export class Telemetry {
       return
     }
 
-    const { appKey, ...payloadWithAppKey } = payload
+    const { appKey, ...payloadWithoutAppKey } = payload
 
     try {
-      this.logger.debug('send telemetry data', payloadWithAppKey)
+      this.logger.debug('send telemetry data', payloadWithoutAppKey)
       const response = await fetch(`${this.api}${endpoint}`, {
         method,
         body: JSON.stringify(payload),

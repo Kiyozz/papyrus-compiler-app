@@ -10,9 +10,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Observable, Subject } from 'rxjs'
 import { PartialDeep } from 'type-fest'
 
-import { Events } from '../../common/events'
 import { Config } from '../../common/interfaces/config'
-import { ipcRenderer } from '../../common/ipc'
+import bridge from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { Group } from '../interfaces'
 
@@ -73,30 +72,25 @@ export function AppProvider({
     partialConfig: PartialDeep<Config>,
     override?: boolean
   ) => {
-    ipcRenderer
-      .invoke<Config>(Events.ConfigUpdate, {
-        config: partialConfig,
-        override
-      })
-      .then(updatedConfig => {
-        setConfig(updatedConfig)
-        setGroups(selectGroups(updatedConfig))
-      })
+    bridge.config.update(partialConfig, override).then(updatedConfig => {
+      setConfig(updatedConfig)
+      setGroups(selectGroups(updatedConfig))
+    })
   }
 
   const copyToClipboard = async (text: string) => {
-    await ipcRenderer.invoke(Events.ClipboardCopy, { text })
+    await bridge.clipboard.copy(text)
   }
 
   const refreshConfig = () =>
-    ipcRenderer.invoke<Config>(Events.ConfigGet).then(refreshedConfig => {
+    bridge.config.get().then(refreshedConfig => {
       setConfig(refreshedConfig)
       setGroups(selectGroups(refreshedConfig))
       refresh$.next(refreshedConfig)
     })
 
   useEffect(() => {
-    ipcRenderer.invoke<Config>(Events.ConfigGet).then(initialConfig => {
+    bridge.config.get().then(initialConfig => {
       setConfig(initialConfig)
       setGroups(selectGroups(initialConfig))
     })

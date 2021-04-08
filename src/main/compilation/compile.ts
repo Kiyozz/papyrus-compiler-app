@@ -7,13 +7,13 @@
 import is from '@sindresorhus/is'
 
 import { toExecutable, toOtherSource, toSource } from '../../common/game'
-import { appStore } from '../../common/store'
 import { executeCommand } from '../command/execute'
 import { CompilationException } from '../exceptions/compilationException'
 import { ConfigurationException } from '../exceptions/configuration.exception'
 import { Logger } from '../logger'
 import * as mo2 from '../mo2/mo2'
 import * as path from '../path/path'
+import { appStore } from '../store'
 import { generateCompilerCmd } from '../utils/generate-compiler-cmd.util'
 
 interface Runner {

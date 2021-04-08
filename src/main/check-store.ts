@@ -6,12 +6,12 @@
 
 import is from '@sindresorhus/is'
 
-import { join } from '../main/path/path'
+import { GameType } from '../common/game'
+import type { Config } from '../common/interfaces/config'
+import { Theme } from '../common/theme'
 import { DEFAULT_COMPILER_PATH } from './constants'
-import { GameType } from './game'
-import type { Config } from './interfaces/config'
+import { join } from './path/path'
 import type { AppStore } from './store'
-import { Theme } from './theme'
 import { validateGroup } from './validators/group.validator'
 
 function checkTheme(appStore: AppStore, defaultConfig: Config) {

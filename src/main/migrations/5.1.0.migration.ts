@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { GameType } from '../game'
+import { GameType } from '../../common/game'
 import type { AppStore } from '../store'
 
 export function migrate510(store: AppStore): void {

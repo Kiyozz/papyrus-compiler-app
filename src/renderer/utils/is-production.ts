@@ -4,8 +4,7 @@
  * All rights reserved.
  */
 
-import { Events } from '../../common/events'
-import { ipcRenderer } from '../../common/ipc'
+import bridge from '../bridge'
 
 let isProductionRegistered = false
 let isProductionSaved = false
@@ -15,7 +14,7 @@ export function isProduction(): Promise<boolean> {
     return Promise.resolve(isProductionSaved)
   }
 
-  return ipcRenderer.invoke<boolean>(Events.IsProduction).then(isProd => {
+  return bridge.isProduction().then(isProd => {
     if (!isProductionRegistered) {
       isProductionRegistered = true
       isProductionSaved = isProd

@@ -5,9 +5,9 @@
  */
 
 import { Config } from '../../common/interfaces/config'
-import { appStore } from '../../common/store'
 import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
+import { appStore } from '../store'
 
 export class ConfigGetHandler implements EventHandler {
   private logger = new Logger('ConfigGetHandler')

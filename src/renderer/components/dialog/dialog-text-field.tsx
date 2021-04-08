@@ -10,9 +10,8 @@ import is from '@sindresorhus/is'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Events } from '../../../common/events'
 import { DialogType } from '../../../common/interfaces/dialog'
-import { ipcRenderer } from '../../../common/ipc'
+import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
 import { TextField } from '../text-field'
 
@@ -45,15 +44,13 @@ export function DialogTextField({
       e.currentTarget.blur()
 
       try {
-        const result = await ipcRenderer
-          .invoke<string | null>(Events.OpenDialog, { type })
-          .then(response => {
-            if (response === null) {
-              return
-            }
+        const result = await bridge.dialog.select(type).then(response => {
+          if (response === null) {
+            return
+          }
 
-            return response
-          })
+          return response
+        })
 
         if (typeof result !== 'undefined') {
           setValue(result)
