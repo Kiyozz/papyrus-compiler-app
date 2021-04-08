@@ -6,9 +6,7 @@
 
 import { is } from 'electron-util'
 
-import { Events } from '../common/events'
 import { ipcMain } from '../common/ipc'
-import { appStore } from '../common/store'
 import { CheckInstallationHandler } from './event-handlers/check-installation.handler'
 import { ClipboardCopyHandler } from './event-handlers/clipboard-copy.handler'
 import { ConfigGetHandler } from './event-handlers/config-get.handler'
@@ -22,6 +20,7 @@ import { OpenFileHandler } from './event-handlers/open-file.handler'
 import { ScriptCompileEvent } from './event-handlers/script-compile.event'
 import { TelemetryActiveHandler } from './event-handlers/telemetry-active.handler'
 import { TelemetryHandler } from './event-handlers/telemetry.handler'
+import { Events } from './events'
 import { Event } from './interfaces/event'
 import { EventHandler } from './interfaces/event-handler'
 import { EventSync } from './interfaces/event-sync'
@@ -29,6 +28,7 @@ import { registerIpcEvents } from './ipc-events.register'
 import { Logger } from './logger'
 import { registerMenu } from './menu.register'
 import { ensureFiles, move, writeFile } from './path/path'
+import { appStore } from './store'
 import { Telemetry } from './telemetry/telemetry'
 
 const logger = new Logger('Initialize')

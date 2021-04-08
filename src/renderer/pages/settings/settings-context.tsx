@@ -12,9 +12,8 @@ import React, {
   useState
 } from 'react'
 
-import { Events } from '../../../common/events'
 import { BadError } from '../../../common/interfaces/bad-error'
-import { ipcRenderer } from '../../../common/ipc'
+import bridge from '../../bridge'
 
 interface StateProps {
   isBadInstallation: BadError
@@ -35,9 +34,7 @@ export function SettingsProvider({
   const [isBadInstallation, setBadInstallation] = useState<BadError>(false)
 
   const detectBadInstallation = useCallback(async () => {
-    const fileExists = await ipcRenderer.invoke<BadError>(
-      Events.CheckInstallation
-    )
+    const fileExists = await bridge.installation.check()
 
     setBadInstallation(fileExists)
   }, [])

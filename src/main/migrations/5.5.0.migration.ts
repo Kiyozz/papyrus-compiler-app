@@ -6,8 +6,8 @@
 
 import is from '@sindresorhus/is'
 
+import { Theme } from '../../common/theme'
 import type { AppStore } from '../store'
-import { Theme } from '../theme'
 
 export function migrate550(store: AppStore): void {
   const telemetry = store.get('telemetry')

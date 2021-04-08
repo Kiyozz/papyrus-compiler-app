@@ -7,12 +7,12 @@
 import { is } from 'electron-util'
 
 import { GameType, toOtherSource, toSource } from '../../common/game'
-import { toAntiSlash, toSlash } from '../../common/slash'
-import { appStore } from '../../common/store'
 import { ApplicationException } from '../exceptions/application.exception'
 import { ConfigurationException } from '../exceptions/configuration.exception'
 import { Logger } from '../logger'
 import * as path from '../path/path'
+import { toAntiSlash, toSlash } from '../slash'
+import { appStore } from '../store'
 
 interface GenerateImportsOptions {
   gameType: GameType

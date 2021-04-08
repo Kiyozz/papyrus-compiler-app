@@ -9,9 +9,9 @@ import deepmerge from 'deepmerge'
 import { PartialDeep } from 'type-fest'
 
 import { Config } from '../../common/interfaces/config'
-import { appStore } from '../../common/store'
 import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
+import { appStore } from '../store'
 
 interface ConfigUpdateHandlerParams {
   config: PartialDeep<Config>

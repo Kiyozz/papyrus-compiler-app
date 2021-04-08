@@ -6,7 +6,7 @@
 
 import is from '@sindresorhus/is'
 
-import type { Config } from '../interfaces/config'
+import type { Config } from '../../common/interfaces/config'
 import type { AppStore } from '../store'
 
 export function migrate520(store: AppStore): void {

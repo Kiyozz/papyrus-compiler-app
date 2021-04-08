@@ -9,11 +9,10 @@ import debounce from 'debounce-fn'
 import React from 'react'
 import { render } from 'react-dom'
 
-import { Events } from '../common/events'
-import { ipcRenderer } from '../common/ipc'
 import { App } from './app'
 import './translations'
 import appIcon from './assets/logo/vector/isolated-layout.svg'
+import bridge from './bridge'
 import { AppProvider } from './hooks/use-app'
 import { CompilationProvider } from './hooks/use-compilation'
 import { DrawerProvider } from './hooks/use-drawer'
@@ -64,23 +63,23 @@ function start() {
       document.getElementById('app')
     )
   } catch (e) {
-    ipcRenderer.invoke(Events.AppError, e instanceof Error ? e : new Error(e))
+    bridge.error(e instanceof Error ? e : new Error(e))
   }
 
-  function sendIsOnline(event: Events): void {
-    ipcRenderer.send(event, { online: navigator.onLine })
+  function sendIsOnline(): void {
+    bridge.online(navigator.onLine)
   }
 
-  sendIsOnline(Events.Online)
+  sendIsOnline()
 
-  window.addEventListener('online', () => sendIsOnline(Events.Online))
-  window.addEventListener('offline', () => sendIsOnline(Events.Online))
+  window.addEventListener('online', () => sendIsOnline())
+  window.addEventListener('offline', () => sendIsOnline())
 
   isProduction().then(production => {
     if (!production) {
       const handle = debounce(
         (error: Error) => {
-          ipcRenderer.invoke(Events.AppError, error)
+          bridge.error(error)
         },
         { wait: 200 }
       )

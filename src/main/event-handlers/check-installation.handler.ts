@@ -13,11 +13,11 @@ import {
   toSource
 } from '../../common/game'
 import { BadError } from '../../common/interfaces/bad-error'
-import { toSlash } from '../../common/slash'
-import { appStore } from '../../common/store'
 import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 import * as path from '../path/path'
+import { toSlash } from '../slash'
+import { appStore } from '../store'
 
 export class CheckInstallationHandler implements EventHandler {
   private readonly logger = new Logger('CheckInstallationHandler')

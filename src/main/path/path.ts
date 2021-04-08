@@ -10,10 +10,10 @@ import { promises as fs, existsSync, Stats } from 'fs'
 import moveFile from 'move-file'
 import * as path from 'path'
 
-import { toSlash } from '../../common/slash'
 import { FileAccessException } from '../exceptions/files/file-access.exception'
 import { FileEnsureException } from '../exceptions/files/file-ensure.exception'
 import { Logger } from '../logger'
+import { toSlash } from '../slash'
 import { pluralize } from '../utils/pluralize.util'
 
 const logger = new Logger('Path')

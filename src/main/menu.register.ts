@@ -9,10 +9,10 @@ import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
 import createDefaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem } from 'electron-util'
 
-import { Events } from '../common/events'
-import { appStore, defaultConfig } from '../common/store'
+import { Events } from './events'
 import { Logger } from './logger'
 import { exists } from './path/path'
+import { appStore, defaultConfig } from './store'
 
 interface RegisterMenusCallbacks {
   openLogFile: (file: string) => void

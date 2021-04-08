@@ -6,12 +6,11 @@
 
 import React, { createContext, useCallback, useContext } from 'react'
 
-import { Events } from '../../common/events'
-import { ipcRenderer } from '../../common/ipc'
 import {
   TelemetryEvents,
   TelemetryEventsProperties
 } from '../../common/telemetry-events'
+import bridge from '../bridge'
 import { useApp } from './use-app'
 
 interface TelemetryContextInterface {
@@ -32,25 +31,21 @@ export function TelemetryProvider({
 }: React.PropsWithChildren<unknown>): JSX.Element {
   const { config } = useApp()
   const sendTelemetry = useCallback(
-    (event: TelemetryEvents, properties: Record<string, unknown>) => {
+    (
+      event: TelemetryEvents,
+      properties: TelemetryEventsProperties[TelemetryEvents]
+    ) => {
       if (
         config.telemetry?.active &&
         (process.env.ELECTRON_TELEMETRY_FEATURE ?? 'false') === 'true'
       ) {
-        ipcRenderer
-          .invoke(Events.Telemetry, { name: event, properties })
-          .catch(e =>
-            console.error(
-              "can't send telemetry event to main process",
-              e.message || e
-            )
-          )
+        bridge.telemetry.send(event, properties)
       }
     },
     [config.telemetry]
   )
   const setActive = useCallback((active: boolean) => {
-    ipcRenderer.invoke(Events.TelemetryActive, active)
+    bridge.telemetry.active(active)
   }, [])
 
   return (

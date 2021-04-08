@@ -12,9 +12,8 @@ import React, {
   useState
 } from 'react'
 
-import { Events } from '../../common/events'
 import { CompilationResult } from '../../common/interfaces/compilation-result'
-import { ipcRenderer } from '../../common/ipc'
+import bridge from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { ScriptInterface } from '../interfaces'
 import { chunk } from '../utils/chunk'
@@ -37,16 +36,13 @@ const CompilationContext = createContext({} as CompilationContextInterface)
 
 function whenCompileScriptFinish(script: string): Promise<CompilationResult> {
   return new Promise<CompilationResult>((resolve, reject) => {
-    ipcRenderer.once<CompilationResult>(
-      `${Events.CompileScriptFinish}-${script}`,
-      result => {
-        if (result.success) {
-          resolve(result)
-        } else {
-          reject(new Error(result.output))
-        }
+    bridge.compilation.onceFinish(script, result => {
+      if (result.success) {
+        resolve(result)
+      } else {
+        reject(new Error(result.output))
       }
-    )
+    })
   })
 }
 
@@ -97,7 +93,7 @@ export function CompilationProvider({
         })
 
         for (const script of partialScripts) {
-          ipcRenderer.send(Events.CompileScriptStart, script.name)
+          bridge.compilation.start(script.name)
         }
 
         await Promise.all(

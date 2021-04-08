@@ -6,13 +6,13 @@
 
 import { IpcMainEvent } from 'electron'
 
-import { checkStore } from '../../common/check-store'
-import { Events } from '../../common/events'
 import { CompilationResult } from '../../common/interfaces/compilation-result'
-import { appStore, defaultConfig } from '../../common/store'
+import { checkStore } from '../check-store'
 import { compile } from '../compilation/compile'
+import { Events } from '../events'
 import { Event } from '../interfaces/event'
 import { Logger } from '../logger'
+import { appStore, defaultConfig } from '../store'
 
 export class ScriptCompileEvent implements Event<string> {
   private logger = new Logger('ScriptCompileEvent')

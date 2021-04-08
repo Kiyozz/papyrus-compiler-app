@@ -13,8 +13,7 @@ import React, {
   useState
 } from 'react'
 
-import { Events } from '../../common/events'
-import { ipcRenderer } from '../../common/ipc'
+import bridge from '../bridge'
 import { GithubRelease } from '../interfaces'
 import { useApp } from './use-app'
 import { useVersion } from './use-version'
@@ -41,7 +40,7 @@ export function InitializationProvider({
   const [, setVersion] = useVersion()
 
   const checkUpdates = useCallback(() => {
-    ipcRenderer.invoke<string>(Events.GetVersion).then(async version => {
+    bridge.version.get().then(async version => {
       setVersion(version)
       const response = await fetch(`${GITHUB_REPOSITORY}/releases`)
       const [release]: GithubRelease[] = await response.json()
@@ -65,9 +64,9 @@ export function InitializationProvider({
   }, [checkUpdates])
 
   useEffect(() => {
-    ipcRenderer.on(Events.Changelog, checkUpdates)
+    bridge.changelog.on(checkUpdates)
 
-    return () => ipcRenderer.off(Events.Changelog, checkUpdates)
+    return () => bridge.changelog.off(checkUpdates)
   }, [checkUpdates])
   return (
     <InitializationContext.Provider value={{ done, latestVersion }}>
