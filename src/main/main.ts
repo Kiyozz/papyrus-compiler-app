@@ -31,8 +31,8 @@ async function createWindow() {
     minWidth: 700,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: false,
-      contextIsolation: true,
+      enableRemoteModule: true,
+      contextIsolation: false,
       preload: join(__dirname, 'preload.js')
     },
     show: false

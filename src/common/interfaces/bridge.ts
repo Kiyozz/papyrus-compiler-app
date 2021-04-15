@@ -65,18 +65,6 @@ export interface Bridge {
     select: (type: DialogType) => Promise<string | null>
   }
 
-  titlebar: {
-    instance: () => Titlebar
-    colors: {
-      darkColor: Color
-      darkColorUnfocus: Color
-      lightColor: Color
-      lightColorUnfocus: Color
-    }
-    updateBackground: (bg: Color) => void
-    updateTitle: (title: string) => void
-  }
-
   shell: {
     openExternal: (href: string) => void
   }
