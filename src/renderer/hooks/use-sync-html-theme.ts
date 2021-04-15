@@ -4,25 +4,25 @@
  * All rights reserved.
  */
 
-import { Color } from 'custom-electron-titlebar'
+import type { Color } from 'custom-electron-titlebar'
 import { useEffect } from 'react'
 
 import { Theme } from '../../common/theme'
-import {
-  darkColor,
-  darkColorUnfocus,
-  lightColor,
-  lightColorUnfocus
-} from '../utils/color'
+import bridge from '../bridge'
 import { useFocus } from './use-focus'
 import { useSystemDarkPreference } from './use-system-dark-preference'
 import { useTheme } from './use-theme'
-import { useTitlebar } from './use-titlebar'
 
 export function useSyncHtmlTheme(): void {
+  const {
+    darkColor,
+    darkColorUnfocus,
+    lightColor,
+    lightColorUnfocus
+  } = bridge.titlebar.colors
+
   const isSystemThemeDark = useSystemDarkPreference()
   const [theme] = useTheme()
-  const { titlebar } = useTitlebar()
   const isFocus = useFocus()
 
   useEffect(() => {
@@ -45,8 +45,16 @@ export function useSyncHtmlTheme(): void {
       usedColor = isSystemThemeDark ? colors.dark : colors.light
     }
 
-    titlebar.updateBackground(usedColor)
-  }, [isFocus, isSystemThemeDark, theme, titlebar])
+    bridge.titlebar.updateBackground(usedColor)
+  }, [
+    darkColor,
+    darkColorUnfocus,
+    isFocus,
+    isSystemThemeDark,
+    lightColor,
+    lightColorUnfocus,
+    theme
+  ])
 
   useEffect(() => {
     const list = document.documentElement.classList

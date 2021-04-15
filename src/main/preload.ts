@@ -1,17 +1,27 @@
-// import { contextBridge } from 'electron'
-
 /*
  * Copyright (c) 2021 Kiyozz.
  *
  * All rights reserved.
  */
 
+import { Titlebar } from 'custom-electron-titlebar'
+import { contextBridge, Menu, shell } from 'electron'
+
 import { BadError } from '../common/interfaces/bad-error'
 import { Bridge } from '../common/interfaces/bridge'
 import { CompilationResult } from '../common/interfaces/compilation-result'
 import { Config } from '../common/interfaces/config'
 import { ipcRenderer } from '../common/ipc'
+import {
+  darkColor,
+  darkColorUnfocus,
+  lightColor,
+  lightColorUnfocus
+} from '../renderer/utils/color'
+import { isDark } from '../renderer/utils/dark'
 import { Events } from './events'
+
+let titlebar: Titlebar | null = null
 
 const api: Bridge = {
   telemetry: {
@@ -61,8 +71,27 @@ const api: Bridge = {
   dialog: {
     select: type =>
       ipcRenderer.invoke<string | null>(Events.OpenDialog, { type })
+  },
+  titlebar: {
+    instance: () =>
+      (titlebar ??= new Titlebar({
+        backgroundColor: isDark() ? darkColor : lightColor,
+        // icon: appIcon,
+        unfocusEffect: false,
+        menu: Menu.getApplicationMenu()
+      })),
+    colors: {
+      darkColor,
+      darkColorUnfocus,
+      lightColor,
+      lightColorUnfocus
+    },
+    updateBackground: bg => titlebar?.updateBackground(bg),
+    updateTitle: title => titlebar?.updateTitle(title)
+  },
+  shell: {
+    openExternal: href => shell.openExternal(href)
   }
 }
 
-// contextBridge.exposeInMainWorld('bridge', api)
-;((window as unknown) as { bridge: Bridge }).bridge = api
+contextBridge.exposeInMainWorld('bridge', api)
