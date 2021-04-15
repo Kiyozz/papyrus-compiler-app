@@ -4,14 +4,12 @@
  * All rights reserved.
  */
 
-import { Titlebar } from 'custom-electron-titlebar'
 import debounce from 'debounce-fn'
 import React from 'react'
 import { render } from 'react-dom'
 
 import { App } from './app'
 import './translations'
-import appIcon from './assets/logo/vector/isolated-layout.svg'
 import bridge from './bridge'
 import { AppProvider } from './hooks/use-app'
 import { CompilationProvider } from './hooks/use-compilation'
@@ -20,45 +18,34 @@ import { DropProvider } from './hooks/use-drop'
 import { FocusProvider } from './hooks/use-focus'
 import { InitializationProvider } from './hooks/use-initialization'
 import { TelemetryProvider } from './hooks/use-telemetry'
-import { TitlebarProvider } from './hooks/use-titlebar'
 import { VersionProvider } from './hooks/use-version'
 import { SettingsProvider } from './pages/settings/settings-context'
 import { Theme } from './theme'
-import { darkColor, lightColor } from './utils/color'
-import { isDark } from './utils/dark'
 import { isProduction } from './utils/is-production'
 
 function start() {
-  const titlebar = new Titlebar({
-    backgroundColor: isDark() ? darkColor : lightColor,
-    icon: appIcon,
-    unfocusEffect: false
-  })
-
   try {
     render(
       <VersionProvider>
-        <TitlebarProvider titlebar={titlebar}>
-          <AppProvider titlebar={titlebar}>
-            <InitializationProvider>
-              <CompilationProvider>
-                <SettingsProvider>
-                  <FocusProvider>
-                    <Theme>
-                      <TelemetryProvider>
-                        <DrawerProvider>
-                          <DropProvider>
-                            <App />
-                          </DropProvider>
-                        </DrawerProvider>
-                      </TelemetryProvider>
-                    </Theme>
-                  </FocusProvider>
-                </SettingsProvider>
-              </CompilationProvider>
-            </InitializationProvider>
-          </AppProvider>
-        </TitlebarProvider>
+        <AppProvider>
+          <InitializationProvider>
+            <CompilationProvider>
+              <SettingsProvider>
+                <FocusProvider>
+                  <Theme>
+                    <TelemetryProvider>
+                      <DrawerProvider>
+                        <DropProvider>
+                          <App />
+                        </DropProvider>
+                      </DrawerProvider>
+                    </TelemetryProvider>
+                  </Theme>
+                </FocusProvider>
+              </SettingsProvider>
+            </CompilationProvider>
+          </InitializationProvider>
+        </AppProvider>
       </VersionProvider>,
       document.getElementById('app')
     )

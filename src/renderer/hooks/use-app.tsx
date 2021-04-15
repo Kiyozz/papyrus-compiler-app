@@ -5,7 +5,6 @@
  */
 
 import is from '@sindresorhus/is'
-import { Titlebar } from 'custom-electron-titlebar'
 import React, { useContext, useEffect, useState } from 'react'
 import { Observable, Subject } from 'rxjs'
 import { PartialDeep } from 'type-fest'
@@ -26,10 +25,6 @@ interface Context {
   refreshConfig: () => void
   copyToClipboard: (text: string) => void
   onRefreshConfig: Observable<Config>
-}
-
-interface Props {
-  titlebar: Titlebar
 }
 
 const AppContext = React.createContext({} as Context)
@@ -62,7 +57,7 @@ export const useApp = (): Context => useContext(AppContext)
 
 export function AppProvider({
   children
-}: React.PropsWithChildren<Props>): JSX.Element | null {
+}: React.PropsWithChildren<unknown>): JSX.Element | null {
   const [config, setConfig] = useState<Config>({} as Config)
   const [groups, setGroups] = useState<Group[]>([])
   const [isShowChangelog, setShowChangelog] = useState(false)

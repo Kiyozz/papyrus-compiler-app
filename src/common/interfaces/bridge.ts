@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+import type { Color, Titlebar } from 'custom-electron-titlebar'
 import { PartialDeep } from 'type-fest'
 
 import { TelemetryEvents, TelemetryEventsProperties } from '../telemetry-events'
@@ -62,5 +63,21 @@ export interface Bridge {
 
   dialog: {
     select: (type: DialogType) => Promise<string | null>
+  }
+
+  titlebar: {
+    instance: () => Titlebar
+    colors: {
+      darkColor: Color
+      darkColorUnfocus: Color
+      lightColor: Color
+      lightColorUnfocus: Color
+    }
+    updateBackground: (bg: Color) => void
+    updateTitle: (title: string) => void
+  }
+
+  shell: {
+    openExternal: (href: string) => void
   }
 }

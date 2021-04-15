@@ -54,7 +54,7 @@ const createConfig = () => {
       filename: 'index.js',
       path: output
     },
-    target: 'electron-renderer',
+    target: 'web',
     resolve: {
       extensions: ['.ts', '.tsx', '.js']
     },

@@ -6,19 +6,19 @@
 
 import CloseIcon from '@material-ui/icons/Close'
 import DownloadIcon from '@material-ui/icons/GetApp'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
 
 import { MOD_URL } from '../../../common/mod'
+import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
 import { useInitialization } from '../../hooks/use-initialization'
 import useOnKeyUp from '../../hooks/use-on-key-up'
 import { Dialog } from './dialog'
 
 function Anchor({ children, href }: React.PropsWithChildren<{ href: string }>) {
-  const shell = useMemo(() => window.require('electron').shell, [])
-  const onClick = useCallback(() => shell.openExternal(href), [href, shell])
+  const onClick = useCallback(() => bridge.shell.openExternal(href), [href])
 
   return <a onClick={onClick}>{children}</a>
 }
@@ -51,7 +51,6 @@ function Code({ value }: { value: string }) {
 }
 
 export function DialogChangelog(): JSX.Element {
-  const shell = useMemo(() => window.require('electron').shell, [])
   const { t } = useTranslation()
   const { isShowChangelog, changelog, setShowChangelog } = useApp()
   const { latestVersion } = useInitialization()
@@ -62,9 +61,9 @@ export function DialogChangelog(): JSX.Element {
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
 
-      shell.openExternal(MOD_URL)
+      bridge.shell.openExternal(MOD_URL)
     },
-    [shell]
+    []
   )
 
   const onClickShowNotes = useCallback(() => {
