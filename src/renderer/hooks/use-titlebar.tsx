@@ -7,7 +7,7 @@ interface Context {
 
 const TitlebarContext = createContext({} as Context)
 
-export const useTitlebar = () => useContext(TitlebarContext)
+export const useTitlebar = (): Context => useContext(TitlebarContext)
 
 export function TitlebarProvider({
   children,

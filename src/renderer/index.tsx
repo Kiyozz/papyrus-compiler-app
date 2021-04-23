@@ -11,6 +11,7 @@ import { render } from 'react-dom'
 
 import { App } from './app'
 import './translations'
+import appIcon from './assets/logo/vector/isolated-layout.svg'
 import bridge from './bridge'
 import { AppProvider } from './hooks/use-app'
 import { CompilationProvider } from './hooks/use-compilation'
@@ -30,7 +31,7 @@ import { isProduction } from './utils/is-production'
 function start() {
   const titlebar = new Titlebar({
     backgroundColor: isDark() ? darkColor : lightColor,
-    // icon: appIcon,
+    icon: appIcon,
     unfocusEffect: false
   })
 

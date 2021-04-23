@@ -4,7 +4,6 @@
  * All rights reserved.
  */
 
-import type { Color, Titlebar } from 'custom-electron-titlebar'
 import { PartialDeep } from 'type-fest'
 
 import { TelemetryEvents, TelemetryEventsProperties } from '../telemetry-events'
