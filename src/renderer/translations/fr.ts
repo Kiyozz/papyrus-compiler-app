@@ -61,7 +61,7 @@ const fr = {
       errors: {
         installationInvalid: 'La configuration semble invalide :',
         scripts:
-          "Vérifiez que votre installation de Creation Kit est valide. L'application vérifie la présence du fichier Actor.psc dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de l'application, les dossiers overwrite et mods sont également vérifiés.",
+          "Vérifiez que votre installation de Creation Kit est valide. L'application vérifie la présence du fichier {{file}} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de l'application, les dossiers overwrite et mods sont également vérifiés.",
         game: 'Vérifiez que "{{exe}}" existe dans le dossier du jeu.',
         compiler: 'Vérifiez que "{{compilerExe}}" existe.',
         mo2Instance:

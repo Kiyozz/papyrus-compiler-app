@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+/* eslint-disable no-undef */
+
+/*
+ * Copyright (c) 2021 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
+console.log('Batch compile of 1 files finished. 1 succeeded, 0 failed.')

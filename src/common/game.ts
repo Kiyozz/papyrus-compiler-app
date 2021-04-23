@@ -8,6 +8,7 @@ export type GamePath = string
 export type CompilerPath = string
 export type OutputPath = string
 export type Flag = 'TESV_Papyrus_Flags.flg' | 'Institute_Papyrus_Flags.flg'
+export type CompilerSourceFile = 'Actor.psc' | 'Base/Actor.psc'
 
 export enum GameSource {
   ScriptsFirst = 'Scripts/Source',
@@ -66,5 +67,14 @@ export function toExecutable(game: GameType): Executable {
       return Executable.Fo4
     default:
       return Executable.Se
+  }
+}
+
+export function toCompilerSourceFile(game: GameType): CompilerSourceFile {
+  switch (game) {
+    case GameType.Fo4:
+      return 'Base/Actor.psc'
+    default:
+      return 'Actor.psc'
   }
 }

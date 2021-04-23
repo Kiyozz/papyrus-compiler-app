@@ -60,7 +60,7 @@ const en = {
       errors: {
         installationInvalid: 'Configuration seems invalid:',
         scripts:
-          "Check that your Creation Kit installation is valid. The app checks the presence of Actor.psc file in Scripts\\Source or Source\\Scripts folders to validate your Creation Kit installation. If you're using the app MO2 integration, the folders overwrite and mods are also checked.",
+          "Check that your Creation Kit installation is valid. The app checks the presence of {{file}} file in Scripts\\Source or Source\\Scripts folders to validate your Creation Kit installation. If you're using the app MO2 integration, the folders overwrite and mods are also checked.",
         game: 'Check that "{{exe}}" exists in the game folder.',
         compiler: 'Check that "{{compilerExe}}" exists.',
         mo2Instance: 'Check that instance folder "{{mo2Instance}}" exists.'

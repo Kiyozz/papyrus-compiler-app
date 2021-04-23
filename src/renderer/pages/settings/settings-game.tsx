@@ -12,7 +12,11 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { GameType, toExecutable } from '../../../common/game'
+import {
+  GameType,
+  toCompilerSourceFile,
+  toExecutable
+} from '../../../common/game'
 import { Alert } from '../../components/alert'
 import { DialogTextField } from '../../components/dialog/dialog-text-field'
 import { useApp } from '../../hooks/use-app'
@@ -120,7 +124,9 @@ export function SettingsGame({
                   compilerExe: compilation.compilerPath
                 })}
               {isBadInstallation === 'scripts' &&
-                t('page.settings.errors.scripts')}
+                t('page.settings.errors.scripts', {
+                  file: toCompilerSourceFile(game.type)
+                })}
             </p>
           </div>
           <div>
