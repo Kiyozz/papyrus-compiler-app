@@ -7,7 +7,9 @@
 import is from '@sindresorhus/is'
 
 import {
+  CompilerSourceFile,
   GameType,
+  toCompilerSourceFile,
   toExecutable,
   toOtherSource,
   toSource
@@ -35,7 +37,8 @@ export class CheckInstallationHandler implements EventHandler {
       return hasCompiler
     }
 
-    const file = 'Actor.psc'
+    const gameType = appStore.get('game').type
+    const file = toCompilerSourceFile(gameType)
     const isUsingMo2: boolean = appStore.get('mo2.use')
 
     if (isUsingMo2) {
@@ -81,7 +84,7 @@ export class CheckInstallationHandler implements EventHandler {
     return result
   }
 
-  private async checkInMo2(file: string): Promise<BadError> {
+  private async checkInMo2(file: CompilerSourceFile): Promise<BadError> {
     const gameType: GameType = appStore.get('game.type')
     const mo2 = appStore.get('mo2')
 

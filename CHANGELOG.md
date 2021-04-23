@@ -4,6 +4,12 @@
 
 - Fix the new version popup background in light theme
 
+- FO4 support - Creation Kit installation
+
+  PCA was checking your Creation Kit installation by searching for `YOUR_GAME/Data/Scripts/Source/Actor.psc` file.
+
+  This was invalid because Fallout 4 use `YOUR_GAME/Data/Scripts/Source/Base/Actor.psc`
+
 ## 5.5.1 (2021-03-18)
 
 ### Bug fixes
