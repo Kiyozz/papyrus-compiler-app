@@ -1,4 +1,4 @@
-## Unreleased
+## 5.5.2 (2021-04-25)
 
 ### Bug fixes
 
