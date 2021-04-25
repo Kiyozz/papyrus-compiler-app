@@ -19,8 +19,8 @@ enum Step {
   Ask,
   Game,
   Compiler,
-  Mo2,
   Concurrent,
+  Mo2,
   End
 }
 
@@ -44,7 +44,12 @@ function getConcurrentSettingsAnchor() {
 
 function GameSettingsStep({ next }: { next: Next }) {
   const { t } = useTranslation()
-  const stepAnchor = useMemo(() => getGameSettingsAnchor(), [])
+  const [stepAnchor, setAnchor] = useState(getGameSettingsAnchor)
+
+  useEffect(() => {
+    setAnchor(getGameSettingsAnchor())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname])
 
   const onClickOk = useCallback(() => next(), [next])
 
@@ -207,6 +212,8 @@ export function TutorialSettings(): JSX.Element | null {
 
     return () => clearTimeout(time)
   }, [])
+
+  console.log('step', step)
 
   if (!config.tutorials.settings) {
     return null
