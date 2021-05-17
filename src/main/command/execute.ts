@@ -14,7 +14,7 @@ const logger = new Logger('ExecuteCommand')
 
 export function executeCommand(
   cmd: string,
-  cwd?: string
+  cwd?: string,
 ): Promise<{ stdout: string; stderr: string }> {
   logger.debug('running the command', cmd, 'in the folder', cwd)
 

@@ -15,11 +15,11 @@ import { ScriptInterface } from '../../interfaces'
 
 export function getClassNameFromStatus(script: ScriptInterface): string {
   switch (script.status) {
-    case ScriptStatus.Idle:
+    case ScriptStatus.idle:
       return 'text-black-600 dark:text-gray-500'
-    case ScriptStatus.Running:
+    case ScriptStatus.running:
       return 'text-blue-800 dark:text-blue-600'
-    case ScriptStatus.Success:
+    case ScriptStatus.success:
       return 'text-green-500 dark:text-green-400'
     default:
       return 'text-red-300'
@@ -28,11 +28,11 @@ export function getClassNameFromStatus(script: ScriptInterface): string {
 
 export function getIconFromStatus(script: ScriptInterface): JSX.Element {
   switch (script.status) {
-    case ScriptStatus.Idle:
+    case ScriptStatus.idle:
       return <QueryBuilderIcon />
-    case ScriptStatus.Running:
+    case ScriptStatus.running:
       return <HourglassEmptyIcon />
-    case ScriptStatus.Success:
+    case ScriptStatus.success:
       return <CheckCircleIcon />
     default:
       return <ErrorIcon />

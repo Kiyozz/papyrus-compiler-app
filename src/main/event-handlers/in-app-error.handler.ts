@@ -28,15 +28,15 @@ export class InAppErrorHandler implements EventHandler<Error> {
       properties: {
         error: args.message,
         stack:
-          `[${args.stack?.length}] ${args.stack?.slice(0, 600)}` ?? 'unknown'
-      }
+          `[${args.stack?.length}] ${args.stack?.slice(0, 600)}` ?? 'unknown',
+      },
     })
 
     dialog.showErrorBox(
       'A JavaScript error occurred in the renderer process.',
       `${debugInfo()}
       
-      ${args ?? 'unknown error'}`
+      ${args ?? 'unknown error'}`,
     )
   }
 }

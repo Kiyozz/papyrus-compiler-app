@@ -19,7 +19,7 @@ import { Dialog } from './dialog'
 
 function Anchor({
   children,
-  href
+  href,
 }: React.PropsWithChildren<React.HTMLProps<HTMLAnchorElement>>) {
   const onClick = () => {
     if (href) {
@@ -130,7 +130,7 @@ export function DialogChangelog(): JSX.Element {
               h3: HeadingThree,
               h5: HeadingFive,
               code: Code,
-              a: Anchor
+              a: Anchor,
             }}
           >
             {changelog}

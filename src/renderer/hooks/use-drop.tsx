@@ -33,7 +33,7 @@ export const useSetDrop = (on: OnDropFunction | null): void => {
 }
 
 export function DropProvider({
-  children
+  children,
 }: React.PropsWithChildren<unknown>): JSX.Element {
   const [onDrop, setOnDrop] = useState<OnDropFunction | null>(null)
 
@@ -45,7 +45,7 @@ export function DropProvider({
             isDragActive,
             drop: open,
             onDrop,
-            setOnDrop
+            setOnDrop,
           }}
         >
           <DropFilesOverlay open={isDragActive && onDrop !== null} />

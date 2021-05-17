@@ -29,7 +29,7 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
       setAnchor(null)
     },
     clicked =>
-      ((anchor && clicked !== anchor) ?? false) && !isChildren(anchor, clicked)
+      ((anchor && clicked !== anchor) ?? false) && !isChildren(anchor, clicked),
   )
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -39,31 +39,29 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
   const groupSelectOptions = useMemo(() => {
     return groups
       .filter((group: Group): boolean => !group.isEmpty())
-      .map(
-        (group: Group): JSX.Element => {
-          const onClickGroup = () => {
-            send(TelemetryEvents.CompilationGroupLoaded, {
-              groups: groups.length
-            })
-            setAnchor(null)
-            onChangeGroup(group.name)
-          }
-
-          return (
-            <button
-              className="btn item btn-no-rounded"
-              key={group.name}
-              onClick={onClickGroup}
-            >
-              {group.name}
-            </button>
-          )
+      .map((group: Group): JSX.Element => {
+        const onClickGroup = () => {
+          send(TelemetryEvents.compilationGroupLoaded, {
+            groups: groups.length,
+          })
+          setAnchor(null)
+          onChangeGroup(group.name)
         }
-      )
+
+        return (
+          <button
+            className="btn item btn-no-rounded"
+            key={group.name}
+            onClick={onClickGroup}
+          >
+            {group.name}
+          </button>
+        )
+      })
   }, [groups, onChangeGroup, send])
 
   const notEmptyGroups = groups.filter(
-    (group: Group): boolean => !group.isEmpty()
+    (group: Group): boolean => !group.isEmpty(),
   )
 
   return (

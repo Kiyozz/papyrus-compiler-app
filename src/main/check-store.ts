@@ -7,17 +7,18 @@
 import is from '@sindresorhus/is'
 
 import { GameType } from '../common/game'
-import type { Config } from '../common/interfaces/config'
 import { Theme } from '../common/theme'
 import { DEFAULT_COMPILER_PATH } from './constants'
 import { join } from './path/path'
-import type { AppStore } from './store'
 import { validateGroup } from './validators/group.validator'
+
+import type { Config } from '../common/interfaces/config'
+import type { AppStore } from './store'
 
 function checkTheme(appStore: AppStore, defaultConfig: Config) {
   const theme = appStore.get('theme')
 
-  if (![Theme.System, Theme.Light, Theme.Dark].includes(theme)) {
+  if (![Theme.system, Theme.light, Theme.dark].includes(theme)) {
     appStore.set('theme', defaultConfig.theme)
   }
 }
@@ -45,7 +46,7 @@ function checkMo2(appStore: AppStore, defaultConfig: Config) {
 
   if (
     (Object.keys(mo2) as (keyof Config['mo2'])[]).some(key =>
-      is.nullOrUndefined(mo2[key])
+      is.nullOrUndefined(mo2[key]),
     )
   ) {
     resetMo2Config()
@@ -98,9 +99,9 @@ function checkGameType(appStore: AppStore, defaultConfig: Config) {
   }
 
   if (
-    gameType !== GameType.Le &&
-    gameType !== GameType.Se &&
-    gameType !== GameType.Vr
+    gameType !== GameType.le &&
+    gameType !== GameType.se &&
+    gameType !== GameType.vr
   ) {
     resetGameType()
   }
@@ -135,7 +136,7 @@ function checkCompilerPath(appStore: AppStore) {
   ) {
     appStore.set(
       'compilation.compilerPath',
-      join(gamePath, DEFAULT_COMPILER_PATH)
+      join(gamePath, DEFAULT_COMPILER_PATH),
     )
   }
 }
@@ -174,12 +175,12 @@ function checkCompilation(appStore: AppStore, defaultConfig: Config) {
   } else if (is.numericString(compilation.concurrentScripts)) {
     appStore.set(
       'compilation.concurrentScripts',
-      parseInt(compilation.concurrentScripts, 10)
+      parseInt(compilation.concurrentScripts, 10),
     )
   } else if (!is.number(compilation.concurrentScripts)) {
     appStore.set(
       'compilation.concurrentScripts',
-      defaultConfig.compilation.concurrentScripts
+      defaultConfig.compilation.concurrentScripts,
     )
   }
 }

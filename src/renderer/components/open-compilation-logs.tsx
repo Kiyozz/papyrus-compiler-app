@@ -19,7 +19,7 @@ import { NavItem } from './nav-item'
 
 export function LogsListItem({
   script,
-  logs
+  logs,
 }: {
   script: ScriptInterface
   logs: string
@@ -27,7 +27,7 @@ export function LogsListItem({
   const { copyToClipboard } = useApp()
   const { send } = useTelemetry()
   const onClickCopyLogs = () => {
-    send(TelemetryEvents.CompilationLogsCopy, {})
+    send(TelemetryEvents.compilationLogsCopy, {})
     copyToClipboard(`${script.name}\n\n${logs}\n`)
   }
 

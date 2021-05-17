@@ -8,7 +8,7 @@ import { useCallback, useEffect } from 'react'
 
 export function useDocumentClick(
   cb: () => void,
-  check: (clicked: HTMLElement | null) => boolean
+  check: (clicked: HTMLElement | null) => boolean,
 ): void {
   const onClickOut = useCallback(
     (e: MouseEvent) => {
@@ -17,7 +17,7 @@ export function useDocumentClick(
         cb()
       }
     },
-    [check, cb]
+    [check, cb],
   )
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import { ScriptInterface } from '../interfaces'
 
 export function chunk(
   scripts: ScriptInterface[],
-  size: number
+  size: number,
 ): ScriptInterface[][] {
   return scripts.reduce(
     (acc: ScriptInterface[][], current: ScriptInterface, i: number) => {
@@ -18,6 +18,6 @@ export function chunk(
 
       return acc
     },
-    []
+    [],
   )
 }

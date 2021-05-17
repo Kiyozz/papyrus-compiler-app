@@ -9,7 +9,7 @@ import React, {
   useCallback,
   useContext,
   useMemo,
-  useState
+  useState,
 } from 'react'
 
 import { BadError } from '../../../common/interfaces/bad-error'
@@ -29,7 +29,7 @@ export const useSettings = (): SettingsContextInterface =>
   useContext(SettingsContext)
 
 export function SettingsProvider({
-  children
+  children,
 }: React.PropsWithChildren<unknown>): JSX.Element {
   const [isBadInstallation, setBadInstallation] = useState<BadError>(false)
 
@@ -45,9 +45,9 @@ export function SettingsProvider({
     () => ({
       isBadInstallation,
       checkInstallation: detectBadInstallation,
-      resetBadInstallation
+      resetBadInstallation,
     }),
-    [detectBadInstallation, isBadInstallation, resetBadInstallation]
+    [detectBadInstallation, isBadInstallation, resetBadInstallation],
   )
 
   return (

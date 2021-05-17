@@ -13,7 +13,7 @@ import { GITHUB_ISSUES_NEW } from '../constants'
 export function createReportDialog(
   error: Error,
   versions?: { app: string; electron: string; os: string },
-  submitIssue?: (url: string, data: ReportData | unknown) => void
+  submitIssue?: (url: string, data: ReportData | unknown) => void,
 ): void {
   const message = error.message.split('\n').map(s => s.trim())
   const stack = error.stack?.split('\n').map(s => s.trim())
@@ -24,7 +24,7 @@ export function createReportDialog(
       message: message.join('\n\n'),
       detail: stack?.join('\n\n'),
       type: 'error',
-      buttons: ['Ignore', 'Report', 'Exit']
+      buttons: ['Ignore', 'Report', 'Exit'],
     })
     .then(result => {
       if (result.response === 1) {
@@ -41,15 +41,15 @@ export function createReportDialog(
               stack?.join('\n\n') ?? ''
             }\n\`\`\`\n`,
             labels,
-            assignee: ['Kiyozz']
+            assignee: ['Kiyozz'],
           })
         } else {
           shell.openExternal(
             `${GITHUB_ISSUES_NEW}?title=Error report&labels=${labels.join(
-              ','
+              ',',
             )}&assignee=Kiyozz&body=Error: %0A \`\`\`%0A ${message.join(
-              '%0A%0A'
-            )}%0A%0A${stack?.join('%0A%0A') ?? ''}%0A \`\`\`\n`
+              '%0A%0A',
+            )}%0A%0A${stack?.join('%0A%0A') ?? ''}%0A \`\`\`\n`,
           )
         }
       }

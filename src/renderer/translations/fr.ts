@@ -10,7 +10,7 @@ const fr = {
     compilation: 'Compilation',
     groups: 'Groupes',
     settings: 'Paramètres',
-    closePanel: 'Fermer'
+    closePanel: 'Fermer',
   },
   page: {
     compilation: {
@@ -19,22 +19,22 @@ const fr = {
         searchScripts: 'Rechercher',
         loadGroup: 'Groupe',
         start: 'Lancer',
-        clearList: 'Vider la liste'
+        clearList: 'Vider la liste',
       },
       dragAndDropText:
         "Vous pouvez glisser-déposer des fichiers psc pour les charger dans l'application.",
       dragAndDropAdmin:
         "Cette fonctionnalité n'est pas disponible si l'application est lancée en mode administrateur.",
       scriptItem: {
-        removeFromList: 'Supprimer de la liste'
-      }
+        removeFromList: 'Supprimer de la liste',
+      },
     },
     groups: {
       title: 'Groupes',
       actions: {
         create: 'Créer',
         edit: 'Modifier',
-        remove: 'Supprimer'
+        remove: 'Supprimer',
       },
       createGroupText:
         'Vous pouvez créer un groupe avec le bouton $t(page.groups.actions.create).',
@@ -47,13 +47,13 @@ const fr = {
         editGroup: 'Modifier un groupe',
         name: 'Nom',
         dropScripts: 'Glisser-déposer vos scripts ici',
-        close: 'Fermer'
-      }
+        close: 'Fermer',
+      },
     },
     settings: {
       title: 'Paramètres',
       actions: {
-        refresh: 'Rafraîchir'
+        refresh: 'Rafraîchir',
       },
       game: 'Jeu',
       gameFolderInfo: 'Dossier de {{gameType}} (où {{exe}} se trouve)',
@@ -65,7 +65,7 @@ const fr = {
         game: 'Vérifiez que "{{exe}}" existe dans le dossier du jeu.',
         compiler: 'Vérifiez que "{{compilerExe}}" existe.',
         mo2Instance:
-          'Vérifiez que le dossier de l\'instance "{{mo2Instance}}" existe.'
+          'Vérifiez que le dossier de l\'instance "{{mo2Instance}}" existe.',
       },
       mo2: {
         enable: 'Activer',
@@ -74,19 +74,18 @@ const fr = {
         instance: "Dossier de l'instance",
         limit: 'Limite {{limit}}',
         errorInstance:
-          'Le dossier "{{folder}}" ne contient pas les dossiers {{requiredFolders}}.'
+          'Le dossier "{{folder}}" ne contient pas les dossiers {{requiredFolders}}.',
       },
       compilation: {
         title: 'Compilation',
         concurrentScripts: {
           label: 'Nombre de scripts compilés simultanéments',
-          info:
-            'Réduisez si vous rencontrez des blocages quand vous lancez la compilation'
-        }
+          info: 'Réduisez si vous rencontrez des blocages quand vous lancez la compilation',
+        },
       },
       telemetry: {
         title: "Données d'utilisation",
-        enable: 'Activer'
+        enable: 'Activer',
       },
       version: 'Version {{version}}',
       theme: {
@@ -94,17 +93,17 @@ const fr = {
         options: {
           system: 'Système',
           light: 'Clair',
-          dark: 'Sombre'
-        }
-      }
-    }
+          dark: 'Sombre',
+        },
+      },
+    },
   },
   changelog: {
     newVersion: 'Nouvelle version disponible',
     available: {
       view: 'Voir les nouveautés',
-      message: 'Nouvelle version disponible : {{version}}'
-    }
+      message: 'Nouvelle version disponible : {{version}}',
+    },
   },
   common: {
     selectFolder: 'Sélectionner un dossier',
@@ -120,8 +119,8 @@ const fr = {
       invalidConfigurationCompiler:
         "{{exe}} n'est pas un compilateur valide. Le fichier n'existe pas.",
       invalidConfigurationScripts:
-        "Votre configuration n'est pas valide. Impossible de valider l'installation du Creation Kit. L'application vérifie la présence du fichier Actor.psc pour valider votre installation du Creation Kit. Impossible de trouver le fichier Actor.psc dans les dossiers Source\\Scripts ou Scripts\\Source. Si vous utilisez l'integration MO2 de l'application, les dossiers overwrite et mods sont également vérifiés."
-    }
+        "Votre configuration n'est pas valide. Impossible de valider l'installation du Creation Kit. L'application vérifie la présence du fichier Actor.psc pour valider votre installation du Creation Kit. Impossible de trouver le fichier Actor.psc dans les dossiers Source\\Scripts ou Scripts\\Source. Si vous utilisez l'integration MO2 de l'application, les dossiers overwrite et mods sont également vérifiés.",
+    },
   },
   tutorials: {
     close: 'Fermer',
@@ -129,27 +128,23 @@ const fr = {
     settings: {
       ask: {
         title: "Configurer l'application",
-        text:
-          "C'est la première fois que vous lancez l'application. Suivre le tutoriel ?",
-        needHelp: "J'ai besoin d'aide"
+        text: "C'est la première fois que vous lancez l'application. Suivre le tutoriel ?",
+        needHelp: "J'ai besoin d'aide",
       },
       game: {
-        text: 'Ici, vous pouvez enregistrer les informations de votre jeu'
+        text: 'Ici, vous pouvez enregistrer les informations de votre jeu',
       },
       compiler: {
-        text:
-          "Ici, vous pouvez enregistrer le chemin vers le compilateur Papyrus. Disponible après l'installation de Creation Kit"
+        text: "Ici, vous pouvez enregistrer le chemin vers le compilateur Papyrus. Disponible après l'installation de Creation Kit",
       },
       compilation: {
         concurrent: {
-          text:
-            'Ici, vous pouvez enregistrer le nombre de scripts compilés simultanéments.'
-        }
+          text: 'Ici, vous pouvez enregistrer le nombre de scripts compilés simultanéments.',
+        },
       },
       mo2: {
-        text:
-          "Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez l'application à travers MO2"
-      }
+        text: "Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez l'application à travers MO2",
+      },
     },
     telemetry: {
       text:
@@ -157,9 +152,9 @@ const fr = {
         '<1>Toutes les données transmises sont anonymes.</1>' +
         "<2>Des exemples de données collectées comprennent les données de groupe et de compilation, les erreurs, et les horodatages de divers événements d'application.</2>" +
         '<3>Les données de télémétrie sont désactivables dans les paramètres.</3>',
-      close: "J'ai compris"
-    }
-  }
+      close: "J'ai compris",
+    },
+  },
 }
 
 export default fr

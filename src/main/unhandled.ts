@@ -20,9 +20,9 @@ export function unhandled(onError: () => void): void {
         `
         ${debugInfo()}
         
-        ${error.stack}`
+        ${error.stack}`,
       )
       onError()
-    }
+    },
   })
 }

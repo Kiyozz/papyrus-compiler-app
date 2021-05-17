@@ -17,54 +17,54 @@ const api: Bridge = {
   telemetry: {
     send: (event, args) =>
       ipcRenderer
-        .invoke(Events.Telemetry, { name: event, properties: args })
+        .invoke(Events.telemetry, { name: event, properties: args })
         .catch(e =>
           console.error(
             "can't send telemetry event to main process",
-            e.message || e
-          )
+            e.message || e,
+          ),
         ),
-    active: active => ipcRenderer.invoke(Events.TelemetryActive, active)
+    active: active => ipcRenderer.invoke(Events.telemetryActive, active),
   },
   version: {
-    get: () => ipcRenderer.invoke<string>(Events.GetVersion)
+    get: () => ipcRenderer.invoke<string>(Events.getVersion),
   },
   changelog: {
-    on: fn => ipcRenderer.on(Events.Changelog, fn),
-    off: fn => ipcRenderer.off(Events.Changelog, fn)
+    on: fn => ipcRenderer.on(Events.changelog, fn),
+    off: fn => ipcRenderer.off(Events.changelog, fn),
   },
-  error: e => ipcRenderer.invoke(Events.AppError, e),
-  online: online => ipcRenderer.send(Events.Online, { online }),
+  error: e => ipcRenderer.invoke(Events.appError, e),
+  online: online => ipcRenderer.send(Events.online, { online }),
   installation: {
-    check: () => ipcRenderer.invoke<BadError>(Events.CheckInstallation)
+    check: () => ipcRenderer.invoke<BadError>(Events.checkInstallation),
   },
   clipboard: {
-    copy: text => ipcRenderer.invoke(Events.ClipboardCopy, { text })
+    copy: text => ipcRenderer.invoke(Events.clipboardCopy, { text }),
   },
   config: {
     update: (partialConfig, override) =>
-      ipcRenderer.invoke<Config>(Events.ConfigUpdate, {
+      ipcRenderer.invoke<Config>(Events.configUpdate, {
         config: partialConfig,
-        override
+        override,
       }),
-    get: () => ipcRenderer.invoke<Config>(Events.ConfigGet)
+    get: () => ipcRenderer.invoke<Config>(Events.configGet),
   },
-  isProduction: () => ipcRenderer.invoke<boolean>(Events.IsProduction),
+  isProduction: () => ipcRenderer.invoke<boolean>(Events.isProduction),
   compilation: {
-    start: script => ipcRenderer.send(Events.CompileScriptStart, script),
+    start: script => ipcRenderer.send(Events.compileScriptStart, script),
     onceFinish: (script, listener) =>
       ipcRenderer.once<CompilationResult>(
-        `${Events.CompileScriptFinish}-${script}`,
-        listener
-      )
+        `${Events.compileScriptFinish}-${script}`,
+        listener,
+      ),
   },
   dialog: {
     select: type =>
-      ipcRenderer.invoke<string | null>(Events.OpenDialog, { type })
+      ipcRenderer.invoke<string | null>(Events.openDialog, { type }),
   },
   shell: {
-    openExternal: href => shell.openExternal(href)
-  }
+    openExternal: href => shell.openExternal(href),
+  },
 }
 
-;((window as unknown) as { bridge: Bridge }).bridge = api
+;(window as unknown as { bridge: Bridge }).bridge = api

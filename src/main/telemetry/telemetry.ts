@@ -9,7 +9,7 @@ import fetch, { Response, Headers } from 'electron-fetch'
 
 import {
   TelemetryEvents,
-  TelemetryEventsProperties
+  TelemetryEventsProperties,
 } from '../../common/telemetry-events'
 import { Logger } from '../logger'
 
@@ -25,7 +25,7 @@ export class Telemetry {
     private isActive: boolean,
     private api: string,
     private appKey: string,
-    private isOnline: boolean
+    private isOnline: boolean,
   ) {
     this.logger = new Logger('Telemetry')
 
@@ -42,22 +42,22 @@ export class Telemetry {
 
   event<E extends TelemetryEvents>({
     name,
-    properties
+    properties,
   }: Params<E>): Promise<void> {
     return this.sendRequest(
       { endpoint: '/events', method: 'POST' },
-      { type: name, properties, appKey: this.appKey }
+      { type: name, properties, appKey: this.appKey },
     )
   }
 
   exception({
-    properties
+    properties,
   }: {
-    properties: TelemetryEventsProperties[TelemetryEvents.Exception]
+    properties: TelemetryEventsProperties[TelemetryEvents.exception]
   }): Promise<void> {
     return this.sendRequest(
       { endpoint: '/events', method: 'POST' },
-      { type: TelemetryEvents.Exception, properties, appKey: this.appKey }
+      { type: TelemetryEvents.exception, properties, appKey: this.appKey },
     )
   }
 
@@ -71,7 +71,7 @@ export class Telemetry {
 
   private async sendRequest(
     { endpoint, method }: { endpoint: string; method: 'POST' | 'PUT' },
-    payload: Record<string | 'appKey', unknown>
+    payload: Record<string | 'appKey', unknown>,
   ): Promise<void> {
     if (!this.isActive || !this.isOnline) {
       if (!this.isOnline) {
@@ -92,23 +92,23 @@ export class Telemetry {
       const response = await fetch(`${this.api}${endpoint}`, {
         method,
         body: JSON.stringify(payload),
-        headers: this.getHeaders()
+        headers: this.getHeaders(),
       })
 
       if (!response.ok) {
         this.logger.debug(
           "can't send telemetry data",
-          await this.getData(response)
+          await this.getData(response),
         )
         return
       }
     } catch (error) {
       this.logger.debug(
         "can't send telemetry data",
-        error instanceof Error ? error.message : error
+        error instanceof Error ? error.message : error,
       )
       this.logger.info(
-        'disabling telemetry for this session because api is either unreacheable or an error has occurred'
+        'disabling telemetry for this session because api is either unreacheable or an error has occurred',
       )
       this.setActive(false)
     }

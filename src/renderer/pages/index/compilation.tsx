@@ -27,13 +27,8 @@ import { ScriptItem } from './script-item'
 export function Compilation(): JSX.Element {
   const { t } = useTranslation()
   const { groups } = useApp()
-  const {
-    scripts,
-    start,
-    setScripts,
-    concurrentScripts,
-    isRunning
-  } = useCompilation()
+  const { scripts, start, setScripts, concurrentScripts, isRunning } =
+    useCompilation()
   const { send } = useTelemetry()
   const { drop } = useDrop()
 
@@ -42,17 +37,17 @@ export function Compilation(): JSX.Element {
       setScripts((scriptsList: ScriptInterface[]) => {
         const pscScripts: ScriptInterface[] = pscFilesToPscScripts(
           pscFiles,
-          scriptsList
+          scriptsList,
         )
-        send(TelemetryEvents.CompilationDropScripts, {
-          scripts: pscScripts.length
+        send(TelemetryEvents.compilationDropScripts, {
+          scripts: pscScripts.length,
         })
         const newScripts = uniqScripts([...scriptsList, ...pscScripts])
 
         return reorderScripts(newScripts)
       })
     },
-    [setScripts, send]
+    [setScripts, send],
   )
 
   useSetDrop(onDrop)
@@ -61,14 +56,14 @@ export function Compilation(): JSX.Element {
     (script: ScriptInterface) => {
       return () => {
         setScripts(scriptsList => {
-          send(TelemetryEvents.CompilationRemoveScript, {
-            remainingScripts: scriptsList.length - 1
+          send(TelemetryEvents.compilationRemoveScript, {
+            remainingScripts: scriptsList.length - 1,
           })
           return scriptsList.filter((cs: ScriptInterface) => cs !== script)
         })
       }
     },
-    [setScripts, send]
+    [setScripts, send],
   )
 
   const onClickStart = useCallback(() => {
@@ -76,9 +71,9 @@ export function Compilation(): JSX.Element {
       return
     }
 
-    send(TelemetryEvents.CompilationPlay, {
+    send(TelemetryEvents.compilationPlay, {
       scripts: scripts.length,
-      concurrentScripts
+      concurrentScripts,
     })
     start({ scripts })
   }, [scripts, send, start, concurrentScripts])
@@ -92,10 +87,10 @@ export function Compilation(): JSX.Element {
       }
 
       setScripts(scriptList =>
-        reorderScripts(uniqScripts([...scriptList, ...group.scripts]))
+        reorderScripts(uniqScripts([...scriptList, ...group.scripts])),
       )
     },
-    [setScripts, groups]
+    [setScripts, groups],
   )
 
   const onClearScripts = useCallback(() => {
@@ -111,7 +106,7 @@ export function Compilation(): JSX.Element {
         {t('page.compilation.actions.searchScripts')}
       </button>
     ),
-    [t, drop]
+    [t, drop],
   )
 
   const pageActions = useMemo(() => {
@@ -123,7 +118,7 @@ export function Compilation(): JSX.Element {
           groups={groups}
           onChangeGroup={onChangeGroup}
           key="groups"
-        />
+        />,
       )
     }
 
@@ -143,7 +138,7 @@ export function Compilation(): JSX.Element {
   }, [scripts, onClickRemoveScriptFromScript])
 
   const onClickEmpty = useCallback(() => {
-    send(TelemetryEvents.CompilationListEmpty, { scripts: scripts.length })
+    send(TelemetryEvents.compilationListEmpty, { scripts: scripts.length })
     onClearScripts()
   }, [onClearScripts, send, scripts])
 
@@ -151,7 +146,7 @@ export function Compilation(): JSX.Element {
     ({ className }: { className?: string }) => (
       <PlayIcon className={className} />
     ),
-    []
+    [],
   )
 
   return (

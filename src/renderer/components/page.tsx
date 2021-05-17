@@ -15,7 +15,7 @@ interface Props {
 
 export function Page({
   children,
-  className
+  className,
 }: React.PropsWithChildren<Props>): JSX.Element {
   const [isDrawerExpand] = useDrawer()
 
@@ -24,7 +24,7 @@ export function Page({
       className={cx(
         'page h-screen w-screen p-6 overflow-overlay bg-light-600 dark:bg-black-800',
         className,
-        isDrawerExpand ? 'pl-48' : 'pl-14'
+        isDrawerExpand ? 'pl-48' : 'pl-14',
       )}
     >
       <main>{children}</main>

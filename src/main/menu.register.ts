@@ -25,7 +25,7 @@ const reportBugUrl = 'https://github.com/Kiyozz/papyrus-compiler-app/issues/new'
 
 export function registerMenu({
   win,
-  openLogFile
+  openLogFile,
 }: RegisterMenusCallbacks): void {
   const menu = appMenu()
 
@@ -38,7 +38,7 @@ export function registerMenu({
           click() {
             appStore.openInEditor()
           },
-          accelerator: 'CommandOrControl+,'
+          accelerator: 'CommandOrControl+,',
         },
         {
           label: 'Reset',
@@ -47,19 +47,19 @@ export function registerMenu({
               ...defaultConfig,
               tutorials: {
                 ...defaultConfig.tutorials,
-                settings: false
-              }
+                settings: false,
+              },
             }
-          }
-        }
-      ]
+          },
+        },
+      ],
     },
     {
       label: 'Check for updates',
       click() {
-        win.webContents.send(Events.Changelog)
-      }
-    }
+        win.webContents.send(Events.changelog)
+      },
+    },
   ]
 
   const helpMenu: MenuItemConstructorOptions = {
@@ -70,17 +70,17 @@ export function registerMenu({
         click() {
           openLogFile(logger.file.path)
         },
-        accelerator: 'CommandOrControl+Alt+J'
+        accelerator: 'CommandOrControl+Alt+J',
       },
       openUrlMenuItem({
         label: 'Report bug',
-        url: reportBugUrl
+        url: reportBugUrl,
       }),
       openUrlMenuItem({
         label: 'GitHub',
-        url: githubUrl
-      })
-    ]
+        url: githubUrl,
+      }),
+    ],
   }
 
   if (exists(logger.previousSessionFilePath)) {
@@ -90,7 +90,7 @@ export function registerMenu({
         click() {
           openLogFile(logger.previousSessionFilePath)
         },
-        accelerator: 'CommandOrControl+Alt+Shift+J'
+        accelerator: 'CommandOrControl+Alt+Shift+J',
       })
     }
   }
@@ -102,7 +102,7 @@ export function registerMenu({
   defaultMenus.push(helpMenu)
 
   const windowMenuIndex = defaultMenus.findIndex(
-    defaultMenu => defaultMenu.label === 'Window'
+    defaultMenu => defaultMenu.label === 'Window',
   )
 
   if (windowMenuIndex !== -1) {

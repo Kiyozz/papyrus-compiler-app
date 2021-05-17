@@ -8,7 +8,7 @@ import is from '@sindresorhus/is'
 
 import {
   TelemetryEvents,
-  TelemetryEventsProperties
+  TelemetryEventsProperties,
 } from '../../common/telemetry-events'
 import { EventHandler } from '../interfaces/event-handler'
 import { Telemetry } from '../telemetry/telemetry'
@@ -19,7 +19,8 @@ interface Payload<E extends TelemetryEvents> {
 }
 
 export class TelemetryHandler
-  implements EventHandler<Payload<TelemetryEvents>> {
+  implements EventHandler<Payload<TelemetryEvents>>
+{
   constructor(private telemetry: Telemetry) {}
 
   async listen(args?: Payload<TelemetryEvents>): Promise<void> {

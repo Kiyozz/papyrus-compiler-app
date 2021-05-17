@@ -24,43 +24,43 @@ const jsonPath = is.development
   ? join(__dirname, '../..', 'package.json')
   : join(app.getAppPath(), 'package.json')
 const json: { version: string } = JSON.parse(
-  fs.readFileSync(jsonPath).toString()
+  fs.readFileSync(jsonPath).toString(),
 )
 
 const defaultConfig: Config = {
   game: {
     path: '',
     type: (process.env.ELECTRON_WEBPACK_APP_MOD_URL ?? '').includes(
-      'specialedition'
+      'specialedition',
     )
-      ? GameType.Se
-      : GameType.Le
+      ? GameType.se
+      : GameType.le,
   },
   compilation: {
     concurrentScripts: 15,
     compilerPath: '',
     flag: 'TESV_Papyrus_Flags.flg',
-    output: 'Data\\Scripts'
+    output: 'Data\\Scripts',
   },
   tutorials: {
     settings: true,
-    telemetry: true
+    telemetry: true,
   },
   mo2: {
     use: false,
     output: 'overwrite\\Scripts',
-    mods: 'mods'
+    mods: 'mods',
   },
   groups: [],
   telemetry: {
-    active: true
+    active: true,
   },
-  theme: Theme.System,
+  theme: Theme.system,
   __internal__: {
     migrations: {
-      version: json.version
-    }
-  }
+      version: json.version,
+    },
+  },
 }
 
 const appStore = new Store<Config>({
@@ -71,8 +71,8 @@ const appStore = new Store<Config>({
     '4.2.0': migrate420,
     '5.1.0': migrate510,
     '5.2.0': migrate520,
-    '5.5.0': migrate550
-  }
+    '5.5.0': migrate550,
+  },
 } as never)
 
 checkStore(appStore, defaultConfig)

@@ -11,7 +11,7 @@ export function isDark(): boolean {
 }
 
 export function onDarkPreferenceChanges(
-  onChange: (isDark: boolean) => void
+  onChange: (isDark: boolean) => void,
 ): Unsubscribe {
   const media = window.matchMedia('(prefers-color-scheme: dark)')
 

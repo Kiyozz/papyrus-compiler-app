@@ -38,9 +38,9 @@ function installExtensions() {
     const installer = require('electron-devtools-installer')
     const extensions = [installer.REACT_DEVELOPER_TOOLS]
 
-    return Promise.all(
-      extensions.map(name => installer.default(name))
-    ).catch(e => logger.warn(e))
+    return Promise.all(extensions.map(name => installer.default(name))).catch(
+      e => logger.warn(e),
+    )
   }
 }
 
@@ -75,33 +75,33 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
     telemetryActive,
     process.env.ELECTRON_TELEMETRY_API ?? '',
     process.env.ELECTRON_TELEMETRY_API_KEY ?? '',
-    true
+    true,
   )
 
-  ipcMain.on(Events.Online, (e, args: { online: boolean }) => {
+  ipcMain.on(Events.online, (e, args: { online: boolean }) => {
     logger.info(
       'network status changes.',
-      `Internet is ${args.online ? 'online' : 'offline'}`
+      `Internet is ${args.online ? 'online' : 'offline'}`,
     )
     telemetry.setOnline(args.online)
   })
 
   const openFileHandler = new OpenFileHandler()
   const handlers = new Map<string, EventHandler>([
-    [Events.OpenDialog, new DialogHandler()],
-    [Events.CheckInstallation, new CheckInstallationHandler()],
-    [Events.ConfigUpdate, new ConfigUpdateHandler()],
-    [Events.ConfigGet, new ConfigGetHandler()],
-    [Events.FilesStats, new FileStatHandler()],
-    [Events.GetVersion, new GetVersionHandler()],
-    [Events.AppError, new InAppErrorHandler(telemetry)],
-    [Events.IsProduction, new IsProductionHandler()],
-    [Events.ClipboardCopy, new ClipboardCopyHandler()],
-    [Events.Telemetry, new TelemetryHandler(telemetry)],
-    [Events.TelemetryActive, new TelemetryActiveHandler(telemetry)]
+    [Events.openDialog, new DialogHandler()],
+    [Events.checkInstallation, new CheckInstallationHandler()],
+    [Events.configUpdate, new ConfigUpdateHandler()],
+    [Events.configGet, new ConfigGetHandler()],
+    [Events.filesStats, new FileStatHandler()],
+    [Events.getVersion, new GetVersionHandler()],
+    [Events.appError, new InAppErrorHandler(telemetry)],
+    [Events.isProduction, new IsProductionHandler()],
+    [Events.clipboardCopy, new ClipboardCopyHandler()],
+    [Events.telemetry, new TelemetryHandler(telemetry)],
+    [Events.telemetryActive, new TelemetryActiveHandler(telemetry)],
   ])
   const events = new Map<string, Event>([
-    [Events.CompileScriptStart, new ScriptCompileEvent()]
+    [Events.compileScriptStart, new ScriptCompileEvent()],
   ])
   const syncs = new Map<string, EventSync>([])
 
@@ -111,7 +111,7 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
     win,
     openLogFile: (file: string) => {
       openFileHandler.listen(file)
-    }
+    },
   })
 
   registerIpcEvents(handlers, events, syncs)

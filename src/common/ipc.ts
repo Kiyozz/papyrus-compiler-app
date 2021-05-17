@@ -8,7 +8,7 @@ import {
   ipcMain as baseIpcMain,
   IpcMainEvent,
   IpcMainInvokeEvent,
-  ipcRenderer as baseIpcRenderer
+  ipcRenderer as baseIpcRenderer,
 } from 'electron'
 
 type MainInvokeListener<Args> = (event: IpcMainInvokeEvent, args: Args) => void
@@ -19,8 +19,8 @@ class IpcException extends Error {
     super(
       message.replace(
         /Error invoking remote method ('.*'): Error: (.*)/,
-        (s, event: string, errorMessage: string) => errorMessage
-      )
+        (s, event: string, errorMessage: string) => errorMessage,
+      ),
     )
   }
 }
@@ -30,7 +30,7 @@ class IpcRenderer {
     return (baseIpcRenderer.invoke(channel, args) as Promise<Result>).catch(
       e => {
         throw new IpcException(e.message)
-      }
+      },
     )
   }
 
@@ -40,7 +40,7 @@ class IpcRenderer {
 
   once<Result = unknown>(
     channel: string,
-    listener: (args: Result) => void
+    listener: (args: Result) => void,
   ): void {
     baseIpcRenderer.once(channel, (_, args: Result) => {
       listener(args)
@@ -61,7 +61,7 @@ class IpcRenderer {
 class IpcMain {
   handle<Result = unknown>(
     channel: string,
-    listener: MainInvokeListener<Result>
+    listener: MainInvokeListener<Result>,
   ) {
     return baseIpcMain.handle(channel, listener)
   }

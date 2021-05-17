@@ -40,13 +40,13 @@ function selectGroups(config: Config): Group[] {
         g.name,
         g.scripts.map((s, i) => {
           return {
-            status: ScriptStatus.Idle,
+            status: ScriptStatus.idle,
             id: i,
             name: s.name,
-            path: s.path
+            path: s.path,
           }
-        })
-      )
+        }),
+      ),
   )
 }
 
@@ -56,7 +56,7 @@ const onRefreshConfig = refresh$.asObservable()
 export const useApp = (): Context => useContext(AppContext)
 
 export function AppProvider({
-  children
+  children,
 }: React.PropsWithChildren<unknown>): JSX.Element | null {
   const [config, setConfig] = useState<Config>({} as Config)
   const [groups, setGroups] = useState<Group[]>([])
@@ -65,7 +65,7 @@ export function AppProvider({
 
   const updateConfig = (
     partialConfig: PartialDeep<Config>,
-    override?: boolean
+    override?: boolean,
   ) => {
     bridge.config.update(partialConfig, override).then(updatedConfig => {
       setConfig(updatedConfig)
@@ -107,7 +107,7 @@ export function AppProvider({
         groups,
         refreshConfig,
         copyToClipboard,
-        onRefreshConfig
+        onRefreshConfig,
       }}
     >
       {children}

@@ -4,7 +4,6 @@
  * All rights reserved.
  */
 
-import type { Color } from 'custom-electron-titlebar'
 import { useEffect } from 'react'
 
 import { Theme } from '../../common/theme'
@@ -12,12 +11,14 @@ import {
   darkColor,
   darkColorUnfocus,
   lightColor,
-  lightColorUnfocus
+  lightColorUnfocus,
 } from '../utils/color'
 import { useFocus } from './use-focus'
 import { useSystemDarkPreference } from './use-system-dark-preference'
 import { useTheme } from './use-theme'
 import { useTitlebar } from './use-titlebar'
+
+import type { Color } from 'custom-electron-titlebar'
 
 export function useSyncHtmlTheme(): void {
   const isSystemThemeDark = useSystemDarkPreference()
@@ -29,7 +30,7 @@ export function useSyncHtmlTheme(): void {
     let usedColor: Color
     const colors = {
       light: lightColor,
-      dark: darkColor
+      dark: darkColor,
     }
 
     if (!isFocus) {
@@ -37,9 +38,9 @@ export function useSyncHtmlTheme(): void {
       colors.dark = darkColorUnfocus
     }
 
-    if (theme === Theme.Dark) {
+    if (theme === Theme.dark) {
       usedColor = colors.dark
-    } else if (theme === Theme.Light) {
+    } else if (theme === Theme.light) {
       usedColor = colors.light
     } else {
       usedColor = isSystemThemeDark ? colors.dark : colors.light
@@ -51,9 +52,9 @@ export function useSyncHtmlTheme(): void {
   useEffect(() => {
     const list = document.documentElement.classList
 
-    if (theme === Theme.Dark) {
+    if (theme === Theme.dark) {
       list.add('dark')
-    } else if (theme === Theme.Light) {
+    } else if (theme === Theme.light) {
       list.remove('dark')
     } else {
       if (isSystemThemeDark) {

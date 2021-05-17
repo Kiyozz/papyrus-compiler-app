@@ -26,7 +26,7 @@ export function Dialog({
   actions,
   title,
   content: Content,
-  children
+  children,
 }: React.PropsWithChildren<DialogProps>): JSX.Element {
   const container = useRef<HTMLDivElement | null>(null)
 
@@ -34,7 +34,7 @@ export function Dialog({
     () => {
       onClose?.()
     },
-    clicked => clicked === container.current
+    clicked => clicked === container.current,
   )
 
   const onEscape = useCallback(() => {
@@ -61,7 +61,7 @@ export function Dialog({
         )}
       </>
     ),
-    [actions, children, title]
+    [actions, children, title],
   )
 
   return createPortal(
@@ -85,6 +85,6 @@ export function Dialog({
         </div>
       </>
     ) : null,
-    document.body
+    document.body,
   )
 }

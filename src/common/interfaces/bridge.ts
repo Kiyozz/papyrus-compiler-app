@@ -16,7 +16,7 @@ export interface Bridge {
   telemetry: {
     send: <T extends TelemetryEvents>(
       event: T,
-      args: TelemetryEventsProperties[T]
+      args: TelemetryEventsProperties[T],
     ) => void
     active: (active: boolean) => void
   }
@@ -45,7 +45,7 @@ export interface Bridge {
   config: {
     update: (
       partialConfig: PartialDeep<Config>,
-      override?: boolean
+      override?: boolean,
     ) => Promise<Config>
     get: () => Promise<Config>
   }
@@ -56,7 +56,7 @@ export interface Bridge {
     start: (script: string) => void
     onceFinish: (
       script: string,
-      listener: (result: CompilationResult) => void
+      listener: (result: CompilationResult) => void,
     ) => void
   }
 

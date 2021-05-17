@@ -36,25 +36,26 @@ export function Groups(): JSX.Element {
       if (
         !is.undefined(
           groups.find(
-            g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase()
-          )
+            g =>
+              g.name.trim().toLowerCase() === group.name.trim().toLowerCase(),
+          ),
         )
       ) {
         return
       }
 
-      send(TelemetryEvents.GroupCreated, { scripts: group.scripts.length })
+      send(TelemetryEvents.groupCreated, { scripts: group.scripts.length })
       setConfig({
         groups: [
           ...groups,
           {
             name: group.name,
-            scripts: group.scripts.map(s => ({ name: s.name, path: s.path }))
-          }
-        ]
+            scripts: group.scripts.map(s => ({ name: s.name, path: s.path })),
+          },
+        ],
       })
     },
-    [setConfig, groups, send]
+    [setConfig, groups, send],
   )
   const editGroup = useCallback(
     ({ group, lastGroupName }: EditGroupParams) => {
@@ -63,39 +64,41 @@ export function Groups(): JSX.Element {
           lastGroupName.trim().toLowerCase() &&
         !is.undefined(
           groups.find(
-            g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase()
-          )
+            g =>
+              g.name.trim().toLowerCase() === group.name.trim().toLowerCase(),
+          ),
         )
       ) {
         return
       }
 
-      send(TelemetryEvents.GroupEdited, { scripts: group.scripts.length })
+      send(TelemetryEvents.groupEdited, { scripts: group.scripts.length })
       setConfig({
         groups: groups.map((g: Group) => {
           if (g.name === lastGroupName) {
             return {
               scripts: group.scripts.map(s => ({ name: s.name, path: s.path })),
-              name: group.name
+              name: group.name,
             }
           }
 
           return {
             ...g,
-            scripts: g.scripts.map(s => ({ name: s.name, path: s.path }))
+            scripts: g.scripts.map(s => ({ name: s.name, path: s.path })),
           }
-        })
+        }),
       })
     },
-    [groups, setConfig, send]
+    [groups, setConfig, send],
   )
   const removeGroup = useCallback(
     (group: GroupInterface) => {
       if (
         is.undefined(
           groups.find(
-            g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase()
-          )
+            g =>
+              g.name.trim().toLowerCase() === group.name.trim().toLowerCase(),
+          ),
         )
       ) {
         return
@@ -105,12 +108,12 @@ export function Groups(): JSX.Element {
         {
           groups: groups
             .map(g => ({ name: g.name, scripts: g.scripts }))
-            .filter(g => g.name !== group.name)
+            .filter(g => g.name !== group.name),
         },
-        true
+        true,
       )
     },
-    [groups, setConfig]
+    [groups, setConfig],
   )
 
   const onClickRemoveGroup = useCallback(
@@ -119,7 +122,7 @@ export function Groups(): JSX.Element {
         removeGroup(group)
       }
     },
-    [removeGroup]
+    [removeGroup],
   )
 
   const onClickEditGroup = useCallback((group: GroupInterface) => {
@@ -139,7 +142,7 @@ export function Groups(): JSX.Element {
       setShowPopup(false)
       addGroup(group as GroupInterface)
     },
-    [setShowPopup, addGroup]
+    [setShowPopup, addGroup],
   )
 
   const onGroupEdit = useCallback(
@@ -147,7 +150,7 @@ export function Groups(): JSX.Element {
       setShowPopup(false)
       editGroup({ group, lastGroupName })
     },
-    [setShowPopup, editGroup]
+    [setShowPopup, editGroup],
   )
 
   const onClosePopup = useCallback(() => {
@@ -164,7 +167,7 @@ export function Groups(): JSX.Element {
               <CreateIcon />
             </div>
             {t('page.groups.actions.create')}
-          </button>
+          </button>,
         ]}
       />
 

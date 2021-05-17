@@ -14,20 +14,20 @@ import { useTelemetry } from './use-telemetry'
 export function useTheme(): [Theme, (theme: Theme) => void] {
   const {
     setConfig,
-    config: { theme }
+    config: { theme },
   } = useApp()
   const { send } = useTelemetry()
 
   const setTheme = useCallback(
     (theme: Theme) => {
-      if (![Theme.System, Theme.Light, Theme.Dark].includes(theme)) {
+      if (![Theme.system, Theme.light, Theme.dark].includes(theme)) {
         return
       }
 
-      send(TelemetryEvents.SettingsTheme, { theme })
+      send(TelemetryEvents.settingsTheme, { theme })
       setConfig({ theme })
     },
-    [setConfig, send]
+    [setConfig, send],
   )
 
   return [theme, setTheme]

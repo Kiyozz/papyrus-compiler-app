@@ -19,8 +19,8 @@ export function TutorialTelemetry(): JSX.Element {
   const onClickOk = () => {
     setConfig({
       tutorials: {
-        telemetry: false
-      }
+        telemetry: false,
+      },
     })
   }
 

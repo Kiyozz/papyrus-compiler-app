@@ -9,7 +9,7 @@ import React, {
   Dispatch,
   SetStateAction,
   useContext,
-  useState
+  useState,
 } from 'react'
 
 type Context = [string, Dispatch<SetStateAction<string>>]
@@ -19,7 +19,7 @@ const VersionContext = createContext(['', () => ''] as Context)
 export const useVersion = (): Context => useContext(VersionContext)
 
 export function VersionProvider({
-  children
+  children,
 }: React.PropsWithChildren<unknown>): JSX.Element {
   const [version, setVersion] = useState('')
 

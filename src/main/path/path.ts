@@ -76,7 +76,7 @@ export async function ensureFile(item: string): Promise<void> {
 export async function ensureDirs(items: string[]): Promise<void> {
   logger.debug(
     `checking presence of folder${pluralize(items)}`,
-    ...items.map(i => `"${i}"`)
+    ...items.map(i => `"${i}"`),
   )
 
   for (const item of items) {
@@ -91,7 +91,7 @@ export async function ensureDirs(items: string[]): Promise<void> {
 export async function ensureFiles(items: string[]): Promise<void> {
   logger.debug(
     `checking presence of file${pluralize(items)}`,
-    ...items.map(i => `"${i}"`)
+    ...items.map(i => `"${i}"`),
   )
 
   for (const item of items) {
@@ -105,21 +105,21 @@ export async function ensureFiles(items: string[]): Promise<void> {
 
 export async function getPathsInFolder(
   fileNames: string[],
-  options: fg.Options = {}
+  options: fg.Options = {},
 ): Promise<string[]> {
   logger.debug(
     'retrieving paths from the folders',
     fileNames,
     'with options',
-    options
+    options,
   )
 
   const response = await fg(
     fileNames.map(file => toSlash(file)),
     {
       caseSensitiveMatch: false,
-      ...options
-    }
+      ...options,
+    },
   )
 
   logger.debug('response of fast-glob', response)

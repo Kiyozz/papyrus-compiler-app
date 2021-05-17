@@ -20,11 +20,11 @@ interface Props {
 export function SettingsMo2({
   onChangeMo2,
   onChangeMo2Instance,
-  onClickRefreshInstallation
+  onClickRefreshInstallation,
 }: Props): JSX.Element {
   const { t } = useTranslation()
   const {
-    config: { mo2 }
+    config: { mo2 },
   } = useApp()
 
   return (

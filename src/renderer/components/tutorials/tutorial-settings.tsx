@@ -21,7 +21,7 @@ enum Step {
   compiler,
   concurrent,
   mo2,
-  end
+  end,
 }
 
 type Next = () => void
@@ -66,7 +66,7 @@ function GameSettingsStep({ next }: { next: Next }) {
         </button>
       </div>
     </div>,
-    stepAnchor
+    stepAnchor,
   )
 }
 
@@ -88,7 +88,7 @@ function CompilerSettingsStep({ next }: { next: Next }) {
         </button>
       </div>
     </div>,
-    stepAnchor
+    stepAnchor,
   )
 }
 
@@ -111,7 +111,7 @@ function Mo2SettingsStep({ next }: { next: Next }) {
         </button>
       </div>
     </div>,
-    stepAnchor
+    stepAnchor,
   )
 }
 
@@ -133,7 +133,7 @@ function ConcurrentSettingsStep({ next }: { next: Next }) {
         </button>
       </div>
     </div>,
-    stepAnchor
+    stepAnchor,
   )
 }
 
@@ -161,12 +161,12 @@ export function TutorialSettings(): JSX.Element | null {
   const { send } = useTelemetry()
 
   const onClickClose = () => {
-    send(TelemetryEvents.TutorialsSettingsDeny, {})
+    send(TelemetryEvents.tutorialsSettingsDeny, {})
     setConfig({
       tutorials: {
         ...config.tutorials,
-        settings: false
-      }
+        settings: false,
+      },
     })
   }
 
@@ -191,18 +191,18 @@ export function TutorialSettings(): JSX.Element | null {
     setStep(Step.end)
     setConfig({
       tutorials: {
-        settings: false
-      }
+        settings: false,
+      },
     })
   }, [setConfig])
 
   useEffect(() => {
     if (step === Step.waiting) {
-      send(TelemetryEvents.AppFirstLoaded, {})
+      send(TelemetryEvents.appFirstLoaded, {})
     }
 
     if (step === Step.end) {
-      send(TelemetryEvents.TutorialsSettingsEnd, {})
+      send(TelemetryEvents.tutorialsSettingsEnd, {})
     }
   }, [step, send])
 

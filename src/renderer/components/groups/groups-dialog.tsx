@@ -32,7 +32,7 @@ export function GroupsDialog({
   onGroupEdit,
   open,
   onClose,
-  group
+  group,
 }: Props): JSX.Element {
   const { t } = useTranslation()
   const [name, setName] = useState('')
@@ -65,11 +65,11 @@ export function GroupsDialog({
     (script: ScriptInterface) => {
       return () => {
         setScripts(s =>
-          s.filter(scriptFromList => scriptFromList.name !== script.name)
+          s.filter(scriptFromList => scriptFromList.name !== script.name),
         )
       }
     },
-    []
+    [],
   )
 
   const onSubmitGroup = useCallback(
@@ -83,7 +83,7 @@ export function GroupsDialog({
       if (isEdit && group) {
         onGroupEdit(group.name, {
           name: name.trim(),
-          scripts
+          scripts,
         })
 
         return
@@ -91,10 +91,10 @@ export function GroupsDialog({
 
       onGroupAdd({
         name: name.trim(),
-        scripts
+        scripts,
       })
     },
-    [name, isEdit, group, scripts, onGroupAdd, onGroupEdit]
+    [name, isEdit, group, scripts, onGroupAdd, onGroupEdit],
   )
 
   const onChangeName = useCallback((e: string | number) => {
@@ -107,10 +107,10 @@ export function GroupsDialog({
     (pscFiles: File[]) => {
       const pscScripts = pscFilesToPscScripts(pscFiles)
 
-      send(TelemetryEvents.GroupDropScripts, { scripts: pscScripts.length })
+      send(TelemetryEvents.groupDropScripts, { scripts: pscScripts.length })
       setScripts(s => uniqScripts([...s, ...pscScripts]))
     },
-    [send]
+    [send],
   )
 
   useSetDrop(onDrop)
@@ -119,7 +119,7 @@ export function GroupsDialog({
     ({ children }: React.PropsWithChildren<unknown>) => (
       <form onSubmit={onSubmitGroup}>{children}</form>
     ),
-    [onSubmitGroup]
+    [onSubmitGroup],
   )
 
   return (

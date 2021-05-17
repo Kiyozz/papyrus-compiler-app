@@ -17,7 +17,7 @@ export function SettingsCompilation(): JSX.Element {
   const { t } = useTranslation()
   const {
     config: { compilation },
-    setConfig
+    setConfig,
   } = useApp()
 
   const onChangeConcurrentScripts = useCallback(
@@ -40,7 +40,7 @@ export function SettingsCompilation(): JSX.Element {
         setConfig({ compilation: { concurrentScripts: parsedValue } })
       }
     },
-    [setConfig]
+    [setConfig],
   )
 
   return (

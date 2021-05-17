@@ -33,9 +33,9 @@ async function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
-      preload: join(__dirname, 'preload.js')
+      preload: join(__dirname, 'preload.js'),
     },
-    show: false
+    show: false,
   }
 
   if (is.macos) {

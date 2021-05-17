@@ -38,7 +38,7 @@ export function TextField({
   iconOnMouseLeave,
   iconOnClick,
   inputClassName = '',
-  infoText
+  infoText,
 }: Props): JSX.Element {
   const onChangeInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +46,7 @@ export function TextField({
 
       onChange(newValue)
     },
-    [onChange]
+    [onChange],
   )
 
   return (

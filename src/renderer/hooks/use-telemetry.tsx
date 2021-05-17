@@ -8,7 +8,7 @@ import React, { createContext, useCallback, useContext } from 'react'
 
 import {
   TelemetryEvents,
-  TelemetryEventsProperties
+  TelemetryEventsProperties,
 } from '../../common/telemetry-events'
 import bridge from '../bridge'
 import { useApp } from './use-app'
@@ -16,7 +16,7 @@ import { useApp } from './use-app'
 interface TelemetryContextInterface {
   send: <E extends TelemetryEvents>(
     event: E,
-    properties: TelemetryEventsProperties[E]
+    properties: TelemetryEventsProperties[E],
   ) => void
   setActive: (active: boolean) => void
 }
@@ -27,13 +27,13 @@ export const useTelemetry = (): TelemetryContextInterface =>
   useContext(TelemetryContext)
 
 export function TelemetryProvider({
-  children
+  children,
 }: React.PropsWithChildren<unknown>): JSX.Element {
   const { config } = useApp()
   const sendTelemetry = useCallback(
     (
       event: TelemetryEvents,
-      properties: TelemetryEventsProperties[TelemetryEvents]
+      properties: TelemetryEventsProperties[TelemetryEvents],
     ) => {
       if (
         config.telemetry?.active &&
@@ -42,7 +42,7 @@ export function TelemetryProvider({
         bridge.telemetry.send(event, properties)
       }
     },
-    [config.telemetry]
+    [config.telemetry],
   )
   const setActive = useCallback((active: boolean) => {
     bridge.telemetry.active(active)

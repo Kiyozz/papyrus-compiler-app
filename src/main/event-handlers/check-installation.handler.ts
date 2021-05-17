@@ -12,7 +12,7 @@ import {
   toCompilerSourceFile,
   toExecutable,
   toOtherSource,
-  toSource
+  toSource,
 } from '../../common/game'
 import { BadError } from '../../common/interfaces/bad-error'
 import { EventHandler } from '../interfaces/event-handler'
@@ -61,7 +61,7 @@ export class CheckInstallationHandler implements EventHandler {
     const executable = toExecutable(gameType)
 
     const result: Promise<BadError> = Promise.resolve(
-      path.exists(path.join(gamePath, executable)) ? false : 'game'
+      path.exists(path.join(gamePath, executable)) ? false : 'game',
     )
 
     this.logger.debug('checking game exe - done')
@@ -76,7 +76,7 @@ export class CheckInstallationHandler implements EventHandler {
     const mo2Instance: string = appStore.get('mo2.instance')
 
     const result: Promise<BadError> = Promise.resolve(
-      mo2Use ? (!path.exists(mo2Instance) ? 'mo2-instance' : false) : false
+      mo2Use ? (!path.exists(mo2Instance) ? 'mo2-instance' : false) : false,
     )
 
     this.logger.debug('checking mo2 instance - done')
@@ -102,12 +102,12 @@ export class CheckInstallationHandler implements EventHandler {
       path.join(modsPath, '**', sourcesFolder, file),
       path.join(modsPath, '**', otherSourcesFolder, file),
       path.join(mo2.instance, 'overwrite', sourcesFolder, file),
-      path.join(mo2.instance, 'overwrite', otherSourcesFolder, file)
+      path.join(mo2.instance, 'overwrite', otherSourcesFolder, file),
     ].map(folder => path.normalize(toSlash(folder)))
 
     const files = await path.getPathsInFolder([...pathToChecks], {
       absolute: true,
-      deep: 4
+      deep: 4,
     })
 
     return files.length === 0 ? this.checkInGameDataFolder(file) : false
@@ -122,7 +122,7 @@ export class CheckInstallationHandler implements EventHandler {
       gamePath,
       'Data',
       toSource(gameType),
-      file
+      file,
     )
 
     const result = path.exists(path.normalize(gameScriptsFolder))
@@ -132,7 +132,7 @@ export class CheckInstallationHandler implements EventHandler {
         gamePath,
         'Data',
         toOtherSource(gameType),
-        file
+        file,
       )
 
       const otherResult = path.exists(path.normalize(otherGameScriptsFolder))
@@ -155,7 +155,7 @@ export class CheckInstallationHandler implements EventHandler {
     const compilerPath: string = appStore.get('compilation.compilerPath')
 
     const result: Promise<BadError> = Promise.resolve(
-      path.exists(path.normalize(compilerPath)) ? false : 'compiler'
+      path.exists(path.normalize(compilerPath)) ? false : 'compiler',
     )
 
     this.logger.debug('checking compiler path - done')

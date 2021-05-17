@@ -25,14 +25,14 @@ export type OnDropFunction = ((files: File[]) => void) | null
 export function DropScripts({
   onDrop,
   className,
-  children
+  children,
 }: React.PropsWithChildren<Props>): JSX.Element {
   const { getRootProps, isDragActive, getInputProps, open } = useDropzone({
     onDrop: files => onDrop?.(files),
     accept: '.psc',
     preventDropOnDocument: true,
     noClick: true,
-    noKeyboard: true
+    noKeyboard: true,
   })
 
   return (

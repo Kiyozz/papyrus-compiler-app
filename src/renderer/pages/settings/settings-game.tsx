@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 import {
   GameType,
   toCompilerSourceFile,
-  toExecutable
+  toExecutable,
 } from '../../../common/game'
 import { Alert } from '../../components/alert'
 import { DialogTextField } from '../../components/dialog/dialog-text-field'
@@ -33,11 +33,11 @@ export function SettingsGame({
   onChangeGameFolder,
   onClickRadio,
   onChangeCompilerPath,
-  onClickRefreshInstallation
+  onClickRefreshInstallation,
 }: Props): JSX.Element {
   const { t } = useTranslation()
   const {
-    config: { game, compilation }
+    config: { game, compilation },
   } = useApp()
   const { isBadInstallation } = useSettings()
   const exe = toExecutable(game.type)
@@ -50,36 +50,36 @@ export function SettingsGame({
       <FormControl component="fieldset" fullWidth>
         <RadioGroup row value={game.type} onChange={onClickRadio}>
           <FormControlLabel
-            value={GameType.Le}
+            value={GameType.le}
             classes={{
-              label: 'dark:text-white'
+              label: 'dark:text-white',
             }}
             control={<Radio />}
-            label={GameType.Le}
+            label={GameType.le}
           />
           <FormControlLabel
-            value={GameType.Se}
+            value={GameType.se}
             classes={{
-              label: 'dark:text-white'
+              label: 'dark:text-white',
             }}
             control={<Radio />}
-            label={GameType.Se}
+            label={GameType.se}
           />
           <FormControlLabel
-            value={GameType.Vr}
+            value={GameType.vr}
             classes={{
-              label: 'dark:text-white'
+              label: 'dark:text-white',
             }}
             control={<Radio />}
-            label={GameType.Vr}
+            label={GameType.vr}
           />
           <FormControlLabel
-            value={GameType.Fo4}
+            value={GameType.fo4}
             classes={{
-              label: 'dark:text-white'
+              label: 'dark:text-white',
             }}
             control={<Radio />}
-            label={GameType.Fo4}
+            label={GameType.fo4}
           />
         </RadioGroup>
       </FormControl>
@@ -90,7 +90,7 @@ export function SettingsGame({
           error={isBadInstallation === 'game'}
           label={t('page.settings.gameFolderInfo', {
             gameType: game.type,
-            exe
+            exe,
           })}
           defaultValue={game.path}
           onChange={onChangeGameFolder}
@@ -121,11 +121,11 @@ export function SettingsGame({
                 t('page.settings.errors.game', { exe })}
               {isBadInstallation === 'compiler' &&
                 t('page.settings.errors.compiler', {
-                  compilerExe: compilation.compilerPath
+                  compilerExe: compilation.compilerPath,
                 })}
               {isBadInstallation === 'scripts' &&
                 t('page.settings.errors.scripts', {
-                  file: toCompilerSourceFile(game.type)
+                  file: toCompilerSourceFile(game.type),
                 })}
             </p>
           </div>

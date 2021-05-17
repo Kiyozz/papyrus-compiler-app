@@ -29,22 +29,19 @@ export function Settings(): JSX.Element {
     config: {
       game,
       compilation,
-      mo2: { instance: mo2Instance }
+      mo2: { instance: mo2Instance },
     },
     setConfig,
-    refreshConfig
+    refreshConfig,
   } = useApp()
-  const {
-    checkInstallation,
-    isBadInstallation,
-    resetBadInstallation
-  } = useSettings()
+  const { checkInstallation, isBadInstallation, resetBadInstallation } =
+    useSettings()
   const { isLoading } = useLoading()
   const { send } = useTelemetry()
 
   const debouncedUpdateConfig = useMemo(
     () => debounce(setConfig, { wait: 500 }),
-    [setConfig]
+    [setConfig],
   )
 
   const setGame = useCallback(
@@ -53,38 +50,38 @@ export function Settings(): JSX.Element {
         game: { type: gameType },
         compilation: {
           flag:
-            gameType === GameType.Fo4
+            gameType === GameType.fo4
               ? 'Institute_Papyrus_Flags.flg'
-              : 'TESV_Papyrus_Flags.flg'
-        }
+              : 'TESV_Papyrus_Flags.flg',
+        },
       })
     },
-    [setConfig]
+    [setConfig],
   )
   const setGameFolder = useCallback(
     (gamePath: string) => debouncedUpdateConfig({ game: { path: gamePath } }),
-    [debouncedUpdateConfig]
+    [debouncedUpdateConfig],
   )
   const setCompilerPath = useCallback(
     (compilerPath: string) =>
       debouncedUpdateConfig({ compilation: { compilerPath } }),
-    [debouncedUpdateConfig]
+    [debouncedUpdateConfig],
   )
   const setMo2 = useCallback(
     (useMo2Updated: boolean) => setConfig({ mo2: { use: useMo2Updated } }),
-    [setConfig]
+    [setConfig],
   )
   const setMo2Instance = useCallback(
     (instance?: string) => debouncedUpdateConfig({ mo2: { instance } }),
-    [debouncedUpdateConfig]
+    [debouncedUpdateConfig],
   )
   const setDisableMo2 = useCallback(
     () => setConfig({ mo2: { use: false, instance: undefined } }),
-    [setConfig]
+    [setConfig],
   )
   const debouncedcheckInstallation = useMemo(
     () => debounce(checkInstallation, { wait: 500 }),
-    [checkInstallation]
+    [checkInstallation],
   )
 
   const onClickRadio = useCallback(
@@ -93,15 +90,15 @@ export function Settings(): JSX.Element {
       const value = e.target.value as GameType
 
       if (
-        ![GameType.Le, GameType.Se, GameType.Vr, GameType.Fo4].includes(value)
+        ![GameType.le, GameType.se, GameType.vr, GameType.fo4].includes(value)
       ) {
         return
       }
 
-      send(TelemetryEvents.SettingsGame, { game: value })
+      send(TelemetryEvents.settingsGame, { game: value })
       setGame(value)
     },
-    [resetBadInstallation, setGame, send]
+    [resetBadInstallation, setGame, send],
   )
 
   useEffect(() => {
@@ -118,21 +115,21 @@ export function Settings(): JSX.Element {
     game.path,
     game.type,
     mo2Instance,
-    resetBadInstallation
+    resetBadInstallation,
   ])
 
   const onChangeGameFolder = useCallback(
     (value: string) => {
       setGameFolder(value)
     },
-    [setGameFolder]
+    [setGameFolder],
   )
 
   const onChangeCompilerPath = useCallback(
     (value: string) => {
       setCompilerPath(value)
     },
-    [setCompilerPath]
+    [setCompilerPath],
   )
 
   const onChangeMo2Instance = useCallback(
@@ -143,27 +140,27 @@ export function Settings(): JSX.Element {
         setMo2Instance(value)
       }
     },
-    [setMo2Instance]
+    [setMo2Instance],
   )
 
   const onChangeMo2 = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const checked = e.currentTarget.checked
 
-      send(TelemetryEvents.ModOrganizerActive, { active: checked })
+      send(TelemetryEvents.modOrganizerActive, { active: checked })
       checked ? setMo2(checked) : setDisableMo2()
     },
-    [setDisableMo2, setMo2, send]
+    [setDisableMo2, setMo2, send],
   )
 
   const onClickRefreshInstallation = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
 
-      send(TelemetryEvents.SettingsRefresh, {})
+      send(TelemetryEvents.settingsRefresh, {})
       checkInstallation()
     },
-    [checkInstallation, send]
+    [checkInstallation, send],
   )
 
   const onClickPageRefresh = useCallback(() => {
@@ -176,7 +173,7 @@ export function Settings(): JSX.Element {
     }
 
     refreshConfig()
-    send(TelemetryEvents.SettingsRefresh, {})
+    send(TelemetryEvents.settingsRefresh, {})
   }, [isLoading, isBadInstallation, refreshConfig, checkInstallation, send])
 
   return (
@@ -189,7 +186,7 @@ export function Settings(): JSX.Element {
               <RefreshIcon />
             </div>
             {t('page.settings.actions.refresh')}
-          </button>
+          </button>,
         ]}
       />
 

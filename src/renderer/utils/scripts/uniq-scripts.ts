@@ -8,7 +8,7 @@ import { ScriptInterface } from '../../interfaces'
 import { uniqArray } from '../uniq-array'
 
 export default function uniqScripts(
-  scripts: ScriptInterface[]
+  scripts: ScriptInterface[],
 ): ScriptInterface[] {
   return uniqArray(scripts, ['name'])
 }

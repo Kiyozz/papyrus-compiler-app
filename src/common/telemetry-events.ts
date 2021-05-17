@@ -7,73 +7,73 @@
 import { GameType } from './game'
 
 export enum TelemetryEvents {
-  AppFirstLoaded = 'App.FirstLoaded',
-  AppLoaded = 'App.Loaded',
-  CompilationDropScripts = 'Compilation.DropScripts',
-  CompilationGroupLoaded = 'Compilation.GroupLoaded',
-  CompilationListEmpty = 'Compilation.ListEmpty',
-  CompilationLogsCopy = 'Compilation.LogsCopy',
-  CompilationPlay = 'Compilation.Play',
-  CompilationRemoveScript = 'Compilation.RemoveScript',
-  Exception = 'Exception',
-  GroupCreated = 'Group.Created',
-  GroupDeleted = 'Group.Deleted',
-  GroupDropScripts = 'Group.DropScripts',
-  GroupEdited = 'Group.Edited',
-  ModOrganizerActive = 'ModOrganizer.Active',
-  SettingsGame = 'Settings.Game',
-  SettingsTheme = 'Settings.Theme',
-  SettingsRefresh = 'Settings.Refresh',
-  TelemetryEnabled = 'Telemetry.Enabled',
-  TutorialsSettingsEnd = 'Tutorials.SettingsEnd',
-  TutorialsSettingsDeny = 'Tutorials.SettingsDeny'
+  appFirstLoaded = 'App.FirstLoaded',
+  appLoaded = 'App.Loaded',
+  compilationDropScripts = 'Compilation.DropScripts',
+  compilationGroupLoaded = 'Compilation.GroupLoaded',
+  compilationListEmpty = 'Compilation.ListEmpty',
+  compilationLogsCopy = 'Compilation.LogsCopy',
+  compilationPlay = 'Compilation.Play',
+  compilationRemoveScript = 'Compilation.RemoveScript',
+  exception = 'Exception',
+  groupCreated = 'Group.Created',
+  groupDeleted = 'Group.Deleted',
+  groupDropScripts = 'Group.DropScripts',
+  groupEdited = 'Group.Edited',
+  modOrganizerActive = 'ModOrganizer.Active',
+  settingsGame = 'Settings.Game',
+  settingsTheme = 'Settings.Theme',
+  settingsRefresh = 'Settings.Refresh',
+  telemetryEnabled = 'Telemetry.Enabled',
+  tutorialsSettingsEnd = 'Tutorials.SettingsEnd',
+  tutorialsSettingsDeny = 'Tutorials.SettingsDeny',
 }
 
 export interface TelemetryEventsProperties {
-  [TelemetryEvents.AppFirstLoaded]: Record<string, never>
-  [TelemetryEvents.AppLoaded]: Record<string, never>
-  [TelemetryEvents.CompilationDropScripts]: {
+  [TelemetryEvents.appFirstLoaded]: Record<string, never>
+  [TelemetryEvents.appLoaded]: Record<string, never>
+  [TelemetryEvents.compilationDropScripts]: {
     scripts: number
   }
-  [TelemetryEvents.CompilationGroupLoaded]: {
+  [TelemetryEvents.compilationGroupLoaded]: {
     groups: number
   }
-  [TelemetryEvents.CompilationListEmpty]: {
+  [TelemetryEvents.compilationListEmpty]: {
     scripts: number
   }
-  [TelemetryEvents.CompilationLogsCopy]: Record<string, never>
-  [TelemetryEvents.CompilationPlay]: {
+  [TelemetryEvents.compilationLogsCopy]: Record<string, never>
+  [TelemetryEvents.compilationPlay]: {
     scripts: number
     concurrentScripts: number
   }
-  [TelemetryEvents.CompilationRemoveScript]: {
+  [TelemetryEvents.compilationRemoveScript]: {
     remainingScripts: number
   }
-  [TelemetryEvents.Exception]: {
+  [TelemetryEvents.exception]: {
     error: string
     stack: string
   }
-  [TelemetryEvents.GroupCreated]: {
+  [TelemetryEvents.groupCreated]: {
     scripts: number
   }
-  [TelemetryEvents.GroupDeleted]: Record<string, never>
-  [TelemetryEvents.GroupDropScripts]: {
+  [TelemetryEvents.groupDeleted]: Record<string, never>
+  [TelemetryEvents.groupDropScripts]: {
     scripts: number
   }
-  [TelemetryEvents.GroupEdited]: {
+  [TelemetryEvents.groupEdited]: {
     scripts: number
   }
-  [TelemetryEvents.ModOrganizerActive]: {
+  [TelemetryEvents.modOrganizerActive]: {
     active: boolean
   }
-  [TelemetryEvents.SettingsGame]: {
+  [TelemetryEvents.settingsGame]: {
     game: GameType
   }
-  [TelemetryEvents.SettingsRefresh]: Record<string, never>
-  [TelemetryEvents.SettingsTheme]: {
+  [TelemetryEvents.settingsRefresh]: Record<string, never>
+  [TelemetryEvents.settingsTheme]: {
     theme: string
   }
-  [TelemetryEvents.TelemetryEnabled]: Record<string, never>
-  [TelemetryEvents.TutorialsSettingsEnd]: Record<string, never>
-  [TelemetryEvents.TutorialsSettingsDeny]: Record<string, never>
+  [TelemetryEvents.telemetryEnabled]: Record<string, never>
+  [TelemetryEvents.tutorialsSettingsEnd]: Record<string, never>
+  [TelemetryEvents.tutorialsSettingsDeny]: Record<string, never>
 }

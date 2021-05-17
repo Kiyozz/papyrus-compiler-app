@@ -5,8 +5,9 @@
  */
 
 import { CompilerPath, Flag, GameType, GamePath, OutputPath } from '../game'
-import type { Theme } from '../theme'
 import { Group } from './group'
+
+import type { Theme } from '../theme'
 
 interface Game {
   type: GameType

@@ -10,7 +10,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useState
+  useState,
 } from 'react'
 
 import bridge from '../bridge'
@@ -32,7 +32,7 @@ export const useInitialization = (): Context =>
   useContext(InitializationContext)
 
 export function InitializationProvider({
-  children
+  children,
 }: React.PropsWithChildren<unknown>): JSX.Element {
   const [done, setDone] = useState(false)
   const [latestVersion, setLatestVersion] = useState('')

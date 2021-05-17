@@ -27,7 +27,7 @@ export class ScriptCompileEvent implements Event<string> {
       .replace('0 error(s), 0 warning(s)', '')
       .replace(
         'Batch compile of 1 files finished. 1 succeeded, 0 failed.',
-        'Succeeded'
+        'Succeeded',
       )
       .trim()
   }
@@ -42,7 +42,7 @@ export class ScriptCompileEvent implements Event<string> {
 
     checkStore(appStore, defaultConfig)
 
-    const endEvent = `${Events.CompileScriptFinish}-${script}`
+    const endEvent = `${Events.compileScriptFinish}-${script}`
 
     this.logger.debug('current store values checked')
 
@@ -52,13 +52,13 @@ export class ScriptCompileEvent implements Event<string> {
       ipcEvent.reply(endEvent, {
         success: true,
         output: result,
-        script
+        script,
       } as CompilationResult)
     } catch (e) {
       ipcEvent.reply(endEvent, {
         success: false,
         output: this.cleanErrorLog(script, e.message),
-        script
+        script,
       } as CompilationResult)
     }
   }

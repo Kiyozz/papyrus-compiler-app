@@ -19,7 +19,8 @@ interface ConfigUpdateHandlerParams {
 }
 
 export class ConfigUpdateHandler
-  implements EventHandler<ConfigUpdateHandlerParams> {
+  implements EventHandler<ConfigUpdateHandlerParams>
+{
   private logger = new Logger('ConfigUpdateHandler')
 
   listen(args?: ConfigUpdateHandlerParams): Config {
@@ -56,7 +57,7 @@ export class ConfigUpdateHandler
             appStore.set(key, value)
           }
         }
-      }
+      },
     )
 
     return appStore.store

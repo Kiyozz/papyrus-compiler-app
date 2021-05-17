@@ -27,7 +27,7 @@ const logger = new Logger('CompileScript')
 
 function checkCommandResult(
   script: string,
-  result: { stdout: string; stderr: string }
+  result: { stdout: string; stderr: string },
 ) {
   const isSuccess = /0 failed/.test(result.stdout)
 
@@ -52,7 +52,7 @@ export async function compile(scriptName: string): Promise<string> {
     exe: compilerPath,
     imports: [gameSourceAbsolute],
     cwd: gamePath,
-    output: path.join(gamePath, compilation.output)
+    output: path.join(gamePath, compilation.output),
   }
 
   logger.debug('runner', runner)
@@ -62,7 +62,7 @@ export async function compile(scriptName: string): Promise<string> {
 
   if (!path.exists(compilerPath)) {
     logger.error(
-      `the configuration is invalid (compiler), ${compilerPath} file does not exist`
+      `the configuration is invalid (compiler), ${compilerPath} file does not exist`,
     )
 
     throw new ConfigurationException(`${compilerPath} does not exist`)
@@ -70,7 +70,7 @@ export async function compile(scriptName: string): Promise<string> {
 
   if (!path.exists(gameExeAbsolute)) {
     logger.error(
-      `the configuration is invalid (game), ${gameExe} file does not exist in game folder`
+      `the configuration is invalid (game), ${gameExe} file does not exist in game folder`,
     )
 
     throw new ConfigurationException(`${gameExeAbsolute} does not exist`)
@@ -98,8 +98,8 @@ export async function compile(scriptName: string): Promise<string> {
       const imports = await mo2.getImportsPath({
         gameType,
         mo2: {
-          instance: mo2Config.instance
-        }
+          instance: mo2Config.instance,
+        },
       })
 
       runner.cwd = mo2.getModsPath(mo2Config.instance)
@@ -117,7 +117,7 @@ export async function compile(scriptName: string): Promise<string> {
     scriptName,
     imports: runner.imports,
     output: runner.output,
-    flag: compilation.flag
+    flag: compilation.flag,
   })
 
   try {
@@ -135,7 +135,7 @@ export async function compile(scriptName: string): Promise<string> {
 
     logger.error('compilation error', {
       message: err.message,
-      stack: err.stack
+      stack: err.stack,
     })
 
     const outputStdErr = err.stderr.replace('<unknown>', 'unknown')
@@ -143,7 +143,7 @@ export async function compile(scriptName: string): Promise<string> {
 
     throw new CompilationException(
       scriptName,
-      !outputStdErr ? outputStdOut : outputStdErr
+      !outputStdErr ? outputStdOut : outputStdErr,
     )
   }
 }

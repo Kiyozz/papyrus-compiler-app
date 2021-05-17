@@ -17,7 +17,7 @@ export function SettingsTelemetry(): JSX.Element {
   const { t } = useTranslation()
   const {
     config: { telemetry },
-    setConfig
+    setConfig,
   } = useApp()
   const { send, setActive } = useTelemetry()
 
@@ -25,7 +25,7 @@ export function SettingsTelemetry(): JSX.Element {
     const checked = e.currentTarget.checked
 
     if (checked) {
-      send(TelemetryEvents.TelemetryEnabled, {})
+      send(TelemetryEvents.telemetryEnabled, {})
     }
 
     setActive(checked)

@@ -21,10 +21,10 @@ export function generateCompilerCmd({
   output,
   exe,
   scriptName,
-  flag
+  flag,
 }: GenerateCmdOptions): string {
   const cmd = `"${exe}" "${scriptName}" -i="${imports.join(
-    ';'
+    ';',
   )}" -o="${output}" -f="${flag}"`
 
   logger.debug('generated command', cmd)

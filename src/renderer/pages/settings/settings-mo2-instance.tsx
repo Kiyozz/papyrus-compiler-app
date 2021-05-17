@@ -20,11 +20,11 @@ interface Props {
 
 export function SettingsMo2Instance({
   onChangeMo2Instance,
-  onClickRefreshInstallation
+  onClickRefreshInstallation,
 }: Props): JSX.Element | null {
   const { t } = useTranslation()
   const {
-    config: { mo2 }
+    config: { mo2 },
   } = useApp()
   const { isBadInstallation } = useSettings()
 
@@ -52,7 +52,7 @@ export function SettingsMo2Instance({
 
             <p className="select-text">
               {t('page.settings.errors.mo2Instance', {
-                mo2Instance: mo2.instance
+                mo2Instance: mo2.instance,
               })}
             </p>
           </div>

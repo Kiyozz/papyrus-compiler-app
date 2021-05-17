@@ -26,7 +26,7 @@ function deepChilds(element?: HTMLElement | ChildNode | null): ChildNode[] {
 
 export function isChildren(
   from: HTMLElement | ChildNode | undefined | null,
-  child: HTMLElement | null
+  child: HTMLElement | null,
 ): boolean {
   if (child === null) {
     return false

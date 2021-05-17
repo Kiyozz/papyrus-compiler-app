@@ -13,7 +13,7 @@ import { useSystemDarkPreference } from './hooks/use-system-dark-preference'
 import { useTheme } from './hooks/use-theme'
 
 export function Theme({
-  children
+  children,
 }: React.PropsWithChildren<unknown>): JSX.Element {
   const isDark = useSystemDarkPreference()
   const [currentTheme] = useTheme()
@@ -21,42 +21,42 @@ export function Theme({
   const theme = createMuiTheme({
     palette: {
       type:
-        currentTheme === SettingsTheme.System
+        currentTheme === SettingsTheme.system
           ? isDark
             ? 'dark'
             : 'light'
-          : currentTheme === SettingsTheme.Dark
+          : currentTheme === SettingsTheme.dark
           ? 'dark'
           : 'light',
       primary: {
         main: '#539dff',
-        light: '#539dff'
+        light: '#539dff',
       },
       secondary: {
         main: '#2cb67d',
-        light: '#3fc68e'
+        light: '#3fc68e',
       },
       error: {
         main: red['300'],
-        light: '#e45858'
-      }
+        light: '#e45858',
+      },
     },
     overrides: {
       MuiRadio: {
         root: {
           '&$checked$colorSecondary': {
-            color: '#539dff'
-          }
-        }
+            color: '#539dff',
+          },
+        },
       },
       MuiCheckbox: {
         root: {
           '&$checked$colorSecondary': {
-            color: '#539dff'
-          }
-        }
-      }
-    }
+            color: '#539dff',
+          },
+        },
+      },
+    },
   })
 
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>

@@ -28,7 +28,7 @@ export function GroupsListItemMenu({ onDelete, onEdit }: Props): JSX.Element {
   useDocumentClick(
     () => setAnchor(null),
     clicked =>
-      ((anchor && anchor !== clicked) ?? false) && !isChildren(anchor, clicked)
+      ((anchor && anchor !== clicked) ?? false) && !isChildren(anchor, clicked),
   )
 
   const onOpen = (e: React.MouseEvent<HTMLElement>) =>
@@ -40,7 +40,7 @@ export function GroupsListItemMenu({ onDelete, onEdit }: Props): JSX.Element {
   }
 
   const onClickDelete = () => {
-    send(TelemetryEvents.GroupDeleted, {})
+    send(TelemetryEvents.groupDeleted, {})
     setAnchor(null)
     onDelete()
   }

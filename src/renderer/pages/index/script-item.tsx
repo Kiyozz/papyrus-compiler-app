@@ -11,7 +11,7 @@ import { useCompilation } from '../../hooks/use-compilation'
 import { ScriptInterface } from '../../interfaces'
 import {
   getClassNameFromStatus,
-  getIconFromStatus
+  getIconFromStatus,
 } from '../../utils/scripts/from-status'
 
 interface Props {
@@ -21,7 +21,7 @@ interface Props {
 
 export function ScriptItem({
   script,
-  onClickRemoveScript
+  onClickRemoveScript,
 }: Props): JSX.Element {
   const { isRunning } = useCompilation()
   const onClickRemove = useCallback(() => {

@@ -13,7 +13,7 @@ const hasFocus = () => document.hasFocus()
 export const useFocus = (): boolean => useContext(FocusContext)
 
 export const FocusProvider = ({
-  children
+  children,
 }: React.PropsWithChildren<unknown>): JSX.Element => {
   const [isFocus, setFocus] = useState(hasFocus)
 

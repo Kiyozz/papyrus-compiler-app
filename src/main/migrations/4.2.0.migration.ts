@@ -9,6 +9,7 @@ import * as util from 'electron-util'
 import * as path from 'path'
 
 import { toAntiSlash, toSlash } from '../slash'
+
 import type { AppStore } from '../store'
 
 export function migrate420(store: AppStore): void {
@@ -20,7 +21,7 @@ export function migrate420(store: AppStore): void {
 
     store.set(
       'compilation.compilerPath',
-      slashFunc(path.join(gamePath, compilerPath))
+      slashFunc(path.join(gamePath, compilerPath)),
     )
   }
 }

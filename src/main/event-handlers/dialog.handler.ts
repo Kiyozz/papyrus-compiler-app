@@ -20,7 +20,7 @@ export class DialogHandler implements EventHandler<DialogHandlerArgs> {
     }
 
     const result = await dialog.showOpenDialog({
-      properties: [type === 'folder' ? 'openDirectory' : 'openFile']
+      properties: [type === 'folder' ? 'openDirectory' : 'openFile'],
     })
 
     if (result.canceled) {

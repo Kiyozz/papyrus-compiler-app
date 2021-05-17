@@ -9,14 +9,14 @@ import { ScriptInterface } from '../../interfaces'
 
 export function pscFilesToPscScripts(
   pscFiles: File[],
-  actualList?: ScriptInterface[]
+  actualList?: ScriptInterface[],
 ): ScriptInterface[] {
   return pscFiles.map(({ name, path }, index) => {
     return {
       id: (actualList?.length ?? 0) + index,
       name,
       path,
-      status: ScriptStatus.Idle
+      status: ScriptStatus.idle,
     }
   })
 }

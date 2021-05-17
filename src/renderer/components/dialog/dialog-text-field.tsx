@@ -31,7 +31,7 @@ export function DialogTextField({
   label,
   defaultValue,
   onChange,
-  type
+  type,
 }: Props): JSX.Element {
   const { onRefreshConfig } = useApp()
   const { t } = useTranslation()
@@ -60,7 +60,7 @@ export function DialogTextField({
         console.log(err?.message)
       }
     },
-    [onChange, type]
+    [onChange, type],
   )
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export function DialogTextField({
         onChange(newValue)
       }
     },
-    [onChange]
+    [onChange],
   )
 
   return (

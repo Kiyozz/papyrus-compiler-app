@@ -10,7 +10,7 @@ const en = {
     compilation: 'Compilation',
     groups: 'Groups',
     settings: 'Settings',
-    closePanel: 'Close panel'
+    closePanel: 'Close panel',
   },
   page: {
     compilation: {
@@ -19,22 +19,22 @@ const en = {
         searchScripts: 'Search scripts',
         loadGroup: 'Load group',
         start: 'Start',
-        clearList: 'Clear list'
+        clearList: 'Clear list',
       },
       dragAndDropText:
         'You can drag and drop psc files to load them into the application.',
       dragAndDropAdmin:
         'This is only available when not running in administrator.',
       scriptItem: {
-        removeFromList: 'Remove from list'
-      }
+        removeFromList: 'Remove from list',
+      },
     },
     groups: {
       title: 'Groups',
       actions: {
         create: 'Create',
         edit: 'Edit',
-        remove: 'Remove'
+        remove: 'Remove',
       },
       createGroupText: 'You can create a group with the top-right button.',
       whatIsAGroup:
@@ -46,13 +46,13 @@ const en = {
         editGroup: 'Edit a group',
         name: 'Name',
         dropScripts: 'Drop your scripts files here',
-        close: 'Close'
-      }
+        close: 'Close',
+      },
     },
     settings: {
       title: 'Settings',
       actions: {
-        refresh: 'Refresh'
+        refresh: 'Refresh',
       },
       game: 'Game',
       gameFolderInfo: '{{gameType}} folder (where {{exe}} is located)',
@@ -63,7 +63,7 @@ const en = {
           "Check that your Creation Kit installation is valid. The app checks the presence of {{file}} file in Scripts\\Source or Source\\Scripts folders to validate your Creation Kit installation. If you're using the app MO2 integration, the folders overwrite and mods are also checked.",
         game: 'Check that "{{exe}}" exists in the game folder.',
         compiler: 'Check that "{{compilerExe}}" exists.',
-        mo2Instance: 'Check that instance folder "{{mo2Instance}}" exists.'
+        mo2Instance: 'Check that instance folder "{{mo2Instance}}" exists.',
       },
       mo2: {
         enable: 'Enable',
@@ -71,18 +71,18 @@ const en = {
         instance: 'Instance folder',
         limit: 'Limit {{limit}}',
         errorInstance:
-          'The folder "{{folder}}" does not contains {{requiredFolders}} folders.'
+          'The folder "{{folder}}" does not contains {{requiredFolders}} folders.',
       },
       compilation: {
         title: 'Compilation',
         concurrentScripts: {
           label: 'Number of concurrently compiled scripts',
-          info: 'Reduce if you experience latency when starting the compilation'
-        }
+          info: 'Reduce if you experience latency when starting the compilation',
+        },
       },
       telemetry: {
         title: 'Telemetry',
-        enable: 'Enable'
+        enable: 'Enable',
       },
       version: 'Version {{version}}',
       theme: {
@@ -90,17 +90,17 @@ const en = {
         options: {
           system: 'System',
           light: 'Light',
-          dark: 'Dark'
-        }
-      }
-    }
+          dark: 'Dark',
+        },
+      },
+    },
   },
   changelog: {
     newVersion: 'New version available',
     available: {
       view: 'View patch notes',
-      message: 'New version available: {{version}}'
-    }
+      message: 'New version available: {{version}}',
+    },
   },
   common: {
     selectFolder: 'Select a folder',
@@ -118,8 +118,8 @@ const en = {
       invalidConfigurationScripts:
         "Your configuration is incorrect. Cannot validate Creation Kit installation. The app checks the presence of Actor.psc to validate your Creation Kit installation. Cannot find the file Actor.psc in Source\\Scripts or Scripts\\Source. If you're using the app MO2 integration, the folders overwrite and mods are also checked.",
       invalidConfigurationMo2Instance:
-        'Your configuration is incorrect. The mo2 instance at {{instance}} does not exist.'
-    }
+        'Your configuration is incorrect. The mo2 instance at {{instance}} does not exist.',
+    },
   },
   tutorials: {
     close: 'Close',
@@ -127,27 +127,23 @@ const en = {
     settings: {
       ask: {
         title: 'Setup the application',
-        text:
-          'This is the first time you start the application. Do you need help?',
-        needHelp: 'I need help'
+        text: 'This is the first time you start the application. Do you need help?',
+        needHelp: 'I need help',
       },
       game: {
-        text: 'Here, you can register your game information'
+        text: 'Here, you can register your game information',
       },
       compiler: {
-        text:
-          'Here, you can register your papyrus compiler. Available after Creation Kit installation'
+        text: 'Here, you can register your papyrus compiler. Available after Creation Kit installation',
       },
       compilation: {
         concurrent: {
-          text:
-            'Here, you can register how many scripts that are concurrently compiled.'
-        }
+          text: 'Here, you can register how many scripts that are concurrently compiled.',
+        },
       },
       mo2: {
-        text:
-          'Here, you can register your MO2 configuration. Ignore this if you are running the app through MO2'
-      }
+        text: 'Here, you can register your MO2 configuration. Ignore this if you are running the app through MO2',
+      },
     },
     telemetry: {
       text:
@@ -155,9 +151,9 @@ const en = {
         '<1>All transmitted data is anonymous.</1>' +
         '<2>Examples of collected data include group and compilation data, errors, and timestamps of various app events.</2>' +
         '<3>Data telemetry can be disabled in the settings.</3>',
-      close: 'I get it'
-    }
-  }
+      close: 'I get it',
+    },
+  },
 }
 
 export default en

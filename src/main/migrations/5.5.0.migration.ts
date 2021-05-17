@@ -7,6 +7,7 @@
 import is from '@sindresorhus/is'
 
 import { Theme } from '../../common/theme'
+
 import type { AppStore } from '../store'
 
 export function migrate550(store: AppStore): void {
@@ -23,6 +24,6 @@ export function migrate550(store: AppStore): void {
   }
 
   if (is.undefined(theme)) {
-    store.set('theme', Theme.System)
+    store.set('theme', Theme.system)
   }
 }

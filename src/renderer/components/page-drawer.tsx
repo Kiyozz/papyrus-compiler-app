@@ -28,20 +28,20 @@ export function PageDrawer(): JSX.Element {
       {
         Icon: CodeIcon,
         text: t('nav.compilation'),
-        path: '/compilation'
+        path: '/compilation',
       },
       {
         Icon: LayersIcon,
         text: t('nav.groups'),
-        path: '/groups'
+        path: '/groups',
       },
       {
         Icon: SettingsIcon,
         text: t('nav.settings'),
-        path: '/settings'
-      }
+        path: '/settings',
+      },
     ],
-    [t]
+    [t],
   )
 
   const onDrawerExpandClick = () => setDrawerExpand(c => !c)

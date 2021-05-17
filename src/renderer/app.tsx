@@ -24,14 +24,14 @@ export function App(): JSX.Element {
   const { done } = useInitialization()
   const { send } = useTelemetry()
   const {
-    config: { tutorials }
+    config: { tutorials },
   } = useApp()
 
   useSyncHtmlTheme()
 
   useEffect(() => {
     if (done) {
-      send(TelemetryEvents.AppLoaded, {})
+      send(TelemetryEvents.appLoaded, {})
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [done])

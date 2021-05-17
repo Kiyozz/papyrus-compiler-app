@@ -5,8 +5,8 @@
  */
 
 export enum ScriptStatus {
-  Success,
-  Failed,
-  Running,
-  Idle
+  success,
+  failed,
+  running,
+  idle,
 }

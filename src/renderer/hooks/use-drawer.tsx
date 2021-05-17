@@ -9,7 +9,7 @@ import React, {
   createContext,
   Dispatch,
   SetStateAction,
-  useContext
+  useContext,
 } from 'react'
 import useLocalStorage from 'react-use-localstorage'
 
@@ -20,11 +20,11 @@ type Context = [boolean, Dispatch<SetStateAction<boolean>>]
 const DrawerContext = createContext([true, () => true] as Context)
 
 export function DrawerProvider({
-  children
+  children,
 }: React.PropsWithChildren<unknown>): JSX.Element {
   const [isDrawerExpandLS, setDrawerExpandLS] = useLocalStorage(
-    LocalStorage.DrawerExpand,
-    'false'
+    LocalStorage.drawerExpand,
+    'false',
   )
 
   return (
@@ -37,7 +37,7 @@ export function DrawerProvider({
           } else {
             setDrawerExpandLS(`${v}`)
           }
-        }
+        },
       ]}
     >
       {children}

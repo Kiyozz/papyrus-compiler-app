@@ -12,7 +12,7 @@ interface LoadingContextInterface {
 }
 
 const LoadingContext = createContext<LoadingContextInterface>({
-  isLoading: false
+  isLoading: false,
 } as LoadingContextInterface)
 
 export function useLoading(): LoadingContextInterface {
@@ -20,7 +20,7 @@ export function useLoading(): LoadingContextInterface {
 }
 
 export function LoadingProvider({
-  children
+  children,
 }: React.PropsWithChildren<unknown>): JSX.Element {
   const [isLoading, setLoading] = useState(false)
 

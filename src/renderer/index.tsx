@@ -32,7 +32,7 @@ function start() {
   const titlebar = new Titlebar({
     backgroundColor: isDark() ? darkColor : lightColor,
     icon: appIcon,
-    unfocusEffect: false
+    unfocusEffect: false,
   })
 
   try {
@@ -60,7 +60,7 @@ function start() {
           </TitlebarProvider>
         </AppProvider>
       </VersionProvider>,
-      document.getElementById('app')
+      document.getElementById('app'),
     )
   } catch (e) {
     bridge.error(e instanceof Error ? e : new Error(e))
@@ -81,7 +81,7 @@ function start() {
         (error: Error) => {
           bridge.error(error)
         },
-        { wait: 200 }
+        { wait: 200 },
       )
 
       window.addEventListener('error', event => {

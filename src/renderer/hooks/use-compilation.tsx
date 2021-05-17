@@ -9,7 +9,7 @@ import React, {
   useCallback,
   useContext,
   useMemo,
-  useState
+  useState,
 } from 'react'
 
 import { CompilationResult } from '../../common/interfaces/compilation-result'
@@ -51,7 +51,7 @@ export function useCompilation(): CompilationContextInterface {
 }
 
 export function CompilationProvider({
-  children
+  children,
 }: React.PropsWithChildren<unknown>): JSX.Element {
   const [isRunning, setRunning] = useState(false)
   const [compilationScripts, setCompilationScripts] = useState<
@@ -66,7 +66,7 @@ export function CompilationProvider({
       (config?.compilation?.concurrentScripts ?? 0) === 0
         ? 1
         : config?.compilation?.concurrentScripts ?? 1,
-    [config]
+    [config],
   )
 
   const start = useCallback(
@@ -86,7 +86,7 @@ export function CompilationProvider({
               return s
             }
 
-            s.status = ScriptStatus.Running
+            s.status = ScriptStatus.running
 
             return s
           })
@@ -100,7 +100,7 @@ export function CompilationProvider({
           partialScripts.map(async (s: ScriptInterface) => {
             try {
               const result: CompilationResult = await whenCompileScriptFinish(
-                s.name
+                s.name,
               )
 
               setCompilationScripts((cs: ScriptInterface[]) => {
@@ -111,8 +111,8 @@ export function CompilationProvider({
                 }
 
                 cs[found].status = result.success
-                  ? ScriptStatus.Success
-                  : ScriptStatus.Failed
+                  ? ScriptStatus.success
+                  : ScriptStatus.failed
 
                 return cs
               })
@@ -128,7 +128,7 @@ export function CompilationProvider({
                   return cs
                 }
 
-                cs[found].status = ScriptStatus.Failed
+                cs[found].status = ScriptStatus.failed
 
                 return cs
               })
@@ -137,13 +137,13 @@ export function CompilationProvider({
                 return [...cl, [s, e.message]]
               })
             }
-          })
+          }),
         )
       }
 
       setRunning(false)
     },
-    [concurrentScripts]
+    [concurrentScripts],
   )
 
   return (
@@ -154,7 +154,7 @@ export function CompilationProvider({
         scripts: compilationScripts,
         logs: compilationLogs,
         setScripts: setCompilationScripts,
-        concurrentScripts
+        concurrentScripts,
       }}
     >
       {children}

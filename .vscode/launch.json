@@ -8,6 +8,18 @@
       "runtimeExecutable": "npm",
       "skipFiles": ["<node_internals>/**"],
       "type": "pwa-node"
+    },
+    {
+      "name": "pca@attach",
+      "request": "attach",
+      "port": 9222,
+      "type": "node"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "pca",
+      "configurations": ["pca@dev", "pca@attach"]
     }
   ]
 }

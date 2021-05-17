@@ -40,8 +40,7 @@
     "import/exports-last": "error",
     "import/newline-after-import": "error",
     "import/default": "error",
-    "import/no-useless-path-segments": "error",
-    "import/no-cycle": "error"
+    "import/no-useless-path-segments": "error"
   },
   "overrides": [
     {

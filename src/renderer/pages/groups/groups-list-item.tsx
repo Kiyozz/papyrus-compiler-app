@@ -19,7 +19,7 @@ interface Props {
 export function GroupsListItem({
   group,
   onDelete,
-  onEdit
+  onEdit,
 }: Props): JSX.Element {
   const { t } = useTranslation()
 

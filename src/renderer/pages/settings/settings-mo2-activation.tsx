@@ -18,7 +18,7 @@ interface Props {
 export function SettingsMo2Activation({ onChangeMo2 }: Props): JSX.Element {
   const { t } = useTranslation()
   const {
-    config: { mo2 }
+    config: { mo2 },
   } = useApp()
 
   return (

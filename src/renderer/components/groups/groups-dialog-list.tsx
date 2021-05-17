@@ -12,13 +12,13 @@ import { ScriptInterface } from '../../interfaces'
 interface Props {
   scripts: ScriptInterface[]
   onClickRemoveScriptFromGroup: (
-    script: ScriptInterface
+    script: ScriptInterface,
   ) => (e: React.MouseEvent) => void
 }
 
 export function GroupsDialogList({
   scripts,
-  onClickRemoveScriptFromGroup
+  onClickRemoveScriptFromGroup,
 }: Props): JSX.Element {
   return (
     <ul className="flex flex-col gap-2">

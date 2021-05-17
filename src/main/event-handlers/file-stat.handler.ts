@@ -26,7 +26,7 @@ export class FileStatHandler implements EventHandler<string[]> {
     const stats = await Promise.all(
       files.map(async file => {
         return { file, stat: await stat(file) }
-      })
+      }),
     )
 
     stats.forEach(({ stat: fileStat, file }) => {

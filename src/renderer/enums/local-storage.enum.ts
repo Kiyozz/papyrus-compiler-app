@@ -5,5 +5,5 @@
  */
 
 export enum LocalStorage {
-  DrawerExpand = 'drawer-expand'
+  drawerExpand = 'drawer-expand',
 }

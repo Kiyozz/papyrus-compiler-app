@@ -28,13 +28,13 @@ async function getModsSourcesPath(gameType: GameType, instance: string) {
   const otherSourcesPath = toOtherSource(gameType)
   const modsPath = path.join(instance, appStore.get('mo2.mods'))
   const foldersToCheck = [sourcesPath, otherSourcesPath].map(
-    p => `${modsPath}/**/${p}`
+    p => `${modsPath}/**/${p}`,
   )
 
   let files: string[] = await path.getPathsInFolder(foldersToCheck, {
     absolute: true,
     deep: 3,
-    onlyDirectories: true
+    onlyDirectories: true,
   })
   const doubleSourceFolders = files
     .map((file, index, list) => {
@@ -74,7 +74,7 @@ async function getModsSourcesPath(gameType: GameType, instance: string) {
       return doubleSourceFolders.includes(file)
     })
     .map(file =>
-      path.normalize(is.linux || is.macos ? toSlash(file) : toAntiSlash(file))
+      path.normalize(is.linux || is.macos ? toSlash(file) : toAntiSlash(file)),
     )
 
   logger.debug('[MO2] Folders containing sources', files)
@@ -86,7 +86,7 @@ async function getModsSourcesPath(gameType: GameType, instance: string) {
 
 export async function getImportsPath({
   gameType,
-  mo2: { instance }
+  mo2: { instance },
 }: GenerateImportsOptions): Promise<string[]> {
   logger.info('getting MO2 imports path')
 
@@ -98,20 +98,20 @@ export async function getImportsPath({
     const sources = await getModsSourcesPath(gameType, instance)
     const overwritePath = path.join(instance, 'overwrite')
     const mo2OverwriteSourcesPath = path.normalize(
-      path.join(overwritePath, sourcePath)
+      path.join(overwritePath, sourcePath),
     )
     const mo2OverwriteOtherSourcesPath = path.normalize(
-      path.join(overwritePath, otherSourcePath)
+      path.join(overwritePath, otherSourcePath),
     )
     const imports = [
       ...sources.map(folder => folder.replace(modsPath, '.')),
       mo2OverwriteOtherSourcesPath,
-      mo2OverwriteSourcesPath
+      mo2OverwriteSourcesPath,
     ]
 
     await path.ensureDirs([
       mo2OverwriteSourcesPath,
-      mo2OverwriteOtherSourcesPath
+      mo2OverwriteOtherSourcesPath,
     ])
 
     return imports
@@ -125,7 +125,7 @@ export function getModsPath(mo2Instance: string): string {
 
   const modsPath = path.join(
     mo2Instance,
-    appStore.get<string, string>('mo2.mods')
+    appStore.get<string, string>('mo2.mods'),
   )
   const modsPathExists = path.exists(modsPath)
 
@@ -140,7 +140,7 @@ export async function getOutputPath(mo2Instance: string): Promise<string> {
   logger.info('getting MO2 output path')
 
   const outputRaw = path.normalize(
-    path.join(mo2Instance, appStore.get<string, string>('mo2.output'))
+    path.join(mo2Instance, appStore.get<string, string>('mo2.output')),
   )
 
   const output =

@@ -6,11 +6,11 @@
 
 export function uniqArray<T>(
   arrayInput: T[] = [],
-  keys: (keyof T)[] = []
+  keys: (keyof T)[] = [],
 ): T[] {
   if (!Array.isArray(arrayInput)) {
     throw new TypeError(
-      `Expected an array for arrayInput, got ${typeof arrayInput}`
+      `Expected an array for arrayInput, got ${typeof arrayInput}`,
     )
   }
 

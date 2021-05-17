@@ -15,7 +15,7 @@ const logger = new Logger('RegisterIpcEvents')
 export function registerIpcEvents(
   handlers: Map<string, EventHandler>,
   events: Map<string, Event>,
-  syncs: Map<string, EventSync>
+  syncs: Map<string, EventSync>,
 ): void {
   handlers.forEach((handler, name) => {
     logger.info(`register "${name}"`)

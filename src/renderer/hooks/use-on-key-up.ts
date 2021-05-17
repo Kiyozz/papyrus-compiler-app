@@ -15,7 +15,7 @@ interface UseOnKeyUpOptions {
 export default function useOnKeyUp(
   key: string,
   action: () => void,
-  options?: UseOnKeyUpOptions
+  options?: UseOnKeyUpOptions,
 ): void {
   const onKeyUp = useCallback(
     (e: KeyboardEvent) => {
@@ -39,7 +39,7 @@ export default function useOnKeyUp(
 
       action()
     },
-    [action, key, options]
+    [action, key, options],
   )
 
   useEffect(() => {

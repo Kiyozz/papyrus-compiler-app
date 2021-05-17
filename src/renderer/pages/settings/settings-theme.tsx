@@ -34,25 +34,25 @@ export function SettingsTheme(): JSX.Element {
         <FormControl component="fieldset" fullWidth>
           <RadioGroup row value={theme} onChange={onChangeTheme}>
             <FormControlLabel
-              value={Theme.System}
+              value={Theme.system}
               classes={{
-                label: 'dark:text-white'
+                label: 'dark:text-white',
               }}
               control={<Radio />}
               label={t('page.settings.theme.options.system')}
             />
             <FormControlLabel
-              value={Theme.Light}
+              value={Theme.light}
               classes={{
-                label: 'dark:text-white'
+                label: 'dark:text-white',
               }}
               control={<Radio />}
               label={t('page.settings.theme.options.light')}
             />
             <FormControlLabel
-              value={Theme.Dark}
+              value={Theme.dark}
               classes={{
-                label: 'dark:text-white'
+                label: 'dark:text-white',
               }}
               control={<Radio />}
               label={t('page.settings.theme.options.dark')}
