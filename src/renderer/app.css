@@ -151,11 +151,19 @@ body {
 }
 
 .changelog-container ul {
-  @apply pl-4;
+  @apply pl-4 list-disc;
 }
 
-.changelog-container li {
-  @apply mb-1;
+.changelog-container li + li {
+  margin-top: 0.25em;
+}
+
+.changelog-container p {
+  @apply mt-0 mb-4;
+}
+
+.changelog-container li > p {
+  @apply mt-4;
 }
 
 .changelog-container a {
@@ -230,4 +238,11 @@ input.MuiInputBase-inputAdornedStart {
 .overflow-overlay {
   -webkit-background-clip: text;
   @apply bg-transparent transition-colors delay-75 hover:bg-light-800 dark:hover:bg-opacity-20;
+}
+
+.markdown-code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  border-radius: 6px;
 }

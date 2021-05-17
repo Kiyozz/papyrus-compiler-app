@@ -15,13 +15,13 @@ import { useFocus } from '../../hooks/use-focus'
 import { useTelemetry } from '../../hooks/use-telemetry'
 
 enum Step {
-  Waiting,
-  Ask,
-  Game,
-  Compiler,
-  Concurrent,
-  Mo2,
-  End
+  waiting,
+  ask,
+  game,
+  compiler,
+  concurrent,
+  mo2,
+  end
 }
 
 type Next = () => void
@@ -51,7 +51,7 @@ function GameSettingsStep({ next }: { next: Next }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname])
 
-  const onClickOk = useCallback(() => next(), [next])
+  const onClickOk = () => next()
 
   if (!stepAnchor) {
     return null
@@ -73,7 +73,7 @@ function GameSettingsStep({ next }: { next: Next }) {
 function CompilerSettingsStep({ next }: { next: Next }) {
   const { t } = useTranslation()
   const stepAnchor = useMemo(() => getCompilerSettingsAnchor(), [])
-  const onClickOk = useCallback(() => next(), [next])
+  const onClickOk = () => next()
 
   if (!stepAnchor) {
     return null
@@ -95,7 +95,8 @@ function CompilerSettingsStep({ next }: { next: Next }) {
 function Mo2SettingsStep({ next }: { next: Next }) {
   const { t } = useTranslation()
   const stepAnchor = useMemo(() => getMo2SettingsAnchor(), [])
-  const onClickOk = useCallback(() => next(), [next])
+
+  const onClickOk = () => next()
 
   if (!stepAnchor) {
     return null
@@ -117,7 +118,7 @@ function Mo2SettingsStep({ next }: { next: Next }) {
 function ConcurrentSettingsStep({ next }: { next: Next }) {
   const { t } = useTranslation()
   const stepAnchor = useMemo(() => getConcurrentSettingsAnchor(), [])
-  const onClickOk = useCallback(() => next(), [next])
+  const onClickOk = () => next()
 
   if (!stepAnchor) {
     return null
@@ -155,11 +156,11 @@ export function TutorialSettings(): JSX.Element | null {
   const { t } = useTranslation()
   const { config, setConfig } = useApp()
   const history = useHistory()
-  const [step, setStep] = useState(Step.Waiting)
+  const [step, setStep] = useState(Step.waiting)
   const isFocus = useFocus()
   const { send } = useTelemetry()
 
-  const onClickClose = useCallback(() => {
+  const onClickClose = () => {
     send(TelemetryEvents.TutorialsSettingsDeny, {})
     setConfig({
       tutorials: {
@@ -167,27 +168,27 @@ export function TutorialSettings(): JSX.Element | null {
         settings: false
       }
     })
-  }, [config.tutorials, setConfig, send])
+  }
 
   const onClickNeedHelp = useCallback(() => {
     history.push('/settings')
-    setStep(Step.Game)
+    setStep(Step.game)
   }, [history])
 
   const onNextStepGame = useCallback(() => {
-    setStep(Step.Compiler)
+    setStep(Step.compiler)
   }, [])
 
   const onNextStepCompiler = useCallback(() => {
-    setStep(Step.Concurrent)
+    setStep(Step.concurrent)
   }, [])
 
   const onNextStepConcurrent = useCallback(() => {
-    setStep(Step.Mo2)
+    setStep(Step.mo2)
   }, [])
 
   const onNextStepMo2 = useCallback(() => {
-    setStep(Step.End)
+    setStep(Step.end)
     setConfig({
       tutorials: {
         settings: false
@@ -196,24 +197,22 @@ export function TutorialSettings(): JSX.Element | null {
   }, [setConfig])
 
   useEffect(() => {
-    if (step === Step.Waiting) {
+    if (step === Step.waiting) {
       send(TelemetryEvents.AppFirstLoaded, {})
     }
 
-    if (step === Step.End) {
+    if (step === Step.end) {
       send(TelemetryEvents.TutorialsSettingsEnd, {})
     }
   }, [step, send])
 
   useEffect(() => {
     const time = setTimeout(() => {
-      setStep(Step.Ask)
+      setStep(Step.ask)
     }, 1000)
 
     return () => clearTimeout(time)
   }, [])
-
-  console.log('step', step)
 
   if (!config.tutorials.settings) {
     return null
@@ -222,7 +221,7 @@ export function TutorialSettings(): JSX.Element | null {
   return (
     <>
       <Overlay />
-      {(step === Step.Ask || step === Step.Waiting) && (
+      {(step === Step.ask || step === Step.waiting) && (
         <div
           className={`fixed top-0 left-0 w-full h-full ${
             isFocus
@@ -240,14 +239,14 @@ export function TutorialSettings(): JSX.Element | null {
             <button
               className="btn btn-primary"
               onClick={onClickNeedHelp}
-              disabled={step === Step.Waiting}
+              disabled={step === Step.waiting}
             >
               {t('tutorials.settings.ask.needHelp')}
             </button>
             <button
               className="btn"
               onClick={onClickClose}
-              disabled={step === Step.Waiting}
+              disabled={step === Step.waiting}
             >
               {t('tutorials.close')}
             </button>
@@ -255,17 +254,17 @@ export function TutorialSettings(): JSX.Element | null {
         </div>
       )}
 
-      {step === Step.Game && <GameSettingsStep next={onNextStepGame} />}
+      {step === Step.game && <GameSettingsStep next={onNextStepGame} />}
 
-      {step === Step.Compiler && (
+      {step === Step.compiler && (
         <CompilerSettingsStep next={onNextStepCompiler} />
       )}
 
-      {step === Step.Concurrent && (
+      {step === Step.concurrent && (
         <ConcurrentSettingsStep next={onNextStepConcurrent} />
       )}
 
-      {step === Step.Mo2 && <Mo2SettingsStep next={onNextStepMo2} />}
+      {step === Step.mo2 && <Mo2SettingsStep next={onNextStepMo2} />}
     </>
   )
 }

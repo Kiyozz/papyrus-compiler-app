@@ -6,7 +6,7 @@
 
 import CloseIcon from '@material-ui/icons/Close'
 import DownloadIcon from '@material-ui/icons/GetApp'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
 
@@ -17,37 +17,37 @@ import { useInitialization } from '../../hooks/use-initialization'
 import useOnKeyUp from '../../hooks/use-on-key-up'
 import { Dialog } from './dialog'
 
-function Anchor({ children, href }: React.PropsWithChildren<{ href: string }>) {
-  const onClick = useCallback(() => bridge.shell.openExternal(href), [href])
+function Anchor({
+  children,
+  href
+}: React.PropsWithChildren<React.HTMLProps<HTMLAnchorElement>>) {
+  const onClick = () => {
+    if (href) {
+      bridge.shell.openExternal(href)
+    }
+  }
 
   return <a onClick={onClick}>{children}</a>
 }
 
-function Heading({
-  children,
-  level
-}: React.PropsWithChildren<{ level: number }>) {
-  if (level === 2) {
-    return <h6 className="mb-2 text-2xl">{children}</h6>
-  }
+function HeadingTwo({ children }: React.PropsWithChildren<unknown>) {
+  return <h6 className="mb-2 text-2xl">{children}</h6>
+}
 
+function HeadingFive({ children }: React.PropsWithChildren<unknown>) {
   return <h5 className="mb-2 text-xl">{children}</h5>
+}
+
+function HeadingThree({ children }: React.PropsWithChildren<unknown>) {
+  return <h3 className="mb-2 text-xl">{children}</h3>
 }
 
 function Paragraph({ children }: React.PropsWithChildren<unknown>) {
   return <p className="text-sm">{children}</p>
 }
 
-function Code({ value }: { value: string }) {
-  return (
-    <code className="p-4 dark:bg-gray-700 mt-2 block w-full rounded">
-      {value.split('\n').map((s, i) => (
-        <pre key={i} className="mb-0">
-          {s}
-        </pre>
-      ))}
-    </code>
-  )
+function Code({ children }: { children: React.ReactNode[] }) {
+  return <code className="dark:bg-gray-800 markdown-code">{children}</code>
 }
 
 export function DialogChangelog(): JSX.Element {
@@ -57,25 +57,22 @@ export function DialogChangelog(): JSX.Element {
 
   const [isUserShowNotes, setUserShowNotes] = useState(false)
 
-  const onClickDownloadRelease = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault()
+  const onClickDownloadRelease = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
 
-      bridge.shell.openExternal(MOD_URL)
-    },
-    []
-  )
+    bridge.shell.openExternal(MOD_URL)
+  }
 
-  const onClickShowNotes = useCallback(() => {
+  const onClickShowNotes = () => {
     if (isShowChangelog) {
       setUserShowNotes(true)
     }
-  }, [isShowChangelog])
+  }
 
-  const onCloseDialog = useCallback(() => {
+  const onCloseDialog = () => {
     setUserShowNotes(false)
     setShowChangelog(false)
-  }, [setShowChangelog])
+  }
 
   useOnKeyUp('Escape', () => {
     setShowChangelog(false)
@@ -127,14 +124,17 @@ export function DialogChangelog(): JSX.Element {
       >
         <div className="changelog-container dark:bg-gray-700 p-4 rounded dark:text-gray-300 text-sm">
           <ReactMarkdown
-            source={changelog}
-            renderers={{
-              paragraph: Paragraph,
-              heading: Heading,
+            components={{
+              p: Paragraph,
+              h2: HeadingTwo,
+              h3: HeadingThree,
+              h5: HeadingFive,
               code: Code,
-              link: Anchor
+              a: Anchor
             }}
-          />
+          >
+            {changelog}
+          </ReactMarkdown>
         </div>
       </Dialog>
     </>
