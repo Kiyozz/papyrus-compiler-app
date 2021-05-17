@@ -1,3 +1,10 @@
+## Unreleased
+
+### Bug fixes
+
+- Texts could appears behind scrollable section
+- Changelog dialog could malformat release changelog
+
 ## 5.5.2 (2021-04-25)
 
 ### Bug fixes
