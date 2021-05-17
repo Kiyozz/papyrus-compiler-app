@@ -24,33 +24,33 @@ exports.default = async function afterPack(context) {
     windows: {
       debug: {
         from: 'windows-debug.cmd',
-        to: `${productName}-debug.exe.cmd`
+        to: `${productName}-debug.exe.cmd`,
       },
       name: {
         from: 'PCA.exe',
-        to: `${productName}.exe`
-      }
+        to: `${productName}.exe`,
+      },
     },
     linux: {
       debug: {
         from: 'linux-debug.sh',
-        to: `${productName}-debug.sh`
+        to: `${productName}-debug.sh`,
       },
       name: {
         from: 'PCA',
-        to: productName
-      }
+        to: productName,
+      },
     },
     mac: {
       debug: {
         from: 'mac-debug.sh',
-        to: `${productName}-debug.sh`
+        to: `${productName}-debug.sh`,
       },
       name: {
         from: 'PCA.app',
-        to: `${productName}.app`
-      }
-    }
+        to: `${productName}.app`,
+      },
+    },
   }
 
   let usedConfig

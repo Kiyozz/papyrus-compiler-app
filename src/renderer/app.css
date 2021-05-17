@@ -37,9 +37,6 @@ body {
   @apply overflow-hidden antialiased dark:text-gray-400 bg-light-600 dark:bg-black-800;
 }
 
-#app {
-}
-
 .page {
   @apply h-screen-appbar;
 }
@@ -50,8 +47,7 @@ body {
 
 .overflow-overlay,
 .container-after-titlebar {
-  /*noinspection CssInvalidPropertyValue*/
-  overflow: overlay !important;
+  overflow: hidden overlay !important;
 }
 
 .w-controls {
@@ -222,22 +218,19 @@ input.MuiInputBase-inputAdornedStart {
 
 /* ------ SCROLLBAR ----- */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 16px;
+  height: 16px;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 5px;
-  background-color: inherit;
+  min-height: 40px;
+  background-clip: padding-box;
+  border: 4px solid transparent;
+  @apply bg-light-300 dark:bg-black-600 rounded-lg hover:bg-light-800 dark:hover:bg-opacity-20;
 }
 
 ::-webkit-scrollbar-track {
-  display: none;
-}
-
-.overflow-overlay {
-  -webkit-background-clip: text;
-  @apply bg-transparent transition-colors delay-75 hover:bg-light-800 dark:hover:bg-opacity-20;
+  visibility: hidden;
 }
 
 .markdown-code {
