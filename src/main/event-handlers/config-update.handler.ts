@@ -11,7 +11,7 @@ import { PartialDeep } from 'type-fest'
 import { Config } from '../../common/interfaces/config'
 import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
-import { appStore } from '../store'
+import { settingsStore } from '../store/settings/store'
 
 interface ConfigUpdateHandlerParams {
   config: PartialDeep<Config>
@@ -32,7 +32,7 @@ export class ConfigUpdateHandler
 
     ;(Object.entries(args.config) as [keyof Config, unknown][]).forEach(
       ([key, value]) => {
-        if (!appStore.has(key)) {
+        if (!settingsStore.has(key)) {
           return
         }
 
@@ -41,25 +41,25 @@ export class ConfigUpdateHandler
         if (args.override) {
           this.logger.debug('total overwrite of the previous value')
 
-          appStore.set(key, value)
+          settingsStore.set(key, value)
         } else {
-          const keyValue = appStore.get(key)
+          const keyValue = settingsStore.get(key)
 
           if (is.array(keyValue)) {
-            appStore.set(key, value)
+            settingsStore.set(key, value)
           } else if (
             is.object(keyValue) &&
             is.object(value) &&
             !is.array(value)
           ) {
-            appStore.set(key, deepmerge(keyValue, value))
+            settingsStore.set(key, deepmerge(keyValue, value))
           } else {
-            appStore.set(key, value)
+            settingsStore.set(key, value)
           }
         }
       },
     )
 
-    return appStore.store
+    return settingsStore.store
   }
 }

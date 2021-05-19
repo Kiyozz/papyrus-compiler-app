@@ -9,16 +9,16 @@ import Store from 'electron-store'
 import { is } from 'electron-util'
 import * as fs from 'fs'
 
-import { GameType } from '../common/game'
-import { Config } from '../common/interfaces/config'
-import { Theme } from '../common/theme'
-import { checkStore } from './check-store'
+import { GameType } from '../../../common/game'
+import { Config } from '../../../common/interfaces/config'
+import { Theme } from '../../../common/theme'
+import { join } from '../../path/path'
+import { checkStore } from './check'
 import { migrate410 } from './migrations/4.1.0.migration'
 import { migrate420 } from './migrations/4.2.0.migration'
 import { migrate510 } from './migrations/5.1.0.migration'
 import { migrate520 } from './migrations/5.2.0.migration'
 import { migrate550 } from './migrations/5.5.0.migration'
-import { join } from './path/path'
 
 const jsonPath = is.development
   ? join(__dirname, '../..', 'package.json')
@@ -63,7 +63,7 @@ const defaultConfig: Config = {
   },
 }
 
-const appStore = new Store<Config>({
+const settingsStore = new Store<Config>({
   defaults: defaultConfig,
   projectVersion: json.version,
   migrations: {
@@ -75,8 +75,8 @@ const appStore = new Store<Config>({
   },
 } as never)
 
-checkStore(appStore, defaultConfig)
+checkStore(settingsStore, defaultConfig)
 
-export type AppStore = Store<Config>
+export type SettingsStore = Store<Config>
 
-export { appStore, defaultConfig }
+export { settingsStore, defaultConfig }

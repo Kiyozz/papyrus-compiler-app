@@ -1,5 +1,11 @@
 ## Unreleased
 
+### Features
+
+- Recent compiled files appears in a new section called "Recent files"
+
+  You can now add files faster
+
 ### Bug fixes
 
 - Texts could appears behind scrollable section

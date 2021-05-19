@@ -11,6 +11,8 @@ import { BadError } from './bad-error'
 import { CompilationResult } from './compilation-result'
 import { Config } from './config'
 import { DialogType } from './dialog'
+import { Disposable } from './disposable'
+import { Script } from './script'
 
 export interface Bridge {
   telemetry: {
@@ -66,5 +68,24 @@ export interface Bridge {
 
   shell: {
     openExternal: (href: string) => void
+  }
+
+  recentFiles: {
+    get: () => Promise<Script[]>
+    set: (scripts: Script[]) => Promise<Script[]>
+    clear: () => Promise<void>
+    remove: (script: Script) => Promise<Script[]>
+
+    select: {
+      onAll: (cb: () => void) => Disposable
+      onNone: (cb: () => void) => Disposable
+      onRevertSelection: (cb: () => void) => Disposable
+      onClear: (cb: () => void) => Disposable
+    }
+
+    dialog: {
+      open: () => void
+      close: () => void
+    }
   }
 }

@@ -10,60 +10,112 @@ import { BadError } from '../common/interfaces/bad-error'
 import { Bridge } from '../common/interfaces/bridge'
 import { CompilationResult } from '../common/interfaces/compilation-result'
 import { Config } from '../common/interfaces/config'
-import { ipcRenderer } from '../common/ipc'
-import { Events } from './events'
+import { Script } from '../common/interfaces/script'
+import { ipcRenderer } from './ipc'
+import { IpcEvent } from './ipc-event'
 
 const api: Bridge = {
   telemetry: {
     send: (event, args) =>
       ipcRenderer
-        .invoke(Events.telemetry, { name: event, properties: args })
+        .invoke(IpcEvent.telemetry, { name: event, properties: args })
         .catch(e =>
           console.error(
             "can't send telemetry event to main process",
             e.message || e,
           ),
         ),
-    active: active => ipcRenderer.invoke(Events.telemetryActive, active),
+    active: active => ipcRenderer.invoke(IpcEvent.telemetryActive, active),
   },
   version: {
-    get: () => ipcRenderer.invoke<string>(Events.getVersion),
+    get: () => ipcRenderer.invoke<string>(IpcEvent.getVersion),
   },
   changelog: {
-    on: fn => ipcRenderer.on(Events.changelog, fn),
-    off: fn => ipcRenderer.off(Events.changelog, fn),
+    on: fn => ipcRenderer.on(IpcEvent.changelog, fn),
+    off: fn => ipcRenderer.removeListener(IpcEvent.changelog, fn),
   },
-  error: e => ipcRenderer.invoke(Events.appError, e),
-  online: online => ipcRenderer.send(Events.online, { online }),
+  error: e => ipcRenderer.invoke(IpcEvent.appError, e),
+  online: online => ipcRenderer.send(IpcEvent.online, { online }),
   installation: {
-    check: () => ipcRenderer.invoke<BadError>(Events.checkInstallation),
+    check: () => ipcRenderer.invoke<BadError>(IpcEvent.checkInstallation),
   },
   clipboard: {
-    copy: text => ipcRenderer.invoke(Events.clipboardCopy, { text }),
+    copy: text => ipcRenderer.invoke(IpcEvent.clipboardCopy, { text }),
   },
   config: {
     update: (partialConfig, override) =>
-      ipcRenderer.invoke<Config>(Events.configUpdate, {
+      ipcRenderer.invoke<Config>(IpcEvent.configUpdate, {
         config: partialConfig,
         override,
       }),
-    get: () => ipcRenderer.invoke<Config>(Events.configGet),
+    get: () => ipcRenderer.invoke<Config>(IpcEvent.configGet),
   },
-  isProduction: () => ipcRenderer.invoke<boolean>(Events.isProduction),
+  isProduction: () => ipcRenderer.invoke<boolean>(IpcEvent.isProduction),
   compilation: {
-    start: script => ipcRenderer.send(Events.compileScriptStart, script),
+    start: script => ipcRenderer.send(IpcEvent.compileScriptStart, script),
     onceFinish: (script, listener) =>
       ipcRenderer.once<CompilationResult>(
-        `${Events.compileScriptFinish}-${script}`,
+        `${IpcEvent.compileScriptFinish}-${script}`,
         listener,
       ),
   },
   dialog: {
-    select: type =>
-      ipcRenderer.invoke<string | null>(Events.openDialog, { type }),
+    select: type => {
+      return ipcRenderer.invoke<string | null>(IpcEvent.openDialog, { type })
+    },
   },
   shell: {
     openExternal: href => shell.openExternal(href),
+  },
+  recentFiles: {
+    get: () => ipcRenderer.invoke<Script[]>(IpcEvent.recentFilesGet),
+    set: scripts => {
+      return ipcRenderer.invoke<Script[]>(IpcEvent.recentFilesSet, scripts)
+    },
+    clear: () => ipcRenderer.invoke(IpcEvent.recentFilesClear),
+    remove: script => ipcRenderer.invoke(IpcEvent.recentFileRemove, script),
+    select: {
+      onAll: cb => {
+        ipcRenderer.on(IpcEvent.recentFilesSelectAll, cb)
+
+        return {
+          dispose() {
+            ipcRenderer.removeListener(IpcEvent.recentFilesSelectAll, cb)
+          },
+        }
+      },
+      onNone: cb => {
+        ipcRenderer.on(IpcEvent.recentFilesSelectNone, cb)
+
+        return {
+          dispose() {
+            ipcRenderer.removeListener(IpcEvent.recentFilesSelectNone, cb)
+          },
+        }
+      },
+      onRevertSelection: cb => {
+        ipcRenderer.on(IpcEvent.recentFilesRevertSelection, cb)
+
+        return {
+          dispose() {
+            ipcRenderer.removeListener(IpcEvent.recentFilesRevertSelection, cb)
+          },
+        }
+      },
+      onClear: cb => {
+        ipcRenderer.on(IpcEvent.recentFilesOnClear, cb)
+
+        return {
+          dispose() {
+            ipcRenderer.removeListener(IpcEvent.recentFilesOnClear, cb)
+          },
+        }
+      },
+    },
+    dialog: {
+      open: () => ipcRenderer.send(IpcEvent.recentFilesDialogOpen),
+      close: () => ipcRenderer.send(IpcEvent.recentFilesDialogClose),
+    },
   },
 }
 

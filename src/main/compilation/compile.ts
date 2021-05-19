@@ -13,7 +13,7 @@ import { ConfigurationException } from '../exceptions/configuration.exception'
 import { Logger } from '../logger'
 import * as mo2 from '../mo2/mo2'
 import * as path from '../path/path'
-import { appStore } from '../store'
+import { settingsStore } from '../store/settings/store'
 import { generateCompilerCmd } from '../utils/generate-compiler-cmd.util'
 
 interface Runner {
@@ -39,15 +39,15 @@ function checkCommandResult(
 export async function compile(scriptName: string): Promise<string> {
   logger.debug('compiling the file', scriptName)
 
-  const game = appStore.get('game')
-  const compilation = appStore.get('compilation')
+  const game = settingsStore.get('game')
+  const compilation = settingsStore.get('compilation')
   const gamePath = game.path
   const gameType = game.type
   const compilerPath = compilation.compilerPath
   const dataFolder = path.join(gamePath, 'Data')
   const gameSource = toSource(gameType)
   const gameSourceAbsolute = path.join(dataFolder, gameSource)
-  const mo2Config = appStore.get('mo2')
+  const mo2Config = settingsStore.get('mo2')
   const runner: Runner = {
     exe: compilerPath,
     imports: [gameSourceAbsolute],

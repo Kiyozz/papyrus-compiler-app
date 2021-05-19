@@ -125,7 +125,6 @@ export function GroupsDialog({
   return (
     <Dialog
       open={open}
-      maxWidth={80}
       onClose={onDialogClose}
       actions={
         <>
@@ -140,11 +139,7 @@ export function GroupsDialog({
           <button className="btn" type="button" onClick={onClose}>
             {t('page.groups.dialog.close')}
           </button>
-          <button
-            className="btn btn-primary"
-            type="submit"
-            disabled={name === ''}
-          >
+          <button className="btn" type="submit" disabled={name === ''}>
             {isEdit
               ? t('page.groups.actions.edit')
               : t('page.groups.actions.create')}

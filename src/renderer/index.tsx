@@ -19,6 +19,7 @@ import { DrawerProvider } from './hooks/use-drawer'
 import { DropProvider } from './hooks/use-drop'
 import { FocusProvider } from './hooks/use-focus'
 import { InitializationProvider } from './hooks/use-initialization'
+import { RecentFilesProvider } from './hooks/use-recent-files'
 import { TelemetryProvider } from './hooks/use-telemetry'
 import { TitlebarProvider } from './hooks/use-titlebar'
 import { VersionProvider } from './hooks/use-version'
@@ -41,21 +42,23 @@ function start() {
         <AppProvider>
           <TitlebarProvider titlebar={titlebar}>
             <InitializationProvider>
-              <CompilationProvider>
-                <SettingsProvider>
-                  <FocusProvider>
-                    <Theme>
-                      <TelemetryProvider>
-                        <DrawerProvider>
-                          <DropProvider>
-                            <App />
-                          </DropProvider>
-                        </DrawerProvider>
-                      </TelemetryProvider>
-                    </Theme>
-                  </FocusProvider>
-                </SettingsProvider>
-              </CompilationProvider>
+              <RecentFilesProvider>
+                <CompilationProvider>
+                  <SettingsProvider>
+                    <FocusProvider>
+                      <Theme>
+                        <TelemetryProvider>
+                          <DrawerProvider>
+                            <DropProvider>
+                              <App />
+                            </DropProvider>
+                          </DrawerProvider>
+                        </TelemetryProvider>
+                      </Theme>
+                    </FocusProvider>
+                  </SettingsProvider>
+                </CompilationProvider>
+              </RecentFilesProvider>
             </InitializationProvider>
           </TitlebarProvider>
         </AppProvider>

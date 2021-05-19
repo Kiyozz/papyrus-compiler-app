@@ -47,15 +47,15 @@ export function Dialog({
     () => (
       <>
         {title && (
-          <div className="sticky top-0 w-full h-full flex text-xl font-medium py-4 px-5">
+          <div className="sticky top-0 flex-initial flex text-xl font-medium py-4 px-6">
             {title}
           </div>
         )}
-        <div className="w-full h-full overflow-overlay">
-          <div className="py-2 px-5">{children}</div>
+        <div className="flex-auto overflow-overlay">
+          <div className="py-2 px-6">{children}</div>
         </div>
         {actions && (
-          <div className="w-full h-full flex p-2 gap-2 justify-end">
+          <div className="flex-initial flex p-2 gap-2 justify-end">
             {actions}
           </div>
         )}
@@ -70,10 +70,10 @@ export function Dialog({
         <div className="fixed top-0 left-0 z-10 w-full h-screen bg-black-800 bg-opacity-50 dark:bg-opacity-70" />
         <div
           ref={container}
-          className={`fixed top-0 left-0 z-10 flex justify-center items-center w-full h-screen`}
+          className={`fixed top-0 bottom-0 p-8 pt-16 left-0 z-10 flex justify-center items-center w-full h-screen`}
         >
           <div
-            className="paper text-black-600 dark:text-light-400 p-0 w-full flex flex-col"
+            className="paper text-black-600 dark:text-light-400 p-0 w-full max-h-full flex flex-col"
             style={
               maxWidth !== undefined
                 ? { maxWidth: `${maxWidth}%`, maxHeight: `${maxWidth}%` }

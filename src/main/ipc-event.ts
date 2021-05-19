@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-export enum Events {
+export enum IpcEvent {
   filesStats = 'event-files-stats',
   compileScriptStart = 'event-compile-script-start',
   compileScriptFinish = 'event-compile-script-finish',
@@ -17,7 +17,18 @@ export enum Events {
   isProduction = 'event-is-production',
   getVersion = 'event-get-version',
   changelog = 'event-changelog',
+  recentFilesGet = 'event-recent-files-get',
+  recentFilesSet = 'event-recent-files-set',
+  recentFilesClear = 'event-recent-files-clear',
+  recentFilesSelectAll = 'event-recent-files-select-all',
+  recentFilesSelectNone = 'event-recent-files-select-none',
+  recentFilesRevertSelection = 'event-recent-files-revert-selection',
+  recentFilesOnClear = 'event-recent-files-on-clear',
+  recentFilesDialogOpen = 'event-recent-files-dialog-open',
+  recentFilesDialogClose = 'event-recent-files-dialog-close',
+  recentFileRemove = 'event-recent-file-remove',
   telemetry = 'event-telemetry',
   telemetryActive = 'event-telemetry-active',
   online = 'event-is-online',
+  getHomedir = 'event-homedir-get',
 }

@@ -12,7 +12,7 @@ import { ConfigurationException } from '../exceptions/configuration.exception'
 import { Logger } from '../logger'
 import * as path from '../path/path'
 import { toAntiSlash, toSlash } from '../slash'
-import { appStore } from '../store'
+import { settingsStore } from '../store/settings/store'
 
 interface GenerateImportsOptions {
   gameType: GameType
@@ -26,7 +26,7 @@ const logger = new Logger('Mo2Service')
 async function getModsSourcesPath(gameType: GameType, instance: string) {
   const sourcesPath = toSource(gameType)
   const otherSourcesPath = toOtherSource(gameType)
-  const modsPath = path.join(instance, appStore.get('mo2.mods'))
+  const modsPath = path.join(instance, settingsStore.get('mo2.mods'))
   const foldersToCheck = [sourcesPath, otherSourcesPath].map(
     p => `${modsPath}/**/${p}`,
   )
@@ -92,7 +92,7 @@ export async function getImportsPath({
 
   const sourcePath = toSource(gameType)
   const otherSourcePath = toOtherSource(gameType)
-  const modsPath = path.join(instance, appStore.get('mo2.mods'))
+  const modsPath = path.join(instance, settingsStore.get('mo2.mods'))
 
   try {
     const sources = await getModsSourcesPath(gameType, instance)
@@ -125,7 +125,7 @@ export function getModsPath(mo2Instance: string): string {
 
   const modsPath = path.join(
     mo2Instance,
-    appStore.get<string, string>('mo2.mods'),
+    settingsStore.get<string, string>('mo2.mods'),
   )
   const modsPathExists = path.exists(modsPath)
 
@@ -140,7 +140,7 @@ export async function getOutputPath(mo2Instance: string): Promise<string> {
   logger.info('getting MO2 output path')
 
   const outputRaw = path.normalize(
-    path.join(mo2Instance, appStore.get<string, string>('mo2.output')),
+    path.join(mo2Instance, settingsStore.get<string, string>('mo2.output')),
   )
 
   const output =

@@ -102,17 +102,13 @@ export function DialogChangelog(): JSX.Element {
 
       <Dialog
         open={isUserShowNotes}
-        maxWidth={70}
         onClose={onCloseDialog}
         actions={
           <>
             <button className="btn" onClick={onCloseDialog}>
               Close
             </button>
-            <button
-              className="btn btn-primary"
-              onClick={onClickDownloadRelease}
-            >
+            <button className="btn" onClick={onClickDownloadRelease}>
               <div className="icon">
                 <DownloadIcon />
               </div>

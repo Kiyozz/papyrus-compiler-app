@@ -8,11 +8,11 @@ import is from '@sindresorhus/is'
 import * as util from 'electron-util'
 import * as path from 'path'
 
-import { toAntiSlash, toSlash } from '../slash'
+import { toAntiSlash, toSlash } from '../../../slash'
 
-import type { AppStore } from '../store'
+import type { SettingsStore } from '../store'
 
-export function migrate420(store: AppStore): void {
+export function migrate420(store: SettingsStore): void {
   const gamePath = store.get('game.path')
   const compilerPath = store.get('compilation.compilerPath')
 

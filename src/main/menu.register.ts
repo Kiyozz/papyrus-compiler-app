@@ -9,10 +9,10 @@ import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
 import createDefaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem } from 'electron-util'
 
-import { Events } from './events'
+import { IpcEvent } from './ipc-event'
 import { Logger } from './logger'
 import { exists } from './path/path'
-import { appStore, defaultConfig } from './store'
+import { settingsStore, defaultConfig } from './store/settings/store'
 
 interface RegisterMenusCallbacks {
   openLogFile: (file: string) => void
@@ -36,18 +36,19 @@ export function registerMenu({
         {
           label: 'Open',
           click() {
-            appStore.openInEditor()
+            settingsStore.openInEditor()
           },
           accelerator: 'CommandOrControl+,',
         },
         {
           label: 'Reset',
           click() {
-            appStore.store = {
+            settingsStore.store = {
               ...defaultConfig,
               tutorials: {
                 ...defaultConfig.tutorials,
                 settings: false,
+                telemetry: false,
               },
             }
           },
@@ -57,7 +58,7 @@ export function registerMenu({
     {
       label: 'Check for updates',
       click() {
-        win.webContents.send(Events.changelog)
+        win.webContents.send(IpcEvent.changelog)
       },
     },
   ]

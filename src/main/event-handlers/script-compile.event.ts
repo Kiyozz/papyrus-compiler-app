@@ -7,12 +7,12 @@
 import { IpcMainEvent } from 'electron'
 
 import { CompilationResult } from '../../common/interfaces/compilation-result'
-import { checkStore } from '../check-store'
 import { compile } from '../compilation/compile'
-import { Events } from '../events'
 import { Event } from '../interfaces/event'
+import { IpcEvent } from '../ipc-event'
 import { Logger } from '../logger'
-import { appStore, defaultConfig } from '../store'
+import { checkStore } from '../store/settings/check'
+import { settingsStore, defaultConfig } from '../store/settings/store'
 
 export class ScriptCompileEvent implements Event<string> {
   private logger = new Logger('ScriptCompileEvent')
@@ -40,9 +40,9 @@ export class ScriptCompileEvent implements Event<string> {
     this.logger.info('start compilation of scripts', script)
     this.logger.debug('checking the current store values')
 
-    checkStore(appStore, defaultConfig)
+    checkStore(settingsStore, defaultConfig)
 
-    const endEvent = `${Events.compileScriptFinish}-${script}`
+    const endEvent = `${IpcEvent.compileScriptFinish}-${script}`
 
     this.logger.debug('current store values checked')
 

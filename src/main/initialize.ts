@@ -6,7 +6,7 @@
 
 import { is } from 'electron-util'
 
-import { ipcMain } from '../common/ipc'
+import { registerContextMenu } from './context-menu.register'
 import { CheckInstallationHandler } from './event-handlers/check-installation.handler'
 import { ClipboardCopyHandler } from './event-handlers/clipboard-copy.handler'
 import { ConfigGetHandler } from './event-handlers/config-get.handler'
@@ -17,18 +17,23 @@ import { GetVersionHandler } from './event-handlers/get-version.handler'
 import { InAppErrorHandler } from './event-handlers/in-app-error.handler'
 import { IsProductionHandler } from './event-handlers/is-production.handler'
 import { OpenFileHandler } from './event-handlers/open-file.handler'
+import { RecentFilesClearHandler } from './event-handlers/recent-files-clear.handler'
+import { RecentFilesGetHandler } from './event-handlers/recent-files-get.handler'
+import { RecentFilesRemoveHandler } from './event-handlers/recent-files-remove.handler'
+import { RecentFilesSetHandler } from './event-handlers/recent-files-set.handler'
 import { ScriptCompileEvent } from './event-handlers/script-compile.event'
 import { TelemetryActiveHandler } from './event-handlers/telemetry-active.handler'
 import { TelemetryHandler } from './event-handlers/telemetry.handler'
-import { Events } from './events'
 import { Event } from './interfaces/event'
 import { EventHandler } from './interfaces/event-handler'
 import { EventSync } from './interfaces/event-sync'
+import { ipcMain } from './ipc'
+import { IpcEvent } from './ipc-event'
 import { registerIpcEvents } from './ipc-events.register'
 import { Logger } from './logger'
 import { registerMenu } from './menu.register'
 import { ensureFiles, move, writeFile } from './path/path'
-import { appStore } from './store'
+import { settingsStore } from './store/settings/store'
 import { Telemetry } from './telemetry/telemetry'
 
 const logger = new Logger('Initialize')
@@ -70,7 +75,7 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
   await backupLogFile()
   await installExtensions()
 
-  const telemetryActive = appStore.get('telemetry.active') as boolean
+  const telemetryActive = settingsStore.get('telemetry.active') as boolean
   const telemetry = new Telemetry(
     telemetryActive,
     process.env.ELECTRON_TELEMETRY_API ?? '',
@@ -78,7 +83,7 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
     true,
   )
 
-  ipcMain.on(Events.online, (e, args: { online: boolean }) => {
+  ipcMain.on(IpcEvent.online, (_, args: { online: boolean }) => {
     logger.info(
       'network status changes.',
       `Internet is ${args.online ? 'online' : 'offline'}`,
@@ -88,31 +93,36 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
 
   const openFileHandler = new OpenFileHandler()
   const handlers = new Map<string, EventHandler>([
-    [Events.openDialog, new DialogHandler()],
-    [Events.checkInstallation, new CheckInstallationHandler()],
-    [Events.configUpdate, new ConfigUpdateHandler()],
-    [Events.configGet, new ConfigGetHandler()],
-    [Events.filesStats, new FileStatHandler()],
-    [Events.getVersion, new GetVersionHandler()],
-    [Events.appError, new InAppErrorHandler(telemetry)],
-    [Events.isProduction, new IsProductionHandler()],
-    [Events.clipboardCopy, new ClipboardCopyHandler()],
-    [Events.telemetry, new TelemetryHandler(telemetry)],
-    [Events.telemetryActive, new TelemetryActiveHandler(telemetry)],
+    [IpcEvent.openDialog, new DialogHandler()],
+    [IpcEvent.checkInstallation, new CheckInstallationHandler()],
+    [IpcEvent.configUpdate, new ConfigUpdateHandler()],
+    [IpcEvent.configGet, new ConfigGetHandler()],
+    [IpcEvent.filesStats, new FileStatHandler()],
+    [IpcEvent.getVersion, new GetVersionHandler()],
+    [IpcEvent.appError, new InAppErrorHandler(telemetry)],
+    [IpcEvent.isProduction, new IsProductionHandler()],
+    [IpcEvent.clipboardCopy, new ClipboardCopyHandler()],
+    [IpcEvent.telemetry, new TelemetryHandler(telemetry)],
+    [IpcEvent.telemetryActive, new TelemetryActiveHandler(telemetry)],
+    [IpcEvent.recentFilesGet, new RecentFilesGetHandler()],
+    [IpcEvent.recentFilesSet, new RecentFilesSetHandler()],
+    [IpcEvent.recentFilesClear, new RecentFilesClearHandler()],
+    [IpcEvent.recentFileRemove, new RecentFilesRemoveHandler()],
   ])
+
   const events = new Map<string, Event>([
-    [Events.compileScriptStart, new ScriptCompileEvent()],
+    [IpcEvent.compileScriptStart, new ScriptCompileEvent()],
   ])
+
   const syncs = new Map<string, EventSync>([])
 
-  logger.debug(appStore.path)
-
+  logger.debug(settingsStore.path)
   registerMenu({
     win,
     openLogFile: (file: string) => {
       openFileHandler.listen(file)
     },
   })
-
   registerIpcEvents(handlers, events, syncs)
+  registerContextMenu(win)
 }

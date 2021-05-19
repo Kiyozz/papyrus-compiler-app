@@ -7,7 +7,7 @@
 import { Config } from '../../common/interfaces/config'
 import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
-import { appStore } from '../store'
+import { settingsStore } from '../store/settings/store'
 
 export class ConfigGetHandler implements EventHandler {
   private logger = new Logger('ConfigGetHandler')
@@ -15,6 +15,6 @@ export class ConfigGetHandler implements EventHandler {
   listen(): Config {
     this.logger.debug('getting configuration')
 
-    return appStore.store
+    return settingsStore.store
   }
 }

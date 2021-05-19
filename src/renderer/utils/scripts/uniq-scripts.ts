@@ -4,8 +4,8 @@
  * All rights reserved.
  */
 
+import { uniqArray } from '../../../common/uniq-array'
 import { ScriptInterface } from '../../interfaces'
-import { uniqArray } from '../uniq-array'
 
 export default function uniqScripts(
   scripts: ScriptInterface[],

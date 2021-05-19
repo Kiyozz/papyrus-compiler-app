@@ -61,24 +61,14 @@ async function createWindow() {
     win = null
   })
 
-  win.webContents.on('devtools-opened', () => {
-    win?.focus()
-    setImmediate(() => {
-      win?.focus()
-    })
-  })
-
   win.on('ready-to-show', () => {
     logger.debug('the window is ready to show')
 
     win?.show()
-    win?.focus()
 
     if (isDev) {
       win?.webContents.openDevTools({ mode: 'bottom' })
     }
-
-    setImmediate(() => win?.focus())
   })
 }
 

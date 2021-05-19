@@ -26,16 +26,26 @@ class IpcException extends Error {
 }
 
 class IpcRenderer {
-  invoke<Result = unknown>(channel: string, args?: unknown): Promise<Result> {
-    return (baseIpcRenderer.invoke(channel, args) as Promise<Result>).catch(
-      e => {
-        throw new IpcException(e.message)
-      },
-    )
+  async invoke<Result = unknown>(
+    channel: string,
+    args?: unknown,
+  ): Promise<Result> {
+    try {
+      return baseIpcRenderer.invoke(channel, args) as Promise<Result>
+    } catch (e) {
+      throw new IpcException(e.message)
+    }
   }
 
   send<Params = unknown>(channel: string, ...args: Params[]): void {
     baseIpcRenderer.send(channel, ...(args ?? []))
+  }
+
+  sendSync<Result = unknown, Params = unknown>(
+    channel: string,
+    ...args: Params[]
+  ): Result {
+    return baseIpcRenderer.sendSync(channel, ...(args ?? []))
   }
 
   once<Result = unknown>(
@@ -47,14 +57,15 @@ class IpcRenderer {
     })
   }
 
-  on<Result = unknown>(channel: string, listener: (args: Result) => void) {
-    baseIpcRenderer.on(channel, (_, args: Result) => {
-      listener(args)
-    })
+  on<Result = unknown>(
+    channel: string,
+    listener: (e: Electron.IpcRendererEvent, args: Result) => void,
+  ) {
+    baseIpcRenderer.on(channel, listener)
   }
 
-  off(channel: string, listener: (args: unknown) => void) {
-    baseIpcRenderer.off(channel, listener)
+  removeListener(channel: string, listener: (args: unknown) => void) {
+    baseIpcRenderer.removeListener(channel, listener)
   }
 }
 

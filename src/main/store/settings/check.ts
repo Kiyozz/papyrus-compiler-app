@@ -6,16 +6,16 @@
 
 import is from '@sindresorhus/is'
 
-import { GameType } from '../common/game'
-import { Theme } from '../common/theme'
-import { DEFAULT_COMPILER_PATH } from './constants'
-import { join } from './path/path'
-import { validateGroup } from './validators/group.validator'
+import { GameType } from '../../../common/game'
+import { Theme } from '../../../common/theme'
+import { DEFAULT_COMPILER_PATH } from '../../constants'
+import { join } from '../../path/path'
+import { validateGroup } from '../../validators/group.validator'
 
-import type { Config } from '../common/interfaces/config'
-import type { AppStore } from './store'
+import type { Config } from '../../../common/interfaces/config'
+import type { SettingsStore } from './store'
 
-function checkTheme(appStore: AppStore, defaultConfig: Config) {
+function _checkTheme(appStore: SettingsStore, defaultConfig: Config) {
   const theme = appStore.get('theme')
 
   if (![Theme.system, Theme.light, Theme.dark].includes(theme)) {
@@ -23,7 +23,7 @@ function checkTheme(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-function checkTelemetry(appStore: AppStore, defaultConfig: Config) {
+function _checkTelemetry(appStore: SettingsStore, defaultConfig: Config) {
   const telemetry = appStore.get('telemetry')
 
   if (
@@ -36,7 +36,7 @@ function checkTelemetry(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-function checkMo2(appStore: AppStore, defaultConfig: Config) {
+function _checkMo2(appStore: SettingsStore, defaultConfig: Config) {
   const mo2 = appStore.get('mo2')
   const resetMo2Config = () => appStore.set('mo2', defaultConfig.mo2)
 
@@ -72,7 +72,7 @@ function checkMo2(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-function checkFlag(appStore: AppStore, defaultConfig: Config) {
+function _checkFlag(appStore: SettingsStore, defaultConfig: Config) {
   const flag = appStore.get('compilation.flag')
 
   if (flag !== 'TESV_Papyrus_Flags.flg') {
@@ -82,7 +82,7 @@ function checkFlag(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-function checkGroups(appStore: AppStore, defaultConfig: Config) {
+function _checkGroups(appStore: SettingsStore, defaultConfig: Config) {
   const groups = appStore.get('groups')
 
   if (!is.array(groups) || !groups.every(validateGroup)) {
@@ -90,7 +90,7 @@ function checkGroups(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-function checkGameType(appStore: AppStore, defaultConfig: Config) {
+function _checkGameType(appStore: SettingsStore, defaultConfig: Config) {
   const gameType: GameType = appStore.get('game.type')
   const resetGameType = () => appStore.set('game.type', defaultConfig.game.type)
 
@@ -107,7 +107,7 @@ function checkGameType(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-function checkGamePath(appStore: AppStore, defaultConfig: Config) {
+function _checkGamePath(appStore: SettingsStore, defaultConfig: Config) {
   const gamePath: string = appStore.get('game.path')
   const resetGamePath = () => appStore.set('game.path', defaultConfig.game.path)
 
@@ -116,7 +116,7 @@ function checkGamePath(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-function checkOutput(appStore: AppStore, defaultConfig: Config) {
+function _checkOutput(appStore: SettingsStore, defaultConfig: Config) {
   const output = appStore.get('compilation.output')
 
   if (!is.string(output) || is.emptyString(output.trim())) {
@@ -124,7 +124,7 @@ function checkOutput(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-function checkCompilerPath(appStore: AppStore) {
+function _checkCompilerPath(appStore: SettingsStore) {
   const compilerPath = appStore.get('compilation.compilerPath')
   const gamePath: string = appStore.get('game.path')
 
@@ -141,7 +141,10 @@ function checkCompilerPath(appStore: AppStore) {
   }
 }
 
-function checkNotSupportedKeys(appStore: AppStore, defaultConfig: Config) {
+function _checkNotSupportedKeys(
+  appStore: SettingsStore,
+  defaultConfig: Config,
+) {
   const supportedKeys = [...Object.keys(defaultConfig), '__internal__']
 
   Object.keys(appStore.store).forEach(key => {
@@ -151,7 +154,7 @@ function checkNotSupportedKeys(appStore: AppStore, defaultConfig: Config) {
   })
 }
 
-function checkTutorials(appStore: AppStore, defaultConfig: Config) {
+function _checkTutorials(appStore: SettingsStore, defaultConfig: Config) {
   const tutorials = appStore.get('tutorials')
 
   if (is.nullOrUndefined(tutorials)) {
@@ -167,7 +170,7 @@ function checkTutorials(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-function checkCompilation(appStore: AppStore, defaultConfig: Config) {
+function _checkCompilation(appStore: SettingsStore, defaultConfig: Config) {
   const compilation = appStore.get('compilation')
 
   if (is.nullOrUndefined(compilation)) {
@@ -185,17 +188,20 @@ function checkCompilation(appStore: AppStore, defaultConfig: Config) {
   }
 }
 
-export function checkStore(appStore: AppStore, defaultConfig: Config): void {
-  checkMo2(appStore, defaultConfig)
-  checkGameType(appStore, defaultConfig)
-  checkGamePath(appStore, defaultConfig)
-  checkFlag(appStore, defaultConfig)
-  checkCompilerPath(appStore)
-  checkOutput(appStore, defaultConfig)
-  checkGroups(appStore, defaultConfig)
-  checkTutorials(appStore, defaultConfig)
-  checkCompilation(appStore, defaultConfig)
-  checkNotSupportedKeys(appStore, defaultConfig)
-  checkTelemetry(appStore, defaultConfig)
-  checkTheme(appStore, defaultConfig)
+export function checkStore(
+  appStore: SettingsStore,
+  defaultConfig: Config,
+): void {
+  _checkMo2(appStore, defaultConfig)
+  _checkGameType(appStore, defaultConfig)
+  _checkGamePath(appStore, defaultConfig)
+  _checkFlag(appStore, defaultConfig)
+  _checkCompilerPath(appStore)
+  _checkOutput(appStore, defaultConfig)
+  _checkGroups(appStore, defaultConfig)
+  _checkTutorials(appStore, defaultConfig)
+  _checkCompilation(appStore, defaultConfig)
+  _checkNotSupportedKeys(appStore, defaultConfig)
+  _checkTelemetry(appStore, defaultConfig)
+  _checkTheme(appStore, defaultConfig)
 }

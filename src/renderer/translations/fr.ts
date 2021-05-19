@@ -20,6 +20,7 @@ const fr = {
         loadGroup: 'Groupe',
         start: 'Lancer',
         clearList: 'Vider la liste',
+        recentFiles: 'Fichiers récents',
       },
       dragAndDropText:
         "Vous pouvez glisser-déposer des fichiers psc pour les charger dans l'application.",
@@ -27,6 +28,11 @@ const fr = {
         "Cette fonctionnalité n'est pas disponible si l'application est lancée en mode administrateur.",
       scriptItem: {
         removeFromList: 'Supprimer de la liste',
+      },
+      recentFilesDialog: {
+        close: 'Fermer',
+        noRecentFiles: 'Aucun fichiers récents',
+        load: 'Charger sélectionnés',
       },
     },
     groups: {

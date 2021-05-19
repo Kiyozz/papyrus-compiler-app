@@ -50,3 +50,16 @@ declare module '*.module.sass' {
   const classes: { readonly [key: string]: string }
   export default classes
 }
+
+declare module 'path-shorten' {
+  export interface Options {
+    home?: boolean
+    homedir?: string
+    length?: number
+    post?: (text: string) => string
+  }
+
+  const pathShorten: (text: string, options?: Options) => string
+
+  export = pathShorten
+}

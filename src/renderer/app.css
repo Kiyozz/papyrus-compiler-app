@@ -56,7 +56,7 @@ body {
 
 .btn,
 .btn-icon {
-  @apply text-black-600 select-none font-medium text-sm tracking-wide dark:text-white;
+  @apply select-none font-medium text-sm tracking-wide;
   @apply rounded inline-flex items-center justify-center;
   @apply px-2 py-1.5;
   @apply transition-colors;
@@ -75,8 +75,8 @@ body {
   @apply rounded px-4 py-3;
 }
 
-.btn-justify-between {
-  @apply justify-between;
+.btn-justify-start {
+  @apply justify-start;
 }
 
 .btn-no-rounded {
@@ -95,7 +95,8 @@ body {
   @apply text-red-400 dark:text-red-400;
 }
 
-.btn:disabled {
+.btn:disabled,
+.btn-icon:disabled {
   @apply pointer-events-none opacity-50;
 }
 
@@ -143,7 +144,7 @@ body {
 }
 
 .paper.p-0 {
-  padding: 0;
+  @apply p-0;
 }
 
 .changelog-container ul {
@@ -226,7 +227,7 @@ input.MuiInputBase-inputAdornedStart {
   min-height: 40px;
   background-clip: padding-box;
   border: 4px solid transparent;
-  @apply bg-light-300 dark:bg-black-600 rounded-lg hover:bg-light-800 dark:hover:bg-opacity-20;
+  @apply bg-gray-400 dark:bg-black-600 rounded-lg hover:bg-light-800 dark:hover:bg-opacity-20;
 }
 
 ::-webkit-scrollbar-track {
@@ -238,4 +239,8 @@ input.MuiInputBase-inputAdornedStart {
   margin: 0;
   font-size: 85%;
   border-radius: 6px;
+}
+
+.grid-recent-files {
+  grid-template-columns: auto minmax(0, 4fr);
 }

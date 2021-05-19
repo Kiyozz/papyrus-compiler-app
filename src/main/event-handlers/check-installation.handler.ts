@@ -19,7 +19,7 @@ import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 import * as path from '../path/path'
 import { toSlash } from '../slash'
-import { appStore } from '../store'
+import { settingsStore } from '../store/settings/store'
 
 export class CheckInstallationHandler implements EventHandler {
   private readonly logger = new Logger('CheckInstallationHandler')
@@ -37,9 +37,9 @@ export class CheckInstallationHandler implements EventHandler {
       return hasCompiler
     }
 
-    const gameType = appStore.get('game').type
+    const gameType = settingsStore.get('game').type
     const file = toCompilerSourceFile(gameType)
-    const isUsingMo2: boolean = appStore.get('mo2.use')
+    const isUsingMo2: boolean = settingsStore.get('mo2.use')
 
     if (isUsingMo2) {
       const hasMo2Instance = await this.checkMo2Instance()
@@ -55,7 +55,7 @@ export class CheckInstallationHandler implements EventHandler {
   private checkGameExe(): Promise<BadError> {
     this.logger.debug('checking game exe')
 
-    const game = appStore.get('game')
+    const game = settingsStore.get('game')
     const gamePath = game.path
     const gameType = game.type
     const executable = toExecutable(gameType)
@@ -72,8 +72,8 @@ export class CheckInstallationHandler implements EventHandler {
   private checkMo2Instance(): Promise<BadError> {
     this.logger.debug('checking mo2 instance')
 
-    const mo2Use: boolean = appStore.get('mo2.use')
-    const mo2Instance: string = appStore.get('mo2.instance')
+    const mo2Use: boolean = settingsStore.get('mo2.use')
+    const mo2Instance: string = settingsStore.get('mo2.instance')
 
     const result: Promise<BadError> = Promise.resolve(
       mo2Use ? (!path.exists(mo2Instance) ? 'mo2-instance' : false) : false,
@@ -85,8 +85,8 @@ export class CheckInstallationHandler implements EventHandler {
   }
 
   private async checkInMo2(file: CompilerSourceFile): Promise<BadError> {
-    const gameType: GameType = appStore.get('game.type')
-    const mo2 = appStore.get('mo2')
+    const gameType: GameType = settingsStore.get('game.type')
+    const mo2 = settingsStore.get('mo2')
 
     if (is.undefined(mo2.instance)) {
       return this.checkInGameDataFolder(file)
@@ -114,8 +114,8 @@ export class CheckInstallationHandler implements EventHandler {
   }
 
   private checkInGameDataFolder(file: string): Promise<BadError> {
-    const gamePath: string = appStore.get('game.path')
-    const gameType: GameType = appStore.get('game.type')
+    const gamePath: string = settingsStore.get('game.path')
+    const gameType: GameType = settingsStore.get('game.type')
     this.logger.debug('checking in game Data folder')
 
     const gameScriptsFolder = path.join(
@@ -152,7 +152,7 @@ export class CheckInstallationHandler implements EventHandler {
   private checkCompiler(): Promise<BadError> {
     this.logger.debug('checking compiler path')
 
-    const compilerPath: string = appStore.get('compilation.compilerPath')
+    const compilerPath: string = settingsStore.get('compilation.compilerPath')
 
     const result: Promise<BadError> = Promise.resolve(
       path.exists(path.normalize(compilerPath)) ? false : 'compiler',

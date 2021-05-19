@@ -6,10 +6,10 @@
 
 import is from '@sindresorhus/is'
 
-import type { Config } from '../../common/interfaces/config'
-import type { AppStore } from '../store'
+import type { Config } from '../../../../common/interfaces/config'
+import type { SettingsStore } from '../store'
 
-export function migrate520(store: AppStore): void {
+export function migrate520(store: SettingsStore): void {
   const tutorials = store.get('tutorials')
 
   if (is.undefined(tutorials)) {

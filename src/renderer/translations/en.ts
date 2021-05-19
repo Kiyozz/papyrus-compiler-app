@@ -20,6 +20,7 @@ const en = {
         loadGroup: 'Load group',
         start: 'Start',
         clearList: 'Clear list',
+        recentFiles: 'Recent files',
       },
       dragAndDropText:
         'You can drag and drop psc files to load them into the application.',
@@ -27,6 +28,11 @@ const en = {
         'This is only available when not running in administrator.',
       scriptItem: {
         removeFromList: 'Remove from list',
+      },
+      recentFilesDialog: {
+        close: 'Close',
+        noRecentFiles: 'No recent files',
+        load: 'Load selected',
       },
     },
     groups: {

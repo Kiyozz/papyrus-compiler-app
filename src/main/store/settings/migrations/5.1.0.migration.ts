@@ -4,11 +4,11 @@
  * All rights reserved.
  */
 
-import { GameType } from '../../common/game'
+import { GameType } from '../../../../common/game'
 
-import type { AppStore } from '../store'
+import type { SettingsStore } from '../store'
 
-export function migrate510(store: AppStore): void {
+export function migrate510(store: SettingsStore): void {
   const gameType: string = store.get('game.type')
 
   if (

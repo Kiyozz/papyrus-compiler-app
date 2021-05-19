@@ -6,11 +6,11 @@
 
 import is from '@sindresorhus/is'
 
-import { Theme } from '../../common/theme'
+import { Theme } from '../../../../common/theme'
 
-import type { AppStore } from '../store'
+import type { SettingsStore } from '../store'
 
-export function migrate550(store: AppStore): void {
+export function migrate550(store: SettingsStore): void {
   const telemetry = store.get('telemetry')
   const tutorials = store.get('tutorials')
   const theme = store.get('theme')

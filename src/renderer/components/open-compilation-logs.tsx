@@ -74,7 +74,6 @@ export function OpenCompilationLogs(): JSX.Element {
       <Dialog
         open={isDialogOpen}
         onClose={onClickButtonCloseLogs}
-        maxWidth={80}
         actions={
           <button className="btn" onClick={onClickButtonCloseLogs}>
             {t('common.logs.close')}
