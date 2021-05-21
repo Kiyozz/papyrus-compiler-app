@@ -26,7 +26,7 @@ export enum TelemetryEvents {
   recentFilesClear = 'RecentFiles.Clear',
   recentFilesSelectAll = 'RecentFiles.SelectAll',
   recentFilesSelectNone = 'RecentFiles.SelectNone',
-  recentFilesRevertSelection = 'RecentFiles.RevertSelection',
+  recentFilesInvertSelection = 'RecentFiles.InvertSelection',
   settingsGame = 'Settings.Game',
   settingsTheme = 'Settings.Theme',
   settingsRefresh = 'Settings.Refresh',
@@ -76,7 +76,7 @@ export interface TelemetryEventsProperties {
   [TelemetryEvents.recentFilesClear]: Record<string, never>
   [TelemetryEvents.recentFilesSelectAll]: Record<string, never>
   [TelemetryEvents.recentFilesSelectNone]: Record<string, never>
-  [TelemetryEvents.recentFilesRevertSelection]: Record<string, never>
+  [TelemetryEvents.recentFilesInvertSelection]: Record<string, never>
   [TelemetryEvents.recentFileRemove]: Record<string, never>
   [TelemetryEvents.settingsGame]: {
     game: GameType

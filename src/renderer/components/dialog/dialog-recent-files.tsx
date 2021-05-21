@@ -76,8 +76,8 @@ export function DialogRecentFiles({ isOpen, onClose }: Props): JSX.Element {
     setSelectedRecentFiles(new Map())
   })
 
-  useIpc(bridge.recentFiles.select.onRevertSelection, () => {
-    send(TelemetryEvents.recentFilesRevertSelection, {})
+  useIpc(bridge.recentFiles.select.onInvertSelection, () => {
+    send(TelemetryEvents.recentFilesInvertSelection, {})
 
     // TODO: get selected items and not loaded (full list)
     // and get diff

@@ -35,6 +35,7 @@ import { registerMenu } from './menu.register'
 import { ensureFiles, move, writeFile } from './path/path'
 import { settingsStore } from './store/settings/store'
 import { Telemetry } from './telemetry/telemetry'
+import './translations/index'
 
 const logger = new Logger('Initialize')
 
@@ -124,5 +125,5 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
     },
   })
   registerIpcEvents(handlers, events, syncs)
-  registerContextMenu(win)
+  await registerContextMenu(win)
 }

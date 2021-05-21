@@ -68,6 +68,7 @@ specifiers:
   lodash-es: ~4.17.21
   mini-css-extract-plugin: ~1.6.0
   move-file: ~2.0.0
+  os-locale: ^5.0.0
   path-shorten: ^0.1.2
   postcss: ~8.2.15
   postcss-loader: ~5.3.0
@@ -159,6 +160,7 @@ devDependencies:
   lodash-es: 4.17.21
   mini-css-extract-plugin: 1.6.0_webpack@5.37.1
   move-file: 2.0.0
+  os-locale: 5.0.0
   path-shorten: 0.1.2
   postcss: 8.2.15
   postcss-loader: 5.3.0_postcss@8.2.15+webpack@5.37.1
@@ -6496,6 +6498,24 @@ packages:
       strip-eof: 1.0.0
     dev: true
 
+  /execa/4.1.0:
+    resolution:
+      {
+        integrity: sha512-j5W0//W7f8UxAn8hXVnwG8tLwdiUy4FJLcSupCg6maBYZDpyBvTApK7KyuI4bKj8KOh1r2YH+6ucuYtJv1bTZA==,
+      }
+    engines: { node: '>=10' }
+    dependencies:
+      cross-spawn: 7.0.3
+      get-stream: 5.2.0
+      human-signals: 1.1.1
+      is-stream: 2.0.0
+      merge-stream: 2.0.0
+      npm-run-path: 4.0.1
+      onetime: 5.1.2
+      signal-exit: 3.0.3
+      strip-final-newline: 2.0.0
+    dev: true
+
   /execa/5.0.0:
     resolution:
       {
@@ -7747,6 +7767,14 @@ packages:
       - debug
     dev: true
 
+  /human-signals/1.1.1:
+    resolution:
+      {
+        integrity: sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==,
+      }
+    engines: { node: '>=8.12.0' }
+    dev: true
+
   /human-signals/2.1.0:
     resolution:
       {
@@ -7976,6 +8004,14 @@ packages:
       get-intrinsic: 1.1.1
       has: 1.0.3
       side-channel: 1.0.4
+    dev: true
+
+  /invert-kv/3.0.1:
+    resolution:
+      {
+        integrity: sha512-CYdFeFexxhv/Bcny+Q0BfOV+ltRlJcd4BBZBYFX/O0u4npJrgZtIcjokegtiSMAvlMTJ+Koq0GBCc//3bueQxw==,
+      }
+    engines: { node: '>=8' }
     dev: true
 
   /ip-regex/2.1.0:
@@ -8934,6 +8970,16 @@ packages:
       }
     dev: true
 
+  /lcid/3.1.1:
+    resolution:
+      {
+        integrity: sha512-M6T051+5QCGLBQb8id3hdvIW8+zeFV2FyBGFS9IEK5H9Wt4MueD4bW1eWikpHgZp+5xR3l5c8pZUkQsIA0BFZg==,
+      }
+    engines: { node: '>=8' }
+    dependencies:
+      invert-kv: 3.0.1
+    dev: true
+
   /levn/0.3.0:
     resolution: { integrity: sha1-OwmSTt+fCDwEkP3UwLxEIeBHZO4= }
     engines: { node: '>= 0.8.0' }
@@ -9247,6 +9293,16 @@ packages:
       semver: 6.3.0
     dev: true
 
+  /map-age-cleaner/0.1.3:
+    resolution:
+      {
+        integrity: sha512-bJzx6nMoP6PDLPBFmg7+xRKeFZvFboMrGlxmNj9ClvX53KrmvM5bXFXEWjbz4cz1AFn+jWJ9z/DJSz7hrs0w3w==,
+      }
+    engines: { node: '>=6' }
+    dependencies:
+      p-defer: 1.0.0
+    dev: true
+
   /map-cache/0.2.2:
     resolution: { integrity: sha1-wyq9C9ZSXZsFFkW7TyasXcmKDb8= }
     engines: { node: '>=0.10.0' }
@@ -9344,6 +9400,18 @@ packages:
   /media-typer/0.3.0:
     resolution: { integrity: sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g= }
     engines: { node: '>= 0.6' }
+    dev: true
+
+  /mem/5.1.1:
+    resolution:
+      {
+        integrity: sha512-qvwipnozMohxLXG1pOqoLiZKNkC4r4qqRucSoDwXowsNGDSULiqFTRUF05vcZWnwJSG22qTsynQhxbaMtnX9gw==,
+      }
+    engines: { node: '>=8' }
+    dependencies:
+      map-age-cleaner: 0.1.3
+      mimic-fn: 2.1.0
+      p-is-promise: 2.1.0
     dev: true
 
   /memfs/3.2.2:
@@ -10205,6 +10273,18 @@ packages:
       url-parse: 1.5.1
     dev: true
 
+  /os-locale/5.0.0:
+    resolution:
+      {
+        integrity: sha512-tqZcNEDAIZKBEPnHPlVDvKrp7NzgLi7jRmhKiUoa2NUmhl13FtkAGLUVR+ZsYvApBQdBfYm43A4tXXQ4IrYLBA==,
+      }
+    engines: { node: '>=10' }
+    dependencies:
+      execa: 4.1.0
+      lcid: 3.1.1
+      mem: 5.1.1
+    dev: true
+
   /p-cancelable/1.1.0:
     resolution:
       {
@@ -10213,9 +10293,22 @@ packages:
     engines: { node: '>=6' }
     dev: true
 
+  /p-defer/1.0.0:
+    resolution: { integrity: sha1-n26xgvbJqozXQwBKfU+WsZaw+ww= }
+    engines: { node: '>=4' }
+    dev: true
+
   /p-finally/1.0.0:
     resolution: { integrity: sha1-P7z7FbiZpEEjs0ttzBi3JDNqLK4= }
     engines: { node: '>=4' }
+    dev: true
+
+  /p-is-promise/2.1.0:
+    resolution:
+      {
+        integrity: sha512-Y3W0wlRPK8ZMRbNq97l4M5otioeA5lm1z7bkNkxCka8HSPjR0xRWmpCmc9utiaLP9Jb1eD8BgeIxTW4AIF45Pg==,
+      }
+    engines: { node: '>=6' }
     dev: true
 
   /p-limit/1.3.0:

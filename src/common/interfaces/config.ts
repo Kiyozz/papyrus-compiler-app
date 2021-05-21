@@ -45,5 +45,6 @@ export interface Config {
   groups: Group[]
   telemetry: Telemetry
   theme: Theme
+  locale: string
   __internal__: unknown
 }

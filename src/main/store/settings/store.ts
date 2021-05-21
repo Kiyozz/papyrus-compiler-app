@@ -8,6 +8,7 @@ import { app } from 'electron'
 import Store from 'electron-store'
 import { is } from 'electron-util'
 import * as fs from 'fs'
+import osLocale from 'os-locale'
 
 import { GameType } from '../../../common/game'
 import { Config } from '../../../common/interfaces/config'
@@ -19,6 +20,7 @@ import { migrate420 } from './migrations/4.2.0.migration'
 import { migrate510 } from './migrations/5.1.0.migration'
 import { migrate520 } from './migrations/5.2.0.migration'
 import { migrate550 } from './migrations/5.5.0.migration'
+import { migrate560 } from './migrations/5.6.0.migration'
 
 const jsonPath = is.development
   ? join(__dirname, '../..', 'package.json')
@@ -56,6 +58,7 @@ const defaultConfig: Config = {
     active: true,
   },
   theme: Theme.system,
+  locale: osLocale.sync(),
   __internal__: {
     migrations: {
       version: json.version,
@@ -72,6 +75,7 @@ const settingsStore = new Store<Config>({
     '5.1.0': migrate510,
     '5.2.0': migrate520,
     '5.5.0': migrate550,
+    '5.6.0': migrate560,
   },
 } as never)
 
