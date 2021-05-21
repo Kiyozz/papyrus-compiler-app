@@ -93,12 +93,12 @@ const api: Bridge = {
           },
         }
       },
-      onRevertSelection: cb => {
-        ipcRenderer.on(IpcEvent.recentFilesRevertSelection, cb)
+      onInvertSelection: cb => {
+        ipcRenderer.on(IpcEvent.recentFilesInvertSelection, cb)
 
         return {
           dispose() {
-            ipcRenderer.removeListener(IpcEvent.recentFilesRevertSelection, cb)
+            ipcRenderer.removeListener(IpcEvent.recentFilesInvertSelection, cb)
           },
         }
       },

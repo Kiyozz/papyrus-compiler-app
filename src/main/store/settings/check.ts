@@ -15,6 +15,14 @@ import { validateGroup } from '../../validators/group.validator'
 import type { Config } from '../../../common/interfaces/config'
 import type { SettingsStore } from './store'
 
+function _checkLocale(appStore: SettingsStore, defaultConfig: Config) {
+  const locale = appStore.get('locale')
+
+  if (locale !== defaultConfig.locale) {
+    appStore.set('locale', defaultConfig.locale)
+  }
+}
+
 function _checkTheme(appStore: SettingsStore, defaultConfig: Config) {
   const theme = appStore.get('theme')
 
@@ -204,4 +212,5 @@ export function checkStore(
   _checkNotSupportedKeys(appStore, defaultConfig)
   _checkTelemetry(appStore, defaultConfig)
   _checkTheme(appStore, defaultConfig)
+  _checkLocale(appStore, defaultConfig)
 }

@@ -22,7 +22,7 @@ export enum IpcEvent {
   recentFilesClear = 'event-recent-files-clear',
   recentFilesSelectAll = 'event-recent-files-select-all',
   recentFilesSelectNone = 'event-recent-files-select-none',
-  recentFilesRevertSelection = 'event-recent-files-revert-selection',
+  recentFilesInvertSelection = 'event-recent-files-invert-selection',
   recentFilesOnClear = 'event-recent-files-on-clear',
   recentFilesDialogOpen = 'event-recent-files-dialog-open',
   recentFilesDialogClose = 'event-recent-files-dialog-close',

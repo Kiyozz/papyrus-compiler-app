@@ -9,28 +9,32 @@ import contextMenu from 'electron-context-menu'
 import { ipcMain } from './ipc'
 import { IpcEvent } from './ipc-event'
 
-export function registerContextMenu(win: Electron.BrowserWindow): void {
+export async function registerContextMenu(
+  win: Electron.BrowserWindow,
+): Promise<void> {
+  const t = await (await import('./translations/index')).default()
+
   const recentFilesMenus: MenuItemConstructorOptions[] = [
     {
-      label: 'Select all',
+      label: t('contextMenu.select.all'),
       click() {
         win.webContents.send(IpcEvent.recentFilesSelectAll)
       },
     },
     {
-      label: 'Select none',
+      label: t('contextMenu.select.none'),
       click() {
         win.webContents.send(IpcEvent.recentFilesSelectNone)
       },
     },
     {
-      label: 'Revert selection',
+      label: t('contextMenu.select.invert'),
       click() {
-        win.webContents.send(IpcEvent.recentFilesRevertSelection)
+        win.webContents.send(IpcEvent.recentFilesInvertSelection)
       },
     },
     {
-      label: 'Clear',
+      label: t('contextMenu.select.clear'),
       click() {
         win.webContents.send(IpcEvent.recentFilesOnClear)
       },

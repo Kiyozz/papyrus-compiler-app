@@ -79,7 +79,7 @@ export interface Bridge {
     select: {
       onAll: (cb: () => void) => Disposable
       onNone: (cb: () => void) => Disposable
-      onRevertSelection: (cb: () => void) => Disposable
+      onInvertSelection: (cb: () => void) => Disposable
       onClear: (cb: () => void) => Disposable
     }
 
