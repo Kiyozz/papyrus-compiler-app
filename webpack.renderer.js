@@ -25,15 +25,15 @@ const createConfig = () => {
       template: path.resolve('src', 'renderer', 'index.html'),
       filename: 'index.html',
       inject: 'head',
-      scriptLoading: 'defer'
+      scriptLoading: 'defer',
     }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
       ELECTRON_WEBPACK_APP_MOD_URL:
         'https://www.nexusmods.com/skyrimspecialedition/mods/23852',
       ELECTRON_TELEMETRY_FEATURE:
-        process.env.ELECTRON_TELEMETRY_FEATURE ?? 'false'
-    })
+        process.env.ELECTRON_TELEMETRY_FEATURE ?? 'false',
+    }),
   ].filter(Boolean)
 
   const rendererSources = path.resolve('src', 'renderer')
@@ -47,16 +47,16 @@ const createConfig = () => {
         path.join(rendererSources, 'index.tsx'),
         path.join(rendererSources, 'tailwind.css'),
         path.join(rendererSources, 'utilities.css'),
-        path.join(rendererSources, 'app.css')
-      ]
+        path.join(rendererSources, 'app.css'),
+      ],
     },
     output: {
       filename: 'index.js',
-      path: output
+      path: output,
     },
     target: 'electron-renderer',
     resolve: {
-      extensions: ['.ts', '.tsx', '.js']
+      extensions: ['.ts', '.tsx', '.js'],
     },
     module: {
       rules: [
@@ -67,8 +67,8 @@ const createConfig = () => {
             !isProduction && 'css-hot-loader',
             MiniCssExtractPlugin.loader,
             'css-loader',
-            'postcss-loader'
-          ].filter(Boolean)
+            'postcss-loader',
+          ].filter(Boolean),
         },
         {
           test: /\.tsx?$/,
@@ -83,22 +83,22 @@ const createConfig = () => {
                   [
                     '@babel/preset-env',
                     {
-                      useBuiltIns: false
-                    }
-                  ]
+                      useBuiltIns: false,
+                    },
+                  ],
                 ],
                 plugins: [
                   !isProduction && [
                     'react-refresh/babel',
-                    { skipEnvCheck: true }
+                    { skipEnvCheck: true },
                   ],
                   '@babel/plugin-proposal-optional-chaining',
                   '@babel/plugin-proposal-nullish-coalescing-operator',
-                  '@babel/plugin-proposal-class-properties'
-                ].filter(Boolean)
-              }
-            }
-          ]
+                  '@babel/plugin-proposal-class-properties',
+                ].filter(Boolean),
+              },
+            },
+          ],
         },
         {
           test: /\.(png|svg)$/,
@@ -106,10 +106,10 @@ const createConfig = () => {
             {
               loader: 'url-loader',
               options: {
-                limit: 1024
-              }
-            }
-          ]
+                limit: 1024,
+              },
+            },
+          ],
         },
         {
           test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
@@ -117,33 +117,33 @@ const createConfig = () => {
             {
               loader: 'url-loader',
               options: {
-                limit: 1024
-              }
-            }
-          ]
-        }
-      ]
+                limit: 1024,
+              },
+            },
+          ],
+        },
+      ],
     },
-    plugins
+    plugins,
   }
 
   if (isProduction) {
     configuration.optimization = {
       minimize: true,
-      minimizer: [new TerserPlugin(), new CssMinimizerWebpackPlugin()]
+      minimizer: [new TerserPlugin(), new CssMinimizerWebpackPlugin()],
     }
   } else {
     configuration.plugins.push(
       new webpack.HotModuleReplacementPlugin(),
       new ForkTsCheckerWebpackPlugin(),
-      new ReactRefreshWebpackPlugin()
+      new ReactRefreshWebpackPlugin(),
     )
 
     configuration.devServer = {
       host: 'localhost',
       port: '9080',
       hot: true,
-      overlay: true
+      overlay: true,
     }
 
     configuration.entry.renderer.unshift('css-hot-loader/hotModuleReplacement')
