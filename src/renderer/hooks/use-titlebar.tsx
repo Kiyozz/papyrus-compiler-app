@@ -1,6 +1,5 @@
-import React, { createContext, useContext } from 'react'
-
 import type { Titlebar } from 'custom-electron-titlebar'
+import React, { createContext, useContext } from 'react'
 
 interface Context {
   titlebar: Titlebar

@@ -7,12 +7,11 @@
 import is from '@sindresorhus/is'
 
 import { GameType } from '../../../common/game'
+import type { Config } from '../../../common/interfaces/config'
 import { Theme } from '../../../common/theme'
 import { DEFAULT_COMPILER_PATH } from '../../constants'
 import { join } from '../../path/path'
 import { validateGroup } from '../../validators/group.validator'
-
-import type { Config } from '../../../common/interfaces/config'
 import type { SettingsStore } from './store'
 
 function _checkLocale(appStore: SettingsStore, defaultConfig: Config) {

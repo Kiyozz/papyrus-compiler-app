@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+import type { Color } from 'custom-electron-titlebar'
 import { useEffect } from 'react'
 
 import { Theme } from '../../common/theme'
@@ -17,8 +18,6 @@ import { useFocus } from './use-focus'
 import { useSystemDarkPreference } from './use-system-dark-preference'
 import { useTheme } from './use-theme'
 import { useTitlebar } from './use-titlebar'
-
-import type { Color } from 'custom-electron-titlebar'
 
 export function useSyncHtmlTheme(): void {
   const isSystemThemeDark = useSystemDarkPreference()

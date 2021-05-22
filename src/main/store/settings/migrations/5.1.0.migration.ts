@@ -5,7 +5,6 @@
  */
 
 import { GameType } from '../../../../common/game'
-
 import type { SettingsStore } from '../store'
 
 export function migrate510(store: SettingsStore): void {

@@ -9,7 +9,6 @@ import * as util from 'electron-util'
 import * as path from 'path'
 
 import { toAntiSlash, toSlash } from '../../../slash'
-
 import type { SettingsStore } from '../store'
 
 export function migrate420(store: SettingsStore): void {
