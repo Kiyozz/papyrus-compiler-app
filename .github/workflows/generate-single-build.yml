@@ -23,9 +23,9 @@ jobs:
         env:
           NODE_ENV: production
           ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrimspecialedition/mods/23852
-          ELECTRON_TELEMETRY_API_KEY: ${{ secrets.ELECTRON_TELEMETRY_API_KEY_SE }}
-          ELECTRON_TELEMETRY_API: ${{ secrets.ELECTRON_TELEMETRY_API }}
-          ELECTRON_TELEMETRY_FEATURE: true
+          ELECTRON_TELEMETRY_API_KEY:
+          ELECTRON_TELEMETRY_API:
+          ELECTRON_TELEMETRY_FEATURE: false
         run: |
           pnpm build
           pnpm package -- --config.productName="PCA SE" --config.extraMetadata.name="PCA SE"
