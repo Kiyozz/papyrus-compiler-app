@@ -35,7 +35,9 @@ export function ScriptItem({
         aria-label="script"
       >
         <div>{script.name}</div>
-        <div className={`ml-auto font-sm ${getClassNameFromStatus(script)}`}>
+        <div
+          className={`ml-auto font-sm flex ${getClassNameFromStatus(script)}`}
+        >
           {getIconFromStatus(script)}
         </div>
       </div>

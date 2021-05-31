@@ -7,7 +7,6 @@
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import ErrorIcon from '@material-ui/icons/Error'
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty'
-import QueryBuilderIcon from '@material-ui/icons/QueryBuilder'
 import React from 'react'
 
 import { ScriptStatus } from '../../enums/script-status.enum'
@@ -29,7 +28,7 @@ export function getClassNameFromStatus(script: ScriptInterface): string {
 export function getIconFromStatus(script: ScriptInterface): JSX.Element {
   switch (script.status) {
     case ScriptStatus.idle:
-      return <QueryBuilderIcon />
+      return <></>
     case ScriptStatus.running:
       return <HourglassEmptyIcon />
     case ScriptStatus.success:
