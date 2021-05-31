@@ -4,8 +4,6 @@
  * All rights reserved.
  */
 
-import { is } from 'electron-util'
-
 import { registerContextMenu } from './context-menu.register'
 import { CheckInstallationHandler } from './event-handlers/check-installation.handler'
 import { ClipboardCopyHandler } from './event-handlers/clipboard-copy.handler'
@@ -39,17 +37,6 @@ import './translations/index'
 
 const logger = new Logger('Initialize')
 
-function installExtensions() {
-  if (is.development) {
-    const installer = require('electron-devtools-installer')
-    const extensions = [installer.REACT_DEVELOPER_TOOLS]
-
-    return Promise.all(extensions.map(name => installer.default(name))).catch(
-      e => logger.warn(e),
-    )
-  }
-}
-
 /**
  * Rename the current log file to have previous session log file
  */
@@ -74,7 +61,6 @@ async function backupLogFile() {
 
 export async function initialize(win: Electron.BrowserWindow): Promise<void> {
   await backupLogFile()
-  await installExtensions()
 
   const telemetryActive = settingsStore.get('telemetry.active') as boolean
   const telemetry = new Telemetry(
