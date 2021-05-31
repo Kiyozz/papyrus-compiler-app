@@ -56,6 +56,7 @@ body {
 
 .btn,
 .btn-icon {
+  -webkit-app-region: no-drag;
   @apply select-none font-medium text-sm tracking-wide;
   @apply rounded inline-flex items-center justify-center;
   @apply px-2 py-1.5;
@@ -243,4 +244,12 @@ input.MuiInputBase-inputAdornedStart {
 
 .grid-recent-files {
   grid-template-columns: auto minmax(0, 4fr);
+}
+
+.draggable {
+  -webkit-app-region: drag;
+}
+
+.no-draggable {
+  -webkit-app-region: no-drag;
 }

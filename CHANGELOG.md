@@ -6,10 +6,12 @@
 
   You can now add files faster
 
+- App top bar is now draggable
+
 ### Bug fixes
 
-- Texts could appears behind scrollable section
-- Changelog dialog could malformat release changelog
+- Texts could appear behind scrollable section
+- New release dialog could have malformed texts
 
 ## 5.5.2 (2021-04-25)
 

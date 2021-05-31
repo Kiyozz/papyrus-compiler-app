@@ -22,7 +22,7 @@ export function PageAppBar({ title, actions = [] }: Props): JSX.Element {
         isFocus
           ? 'bg-light-400 dark:bg-black-400'
           : 'bg-light-600 dark:bg-black-600'
-      } shadow text-black select-none  dark:text-white`}
+      } shadow text-black select-none  dark:text-white draggable`}
     >
       <div className="flex h-16 px-4 items-center">
         <h2 className="text-xl font-bold font-nova">{title}</h2>
