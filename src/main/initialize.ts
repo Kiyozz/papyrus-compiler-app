@@ -104,7 +104,7 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
   const syncs = new Map<string, EventSync>([])
 
   logger.debug(settingsStore.path)
-  registerMenu({
+  await registerMenu({
     win,
     openLogFile: (file: string) => {
       openFileHandler.listen(file)

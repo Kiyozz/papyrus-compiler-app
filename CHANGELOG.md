@@ -11,6 +11,9 @@
 
   This icon could show that a compilation was in progress when not
 
+- Application menu bar items are now
+  translated (PCA only supports `english` and `french` at the moment, helps are welcome)
+
 ### Bug fixes
 
 - Texts could appear behind scrollable section
