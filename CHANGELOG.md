@@ -7,6 +7,9 @@
   You can now add files faster
 
 - App top bar is now draggable
+- The "waiting to compile" icon has been deleted
+
+  This icon could show that a compilation was in progress when not
 
 ### Bug fixes
 
