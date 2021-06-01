@@ -7,7 +7,7 @@
 import is from '@sindresorhus/is'
 import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
 import createDefaultMenu from 'electron-default-menu'
-import { appMenu, openUrlMenuItem } from 'electron-util'
+import { appMenu, openUrlMenuItem, is as isPlatform } from 'electron-util'
 
 import { IpcEvent } from './ipc-event'
 import { Logger } from './logger'
@@ -35,7 +35,7 @@ export async function registerMenu({
       role: 'appMenu',
       submenu: [
         {
-          label: t('appMenu.app.preferences.actions.open'),
+          label: t('appMenu.app.preferences.actions.configuration'),
           click() {
             settingsStore.openInEditor()
           },
@@ -123,6 +123,16 @@ export async function registerMenu({
           item.label = t('appMenu.app.showAll')
           break
       }
+    }
+  }
+
+  if (isPlatform.windows || isPlatform.linux) {
+    if (is.array(menu.submenu)) {
+      menu.submenu = menu.submenu.filter(item => {
+        return !['services', 'hide', 'unhide', 'hideothers'].includes(
+          item.role as string,
+        )
+      })
     }
   }
 

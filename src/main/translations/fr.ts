@@ -24,7 +24,7 @@ const fr: TranslationShape = {
       preferences: {
         title: 'Préférences...',
         actions: {
-          open: 'Ouvrir',
+          configuration: 'Configuration...',
           reset: 'Réinitialiser',
         },
       },

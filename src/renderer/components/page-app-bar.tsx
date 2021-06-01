@@ -4,9 +4,10 @@
  * All rights reserved.
  */
 
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useFocus } from '../hooks/use-focus'
+import { useTitlebar } from '../hooks/use-titlebar'
 
 interface Props {
   title?: string
@@ -15,6 +16,7 @@ interface Props {
 
 export function PageAppBar({ title, actions = [] }: Props): JSX.Element {
   const isFocus = useFocus()
+  const { isOpen } = useTitlebar()
 
   return (
     <div
@@ -22,7 +24,9 @@ export function PageAppBar({ title, actions = [] }: Props): JSX.Element {
         isFocus
           ? 'bg-light-400 dark:bg-black-400'
           : 'bg-light-600 dark:bg-black-600'
-      } shadow text-black select-none  dark:text-white draggable`}
+      } shadow text-black select-none  dark:text-white ${
+        isOpen ? 'no-draggable' : 'draggable'
+      }`.trim()}
     >
       <div className="flex h-16 px-4 items-center">
         <h2 className="text-xl font-bold font-nova">{title}</h2>

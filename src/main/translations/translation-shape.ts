@@ -21,7 +21,7 @@ export interface TranslationShape {
       preferences: {
         title: string
         actions: {
-          open: string
+          configuration: string
           reset: string
         }
       }
