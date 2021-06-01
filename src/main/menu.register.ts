@@ -133,9 +133,9 @@ export async function registerMenu({
   defaultMenus.push(helpMenu)
   defaultMenus.unshift(fileMenu)
 
-  const editMenu = defaultMenus[1]
-  const viewMenu = defaultMenus[2]
-  const windowMenu = defaultMenus[3]
+  const editMenu = defaultMenus.find(menu => menu.label === 'Edit')
+  const viewMenu = defaultMenus.find(menu => menu.label === 'View')
+  const windowMenu = defaultMenus.find(menu => menu.label === 'Window')
 
   if (!is.nullOrUndefined(editMenu)) {
     editMenu.role = 'editMenu'
