@@ -5,7 +5,7 @@
  */
 
 import is from '@sindresorhus/is'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Observable, Subject } from 'rxjs'
 import { PartialDeep } from 'type-fest'
 
@@ -18,7 +18,9 @@ interface Context {
   setShowChangelog: (show: boolean) => void
   setChangelog: (changelog: string) => void
   setConfig: (config: PartialDeep<Config>, override?: boolean) => void
+  setCheckUsingLastVersion: (check: boolean) => void
   isShowChangelog: boolean
+  isCheckUsingLastVersion: boolean
   changelog: string
   config: Config
   groups: Group[]
@@ -62,6 +64,7 @@ export function AppProvider({
   const [groups, setGroups] = useState<Group[]>([])
   const [isShowChangelog, setShowChangelog] = useState(false)
   const [changelog, setChangelog] = useState('')
+  const [isCheckUsingLastVersion, setCheckUsingLastVersion] = useState(false)
 
   const updateConfig = (
     partialConfig: PartialDeep<Config>,
@@ -91,26 +94,27 @@ export function AppProvider({
     })
   }, [])
 
+  const value: Context = useMemo(
+    () => ({
+      setShowChangelog,
+      setChangelog,
+      setConfig: updateConfig,
+      setCheckUsingLastVersion,
+      isShowChangelog,
+      isCheckUsingLastVersion,
+      changelog,
+      config,
+      groups,
+      refreshConfig,
+      copyToClipboard,
+      onRefreshConfig,
+    }),
+    [changelog, config, groups, isCheckUsingLastVersion, isShowChangelog],
+  )
+
   if (is.undefined(config)) {
     return null
   }
 
-  return (
-    <AppContext.Provider
-      value={{
-        setShowChangelog,
-        setChangelog,
-        setConfig: updateConfig,
-        isShowChangelog,
-        changelog,
-        config,
-        groups,
-        refreshConfig,
-        copyToClipboard,
-        onRefreshConfig,
-      }}
-    >
-      {children}
-    </AppContext.Provider>
-  )
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }

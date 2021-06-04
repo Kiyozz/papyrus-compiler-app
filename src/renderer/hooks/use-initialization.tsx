@@ -12,6 +12,7 @@ import React, {
   useEffect,
   useState,
 } from 'react'
+import { useDidMount } from 'rooks'
 
 import bridge from '../bridge'
 import { GithubRelease } from '../interfaces'
@@ -36,38 +37,53 @@ export function InitializationProvider({
 }: React.PropsWithChildren<unknown>): JSX.Element {
   const [done, setDone] = useState(false)
   const [latestVersion, setLatestVersion] = useState('')
-  const { setShowChangelog, setChangelog } = useApp()
-  const [, setVersion] = useVersion()
+  const { setShowChangelog, setChangelog, setCheckUsingLastVersion } = useApp()
+  const [version, setVersion] = useVersion()
 
-  const checkUpdates = useCallback(() => {
-    bridge.version.get().then(async version => {
-      setVersion(version)
+  const checkUpdates = useCallback(
+    async (version: string) => {
       const response = await fetch(`${GITHUB_REPOSITORY}/releases`)
       const [release]: GithubRelease[] = await response.json()
 
-      if (typeof release !== 'undefined') {
+      if (typeof release !== 'undefined' && version.length !== 0) {
         if (compareVersions.compare(release.tag_name, version, '>')) {
           setLatestVersion(release.tag_name)
           setShowChangelog(true)
           setChangelog(release.body)
+
+          return true
         } else {
           setShowChangelog(false)
         }
       }
 
+      return false
+    },
+    [setChangelog, setShowChangelog],
+  )
+
+  useDidMount(() => {
+    bridge.version.get().then(async v => {
+      setVersion(v)
       setDone(true)
+
+      await checkUpdates(v)
     })
-  }, [setChangelog, setLatestVersion, setShowChangelog, setVersion])
+  })
 
   useEffect(() => {
-    checkUpdates()
-  }, [checkUpdates])
+    const check = async () => {
+      const foundNewVersion = await checkUpdates(version)
 
-  useEffect(() => {
-    bridge.changelog.on(checkUpdates)
+      if (!foundNewVersion) {
+        setCheckUsingLastVersion(true)
+      }
+    }
 
-    return () => bridge.changelog.off(checkUpdates)
-  }, [checkUpdates])
+    bridge.changelog.on(check)
+
+    return () => bridge.changelog.off(check)
+  }, [checkUpdates, setCheckUsingLastVersion, version])
   return (
     <InitializationContext.Provider value={{ done, latestVersion }}>
       {children}

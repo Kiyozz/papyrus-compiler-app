@@ -8,6 +8,7 @@ import is from '@sindresorhus/is'
 import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
 import createDefaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem, is as isPlatform } from 'electron-util'
+import { match } from 'ts-pattern'
 
 import { IpcEvent } from './ipc-event'
 import { Logger } from './logger'
@@ -59,7 +60,7 @@ export async function registerMenu({
     {
       label: t('appMenu.app.checkForUpdates'),
       click() {
-        win.webContents.send(IpcEvent.changelog)
+        win.webContents.send(IpcEvent.checkForUpdates)
       },
     },
   ])
@@ -106,22 +107,21 @@ export async function registerMenu({
 
   if (is.array(menu.submenu)) {
     for (const item of menu.submenu) {
-      switch (item.role as string) {
-        case 'about':
-          item.label = t('appMenu.app.about', { app: 'PCA' })
-          break
-        case 'hide':
-          item.label = t('appMenu.app.hideSelf', { app: 'PCA' })
-          break
-        case 'hideothers':
-          item.label = t('appMenu.app.hideOthers')
-          break
-        case 'quit':
-          item.label = t('appMenu.app.quit', { app: 'PCA' })
-          break
-        case 'unhide':
-          item.label = t('appMenu.app.showAll')
-          break
+      const label = match<string, string | undefined>(item.role as string)
+        .with('about', 'hide', 'quit', role => {
+          const key = role === 'hide' ? 'hideSelf' : role
+
+          return t(`appMenu.app.${key}`, { app: 'PCA' })
+        })
+        .with('hideothers', 'unhide', role => {
+          const key = role === 'hideothers' ? 'hideOthers' : 'showAll'
+
+          return t(`appMenu.app.${key}`)
+        })
+        .otherwise(() => undefined)
+
+      if (label !== undefined) {
+        item.label = label
       }
     }
   }
@@ -153,25 +153,16 @@ export async function registerMenu({
 
     if (is.array(editMenu.submenu)) {
       for (const item of editMenu.submenu) {
-        switch (item.role as string) {
-          case 'undo':
-            item.label = t('appMenu.edit.actions.undo')
-            break
-          case 'redo':
-            item.label = t('appMenu.edit.actions.redo')
-            break
-          case 'cut':
-            item.label = t('appMenu.edit.actions.cut')
-            break
-          case 'copy':
-            item.label = t('appMenu.edit.actions.copy')
-            break
-          case 'paste':
-            item.label = t('appMenu.edit.actions.paste')
-            break
-          case 'selectall':
-            item.label = t('appMenu.edit.actions.selectAll')
-            break
+        const label = match<string, string | undefined>(item.role as string)
+          .with('undo', 'redo', 'cut', 'copy', 'paste', 'selectall', role => {
+            const usedRole = role === 'selectall' ? 'selectAll' : role
+
+            return t(`appMenu.edit.actions.${usedRole}`)
+          })
+          .otherwise(() => undefined)
+
+        if (label !== undefined) {
+          item.label = label
         }
       }
     }

@@ -16,7 +16,7 @@ export enum IpcEvent {
   openDialog = 'event-open-dialog',
   isProduction = 'event-is-production',
   getVersion = 'event-get-version',
-  changelog = 'event-changelog',
+  checkForUpdates = 'event-check-for-updates',
   recentFilesGet = 'event-recent-files-get',
   recentFilesSet = 'event-recent-files-set',
   recentFilesClear = 'event-recent-files-clear',
@@ -30,5 +30,4 @@ export enum IpcEvent {
   telemetry = 'event-telemetry',
   telemetryActive = 'event-telemetry-active',
   online = 'event-is-online',
-  getHomedir = 'event-homedir-get',
 }

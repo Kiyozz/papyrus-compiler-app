@@ -12,7 +12,7 @@ interface UseOnKeyUpOptions {
   alt?: boolean
 }
 
-export default function useOnKeyUp(
+export function useOnKeyUp(
   key: string,
   action: () => void,
   options?: UseOnKeyUpOptions,

@@ -137,7 +137,7 @@ export function GroupsDialog({
             </button>
           </div>
           <button className="btn" type="button" onClick={onClose}>
-            {t('page.groups.dialog.close')}
+            {t('page.groups.dialog.cancel')}
           </button>
           <button className="btn" type="submit" disabled={name === ''}>
             {isEdit

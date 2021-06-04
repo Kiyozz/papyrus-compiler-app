@@ -1,6 +1,7 @@
 /*
- *   Copyright (c) 2021 Kiyozz
- *   All rights reserved.
+ * Copyright (c) 2021 Kiyozz.
+ *
+ * All rights reserved.
  */
 
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
@@ -259,7 +260,7 @@ export function DialogRecentFiles({ isOpen, onClose }: Props): JSX.Element {
       actions={
         <>
           <button className="btn" onClick={onClickClose}>
-            {t('page.compilation.recentFilesDialog.close')}
+            {t('page.compilation.recentFilesDialog.cancel')}
           </button>
           <button
             className="btn"

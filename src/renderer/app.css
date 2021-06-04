@@ -88,6 +88,10 @@ body {
   @apply bg-primary-400 text-light-400 hover:bg-primary-500 focus:bg-primary-600 dark:hover:bg-primary-500 dark:focus:bg-primary-600;
 }
 
+.btn-text-primary {
+  @apply bg-transparent text-primary-400 hover:text-primary-500 focus:text-primary-600 dark:hover:text-primary-500 dark:focus:text-primary-600;
+}
+
 .btn-secondary {
   @apply bg-green-600 text-light-400 hover:bg-green-500 focus:bg-green-400 dark:text-light-400 dark:hover:bg-green-500 dark:focus:bg-green-400;
 }
@@ -235,6 +239,8 @@ input.MuiInputBase-inputAdornedStart {
   visibility: hidden;
 }
 
+/* ----- MISC ----- */
+
 .markdown-code {
   padding: 0.2em 0.4em;
   margin: 0;
@@ -246,10 +252,36 @@ input.MuiInputBase-inputAdornedStart {
   grid-template-columns: auto minmax(0, 4fr);
 }
 
+.toast {
+  min-width: 33vw;
+}
+
+.toast-actions {
+  margin: -0.5rem -0.5rem -0.5rem 0.5rem;
+}
+
+/* ----- DRAG ----- */
+
 .draggable {
   -webkit-app-region: drag;
 }
 
 .no-draggable {
   -webkit-app-region: no-drag;
+}
+
+/* ----- ANIMATIONS ----- */
+.go-up-transition-150 {
+  transition-duration: 0.15s;
+}
+
+.go-up-transition-300 {
+  transition-duration: 0.3s;
+}
+
+.go-up-transition-150,
+.go-up-transition-300 {
+  transition-property: transform, opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1),
+    cubic-bezier(0.87, 0.21, 0.35, 0.99);
 }
