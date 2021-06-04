@@ -96,8 +96,8 @@ body {
   @apply text-red-400 dark:text-red-400;
 }
 
-.btn:disabled,
-.btn-icon:disabled {
+*:disabled,
+*[aria-disabled='true'] {
   @apply pointer-events-none opacity-50;
 }
 

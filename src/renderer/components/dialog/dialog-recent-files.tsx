@@ -79,8 +79,6 @@ export function DialogRecentFiles({ isOpen, onClose }: Props): JSX.Element {
   useIpc(bridge.recentFiles.select.onInvertSelection, () => {
     send(TelemetryEvents.recentFilesInvertSelection, {})
 
-    // TODO: get selected items and not loaded (full list)
-    // and get diff
     setSelectedRecentFiles(selectedFiles => {
       return new Map(
         notLoadedRecentFiles
@@ -163,45 +161,20 @@ export function DialogRecentFiles({ isOpen, onClose }: Props): JSX.Element {
     [loadedScripts],
   )
 
-  const LineActions = useCallback(
+  const Line = useCallback(
     ({
       onClickFile,
       onClickDelete,
       disabled = false,
       selected,
+      script,
     }: {
       onClickFile: (evt: React.MouseEvent<HTMLButtonElement>) => void
       onClickDelete: (evt: React.MouseEvent<HTMLButtonElement>) => void
       selected: boolean
       disabled?: boolean
+      script: Script
     }) => {
-      return (
-        <div className="flex gap-1">
-          <button
-            className="btn-icon btn-danger !p-0.5"
-            onClick={onClickDelete}
-          >
-            <DeleteOutlinedIcon fontSize="small" />
-          </button>
-          <button
-            className={cx('btn-icon !p-0.5', selected && 'text-primary-400')}
-            onClick={onClickFile}
-            disabled={disabled}
-          >
-            {selected ? (
-              <CheckBoxIcon fontSize="small" />
-            ) : (
-              <CheckBoxOutlineBlankIcon fontSize="small" />
-            )}
-          </button>
-        </div>
-      )
-    },
-    [],
-  )
-
-  const processedList = useMemo(() => {
-    return recentFiles.map(script => {
       const shortenedPath = shorten(script.path, {
         length: 20,
         home: true,
@@ -209,28 +182,68 @@ export function DialogRecentFiles({ isOpen, onClose }: Props): JSX.Element {
       })
 
       return (
+        <>
+          <div className="flex gap-1">
+            <button
+              className="btn-icon btn-danger !p-0.5"
+              onClick={onClickDelete}
+            >
+              <DeleteOutlinedIcon fontSize="small" />
+            </button>
+            <button
+              className={cx('btn-icon !p-0.5', selected && 'text-primary-400')}
+              onClick={onClickFile}
+              disabled={disabled}
+            >
+              {selected ? (
+                <CheckBoxIcon fontSize="small" />
+              ) : (
+                <CheckBoxOutlineBlankIcon fontSize="small" />
+              )}
+            </button>
+            <div className="text-xs text-gray-500 tracking-tight flex items-center">
+              {shortenedPath.path}
+              <span
+                className={cx(
+                  'font-bold hover:text-primary-400 dark:hover:text-primary-400 cursor-pointer',
+                  {
+                    'text-primary-400 dark:text-primary-400':
+                      selected && !disabled,
+                    'text-black-800 dark:text-white': !selected || !disabled,
+                  },
+                )}
+                aria-disabled={disabled}
+                onClick={onClickFile}
+              >
+                {shortenedPath.filename}
+              </span>
+            </div>
+          </div>
+        </>
+      )
+    },
+    [config.game.path],
+  )
+
+  const processedList = useMemo(() => {
+    return recentFiles.map(script => {
+      return (
         <div
           className="w-full grid grid-recent-files items-center gap-4"
           key={script.path}
         >
-          <LineActions
+          <Line
             onClickFile={onClickFile(script)}
             onClickDelete={onClickDeleteFile(script)}
             disabled={isAlreadyLoaded(script)}
             selected={selectedRecentFiles.has(script.path)}
+            script={script}
           />
-          <div className="text-xs text-gray-500 tracking-tight">
-            {shortenedPath.path}
-            <span className="text-black-800 dark:text-white font-bold">
-              {shortenedPath.filename}
-            </span>
-          </div>
         </div>
       )
     })
   }, [
-    LineActions,
-    config.game.path,
+    Line,
     isAlreadyLoaded,
     onClickDeleteFile,
     onClickFile,
