@@ -4,7 +4,9 @@
  * All rights reserved.
  */
 
-const en = {
+import { TranslationShape } from './translation-shape'
+
+const en: TranslationShape = {
   loading: 'Loading',
   nav: {
     compilation: 'Compilation',
@@ -30,7 +32,7 @@ const en = {
         removeFromList: 'Remove from list',
       },
       recentFilesDialog: {
-        close: 'Close',
+        cancel: 'Cancel',
         noRecentFiles: 'No recent files',
         load: 'Load selected',
       },
@@ -52,7 +54,7 @@ const en = {
         editGroup: 'Edit a group',
         name: 'Name',
         dropScripts: 'Drop your scripts files here',
-        close: 'Close',
+        cancel: 'Cancel',
       },
     },
     settings: {
@@ -107,6 +109,7 @@ const en = {
       view: 'View patch notes',
       message: 'New version available: {{version}}',
     },
+    alreadyLastVersion: 'PCA is up to date',
   },
   common: {
     selectFolder: 'Select a folder',
@@ -122,9 +125,10 @@ const en = {
       invalidConfigurationCompiler:
         '{{exe}} is a invalid compiler. This file does not exists.',
       invalidConfigurationScripts:
-        "Your configuration is incorrect. Cannot validate Creation Kit installation. The app checks the presence of Actor.psc to validate your Creation Kit installation. Cannot find the file Actor.psc in Source\\Scripts or Scripts\\Source. If you're using the app MO2 integration, the folders overwrite and mods are also checked.",
-      invalidConfigurationMo2Instance:
-        'Your configuration is incorrect. The mo2 instance at {{instance}} does not exist.',
+        'Your configuration is incorrect. Cannot validate Creation Kit installation. ' +
+        'The app checks the presence of Actor.psc to validate your Creation Kit installation. ' +
+        'Cannot find the file Actor.psc in Source\\Scripts or Scripts\\Source. ' +
+        "If you're using the app MO2 integration, the folders overwrite and mods are also checked.",
     },
   },
   tutorials: {

@@ -8,7 +8,7 @@ import React, { useCallback, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 import { useDocumentClick } from '../../hooks/use-document-click'
-import useOnKeyUp from '../../hooks/use-on-key-up'
+import { useOnKeyUp } from '../../hooks/use-on-key-up'
 
 interface DialogProps {
   open: boolean

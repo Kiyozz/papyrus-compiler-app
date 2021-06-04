@@ -4,7 +4,6 @@
  * All rights reserved.
  */
 
-import CloseIcon from '@material-ui/icons/Close'
 import DownloadIcon from '@material-ui/icons/GetApp'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,7 +13,8 @@ import { MOD_URL } from '../../../common/mod'
 import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
 import { useInitialization } from '../../hooks/use-initialization'
-import useOnKeyUp from '../../hooks/use-on-key-up'
+import { useOnKeyUp } from '../../hooks/use-on-key-up'
+import { Toast } from '../toast'
 import { Dialog } from './dialog'
 
 function Anchor({
@@ -52,7 +52,13 @@ function Code({ children }: { children: React.ReactNode[] }) {
 
 export function DialogChangelog(): JSX.Element {
   const { t } = useTranslation()
-  const { isShowChangelog, changelog, setShowChangelog } = useApp()
+  const {
+    isShowChangelog,
+    changelog,
+    setShowChangelog,
+    isCheckUsingLastVersion,
+    setCheckUsingLastVersion,
+  } = useApp()
   const { latestVersion } = useInitialization()
 
   const [isUserShowNotes, setUserShowNotes] = useState(false)
@@ -72,6 +78,7 @@ export function DialogChangelog(): JSX.Element {
   const onCloseDialog = () => {
     setUserShowNotes(false)
     setShowChangelog(false)
+    setCheckUsingLastVersion(false)
   }
 
   useOnKeyUp('Escape', () => {
@@ -80,25 +87,25 @@ export function DialogChangelog(): JSX.Element {
 
   return (
     <>
-      {isShowChangelog && !isUserShowNotes && (
-        <div className="fixed z-20 bottom-3 left-3 bg-light-800 dark:bg-gray-800 py-3 items-center rounded text-sm dark:text-white flex">
-          <div className="px-2">
-            {t('changelog.available.message', { version: latestVersion })}
-          </div>
-          <div className="inline-flex gap-2 pr-2">
-            <button className="btn btn-primary" onClick={onClickShowNotes}>
-              {t('changelog.available.view')}
-            </button>
-            <button
-              className="btn-icon text-xs"
-              aria-label="close"
-              onClick={onCloseDialog}
-            >
-              <CloseIcon fontSize="small" />
-            </button>
-          </div>
-        </div>
-      )}
+      <Toast
+        message={t('changelog.available.message', { version: latestVersion })}
+        actions={
+          <button className="btn btn-text-primary" onClick={onClickShowNotes}>
+            {t('changelog.available.view')}
+          </button>
+        }
+        onClose={onCloseDialog}
+        in={isShowChangelog && !isCheckUsingLastVersion && !isUserShowNotes}
+        speedMs={150}
+        autoCloseMs={8_000}
+      />
+
+      <Toast
+        message={t('changelog.alreadyLastVersion')}
+        onClose={onCloseDialog}
+        in={isCheckUsingLastVersion}
+        speedMs={150}
+      />
 
       <Dialog
         open={isUserShowNotes}

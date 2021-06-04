@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021 Kiyozz.
+ *
+ * All rights reserved.
+ */
+
 import type { Titlebar } from 'custom-electron-titlebar'
 import React, {
   createContext,

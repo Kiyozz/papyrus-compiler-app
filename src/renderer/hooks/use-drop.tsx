@@ -1,10 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 /*
  * Copyright (c) 2021 Kiyozz.
  *
  * All rights reserved.
  */
+
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 

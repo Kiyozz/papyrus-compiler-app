@@ -4,7 +4,9 @@
  * All rights reserved.
  */
 
-const fr = {
+import { TranslationShape } from './translation-shape'
+
+const fr: TranslationShape = {
   loading: 'Chargement',
   nav: {
     compilation: 'Compilation',
@@ -30,7 +32,7 @@ const fr = {
         removeFromList: 'Supprimer de la liste',
       },
       recentFilesDialog: {
-        close: 'Fermer',
+        cancel: 'Annuler',
         noRecentFiles: 'Aucun fichiers récents',
         load: 'Charger sélectionnés',
       },
@@ -53,7 +55,7 @@ const fr = {
         editGroup: 'Modifier un groupe',
         name: 'Nom',
         dropScripts: 'Glisser-déposer vos scripts ici',
-        close: 'Fermer',
+        cancel: 'Annuler',
       },
     },
     settings: {
@@ -110,6 +112,7 @@ const fr = {
       view: 'Voir les nouveautés',
       message: 'Nouvelle version disponible : {{version}}',
     },
+    alreadyLastVersion: 'Vous disposez de la dernière version',
   },
   common: {
     selectFolder: 'Sélectionner un dossier',
@@ -125,7 +128,11 @@ const fr = {
       invalidConfigurationCompiler:
         "{{exe}} n'est pas un compilateur valide. Le fichier n'existe pas.",
       invalidConfigurationScripts:
-        "Votre configuration n'est pas valide. Impossible de valider l'installation du Creation Kit. L'application vérifie la présence du fichier Actor.psc pour valider votre installation du Creation Kit. Impossible de trouver le fichier Actor.psc dans les dossiers Source\\Scripts ou Scripts\\Source. Si vous utilisez l'integration MO2 de l'application, les dossiers overwrite et mods sont également vérifiés.",
+        "Votre configuration n'est pas valide. Impossible de valider l'installation du Creation Kit. " +
+        "L'application vérifie la présence du fichier Actor.psc pour valider votre installation du Creation Kit. " +
+        'Impossible de trouver le fichier Actor.psc dans les dossiers Source\\Scripts ou Scripts\\Source. ' +
+        "Si vous utilisez l'integration MO2 de l'application, " +
+        'les dossiers overwrite et mods sont également vérifiés.',
     },
   },
   tutorials: {

@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 
 import { useFocus } from '../hooks/use-focus'
 import { useTitlebar } from '../hooks/use-titlebar'
