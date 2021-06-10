@@ -32,7 +32,6 @@ export function TitlebarProvider({
     let timer: NodeJS.Timer | null = null
     const titlebarElem = document.querySelector('.menubar')
     const onHover = () => {
-      console.log('hover')
       setTitlebarOpen(true)
     }
     const onLeave = () => {
@@ -41,7 +40,6 @@ export function TitlebarProvider({
       }
 
       timer = setTimeout(() => {
-        console.log('leave')
         setTitlebarOpen(false)
       }, 2000)
     }
