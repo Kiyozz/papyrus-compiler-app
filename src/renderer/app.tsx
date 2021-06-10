@@ -51,10 +51,9 @@ export function App(): JSX.Element {
 
           {done && (
             <>
-              {tutorials.settings && <TutorialSettings />}
-              {tutorials.telemetry && !tutorials.settings && (
-                <TutorialTelemetry />
-              )}
+              {tutorials?.settings === true && <TutorialSettings />}
+              {tutorials?.telemetry === true &&
+                tutorials?.settings === false && <TutorialTelemetry />}
               <Routes />
             </>
           )}

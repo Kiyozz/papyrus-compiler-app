@@ -179,7 +179,7 @@ export function DialogRecentFiles({ isOpen, onClose }: Props): JSX.Element {
       const shortenedPath = shorten(script.path, {
         length: 20,
         home: true,
-        homedir: config.game.path,
+        homedir: config.game?.path ?? '',
       })
 
       return (
@@ -223,7 +223,7 @@ export function DialogRecentFiles({ isOpen, onClose }: Props): JSX.Element {
         </>
       )
     },
-    [config.game.path],
+    [config.game],
   )
 
   const processedList = useMemo(() => {
