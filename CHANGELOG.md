@@ -1,10 +1,13 @@
-## Unreleased
+## 5.6.0 (2021-06-10)
 
 ### Features
 
-- Recent compiled files appears in a new section called "Recent files"
+- Recent compiled files appears in a new section called **"Recent files"**
 
   You can now add files faster
+
+![docs/changelog/5.6.0/recent_files_1.png](docs/changelog/5.6.0/recent_files_1.png)
+![docs/changelog/5.6.0/recent_files_2.png](docs/changelog/5.6.0/recent_files_2.png)
 
 - App top bar is now draggable
 - The "waiting to compile" icon has been deleted
@@ -13,6 +16,10 @@
 
 - Application menu bar items are now
   translated (PCA only supports `english` and `french` at the moment, helps are welcome)
+
+- When checking for updates, a message now appear when you're already using the latest version
+
+  ![docs/changelog/5.6.0/toast_1.png](docs/changelog/5.6.0/toast_1.png)
 
 ### Bug fixes
 
