@@ -17,12 +17,14 @@ import { useApp } from './hooks/use-app'
 import { useInitialization } from './hooks/use-initialization'
 import { useSyncHtmlTheme } from './hooks/use-sync-html-theme'
 import { useTelemetry } from './hooks/use-telemetry'
+import { useVersion } from './hooks/use-version'
 import { Routes } from './routes'
 
 export function App(): JSX.Element {
   const { t } = useTranslation()
   const { done } = useInitialization()
   const { send } = useTelemetry()
+  const [version] = useVersion()
   const {
     config: { tutorials },
   } = useApp()
@@ -31,10 +33,10 @@ export function App(): JSX.Element {
 
   useEffect(() => {
     if (done) {
-      send(TelemetryEvents.appLoaded, {})
+      send(TelemetryEvents.appLoaded, { version })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [done])
+  }, [done, version])
 
   return (
     <>
