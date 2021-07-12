@@ -1,3 +1,9 @@
+## Unreleased
+
+### Improvements
+
+- Telemetry event "AppLoaded" now send the application version
+
 ## 5.6.0 (2021-06-10)
 
 ### Features
