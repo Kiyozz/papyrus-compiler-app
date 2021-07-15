@@ -20,7 +20,7 @@ export function Scale({
   speedMs,
   children,
   className,
-}: React.PropsWithChildren<Required<Props>>): JSX.Element | null {
+}: React.PropsWithChildren<Props>): JSX.Element | null {
   if (!children) {
     return null
   }
@@ -29,7 +29,7 @@ export function Scale({
     <div
       className={cx(
         className,
-        `transform-gpu go-up-transition-${speedMs}`,
+        `transform-gpu scale-transition-${speedMs}`,
         !enabled ? 'scale-0 opacity-0' : '',
       )}
     >

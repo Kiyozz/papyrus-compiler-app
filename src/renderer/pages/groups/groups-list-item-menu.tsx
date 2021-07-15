@@ -11,6 +11,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TelemetryEvents } from '../../../common/telemetry-events'
+import Fade from '../../components/animations/fade'
 import { useDocumentClick } from '../../hooks/use-document-click'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { isChildren } from '../../html/is-child'
@@ -50,28 +51,22 @@ export function GroupsListItemMenu({ onDelete, onEdit }: Props): JSX.Element {
       <button className="btn-icon" onClick={onOpen} aria-haspopup="true">
         <MoreVertIcon />
       </button>
-      {anchor !== null && (
+      <Fade in={!!anchor} timeout={150}>
         <div className="menu absolute top-4 right-4">
-          <button
-            className="btn btn-no-rounded btn-justify-start"
-            onClick={onClickEdit}
-          >
+          <button className="btn btn-justify-start" onClick={onClickEdit}>
             <div className="icon">
               <CreateIcon fontSize="small" color="primary" />
             </div>
             <div className="ml-4">{t('page.groups.actions.edit')}</div>
           </button>
-          <button
-            className="btn btn-no-rounded btn-justify-start"
-            onClick={onClickDelete}
-          >
+          <button className="btn btn-justify-start" onClick={onClickDelete}>
             <div className="icon">
               <DeleteIcon fontSize="small" color="error" />
             </div>
             <div className="ml-4">{t('page.groups.actions.remove')}</div>
           </button>
         </div>
-      )}
+      </Fade>
     </div>
   )
 }

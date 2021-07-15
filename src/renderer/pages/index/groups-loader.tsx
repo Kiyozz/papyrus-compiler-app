@@ -9,6 +9,7 @@ import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TelemetryEvents } from '../../../common/telemetry-events'
+import Fade from '../../components/animations/fade'
 import { useDocumentClick } from '../../hooks/use-document-click'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { isChildren } from '../../html/is-child'
@@ -39,7 +40,7 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
   const groupSelectOptions = useMemo(() => {
     return groups
       .filter((group: Group): boolean => !group.isEmpty())
-      .map((group: Group): JSX.Element => {
+      .map(group => {
         const onClickGroup = () => {
           send(TelemetryEvents.compilationGroupLoaded, {
             groups: groups.length,
@@ -49,11 +50,7 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
         }
 
         return (
-          <button
-            className="btn item btn-no-rounded"
-            key={group.name}
-            onClick={onClickGroup}
-          >
+          <button className="btn item" key={group.name} onClick={onClickGroup}>
             {group.name}
           </button>
         )
@@ -74,12 +71,11 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
             </div>
             {t('page.compilation.actions.loadGroup')}
           </button>
-
-          {anchor && (
+          <Fade in={!!anchor} timeout={100}>
             <div className="menu absolute top-4 -left-4">
               {groupSelectOptions}
             </div>
-          )}
+          </Fade>
         </>
       )}
     </div>

@@ -5,6 +5,7 @@
  */
 
 import is from '@sindresorhus/is'
+import cx from 'classnames'
 import React, { useCallback } from 'react'
 
 interface Props {
@@ -53,18 +54,20 @@ export function TextField({
     <>
       {label && (
         <label
-          className={`text-xs block text-black-600 dark:text-gray-300 ${
-            error ? 'label-danger' : ''
-          }`}
+          className={cx(
+            'text-xs block text-black-600 dark:text-gray-300',
+            error && 'label-danger',
+          )}
           htmlFor={id}
         >
           {label}
         </label>
       )}
       <div
-        className={`relative text-sm input pb-0.5 flex ${
-          error ? 'input-danger' : ''
-        }`}
+        className={cx(
+          'relative text-sm input pb-0.5 flex',
+          error && 'input-danger',
+        )}
       >
         {startIcon && (
           <div
@@ -82,7 +85,10 @@ export function TextField({
           id={id}
           name={name}
           placeholder={placeholder}
-          className={`w-full text-black-600 dark:text-white bg-transparent ${inputClassName}`}
+          className={cx(
+            'w-full text-black-600 dark:text-white bg-transparent',
+            inputClassName,
+          )}
           value={value}
           onChange={onChangeInput}
         />

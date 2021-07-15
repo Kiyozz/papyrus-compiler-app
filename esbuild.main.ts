@@ -4,20 +4,17 @@
  * All rights reserved.
  */
 
-const path = require('path')
+import { BuildOptions } from 'esbuild'
+import path from 'path'
 
-/** @var {Partial<import('esbuild').BuildOptions>} */
-module.exports = {
+export default {
   platform: 'node',
   entryPoints: [
     path.resolve('src/main/main.ts'),
-    path.resolve('src/main/preload.ts')
+    path.resolve('src/main/preload.ts'),
   ],
   bundle: true,
   target: 'node14.16.0',
-  loader: {
-    '.ts': 'ts'
-  },
   define: {
     'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`,
     'process.env.ELECTRON_WEBPACK_APP_MOD_URL': `'${
@@ -32,6 +29,6 @@ module.exports = {
     }'`,
     'process.env.ELECTRON_TELEMETRY_FEATURE': `'${
       process.env.ELECTRON_TELEMETRY_FEATURE ?? 'false'
-    }'`
-  }
-}
+    }'`,
+  },
+} as BuildOptions

@@ -60,8 +60,15 @@ body {
   @apply select-none font-medium text-sm tracking-wide;
   @apply rounded inline-flex items-center justify-center;
   @apply px-2 py-1.5;
-  @apply transition-colors;
-  @apply bg-transparent hover:bg-black-600 focus:bg-black-800 hover:bg-opacity-10 focus:bg-opacity-20 dark:hover:bg-darker dark:focus:bg-black-600;
+  @apply transition;
+  @apply bg-transparent hover:bg-black-600 focus:bg-black-800 hover:bg-opacity-10 focus:bg-opacity-20;
+  @apply dark:hover:bg-darker;
+
+  @apply focus:ring-2 ring-gray-900/70 dark:ring-white/40;
+}
+
+[role='button'] {
+  @apply rounded-sm focus:ring-2 ring-gray-900/70 dark:ring-white/40;
 }
 
 .icon {
@@ -116,7 +123,7 @@ body {
 .input::before {
   content: '';
   z-index: -1;
-  @apply absolute left-0 top-0 w-full h-full border-b;
+  @apply absolute left-0 top-0 w-full h-full border-b border-b-black-600 dark:border-b-white;
 }
 
 .input-danger::before {
@@ -124,7 +131,7 @@ body {
 }
 
 .input:hover::before,
-.input:focus::before {
+.input:focus-within::before {
   @apply border-b-2;
 }
 
@@ -248,10 +255,6 @@ input.MuiInputBase-inputAdornedStart {
   border-radius: 6px;
 }
 
-.grid-recent-files {
-  grid-template-columns: auto minmax(0, 4fr);
-}
-
 .toast {
   min-width: 33vw;
 }
@@ -271,17 +274,67 @@ input.MuiInputBase-inputAdornedStart {
 }
 
 /* ----- ANIMATIONS ----- */
-.go-up-transition-150 {
+.scale-transition-150 {
   transition-duration: 0.15s;
 }
 
-.go-up-transition-300 {
+.scale-transition-300 {
   transition-duration: 0.3s;
 }
 
-.go-up-transition-150,
-.go-up-transition-300 {
+.scale-transition-150,
+.scale-transition-300 {
   transition-property: transform, opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1),
     cubic-bezier(0.87, 0.21, 0.35, 0.99);
+}
+
+.fade-enter,
+.fade-200-enter,
+.fade-100-enter {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-200-enter-active,
+.fade-100-enter-active,
+.fade-150-enter-active {
+  opacity: 1;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-100-enter-active {
+  transition-duration: 0.1s;
+}
+
+.fade-150-enter-active {
+  transition-duration: 0.15s;
+}
+
+.fade-exit,
+.fade-200-exit,
+.fade-100-exit {
+  opacity: 1;
+}
+
+.fade-exit-active,
+.fade-200-exit-active,
+.fade-100-exit-active,
+.fade-150-exit-active {
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-100-exit-active {
+  transition-duration: 0.1s;
+}
+
+.fade-150-exit-active {
+  transition-duration: 0.15s;
+}
+
+.fade-exit-active,
+.fade-200-exit-active,
+.fade-100-exit-active,
+.fade-150-exit-active {
+  opacity: 0;
 }

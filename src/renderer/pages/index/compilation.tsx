@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Script } from '../../../common/interfaces/script'
 import { TelemetryEvents } from '../../../common/telemetry-events'
-import { DialogRecentFiles } from '../../components/dialog/dialog-recent-files'
+import DialogRecentFiles from '../../components/dialog/dialog-recent-files'
 import { Page } from '../../components/page'
 import { PageAppBar } from '../../components/page-app-bar'
 import { useApp } from '../../hooks/use-app'
@@ -191,8 +191,7 @@ export function Compilation(): JSX.Element {
       <Page>
         <DialogRecentFiles
           isOpen={dialogState == DialogRecentFilesState.open}
-          onSelectFile={files => {
-            console.log('files', files)
+          onSelectFile={() => {
             setDialogState(DialogRecentFilesState.close)
           }}
           onClose={() => setDialogState(DialogRecentFilesState.close)}
@@ -224,8 +223,10 @@ export function Compilation(): JSX.Element {
           <div className="flex flex-col gap-2">{scriptsList}</div>
         ) : (
           <>
-            <p>{t('page.compilation.dragAndDropText')}</p>
-            <p>{t('page.compilation.dragAndDropAdmin')}</p>
+            <p className="text-sm">{t('page.compilation.dragAndDropText')}</p>
+            <p className="text-sm font-bold">
+              {t('page.compilation.dragAndDropAdmin')}
+            </p>
           </>
         )}
       </Page>
