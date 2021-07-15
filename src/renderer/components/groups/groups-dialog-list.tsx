@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import DeleteIcon from '@material-ui/icons/Delete'
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
 import React from 'react'
 
 import { ScriptInterface } from '../../interfaces'
@@ -21,23 +21,21 @@ export function GroupsDialogList({
   onClickRemoveScriptFromGroup,
 }: Props): JSX.Element {
   return (
-    <ul className="flex flex-col gap-2">
+    <ul className="flex flex-col flex-grow">
       {scripts.map((script, index) => (
         <li
-          className="flex items-center dark:text-white"
+          className="flex items-center dark:text-white text-sm"
           key={script.id + index}
         >
           <div className="w-full">{script.name}</div>
-          <div>
-            <button
-              className="btn-icon btn-danger"
-              type="button"
-              aria-label="delete"
-              onClick={onClickRemoveScriptFromGroup(script)}
-            >
-              <DeleteIcon color="error" />
-            </button>
-          </div>
+          <button
+            className="btn-icon btn-danger !p-0.5"
+            type="button"
+            aria-label="delete"
+            onClick={onClickRemoveScriptFromGroup(script)}
+          >
+            <DeleteOutlinedIcon color="error" fontSize="small" />
+          </button>
         </li>
       ))}
     </ul>

@@ -171,7 +171,7 @@ export function Groups(): JSX.Element {
         ]}
       />
 
-      <Page>
+      <Page mainClassName="h-full">
         <>
           <GroupsDialog
             group={editingGroup}
@@ -195,8 +195,10 @@ export function Groups(): JSX.Element {
               })}
             </div>
           ) : (
-            <div>
-              <p>{t('page.groups.createGroupText')}</p>
+            <div className="h-full w-full flex flex-col items-center text-center gap-4 justify-center text-lg">
+              <p className="text-black-600 dark:text-white font-medium">
+                {t('page.groups.createGroupText')}
+              </p>
               <p>{t('page.groups.whatIsAGroup')}</p>
             </div>
           )}

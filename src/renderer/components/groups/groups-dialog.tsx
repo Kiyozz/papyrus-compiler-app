@@ -6,6 +6,7 @@
 
 import SearchIcon from '@material-ui/icons/Search'
 import is from '@sindresorhus/is'
+import cx from 'classnames'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -117,7 +118,12 @@ export function GroupsDialog({
 
   const dialogContent = useCallback(
     ({ children }: React.PropsWithChildren<unknown>) => (
-      <form onSubmit={onSubmitGroup}>{children}</form>
+      <form
+        onSubmit={onSubmitGroup}
+        className="flex flex-col h-screen overflow-hidden"
+      >
+        {children}
+      </form>
     ),
     [onSubmitGroup],
   )
@@ -152,6 +158,7 @@ export function GroupsDialog({
           : t('page.groups.dialog.createGroup')
       }
       content={dialogContent}
+      contentClassNames={{ child: 'flex flex-col h-full' }}
     >
       <TextField
         label={t('page.groups.dialog.name')}
@@ -161,14 +168,19 @@ export function GroupsDialog({
         value={name}
         onChange={onChangeName}
       />
-      <div className="paper paper-darker overflow-overlay max-h-36 h-full mt-4 outline-none">
+      <div
+        className={cx(
+          'paper paper-darker overflow-overlay mt-4 outline-none h-full',
+          scripts.length === 0 && 'flex justify-center items-center',
+        )}
+      >
         {scripts.length > 0 ? (
           <GroupsDialogList
             scripts={scripts}
             onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup}
           />
         ) : (
-          <p className="dark:text-gray-400">
+          <p className="dark:text-gray-400 text-center">
             {t('page.groups.dialog.dropScripts')}
           </p>
         )}

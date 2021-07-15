@@ -14,6 +14,7 @@ import { useCompilation } from '../hooks/use-compilation'
 import { useDrawer } from '../hooks/use-drawer'
 import { useTelemetry } from '../hooks/use-telemetry'
 import { ScriptInterface } from '../interfaces'
+import Fade from './animations/fade'
 import { Dialog } from './dialog/dialog'
 import { NavItem } from './nav-item'
 
@@ -68,7 +69,9 @@ export function OpenCompilationLogs(): JSX.Element {
     <>
       <NavItem onClick={onClickButtonOpenLogs} className="link">
         <ErrorIcon />
-        {isDrawerExpand && <div className="ml-6">{t('common.logs.nav')}</div>}
+        <Fade in={isDrawerExpand}>
+          <div className="ml-6">{t('common.logs.nav')}</div>
+        </Fade>
       </NavItem>
 
       <Dialog

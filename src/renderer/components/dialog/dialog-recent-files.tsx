@@ -8,7 +8,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
 import cx from 'classnames'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDidMount } from 'rooks'
 
@@ -31,7 +31,7 @@ interface Props {
   onSelectFile: (files: Script[]) => void
 }
 
-export function DialogRecentFiles({ isOpen, onClose }: Props): JSX.Element {
+const DialogRecentFiles = ({ isOpen, onClose }: Props): JSX.Element => {
   const { t } = useTranslation()
   const { send } = useTelemetry()
   const { setScripts, scripts: loadedScripts } = useCompilation()
@@ -204,9 +204,10 @@ export function DialogRecentFiles({ isOpen, onClose }: Props): JSX.Element {
             </button>
             <div className="text-xs text-gray-500 tracking-tight flex items-center">
               {shortenedPath.path}
-              <span
+              <button
+                role="button"
                 className={cx(
-                  'font-bold hover:text-primary-400 dark:hover:text-primary-400 cursor-pointer',
+                  'px-0 font-bold hover:text-primary-400 dark:hover:text-primary-400 cursor-pointer',
                   {
                     'text-primary-400 dark:text-primary-400':
                       selected && !disabled,
@@ -217,7 +218,7 @@ export function DialogRecentFiles({ isOpen, onClose }: Props): JSX.Element {
                 onClick={onClickFile}
               >
                 {shortenedPath.filename}
-              </span>
+              </button>
             </div>
           </div>
         </>
@@ -229,10 +230,7 @@ export function DialogRecentFiles({ isOpen, onClose }: Props): JSX.Element {
   const processedList = useMemo(() => {
     return recentFiles.map(script => {
       return (
-        <div
-          className="w-full grid grid-recent-files items-center gap-4"
-          key={script.path}
-        >
+        <div key={script.path}>
           <Line
             onClickFile={onClickFile(script)}
             onClickDelete={onClickDeleteFile(script)}
@@ -284,3 +282,5 @@ export function DialogRecentFiles({ isOpen, onClose }: Props): JSX.Element {
     </Dialog>
   )
 }
+
+export default memo(DialogRecentFiles)

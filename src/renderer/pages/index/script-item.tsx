@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import DeleteIcon from '@material-ui/icons/Delete'
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
 import React, { useCallback } from 'react'
 
 import { useCompilation } from '../../hooks/use-compilation'
@@ -48,7 +48,7 @@ export function ScriptItem({
         onClick={onClickRemove}
       >
         <div className="icon">
-          <DeleteIcon />
+          <DeleteOutlinedIcon />
         </div>
       </button>
     </div>

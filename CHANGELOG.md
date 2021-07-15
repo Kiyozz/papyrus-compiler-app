@@ -3,6 +3,7 @@
 ### Improvements
 
 - Telemetry event "AppLoaded" now send the application version
+- Group dialog is bigger and display more scripts at once
 
 ## 5.6.0 (2021-06-10)
 

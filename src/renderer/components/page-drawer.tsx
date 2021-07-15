@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useDrawer } from '../hooks/use-drawer'
 import { ActiveLink } from './active-link'
+import Fade from './animations/fade'
 import { NavItem } from './nav-item'
 import { OpenCompilationLogs } from './open-compilation-logs'
 
@@ -48,7 +49,7 @@ export function PageDrawer(): JSX.Element {
 
   return (
     <nav
-      className={`h-screen-appbar fixed left-0 top-24 ${
+      className={`h-screen-appbar fixed left-0 top-24 transition-all duration-300 ${
         isDrawerExpand ? 'w-48' : 'w-14'
       } bg-light-600 dark:bg-black-800 select-none`}
     >
@@ -67,7 +68,9 @@ export function PageDrawer(): JSX.Element {
               >
                 <NavItem>
                   <Link.Icon />
-                  {isDrawerExpand && <div className="ml-6">{Link.text}</div>}
+                  <Fade in={isDrawerExpand}>
+                    <div className="ml-6">{Link.text}</div>
+                  </Fade>
                 </NavItem>
               </ActiveLink>
             )
@@ -76,14 +79,10 @@ export function PageDrawer(): JSX.Element {
         <ul className="mt-auto">
           <OpenCompilationLogs />
           <NavItem className="link" onClick={onDrawerExpandClick}>
-            {isDrawerExpand ? (
-              <>
-                <ChevronLeftIcon />
-                <div className="ml-6">{t('nav.closePanel')}</div>
-              </>
-            ) : (
-              <ChevronRightIcon />
-            )}
+            {isDrawerExpand ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            <Fade in={isDrawerExpand}>
+              <div className="ml-6">{t('nav.closePanel')}</div>
+            </Fade>
           </NavItem>
         </ul>
       </div>

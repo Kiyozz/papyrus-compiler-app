@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+import cx from 'classnames'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -17,6 +18,10 @@ interface DialogProps {
   actions?: JSX.Element
   title?: JSX.Element
   content?: (props: React.PropsWithChildren<unknown>) => JSX.Element
+  contentClassNames?: {
+    content?: string
+    child?: string
+  }
 }
 
 export function Dialog({
@@ -26,6 +31,7 @@ export function Dialog({
   actions,
   title,
   content: Content,
+  contentClassNames = {},
   children,
 }: React.PropsWithChildren<DialogProps>): JSX.Element {
   const container = useRef<HTMLDivElement | null>(null)
@@ -51,8 +57,15 @@ export function Dialog({
             {title}
           </div>
         )}
-        <div className="flex-auto overflow-overlay">
-          <div className="py-2 px-6">{children}</div>
+        <div
+          className={cx(
+            'flex-auto overflow-overlay',
+            contentClassNames.content,
+          )}
+        >
+          <div className={cx('py-2 px-6', contentClassNames.child)}>
+            {children}
+          </div>
         </div>
         {actions && (
           <div className="flex-initial flex p-2 gap-2 justify-end">
@@ -61,7 +74,7 @@ export function Dialog({
         )}
       </>
     ),
-    [actions, children, title],
+    [actions, children, title, contentClassNames],
   )
 
   return createPortal(

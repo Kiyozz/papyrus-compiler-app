@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { createMuiTheme, ThemeProvider } from '@material-ui/core'
+import { createTheme, ThemeProvider } from '@material-ui/core'
 import red from '@material-ui/core/colors/red'
 import React from 'react'
 
@@ -18,7 +18,7 @@ export function Theme({
   const isDark = useSystemDarkPreference()
   const [currentTheme] = useTheme()
 
-  const theme = createMuiTheme({
+  const theme = createTheme({
     palette: {
       type:
         currentTheme === SettingsTheme.system
