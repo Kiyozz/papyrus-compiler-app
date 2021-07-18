@@ -16,7 +16,7 @@ import { useTelemetry } from '../../hooks/use-telemetry'
 import { GroupInterface, ScriptInterface } from '../../interfaces'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
 import uniqScripts from '../../utils/scripts/uniq-scripts'
-import { Dialog } from '../dialog/dialog'
+import { CloseReason, Dialog } from '../dialog/dialog'
 import { TextField } from '../text-field'
 import { GroupsDialogList } from './groups-dialog-list'
 
@@ -42,9 +42,41 @@ export function GroupsDialog({
   const { send } = useTelemetry()
   const { drop } = useDrop()
 
-  const onDialogClose = useCallback(() => {
-    onClose()
-  }, [onClose])
+  const onSubmitGroup = useCallback(
+    (e?: React.FormEvent) => {
+      e?.preventDefault()
+
+      if (!name || !name.trim()) {
+        return
+      }
+
+      if (isEdit && group) {
+        onGroupEdit(group.name, {
+          name: name.trim(),
+          scripts,
+        })
+
+        return
+      }
+
+      onGroupAdd({
+        name: name.trim(),
+        scripts,
+      })
+    },
+    [name, isEdit, group, scripts, onGroupAdd, onGroupEdit],
+  )
+
+  const onDialogClose = useCallback(
+    (reason: CloseReason) => {
+      if (reason === CloseReason.enter) {
+        onSubmitGroup()
+      } else {
+        onClose()
+      }
+    },
+    [onClose, onSubmitGroup],
+  )
 
   useEffect(() => {
     if (open) {
@@ -71,31 +103,6 @@ export function GroupsDialog({
       }
     },
     [],
-  )
-
-  const onSubmitGroup = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault()
-
-      if (!name || !name.trim()) {
-        return
-      }
-
-      if (isEdit && group) {
-        onGroupEdit(group.name, {
-          name: name.trim(),
-          scripts,
-        })
-
-        return
-      }
-
-      onGroupAdd({
-        name: name.trim(),
-        scripts,
-      })
-    },
-    [name, isEdit, group, scripts, onGroupAdd, onGroupEdit],
   )
 
   const onChangeName = useCallback((e: string | number) => {
