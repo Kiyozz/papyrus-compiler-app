@@ -41,6 +41,10 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props): JSX.Element => {
     new Map<string, Script>(),
   )
   const [isFirstRender, setFirstRender] = useState(true)
+  const isValid = useCallback(
+    () => selectedRecentFiles.size > 0,
+    [selectedRecentFiles.size],
+  )
 
   useEffect(() => {
     if (!isFirstRender) {
@@ -103,6 +107,10 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props): JSX.Element => {
   }, [onClose])
 
   const onClickLoad = useCallback(() => {
+    if (!isValid()) {
+      return
+    }
+
     send(TelemetryEvents.recentFilesLoaded, {})
     setScripts(scripts =>
       uniqScripts(
@@ -111,17 +119,18 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props): JSX.Element => {
     )
     setSelectedRecentFiles(new Map())
     onClose()
-  }, [onClose, selectedRecentFiles, send, setScripts])
+  }, [isValid, onClose, selectedRecentFiles, send, setScripts])
 
   const onDialogClose = useCallback(
     (reason: CloseReason) => {
-      if (reason === CloseReason.enter) {
+      if (reason === CloseReason.enter && isValid()) {
+        send(TelemetryEvents.recentFilesCloseWithEnter, {})
         onClickLoad()
       } else {
         onClickClose()
       }
     },
-    [onClickClose, onClickLoad],
+    [isValid, send, onClickLoad, onClickClose],
   )
 
   const onClickFile = useCallback(
