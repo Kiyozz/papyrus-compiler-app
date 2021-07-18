@@ -41,12 +41,13 @@ export function GroupsDialog({
   const [isEdit, setEdit] = useState(false)
   const { send } = useTelemetry()
   const { drop } = useDrop()
+  const isValid = useCallback(() => name.trim().length > 0, [name])
 
   const onSubmitGroup = useCallback(
     (e?: React.FormEvent) => {
       e?.preventDefault()
 
-      if (!name || !name.trim()) {
+      if (!isValid()) {
         return
       }
 
@@ -64,18 +65,19 @@ export function GroupsDialog({
         scripts,
       })
     },
-    [name, isEdit, group, scripts, onGroupAdd, onGroupEdit],
+    [name, isEdit, group, scripts, onGroupAdd, onGroupEdit, isValid],
   )
 
   const onDialogClose = useCallback(
     (reason: CloseReason) => {
-      if (reason === CloseReason.enter) {
+      if (reason === CloseReason.enter && isValid()) {
+        send(TelemetryEvents.groupCloseWithEnter, {})
         onSubmitGroup()
       } else {
         onClose()
       }
     },
-    [onClose, onSubmitGroup],
+    [isValid, send, onSubmitGroup, onClose],
   )
 
   useEffect(() => {

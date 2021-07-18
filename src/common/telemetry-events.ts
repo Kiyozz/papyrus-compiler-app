@@ -20,6 +20,7 @@ export enum TelemetryEvents {
   groupDeleted = 'Group.Deleted',
   groupDropScripts = 'Group.DropScripts',
   groupEdited = 'Group.Edited',
+  groupCloseWithEnter = 'Group.CloseWithEnter',
   modOrganizerActive = 'ModOrganizer.Active',
   recentFilesLoaded = 'RecentFiles.Loaded',
   recentFileRemove = 'RecentFile.Remove',
@@ -27,6 +28,7 @@ export enum TelemetryEvents {
   recentFilesSelectAll = 'RecentFiles.SelectAll',
   recentFilesSelectNone = 'RecentFiles.SelectNone',
   recentFilesInvertSelection = 'RecentFiles.InvertSelection',
+  recentFilesCloseWithEnter = 'RecentFiles.CloseWithEnter',
   settingsGame = 'Settings.Game',
   settingsTheme = 'Settings.Theme',
   settingsRefresh = 'Settings.Refresh',
@@ -69,6 +71,7 @@ export interface TelemetryEventsProperties {
   [TelemetryEvents.groupEdited]: {
     scripts: number
   }
+  [TelemetryEvents.groupCloseWithEnter]: Record<string, never>
   [TelemetryEvents.modOrganizerActive]: {
     active: boolean
   }
@@ -78,6 +81,7 @@ export interface TelemetryEventsProperties {
   [TelemetryEvents.recentFilesSelectNone]: Record<string, never>
   [TelemetryEvents.recentFilesInvertSelection]: Record<string, never>
   [TelemetryEvents.recentFileRemove]: Record<string, never>
+  [TelemetryEvents.recentFilesCloseWithEnter]: Record<string, never>
   [TelemetryEvents.settingsGame]: {
     game: GameType
   }
