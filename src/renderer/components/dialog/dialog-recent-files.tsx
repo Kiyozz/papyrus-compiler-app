@@ -23,7 +23,7 @@ import { useRecentFiles } from '../../hooks/use-recent-files'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { scriptsToInterface } from '../../utils/scripts/scripts-to-interface'
 import uniqScripts from '../../utils/scripts/uniq-scripts'
-import { Dialog } from './dialog'
+import { CloseReason, Dialog } from './dialog'
 
 interface Props {
   isOpen: boolean
@@ -97,12 +97,12 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props): JSX.Element => {
     setSelectedRecentFiles(new Map())
   })
 
-  const onClickClose = () => {
+  const onClickClose = useCallback(() => {
     setSelectedRecentFiles(new Map())
     onClose()
-  }
+  }, [onClose])
 
-  const onClickLoad = () => {
+  const onClickLoad = useCallback(() => {
     send(TelemetryEvents.recentFilesLoaded, {})
     setScripts(scripts =>
       uniqScripts(
@@ -111,7 +111,18 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props): JSX.Element => {
     )
     setSelectedRecentFiles(new Map())
     onClose()
-  }
+  }, [onClose, selectedRecentFiles, send, setScripts])
+
+  const onDialogClose = useCallback(
+    (reason: CloseReason) => {
+      if (reason === CloseReason.enter) {
+        onClickLoad()
+      } else {
+        onClickClose()
+      }
+    },
+    [onClickClose, onClickLoad],
+  )
 
   const onClickFile = useCallback(
     (script: Script) => {
@@ -254,7 +265,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props): JSX.Element => {
     <Dialog
       open={isOpen}
       title={t('page.compilation.actions.recentFiles')}
-      onClose={onClickClose}
+      onClose={onDialogClose}
       actions={
         <>
           <button className="btn" onClick={onClickClose}>

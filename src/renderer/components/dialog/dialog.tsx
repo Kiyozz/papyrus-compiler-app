@@ -14,7 +14,7 @@ import { useOnKeyUp } from '../../hooks/use-on-key-up'
 interface DialogProps {
   open: boolean
   maxWidth?: number
-  onClose?: () => void
+  onClose?: (reason: CloseReason) => void
   actions?: JSX.Element
   title?: JSX.Element
   content?: (props: React.PropsWithChildren<unknown>) => JSX.Element
@@ -22,6 +22,12 @@ interface DialogProps {
     content?: string
     child?: string
   }
+}
+
+export enum CloseReason {
+  escape,
+  outside,
+  enter,
 }
 
 export function Dialog({
@@ -38,16 +44,21 @@ export function Dialog({
 
   useDocumentClick(
     () => {
-      onClose?.()
+      onClose?.(CloseReason.outside)
     },
     clicked => clicked === container.current,
   )
 
   const onEscape = useCallback(() => {
-    onClose?.()
+    onClose?.(CloseReason.escape)
+  }, [onClose])
+
+  const onEnter = useCallback(() => {
+    onClose?.(CloseReason.enter)
   }, [onClose])
 
   useOnKeyUp('Escape', onEscape)
+  useOnKeyUp('Enter', onEnter)
 
   const dialogContent = useMemo(
     () => (

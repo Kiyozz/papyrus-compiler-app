@@ -1,9 +1,15 @@
 ## Unreleased
 
+### Features
+
+- Dialogs can be validated with "Enter"
+
 ### Improvements
 
 - Telemetry event "AppLoaded" now send the application version
 - Group dialog is bigger and display more scripts at once
+
+  ![docs/changelog/unreleased/groups_dialog.png](docs/changelog/unreleased/groups_dialog.png)
 
 ## 5.6.0 (2021-06-10)
 
