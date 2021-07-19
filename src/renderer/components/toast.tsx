@@ -21,14 +21,14 @@ export function Toast({
   message,
   actions,
   onClose,
-  in: enabled,
+  in: isEnabled,
   speedMs,
   autoCloseMs = 4_000,
 }: Props): JSX.Element {
   useEffect(() => {
     let timer: NodeJS.Timeout | undefined
 
-    if (enabled && autoCloseMs !== 0) {
+    if (isEnabled && autoCloseMs !== 0) {
       const handler = () => {
         onClose()
       }
@@ -41,16 +41,16 @@ export function Toast({
         clearTimeout(timer)
       }
     }
-  }, [autoCloseMs, enabled, onClose])
+  }, [autoCloseMs, isEnabled, onClose])
 
   return (
     <Scale
-      in={enabled}
+      in={isEnabled}
       speedMs={speedMs}
-      className="toast fixed z-20 bottom-3 left-3 bg-light-800 dark:bg-gray-800 py-3 px-4 items-center rounded text-sm dark:text-white flex justify-between"
+      className="toast fixed z-20 bottom-3 left-3 bg-light-800 dark:bg-gray-800 py-1.5 px-4 items-center rounded text-sm dark:text-white flex gap-1.5"
     >
-      <div>{message}</div>
-      <div className="inline-flex gap-2 ml-1 toast-actions">{actions}</div>
+      <div className="flex-grow">{message}</div>
+      <div className="flex gap-2">{actions}</div>
     </Scale>
   )
 }

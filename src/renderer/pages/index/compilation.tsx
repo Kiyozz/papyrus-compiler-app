@@ -148,7 +148,7 @@ export function Compilation(): JSX.Element {
   const pageActions = useMemo(() => {
     const possibleActions: JSX.Element[] = [recentFilesButton, searchButton]
 
-    if (groups.filter(group => !group.isEmpty()).length > 0) {
+    if (groups.filter(group => !group.isEmpty).length > 0) {
       possibleActions.push(
         <GroupsLoader
           groups={groups}

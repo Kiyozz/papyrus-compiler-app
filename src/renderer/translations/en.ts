@@ -44,6 +44,7 @@ const en: TranslationShape = {
         edit: 'Edit',
         remove: 'Remove',
       },
+      group: 'Group {{name}}',
       createGroupText: 'You can create a group with the top-right button.',
       whatIsAGroup:
         'A group is a set of scripts that can be easily loaded on the compilation view.',

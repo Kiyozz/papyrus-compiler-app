@@ -3,6 +3,8 @@
 ### Features
 
 - Dialogs can be validated with "Enter"
+- Display a preview of a group when you hover the mouse over it
+  ![docs/changelog/unreleased/group_showcase_preview.png](docs/changelog/unreleased/group_showcase_preview.gif)
 
 ### Improvements
 

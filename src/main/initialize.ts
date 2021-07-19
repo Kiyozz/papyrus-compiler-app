@@ -62,9 +62,9 @@ async function backupLogFile() {
 export async function initialize(win: Electron.BrowserWindow): Promise<void> {
   await backupLogFile()
 
-  const telemetryActive = settingsStore.get('telemetry.active') as boolean
+  const isTelemetryActive = settingsStore.get('telemetry.active') as boolean
   const telemetry = new Telemetry(
-    telemetryActive,
+    isTelemetryActive,
     process.env.ELECTRON_TELEMETRY_API ?? '',
     process.env.ELECTRON_TELEMETRY_API_KEY ?? '',
     true,
