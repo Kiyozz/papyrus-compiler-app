@@ -39,7 +39,7 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
 
   const groupSelectOptions = useMemo(() => {
     return groups
-      .filter((group: Group): boolean => !group.isEmpty())
+      .filter((group: Group): boolean => !group.isEmpty)
       .map(group => {
         const onClickGroup = () => {
           send(TelemetryEvents.compilationGroupLoaded, {
@@ -58,7 +58,7 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
   }, [groups, onChangeGroup, send])
 
   const notEmptyGroups = groups.filter(
-    (group: Group): boolean => !group.isEmpty(),
+    (group: Group): boolean => !group.isEmpty,
   )
 
   return (

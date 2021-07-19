@@ -44,6 +44,7 @@ const fr: TranslationShape = {
         edit: 'Modifier',
         remove: 'Supprimer',
       },
+      group: 'Groupe {{name}}',
       createGroupText:
         'Vous pouvez créer un groupe avec le bouton $t(page.groups.actions.create).',
       whatIsAGroup:

@@ -9,7 +9,7 @@ import { CSSTransition } from 'react-transition-group'
 
 interface Props {
   in: boolean
-  timeout?: number
+  timeout?: 100 | 150 | 200
 }
 
 const Fade = ({

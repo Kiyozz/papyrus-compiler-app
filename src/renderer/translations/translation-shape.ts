@@ -40,6 +40,7 @@ export interface TranslationShape {
         edit: string
         remove: string
       }
+      group: string
       createGroupText: string
       whatIsAGroup: string
       noScripts: string

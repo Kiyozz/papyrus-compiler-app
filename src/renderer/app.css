@@ -259,10 +259,6 @@ input.MuiInputBase-inputAdornedStart {
   min-width: 33vw;
 }
 
-.toast-actions {
-  margin: -0.5rem -0.5rem -0.5rem 0.5rem;
-}
-
 /* ----- DRAG ----- */
 
 .draggable {
