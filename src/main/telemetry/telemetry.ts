@@ -6,6 +6,7 @@
 
 import is from '@sindresorhus/is'
 import fetch, { Response, Headers } from 'electron-fetch'
+import createQueue from 'queue'
 
 import {
   TelemetryEvents,
@@ -19,7 +20,11 @@ interface Params<E extends TelemetryEvents> {
 }
 
 export class Telemetry {
-  private logger: Logger
+  private readonly _logger: Logger
+  private readonly _telemetryQueue = createQueue({
+    concurrency: 3,
+    autostart: true,
+  })
 
   constructor(
     private isActive: boolean,
@@ -27,7 +32,7 @@ export class Telemetry {
     private appKey: string,
     private isOnline: boolean,
   ) {
-    this.logger = new Logger('Telemetry')
+    this._logger = new Logger('Telemetry')
 
     if (
       !is.string(api) ||
@@ -35,7 +40,7 @@ export class Telemetry {
       is.emptyString(api) ||
       is.emptyString(appKey)
     ) {
-      this.logger.debug('no configuration provided. Disabling telemetry.')
+      this._logger.debug('no configuration provided. Disabling telemetry.')
       this.isActive = false
     }
   }
@@ -75,11 +80,11 @@ export class Telemetry {
   ): Promise<void> {
     if (!this.isActive || !this.isOnline) {
       if (!this.isOnline) {
-        this.logger.info('telemetry is disabled: no internet connection')
+        this._logger.info('telemetry is disabled: no internet connection')
       }
 
       if (!this.isActive) {
-        this.logger.info('telemetry is disabled: not sent')
+        this._logger.info('telemetry is disabled: not sent')
       }
 
       return
@@ -87,38 +92,45 @@ export class Telemetry {
 
     const { appKey, ...payloadWithoutAppKey } = payload
 
-    try {
-      this.logger.debug('send telemetry data', payloadWithoutAppKey)
-      const response = await fetch(`${this.api}${endpoint}`, {
-        method,
-        body: JSON.stringify(payload),
-        headers: this.getHeaders(),
-      })
+    return new Promise((resolve, reject) => {
+      this._telemetryQueue.push(async () => {
+        try {
+          this._logger.debug('send telemetry data', payloadWithoutAppKey)
+          const response = await fetch(`${this.api}${endpoint}`, {
+            method,
+            body: JSON.stringify(payload),
+            headers: Telemetry._getHeaders(),
+          })
 
-      if (!response.ok) {
-        this.logger.debug(
-          "can't send telemetry data",
-          await this.getData(response),
-        )
-        return
-      }
-    } catch (error) {
-      this.logger.debug(
-        "can't send telemetry data",
-        error instanceof Error ? error.message : error,
-      )
-      this.logger.info(
-        'disabling telemetry for this session because api is either unreacheable or an error has occurred',
-      )
-      this.setActive(false)
-    }
+          if (!response.ok) {
+            this._logger.debug(
+              "can't send telemetry data",
+              await Telemetry._getData(response),
+            )
+          }
+
+          resolve()
+        } catch (error) {
+          this._logger.debug(
+            "can't send telemetry data",
+            error instanceof Error ? error.message : error,
+          )
+          this._logger.info(
+            'disabling telemetry for this session because api is either unreacheable or an error has occurred',
+          )
+          this.setActive(false)
+
+          reject(error)
+        }
+      })
+    })
   }
 
-  private getHeaders(): Headers {
+  private static _getHeaders(): Headers {
     return new Headers([['Content-Type', 'application/json;charset=UTF-8']])
   }
 
-  private getData(response: Response): Promise<string | unknown> {
+  private static _getData(response: Response): Promise<string | unknown> {
     return response.headers.get('Content-Type')?.includes('json')
       ? response.json()
       : response.text()
