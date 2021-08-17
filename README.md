@@ -13,3 +13,19 @@ Go to NexusMods to access the details.
 LE version: [NexusMods LE](https://www.nexusmods.com/skyrim/mods/96339)
 
 SE version: [NexusMods SE](https://www.nexusmods.com/skyrimspecialedition/mods/23852)
+
+## Screenshots
+
+<details>
+<summary>Open</summary>
+
+![Main page](docs/screenshots/1_compilation_view.png)
+![Main page with scripts](docs/screenshots/2_compilation_list_view.png)
+![Compilation logs dialog](docs/screenshots/3_logs_success.png)
+![Recent files dialog](docs/screenshots/4_recent_files_view.png)
+![Group page](docs/screenshots/5_group_view.png)
+![Edit a group](docs/screenshots/6_edit_group.png)
+![Settings dark](docs/screenshots/7_settings_view_dark.png)
+![Settings light](docs/screenshots/8_settings_view_light.png)
+
+</details>
