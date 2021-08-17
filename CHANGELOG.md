@@ -2,14 +2,15 @@
 
 ### Features
 
-- Dialogs can be validated with "Enter"
-- Display a preview of a group when you hover the mouse over it
+- Dialogs can be validated with "Enter" (#119)
+- Display a preview of a group when you hover the mouse over it (#118)
   ![docs/changelog/unreleased/group_showcase_preview.png](docs/changelog/unreleased/group_showcase_preview.gif)
 
 ### Improvements
 
-- Telemetry event "AppLoaded" now send the application version
-- Group dialog is bigger and display more scripts at once
+- Telemetry event "AppLoaded" now send the application version (#114)
+- Telemetry are sent in a job queue (#123)
+- Group dialog is bigger and display more scripts at once (#117)
 
   ![docs/changelog/unreleased/groups_dialog.png](docs/changelog/unreleased/groups_dialog.png)
 

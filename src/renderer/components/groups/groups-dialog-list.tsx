@@ -22,10 +22,10 @@ export function GroupsDialogList({
 }: Props): JSX.Element {
   return (
     <ul className="flex flex-col flex-grow">
-      {scripts.map((script, index) => (
+      {scripts.map(script => (
         <li
           className="flex items-center dark:text-white text-sm"
-          key={script.id + index}
+          key={script.name}
         >
           <div className="w-full">{script.name}</div>
           <button

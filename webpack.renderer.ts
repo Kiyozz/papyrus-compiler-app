@@ -22,7 +22,9 @@ const createConfig = (): Configuration => {
   const isProduction = process.env.NODE_ENV === 'production'
 
   const plugins = [
-    new MiniCssExtractPlugin(),
+    // FIXME: investigate why MiniCssExtractPlugin is not recognize as WebpackPlugin
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    new MiniCssExtractPlugin() as any,
     new HtmlWebpackPlugin({
       template: path.resolve('src', 'renderer', 'index.html'),
       filename: 'index.html',
@@ -130,7 +132,12 @@ const createConfig = (): Configuration => {
   if (isProduction) {
     configuration.optimization = {
       minimize: true,
-      minimizer: [new TerserPlugin(), new CssMinimizerWebpackPlugin()],
+      minimizer: [
+        new TerserPlugin(),
+        // FIXME: investigate why CssMinimizerWebpackPlugin is not recognize as WebpackPlugin
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        new CssMinimizerWebpackPlugin() as any,
+      ],
     }
   } else {
     if (Array.isArray(configuration.plugins)) {
