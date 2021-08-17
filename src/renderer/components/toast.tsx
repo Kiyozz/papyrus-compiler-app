@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+import cx from 'classnames'
 import React, { useEffect } from 'react'
 
 import { Delay, Scale } from './animations/scale'
@@ -47,7 +48,10 @@ export function Toast({
     <Scale
       in={isEnabled}
       speedMs={speedMs}
-      className="toast fixed z-20 bottom-3 left-3 bg-light-800 dark:bg-gray-800 py-1.5 px-4 items-center rounded text-sm dark:text-white flex gap-1.5"
+      className={cx(
+        'toast fixed z-20 bottom-3 left-3 bg-light-800 dark:bg-gray-800 py-1.5 px-4 items-center rounded text-sm dark:text-white flex gap-1.5',
+        !isEnabled && 'pointer-events-none',
+      )}
     >
       <div className="flex-grow">{message}</div>
       <div className="flex gap-2">{actions}</div>

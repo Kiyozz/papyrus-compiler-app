@@ -30,6 +30,10 @@ function Anchor({
   return <a onClick={onClick}>{children}</a>
 }
 
+function HeadingOne({ children }: React.PropsWithChildren<unknown>) {
+  return <h1 className="mb-2 text-4xl">{children}</h1>
+}
+
 function HeadingTwo({ children }: React.PropsWithChildren<unknown>) {
   return <h6 className="mb-2 text-2xl">{children}</h6>
 }
@@ -129,6 +133,7 @@ export function DialogChangelog(): JSX.Element {
           <ReactMarkdown
             components={{
               p: Paragraph,
+              h1: HeadingOne,
               h2: HeadingTwo,
               h3: HeadingThree,
               h5: HeadingFive,

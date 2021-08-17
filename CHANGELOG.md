@@ -1,10 +1,10 @@
-## Unreleased
+## 5.7.0 (2021-08-17)
 
 ### Features
 
 - Dialogs can be validated with "Enter" (#119)
 - Display a preview of a group when you hover the mouse over it (#118)
-  ![docs/changelog/unreleased/group_showcase_preview.png](docs/changelog/unreleased/group_showcase_preview.gif)
+  ![docs/changelog/5.7.0/group_showcase_preview.png](docs/changelog/5.7.0/group_showcase_preview.gif)
 
 ### Improvements
 
@@ -12,7 +12,7 @@
 - Telemetry are sent in a job queue (#123)
 - Group dialog is bigger and display more scripts at once (#117)
 
-  ![docs/changelog/unreleased/groups_dialog.png](docs/changelog/unreleased/groups_dialog.png)
+  ![docs/changelog/5.7.0/groups_dialog.png](docs/changelog/5.7.0/groups_dialog.png)
 
 ## 5.6.0 (2021-06-10)
 
