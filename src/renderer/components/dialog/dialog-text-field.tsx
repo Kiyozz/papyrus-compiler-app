@@ -57,7 +57,7 @@ export function DialogTextField({
           onChange(result)
         }
       } catch (err) {
-        console.log(err?.message)
+        console.log(err)
       }
     },
     [onChange, type],

@@ -47,6 +47,7 @@ body {
 
 .overflow-overlay,
 .container-after-titlebar {
+  /*noinspection CssInvalidPropertyValue*/
   overflow: hidden overlay !important;
 }
 
@@ -56,7 +57,6 @@ body {
 
 .btn,
 .btn-icon {
-  -webkit-app-region: no-drag;
   @apply select-none font-medium text-sm tracking-wide;
   @apply rounded inline-flex items-center justify-center;
   @apply px-2 py-1.5;
@@ -143,7 +143,7 @@ body {
   @apply bg-light-800 hover:bg-light-800 dark:text-white dark:hover:text-white dark:bg-black-400 dark:hover:bg-black-400;
 }
 
-.link-active-unfocus {
+.link-not-focused-active {
   @apply dark:bg-black-600;
 }
 
@@ -257,16 +257,6 @@ input.MuiInputBase-inputAdornedStart {
 
 .toast {
   min-width: 33vw;
-}
-
-/* ----- DRAG ----- */
-
-.draggable {
-  -webkit-app-region: drag;
-}
-
-.no-draggable {
-  -webkit-app-region: no-drag;
 }
 
 /* ----- ANIMATIONS ----- */

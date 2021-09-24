@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { shell } from 'electron'
+import { contextBridge, shell } from 'electron'
 
 import { BadError } from '../common/interfaces/bad-error'
 import { Bridge } from '../common/interfaces/bridge'
@@ -64,7 +64,9 @@ const api: Bridge = {
   },
   dialog: {
     select: type => {
-      return ipcRenderer.invoke<string | null>(IpcEvent.openDialog, { type })
+      return ipcRenderer.invoke<string | null>(IpcEvent.openDialog, {
+        type,
+      })
     },
   },
   shell: {
@@ -120,6 +122,9 @@ const api: Bridge = {
       close: () => ipcRenderer.send(IpcEvent.recentFilesDialogClose),
     },
   },
+  titlebar: {
+    openMenu: args => ipcRenderer.invoke(IpcEvent.openMenu, args),
+  },
 }
 
-;(window as unknown as { bridge: Bridge }).bridge = api
+contextBridge.exposeInMainWorld('bridge', api)

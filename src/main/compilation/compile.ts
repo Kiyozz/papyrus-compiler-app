@@ -8,8 +8,9 @@ import is from '@sindresorhus/is'
 
 import { toExecutable, toOtherSource, toSource } from '../../common/game'
 import { executeCommand } from '../command/execute'
-import { CompilationException } from '../exceptions/compilationException'
+import { CompilationException } from '../exceptions/compilation.exception'
 import { ConfigurationException } from '../exceptions/configuration.exception'
+import { ExecException } from '../exceptions/exec.exception'
 import { Logger } from '../logger'
 import * as mo2 from '../mo2/mo2'
 import * as path from '../path/path'
@@ -133,17 +134,22 @@ export async function compile(scriptName: string): Promise<string> {
       throw err
     }
 
-    logger.error('compilation error', {
-      message: err.message,
-      stack: err.stack,
-    })
+    if (err instanceof Error) {
+      const e = err as ExecException
+      logger.error('compilation error', {
+        message: e.message,
+        stack: e.stack,
+      })
 
-    const outputStdErr = err.stderr.replace('<unknown>', 'unknown')
-    const outputStdOut = err.stdout.replace('<unknown>', 'unknown')
+      const outputStdErr = e.stderr.replace('<unknown>', 'unknown')
+      const outputStdOut = e.stdout.replace('<unknown>', 'unknown')
 
-    throw new CompilationException(
-      scriptName,
-      !outputStdErr ? outputStdOut : outputStdErr,
-    )
+      throw new CompilationException(
+        scriptName,
+        !outputStdErr ? outputStdOut : outputStdErr,
+      )
+    }
+
+    throw err
   }
 }

@@ -4,14 +4,27 @@
  * All rights reserved.
  */
 
-import { BuildOptions } from 'esbuild'
+import { BuildOptions, PluginBuild } from 'esbuild'
+import fsSync from 'fs'
+import fs from 'fs/promises'
 import path from 'path'
 
-export default {
+const mainPath = path.resolve('src/main')
+const distMainPath = path.resolve('dist/main')
+const distBrowserWindows = path.join(distMainPath, 'browser-windows')
+
+const htmlFiles = [
+  {
+    from: path.resolve(mainPath, 'browser-windows/starting.html'),
+    to: path.join(distBrowserWindows, 'starting.html'),
+  },
+]
+
+const config: BuildOptions = {
   platform: 'node',
   entryPoints: [
-    path.resolve('src/main/main.ts'),
-    path.resolve('src/main/preload.ts'),
+    path.resolve(mainPath, 'main.ts'),
+    path.resolve(mainPath, 'preload.ts'),
   ],
   bundle: true,
   target: 'node14.16.0',
@@ -31,4 +44,32 @@ export default {
       process.env.ELECTRON_TELEMETRY_FEATURE ?? 'false'
     }'`,
   },
-} as BuildOptions
+  plugins: [
+    {
+      name: 'copy-plugin',
+      setup(build: PluginBuild): void {
+        build.onEnd(async () => {
+          if (!fsSync.existsSync(distBrowserWindows)) {
+            await fs.mkdir(path.join(distMainPath, 'browser-windows'), {
+              recursive: true,
+            })
+          }
+
+          for (const file of htmlFiles) {
+            const from = await fs.readFile(file.from)
+
+            try {
+              await fs.writeFile(file.to, from)
+            } catch (e) {
+              console.error(e)
+              process.exit(1)
+            }
+          }
+        })
+      },
+    },
+  ],
+}
+
+// noinspection JSUnusedGlobalSymbols
+export default config

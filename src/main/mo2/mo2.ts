@@ -116,7 +116,11 @@ export async function getImportsPath({
 
     return imports
   } catch (e) {
-    throw new ApplicationException(e.message)
+    if (e instanceof Error) {
+      throw new ApplicationException(e.message)
+    }
+
+    throw e
   }
 }
 

@@ -30,4 +30,5 @@ export enum IpcEvent {
   telemetry = 'event-telemetry',
   telemetryActive = 'event-telemetry-active',
   online = 'event-is-online',
+  openMenu = 'event-open-menu',
 }

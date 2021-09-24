@@ -4,49 +4,15 @@
  * All rights reserved.
  */
 
-import type { Color } from 'custom-electron-titlebar'
 import { useEffect } from 'react'
 
 import { Theme } from '../../common/theme'
-import {
-  darkColor,
-  darkColorUnfocus,
-  lightColor,
-  lightColorUnfocus,
-} from '../utils/color'
-import { useFocus } from './use-focus'
 import { useSystemDarkPreference } from './use-system-dark-preference'
 import { useTheme } from './use-theme'
-import { useTitlebar } from './use-titlebar'
 
 export function useSyncHtmlTheme(): void {
   const isSystemThemeDark = useSystemDarkPreference()
   const [theme] = useTheme()
-  const isFocus = useFocus()
-  const { titlebar } = useTitlebar()
-
-  useEffect(() => {
-    let usedColor: Color
-    const colors = {
-      light: lightColor,
-      dark: darkColor,
-    }
-
-    if (!isFocus) {
-      colors.light = lightColorUnfocus
-      colors.dark = darkColorUnfocus
-    }
-
-    if (theme === Theme.dark) {
-      usedColor = colors.dark
-    } else if (theme === Theme.light) {
-      usedColor = colors.light
-    } else {
-      usedColor = isSystemThemeDark ? colors.dark : colors.light
-    }
-
-    titlebar.updateBackground(usedColor)
-  }, [isFocus, titlebar, isSystemThemeDark, theme])
 
   useEffect(() => {
     const list = document.documentElement.classList

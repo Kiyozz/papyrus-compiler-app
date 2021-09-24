@@ -2,7 +2,7 @@
   "endOfLine": "lf",
   "printWidth": 80,
   "jsxSingleQuote": false,
-  "jsxBracketSameLine": false,
+  "bracketSameLine": false,
   "semi": false,
   "useTabs": false,
   "trailingComma": "all",

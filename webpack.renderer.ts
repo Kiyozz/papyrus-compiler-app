@@ -57,9 +57,12 @@ const createConfig = (): Configuration => {
       filename: 'index.js',
       path: output,
     },
-    target: 'electron-renderer',
+    target: 'web',
     resolve: {
       extensions: ['.ts', '.tsx', '.js'],
+      fallback: {
+        assert: false,
+      },
     },
     module: {
       rules: [
@@ -157,4 +160,5 @@ const createConfig = (): Configuration => {
   return configuration
 }
 
+// noinspection JSUnusedGlobalSymbols
 export default createConfig()

@@ -4,24 +4,24 @@
  * All rights reserved.
  */
 
-function deepChilds(element?: HTMLElement | ChildNode | null): ChildNode[] {
+function deepChildren(element?: HTMLElement | ChildNode | null): ChildNode[] {
   if (element === undefined || element === null) {
     return []
   }
 
-  let childs = Array.from(element.childNodes)
+  let children = Array.from(element.childNodes)
 
-  if (childs.length > 0) {
+  if (children.length > 0) {
     let childNotesDeep: ChildNode[] = []
 
-    for (const child of childs) {
-      childNotesDeep = [...childNotesDeep, ...deepChilds(child)]
+    for (const child of children) {
+      childNotesDeep = [...childNotesDeep, ...deepChildren(child)]
     }
 
-    childs = [...childs, ...childNotesDeep]
+    children = [...children, ...childNotesDeep]
   }
 
-  return childs
+  return children
 }
 
 export function isChildren(
@@ -32,5 +32,5 @@ export function isChildren(
     return false
   }
 
-  return deepChilds(from).includes(child)
+  return deepChildren(from).includes(child)
 }

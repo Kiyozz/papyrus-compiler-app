@@ -48,6 +48,7 @@ export class Logger {
     this.logger.error(...params)
   }
 
+  // noinspection JSUnusedGlobalSymbols
   warn(...params: unknown[]): void {
     this.logger.warn(...params)
   }

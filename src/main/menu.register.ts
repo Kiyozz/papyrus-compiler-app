@@ -1,3 +1,5 @@
+// noinspection SpellCheckingInspection
+
 /*
  * Copyright (c) 2021 Kiyozz.
  *
@@ -10,6 +12,7 @@ import createDefaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem, is as isPlatform } from 'electron-util'
 import { match } from 'ts-pattern'
 
+import { GITHUB_ISSUES_NEW_LINK, GITHUB_LINK } from './constants'
 import { IpcEvent } from './ipc-event'
 import { Logger } from './logger'
 import { exists } from './path/path'
@@ -21,13 +24,11 @@ interface RegisterMenusCallbacks {
 }
 
 const logger = new Logger('RegisterMenu')
-const githubUrl = 'https://github.com/Kiyozz/papyrus-compiler-app'
-const reportBugUrl = 'https://github.com/Kiyozz/papyrus-compiler-app/issues/new'
 
 export async function registerMenu({
   win,
   openLogFile,
-}: RegisterMenusCallbacks): Promise<void> {
+}: RegisterMenusCallbacks): Promise<Menu> {
   const t = await (await import('./translations/index')).default()
 
   const menu = appMenu([
@@ -65,6 +66,8 @@ export async function registerMenu({
     },
   ])
 
+  menu.label = 'PCA'
+
   const fileMenu: MenuItemConstructorOptions = {
     label: t('appMenu.file.title'),
     role: 'fileMenu',
@@ -96,11 +99,11 @@ export async function registerMenu({
     submenu: [
       openUrlMenuItem({
         label: t('appMenu.help.actions.report'),
-        url: reportBugUrl,
+        url: GITHUB_ISSUES_NEW_LINK,
       }),
       openUrlMenuItem({
         label: t('appMenu.help.actions.github'),
-        url: githubUrl,
+        url: GITHUB_LINK,
       }),
     ],
   }
@@ -219,5 +222,9 @@ export async function registerMenu({
 
   logger.debug('registering menu')
 
-  Menu.setApplicationMenu(Menu.buildFromTemplate([menu, ...defaultMenus]))
+  const builtMenu = Menu.buildFromTemplate([menu, ...defaultMenus])
+
+  win.setMenu(builtMenu)
+
+  return builtMenu
 }
