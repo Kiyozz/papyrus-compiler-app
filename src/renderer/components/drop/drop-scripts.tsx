@@ -19,7 +19,6 @@ interface Props {
   children: (renderProps: RenderChildren) => React.ReactNode
 }
 
-export type AddScriptsButton = JSX.Element
 export type OnDropFunction = ((files: File[]) => void) | null
 
 export function DropScripts({

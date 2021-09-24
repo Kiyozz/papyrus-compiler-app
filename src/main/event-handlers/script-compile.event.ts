@@ -17,7 +17,7 @@ import { settingsStore, defaultConfig } from '../store/settings/store'
 export class ScriptCompileEvent implements Event<string> {
   private logger = new Logger('ScriptCompileEvent')
 
-  private cleanSuccessLog(script: string, log: string): string {
+  private static _cleanSuccessLog(script: string, log: string): string {
     return log
       .replace('Starting 1 compile threads for 1 files...', '')
       .replace(`Compiling "${script.replace('.psc', '')}"...`, '')
@@ -32,7 +32,7 @@ export class ScriptCompileEvent implements Event<string> {
       .trim()
   }
 
-  private cleanErrorLog(script: string, log: string): string {
+  private static _cleanErrorLog(script: string, log: string): string {
     return log.replace(`Script ${script} failed to compile: `, '').trim()
   }
 
@@ -47,7 +47,10 @@ export class ScriptCompileEvent implements Event<string> {
     this.logger.debug('current store values checked')
 
     try {
-      const result = this.cleanSuccessLog(script, await compile(script))
+      const result = ScriptCompileEvent._cleanSuccessLog(
+        script,
+        await compile(script),
+      )
 
       ipcEvent.reply(endEvent, {
         success: true,
@@ -55,9 +58,17 @@ export class ScriptCompileEvent implements Event<string> {
         script,
       } as CompilationResult)
     } catch (e) {
+      let errorMessage: string
+
+      if (e instanceof Error) {
+        errorMessage = e.message
+      } else {
+        errorMessage = `unknown error ${e}`
+      }
+
       ipcEvent.reply(endEvent, {
         success: false,
-        output: this.cleanErrorLog(script, e.message),
+        output: ScriptCompileEvent._cleanErrorLog(script, errorMessage),
         script,
       } as CompilationResult)
     }

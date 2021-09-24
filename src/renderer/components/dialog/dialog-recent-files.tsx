@@ -97,6 +97,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props): JSX.Element => {
 
   useIpc(bridge.recentFiles.select.onClear, () => {
     send(TelemetryEvents.recentFilesClear, {})
+    // noinspection JSIgnoredPromiseFromCall
     clearRecentFiles()
     setSelectedRecentFiles(new Map())
   })

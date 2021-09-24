@@ -88,4 +88,8 @@ export interface Bridge {
       close: () => void
     }
   }
+
+  titlebar: {
+    openMenu: (args: { x: number; y: number }) => void
+  }
 }

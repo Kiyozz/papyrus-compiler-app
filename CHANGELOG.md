@@ -178,7 +178,7 @@
 
 - changelog dialog improved
 - global refactoring
-- preferences is now handled in a json file
+- preferences are now handled in a json file
 - preferences can be reset via the app menu
 - preferences can be opened via the app menu
 - theme of the app updated

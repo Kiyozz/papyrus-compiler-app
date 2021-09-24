@@ -1,3 +1,5 @@
+// noinspection SpellCheckingInspection
+
 /*
  * Copyright (c) 2021 Kiyozz.
  *

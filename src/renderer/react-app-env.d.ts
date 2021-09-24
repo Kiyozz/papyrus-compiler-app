@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 /*
  * Copyright (c) 2021 Kiyozz.
  *

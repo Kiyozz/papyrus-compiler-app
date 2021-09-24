@@ -15,8 +15,6 @@ export class RecentFilesGetHandler implements EventHandler {
   async listen(): Promise<Script[]> {
     this._logger.debug('get recent files')
 
-    const files = recentFilesStore.files
-
-    return files
+    return recentFilesStore.files
   }
 }

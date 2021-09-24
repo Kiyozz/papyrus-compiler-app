@@ -41,14 +41,3 @@ export function shorten(text: string, options?: Options): ShortenResult {
     filename,
   }
 }
-
-export function textShorten(
-  text: string,
-  { length = 20 }: { length?: number },
-): string {
-  const slices = text.substring(0, length)
-
-  if (slices.length === text.length) return text
-
-  return `${slices}...`
-}

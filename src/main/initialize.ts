@@ -15,6 +15,7 @@ import { GetVersionHandler } from './event-handlers/get-version.handler'
 import { InAppErrorHandler } from './event-handlers/in-app-error.handler'
 import { IsProductionHandler } from './event-handlers/is-production.handler'
 import { OpenFileHandler } from './event-handlers/open-file.handler'
+import { OpenMenuHandler } from './event-handlers/open-menu.handler'
 import { RecentFilesClearHandler } from './event-handlers/recent-files-clear.handler'
 import { RecentFilesGetHandler } from './event-handlers/recent-files-get.handler'
 import { RecentFilesRemoveHandler } from './event-handlers/recent-files-remove.handler'
@@ -78,6 +79,13 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
     telemetry.setOnline(args.online)
   })
 
+  const menu = await registerMenu({
+    win,
+    openLogFile: (file: string) => {
+      openFileHandler.listen(file)
+    },
+  })
+
   const openFileHandler = new OpenFileHandler()
   const handlers = new Map<string, EventHandler>([
     [IpcEvent.openDialog, new DialogHandler()],
@@ -95,6 +103,7 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
     [IpcEvent.recentFilesSet, new RecentFilesSetHandler()],
     [IpcEvent.recentFilesClear, new RecentFilesClearHandler()],
     [IpcEvent.recentFileRemove, new RecentFilesRemoveHandler()],
+    [IpcEvent.openMenu, new OpenMenuHandler({ win, menu })],
   ])
 
   const events = new Map<string, Event>([
@@ -104,12 +113,6 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
   const syncs = new Map<string, EventSync>([])
 
   logger.debug(settingsStore.path)
-  await registerMenu({
-    win,
-    openLogFile: (file: string) => {
-      openFileHandler.listen(file)
-    },
-  })
   registerIpcEvents(handlers, events, syncs)
   await registerContextMenu(win)
 }

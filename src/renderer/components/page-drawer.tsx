@@ -61,7 +61,7 @@ export function PageDrawer(): JSX.Element {
                 tabIndex={-1}
                 key={Link.path}
                 activeClassName="link-active"
-                activeUnfocusClassName="link-active-unfocus"
+                notFocusedActiveClassName="link-not-focused-active"
                 className="link"
                 to={Link.path}
                 onClick={onClick}

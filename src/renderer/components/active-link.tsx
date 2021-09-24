@@ -14,14 +14,14 @@ interface ActiveLinkProps extends NavLinkProps {
   to: string
   className?: string
   activeClassName?: string
-  activeUnfocusClassName?: string
+  notFocusedActiveClassName?: string
 }
 
 export function ActiveLink({
   children,
   className,
   activeClassName,
-  activeUnfocusClassName,
+  notFocusedActiveClassName,
   ...props
 }: ActiveLinkProps): JSX.Element {
   const isFocus = useFocus()
@@ -30,7 +30,10 @@ export function ActiveLink({
     <NavLink
       {...props}
       className={className}
-      activeClassName={cx(activeClassName, !isFocus && activeUnfocusClassName)}
+      activeClassName={cx(
+        activeClassName,
+        !isFocus && notFocusedActiveClassName,
+      )}
     >
       {children}
     </NavLink>

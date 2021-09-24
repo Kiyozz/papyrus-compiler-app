@@ -31,9 +31,13 @@ class IpcRenderer {
     args?: unknown,
   ): Promise<Result> {
     try {
-      return baseIpcRenderer.invoke(channel, args) as Promise<Result>
+      return (await baseIpcRenderer.invoke(channel, args)) as Promise<Result>
     } catch (e) {
-      throw new IpcException(e.message)
+      if (e instanceof Error) {
+        throw new IpcException(e.message)
+      }
+
+      throw e
     }
   }
 
@@ -41,6 +45,7 @@ class IpcRenderer {
     baseIpcRenderer.send(channel, ...(args ?? []))
   }
 
+  // noinspection JSUnusedGlobalSymbols
   sendSync<Result = unknown, Params = unknown>(
     channel: string,
     ...args: Params[]

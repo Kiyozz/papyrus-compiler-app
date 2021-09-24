@@ -88,6 +88,7 @@ export function Compilation(): JSX.Element {
       path: s.path,
     }))
 
+    // noinspection JSIgnoredPromiseFromCall
     setRecentFiles(files)
     send(TelemetryEvents.compilationPlay, {
       scripts: scripts.length,

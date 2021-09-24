@@ -16,23 +16,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Cache .pnpm-store
-        uses: actions/cache@v1
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-node${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-      - uses: actions/setup-node@v1.4.4
-        with:
-          node-version: 16
 
-      - name: Dependencies
-        uses: pnpm/action-setup@v2.0.0
+      - uses: pnpm/action-setup@v2
         with:
           version: 6
           run_install: true
 
-      - name: Lint
-        run: pnpm lint
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'pnpm'
 
-      - name: Build
-        run: pnpm build
+      - run: pnpm lint
+      - run: pnpm build

@@ -18,7 +18,7 @@ export class OpenFileHandler implements EventHandler {
     try {
       await shell.openExternal(file)
     } catch (e) {
-      if (e.message.includes('Invalid URL')) {
+      if (e instanceof Error && e.message.includes('Invalid URL')) {
         await shell.openExternal(`file://${file}`)
       } else {
         throw e

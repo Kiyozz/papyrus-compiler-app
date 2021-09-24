@@ -116,7 +116,7 @@ export class Telemetry {
             error instanceof Error ? error.message : error,
           )
           this._logger.info(
-            'disabling telemetry for this session because api is either unreacheable or an error has occurred',
+            'disabling telemetry for this session because api is either unreachable or an error has occurred',
           )
           this.setActive(false)
 

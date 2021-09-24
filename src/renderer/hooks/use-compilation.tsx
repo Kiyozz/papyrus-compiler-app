@@ -121,6 +121,14 @@ export function CompilationProvider({
                 return [...cl, [s, result.output]]
               })
             } catch (e) {
+              let errorMessage: string
+
+              if (e instanceof Error) {
+                errorMessage = e.message
+              } else {
+                errorMessage = `unknown error ${e}`
+              }
+
               setCompilationScripts((cs: ScriptInterface[]) => {
                 const found = cs.findIndex(incs => incs.id === s.id)
 
@@ -134,7 +142,7 @@ export function CompilationProvider({
               })
 
               setCompilationLogs(cl => {
-                return [...cl, [s, e.message]]
+                return [...cl, [s, errorMessage]]
               })
             }
           }),
