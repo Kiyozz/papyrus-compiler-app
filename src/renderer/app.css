@@ -42,7 +42,7 @@ body {
 }
 
 .page > main {
-  @apply pl-4 pr-4;
+  @apply max-w-screen-md mx-auto px-6;
 }
 
 .overflow-overlay,
