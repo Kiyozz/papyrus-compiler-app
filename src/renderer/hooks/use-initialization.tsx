@@ -42,7 +42,7 @@ export function InitializationProvider({
 
   const checkUpdates = useCallback(
     async (version: string) => {
-      const response = await fetch(`${GITHUB_REPOSITORY}/releases`)
+      const response = await fetch(`${GITHUB_REPOSITORY}/releases?per_page=1`)
       const [release]: GithubRelease[] = await response.json()
 
       if (typeof release !== 'undefined' && version.length !== 0) {
