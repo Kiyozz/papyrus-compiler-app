@@ -142,17 +142,9 @@ const createConfig = (): Configuration => {
   } else {
     if (Array.isArray(configuration.plugins)) {
       configuration.plugins.push(
-        new webpack.HotModuleReplacementPlugin(),
         new ForkTsCheckerWebpackPlugin(),
         new ReactRefreshWebpackPlugin(),
       )
-    }
-
-    configuration.devServer = {
-      host: 'localhost',
-      port: 9080,
-      hot: true,
-      overlay: true,
     }
 
     const entries = configuration.entry as Record<'renderer', string[]>
