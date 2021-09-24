@@ -4,12 +4,8 @@
  * All rights reserved.
  */
 const { Platform } = require('electron-builder')
-const fs = require('fs')
+const fs = require('fs/promises')
 const path = require('path')
-const { promisify } = require('util')
-
-const writeFile = promisify(fs.writeFile)
-const readFile = promisify(fs.readFile)
 
 /**
  *
@@ -64,9 +60,9 @@ exports.default = async function afterPack(context) {
   }
 
   let debugFile = (
-    await readFile(path.resolve(__dirname, usedConfig.debug.from))
+    await fs.readFile(path.resolve(__dirname, usedConfig.debug.from))
   ).toString()
   debugFile = debugFile.replace(usedConfig.name.from, usedConfig.name.to)
 
-  await writeFile(path.resolve(appOutDir, usedConfig.debug.to), debugFile)
+  await fs.writeFile(path.resolve(appOutDir, usedConfig.debug.to), debugFile)
 }
