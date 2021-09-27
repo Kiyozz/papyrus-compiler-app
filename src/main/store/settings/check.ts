@@ -105,12 +105,14 @@ function _checkGameType(appStore: SettingsStore, defaultConfig: Config) {
     resetGameType()
   }
 
-  if (
-    gameType !== GameType.le &&
-    gameType !== GameType.se &&
-    gameType !== GameType.vr
-  ) {
-    resetGameType()
+  switch (gameType) {
+    case GameType.fo4:
+    case GameType.le:
+    case GameType.se:
+    case GameType.vr:
+      break
+    default:
+      resetGameType()
   }
 }
 
