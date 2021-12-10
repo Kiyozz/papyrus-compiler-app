@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1.4.4
         with:
-          node-version: 16
+          node-version: 16.9.1
 
       - name: Dependencies
         uses: pnpm/action-setup@v2.0.0
@@ -23,8 +23,8 @@ jobs:
         env:
           NODE_ENV: production
           ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrimspecialedition/mods/23852
-          ELECTRON_TELEMETRY_API_KEY:
-          ELECTRON_TELEMETRY_API:
+          ELECTRON_TELEMETRY_API_KEY: ''
+          ELECTRON_TELEMETRY_API: ''
           ELECTRON_TELEMETRY_FEATURE: false
         run: |
           pnpm build

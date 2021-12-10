@@ -7,6 +7,7 @@
 import is from '@sindresorhus/is'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Observable, Subject } from 'rxjs'
+// eslint-disable-next-line import/no-unresolved
 import { PartialDeep } from 'type-fest'
 
 import { Config } from '../../common/interfaces/config'

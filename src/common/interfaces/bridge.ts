@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+// eslint-disable-next-line import/no-unresolved
 import { PartialDeep } from 'type-fest'
 
 import { TelemetryEvents, TelemetryEventsProperties } from '../telemetry-events'
@@ -12,7 +13,9 @@ import { CompilationResult } from './compilation-result'
 import { Config } from './config'
 import { DialogType } from './dialog'
 import { Disposable } from './disposable'
+import { Platform } from './platform'
 import { Script } from './script'
+import { WindowState } from './window-state'
 
 export interface Bridge {
   telemetry: {
@@ -91,5 +94,17 @@ export interface Bridge {
 
   titlebar: {
     openMenu: (args: { x: number; y: number }) => void
+  }
+
+  os: {
+    platform: () => Platform
+  }
+
+  window: {
+    close: () => void
+    minimize: () => Promise<WindowState>
+    maximize: () => Promise<WindowState>
+    restore: () => Promise<WindowState>
+    onStateChange: (cb: (state: WindowState) => void) => Disposable
   }
 }

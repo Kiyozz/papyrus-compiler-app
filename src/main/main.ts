@@ -41,13 +41,15 @@ async function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       preload: join(__dirname, 'preload.js'),
-      devTools: isDev,
     },
     show: false,
   }
 
-  if (!is.macos) {
+  if (is.macos) {
+    windowOptions.titleBarStyle = 'hiddenInset'
+  } else {
     windowOptions.autoHideMenuBar = true
+    windowOptions.frame = false
   }
 
   const tm = setTimeout(() => {
@@ -101,14 +103,18 @@ async function createWindow() {
   win.on('ready-to-show', () => {
     logger.debug('the window is ready to show')
     clearTimeout(tm)
+
     startingWin?.close()
     startingWin?.destroy()
+    startingWin = null
 
-    win?.show()
+    setTimeout(() => {
+      win?.show()
 
-    if (isDev) {
-      win?.webContents.openDevTools({ mode: 'bottom' })
-    }
+      if (isDev) {
+        win?.webContents.openDevTools({ mode: 'bottom' })
+      }
+    }, 100)
   })
 }
 

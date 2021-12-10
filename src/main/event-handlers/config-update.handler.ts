@@ -6,6 +6,7 @@
 
 import is from '@sindresorhus/is'
 import deepmerge from 'deepmerge'
+// eslint-disable-next-line import/no-unresolved
 import { PartialDeep } from 'type-fest'
 
 import { Config } from '../../common/interfaces/config'

@@ -4,7 +4,7 @@ mainConfig:
   src: src/main/main.ts
   output: dist/main
 rendererConfig:
-  type: webpack
-  path: webpack.renderer.ts
+  type: vite
+  path: src/renderer/vite.config.ts
   src: src/renderer/index.tsx
   output: dist/renderer

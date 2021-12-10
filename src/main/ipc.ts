@@ -9,6 +9,7 @@ import {
   IpcMainEvent,
   IpcMainInvokeEvent,
   ipcRenderer as baseIpcRenderer,
+  IpcRendererEvent,
 } from 'electron'
 
 type MainInvokeListener<Args> = (event: IpcMainInvokeEvent, args: Args) => void
@@ -69,7 +70,10 @@ class IpcRenderer {
     baseIpcRenderer.on(channel, listener)
   }
 
-  removeListener(channel: string, listener: (args: unknown) => void) {
+  removeListener<Result = unknown>(
+    channel: string,
+    listener: (e: IpcRendererEvent, args: Result) => void,
+  ) {
     baseIpcRenderer.removeListener(channel, listener)
   }
 }

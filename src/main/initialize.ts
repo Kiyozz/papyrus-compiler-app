@@ -5,6 +5,7 @@
  */
 
 import { registerContextMenu } from './context-menu.register'
+import { Env } from './env'
 import { CheckInstallationHandler } from './event-handlers/check-installation.handler'
 import { ClipboardCopyHandler } from './event-handlers/clipboard-copy.handler'
 import { ConfigGetHandler } from './event-handlers/config-get.handler'
@@ -16,6 +17,7 @@ import { InAppErrorHandler } from './event-handlers/in-app-error.handler'
 import { IsProductionHandler } from './event-handlers/is-production.handler'
 import { OpenFileHandler } from './event-handlers/open-file.handler'
 import { OpenMenuHandler } from './event-handlers/open-menu.handler'
+import { PlatformSync } from './event-handlers/platform.sync'
 import { RecentFilesClearHandler } from './event-handlers/recent-files-clear.handler'
 import { RecentFilesGetHandler } from './event-handlers/recent-files-get.handler'
 import { RecentFilesRemoveHandler } from './event-handlers/recent-files-remove.handler'
@@ -23,6 +25,13 @@ import { RecentFilesSetHandler } from './event-handlers/recent-files-set.handler
 import { ScriptCompileEvent } from './event-handlers/script-compile.event'
 import { TelemetryActiveHandler } from './event-handlers/telemetry-active.handler'
 import { TelemetryHandler } from './event-handlers/telemetry.handler'
+import {
+  listenToWindowState,
+  WindowCloseHandler,
+  WindowMaximizeHandler,
+  WindowMinimizeHandler,
+  WindowRestoreHandler,
+} from './event-handlers/window.handlers'
 import { Event } from './interfaces/event'
 import { EventHandler } from './interfaces/event-handler'
 import { EventSync } from './interfaces/event-sync'
@@ -66,8 +75,8 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
   const isTelemetryActive = settingsStore.get('telemetry.active') as boolean
   const telemetry = new Telemetry(
     isTelemetryActive,
-    process.env.ELECTRON_TELEMETRY_API ?? '',
-    process.env.ELECTRON_TELEMETRY_API_KEY ?? '',
+    Env.telemetryApi,
+    Env.telemetryApiKey,
     true,
   )
 
@@ -104,13 +113,21 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
     [IpcEvent.recentFilesClear, new RecentFilesClearHandler()],
     [IpcEvent.recentFileRemove, new RecentFilesRemoveHandler()],
     [IpcEvent.openMenu, new OpenMenuHandler({ win, menu })],
+    [IpcEvent.windowClose, new WindowCloseHandler(win)],
+    [IpcEvent.windowMaximize, new WindowMaximizeHandler(win)],
+    [IpcEvent.windowMinimize, new WindowMinimizeHandler(win)],
+    [IpcEvent.windowRestore, new WindowRestoreHandler(win)],
   ])
+
+  listenToWindowState(win)
 
   const events = new Map<string, Event>([
     [IpcEvent.compileScriptStart, new ScriptCompileEvent()],
   ])
 
-  const syncs = new Map<string, EventSync>([])
+  const syncs = new Map<string, EventSync>([
+    [IpcEvent.platform, new PlatformSync()],
+  ])
 
   logger.debug(settingsStore.path)
   registerIpcEvents(handlers, events, syncs)
