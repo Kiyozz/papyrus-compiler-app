@@ -16,6 +16,7 @@ export enum IpcEvent {
   openDialog = 'event-open-dialog',
   isProduction = 'event-is-production',
   getVersion = 'event-get-version',
+  platform = 'sync-platform',
   checkForUpdates = 'event-check-for-updates',
   recentFilesGet = 'event-recent-files-get',
   recentFilesSet = 'event-recent-files-set',
@@ -31,4 +32,9 @@ export enum IpcEvent {
   telemetryActive = 'event-telemetry-active',
   online = 'event-is-online',
   openMenu = 'event-open-menu',
+  windowClose = 'event-window-close',
+  windowMinimize = 'event-window-minimize',
+  windowMaximize = 'event-window-maximize',
+  windowRestore = 'event-window-restore',
+  windowStateChange = 'event-window-state-change',
 }

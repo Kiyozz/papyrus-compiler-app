@@ -11,6 +11,7 @@ import { MemoryRouter as Router } from 'react-router-dom'
 import { TelemetryEvents } from '../common/telemetry-events'
 import { DialogChangelog } from './components/dialog/dialog-changelog'
 import { PageDrawer } from './components/page-drawer'
+import { Titlebar } from './components/titlebar'
 import { TutorialSettings } from './components/tutorials/tutorial-settings'
 import { TutorialTelemetry } from './components/tutorials/tutorial-telemetry'
 import { useApp } from './hooks/use-app'
@@ -20,7 +21,7 @@ import { useTelemetry } from './hooks/use-telemetry'
 import { useVersion } from './hooks/use-version'
 import { Routes } from './routes'
 
-export function App(): JSX.Element {
+export function App() {
   const { t } = useTranslation()
   const { done } = useInitialization()
   const { send } = useTelemetry()
@@ -40,6 +41,7 @@ export function App(): JSX.Element {
 
   return (
     <>
+      <Titlebar title="PCA" />
       {!done && (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-light-400 dark:bg-darker z-20">
           <div className="text-center text-4xl">{t('loading')}</div>

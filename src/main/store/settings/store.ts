@@ -8,11 +8,12 @@ import { app } from 'electron'
 import Store from 'electron-store'
 import { is } from 'electron-util'
 import * as fs from 'fs'
-import osLocale from 'os-locale'
+import { osLocaleSync } from 'os-locale'
 
 import { GameType } from '../../../common/game'
 import { Config } from '../../../common/interfaces/config'
 import { Theme } from '../../../common/theme'
+import { Env } from '../../env'
 import { join } from '../../path/path'
 import { checkStore } from './check'
 import { migrate410 } from './migrations/4.1.0.migration'
@@ -32,11 +33,7 @@ const json: { version: string } = JSON.parse(
 const defaultConfig: Config = {
   game: {
     path: '',
-    type: (process.env.ELECTRON_WEBPACK_APP_MOD_URL ?? '').includes(
-      'specialedition',
-    )
-      ? GameType.se
-      : GameType.le,
+    type: Env.modUrl.includes('specialedition') ? GameType.se : GameType.le,
   },
   compilation: {
     concurrentScripts: 15,
@@ -58,7 +55,7 @@ const defaultConfig: Config = {
     active: true,
   },
   theme: Theme.system,
-  locale: osLocale.sync(),
+  locale: osLocaleSync(),
   __internal__: {
     migrations: {
       version: json.version,

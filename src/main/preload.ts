@@ -4,13 +4,15 @@
  * All rights reserved.
  */
 
-import { contextBridge, shell } from 'electron'
+import { contextBridge, IpcRendererEvent, shell } from 'electron'
 
 import { BadError } from '../common/interfaces/bad-error'
 import { Bridge } from '../common/interfaces/bridge'
 import { CompilationResult } from '../common/interfaces/compilation-result'
 import { Config } from '../common/interfaces/config'
+import { Disposable } from '../common/interfaces/disposable'
 import { Script } from '../common/interfaces/script'
+import { WindowState } from '../common/interfaces/window-state'
 import { ipcRenderer } from './ipc'
 import { IpcEvent } from './ipc-event'
 
@@ -124,6 +126,28 @@ const api: Bridge = {
   },
   titlebar: {
     openMenu: args => ipcRenderer.invoke(IpcEvent.openMenu, args),
+  },
+  os: {
+    platform: () => ipcRenderer.sendSync(IpcEvent.platform),
+  },
+  window: {
+    close: () => ipcRenderer.invoke(IpcEvent.windowClose),
+    minimize: () => ipcRenderer.invoke(IpcEvent.windowMinimize),
+    maximize: () => ipcRenderer.invoke(IpcEvent.windowMaximize),
+    restore: () => ipcRenderer.invoke(IpcEvent.windowRestore),
+    onStateChange: (cb: (state: WindowState) => void): Disposable => {
+      const handler = (e: IpcRendererEvent, args: WindowState) => {
+        cb(args)
+      }
+
+      ipcRenderer.on(IpcEvent.windowStateChange, handler)
+
+      return {
+        dispose() {
+          return ipcRenderer.removeListener(IpcEvent.windowStateChange, handler)
+        },
+      }
+    },
   },
 }
 

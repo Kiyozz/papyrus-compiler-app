@@ -1,9 +1,29 @@
+## Unreleased
+
+### Features
+
+- A loading screen now appear when the application start
+
+  ![docs/changelog/Unreleased/loading.png](docs/changelog/Unreleased/loading.png)
+
+- New application titlebar
+
+  The appplication menu is now accessible with the application icon at the left
+
+  ![docs/changelog/Unreleased/new-titlebar.png](docs/changelog/Unreleased/new-titlebar.png)
+
+  ![docs/changelog/Unreleased/new-titlebar-open.png](docs/changelog/Unreleased/new-titlebar-open.png)
+
+- Bumps electron to 16.0.4
+- Bumps chrome to 96
+
 ## 5.7.0 (2021-08-17)
 
 ### Features
 
 - Dialogs can be validated with "Enter" (#119)
 - Display a preview of a group when you hover the mouse over it (#118)
+
   ![docs/changelog/5.7.0/group_showcase_preview.png](docs/changelog/5.7.0/group_showcase_preview.gif)
 
 ### Improvements

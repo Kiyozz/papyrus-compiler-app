@@ -7,7 +7,7 @@
 import { is } from 'electron-util'
 import fg from 'fast-glob'
 import { promises as fs, existsSync, Stats } from 'fs'
-import moveFile from 'move-file'
+import { moveFile } from 'move-file'
 import * as path from 'path'
 
 import { FileAccessException } from '../exceptions/files/file-access.exception'

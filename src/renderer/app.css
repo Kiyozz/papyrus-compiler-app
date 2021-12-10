@@ -14,6 +14,14 @@
   --bg-darker: theme('colors.darker');
 }
 
+.drag {
+  -webkit-app-region: drag;
+}
+
+.drag button {
+  -webkit-app-region: no-drag;
+}
+
 img {
   @apply pointer-events-none;
 }
@@ -65,6 +73,10 @@ body {
   @apply dark:hover:bg-darker;
 
   @apply focus:ring-2 ring-gray-900/70 dark:ring-white/40;
+}
+
+.btn-default {
+  @apply cursor-default bg-transparent hover:bg-transparent focus:bg-transparent hover:bg-opacity-100 !important;
 }
 
 [role='button'] {
@@ -323,4 +335,88 @@ input.MuiInputBase-inputAdornedStart {
 .fade-100-exit-active,
 .fade-150-exit-active {
   opacity: 0;
+}
+
+/* WINDOW CONTROLS */
+.titlebar {
+  font-size: 12px;
+  color: #171717;
+  @apply flex z-30 relative select-none w-full items-center bg-light-600 dark:bg-black-600;
+}
+
+.titlebar.focused {
+  @apply bg-light-400 dark:bg-black-400;
+}
+
+.titlebar.other-platform {
+  height: 32px;
+}
+
+.titlebar.macos {
+  height: 22px;
+  @apply justify-center;
+}
+
+.titlebar.macos-bigsur {
+  height: 28px;
+}
+
+.titlebar.maximized:not(.macos),
+.titlebar.maximized:not(.macos) .titlebar-control {
+  height: 24px;
+}
+
+.titlebar.maximized:not(.macos) .titlebar-control-close {
+  @apply mr-0.5;
+}
+
+.dark .titlebar {
+  color: #ffffff;
+}
+
+.titlebar-icon {
+  background: url('./assets/logo/vector/isolated-layout-mono.svg') no-repeat
+    bottom/cover;
+}
+
+.dark .titlebar-icon {
+  background: url('./assets/logo/vector/isolated-layout-mono-white.svg')
+    no-repeat bottom/cover;
+}
+
+.titlebar-control {
+  width: 46px;
+  height: 32px;
+  /*noinspection CssNoGenericFontName*/
+  font-family: 'Segoe MDL2 Assets';
+  font-size: 10px;
+  color: inherit;
+  @apply cursor-default;
+}
+
+.titlebar .titlebar-control:hover {
+  @apply bg-light-700 transition-colors duration-300;
+}
+
+.titlebar .titlebar-control:hover:active {
+  @apply bg-light-600;
+}
+
+.titlebar .titlebar-control-close:hover {
+  background: #c42b1c;
+  color: #ffffff;
+  @apply transition-none;
+}
+
+.titlebar .titlebar-control-close:active:hover {
+  background: #ce2b1c;
+  color: #ffffff;
+}
+
+.dark .titlebar-control {
+  color: #ffffff;
+}
+
+.dark .titlebar-control:not(.titlebar-control-close):hover {
+  @apply bg-darker;
 }

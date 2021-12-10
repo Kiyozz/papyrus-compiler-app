@@ -9,8 +9,8 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
 
-import { MOD_URL } from '../../../common/mod'
 import bridge from '../../bridge'
+import { Env } from '../../env'
 import { useApp } from '../../hooks/use-app'
 import { useInitialization } from '../../hooks/use-initialization'
 import { useOnKeyUp } from '../../hooks/use-on-key-up'
@@ -70,7 +70,7 @@ export function DialogChangelog(): JSX.Element {
   const onClickDownloadRelease = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    bridge.shell.openExternal(MOD_URL)
+    bridge.shell.openExternal(Env.modUrl)
   }
 
   const onClickShowNotes = () => {

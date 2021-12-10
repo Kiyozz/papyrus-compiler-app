@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import compareVersions from 'compare-versions'
+import { compare } from 'compare-versions'
 import React, {
   createContext,
   useCallback,
@@ -46,7 +46,7 @@ export function InitializationProvider({
       const [release]: GithubRelease[] = await response.json()
 
       if (typeof release !== 'undefined' && version.length !== 0) {
-        if (compareVersions.compare(release.tag_name, version, '>')) {
+        if (compare(release.tag_name, version, '>')) {
           setLatestVersion(release.tag_name)
           setShowChangelog(true)
           setChangelog(release.body)

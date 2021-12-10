@@ -11,6 +11,7 @@ import {
   TelemetryEventsProperties,
 } from '../../common/telemetry-events'
 import bridge from '../bridge'
+import { Env } from '../env'
 import { useApp } from './use-app'
 
 interface TelemetryContextInterface {
@@ -35,10 +36,7 @@ export function TelemetryProvider({
       event: TelemetryEvents,
       properties: TelemetryEventsProperties[TelemetryEvents],
     ) => {
-      if (
-        config.telemetry?.active &&
-        (process.env.ELECTRON_TELEMETRY_FEATURE ?? 'false') === 'true'
-      ) {
+      if (config.telemetry?.active && Env.telemetryFeature) {
         bridge.telemetry.send(event, properties)
       }
     },

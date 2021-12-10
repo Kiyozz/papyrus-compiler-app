@@ -40,7 +40,8 @@
     "import/exports-last": "error",
     "import/newline-after-import": "error",
     "import/default": "error",
-    "import/no-useless-path-segments": "error"
+    "import/no-useless-path-segments": "error",
+    "react/prop-types": "off"
   },
   "overrides": [
     {

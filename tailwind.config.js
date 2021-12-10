@@ -22,6 +22,10 @@ module.exports = {
       height: {
         'screen-titlebar': 'calc(100vh - theme("height.8"))',
         'screen-appbar': 'calc(100vh - theme("height.8") - theme("height.16"))',
+        5.5: '1.375rem',
+      },
+      boxShadow: {
+        b: '0 1px 0 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
       },
       colors: {
         darker: '#16161a',
