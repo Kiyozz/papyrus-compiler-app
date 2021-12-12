@@ -12,7 +12,8 @@ import createDefaultMenu from 'electron-default-menu'
 import { appMenu, openUrlMenuItem, is as isPlatform } from 'electron-util'
 import { match } from 'ts-pattern'
 
-import { GITHUB_ISSUES_NEW_LINK, GITHUB_LINK } from './constants'
+import { GITHUB_LINK } from '../common/constants'
+import { GITHUB_ISSUES_NEW_LINK } from './constants'
 import { IpcEvent } from './ipc-event'
 import { Logger } from './logger'
 import { exists } from './path/path'
@@ -54,6 +55,8 @@ export async function registerMenu({
                 telemetry: false,
               },
             }
+
+            win.webContents.send(IpcEvent.configReset)
           },
         },
       ],

@@ -39,7 +39,7 @@ const defaultConfig: Config = {
     concurrentScripts: 15,
     compilerPath: '',
     flag: 'TESV_Papyrus_Flags.flg',
-    output: 'Data\\Scripts',
+    output: join('Data/Scripts'),
   },
   tutorials: {
     settings: true,
@@ -47,7 +47,7 @@ const defaultConfig: Config = {
   },
   mo2: {
     use: false,
-    output: 'overwrite\\Scripts',
+    output: join('overwrite/Scripts'),
     mods: 'mods',
   },
   groups: [],

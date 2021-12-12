@@ -53,6 +53,7 @@ export interface Bridge {
       override?: boolean,
     ) => Promise<Config>
     get: () => Promise<Config>
+    onReset: (cb: () => void) => Disposable
   }
 
   isProduction: () => Promise<boolean>

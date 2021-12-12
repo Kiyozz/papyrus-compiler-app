@@ -33,3 +33,4 @@ SE version: [NexusMods SE](https://www.nexusmods.com/skyrimspecialedition/mods/2
 ## TODO
 
 - [ ] create a gitbook
+- [ ] recent files checkbox show full path

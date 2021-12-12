@@ -2,6 +2,8 @@
 
 ### Features
 
+- Recent files dialog displays more scripts at once
+
 - A loading screen now appear when the application start
 
   ![docs/changelog/Unreleased/loading.png](docs/changelog/Unreleased/loading.png)
@@ -14,8 +16,12 @@
 
   ![docs/changelog/Unreleased/new-titlebar-open.png](docs/changelog/Unreleased/new-titlebar-open.png)
 
+- The position of the app is not memoized
+- The application reloads when user resets the configuration
 - Bumps electron to 16.0.4
 - Bumps chrome to 96
+- Changelog window correctly displays images
+- The application restarts on configuration reset
 
 ## 5.7.0 (2021-08-17)
 

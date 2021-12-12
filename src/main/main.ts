@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+import isType from '@sindresorhus/is'
 import {
   app,
   BrowserWindow,
@@ -17,6 +18,7 @@ import { format } from 'url'
 import { initialize } from './initialize'
 import { Logger } from './logger'
 import { join } from './path/path'
+import { createWindowStore } from './store/window/store'
 import { unhandled } from './unhandled'
 
 const logger = new Logger('Main')
@@ -33,6 +35,9 @@ async function createWindow() {
 
   const isDev = is.development
 
+  const windowStore = createWindowStore()
+  const { x, y } = windowStore.store
+
   const windowOptions: BrowserWindowConstructorOptions = {
     width: 800,
     height: 820,
@@ -42,6 +47,8 @@ async function createWindow() {
       nodeIntegration: true,
       preload: join(__dirname, 'preload.js'),
     },
+    x: isType.null_(x) ? undefined : x,
+    y: isType.null_(y) ? undefined : y,
     show: false,
   }
 
@@ -94,7 +101,7 @@ async function createWindow() {
     )
   }
 
-  await initialize(win)
+  await initialize(win, windowStore)
 
   win.on('closed', () => {
     win = null

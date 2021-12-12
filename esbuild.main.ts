@@ -13,7 +13,7 @@ const mainPath = path.resolve('src/main')
 const distMainPath = path.resolve('dist/main')
 const distBrowserWindows = path.join(distMainPath, 'browser-windows')
 
-const htmlFiles = [
+const files = [
   {
     from: path.resolve(mainPath, 'browser-windows/starting.html'),
     to: path.join(distBrowserWindows, 'starting.html'),
@@ -55,7 +55,7 @@ const config: BuildOptions = {
             })
           }
 
-          for (const file of htmlFiles) {
+          for (const file of files) {
             const from = await fs.readFile(file.from)
 
             try {

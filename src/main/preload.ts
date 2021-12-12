@@ -53,6 +53,15 @@ const api: Bridge = {
       })
     },
     get: () => ipcRenderer.invoke<Config>(IpcEvent.configGet),
+    onReset: cb => {
+      ipcRenderer.on(IpcEvent.configReset, cb)
+
+      return {
+        dispose() {
+          ipcRenderer.removeListener(IpcEvent.configReset, cb)
+        },
+      }
+    },
   },
   isProduction: () => ipcRenderer.invoke<boolean>(IpcEvent.isProduction),
   compilation: {

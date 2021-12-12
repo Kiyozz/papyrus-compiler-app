@@ -14,6 +14,7 @@ import { Config } from '../../common/interfaces/config'
 import bridge from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { Group } from '../interfaces'
+import { useIpc } from './use-ipc'
 
 interface Context {
   setShowChangelog: (show: boolean) => void
@@ -66,6 +67,10 @@ export function AppProvider({
   const [isShowChangelog, setShowChangelog] = useState(false)
   const [changelog, setChangelog] = useState('')
   const [isCheckUsingLastVersion, setCheckUsingLastVersion] = useState(false)
+
+  useIpc(bridge.config.onReset, () => {
+    window.location.reload()
+  })
 
   const updateConfig = (
     partialConfig: PartialDeep<Config>,

@@ -7,8 +7,9 @@
 import DownloadIcon from '@material-ui/icons/GetApp'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown, { Components } from 'react-markdown'
 
+import { GITHUB_LINK } from '../../../common/constants'
 import bridge from '../../bridge'
 import { Env } from '../../env'
 import { useApp } from '../../hooks/use-app'
@@ -16,6 +17,14 @@ import { useInitialization } from '../../hooks/use-initialization'
 import { useOnKeyUp } from '../../hooks/use-on-key-up'
 import { Toast } from '../toast'
 import { Dialog } from './dialog'
+
+const Img: Components['img'] = ({ src, alt, ...props }) => {
+  const newSrc = src?.startsWith('docs')
+    ? `${GITHUB_LINK}/blob/master/${src}?raw=true`
+    : src
+
+  return <img src={newSrc} alt={alt} {...props} />
+}
 
 function Anchor({
   children,
@@ -139,6 +148,7 @@ export function DialogChangelog(): JSX.Element {
               h5: HeadingFive,
               code: Code,
               a: Anchor,
+              img: Img,
             }}
           >
             {changelog}

@@ -42,6 +42,7 @@ import { Logger } from './logger'
 import { registerMenu } from './menu.register'
 import { ensureFiles, move, writeFile } from './path/path'
 import { settingsStore } from './store/settings/store'
+import { WindowStore } from './store/window/store'
 import { Telemetry } from './telemetry/telemetry'
 import './translations/index'
 
@@ -69,7 +70,10 @@ async function backupLogFile() {
   logger.info(`file ${logFilename}.1.log created`)
 }
 
-export async function initialize(win: Electron.BrowserWindow): Promise<void> {
+export async function initialize(
+  win: Electron.BrowserWindow,
+  windowStore: WindowStore,
+): Promise<void> {
   await backupLogFile()
 
   const isTelemetryActive = settingsStore.get('telemetry.active') as boolean
@@ -132,4 +136,10 @@ export async function initialize(win: Electron.BrowserWindow): Promise<void> {
   logger.debug(settingsStore.path)
   registerIpcEvents(handlers, events, syncs)
   await registerContextMenu(win)
+
+  win.on('moved', () => {
+    const [x, y] = win.getPosition()
+
+    windowStore.set({ x, y })
+  })
 }
