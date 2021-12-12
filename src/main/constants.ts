@@ -4,10 +4,11 @@
  * All rights reserved.
  */
 
-import { is } from 'electron-util'
+import { GITHUB_LINK } from '../common/constants'
+import { join } from './path/path'
 
-export const GITHUB_LINK = 'https://github.com/Kiyozz/papyrus-compiler-app'
 export const GITHUB_ISSUES_NEW_LINK = `${GITHUB_LINK}/issues/new`
-export const DEFAULT_COMPILER_PATH = `Papyrus Compiler${
-  is.linux || is.macos ? '/' : '\\'
-}PapyrusCompiler.exe`
+export const DEFAULT_COMPILER_PATH = join(
+  'Papyrus Compiler',
+  'PapyrusCompiler.exe',
+)

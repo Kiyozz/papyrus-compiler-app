@@ -11,6 +11,7 @@ export enum IpcEvent {
   checkInstallation = 'event-check-installation',
   configUpdate = 'event-config-update',
   configGet = 'event-config-get',
+  configReset = 'event-config-reset',
   clipboardCopy = 'event-clipboard-copy',
   appError = 'event-error',
   openDialog = 'event-open-dialog',
