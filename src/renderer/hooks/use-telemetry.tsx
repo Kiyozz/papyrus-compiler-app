@@ -14,7 +14,7 @@ import bridge from '../bridge'
 import { Env } from '../env'
 import { useApp } from './use-app'
 
-interface TelemetryContextInterface {
+type _TelemetryContext = {
   send: <E extends TelemetryEvents>(
     event: E,
     properties: TelemetryEventsProperties[E],
@@ -22,14 +22,9 @@ interface TelemetryContextInterface {
   setActive: (active: boolean) => void
 }
 
-const TelemetryContext = createContext({} as TelemetryContextInterface)
+const _Context = createContext({} as _TelemetryContext)
 
-export const useTelemetry = (): TelemetryContextInterface =>
-  useContext(TelemetryContext)
-
-export function TelemetryProvider({
-  children,
-}: React.PropsWithChildren<unknown>): JSX.Element {
+const TelemetryProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const { config } = useApp()
   const sendTelemetry = useCallback(
     (
@@ -47,8 +42,14 @@ export function TelemetryProvider({
   }, [])
 
   return (
-    <TelemetryContext.Provider value={{ send: sendTelemetry, setActive }}>
+    <_Context.Provider value={{ send: sendTelemetry, setActive }}>
       {children}
-    </TelemetryContext.Provider>
+    </_Context.Provider>
   )
 }
+
+export const useTelemetry = (): _TelemetryContext => {
+  return useContext(_Context)
+}
+
+export default TelemetryProvider

@@ -17,24 +17,24 @@ import {
   toCompilerSourceFile,
   toExecutable,
 } from '../../../common/game'
-import { Alert } from '../../components/alert'
-import { DialogTextField } from '../../components/dialog/dialog-text-field'
+import Alert from '../../components/alert'
+import DialogTextField from '../../components/dialog/dialog-text-field'
 import { useApp } from '../../hooks/use-app'
-import { useSettings } from './settings-context'
+import { useSettings } from './use-settings'
 
-interface Props {
+type Props = {
   onClickRadio: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeGameFolder: (value: string) => void
   onChangeCompilerPath: (value: string) => void
   onClickRefreshInstallation: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-export function SettingsGame({
+const SettingsGame = ({
   onChangeGameFolder,
   onClickRadio,
   onChangeCompilerPath,
   onClickRefreshInstallation,
-}: Props): JSX.Element {
+}: Props) => {
   const { t } = useTranslation()
   const {
     config: { game, compilation },
@@ -142,3 +142,5 @@ export function SettingsGame({
     </div>
   )
 }
+
+export default SettingsGame

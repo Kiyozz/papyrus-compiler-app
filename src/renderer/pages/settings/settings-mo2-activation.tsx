@@ -15,7 +15,7 @@ interface Props {
   onChangeMo2: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export function SettingsMo2Activation({ onChangeMo2 }: Props): JSX.Element {
+const SettingsMo2Activation = ({ onChangeMo2 }: Props) => {
   const { t } = useTranslation()
   const {
     config: { mo2 },
@@ -37,3 +37,5 @@ export function SettingsMo2Activation({ onChangeMo2 }: Props): JSX.Element {
     />
   )
 }
+
+export default SettingsMo2Activation

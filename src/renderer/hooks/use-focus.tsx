@@ -6,15 +6,13 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-const FocusContext = createContext(true)
+type _FocusContext = boolean
+
+const _Context = createContext<_FocusContext>(true)
 
 const hasFocus = () => document.hasFocus()
 
-export const useFocus = (): boolean => useContext(FocusContext)
-
-export const FocusProvider = ({
-  children,
-}: React.PropsWithChildren<unknown>): JSX.Element => {
+const FocusProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const [isFocus, setFocus] = useState(hasFocus)
 
   useEffect(() => {
@@ -35,7 +33,9 @@ export const FocusProvider = ({
     }
   }, [])
 
-  return (
-    <FocusContext.Provider value={isFocus}>{children}</FocusContext.Provider>
-  )
+  return <_Context.Provider value={isFocus}>{children}</_Context.Provider>
 }
+
+export const useFocus = (): boolean => useContext(_Context)
+
+export default FocusProvider

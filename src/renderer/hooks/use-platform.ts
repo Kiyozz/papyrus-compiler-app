@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Platform } from '../../common/interfaces/platform'
+import { Platform } from '../../common/types/platform'
 import bridge from '../bridge'
 
 export const usePlatform = (): Platform => {

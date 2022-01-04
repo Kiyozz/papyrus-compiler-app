@@ -7,8 +7,8 @@
 import is from '@sindresorhus/is'
 
 import { GameType } from '../../../common/game'
-import type { Config } from '../../../common/interfaces/config'
 import { Theme } from '../../../common/theme'
+import type { Config } from '../../../common/types/config'
 import { DEFAULT_COMPILER_PATH } from '../../constants'
 import { join } from '../../path/path'
 import { validateGroup } from '../../validators/group.validator'

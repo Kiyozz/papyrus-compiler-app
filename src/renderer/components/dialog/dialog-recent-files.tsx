@@ -12,26 +12,27 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDidMount } from 'rooks'
 
-import { Script } from '../../../common/interfaces/script'
 import { shorten } from '../../../common/shorten'
 import { TelemetryEvents } from '../../../common/telemetry-events'
+import { Script } from '../../../common/types/script'
 import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
 import { useCompilation } from '../../hooks/use-compilation'
 import { useIpc } from '../../hooks/use-ipc'
 import { useRecentFiles } from '../../hooks/use-recent-files'
 import { useTelemetry } from '../../hooks/use-telemetry'
-import { scriptsToInterface } from '../../utils/scripts/scripts-to-interface'
-import uniqScripts from '../../utils/scripts/uniq-scripts'
-import { CloseReason, Dialog } from './dialog'
+import { scriptsToRenderer } from '../../utils/scripts/scripts-to-renderer'
+import { uniqScripts } from '../../utils/scripts/uniq-scripts'
+import Paper from '../paper'
+import Dialog, { CloseReason } from './dialog'
 
-interface Props {
+type Props = {
   isOpen: boolean
   onClose: () => void
   onSelectFile: (files: Script[]) => void
 }
 
-const DialogRecentFiles = ({ isOpen, onClose }: Props): JSX.Element => {
+const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
   const { t } = useTranslation()
   const { send } = useTelemetry()
   const { setScripts, scripts: loadedScripts } = useCompilation()
@@ -115,7 +116,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props): JSX.Element => {
     send(TelemetryEvents.recentFilesLoaded, {})
     setScripts(scripts =>
       uniqScripts(
-        scriptsToInterface(scripts, Array.from(selectedRecentFiles.values())),
+        scriptsToRenderer(scripts, Array.from(selectedRecentFiles.values())),
       ),
     )
     setSelectedRecentFiles(new Map())
@@ -166,7 +167,6 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props): JSX.Element => {
           send(TelemetryEvents.recentFileRemove, {})
           setSelectedRecentFiles(srf => {
             srf.delete(script.path)
-            console.log('delete', script, srf)
 
             return new Map(srf)
           })
@@ -297,7 +297,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props): JSX.Element => {
         </span>
       ) : (
         <div className="flex flex-col gap-2">
-          <div className="paper paper-darker">{processedList}</div>
+          <Paper darker>{processedList}</Paper>
         </div>
       )}
     </Dialog>

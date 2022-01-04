@@ -6,8 +6,8 @@
 
 import Store from 'electron-store'
 
-import { RecentFiles } from '../../../common/interfaces/recent-files'
-import { Script } from '../../../common/interfaces/script'
+import { RecentFiles } from '../../../common/types/recent-files'
+import { Script } from '../../../common/types/script'
 import { uniqArray } from '../../../common/uniq-array'
 
 const defaultRecentFiles: RecentFiles = {

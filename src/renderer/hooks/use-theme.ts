@@ -11,7 +11,7 @@ import { Theme } from '../../common/theme'
 import { useApp } from './use-app'
 import { useTelemetry } from './use-telemetry'
 
-export function useTheme(): [Theme, (theme: Theme) => void] {
+export const useTheme = (): [Theme, (theme: Theme) => void] => {
   const {
     setConfig,
     config: { theme },

@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron'
 
-import { WindowState } from '../../common/interfaces/window-state'
+import { WindowState } from '../../common/types/window-state'
 import { EventHandler } from '../interfaces/event-handler'
 import { IpcEvent } from '../ipc-event'
 

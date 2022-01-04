@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { Config } from '../../common/interfaces/config'
+import { Config } from '../../common/types/config'
 import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 import { settingsStore } from '../store/settings/store'

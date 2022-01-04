@@ -13,12 +13,12 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useDrawer } from '../hooks/use-drawer'
-import { ActiveLink } from './active-link'
+import ActiveLink from './active-link'
 import Fade from './animations/fade'
-import { NavItem } from './nav-item'
-import { OpenCompilationLogs } from './open-compilation-logs'
+import NavItem from './nav-item'
+import OpenCompilationLogs from './open-compilation-logs'
 
-export function PageDrawer(): JSX.Element {
+const PageDrawer = () => {
   const [isDrawerExpand, setDrawerExpand] = useDrawer()
   const { t } = useTranslation()
 
@@ -89,3 +89,5 @@ export function PageDrawer(): JSX.Element {
     </nav>
   )
 }
+
+export default PageDrawer

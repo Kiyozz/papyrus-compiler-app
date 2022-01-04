@@ -12,20 +12,20 @@ import React, {
   useState,
 } from 'react'
 
-type Context = [string, Dispatch<SetStateAction<string>>]
+type _VersionContext = [string, Dispatch<SetStateAction<string>>]
 
-const VersionContext = createContext(['', () => ''] as Context)
+const _Context = createContext(['', () => ''] as _VersionContext)
 
-export const useVersion = (): Context => useContext(VersionContext)
-
-export function VersionProvider({
-  children,
-}: React.PropsWithChildren<unknown>): JSX.Element {
+const VersionProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const [version, setVersion] = useState('')
 
   return (
-    <VersionContext.Provider value={[version, setVersion]}>
+    <_Context.Provider value={[version, setVersion]}>
       {children}
-    </VersionContext.Provider>
+    </_Context.Provider>
   )
 }
+
+export const useVersion = (): _VersionContext => useContext(_Context)
+
+export default VersionProvider

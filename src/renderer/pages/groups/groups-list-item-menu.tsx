@@ -23,11 +23,7 @@ interface Props {
   onDelete: () => void
 }
 
-export function GroupsListItemMenu({
-  className,
-  onDelete,
-  onEdit,
-}: Props): JSX.Element {
+const GroupsListItemMenu = ({ className, onDelete, onEdit }: Props) => {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const { send } = useTelemetry()
@@ -77,3 +73,5 @@ export function GroupsListItemMenu({
     </div>
   )
 }
+
+export default GroupsListItemMenu

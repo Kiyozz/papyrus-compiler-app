@@ -6,17 +6,17 @@
 
 import { useCallback, useEffect } from 'react'
 
-interface UseOnKeyUpOptions {
+type UseOnKeyUpOptions = {
   ctrl?: boolean
   shift?: boolean
   alt?: boolean
 }
 
-export function useOnKeyUp(
+export const useOnKeyUp = (
   key: string,
   action: () => void,
   options?: UseOnKeyUpOptions,
-): void {
+) => {
   const onKeyUp = useCallback(
     (e: KeyboardEvent) => {
       if (e.key !== key) {

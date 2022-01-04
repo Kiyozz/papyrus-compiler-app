@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-interface PluralizeOptions {
+type PluralizeOptions = {
   single?: string
   multiple?: string
 }

@@ -15,6 +15,7 @@ import {
 import { debugInfo, is } from 'electron-util'
 import { format } from 'url'
 
+import { version } from '../common/version'
 import { initialize } from './initialize'
 import { Logger } from './logger'
 import { join } from './path/path'
@@ -32,6 +33,7 @@ unhandled(() => {
 
 async function createWindow() {
   logger.info(debugInfo())
+  logger.info('public release: ', version)
 
   const isDev = is.development
 

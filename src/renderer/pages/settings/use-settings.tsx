@@ -12,25 +12,18 @@ import React, {
   useState,
 } from 'react'
 
-import { BadError } from '../../../common/interfaces/bad-error'
+import { BadError } from '../../../common/types/bad-error'
 import bridge from '../../bridge'
 
-interface StateProps {
+type _SettingsContext = {
   isBadInstallation: BadError
   checkInstallation: () => void
   resetBadInstallation: () => void
 }
 
-type SettingsContextInterface = StateProps
+const _Context = createContext({} as _SettingsContext)
 
-const SettingsContext = createContext({} as SettingsContextInterface)
-
-export const useSettings = (): SettingsContextInterface =>
-  useContext(SettingsContext)
-
-export function SettingsProvider({
-  children,
-}: React.PropsWithChildren<unknown>): JSX.Element {
+const SettingsProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const [isBadInstallation, setBadInstallation] = useState<BadError>(false)
 
   const detectBadInstallation = useCallback(async () => {
@@ -41,7 +34,7 @@ export function SettingsProvider({
 
   const resetBadInstallation = useCallback(() => setBadInstallation(false), [])
 
-  const value: SettingsContextInterface = useMemo(
+  const value: _SettingsContext = useMemo(
     () => ({
       isBadInstallation,
       checkInstallation: detectBadInstallation,
@@ -50,9 +43,11 @@ export function SettingsProvider({
     [detectBadInstallation, isBadInstallation, resetBadInstallation],
   )
 
-  return (
-    <SettingsContext.Provider value={value}>
-      {children}
-    </SettingsContext.Provider>
-  )
+  return <_Context.Provider value={value}>{children}</_Context.Provider>
 }
+
+export const useSettings = (): _SettingsContext => {
+  return useContext(_Context)
+}
+
+export default SettingsProvider

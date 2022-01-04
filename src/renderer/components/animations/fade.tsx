@@ -7,7 +7,7 @@
 import React, { memo, PropsWithChildren } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
-interface Props {
+type Props = {
   in: boolean
   timeout?: 100 | 150 | 200
 }
@@ -16,7 +16,7 @@ const Fade = ({
   in: on,
   timeout = 200,
   children,
-}: PropsWithChildren<Props>): JSX.Element => {
+}: PropsWithChildren<Props>) => {
   return (
     <CSSTransition
       in={on}

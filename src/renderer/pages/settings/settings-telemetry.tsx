@@ -13,7 +13,7 @@ import { TelemetryEvents } from '../../../common/telemetry-events'
 import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
 
-export function SettingsTelemetry(): JSX.Element {
+const SettingsTelemetry = () => {
   const { t } = useTranslation()
   const {
     config: { telemetry },
@@ -58,3 +58,5 @@ export function SettingsTelemetry(): JSX.Element {
     </div>
   )
 }
+
+export default SettingsTelemetry

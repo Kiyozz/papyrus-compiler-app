@@ -5,10 +5,8 @@
  */
 
 import { uniqArray } from '../../../common/uniq-array'
-import { ScriptInterface } from '../../interfaces'
+import { ScriptRenderer } from '../../types'
 
-export default function uniqScripts(
-  scripts: ScriptInterface[],
-): ScriptInterface[] {
+export const uniqScripts = (scripts: ScriptRenderer[]): ScriptRenderer[] => {
   return uniqArray(scripts, ['name'])
 }

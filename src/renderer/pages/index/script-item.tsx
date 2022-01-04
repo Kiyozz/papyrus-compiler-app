@@ -8,21 +8,18 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
 import React, { useCallback } from 'react'
 
 import { useCompilation } from '../../hooks/use-compilation'
-import { ScriptInterface } from '../../interfaces'
+import { ScriptRenderer } from '../../types'
 import {
   getClassNameFromStatus,
   getIconFromStatus,
 } from '../../utils/scripts/from-status'
 
 interface Props {
-  script: ScriptInterface
-  onClickRemoveScript: (script: ScriptInterface) => void
+  script: ScriptRenderer
+  onClickRemoveScript: (script: ScriptRenderer) => void
 }
 
-export function ScriptItem({
-  script,
-  onClickRemoveScript,
-}: Props): JSX.Element {
+const ScriptItem = ({ script, onClickRemoveScript }: Props) => {
   const { isRunning } = useCompilation()
   const onClickRemove = useCallback(() => {
     onClickRemoveScript(script)
@@ -54,3 +51,5 @@ export function ScriptItem({
     </div>
   )
 }
+
+export default ScriptItem

@@ -4,7 +4,9 @@
  * All rights reserved.
  */
 
-function deepChildren(element?: HTMLElement | ChildNode | null): ChildNode[] {
+const getDeepChildren = (
+  element?: HTMLElement | ChildNode | null,
+): ChildNode[] => {
   if (element === undefined || element === null) {
     return []
   }
@@ -15,7 +17,7 @@ function deepChildren(element?: HTMLElement | ChildNode | null): ChildNode[] {
     let childNotesDeep: ChildNode[] = []
 
     for (const child of children) {
-      childNotesDeep = [...childNotesDeep, ...deepChildren(child)]
+      childNotesDeep = [...childNotesDeep, ...getDeepChildren(child)]
     }
 
     children = [...children, ...childNotesDeep]
@@ -24,13 +26,13 @@ function deepChildren(element?: HTMLElement | ChildNode | null): ChildNode[] {
   return children
 }
 
-export function isChildren(
+export const isChildren = (
   from: HTMLElement | ChildNode | undefined | null,
   child: HTMLElement | null,
-): boolean {
+) => {
   if (child === null) {
     return false
   }
 
-  return deepChildren(from).includes(child)
+  return getDeepChildren(from).includes(child)
 }

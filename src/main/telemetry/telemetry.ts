@@ -14,7 +14,7 @@ import {
 } from '../../common/telemetry-events'
 import { Logger } from '../logger'
 
-interface Params<E extends TelemetryEvents> {
+type Params<E extends TelemetryEvents> = {
   name: E
   properties: TelemetryEventsProperties[E]
 }

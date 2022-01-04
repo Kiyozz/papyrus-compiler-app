@@ -9,7 +9,7 @@ import bridge from '../bridge'
 let isProductionRegistered = false
 let isProductionSaved = false
 
-export function isProduction(): Promise<boolean> {
+export const isProduction = (): Promise<boolean> => {
   if (isProductionRegistered) {
     return Promise.resolve(isProductionSaved)
   }

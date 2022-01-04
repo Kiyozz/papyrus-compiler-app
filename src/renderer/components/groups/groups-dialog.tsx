@@ -13,31 +13,32 @@ import { useTranslation } from 'react-i18next'
 import { TelemetryEvents } from '../../../common/telemetry-events'
 import { useDrop, useSetDrop } from '../../hooks/use-drop'
 import { useTelemetry } from '../../hooks/use-telemetry'
-import { GroupInterface, ScriptInterface } from '../../interfaces'
+import { GroupRenderer, ScriptRenderer } from '../../types'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
-import uniqScripts from '../../utils/scripts/uniq-scripts'
-import { CloseReason, Dialog } from '../dialog/dialog'
-import { TextField } from '../text-field'
-import { GroupsDialogList } from './groups-dialog-list'
+import { uniqScripts } from '../../utils/scripts/uniq-scripts'
+import Dialog, { CloseReason } from '../dialog/dialog'
+import Paper from '../paper'
+import TextField from '../text-field'
+import GroupsDialogList from './groups-dialog-list'
 
-interface Props {
-  onGroupAdd: (group: GroupInterface) => void
-  onGroupEdit: (lastGroupName: string, group: GroupInterface) => void
+type Props = {
+  onGroupAdd: (group: GroupRenderer) => void
+  onGroupEdit: (lastGroupName: string, group: GroupRenderer) => void
   onClose: () => void
-  group?: GroupInterface
+  group?: GroupRenderer
   open: boolean
 }
 
-export function GroupsDialog({
+const GroupsDialog = ({
   onGroupAdd,
   onGroupEdit,
   open,
   onClose,
   group,
-}: Props): JSX.Element {
+}: Props) => {
   const { t } = useTranslation()
   const [name, setName] = useState('')
-  const [scripts, setScripts] = useState<ScriptInterface[]>([])
+  const [scripts, setScripts] = useState<ScriptRenderer[]>([])
   const [isEdit, setEdit] = useState(false)
   const { send } = useTelemetry()
   const { drop } = useDrop()
@@ -96,16 +97,13 @@ export function GroupsDialog({
     }
   }, [open, group])
 
-  const onClickRemoveScriptFromGroup = useCallback(
-    (script: ScriptInterface) => {
-      return () => {
-        setScripts(s =>
-          s.filter(scriptFromList => scriptFromList.name !== script.name),
-        )
-      }
-    },
-    [],
-  )
+  const onClickRemoveScriptFromGroup = useCallback((script: ScriptRenderer) => {
+    return () => {
+      setScripts(s =>
+        s.filter(scriptFromList => scriptFromList.name !== script.name),
+      )
+    }
+  }, [])
 
   const onChangeName = useCallback((e: string | number) => {
     if (is.string(e)) {
@@ -177,9 +175,10 @@ export function GroupsDialog({
         value={name}
         onChange={onChangeName}
       />
-      <div
+      <Paper
+        darker
         className={cx(
-          'paper paper-darker overflow-overlay mt-4 outline-none h-full',
+          'overflow-overlay mt-4 outline-none h-full',
           scripts.length === 0 && 'flex justify-center items-center',
         )}
       >
@@ -193,7 +192,9 @@ export function GroupsDialog({
             {t('page.groups.dialog.dropScripts')}
           </p>
         )}
-      </div>
+      </Paper>
     </Dialog>
   )
 }
+
+export default GroupsDialog

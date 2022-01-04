@@ -14,7 +14,7 @@ import * as path from '../path/path'
 import { toAntiSlash, toSlash } from '../slash'
 import { settingsStore } from '../store/settings/store'
 
-interface GenerateImportsOptions {
+type GenerateImportsOptions = {
   gameType: GameType
   mo2: {
     instance: string

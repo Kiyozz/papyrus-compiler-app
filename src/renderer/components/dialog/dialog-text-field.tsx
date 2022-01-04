@@ -10,12 +10,12 @@ import is from '@sindresorhus/is'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { DialogType } from '../../../common/interfaces/dialog'
+import { DialogType } from '../../../common/types/dialog'
 import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
-import { TextField } from '../text-field'
+import TextField from '../text-field'
 
-export interface Props {
+type Props = {
   id: string
   className?: string
   error?: boolean
@@ -25,14 +25,14 @@ export interface Props {
   type: DialogType
 }
 
-export function DialogTextField({
+const DialogTextField = ({
   error = false,
   id,
   label,
   defaultValue,
   onChange,
   type,
-}: Props): JSX.Element {
+}: Props) => {
   const { onRefreshConfig } = useApp()
   const { t } = useTranslation()
   const [value, setValue] = useState(defaultValue)
@@ -104,3 +104,5 @@ export function DialogTextField({
     />
   )
 }
+
+export default DialogTextField

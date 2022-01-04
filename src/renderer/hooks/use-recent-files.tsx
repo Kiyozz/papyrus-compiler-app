@@ -14,10 +14,10 @@ import React, {
 } from 'react'
 import { Observable, Subject } from 'rxjs'
 
-import { Script } from '../../common/interfaces/script'
+import { Script } from '../../common/types/script'
 import bridge from '../bridge'
 
-interface _RecentFilesContext {
+type _RecentFilesContext = {
   recentFiles: Script[]
   onRecentFilesChanges: Observable<Script[]>
   setRecentFiles(scripts: Script[]): Promise<void>
@@ -29,11 +29,9 @@ const _Context = createContext({} as _RecentFilesContext)
 const _recentFiles$ = new Subject<Script[]>()
 const _onRecentFilesChanges = _recentFiles$.asObservable()
 
-export const useRecentFiles = (): _RecentFilesContext => useContext(_Context)
-
-export function RecentFilesProvider({
+const RecentFilesProvider = ({
   children,
-}: React.PropsWithChildren<unknown>): JSX.Element {
+}: React.PropsWithChildren<unknown>) => {
   const [recentFiles, setRecentFilesMemory] = useState<Script[]>([])
 
   useEffect(() => {
@@ -81,3 +79,7 @@ export function RecentFilesProvider({
 
   return <_Context.Provider value={value}>{children}</_Context.Provider>
 }
+
+export const useRecentFiles = (): _RecentFilesContext => useContext(_Context)
+
+export default RecentFilesProvider

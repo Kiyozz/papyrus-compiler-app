@@ -11,23 +11,23 @@ import { initReactI18next } from 'react-i18next'
 import en from './en'
 import fr from './fr'
 
-// noinspection JSIgnoredPromiseFromCall
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    resources: {
-      en: {
-        translation: { ...en },
+export const loadTranslations = () => {
+  // noinspection JSIgnoredPromiseFromCall
+  i18n
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    .init({
+      resources: {
+        en: {
+          translation: { ...en },
+        },
+        fr: {
+          translation: { ...fr },
+        },
       },
-      fr: {
-        translation: { ...fr },
+      fallbackLng: 'en',
+      interpolation: {
+        escapeValue: false,
       },
-    },
-    fallbackLng: 'en',
-    interpolation: {
-      escapeValue: false,
-    },
-  })
-
-export default i18n
+    })
+}

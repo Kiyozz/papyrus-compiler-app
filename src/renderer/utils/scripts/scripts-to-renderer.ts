@@ -4,15 +4,15 @@
  * All rights reserved.
  */
 
-import { Script } from '../../../common/interfaces/script'
+import { Script } from '../../../common/types/script'
 import { ScriptStatus } from '../../enums/script-status.enum'
-import { ScriptInterface } from '../../interfaces'
-import reorderScripts from './reorder-scripts'
+import { ScriptRenderer } from '../../types'
+import { reorderScripts } from './reorder-scripts'
 
-export function scriptsToInterface(
-  interfaces: ScriptInterface[],
+export const scriptsToRenderer = (
+  interfaces: ScriptRenderer[],
   scripts: Script[],
-): ScriptInterface[] {
+): ScriptRenderer[] => {
   return reorderScripts([
     ...interfaces,
     ...scripts.map(
@@ -21,7 +21,7 @@ export function scriptsToInterface(
           ...s,
           id: 1,
           status: ScriptStatus.idle,
-        } as ScriptInterface),
+        } as ScriptRenderer),
     ),
   ])
 }

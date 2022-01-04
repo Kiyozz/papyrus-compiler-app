@@ -6,10 +6,10 @@
 
 import { dialog } from 'electron'
 
-import { DialogType } from '../../common/interfaces/dialog'
+import { DialogType } from '../../common/types/dialog'
 import { EventHandler } from '../interfaces/event-handler'
 
-interface DialogHandlerArgs {
+type DialogHandlerArgs = {
   type: DialogType
 }
 

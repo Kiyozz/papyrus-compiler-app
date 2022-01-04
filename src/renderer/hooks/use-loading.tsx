@@ -6,7 +6,7 @@
 
 import React, { createContext, useContext, useState } from 'react'
 
-interface LoadingContextInterface {
+type LoadingContextInterface = {
   isLoading: boolean
   setLoading: (loading: boolean) => void
 }
@@ -15,13 +15,7 @@ const LoadingContext = createContext<LoadingContextInterface>({
   isLoading: false,
 } as LoadingContextInterface)
 
-export function useLoading(): LoadingContextInterface {
-  return useContext(LoadingContext)
-}
-
-export function LoadingProvider({
-  children,
-}: React.PropsWithChildren<unknown>): JSX.Element {
+const LoadingProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const [isLoading, setLoading] = useState(false)
 
   return (
@@ -30,3 +24,9 @@ export function LoadingProvider({
     </LoadingContext.Provider>
   )
 }
+
+export const useLoading = (): LoadingContextInterface => {
+  return useContext(LoadingContext)
+}
+
+export default LoadingProvider

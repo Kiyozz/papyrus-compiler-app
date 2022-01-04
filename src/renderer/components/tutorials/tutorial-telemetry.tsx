@@ -10,7 +10,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useApp } from '../../hooks/use-app'
 import { useFocus } from '../../hooks/use-focus'
 
-export function TutorialTelemetry(): JSX.Element {
+const TutorialTelemetry = () => {
   const { setConfig } = useApp()
   const isFocus = useFocus()
   const { t } = useTranslation()
@@ -54,3 +54,5 @@ export function TutorialTelemetry(): JSX.Element {
     </div>
   )
 }
+
+export default TutorialTelemetry

@@ -167,10 +167,6 @@ body {
   @apply bg-light-700 dark:bg-darker;
 }
 
-.paper.p-0 {
-  @apply p-0;
-}
-
 .changelog-container ul {
   @apply pl-4 list-disc;
 }

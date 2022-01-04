@@ -4,16 +4,16 @@
  * All rights reserved.
  */
 
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { useFocus } from '../hooks/use-focus'
 
-interface Props {
+type Props = {
   title?: string
-  actions?: JSX.Element[]
+  actions?: ReactNode[]
 }
 
-export function PageAppBar({ title, actions = [] }: Props): JSX.Element {
+const PageAppBar = ({ title, actions = [] }: Props) => {
   const isFocus = useFocus()
 
   return (
@@ -35,3 +35,5 @@ export function PageAppBar({ title, actions = [] }: Props): JSX.Element {
     </div>
   )
 }
+
+export default PageAppBar

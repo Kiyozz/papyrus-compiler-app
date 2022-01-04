@@ -11,19 +11,19 @@ import { useTranslation } from 'react-i18next'
 
 import { GameType } from '../../../common/game'
 import { TelemetryEvents } from '../../../common/telemetry-events'
-import { Page } from '../../components/page'
-import { PageAppBar } from '../../components/page-app-bar'
+import Page from '../../components/page'
+import PageAppBar from '../../components/page-app-bar'
 import { useApp } from '../../hooks/use-app'
 import { useLoading } from '../../hooks/use-loading'
 import { useTelemetry } from '../../hooks/use-telemetry'
-import { SettingsCompilation } from './settings-compilation'
-import { useSettings } from './settings-context'
-import { SettingsGame } from './settings-game'
-import { SettingsMo2 } from './settings-mo2'
-import { SettingsTelemetry } from './settings-telemetry'
-import { SettingsTheme } from './settings-theme'
+import SettingsCompilation from './settings-compilation'
+import SettingsGame from './settings-game'
+import SettingsMo2 from './settings-mo2'
+import SettingsTelemetry from './settings-telemetry'
+import SettingsTheme from './settings-theme'
+import { useSettings } from './use-settings'
 
-export function Settings(): JSX.Element {
+const Settings = () => {
   const { t } = useTranslation()
   const {
     config: {
@@ -213,3 +213,5 @@ export function Settings(): JSX.Element {
     </>
   )
 }
+
+export default Settings

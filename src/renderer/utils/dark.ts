@@ -6,16 +6,16 @@
 
 type Unsubscribe = () => void
 
-export function isDark(): boolean {
+export const isDark = () => {
   return window.matchMedia('(prefers-color-scheme: dark)').matches
 }
 
-export function onDarkPreferenceChanges(
+export const onDarkPreferenceChanges = (
   onChange: (isDark: boolean) => void,
-): Unsubscribe {
+): Unsubscribe => {
   const media = window.matchMedia('(prefers-color-scheme: dark)')
 
-  function onChangeInternal(e: MediaQueryListEvent) {
+  const onChangeInternal = (e: MediaQueryListEvent) => {
     onChange(e.matches)
   }
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { WindowState } from '../../common/interfaces/window-state'
+import { WindowState } from '../../common/types/window-state'
 import bridge from '../bridge'
 
 export const useWindowState = (): WindowState => {

@@ -15,8 +15,8 @@ import { Env } from '../../env'
 import { useApp } from '../../hooks/use-app'
 import { useInitialization } from '../../hooks/use-initialization'
 import { useOnKeyUp } from '../../hooks/use-on-key-up'
-import { Toast } from '../toast'
-import { Dialog } from './dialog'
+import Toast from '../toast'
+import Dialog from './dialog'
 
 const Img: Components['img'] = ({ src, alt, ...props }) => {
   const newSrc = src?.startsWith('docs')
@@ -26,10 +26,10 @@ const Img: Components['img'] = ({ src, alt, ...props }) => {
   return <img src={newSrc} alt={alt} {...props} />
 }
 
-function Anchor({
+const Anchor = ({
   children,
   href,
-}: React.PropsWithChildren<React.HTMLProps<HTMLAnchorElement>>) {
+}: React.PropsWithChildren<React.HTMLProps<HTMLAnchorElement>>) => {
   const onClick = () => {
     if (href) {
       bridge.shell.openExternal(href)
@@ -39,31 +39,31 @@ function Anchor({
   return <a onClick={onClick}>{children}</a>
 }
 
-function HeadingOne({ children }: React.PropsWithChildren<unknown>) {
-  return <h1 className="mb-2 text-4xl">{children}</h1>
-}
+const HeadingOne = ({ children }: React.PropsWithChildren<unknown>) => (
+  <h1 className="mb-2 text-4xl">{children}</h1>
+)
 
-function HeadingTwo({ children }: React.PropsWithChildren<unknown>) {
-  return <h6 className="mb-2 text-2xl">{children}</h6>
-}
+const HeadingTwo = ({ children }: React.PropsWithChildren<unknown>) => (
+  <h6 className="mb-2 text-2xl">{children}</h6>
+)
 
-function HeadingFive({ children }: React.PropsWithChildren<unknown>) {
-  return <h5 className="mb-2 text-xl">{children}</h5>
-}
+const HeadingFive = ({ children }: React.PropsWithChildren<unknown>) => (
+  <h5 className="mb-2 text-xl">{children}</h5>
+)
 
-function HeadingThree({ children }: React.PropsWithChildren<unknown>) {
-  return <h3 className="mb-2 text-xl">{children}</h3>
-}
+const HeadingThree = ({ children }: React.PropsWithChildren<unknown>) => (
+  <h3 className="mb-2 text-xl">{children}</h3>
+)
 
-function Paragraph({ children }: React.PropsWithChildren<unknown>) {
-  return <p className="text-sm">{children}</p>
-}
+const Paragraph = ({ children }: React.PropsWithChildren<unknown>) => (
+  <p className="text-sm">{children}</p>
+)
 
-function Code({ children }: { children: React.ReactNode[] }) {
-  return <code className="dark:bg-gray-800 markdown-code">{children}</code>
-}
+const Code = ({ children }: { children: React.ReactNode[] }) => (
+  <code className="dark:bg-gray-800 markdown-code">{children}</code>
+)
 
-export function DialogChangelog(): JSX.Element {
+const DialogChangelog = () => {
   const { t } = useTranslation()
   const {
     isShowChangelog,
@@ -158,3 +158,5 @@ export function DialogChangelog(): JSX.Element {
     </>
   )
 }
+
+export default DialogChangelog

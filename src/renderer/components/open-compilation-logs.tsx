@@ -13,18 +13,18 @@ import { useApp } from '../hooks/use-app'
 import { useCompilation } from '../hooks/use-compilation'
 import { useDrawer } from '../hooks/use-drawer'
 import { useTelemetry } from '../hooks/use-telemetry'
-import { ScriptInterface } from '../interfaces'
+import { ScriptRenderer } from '../types'
 import Fade from './animations/fade'
-import { Dialog } from './dialog/dialog'
-import { NavItem } from './nav-item'
+import Dialog from './dialog/dialog'
+import NavItem from './nav-item'
 
-export function LogsListItem({
+const LogsListItem = ({
   script,
   logs,
 }: {
-  script: ScriptInterface
+  script: ScriptRenderer
   logs: string
-}): JSX.Element {
+}) => {
   const { copyToClipboard } = useApp()
   const { send } = useTelemetry()
   const onClickCopyLogs = () => {
@@ -51,7 +51,7 @@ export function LogsListItem({
   )
 }
 
-export function OpenCompilationLogs(): JSX.Element {
+const OpenCompilationLogs = () => {
   const { t } = useTranslation()
   const [isDrawerExpand] = useDrawer()
   const { logs } = useCompilation()
@@ -97,3 +97,5 @@ export function OpenCompilationLogs(): JSX.Element {
     </>
   )
 }
+
+export default OpenCompilationLogs

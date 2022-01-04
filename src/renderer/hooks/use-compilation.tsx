@@ -12,29 +12,31 @@ import React, {
   useState,
 } from 'react'
 
-import { CompilationResult } from '../../common/interfaces/compilation-result'
+import { CompilationResult } from '../../common/types/compilation-result'
 import bridge from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
-import { ScriptInterface } from '../interfaces'
+import { ScriptRenderer } from '../types'
 import { chunk } from '../utils/chunk'
 import { useApp } from './use-app'
 
-interface StartOptions {
-  scripts: ScriptInterface[]
+type StartOptions = {
+  scripts: ScriptRenderer[]
 }
 
-interface CompilationContextInterface {
+type _CompilationContext = {
   start: (options: StartOptions) => void
   isRunning: boolean
-  scripts: ScriptInterface[]
+  scripts: ScriptRenderer[]
   concurrentScripts: number
-  logs: [ScriptInterface, string][]
-  setScripts: (fn: (scripts: ScriptInterface[]) => ScriptInterface[]) => void
+  logs: [ScriptRenderer, string][]
+  setScripts: (fn: (scripts: ScriptRenderer[]) => ScriptRenderer[]) => void
 }
 
-const CompilationContext = createContext({} as CompilationContextInterface)
+const _Context = createContext({} as _CompilationContext)
 
-function whenCompileScriptFinish(script: string): Promise<CompilationResult> {
+const whenCompileScriptFinish = (
+  script: string,
+): Promise<CompilationResult> => {
   return new Promise<CompilationResult>((resolve, reject) => {
     bridge.compilation.onceFinish(script, result => {
       if (result.success) {
@@ -46,19 +48,15 @@ function whenCompileScriptFinish(script: string): Promise<CompilationResult> {
   })
 }
 
-export function useCompilation(): CompilationContextInterface {
-  return useContext(CompilationContext)
-}
-
-export function CompilationProvider({
+const CompilationProvider = ({
   children,
-}: React.PropsWithChildren<unknown>): JSX.Element {
+}: React.PropsWithChildren<unknown>) => {
   const [isRunning, setRunning] = useState(false)
   const [compilationScripts, setCompilationScripts] = useState<
-    ScriptInterface[]
+    ScriptRenderer[]
   >([])
   const [compilationLogs, setCompilationLogs] = useState<
-    [ScriptInterface, string][]
+    [ScriptRenderer, string][]
   >([])
   const { config } = useApp()
   const concurrentScripts = useMemo(
@@ -78,8 +76,8 @@ export function CompilationProvider({
       const scriptsOfScripts = chunk(scripts, concurrentScripts)
 
       for (const partialScripts of scriptsOfScripts) {
-        setCompilationScripts((cs: ScriptInterface[]) => {
-          return cs.map((s: ScriptInterface) => {
+        setCompilationScripts((cs: ScriptRenderer[]) => {
+          return cs.map((s: ScriptRenderer) => {
             const found = partialScripts.find(ps => ps.id === s.id)
 
             if (!found) {
@@ -97,13 +95,13 @@ export function CompilationProvider({
         }
 
         await Promise.all(
-          partialScripts.map(async (s: ScriptInterface) => {
+          partialScripts.map(async (s: ScriptRenderer) => {
             try {
               const result: CompilationResult = await whenCompileScriptFinish(
                 s.name,
               )
 
-              setCompilationScripts((cs: ScriptInterface[]) => {
+              setCompilationScripts((cs: ScriptRenderer[]) => {
                 const found = cs.findIndex(incs => incs.id === s.id)
 
                 if (found === -1) {
@@ -129,7 +127,7 @@ export function CompilationProvider({
                 errorMessage = `unknown error ${e}`
               }
 
-              setCompilationScripts((cs: ScriptInterface[]) => {
+              setCompilationScripts((cs: ScriptRenderer[]) => {
                 const found = cs.findIndex(incs => incs.id === s.id)
 
                 if (found === -1) {
@@ -155,7 +153,7 @@ export function CompilationProvider({
   )
 
   return (
-    <CompilationContext.Provider
+    <_Context.Provider
       value={{
         start,
         isRunning,
@@ -166,6 +164,12 @@ export function CompilationProvider({
       }}
     >
       {children}
-    </CompilationContext.Provider>
+    </_Context.Provider>
   )
 }
+
+export const useCompilation = (): _CompilationContext => {
+  return useContext(_Context)
+}
+
+export default CompilationProvider
