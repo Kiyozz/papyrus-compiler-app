@@ -5,7 +5,7 @@
  */
 
 import cx from 'classnames'
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { ReactNode, useCallback, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 import { useDocumentClick } from '../../hooks/use-document-click'
@@ -16,8 +16,8 @@ type DialogProps = {
   open: boolean
   maxWidth?: number
   onClose?: (reason: CloseReason) => void
-  actions?
-  title?
+  actions?: ReactNode
+  title?: ReactNode
   content?: (props: React.PropsWithChildren<unknown>) => JSX.Element
   contentClassNames?: {
     content?: string
