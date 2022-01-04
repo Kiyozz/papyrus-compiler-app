@@ -10,9 +10,9 @@ import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty'
 import React from 'react'
 
 import { ScriptStatus } from '../../enums/script-status.enum'
-import { ScriptInterface } from '../../interfaces'
+import { ScriptRenderer } from '../../types'
 
-export function getClassNameFromStatus(script: ScriptInterface): string {
+export const getClassNameFromStatus = (script: ScriptRenderer): string => {
   switch (script.status) {
     case ScriptStatus.idle:
       return 'text-black-600 dark:text-gray-500'
@@ -25,7 +25,7 @@ export function getClassNameFromStatus(script: ScriptInterface): string {
   }
 }
 
-export function getIconFromStatus(script: ScriptInterface): JSX.Element {
+export const getIconFromStatus = (script: ScriptRenderer) => {
   switch (script.status) {
     case ScriptStatus.idle:
       return <></>

@@ -9,7 +9,7 @@ import { clipboard } from 'electron'
 import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 
-interface Entry {
+type Entry = {
   text: string
 }
 

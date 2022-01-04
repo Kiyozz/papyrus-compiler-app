@@ -6,10 +6,10 @@
 
 import { useCallback, useEffect } from 'react'
 
-export function useDocumentClick(
+export const useDocumentClick = (
   cb: () => void,
   check: (clicked: HTMLElement | null) => boolean,
-): void {
+): void => {
   const onClickOut = useCallback(
     (e: MouseEvent) => {
       const target = e.target as HTMLElement | null

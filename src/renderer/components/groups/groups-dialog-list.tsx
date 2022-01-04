@@ -7,37 +7,34 @@
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
 import React from 'react'
 
-import { ScriptInterface } from '../../interfaces'
+import { ScriptRenderer } from '../../types'
 
-interface Props {
-  scripts: ScriptInterface[]
+type Props = {
+  scripts: ScriptRenderer[]
   onClickRemoveScriptFromGroup: (
-    script: ScriptInterface,
+    script: ScriptRenderer,
   ) => (e: React.MouseEvent) => void
 }
 
-export function GroupsDialogList({
-  scripts,
-  onClickRemoveScriptFromGroup,
-}: Props): JSX.Element {
-  return (
-    <ul className="flex flex-col flex-grow">
-      {scripts.map(script => (
-        <li
-          className="flex items-center dark:text-white text-sm"
-          key={script.name}
+const GroupsDialogList = ({ scripts, onClickRemoveScriptFromGroup }: Props) => (
+  <ul className="flex flex-col flex-grow">
+    {scripts.map(script => (
+      <li
+        className="flex items-center dark:text-white text-sm"
+        key={script.name}
+      >
+        <div className="w-full">{script.name}</div>
+        <button
+          className="btn-icon btn-danger !p-0.5"
+          type="button"
+          aria-label="delete"
+          onClick={onClickRemoveScriptFromGroup(script)}
         >
-          <div className="w-full">{script.name}</div>
-          <button
-            className="btn-icon btn-danger !p-0.5"
-            type="button"
-            aria-label="delete"
-            onClick={onClickRemoveScriptFromGroup(script)}
-          >
-            <DeleteOutlinedIcon color="error" fontSize="small" />
-          </button>
-        </li>
-      ))}
-    </ul>
-  )
-}
+          <DeleteOutlinedIcon color="error" fontSize="small" />
+        </button>
+      </li>
+    ))}
+  </ul>
+)
+
+export default GroupsDialogList

@@ -6,13 +6,13 @@
 
 import { contextBridge, IpcRendererEvent, shell } from 'electron'
 
-import { BadError } from '../common/interfaces/bad-error'
-import { Bridge } from '../common/interfaces/bridge'
-import { CompilationResult } from '../common/interfaces/compilation-result'
-import { Config } from '../common/interfaces/config'
-import { Disposable } from '../common/interfaces/disposable'
-import { Script } from '../common/interfaces/script'
-import { WindowState } from '../common/interfaces/window-state'
+import { BadError } from '../common/types/bad-error'
+import { Bridge } from '../common/types/bridge'
+import { CompilationResult } from '../common/types/compilation-result'
+import { Config } from '../common/types/config'
+import { Disposable } from '../common/types/disposable'
+import { Script } from '../common/types/script'
+import { WindowState } from '../common/types/window-state'
 import { ipcRenderer } from './ipc'
 import { IpcEvent } from './ipc-event'
 

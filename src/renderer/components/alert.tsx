@@ -6,12 +6,10 @@
 
 import React from 'react'
 
-export function Alert({
-  children,
-}: React.PropsWithChildren<unknown>): JSX.Element {
-  return (
-    <div className="text-red-700 dark:text-red-400 mt-3 text-sm flex gap-2 p-2 items-center">
-      {children}
-    </div>
-  )
-}
+const Alert = ({ children }: React.PropsWithChildren<unknown>) => (
+  <div className="text-red-700 dark:text-red-400 mt-3 text-sm flex gap-2 p-2 items-center">
+    {children}
+  </div>
+)
+
+export default Alert

@@ -8,24 +8,24 @@ import cx from 'classnames'
 import React from 'react'
 import { useDropzone } from 'react-dropzone'
 
-interface RenderChildren {
+type RenderChildren = {
   isDragActive: boolean
   open: () => void
 }
 
-interface Props {
+type Props = {
   className?: string
-  onDrop?: OnDropFunction
+  onDrop?: OnDrop
   children: (renderProps: RenderChildren) => React.ReactNode
 }
 
-export type OnDropFunction = ((files: File[]) => void) | null
+type OnDrop = ((files: File[]) => void) | null
 
-export function DropScripts({
+const DropScripts = ({
   onDrop,
   className,
   children,
-}: React.PropsWithChildren<Props>): JSX.Element {
+}: React.PropsWithChildren<Props>) => {
   const { getRootProps, isDragActive, getInputProps, open } = useDropzone({
     onDrop: files => onDrop?.(files),
     accept: '.psc',
@@ -41,3 +41,7 @@ export function DropScripts({
     </div>
   )
 }
+
+export type { OnDrop }
+
+export default DropScripts

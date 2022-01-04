@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { Theme } from '../../../common/theme'
 import { useTheme } from '../../hooks/use-theme'
 
-export function SettingsTheme(): JSX.Element {
+const SettingsTheme = () => {
   const { t } = useTranslation()
   const [theme, setTheme] = useTheme()
 
@@ -63,3 +63,5 @@ export function SettingsTheme(): JSX.Element {
     </div>
   )
 }
+
+export default SettingsTheme

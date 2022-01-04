@@ -5,5 +5,5 @@
  */
 
 export * from './group'
-export * from './script.interface'
+export * from './script-renderer'
 export * from './github-release'

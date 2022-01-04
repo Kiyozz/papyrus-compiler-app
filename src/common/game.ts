@@ -29,7 +29,7 @@ export enum GameType {
   fo4 = 'Fallout 4',
 }
 
-export function toSource(game: GameType): GameSource {
+export const toSource = (game: GameType): GameSource => {
   switch (game) {
     case GameType.le:
     case GameType.fo4:
@@ -42,7 +42,7 @@ export function toSource(game: GameType): GameSource {
   }
 }
 
-export function toOtherSource(game: GameType): GameSource {
+export const toOtherSource = (game: GameType): GameSource => {
   switch (game) {
     case GameType.le:
     case GameType.fo4:
@@ -55,7 +55,7 @@ export function toOtherSource(game: GameType): GameSource {
   }
 }
 
-export function toExecutable(game: GameType): Executable {
+export const toExecutable = (game: GameType): Executable => {
   switch (game) {
     case GameType.le:
       return Executable.le
@@ -70,7 +70,7 @@ export function toExecutable(game: GameType): Executable {
   }
 }
 
-export function toCompilerSourceFile(game: GameType): CompilerSourceFile {
+export const toCompilerSourceFile = (game: GameType): CompilerSourceFile => {
   switch (game) {
     case GameType.fo4:
       return 'Base/Actor.psc'

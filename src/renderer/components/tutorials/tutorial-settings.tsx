@@ -7,7 +7,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { TelemetryEvents } from '../../../common/telemetry-events'
 import { useApp } from '../../hooks/use-app'
@@ -26,23 +26,17 @@ enum Step {
 
 type Next = () => void
 
-function getGameSettingsAnchor() {
-  return document.querySelector('#settings-game')
-}
+const getGameSettingsAnchor = () => document.querySelector('#settings-game')
 
-function getCompilerSettingsAnchor() {
-  return document.querySelector('#settings-compiler')
-}
+const getCompilerSettingsAnchor = () =>
+  document.querySelector('#settings-compiler')
 
-function getMo2SettingsAnchor() {
-  return document.querySelector('#settings-mo2')
-}
+const getMo2SettingsAnchor = () => document.querySelector('#settings-mo2')
 
-function getConcurrentSettingsAnchor() {
-  return document.querySelector('#compilation-concurrentScripts')
-}
+const getConcurrentSettingsAnchor = () =>
+  document.querySelector('#compilation-concurrentScripts')
 
-function GameSettingsStep({ next }: { next: Next }) {
+const GameSettingsStep = ({ next }: { next: Next }) => {
   const { t } = useTranslation()
   const [stepAnchor, setAnchor] = useState(getGameSettingsAnchor)
 
@@ -70,7 +64,7 @@ function GameSettingsStep({ next }: { next: Next }) {
   )
 }
 
-function CompilerSettingsStep({ next }: { next: Next }) {
+const CompilerSettingsStep = ({ next }: { next: Next }) => {
   const { t } = useTranslation()
   const stepAnchor = useMemo(() => getCompilerSettingsAnchor(), [])
   const onClickOk = () => next()
@@ -92,7 +86,7 @@ function CompilerSettingsStep({ next }: { next: Next }) {
   )
 }
 
-function Mo2SettingsStep({ next }: { next: Next }) {
+const Mo2SettingsStep = ({ next }: { next: Next }) => {
   const { t } = useTranslation()
   const stepAnchor = useMemo(() => getMo2SettingsAnchor(), [])
 
@@ -115,7 +109,7 @@ function Mo2SettingsStep({ next }: { next: Next }) {
   )
 }
 
-function ConcurrentSettingsStep({ next }: { next: Next }) {
+const ConcurrentSettingsStep = ({ next }: { next: Next }) => {
   const { t } = useTranslation()
   const stepAnchor = useMemo(() => getConcurrentSettingsAnchor(), [])
   const onClickOk = () => next()
@@ -137,11 +131,9 @@ function ConcurrentSettingsStep({ next }: { next: Next }) {
   )
 }
 
-function Overlay() {
-  return (
-    <div className="fixed z-20 bg-black-800 bg-opacity-60 top-0 left-0 right-0 bottom-0" />
-  )
-}
+const Overlay = () => (
+  <div className="fixed z-20 bg-black-800 bg-opacity-60 top-0 left-0 right-0 bottom-0" />
+)
 
 /**
  * Display a help to user to configure the application
@@ -152,10 +144,10 @@ function Overlay() {
  * 4. Information about MO2
  * 5. Show concurrent scripts
  */
-export function TutorialSettings(): JSX.Element | null {
+const TutorialSettings = () => {
   const { t } = useTranslation()
   const { config, setConfig } = useApp()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [step, setStep] = useState(Step.waiting)
   const isFocus = useFocus()
   const { send } = useTelemetry()
@@ -171,9 +163,9 @@ export function TutorialSettings(): JSX.Element | null {
   }
 
   const onClickNeedHelp = useCallback(() => {
-    history.push('/settings')
+    navigate('/settings')
     setStep(Step.game)
-  }, [history])
+  }, [navigate])
 
   const onNextStepGame = useCallback(() => {
     setStep(Step.compiler)
@@ -268,3 +260,5 @@ export function TutorialSettings(): JSX.Element | null {
     </>
   )
 }
+
+export default TutorialSettings

@@ -17,7 +17,7 @@ import * as path from '../path/path'
 import { settingsStore } from '../store/settings/store'
 import { generateCompilerCmd } from '../utils/generate-compiler-cmd.util'
 
-interface Runner {
+type Runner = {
   exe: string
   imports: string[]
   cwd: string

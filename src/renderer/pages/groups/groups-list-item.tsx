@@ -9,20 +9,16 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Fade from '../../components/animations/fade'
-import { Group, GroupInterface } from '../../interfaces'
-import { GroupsListItemMenu } from './groups-list-item-menu'
+import { Group, GroupRenderer } from '../../types'
+import GroupsListItemMenu from './groups-list-item-menu'
 
-interface Props {
-  onEdit: (group: GroupInterface) => () => void
-  onDelete: (group: GroupInterface) => () => void
+type Props = {
+  onEdit: (group: GroupRenderer) => () => void
+  onDelete: (group: GroupRenderer) => () => void
   group: Group
 }
 
-export function GroupsListItem({
-  group,
-  onDelete,
-  onEdit,
-}: Props): JSX.Element {
+const GroupsListItem = ({ group, onDelete, onEdit }: Props) => {
   const { t } = useTranslation()
   const [isDisplayPreview, setDisplayPreview] = useState(false)
   const [isEnter, setEnter] = useState(false)
@@ -106,3 +102,5 @@ export function GroupsListItem({
     </div>
   )
 }
+
+export default GroupsListItem

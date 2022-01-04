@@ -8,7 +8,7 @@ import is from '@sindresorhus/is'
 import cx from 'classnames'
 import React, { useCallback } from 'react'
 
-interface Props {
+type Props = {
   autoFocus?: boolean
   name?: string
   error?: boolean
@@ -19,13 +19,13 @@ interface Props {
   infoText?: string
   inputClassName?: string
   onChange: (value: string | number) => void
-  startIcon?: JSX.Element
+  startIcon?
   iconOnMouseEnter?: () => void
   iconOnMouseLeave?: () => void
   iconOnClick?: (e: React.MouseEvent<HTMLDivElement>) => void
 }
 
-export function TextField({
+const TextField = ({
   autoFocus,
   name,
   error,
@@ -40,7 +40,7 @@ export function TextField({
   iconOnClick,
   inputClassName = '',
   infoText,
-}: Props): JSX.Element {
+}: Props) => {
   const onChangeInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.currentTarget.value
@@ -101,3 +101,5 @@ export function TextField({
     </>
   )
 }
+
+export default TextField

@@ -8,32 +8,32 @@ import ClearIcon from '@material-ui/icons/Clear'
 import HistoryIcon from '@material-ui/icons/History'
 import PlayIcon from '@material-ui/icons/PlayCircleFilled'
 import SearchIcon from '@material-ui/icons/Search'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { ReactNode, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Script } from '../../../common/interfaces/script'
 import { TelemetryEvents } from '../../../common/telemetry-events'
+import { Script } from '../../../common/types/script'
 import DialogRecentFiles from '../../components/dialog/dialog-recent-files'
-import { Page } from '../../components/page'
-import { PageAppBar } from '../../components/page-app-bar'
+import Page from '../../components/page'
+import PageAppBar from '../../components/page-app-bar'
 import { useApp } from '../../hooks/use-app'
 import { useCompilation } from '../../hooks/use-compilation'
 import { useDrop, useSetDrop } from '../../hooks/use-drop'
 import { useRecentFiles } from '../../hooks/use-recent-files'
 import { useTelemetry } from '../../hooks/use-telemetry'
-import { ScriptInterface } from '../../interfaces'
+import { ScriptRenderer } from '../../types'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
-import reorderScripts from '../../utils/scripts/reorder-scripts'
-import uniqScripts from '../../utils/scripts/uniq-scripts'
-import { GroupsLoader } from './groups-loader'
-import { ScriptItem } from './script-item'
+import { reorderScripts } from '../../utils/scripts/reorder-scripts'
+import { uniqScripts } from '../../utils/scripts/uniq-scripts'
+import GroupsLoader from './groups-loader'
+import ScriptItem from './script-item'
 
 enum DialogRecentFilesState {
   open,
   close,
 }
 
-export function Compilation(): JSX.Element {
+const Compilation = () => {
   const { t } = useTranslation()
   const { groups } = useApp()
   const { scripts, start, setScripts, concurrentScripts, isRunning } =
@@ -45,8 +45,8 @@ export function Compilation(): JSX.Element {
 
   const onDrop = useCallback(
     (pscFiles: File[]) => {
-      setScripts((scriptsList: ScriptInterface[]) => {
-        const pscScripts: ScriptInterface[] = pscFilesToPscScripts(
+      setScripts((scriptsList: ScriptRenderer[]) => {
+        const pscScripts: ScriptRenderer[] = pscFilesToPscScripts(
           pscFiles,
           scriptsList,
         )
@@ -65,13 +65,13 @@ export function Compilation(): JSX.Element {
   useSetDrop(onDrop)
 
   const onClickRemoveScriptFromScript = useCallback(
-    (script: ScriptInterface) => {
+    (script: ScriptRenderer) => {
       return () => {
         setScripts(scriptsList => {
           send(TelemetryEvents.compilationRemoveScript, {
             remainingScripts: scriptsList.length - 1,
           })
-          return scriptsList.filter((cs: ScriptInterface) => cs !== script)
+          return scriptsList.filter((cs: ScriptRenderer) => cs !== script)
         })
       }
     },
@@ -147,7 +147,7 @@ export function Compilation(): JSX.Element {
   )
 
   const pageActions = useMemo(() => {
-    const possibleActions: JSX.Element[] = [recentFilesButton, searchButton]
+    const possibleActions: ReactNode[] = [recentFilesButton, searchButton]
 
     if (groups.filter(group => !group.isEmpty).length > 0) {
       possibleActions.push(
@@ -162,7 +162,7 @@ export function Compilation(): JSX.Element {
     return possibleActions
   }, [searchButton, recentFilesButton, groups, onChangeGroup])
 
-  const scriptsList: JSX.Element[] = useMemo(() => {
+  const scriptsList: ReactNode[] = useMemo(() => {
     return scripts.map(script => {
       return (
         <ScriptItem
@@ -234,3 +234,5 @@ export function Compilation(): JSX.Element {
     </>
   )
 }
+
+export default Compilation

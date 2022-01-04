@@ -15,26 +15,23 @@ import React, {
 import { useDidMount } from 'rooks'
 
 import bridge from '../bridge'
-import { GithubRelease } from '../interfaces'
+import { GithubRelease } from '../types'
 import { useApp } from './use-app'
 import { useVersion } from './use-version'
 
 const GITHUB_REPOSITORY =
   'https://api.github.com/repos/Kiyozz/papyrus-compiler-app'
 
-interface Context {
+type _InitializationContext = {
   latestVersion: string
   done: boolean
 }
 
-const InitializationContext = createContext({} as Context)
+const _Context = createContext({} as _InitializationContext)
 
-export const useInitialization = (): Context =>
-  useContext(InitializationContext)
-
-export function InitializationProvider({
+const InitializationProvider = ({
   children,
-}: React.PropsWithChildren<unknown>): JSX.Element {
+}: React.PropsWithChildren<unknown>) => {
   const [done, setDone] = useState(false)
   const [latestVersion, setLatestVersion] = useState('')
   const { setShowChangelog, setChangelog, setCheckUsingLastVersion } = useApp()
@@ -85,8 +82,14 @@ export function InitializationProvider({
     return () => bridge.changelog.off(check)
   }, [checkUpdates, setCheckUsingLastVersion, version])
   return (
-    <InitializationContext.Provider value={{ done, latestVersion }}>
+    <_Context.Provider value={{ done, latestVersion }}>
       {children}
-    </InitializationContext.Provider>
+    </_Context.Provider>
   )
 }
+
+export const useInitialization = (): _InitializationContext => {
+  return useContext(_Context)
+}
+
+export default InitializationProvider

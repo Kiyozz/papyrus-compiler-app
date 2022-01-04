@@ -6,7 +6,7 @@
 
 import { Logger } from '../logger'
 
-interface GenerateCmdOptions {
+type GenerateCmdOptions = {
   imports: string[]
   output: string
   exe: string

@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { Script } from '../../common/interfaces/script'
+import { Script } from '../../common/types/script'
 import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 import { recentFilesStore } from '../store/recent-files/store'

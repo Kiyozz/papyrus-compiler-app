@@ -8,39 +8,25 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-import { DropFilesOverlay } from '../components/drop/drop-files-overlay'
-import { DropScripts, OnDropFunction } from '../components/drop/drop-scripts'
+import DropFilesOverlay from '../components/drop/drop-files-overlay'
+import DropScripts, { OnDrop } from '../components/drop/drop-scripts'
 
-interface Context {
-  onDrop: OnDropFunction | null
-  setOnDrop: (on: (() => OnDropFunction) | null) => void
+type _DropContext = {
+  onDrop: OnDrop | null
+  setOnDrop: (on: (() => OnDrop) | null) => void
   drop: () => void
   isDragActive: boolean
 }
 
-const DropContext = createContext({} as Context)
+const _Context = createContext({} as _DropContext)
 
-export const useDrop = (): Context => useContext(DropContext)
-
-export const useSetDrop = (on: OnDropFunction | null): void => {
-  const { setOnDrop } = useDrop()
-
-  useEffect(() => {
-    setOnDrop(() => on)
-
-    return () => setOnDrop(null)
-  }, [on, setOnDrop])
-}
-
-export function DropProvider({
-  children,
-}: React.PropsWithChildren<unknown>): JSX.Element {
-  const [onDrop, setOnDrop] = useState<OnDropFunction | null>(null)
+const DropProvider = ({ children }: React.PropsWithChildren<unknown>) => {
+  const [onDrop, setOnDrop] = useState<OnDrop | null>(null)
 
   return (
     <DropScripts onDrop={onDrop}>
       {({ isDragActive, open }) => (
-        <DropContext.Provider
+        <_Context.Provider
           value={{
             isDragActive,
             drop: open,
@@ -50,8 +36,22 @@ export function DropProvider({
         >
           <DropFilesOverlay open={isDragActive && onDrop !== null} />
           {children}
-        </DropContext.Provider>
+        </_Context.Provider>
       )}
     </DropScripts>
   )
 }
+
+export const useDrop = (): _DropContext => useContext(_Context)
+
+export const useSetDrop = (on: OnDrop | null): void => {
+  const { setOnDrop } = useDrop()
+
+  useEffect(() => {
+    setOnDrop(() => on)
+
+    return () => setOnDrop(null)
+  }, [on, setOnDrop])
+}
+
+export default DropProvider

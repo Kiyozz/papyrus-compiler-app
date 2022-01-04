@@ -10,29 +10,29 @@ import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TelemetryEvents } from '../../../common/telemetry-events'
-import { GroupsDialog } from '../../components/groups/groups-dialog'
-import { Page } from '../../components/page'
-import { PageAppBar } from '../../components/page-app-bar'
+import GroupsDialog from '../../components/groups/groups-dialog'
+import Page from '../../components/page'
+import PageAppBar from '../../components/page-app-bar'
 import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
-import { Group, GroupInterface } from '../../interfaces'
-import { GroupsListItem } from './groups-list-item'
+import { Group, GroupRenderer } from '../../types'
+import GroupsListItem from './groups-list-item'
 
-interface EditGroupParams {
-  group: GroupInterface
+type EditGroupParams = {
+  group: GroupRenderer
   lastGroupName: string
 }
 
-export function Groups(): JSX.Element {
+const Groups = () => {
   const { t } = useTranslation()
   const { groups, setConfig } = useApp()
   const { send } = useTelemetry()
 
   const [showAddPopup, setShowPopup] = useState(false)
-  const [editingGroup, setEditingGroup] = useState<GroupInterface | undefined>()
+  const [editingGroup, setEditingGroup] = useState<GroupRenderer | undefined>()
 
   const addGroup = useCallback(
-    (group: GroupInterface) => {
+    (group: GroupRenderer) => {
       if (
         !is.undefined(
           groups.find(
@@ -92,7 +92,7 @@ export function Groups(): JSX.Element {
     [groups, setConfig, send],
   )
   const removeGroup = useCallback(
-    (group: GroupInterface) => {
+    (group: GroupRenderer) => {
       if (
         is.undefined(
           groups.find(
@@ -117,7 +117,7 @@ export function Groups(): JSX.Element {
   )
 
   const onClickRemoveGroup = useCallback(
-    (group: GroupInterface) => {
+    (group: GroupRenderer) => {
       return () => {
         removeGroup(group)
       }
@@ -125,7 +125,7 @@ export function Groups(): JSX.Element {
     [removeGroup],
   )
 
-  const onClickEditGroup = useCallback((group: GroupInterface) => {
+  const onClickEditGroup = useCallback((group: GroupRenderer) => {
     return () => {
       setEditingGroup(group)
       setShowPopup(true)
@@ -138,15 +138,15 @@ export function Groups(): JSX.Element {
   }, [])
 
   const onGroupAdd = useCallback(
-    (group: Partial<GroupInterface>) => {
+    (group: Partial<GroupRenderer>) => {
       setShowPopup(false)
-      addGroup(group as GroupInterface)
+      addGroup(group as GroupRenderer)
     },
     [setShowPopup, addGroup],
   )
 
   const onGroupEdit = useCallback(
-    (lastGroupName: string, group: GroupInterface) => {
+    (lastGroupName: string, group: GroupRenderer) => {
       setShowPopup(false)
       editGroup({ group, lastGroupName })
     },
@@ -207,3 +207,5 @@ export function Groups(): JSX.Element {
     </>
   )
 }
+
+export default Groups

@@ -6,11 +6,11 @@
 
 import React from 'react'
 
-interface Props {
+type Props = {
   open: boolean
 }
 
-export function DropFilesOverlay({ open }: Props): JSX.Element | null {
+const DropFilesOverlay = ({ open }: Props) => {
   if (!open) {
     return null
   }
@@ -25,3 +25,5 @@ export function DropFilesOverlay({ open }: Props): JSX.Element | null {
     </div>
   )
 }
+
+export default DropFilesOverlay

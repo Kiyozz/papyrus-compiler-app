@@ -17,7 +17,7 @@ import { Platform } from './platform'
 import { Script } from './script'
 import { WindowState } from './window-state'
 
-export interface Bridge {
+export type Bridge = {
   telemetry: {
     send: <T extends TelemetryEvents>(
       event: T,

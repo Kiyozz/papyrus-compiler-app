@@ -10,7 +10,7 @@ import { Theme } from '../../common/theme'
 import { useSystemDarkPreference } from './use-system-dark-preference'
 import { useTheme } from './use-theme'
 
-export function useSyncHtmlTheme(): void {
+export const useSyncHtmlTheme = (): void => {
   const isSystemThemeDark = useSystemDarkPreference()
   const [theme] = useTheme()
 

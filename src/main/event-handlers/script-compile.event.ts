@@ -6,7 +6,7 @@
 
 import { IpcMainEvent } from 'electron'
 
-import { CompilationResult } from '../../common/interfaces/compilation-result'
+import { CompilationResult } from '../../common/types/compilation-result'
 import { compile } from '../compilation/compile'
 import { Event } from '../interfaces/event'
 import { IpcEvent } from '../ipc-event'

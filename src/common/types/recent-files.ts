@@ -6,6 +6,6 @@
 
 import { Script } from './script'
 
-export interface RecentFiles {
+export type RecentFiles = {
   files: Script[]
 }

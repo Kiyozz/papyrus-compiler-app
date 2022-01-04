@@ -4,10 +4,8 @@
  * All rights reserved.
  */
 
-import { ScriptInterface } from '../../interfaces'
+import { ScriptRenderer } from '../../types'
 
-export default function reorderScripts(
-  scripts: ScriptInterface[],
-): ScriptInterface[] {
+export const reorderScripts = (scripts: ScriptRenderer[]): ScriptRenderer[] => {
   return scripts.map((script, index) => ({ ...script, id: index }))
 }

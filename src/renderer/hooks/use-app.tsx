@@ -5,18 +5,24 @@
  */
 
 import is from '@sindresorhus/is'
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { Observable, Subject } from 'rxjs'
 // eslint-disable-next-line import/no-unresolved
 import { PartialDeep } from 'type-fest'
 
-import { Config } from '../../common/interfaces/config'
+import { Config } from '../../common/types/config'
 import bridge from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
-import { Group } from '../interfaces'
+import { Group } from '../types'
 import { useIpc } from './use-ipc'
 
-interface Context {
+type _AppContext = {
   setShowChangelog: (show: boolean) => void
   setChangelog: (changelog: string) => void
   setConfig: (config: PartialDeep<Config>, override?: boolean) => void
@@ -31,9 +37,9 @@ interface Context {
   onRefreshConfig: Observable<Config>
 }
 
-const AppContext = React.createContext({} as Context)
+const _Context = React.createContext({} as _AppContext)
 
-function selectGroups(config: Config): Group[] {
+const _selectGroups = (config: Config): Group[] => {
   if (config.groups.length === 0) {
     return []
   }
@@ -54,14 +60,10 @@ function selectGroups(config: Config): Group[] {
   )
 }
 
-const refresh$ = new Subject<Config>()
-const onRefreshConfig = refresh$.asObservable()
+const _refresh$ = new Subject<Config>()
+const _onRefreshConfig = _refresh$.asObservable()
 
-export const useApp = (): Context => useContext(AppContext)
-
-export function AppProvider({
-  children,
-}: React.PropsWithChildren<unknown>): JSX.Element | null {
+const AppProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const [config, setConfig] = useState<Config>({} as Config)
   const [groups, setGroups] = useState<Group[]>([])
   const [isShowChangelog, setShowChangelog] = useState(false)
@@ -78,7 +80,7 @@ export function AppProvider({
   ) => {
     bridge.config.update(partialConfig, override).then(updatedConfig => {
       setConfig(updatedConfig)
-      setGroups(selectGroups(updatedConfig))
+      setGroups(_selectGroups(updatedConfig))
     })
   }
 
@@ -86,21 +88,22 @@ export function AppProvider({
     await bridge.clipboard.copy(text)
   }
 
-  const refreshConfig = () =>
-    bridge.config.get().then(refreshedConfig => {
+  const refreshConfig = useCallback(() => {
+    return bridge.config.get().then(refreshedConfig => {
       setConfig(refreshedConfig)
-      setGroups(selectGroups(refreshedConfig))
-      refresh$.next(refreshedConfig)
+      setGroups(_selectGroups(refreshedConfig))
+      _refresh$.next(refreshedConfig)
     })
+  }, [])
 
   useEffect(() => {
     bridge.config.get().then(initialConfig => {
       setConfig(initialConfig)
-      setGroups(selectGroups(initialConfig))
+      setGroups(_selectGroups(initialConfig))
     })
   }, [])
 
-  const value: Context = useMemo(
+  const value: _AppContext = useMemo(
     () => ({
       setShowChangelog,
       setChangelog,
@@ -113,14 +116,25 @@ export function AppProvider({
       groups,
       refreshConfig,
       copyToClipboard,
-      onRefreshConfig,
+      onRefreshConfig: _onRefreshConfig,
     }),
-    [changelog, config, groups, isCheckUsingLastVersion, isShowChangelog],
+    [
+      changelog,
+      config,
+      groups,
+      isCheckUsingLastVersion,
+      isShowChangelog,
+      refreshConfig,
+    ],
   )
 
   if (is.undefined(config)) {
     return null
   }
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>
+  return <_Context.Provider value={value}>{children}</_Context.Provider>
 }
+
+export const useApp = (): _AppContext => useContext(_Context)
+
+export default AppProvider

@@ -1,7 +1,7 @@
 import { is } from 'electron-util'
 import { release } from 'os'
 
-import { Platform } from '../../common/interfaces/platform'
+import { Platform } from '../../common/types/platform'
 import { EventSync } from '../interfaces/event-sync'
 
 export class PlatformSync implements EventSync {

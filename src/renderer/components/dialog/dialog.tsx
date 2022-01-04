@@ -10,13 +10,14 @@ import { createPortal } from 'react-dom'
 
 import { useDocumentClick } from '../../hooks/use-document-click'
 import { useOnKeyUp } from '../../hooks/use-on-key-up'
+import Paper from '../paper'
 
-interface DialogProps {
+type DialogProps = {
   open: boolean
   maxWidth?: number
   onClose?: (reason: CloseReason) => void
-  actions?: JSX.Element
-  title?: JSX.Element
+  actions?
+  title?
   content?: (props: React.PropsWithChildren<unknown>) => JSX.Element
   contentClassNames?: {
     content?: string
@@ -24,13 +25,13 @@ interface DialogProps {
   }
 }
 
-export enum CloseReason {
+enum CloseReason {
   escape,
   outside,
   enter,
 }
 
-export function Dialog({
+const Dialog = ({
   open,
   maxWidth,
   onClose,
@@ -39,7 +40,7 @@ export function Dialog({
   content: Content,
   contentClassNames = {},
   children,
-}: React.PropsWithChildren<DialogProps>): JSX.Element {
+}: React.PropsWithChildren<DialogProps>) => {
   const container = useRef<HTMLDivElement | null>(null)
 
   useDocumentClick(
@@ -96,8 +97,8 @@ export function Dialog({
           ref={container}
           className={`fixed top-0 bottom-0 p-8 pt-16 left-0 z-10 flex justify-center items-center w-full h-screen`}
         >
-          <div
-            className="paper text-black-600 dark:text-light-400 p-0 w-full max-h-full flex flex-col"
+          <Paper
+            className="text-black-600 dark:text-light-400 p-0 w-full max-h-full flex flex-col"
             style={
               maxWidth !== undefined
                 ? { maxWidth: `${maxWidth}%`, maxHeight: `${maxWidth}%` }
@@ -105,10 +106,14 @@ export function Dialog({
             }
           >
             {Content ? <Content>{dialogContent}</Content> : dialogContent}
-          </div>
+          </Paper>
         </div>
       </>
     ) : null,
     document.body,
   )
 }
+
+export { CloseReason }
+
+export default Dialog

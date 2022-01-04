@@ -8,12 +8,12 @@ import is from '@sindresorhus/is'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TextField } from '../../components/text-field'
+import TextField from '../../components/text-field'
 import { useApp } from '../../hooks/use-app'
 
 const maxConcurrentCompilationScripts = 100
 
-export function SettingsCompilation(): JSX.Element {
+const SettingsCompilation = () => {
   const { t } = useTranslation()
   const {
     config: { compilation },
@@ -66,3 +66,5 @@ export function SettingsCompilation(): JSX.Element {
     </div>
   )
 }
+
+export default SettingsCompilation

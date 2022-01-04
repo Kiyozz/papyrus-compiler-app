@@ -4,7 +4,9 @@
  * All rights reserved.
  */
 
-export interface Script {
+import { Script } from './script'
+
+export type Group = {
   name: string
-  path: string
+  scripts: Script[]
 }

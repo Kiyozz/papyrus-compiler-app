@@ -6,7 +6,7 @@
 
 import is from '@sindresorhus/is'
 
-import type { Config } from '../../../../common/interfaces/config'
+import type { Config } from '../../../../common/types/config'
 import type { SettingsStore } from '../store'
 
 export function migrate520(store: SettingsStore): void {

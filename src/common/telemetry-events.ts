@@ -37,9 +37,9 @@ export enum TelemetryEvents {
   tutorialsSettingsDeny = 'Tutorials.SettingsDeny',
 }
 
-export interface TelemetryEventsProperties {
+export type TelemetryEventsProperties = {
   [TelemetryEvents.appFirstLoaded]: Record<string, never>
-  [TelemetryEvents.appLoaded]: Record<'version', string>
+  [TelemetryEvents.appLoaded]: Record<'version' | 'releaseVersion', string>
   [TelemetryEvents.compilationDropScripts]: {
     scripts: number
   }

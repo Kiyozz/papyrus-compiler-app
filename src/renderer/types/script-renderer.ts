@@ -4,10 +4,10 @@
  * All rights reserved.
  */
 
-import { Script } from '../../common/interfaces/script'
+import { Script } from '../../common/types/script'
 import { ScriptStatus } from '../enums/script-status.enum'
 
-export interface ScriptInterface extends Script {
+export type ScriptRenderer = Script & {
   id: number
   status: ScriptStatus
 }

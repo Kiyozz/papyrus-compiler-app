@@ -6,14 +6,14 @@
 
 import pathShorten, { Options } from 'path-shorten'
 
-interface ShortenResult {
+type ShortenResult = {
   path: string
   filename: string
 }
 
 const maxSlicesLength = 4
 
-export function shorten(text: string, options?: Options): ShortenResult {
+export const shorten = (text: string, options?: Options): ShortenResult => {
   if (text.length === 0)
     return {
       filename: text,
@@ -27,7 +27,6 @@ export function shorten(text: string, options?: Options): ShortenResult {
   const filename = slices.pop() as string
 
   if (slices.length > maxSlicesLength) {
-    console.log('c', buffer, slices)
     slices = slices.slice(slices.length - maxSlicesLength + 1)
 
     slices.unshift('...')

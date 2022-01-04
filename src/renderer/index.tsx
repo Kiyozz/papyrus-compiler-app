@@ -8,24 +8,26 @@ import debounce from 'debounce-fn'
 import React from 'react'
 import { render } from 'react-dom'
 
-import { App } from './app'
-import './translations'
+import App from './app'
 import bridge from './bridge'
-import { AppProvider } from './hooks/use-app'
-import { CompilationProvider } from './hooks/use-compilation'
-import { DrawerProvider } from './hooks/use-drawer'
-import { DropProvider } from './hooks/use-drop'
-import { FocusProvider } from './hooks/use-focus'
-import { InitializationProvider } from './hooks/use-initialization'
-import { LoadingProvider } from './hooks/use-loading'
-import { RecentFilesProvider } from './hooks/use-recent-files'
-import { TelemetryProvider } from './hooks/use-telemetry'
-import { VersionProvider } from './hooks/use-version'
-import { SettingsProvider } from './pages/settings/settings-context'
-import { Theme } from './theme'
+import AppProvider from './hooks/use-app'
+import CompilationProvider from './hooks/use-compilation'
+import DrawerProvider from './hooks/use-drawer'
+import DropProvider from './hooks/use-drop'
+import FocusProvider from './hooks/use-focus'
+import InitializationProvider from './hooks/use-initialization'
+import LoadingProvider from './hooks/use-loading'
+import RecentFilesProvider from './hooks/use-recent-files'
+import TelemetryProvider from './hooks/use-telemetry'
+import VersionProvider from './hooks/use-version'
+import SettingsProvider from './pages/settings/use-settings'
+import Theme from './theme'
+import { loadTranslations } from './translations'
 import { isProduction } from './utils/is-production'
 
 function start() {
+  loadTranslations()
+
   try {
     render(
       <VersionProvider>

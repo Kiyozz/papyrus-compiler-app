@@ -4,14 +4,14 @@
  * All rights reserved.
  */
 
-import { ScriptInterface } from '../interfaces'
+import { ScriptRenderer } from '../types'
 
-export function chunk(
-  scripts: ScriptInterface[],
+export const chunk = (
+  scripts: ScriptRenderer[],
   size: number,
-): ScriptInterface[][] {
+): ScriptRenderer[][] => {
   return scripts.reduce(
-    (acc: ScriptInterface[][], current: ScriptInterface, i: number) => {
+    (acc: ScriptRenderer[][], current: ScriptRenderer, i: number) => {
       if (!(i % size)) {
         acc.push(scripts.slice(i, i + size))
       }

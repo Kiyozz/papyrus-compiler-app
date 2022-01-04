@@ -6,9 +6,7 @@
 
 module.exports = {
   mode: 'jit',
-  purge: {
-    content: ['./src/renderer/**/*.{tsx,ts}'],
-  },
+  content: ['./src/renderer/**/*.{tsx,ts}'],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
@@ -17,7 +15,7 @@ module.exports = {
         nova: ['Proxima Nova', 'sans-serif'],
         mono: ['Roboto Mono', 'ui-monospace', 'monospace'],
         body: ['Roboto', '-apple-system', 'sans-serif'],
-        segoe: ['"Segoe UI"', 'Roboto'],
+        segoe: ['Segoe UI', 'Roboto'],
       },
       height: {
         'screen-titlebar': 'calc(100vh - theme("height.8"))',

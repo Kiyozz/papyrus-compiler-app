@@ -10,7 +10,7 @@ type Props = {
   title: string
 }
 
-export const Titlebar = ({ title }: Props) => {
+const Titlebar = ({ title }: Props) => {
   const isFocus = useFocus()
   const platform = usePlatform()
   const windowState = useWindowState()
@@ -98,3 +98,5 @@ export const Titlebar = ({ title }: Props) => {
     </div>
   )
 }
+
+export default Titlebar

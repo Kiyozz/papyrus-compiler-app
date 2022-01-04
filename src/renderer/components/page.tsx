@@ -9,16 +9,16 @@ import React from 'react'
 
 import { useDrawer } from '../hooks/use-drawer'
 
-interface Props {
+type Props = {
   className?: string
   mainClassName?: string
 }
 
-export function Page({
+const Page = ({
   children,
   className,
   mainClassName,
-}: React.PropsWithChildren<Props>): JSX.Element {
+}: React.PropsWithChildren<Props>) => {
   const [isDrawerExpand] = useDrawer()
 
   return (
@@ -33,3 +33,5 @@ export function Page({
     </div>
   )
 }
+
+export default Page

@@ -9,12 +9,12 @@ import deepmerge from 'deepmerge'
 // eslint-disable-next-line import/no-unresolved
 import { PartialDeep } from 'type-fest'
 
-import { Config } from '../../common/interfaces/config'
+import { Config } from '../../common/types/config'
 import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 import { settingsStore } from '../store/settings/store'
 
-interface ConfigUpdateHandlerParams {
+type ConfigUpdateHandlerParams = {
   config: PartialDeep<Config>
   override?: boolean
 }

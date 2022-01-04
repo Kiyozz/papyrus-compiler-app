@@ -5,27 +5,27 @@
  */
 
 import cx from 'classnames'
-import React, { useEffect } from 'react'
+import React, { useEffect, ReactNode } from 'react'
 
-import { Delay, Scale } from './animations/scale'
+import Scale, { Delay } from './animations/scale'
 
-interface Props {
+type Props = {
   message: string
-  actions?: JSX.Element
+  actions?: ReactNode
   onClose: () => void
   in: boolean
   speedMs: Delay
   autoCloseMs?: number
 }
 
-export function Toast({
+const Toast = ({
   message,
   actions,
   onClose,
   in: isEnabled,
   speedMs,
   autoCloseMs = 4_000,
-}: Props): JSX.Element {
+}: Props) => {
   useEffect(() => {
     let timer: NodeJS.Timeout | undefined
 
@@ -58,3 +58,5 @@ export function Toast({
     </Scale>
   )
 }
+
+export default Toast

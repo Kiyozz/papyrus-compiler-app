@@ -5,8 +5,14 @@
  */
 
 import reactRefresh from '@vitejs/plugin-react-refresh'
-import path from 'path'
+import * as fsSync from 'node:fs'
+import * as path from 'node:path'
 import { defineConfig } from 'vite'
+
+const versionPath = path.resolve(__dirname, '../../release-version.json')
+const { version }: { version: string } = JSON.parse(
+  fsSync.readFileSync(versionPath).toString('utf-8'),
+)
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -21,5 +27,10 @@ export default defineConfig({
         replacement: path.join('node_modules/$1'),
       },
     ],
+  },
+  define: {
+    // path-shorten dep use process in his source code. But it is not available in renderer
+    'process.env.debug_path_shorten': 'false',
+    'process.env.RELEASE_VERSION': `'${version}'`,
   },
 })

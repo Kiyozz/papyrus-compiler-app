@@ -13,7 +13,7 @@ import {
 import { EventHandler } from '../interfaces/event-handler'
 import { Telemetry } from '../telemetry/telemetry'
 
-interface Payload<E extends TelemetryEvents> {
+type Payload<E extends TelemetryEvents> = {
   name: E
   properties: TelemetryEventsProperties[E]
 }

@@ -14,7 +14,7 @@ import {
   toOtherSource,
   toSource,
 } from '../../common/game'
-import { BadError } from '../../common/interfaces/bad-error'
+import { BadError } from '../../common/types/bad-error'
 import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 import * as path from '../path/path'

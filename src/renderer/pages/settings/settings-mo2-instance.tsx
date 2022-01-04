@@ -8,20 +8,20 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Alert } from '../../components/alert'
-import { DialogTextField } from '../../components/dialog/dialog-text-field'
+import Alert from '../../components/alert'
+import DialogTextField from '../../components/dialog/dialog-text-field'
 import { useApp } from '../../hooks/use-app'
-import { useSettings } from './settings-context'
+import { useSettings } from './use-settings'
 
 interface Props {
   onChangeMo2Instance: (value: string) => void
   onClickRefreshInstallation: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-export function SettingsMo2Instance({
+const SettingsMo2Instance = ({
   onChangeMo2Instance,
   onClickRefreshInstallation,
-}: Props): JSX.Element | null {
+}: Props) => {
   const { t } = useTranslation()
   const {
     config: { mo2 },
@@ -69,3 +69,5 @@ export function SettingsMo2Instance({
     </>
   )
 }
+
+export default SettingsMo2Instance

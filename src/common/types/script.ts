@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
-export interface Disposable {
-  dispose: () => void
+export type Script = {
+  name: string
+  path: string
 }

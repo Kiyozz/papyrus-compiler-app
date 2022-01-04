@@ -7,20 +7,20 @@
 import cx from 'classnames'
 import React, { HTMLProps } from 'react'
 
-interface Props {
+type Props = {
   in: boolean
   speedMs: Delay
   className?: HTMLProps<HTMLDivElement>['className']
 }
 
-export type Delay = 150 | 300
+type Delay = 150 | 300
 
-export function Scale({
+const Scale = ({
   in: enabled,
   speedMs,
   children,
   className,
-}: React.PropsWithChildren<Props>): JSX.Element | null {
+}: React.PropsWithChildren<Props>) => {
   if (!children) {
     return null
   }
@@ -37,3 +37,7 @@ export function Scale({
     </div>
   )
 }
+
+export type { Delay }
+
+export default Scale

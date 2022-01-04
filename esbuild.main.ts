@@ -5,13 +5,17 @@
  */
 
 import { BuildOptions, PluginBuild } from 'esbuild'
-import fsSync from 'fs'
-import fs from 'fs/promises'
-import path from 'path'
+import * as fsSync from 'node:fs'
+import * as fs from 'node:fs/promises'
+import * as path from 'node:path'
 
+const versionPath = path.resolve('release-version.json')
 const mainPath = path.resolve('src/main')
 const distMainPath = path.resolve('dist/main')
 const distBrowserWindows = path.join(distMainPath, 'browser-windows')
+const { version }: { version: string } = JSON.parse(
+  fsSync.readFileSync(versionPath).toString('utf-8'),
+)
 
 const files = [
   {
@@ -43,6 +47,7 @@ const config: BuildOptions = {
     'process.env.ELECTRON_TELEMETRY_FEATURE': `'${
       process.env.ELECTRON_TELEMETRY_FEATURE ?? 'false'
     }'`,
+    'process.env.RELEASE_VERSION': `'${version}'`,
   },
   plugins: [
     {

@@ -19,7 +19,7 @@ import { Logger } from './logger'
 import { exists } from './path/path'
 import { settingsStore, defaultConfig } from './store/settings/store'
 
-interface RegisterMenusCallbacks {
+type RegisterMenusCallbacks = {
   openLogFile: (file: string) => void
   win: Electron.BrowserWindow
 }

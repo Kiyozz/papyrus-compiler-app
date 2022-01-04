@@ -13,14 +13,14 @@ import Fade from '../../components/animations/fade'
 import { useDocumentClick } from '../../hooks/use-document-click'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { isChildren } from '../../html/is-child'
-import { Group } from '../../interfaces'
+import { Group } from '../../types'
 
 interface Props {
   groups: Group[]
   onChangeGroup: (groupName: string) => void
 }
 
-export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
+const GroupsLoader = ({ groups, onChangeGroup }: Props) => {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const { send } = useTelemetry()
@@ -81,3 +81,5 @@ export function GroupsLoader({ groups, onChangeGroup }: Props): JSX.Element {
     </div>
   )
 }
+
+export default GroupsLoader

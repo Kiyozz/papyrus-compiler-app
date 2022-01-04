@@ -12,9 +12,7 @@ import { Theme as SettingsTheme } from '../common/theme'
 import { useSystemDarkPreference } from './hooks/use-system-dark-preference'
 import { useTheme } from './hooks/use-theme'
 
-export function Theme({
-  children,
-}: React.PropsWithChildren<unknown>): JSX.Element {
+const Theme = ({ children }: React.PropsWithChildren<unknown>) => {
   const isDark = useSystemDarkPreference()
   const [currentTheme] = useTheme()
 
@@ -61,3 +59,5 @@ export function Theme({
 
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>
 }
+
+export default Theme
