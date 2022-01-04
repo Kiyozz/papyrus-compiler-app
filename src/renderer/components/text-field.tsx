@@ -6,7 +6,7 @@
 
 import is from '@sindresorhus/is'
 import cx from 'classnames'
-import React, { useCallback } from 'react'
+import React, { ReactNode, useCallback } from 'react'
 
 type Props = {
   autoFocus?: boolean
@@ -19,7 +19,7 @@ type Props = {
   infoText?: string
   inputClassName?: string
   onChange: (value: string | number) => void
-  startIcon?
+  startIcon?: ReactNode
   iconOnMouseEnter?: () => void
   iconOnMouseLeave?: () => void
   iconOnClick?: (e: React.MouseEvent<HTMLDivElement>) => void
