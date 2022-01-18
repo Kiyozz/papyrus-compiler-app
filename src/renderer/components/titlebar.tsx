@@ -21,6 +21,8 @@ const Titlebar = ({ title }: Props) => {
   }
 
   const isNotMacOs = platform !== 'macos' && platform !== 'macos-bigsur'
+  const isMacOs = !isNotMacOs
+  const isMacOsBigSur = platform === 'macos-bigsur'
 
   const handleCloseWindow = (e: MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.blur()
@@ -48,8 +50,8 @@ const Titlebar = ({ title }: Props) => {
     <div
       className={cx(
         'titlebar drag',
-        !isNotMacOs && 'macos',
-        platform === 'macos-bigsur' && 'macos-bigsur',
+        isMacOs && 'macos',
+        isMacOsBigSur && 'macos-bigsur',
         isNotMacOs && 'other-platform',
         isFocus && 'focused',
         windowState === 'maximized' && 'maximized',
@@ -60,41 +62,53 @@ const Titlebar = ({ title }: Props) => {
           {img}
         </button>
       )}
-      {!isNotMacOs && img}
-      <span className="flex-grow">{title}</span>
-      <div className="flex">
-        <button
-          onClick={handleMinimizeWindow}
-          className="titlebar-control"
-          tabIndex={-1}
-        >
-          &#xE921;
-        </button>
-        {windowState === 'maximized' ? (
-          <button
-            onClick={handleRestoreWindow}
-            className="titlebar-control"
-            tabIndex={-1}
-          >
-            &#xE923;
-          </button>
-        ) : (
-          <button
-            onClick={handleMaximizeWindow}
-            className="titlebar-control"
-            tabIndex={-1}
-          >
-            &#xE922;
-          </button>
+
+      <span
+        className={cx(
+          'flex-grow',
+          isMacOs && 'font-helvetica text-center font-bold',
+          isMacOs && !isMacOsBigSur && 'text-[12px]',
+          isMacOsBigSur && 'text-[14px]',
+          isMacOs && !isFocus && 'text-[#6b6769]',
         )}
-        <button
-          onClick={handleCloseWindow}
-          className="titlebar-control titlebar-control-close"
-          tabIndex={-1}
-        >
-          &#xE8BB;
-        </button>
-      </div>
+      >
+        {title}
+      </span>
+      {isNotMacOs && (
+        <div className="flex">
+          <button
+            onClick={handleMinimizeWindow}
+            className="titlebar-control"
+            tabIndex={-1}
+          >
+            &#xE921;
+          </button>
+          {windowState === 'maximized' ? (
+            <button
+              onClick={handleRestoreWindow}
+              className="titlebar-control"
+              tabIndex={-1}
+            >
+              &#xE923;
+            </button>
+          ) : (
+            <button
+              onClick={handleMaximizeWindow}
+              className="titlebar-control"
+              tabIndex={-1}
+            >
+              &#xE922;
+            </button>
+          )}
+          <button
+            onClick={handleCloseWindow}
+            className="titlebar-control titlebar-control-close"
+            tabIndex={-1}
+          >
+            &#xE8BB;
+          </button>
+        </div>
+      )}
     </div>
   )
 }

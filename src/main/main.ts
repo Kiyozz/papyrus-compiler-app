@@ -27,6 +27,7 @@ let win: BrowserWindow | null = null
 let startingWin: BrowserWindow | null = null
 
 unhandled(() => {
+  logger.debug('win has been closed because of an error')
   win?.close()
   win = null
 })
@@ -110,7 +111,6 @@ async function createWindow() {
   })
 
   win.on('ready-to-show', () => {
-    logger.debug('the window is ready to show')
     clearTimeout(tm)
 
     startingWin?.close()

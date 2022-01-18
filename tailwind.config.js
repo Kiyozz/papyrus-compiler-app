@@ -16,6 +16,7 @@ module.exports = {
         mono: ['Roboto Mono', 'ui-monospace', 'monospace'],
         body: ['Roboto', '-apple-system', 'sans-serif'],
         segoe: ['Segoe UI', 'Roboto'],
+        helvetica: ['Helvetica Neue'],
       },
       height: {
         'screen-titlebar': 'calc(100vh - theme("height.8"))',
