@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022 Kiyozz~WK~WushuLate.
+ *
+ * All rights reserved.
+ */
+
 import { useEffect, useState } from 'react'
 
 import { WindowState } from '../../common/types/window-state'

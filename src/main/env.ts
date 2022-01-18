@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022 Kiyozz~WK~WushuLate.
+ *
+ * All rights reserved.
+ */
+
 import { MOD_URL_DEFAULT } from '../common/env'
 
 export const Env = {

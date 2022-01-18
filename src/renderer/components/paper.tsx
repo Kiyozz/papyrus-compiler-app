@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022 Kiyozz~WK~WushuLate.
+ *
+ * All rights reserved.
+ */
+
 import cx from 'classnames'
 import React from 'react'
 import { HTMLProps } from 'react'
