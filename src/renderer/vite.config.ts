@@ -9,7 +9,7 @@ import * as fsSync from 'node:fs'
 import * as path from 'node:path'
 import { defineConfig } from 'vite'
 
-const versionPath = path.resolve(__dirname, '../../release-version.json')
+const versionPath = path.resolve('release-version.json')
 const { version }: { version: string } = JSON.parse(
   fsSync.readFileSync(versionPath).toString('utf-8'),
 )

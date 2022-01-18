@@ -40,7 +40,7 @@ export class Telemetry {
       is.emptyString(api) ||
       is.emptyString(appKey)
     ) {
-      this._logger.debug('no configuration provided. Disabling telemetry.')
+      this._logger.debug('no configuration provided. Telemetry is disabled.')
       this.isActive = false
     }
   }

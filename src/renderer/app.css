@@ -354,7 +354,7 @@ input.MuiInputBase-inputAdornedStart {
 }
 
 .titlebar.macos-bigsur {
-  height: 28px;
+  height: 34px;
 }
 
 .titlebar.maximized:not(.macos),
