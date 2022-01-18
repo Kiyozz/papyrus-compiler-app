@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022 Kiyozz~WK~WushuLate.
+ *
+ * All rights reserved.
+ */
+
 import { useState } from 'react'
 
 import { Platform } from '../../common/types/platform'

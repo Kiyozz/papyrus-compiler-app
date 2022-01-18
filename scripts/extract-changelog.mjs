@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kiyozz.
+ * Copyright (c) 2021 Kiyozz|WK.
  *
  * All rights reserved.
  */
@@ -18,12 +18,12 @@ version = version.replace('refs/tags/', '')
 const versionWithoutV = version.replace('v', '')
 const versionHeader = '##'
 const changelog = (await fs.readFile(path.resolve('CHANGELOG.md'))).toString(
-  'utf-8'
+  'utf-8',
 )
 
 const regExp = new RegExp(
   `(${versionHeader}\\s(v)?${versionWithoutV}[\\s\\S]*?[^#]{3})${versionHeader}\\s`,
-  'gi'
+  'gi',
 )
 const extracted = regExp.exec(changelog)?.[1]
 

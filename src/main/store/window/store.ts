@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022 Kiyozz~WK~WushuLate.
+ *
+ * All rights reserved.
+ */
+
 import is from '@sindresorhus/is'
 import { screen } from 'electron'
 import Store from 'electron-store'

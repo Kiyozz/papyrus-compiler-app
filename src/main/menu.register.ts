@@ -1,10 +1,10 @@
-// noinspection SpellCheckingInspection
-
 /*
- * Copyright (c) 2021 Kiyozz.
+ * Copyright (c) 2022 Kiyozz~WK~WushuLate.
  *
  * All rights reserved.
  */
+
+// noinspection SpellCheckingInspection
 
 import is from '@sindresorhus/is'
 import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
