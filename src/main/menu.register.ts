@@ -9,6 +9,7 @@
 import is from '@sindresorhus/is'
 import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
 import createDefaultMenu from 'electron-default-menu'
+import { is as isUtil } from 'electron-util'
 import { appMenu, openUrlMenuItem, is as isPlatform } from 'electron-util'
 import { match } from 'ts-pattern'
 
@@ -227,7 +228,11 @@ export async function registerMenu({
 
   const builtMenu = Menu.buildFromTemplate([menu, ...defaultMenus])
 
-  win.setMenu(builtMenu)
+  if (isUtil.macos) {
+    Menu.setApplicationMenu(builtMenu)
+  } else {
+    win.setMenu(builtMenu)
+  }
 
   return builtMenu
 }
