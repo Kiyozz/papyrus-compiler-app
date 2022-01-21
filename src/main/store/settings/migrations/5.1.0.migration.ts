@@ -5,16 +5,28 @@
  */
 
 import { GameType } from '../../../../common/game'
+import { Logger } from '../../../logger'
 import type { SettingsStore } from '../store'
 
+const _logger = new Logger('migration-5.1.0')
+
+/**
+ * Migrate old game type to the new format
+ *
+ * @param {SettingsStore} store
+ */
 export function migrate510(store: SettingsStore): void {
-  const gameType: string = store.get('game.type')
+  _logger.debug('starting')
+  const gameType = store.get('game.type')
 
   if (
     gameType === GameType.se ||
     gameType === GameType.le ||
-    gameType === GameType.vr
+    gameType === GameType.vr ||
+    gameType === GameType.fo4
   ) {
+    _logger.debug('do not need to migrate')
+
     return
   }
 
@@ -28,4 +40,6 @@ export function migrate510(store: SettingsStore): void {
     default:
       store.set('game.type', GameType.se)
   }
+
+  _logger.debug('complete')
 }

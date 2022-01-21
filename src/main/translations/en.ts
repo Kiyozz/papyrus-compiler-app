@@ -29,7 +29,7 @@ const en: TranslationShape = {
           reset: 'Reset',
         },
       },
-      checkForUpdates: 'Check for Updates',
+      checkForUpdates: 'Check for Updates...',
     },
     file: {
       title: 'File',

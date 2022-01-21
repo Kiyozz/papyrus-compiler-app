@@ -76,7 +76,7 @@ export async function initialize(
 ): Promise<void> {
   await backupLogFile()
 
-  const isTelemetryActive = settingsStore.get('telemetry.active') as boolean
+  const isTelemetryActive: boolean = settingsStore.get('telemetry.active')
   const telemetry = new Telemetry(
     isTelemetryActive,
     Env.telemetryApi,

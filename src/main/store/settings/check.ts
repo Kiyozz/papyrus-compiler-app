@@ -6,32 +6,32 @@
 
 import is from '@sindresorhus/is'
 
-import { GameType } from '../../../common/game'
+import { GamePath, GameType, validateGame } from '../../../common/game'
 import { Theme } from '../../../common/theme'
 import type { Config } from '../../../common/types/config'
 import { DEFAULT_COMPILER_PATH } from '../../constants'
 import { join } from '../../path/path'
 import { validateGroup } from '../../validators/group.validator'
-import type { SettingsStore } from './store'
+import type { Args, SettingsStore } from './store'
 
-function _checkLocale(appStore: SettingsStore, defaultConfig: Config) {
-  const locale = appStore.get('locale')
+function _checkLocale(settingsStore: SettingsStore, defaultConfig: Config) {
+  const locale = settingsStore.get('locale')
 
   if (locale !== defaultConfig.locale) {
-    appStore.set('locale', defaultConfig.locale)
+    settingsStore.set('locale', defaultConfig.locale)
   }
 }
 
-function _checkTheme(appStore: SettingsStore, defaultConfig: Config) {
-  const theme = appStore.get('theme')
+function _checkTheme(settingsStore: SettingsStore, defaultConfig: Config) {
+  const theme = settingsStore.get('theme')
 
   if (![Theme.system, Theme.light, Theme.dark].includes(theme)) {
-    appStore.set('theme', defaultConfig.theme)
+    settingsStore.set('theme', defaultConfig.theme)
   }
 }
 
-function _checkTelemetry(appStore: SettingsStore, defaultConfig: Config) {
-  const telemetry = appStore.get('telemetry')
+function _checkTelemetry(settingsStore: SettingsStore, defaultConfig: Config) {
+  const telemetry = settingsStore.get('telemetry')
 
   if (
     is.nullOrUndefined(telemetry) ||
@@ -39,13 +39,13 @@ function _checkTelemetry(appStore: SettingsStore, defaultConfig: Config) {
     is.emptyObject(telemetry) ||
     !is.boolean(telemetry.active)
   ) {
-    appStore.set('telemetry', defaultConfig.telemetry)
+    settingsStore.set('telemetry', defaultConfig.telemetry)
   }
 }
 
-function _checkMo2(appStore: SettingsStore, defaultConfig: Config) {
-  const mo2 = appStore.get('mo2')
-  const resetMo2Config = () => appStore.set('mo2', defaultConfig.mo2)
+function _checkMo2(settingsStore: SettingsStore, defaultConfig: Config) {
+  const mo2 = settingsStore.get('mo2')
+  const resetMo2Config = () => settingsStore.set('mo2', defaultConfig.mo2)
 
   if (is.nullOrUndefined(mo2) || !is.object(mo2)) {
     resetMo2Config()
@@ -79,27 +79,40 @@ function _checkMo2(appStore: SettingsStore, defaultConfig: Config) {
   }
 }
 
-function _checkFlag(appStore: SettingsStore, defaultConfig: Config) {
-  const flag = appStore.get('compilation.flag')
+function _checkFlag(settingsStore: SettingsStore, defaultConfig: Config) {
+  const flag = settingsStore.get('compilation.flag')
 
   if (flag !== 'TESV_Papyrus_Flags.flg') {
     console.warn('only TESV_Papyrus_Flags.flg flag is supported')
 
-    appStore.set('compilation.flag', defaultConfig.compilation.flag)
+    settingsStore.set('compilation.flag', defaultConfig.compilation.flag)
   }
 }
 
-function _checkGroups(appStore: SettingsStore, defaultConfig: Config) {
-  const groups = appStore.get('groups')
+function _checkGroups(settingsStore: SettingsStore, defaultConfig: Config) {
+  const groups = settingsStore.get('groups')
 
   if (!is.array(groups) || !groups.every(validateGroup)) {
-    appStore.set('groups', defaultConfig.groups)
+    settingsStore.set('groups', defaultConfig.groups)
   }
 }
 
-function _checkGameType(appStore: SettingsStore, defaultConfig: Config) {
-  const gameType: GameType = appStore.get('game.type')
-  const resetGameType = () => appStore.set('game.type', defaultConfig.game.type)
+function _checkGameType(
+  settingsStore: SettingsStore,
+  defaultConfig: Config,
+  args?: Args,
+) {
+  const gameType: GameType = settingsStore.get('game.type')
+  const resetGameType = (type?: GameType) =>
+    settingsStore.set('game.type', type ?? defaultConfig.game.type)
+
+  const type = args?.['game-type']
+
+  if (validateGame.gameType(type)) {
+    resetGameType(type)
+
+    return
+  }
 
   if (!is.string(gameType)) {
     resetGameType()
@@ -116,26 +129,57 @@ function _checkGameType(appStore: SettingsStore, defaultConfig: Config) {
   }
 }
 
-function _checkGamePath(appStore: SettingsStore, defaultConfig: Config) {
-  const gamePath: string = appStore.get('game.path')
-  const resetGamePath = () => appStore.set('game.path', defaultConfig.game.path)
+function _checkGamePath(
+  settingsStore: SettingsStore,
+  defaultConfig: Config,
+  args?: Args,
+) {
+  const gamePath: string = settingsStore.get('game.path')
+  const resetGamePath = (path?: GamePath) =>
+    settingsStore.set('game.path', path ?? defaultConfig.game.path)
+
+  const gamePathArgs = args?.['game-path']
+
+  if (validateGame.gamePath(gamePathArgs)) {
+    resetGamePath(gamePathArgs)
+
+    return
+  }
 
   if (!is.string(gamePath)) {
     resetGamePath()
   }
 }
 
-function _checkOutput(appStore: SettingsStore, defaultConfig: Config) {
-  const output = appStore.get('compilation.output')
+function _checkOutput(
+  settingsStore: SettingsStore,
+  defaultConfig: Config,
+  args?: Args,
+) {
+  const output = settingsStore.get('compilation.output')
+  const outputArgs = args?.['output-path']
+
+  if (validateGame.outputPath(outputArgs)) {
+    settingsStore.set('compilation.output', outputArgs)
+
+    return
+  }
 
   if (!is.string(output) || is.emptyString(output.trim())) {
-    appStore.set('compilation.output', defaultConfig.compilation.output)
+    settingsStore.set('compilation.output', defaultConfig.compilation.output)
   }
 }
 
-function _checkCompilerPath(appStore: SettingsStore) {
-  const compilerPath = appStore.get('compilation.compilerPath')
-  const gamePath: string = appStore.get('game.path')
+function _checkCompilerPath(settingsStore: SettingsStore, args?: Args) {
+  const compilerPath = settingsStore.get('compilation.compilerPath')
+  const gamePath: string = settingsStore.get('game.path')
+  const compilerPathArgs = args?.['compiler-path']
+
+  if (validateGame.compilerPath(compilerPathArgs)) {
+    settingsStore.set('compilation.compilerPath', compilerPathArgs)
+
+    return
+  }
 
   if (
     is.nullOrUndefined(compilerPath) ||
@@ -143,7 +187,7 @@ function _checkCompilerPath(appStore: SettingsStore) {
       is.emptyString(compilerPath.trim()) &&
       is.nonEmptyString(gamePath))
   ) {
-    appStore.set(
+    settingsStore.set(
       'compilation.compilerPath',
       join(gamePath, DEFAULT_COMPILER_PATH),
     )
@@ -151,46 +195,52 @@ function _checkCompilerPath(appStore: SettingsStore) {
 }
 
 function _checkNotSupportedKeys(
-  appStore: SettingsStore,
+  settingsStore: SettingsStore,
   defaultConfig: Config,
 ) {
   const supportedKeys = [...Object.keys(defaultConfig), '__internal__']
 
-  Object.keys(appStore.store).forEach(key => {
+  Object.keys(settingsStore.store).forEach(key => {
     if (!supportedKeys.includes(key)) {
-      appStore.delete(key as keyof Config)
+      settingsStore.delete(key as keyof Config)
     }
   })
 }
 
-function _checkTutorials(appStore: SettingsStore, defaultConfig: Config) {
-  const tutorials = appStore.get('tutorials')
+function _checkTutorials(settingsStore: SettingsStore, defaultConfig: Config) {
+  const tutorials = settingsStore.get('tutorials')
 
   if (is.nullOrUndefined(tutorials)) {
-    appStore.set('tutorials', defaultConfig.tutorials)
+    settingsStore.set('tutorials', defaultConfig.tutorials)
   } else {
     if (!is.boolean(tutorials.settings)) {
-      appStore.set('tutorials.settings', defaultConfig.tutorials.settings)
+      settingsStore.set('tutorials.settings', defaultConfig.tutorials.settings)
     }
 
     if (!is.boolean(tutorials.telemetry)) {
-      appStore.set('tutorials.telemetry', defaultConfig.tutorials.telemetry)
+      settingsStore.set(
+        'tutorials.telemetry',
+        defaultConfig.tutorials.telemetry,
+      )
     }
   }
 }
 
-function _checkCompilation(appStore: SettingsStore, defaultConfig: Config) {
-  const compilation = appStore.get('compilation')
+function _checkConcurrentScripts(
+  settingsStore: SettingsStore,
+  defaultConfig: Config,
+) {
+  const compilation = settingsStore.get('compilation')
 
   if (is.nullOrUndefined(compilation)) {
-    appStore.set('compilation', defaultConfig.compilation)
+    settingsStore.set('compilation', defaultConfig.compilation)
   } else if (is.numericString(compilation.concurrentScripts)) {
-    appStore.set(
+    settingsStore.set(
       'compilation.concurrentScripts',
       parseInt(compilation.concurrentScripts, 10),
     )
   } else if (!is.number(compilation.concurrentScripts)) {
-    appStore.set(
+    settingsStore.set(
       'compilation.concurrentScripts',
       defaultConfig.compilation.concurrentScripts,
     )
@@ -198,20 +248,21 @@ function _checkCompilation(appStore: SettingsStore, defaultConfig: Config) {
 }
 
 export function checkStore(
-  appStore: SettingsStore,
+  settingsStore: SettingsStore,
   defaultConfig: Config,
+  args?: Args,
 ): void {
-  _checkMo2(appStore, defaultConfig)
-  _checkGameType(appStore, defaultConfig)
-  _checkGamePath(appStore, defaultConfig)
-  _checkFlag(appStore, defaultConfig)
-  _checkCompilerPath(appStore)
-  _checkOutput(appStore, defaultConfig)
-  _checkGroups(appStore, defaultConfig)
-  _checkTutorials(appStore, defaultConfig)
-  _checkCompilation(appStore, defaultConfig)
-  _checkNotSupportedKeys(appStore, defaultConfig)
-  _checkTelemetry(appStore, defaultConfig)
-  _checkTheme(appStore, defaultConfig)
-  _checkLocale(appStore, defaultConfig)
+  _checkMo2(settingsStore, defaultConfig)
+  _checkGameType(settingsStore, defaultConfig, args)
+  _checkGamePath(settingsStore, defaultConfig, args)
+  _checkFlag(settingsStore, defaultConfig)
+  _checkCompilerPath(settingsStore, args)
+  _checkOutput(settingsStore, defaultConfig, args)
+  _checkGroups(settingsStore, defaultConfig)
+  _checkTutorials(settingsStore, defaultConfig)
+  _checkConcurrentScripts(settingsStore, defaultConfig)
+  _checkNotSupportedKeys(settingsStore, defaultConfig)
+  _checkTelemetry(settingsStore, defaultConfig)
+  _checkTheme(settingsStore, defaultConfig)
+  _checkLocale(settingsStore, defaultConfig)
 }
