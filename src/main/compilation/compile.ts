@@ -38,13 +38,14 @@ function checkCommandResult(
 }
 
 export async function compile(scriptName: string): Promise<string> {
-  logger.debug('compiling the file', scriptName)
+  logger.info('compiling', scriptName)
 
-  const game = settingsStore.get('game')
-  const compilation = settingsStore.get('compilation')
-  const gamePath = game.path
-  const gameType = game.type
-  const compilerPath = compilation.compilerPath
+  const { path: gamePath, type: gameType } = settingsStore.get('game')
+  const {
+    output: outputPath,
+    compilerPath,
+    flag,
+  } = settingsStore.get('compilation')
   const dataFolder = path.join(gamePath, 'Data')
   const gameSource = toSource(gameType)
   const gameSourceAbsolute = path.join(dataFolder, gameSource)
@@ -53,7 +54,7 @@ export async function compile(scriptName: string): Promise<string> {
     exe: compilerPath,
     imports: [gameSourceAbsolute],
     cwd: gamePath,
-    output: path.join(gamePath, compilation.output),
+    output: path.join(gamePath, outputPath),
   }
 
   logger.debug('runner', runner)
@@ -118,7 +119,7 @@ export async function compile(scriptName: string): Promise<string> {
     scriptName,
     imports: runner.imports,
     output: runner.output,
-    flag: compilation.flag,
+    flag: flag,
   })
 
   try {

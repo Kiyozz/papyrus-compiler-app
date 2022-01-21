@@ -29,7 +29,7 @@ export function registerIpcEvents(
         logger.info(`"${name}" succeeded`)
 
         if (payload) {
-          logger.debug(`payload "${name}"`, payload)
+          logger.debug(`"${name}" payload`, payload)
         }
 
         return payload

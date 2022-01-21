@@ -7,7 +7,9 @@
 import is from '@sindresorhus/is'
 
 import {
+  CompilerPath,
   CompilerSourceFile,
+  GamePath,
   GameType,
   toCompilerSourceFile,
   toExecutable,
@@ -37,7 +39,7 @@ export class CheckInstallationHandler implements EventHandler {
       return hasCompiler
     }
 
-    const gameType = settingsStore.get('game').type
+    const gameType: GameType = settingsStore.get('game.type')
     const file = toCompilerSourceFile(gameType)
     const isUsingMo2: boolean = settingsStore.get('mo2.use')
 
@@ -55,9 +57,7 @@ export class CheckInstallationHandler implements EventHandler {
   private checkGameExe(): Promise<BadError> {
     this.logger.debug('checking game exe')
 
-    const game = settingsStore.get('game')
-    const gamePath = game.path
-    const gameType = game.type
+    const { path: gamePath, type: gameType } = settingsStore.get('game')
     const executable = toExecutable(gameType)
 
     const result: Promise<BadError> = Promise.resolve(
@@ -71,12 +71,14 @@ export class CheckInstallationHandler implements EventHandler {
 
   private checkMo2Instance(): Promise<BadError> {
     this.logger.debug('checking mo2 instance')
-
-    const mo2Use: boolean = settingsStore.get('mo2.use')
-    const mo2Instance: string = settingsStore.get('mo2.instance')
+    const { use: mo2Use, instance: mo2Instance } = settingsStore.get('mo2')
 
     const result: Promise<BadError> = Promise.resolve(
-      mo2Use ? (!path.exists(mo2Instance) ? 'mo2-instance' : false) : false,
+      mo2Use && mo2Instance
+        ? !path.exists(mo2Instance)
+          ? 'mo2-instance'
+          : false
+        : false,
     )
 
     this.logger.debug('checking mo2 instance - done')
@@ -114,7 +116,7 @@ export class CheckInstallationHandler implements EventHandler {
   }
 
   private checkInGameDataFolder(file: string): Promise<BadError> {
-    const gamePath: string = settingsStore.get('game.path')
+    const gamePath: GamePath = settingsStore.get('game.path')
     const gameType: GameType = settingsStore.get('game.type')
     this.logger.debug('checking in game Data folder')
 
@@ -152,7 +154,9 @@ export class CheckInstallationHandler implements EventHandler {
   private checkCompiler(): Promise<BadError> {
     this.logger.debug('checking compiler path')
 
-    const compilerPath: string = settingsStore.get('compilation.compilerPath')
+    const compilerPath: CompilerPath = settingsStore.get(
+      'compilation.compilerPath',
+    )
 
     const result: Promise<BadError> = Promise.resolve(
       path.exists(path.normalize(compilerPath)) ? false : 'compiler',

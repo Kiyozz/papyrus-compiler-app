@@ -4,6 +4,8 @@
  * All rights reserved.
  */
 
+import is from '@sindresorhus/is'
+
 export type GamePath = string
 export type CompilerPath = string
 export type OutputPath = string
@@ -77,4 +79,31 @@ export const toCompilerSourceFile = (game: GameType): CompilerSourceFile => {
     default:
       return 'Actor.psc'
   }
+}
+
+export const validateGame = {
+  gameType: (type?: GameType): type is GameType => {
+    if (is.undefined(type)) return false
+
+    switch (type) {
+      case GameType.se:
+      case GameType.le:
+      case GameType.vr:
+      case GameType.fo4:
+        return true
+    }
+
+    return false
+  },
+  gamePath: (path?: GamePath): path is GamePath => {
+    if (is.undefined(path)) return false
+
+    return is.nonEmptyString(path.trim())
+  },
+  compilerPath(path?: CompilerPath): path is CompilerPath {
+    return this.gamePath(path)
+  },
+  outputPath(path?: OutputPath): path is OutputPath {
+    return this.gamePath(path)
+  },
 }
