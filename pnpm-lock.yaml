@@ -25,7 +25,7 @@ specifiers:
   electron-builder: ~22.14.5
   electron-context-menu: ^3.1.1
   electron-default-menu: ~1.0.2
-  electron-esbuild: ^4.0.1
+  electron-esbuild: ^5.0.0
   electron-fetch: ^1.7.4
   electron-log: ~4.4.4
   electron-store: ~8.0.1
@@ -92,7 +92,7 @@ devDependencies:
   electron-builder: 22.14.5
   electron-context-menu: 3.1.1
   electron-default-menu: 1.0.2
-  electron-esbuild: 4.0.1_esbuild@0.14.11+vite@2.7.12
+  electron-esbuild: 5.0.0_esbuild@0.14.11+vite@2.7.12
   electron-fetch: 1.7.4
   electron-log: 4.4.4
   electron-store: 8.0.1
@@ -2993,10 +2993,10 @@ packages:
       unused-filename: 2.1.0
     dev: true
 
-  /electron-esbuild/4.0.1_esbuild@0.14.11+vite@2.7.12:
+  /electron-esbuild/5.0.0_esbuild@0.14.11+vite@2.7.12:
     resolution:
       {
-        integrity: sha512-bdBOTtYDjkFK71tzwsjEL7ZMoUofeL4PwKK/Q2k1UE4yDgSK8nkyCJWJu2uld/5VD2MryZD/ZpEuVcmPvWaQIA==,
+        integrity: sha512-WenOrcg/gBF9vXREqfnN3anOfq8A/uW26kIm9pfJQqpOOBBdiKL0jCx+Uqp+TzxIkJxvo6Pio9adfh83f/5/Rg==,
       }
     engines: { node: ^14.13.1 || >=16.0.0 }
     hasBin: true

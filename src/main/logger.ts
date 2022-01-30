@@ -7,8 +7,10 @@
 import log, { LogFile, LogFunctions, Transports } from 'electron-log'
 import { is } from 'electron-util'
 
+import { cliArgs } from './cli-args'
+
 const isDev = is.development
-const isDebug = process.argv.includes('--debug')
+const isDebug = cliArgs.debug ?? false
 
 if (!isDev && !isDebug) {
   log.transports.console.level = false

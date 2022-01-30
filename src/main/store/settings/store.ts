@@ -8,19 +8,13 @@ import { app } from 'electron'
 import Store from 'electron-store'
 import { is } from 'electron-util'
 import * as fs from 'fs'
-import minimist from 'minimist'
 import { osLocaleSync } from 'os-locale'
 
-import {
-  CompilerPath,
-  GamePath,
-  GameType,
-  OutputPath,
-} from '../../../common/game'
+import { GameType } from '../../../common/game'
 import { Theme } from '../../../common/theme'
 import { Config } from '../../../common/types/config'
+import { cliArgs } from '../../cli-args'
 import { Env } from '../../env'
-import { Logger } from '../../logger'
 import { join } from '../../path/path'
 import { checkStore } from './check'
 import { migrate410 } from './migrations/4.1.0.migration'
@@ -36,15 +30,6 @@ const jsonPath = is.development
 const json: { version: string } = JSON.parse(
   fs.readFileSync(jsonPath).toString(),
 )
-
-type Args = {
-  'game-path'?: GamePath
-  'game-type'?: GameType
-  'compiler-path'?: CompilerPath
-  'output-path'?: OutputPath
-}
-
-const _logger = new Logger('settings-store')
 
 const defaultConfig: Config = {
   game: {
@@ -92,14 +77,8 @@ const settingsStore = new Store<Config>({
   },
 } as never)
 
-const argv = minimist<Args>(process.argv)
-
-_logger.debug('application arguments', argv)
-
-checkStore(settingsStore, defaultConfig, argv)
+checkStore(settingsStore, defaultConfig, cliArgs)
 
 export type SettingsStore = Store<Config>
 
-export type { Args }
-
-export { argv, settingsStore, defaultConfig }
+export { settingsStore, defaultConfig }

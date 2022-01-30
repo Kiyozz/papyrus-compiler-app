@@ -9,10 +9,11 @@ import is from '@sindresorhus/is'
 import { GamePath, GameType, validateGame } from '../../../common/game'
 import { Theme } from '../../../common/theme'
 import type { Config } from '../../../common/types/config'
+import { CliArgs } from '../../cli-args'
 import { DEFAULT_COMPILER_PATH } from '../../constants'
 import { join } from '../../path/path'
 import { validateGroup } from '../../validators/group.validator'
-import type { Args, SettingsStore } from './store'
+import type { SettingsStore } from './store'
 
 function _checkLocale(settingsStore: SettingsStore, defaultConfig: Config) {
   const locale = settingsStore.get('locale')
@@ -100,7 +101,7 @@ function _checkGroups(settingsStore: SettingsStore, defaultConfig: Config) {
 function _checkGameType(
   settingsStore: SettingsStore,
   defaultConfig: Config,
-  args?: Args,
+  args?: CliArgs,
 ) {
   const gameType: GameType = settingsStore.get('game.type')
   const resetGameType = (type?: GameType) =>
@@ -132,7 +133,7 @@ function _checkGameType(
 function _checkGamePath(
   settingsStore: SettingsStore,
   defaultConfig: Config,
-  args?: Args,
+  args?: CliArgs,
 ) {
   const gamePath: string = settingsStore.get('game.path')
   const resetGamePath = (path?: GamePath) =>
@@ -154,7 +155,7 @@ function _checkGamePath(
 function _checkOutput(
   settingsStore: SettingsStore,
   defaultConfig: Config,
-  args?: Args,
+  args?: CliArgs,
 ) {
   const output = settingsStore.get('compilation.output')
   const outputArgs = args?.['output-path']
@@ -170,7 +171,7 @@ function _checkOutput(
   }
 }
 
-function _checkCompilerPath(settingsStore: SettingsStore, args?: Args) {
+function _checkCompilerPath(settingsStore: SettingsStore, args?: CliArgs) {
   const compilerPath = settingsStore.get('compilation.compilerPath')
   const gamePath: string = settingsStore.get('game.path')
   const compilerPathArgs = args?.['compiler-path']
@@ -250,7 +251,7 @@ function _checkConcurrentScripts(
 export function checkStore(
   settingsStore: SettingsStore,
   defaultConfig: Config,
-  args?: Args,
+  args?: CliArgs,
 ): void {
   _checkMo2(settingsStore, defaultConfig)
   _checkGameType(settingsStore, defaultConfig, args)

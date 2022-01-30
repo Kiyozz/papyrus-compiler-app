@@ -53,7 +53,7 @@
     "electron-builder": "~22.14.5",
     "electron-context-menu": "^3.1.1",
     "electron-default-menu": "~1.0.2",
-    "electron-esbuild": "^4.0.1",
+    "electron-esbuild": "^5.0.0",
     "electron-fetch": "^1.7.4",
     "electron-log": "~4.4.4",
     "electron-store": "~8.0.1",
