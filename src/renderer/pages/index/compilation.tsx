@@ -10,12 +10,14 @@ import PlayIcon from '@material-ui/icons/PlayCircleFilled'
 import SearchIcon from '@material-ui/icons/Search'
 import React, { ReactNode, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useDidMount } from 'rooks'
 
 import { TelemetryEvents } from '../../../common/telemetry-events'
 import { Script } from '../../../common/types/script'
 import DialogRecentFiles from '../../components/dialog/dialog-recent-files'
 import Page from '../../components/page'
 import PageAppBar from '../../components/page-app-bar'
+import Toast from '../../components/toast'
 import { useApp } from '../../hooks/use-app'
 import { useCompilation } from '../../hooks/use-compilation'
 import { useDrop, useSetDrop } from '../../hooks/use-drop'
@@ -25,6 +27,7 @@ import { ScriptRenderer } from '../../types'
 import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
 import { reorderScripts } from '../../utils/scripts/reorder-scripts'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
+import { useSettings } from '../settings/use-settings'
 import GroupsLoader from './groups-loader'
 import ScriptItem from './script-item'
 
@@ -42,6 +45,11 @@ const Compilation = () => {
   const { send } = useTelemetry()
   const { drop } = useDrop()
   const [dialogState, setDialogState] = useState(DialogRecentFilesState.close)
+  const { checkConfig, configError, resetConfigError } = useSettings()
+
+  useDidMount(() => {
+    checkConfig()
+  })
 
   const onDrop = useCallback(
     (pscFiles: File[]) => {
@@ -198,11 +206,24 @@ const Compilation = () => {
           onClose={() => setDialogState(DialogRecentFilesState.close)}
         />
 
+        <Toast
+          message={t('config.checkError', { context: configError })}
+          onClose={resetConfigError}
+          in={!!configError}
+          speedMs={300}
+          autoCloseMs={0}
+          actions={
+            <button className="btn" onClick={checkConfig}>
+              {t('common.refresh')}
+            </button>
+          }
+        />
+
         <div className="flex pb-4 gap-2">
           <button
             className="btn btn-primary"
             onClick={onClickStart}
-            disabled={scripts.length === 0 || isRunning}
+            disabled={!!configError || scripts.length === 0 || isRunning}
           >
             <div className="icon">
               <Icon />
@@ -224,8 +245,8 @@ const Compilation = () => {
           <div className="flex flex-col gap-2">{scriptsList}</div>
         ) : (
           <>
-            <p className="text-sm">{t('page.compilation.dragAndDropText')}</p>
-            <p className="text-sm font-bold">
+            <p>{t('page.compilation.dragAndDropText')}</p>
+            <p className="font-bold">
               {t('page.compilation.dragAndDropAdmin')}
             </p>
           </>

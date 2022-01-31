@@ -23,12 +23,10 @@ export type Bridge = {
       event: T,
       args: TelemetryEventsProperties[T],
     ) => void
-    active: (active: boolean) => void
+    setActive: (active: boolean) => void
   }
 
-  version: {
-    get: () => Promise<string>
-  }
+  getVersion: () => Promise<string>
 
   changelog: {
     on: (fn: (args: unknown) => unknown) => void
@@ -38,10 +36,6 @@ export type Bridge = {
   error: (error: Error) => void
 
   online: (online: boolean) => void
-
-  installation: {
-    check: () => Promise<BadError>
-  }
 
   clipboard: {
     copy: (text: string) => Promise<void>
@@ -54,6 +48,7 @@ export type Bridge = {
     ) => Promise<Config>
     get: () => Promise<Config>
     onReset: (cb: () => void) => Disposable
+    check: () => Promise<BadError>
   }
 
   isProduction: () => Promise<boolean>

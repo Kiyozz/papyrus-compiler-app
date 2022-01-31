@@ -10,7 +10,7 @@ import React, { useEffect, ReactNode } from 'react'
 import Scale, { Delay } from './animations/scale'
 
 type Props = {
-  message: string
+  message?: string
   actions?: ReactNode
   onClose: () => void
   in: boolean

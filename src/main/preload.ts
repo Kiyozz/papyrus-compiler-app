@@ -28,20 +28,16 @@ const api: Bridge = {
           ),
         )
     },
-    active: active => ipcRenderer.invoke(IpcEvent.telemetryActive, active),
+    setActive: active =>
+      ipcRenderer.invoke(IpcEvent.telemetrySetActive, active),
   },
-  version: {
-    get: () => ipcRenderer.invoke<string>(IpcEvent.getVersion),
-  },
+  getVersion: () => ipcRenderer.invoke<string>(IpcEvent.getVersion),
   changelog: {
     on: fn => ipcRenderer.on(IpcEvent.checkForUpdates, fn),
     off: fn => ipcRenderer.removeListener(IpcEvent.checkForUpdates, fn),
   },
   error: e => ipcRenderer.invoke(IpcEvent.appError, e),
   online: online => ipcRenderer.send(IpcEvent.online, { online }),
-  installation: {
-    check: () => ipcRenderer.invoke<BadError>(IpcEvent.checkInstallation),
-  },
   clipboard: {
     copy: text => ipcRenderer.invoke(IpcEvent.clipboardCopy, { text }),
   },
@@ -62,6 +58,7 @@ const api: Bridge = {
         },
       }
     },
+    check: () => ipcRenderer.invoke<BadError>(IpcEvent.configCheck),
   },
   isProduction: () => ipcRenderer.invoke<boolean>(IpcEvent.isProduction),
   compilation: {

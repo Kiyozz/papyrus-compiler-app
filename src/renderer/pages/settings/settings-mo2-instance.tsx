@@ -26,7 +26,7 @@ const SettingsMo2Instance = ({
   const {
     config: { mo2 },
   } = useApp()
-  const { isBadInstallation } = useSettings()
+  const { configError } = useSettings()
 
   if (!mo2.use) {
     return null
@@ -36,14 +36,14 @@ const SettingsMo2Instance = ({
     <>
       <DialogTextField
         id="mo2-instance"
-        error={isBadInstallation === 'mo2-instance'}
+        error={configError === 'mo2-instance'}
         defaultValue={mo2.instance ?? ''}
         label={t('page.settings.mo2.instance')}
         onChange={onChangeMo2Instance}
         type="folder"
       />
 
-      {isBadInstallation === 'mo2-instance' && (
+      {configError === 'mo2-instance' && (
         <Alert>
           <div className="w-full">
             <p className="select-text mb-2">
@@ -61,7 +61,7 @@ const SettingsMo2Instance = ({
               <div className="icon">
                 <RefreshIcon />
               </div>
-              {t('page.settings.actions.refresh')}
+              {t('common.refresh')}
             </button>
           </div>
         </Alert>

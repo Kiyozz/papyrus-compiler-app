@@ -39,7 +39,7 @@ const SettingsGame = ({
   const {
     config: { game, compilation },
   } = useApp()
-  const { isBadInstallation } = useSettings()
+  const { configError } = useSettings()
   const exe = toExecutable(game.type)
 
   return (
@@ -87,7 +87,7 @@ const SettingsGame = ({
       <div className="mt-3">
         <DialogTextField
           id="game-folder"
-          error={isBadInstallation === 'game'}
+          error={configError === 'game'}
           label={t('page.settings.gameFolderInfo', {
             gameType: game.type,
             exe,
@@ -101,7 +101,7 @@ const SettingsGame = ({
       <div className="mt-3 relative" id="settings-compiler">
         <DialogTextField
           id="compiler-path"
-          error={isBadInstallation === 'compiler'}
+          error={configError === 'compiler'}
           label={t('page.settings.compilerPath')}
           defaultValue={compilation.compilerPath}
           onChange={onChangeCompilerPath}
@@ -109,7 +109,7 @@ const SettingsGame = ({
         />
       </div>
 
-      {isBadInstallation !== false && isBadInstallation !== 'mo2-instance' && (
+      {configError !== false && configError !== 'mo2-instance' && (
         <Alert>
           <div className="w-full">
             <p className="select-text mb-2">
@@ -117,13 +117,13 @@ const SettingsGame = ({
             </p>
 
             <p className="select-text">
-              {isBadInstallation === 'game' &&
+              {configError === 'game' &&
                 t('page.settings.errors.game', { exe })}
-              {isBadInstallation === 'compiler' &&
+              {configError === 'compiler' &&
                 t('page.settings.errors.compiler', {
                   compilerExe: compilation.compilerPath,
                 })}
-              {isBadInstallation === 'scripts' &&
+              {configError === 'scripts' &&
                 t('page.settings.errors.scripts', {
                   file: toCompilerSourceFile(game.type),
                 })}
@@ -134,7 +134,7 @@ const SettingsGame = ({
               <div className="icon">
                 <RefreshIcon />
               </div>
-              {t('page.settings.actions.refresh')}
+              {t('common.refresh')}
             </button>
           </div>
         </Alert>

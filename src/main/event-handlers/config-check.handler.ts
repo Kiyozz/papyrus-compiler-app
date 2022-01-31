@@ -18,15 +18,20 @@ import {
 } from '../../common/game'
 import { BadError } from '../../common/types/bad-error'
 import { EventHandler } from '../interfaces/event-handler'
+import { IpcEvent } from '../ipc-event'
 import { Logger } from '../logger'
 import * as path from '../path/path'
 import { toSlash } from '../slash'
 import { settingsStore } from '../store/settings/store'
 
-export class CheckInstallationHandler implements EventHandler {
-  private readonly logger = new Logger('CheckInstallationHandler')
+const _logger = new Logger(IpcEvent.configCheck)
 
+export class ConfigCheckHandler implements EventHandler {
   async listen(): Promise<BadError> {
+    const gameType: GameType = settingsStore.get('game.type')
+
+    _logger.debug('the game type is', gameType)
+
     const hasGameExe = await this.checkGameExe()
 
     if (hasGameExe !== false) {
@@ -39,7 +44,6 @@ export class CheckInstallationHandler implements EventHandler {
       return hasCompiler
     }
 
-    const gameType: GameType = settingsStore.get('game.type')
     const file = toCompilerSourceFile(gameType)
     const isUsingMo2: boolean = settingsStore.get('mo2.use')
 
@@ -55,35 +59,27 @@ export class CheckInstallationHandler implements EventHandler {
   }
 
   private checkGameExe(): Promise<BadError> {
-    this.logger.debug('checking game exe')
+    _logger.debug('checking game exe')
 
     const { path: gamePath, type: gameType } = settingsStore.get('game')
     const executable = toExecutable(gameType)
 
-    const result: Promise<BadError> = Promise.resolve(
+    return Promise.resolve(
       path.exists(path.join(gamePath, executable)) ? false : 'game',
     )
-
-    this.logger.debug('checking game exe - done')
-
-    return result
   }
 
   private checkMo2Instance(): Promise<BadError> {
-    this.logger.debug('checking mo2 instance')
+    _logger.debug('checking mo2 instance')
     const { use: mo2Use, instance: mo2Instance } = settingsStore.get('mo2')
 
-    const result: Promise<BadError> = Promise.resolve(
+    return Promise.resolve(
       mo2Use && mo2Instance
         ? !path.exists(mo2Instance)
           ? 'mo2-instance'
           : false
         : false,
     )
-
-    this.logger.debug('checking mo2 instance - done')
-
-    return result
   }
 
   private async checkInMo2(file: CompilerSourceFile): Promise<BadError> {
@@ -94,7 +90,7 @@ export class CheckInstallationHandler implements EventHandler {
       return this.checkInGameDataFolder(file)
     }
 
-    this.logger.info('checking in mo2 folder')
+    _logger.info('checking in mo2 folder')
 
     const sourcesFolder = toSource(gameType)
     const otherSourcesFolder = toOtherSource(gameType)
@@ -118,7 +114,7 @@ export class CheckInstallationHandler implements EventHandler {
   private checkInGameDataFolder(file: string): Promise<BadError> {
     const gamePath: GamePath = settingsStore.get('game.path')
     const gameType: GameType = settingsStore.get('game.type')
-    this.logger.debug('checking in game Data folder')
+    _logger.debug('checking in game Data folder')
 
     const gameScriptsFolder = path.join(
       gamePath,
@@ -146,24 +142,18 @@ export class CheckInstallationHandler implements EventHandler {
       return Promise.resolve('scripts')
     }
 
-    this.logger.debug('checking in game Data folder - done')
-
     return Promise.resolve(false)
   }
 
   private checkCompiler(): Promise<BadError> {
-    this.logger.debug('checking compiler path')
+    _logger.debug('checking compiler path')
 
     const compilerPath: CompilerPath = settingsStore.get(
       'compilation.compilerPath',
     )
 
-    const result: Promise<BadError> = Promise.resolve(
+    return Promise.resolve(
       path.exists(path.normalize(compilerPath)) ? false : 'compiler',
     )
-
-    this.logger.debug('checking compiler path - done')
-
-    return result
   }
 }

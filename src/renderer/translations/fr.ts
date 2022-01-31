@@ -9,6 +9,39 @@
 import { TranslationShape } from './translation-shape'
 
 const fr: TranslationShape = {
+  common: {
+    refresh: 'Rafraîchir',
+    selectFolder: 'Sélectionner un dossier',
+    logs: {
+      nav: 'Logs',
+      title: 'Logs de compilation',
+      noLogs: 'Aucun logs',
+      close: 'Fermer',
+      scriptFailed: 'Problème avec le script {{script}} : {{message}}',
+      scriptFailedCmd: 'Commande éxécutée : {{cmd}}',
+      // Check if those trads are useful
+      invalidConfigurationGame:
+        "Le dossier {{folder}} n'est pas un dossier de jeu valide. Il ne contient pas {{exe}}.",
+      invalidConfigurationCompiler:
+        "{{exe}} n'est pas un compilateur valide. Le fichier n'existe pas.",
+      invalidConfigurationScripts:
+        "Votre configuration n'est pas valide. Impossible de valider l'installation de Creation Kit. " +
+        "L'application vérifie la présence du fichier Actor.psc pour valider votre installation de Creation Kit. " +
+        'Impossible de trouver le fichier Actor.psc dans les dossiers Source\\Scripts ou Scripts\\Source. ' +
+        "Si vous utilisez l'intégration MO2 de l'application, " +
+        'les dossiers overwrite et mods sont également vérifiés.',
+    },
+  },
+  config: {
+    checkError_game: 'Vérifiez que le chemin du jeu est bien configuré.',
+    checkError_compiler:
+      'Vérifiez que le chemin du compilateur est bien configuré.',
+    'checkError_mo2-instance':
+      "Vérifiez que l'instance MO2 est bien configurée.",
+    checkError_scripts:
+      'Vérifiez que votre installation de Creation Kit est valide. ' +
+      "L'application vérifie la présence du fichier Actor.psc dans les dossiers Data\\Source\\Scripts et Data\\Scripts\\Source",
+  },
   loading: 'Chargement',
   nav: {
     compilation: 'Compilation',
@@ -63,9 +96,6 @@ const fr: TranslationShape = {
     },
     settings: {
       title: 'Paramètres',
-      actions: {
-        refresh: 'Rafraîchir',
-      },
       game: 'Jeu',
       gameFolderInfo: 'Dossier de {{gameType}} (où {{exe}} se trouve)',
       compilerPath: 'Où se trouve le fichier PapyrusCompiler.exe ?',
@@ -116,27 +146,6 @@ const fr: TranslationShape = {
       message: 'Nouvelle version disponible : {{version}}',
     },
     alreadyLastVersion: 'Vous disposez de la dernière version',
-  },
-  common: {
-    selectFolder: 'Sélectionner un dossier',
-    logs: {
-      nav: 'Logs',
-      title: 'Logs de compilation',
-      noLogs: 'Aucun logs',
-      close: 'Fermer',
-      scriptFailed: 'Problème avec le script {{script}} : {{message}}',
-      scriptFailedCmd: 'Commande éxécutée : {{cmd}}',
-      invalidConfigurationGame:
-        "Le dossier {{folder}} n'est pas un dossier de jeu valide. Il ne contient pas {{exe}}.",
-      invalidConfigurationCompiler:
-        "{{exe}} n'est pas un compilateur valide. Le fichier n'existe pas.",
-      invalidConfigurationScripts:
-        "Votre configuration n'est pas valide. Impossible de valider l'installation du Creation Kit. " +
-        "L'application vérifie la présence du fichier Actor.psc pour valider votre installation du Creation Kit. " +
-        'Impossible de trouver le fichier Actor.psc dans les dossiers Source\\Scripts ou Scripts\\Source. ' +
-        "Si vous utilisez l'integration MO2 de l'application, " +
-        'les dossiers overwrite et mods sont également vérifiés.',
-    },
   },
   tutorials: {
     close: 'Fermer',

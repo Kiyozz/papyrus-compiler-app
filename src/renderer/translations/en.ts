@@ -7,6 +7,27 @@
 import { TranslationShape } from './translation-shape'
 
 const en: TranslationShape = {
+  common: {
+    refresh: 'Refresh',
+    selectFolder: 'Select a folder',
+    logs: {
+      nav: 'Logs',
+      title: 'Compilation logs',
+      noLogs: 'No logs',
+      close: 'Close',
+      scriptFailed: 'Script {{script}} failed to compile: {{message}}',
+      scriptFailedCmd: 'Executed command: {{cmd}}',
+      invalidConfigurationGame:
+        '{{folder}} is an invalid game folder. The folder does not contains {{exe}}.',
+      invalidConfigurationCompiler:
+        '{{exe}} is a invalid compiler. This file does not exists.',
+      invalidConfigurationScripts:
+        'Your configuration is incorrect. Cannot validate Creation Kit installation. ' +
+        'The app checks the presence of Actor.psc to validate your Creation Kit installation. ' +
+        'Cannot find the file Actor.psc in Source\\Scripts or Scripts\\Source. ' +
+        "If you're using the app MO2 integration, the folders overwrite and mods are also checked.",
+    },
+  },
   loading: 'Loading',
   nav: {
     compilation: 'Compilation',
@@ -60,9 +81,6 @@ const en: TranslationShape = {
     },
     settings: {
       title: 'Settings',
-      actions: {
-        refresh: 'Refresh',
-      },
       game: 'Game',
       gameFolderInfo: '{{gameType}} folder (where {{exe}} is located)',
       compilerPath: 'Where is the PapyrusCompiler.exe file located?',
@@ -111,26 +129,6 @@ const en: TranslationShape = {
       message: 'New version available: {{version}}',
     },
     alreadyLastVersion: 'PCA is up to date',
-  },
-  common: {
-    selectFolder: 'Select a folder',
-    logs: {
-      nav: 'Logs',
-      title: 'Compilation logs',
-      noLogs: 'No logs',
-      close: 'Close',
-      scriptFailed: 'Script {{script}} failed to compile: {{message}}',
-      scriptFailedCmd: 'Executed command: {{cmd}}',
-      invalidConfigurationGame:
-        '{{folder}} is an invalid game folder. The folder does not contains {{exe}}.',
-      invalidConfigurationCompiler:
-        '{{exe}} is a invalid compiler. This file does not exists.',
-      invalidConfigurationScripts:
-        'Your configuration is incorrect. Cannot validate Creation Kit installation. ' +
-        'The app checks the presence of Actor.psc to validate your Creation Kit installation. ' +
-        'Cannot find the file Actor.psc in Source\\Scripts or Scripts\\Source. ' +
-        "If you're using the app MO2 integration, the folders overwrite and mods are also checked.",
-    },
   },
   tutorials: {
     close: 'Close',

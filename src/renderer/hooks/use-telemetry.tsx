@@ -38,7 +38,7 @@ const TelemetryProvider = ({ children }: React.PropsWithChildren<unknown>) => {
     [config.telemetry],
   )
   const setActive = useCallback((active: boolean) => {
-    bridge.telemetry.active(active)
+    bridge.telemetry.setActive(active)
   }, [])
 
   return (
