@@ -44,11 +44,16 @@ const SettingsGame = ({
 
   return (
     <div className="paper relative" id="settings-game">
-      <h1 className="text-2xl dark:text-white mb-3">
+      <h1 className="text-3xl dark:text-white mb-3">
         {t('page.settings.game')}
       </h1>
       <FormControl component="fieldset" fullWidth>
-        <RadioGroup row value={game.type} onChange={onClickRadio}>
+        <RadioGroup
+          row
+          value={game.type}
+          onChange={onClickRadio}
+          classes={{ row: 'justify-between' }}
+        >
           <FormControlLabel
             value={GameType.le}
             classes={{

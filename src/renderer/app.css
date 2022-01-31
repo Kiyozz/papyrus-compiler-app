@@ -65,7 +65,7 @@ body {
 
 .btn,
 .btn-icon {
-  @apply select-none font-medium text-sm tracking-wide;
+  @apply select-none font-medium tracking-wide;
   @apply rounded inline-flex items-center justify-center;
   @apply px-2 py-1.5;
   @apply transition;

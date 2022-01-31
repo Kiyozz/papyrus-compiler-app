@@ -94,7 +94,7 @@ const en: TranslationShape = {
       },
       mo2: {
         enable: 'Enable',
-        enableText: 'only if the app is not started from MO2',
+        enableText: 'only if PCA is not started from MO2',
         instance: 'Instance folder',
         limit: 'Limit {{limit}}',
         errorInstance:

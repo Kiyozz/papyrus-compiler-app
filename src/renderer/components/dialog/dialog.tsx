@@ -65,7 +65,7 @@ const Dialog = ({
     () => (
       <>
         {title && (
-          <div className="sticky top-0 flex-initial flex text-xl font-medium py-4 px-6">
+          <div className="sticky top-0 flex-initial flex text-2xl font-medium py-4 px-6">
             {title}
           </div>
         )}

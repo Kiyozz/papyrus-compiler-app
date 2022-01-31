@@ -55,7 +55,7 @@ const TextField = ({
       {label && (
         <label
           className={cx(
-            'text-xs block text-black-600 dark:text-gray-300',
+            'block text-black-600 dark:text-gray-300',
             error && 'label-danger',
           )}
           htmlFor={id}
@@ -64,10 +64,7 @@ const TextField = ({
         </label>
       )}
       <div
-        className={cx(
-          'relative text-sm input pb-0.5 flex',
-          error && 'input-danger',
-        )}
+        className={cx('relative input pb-0.5 flex', error && 'input-danger')}
       >
         {startIcon && (
           <div
@@ -94,7 +91,7 @@ const TextField = ({
         />
       </div>
       {is.string(infoText) && (
-        <div className="text-xs mt-1 text-black-600 dark:text-light-800">
+        <div className="text-sm mt-1 text-black-600 dark:text-light-800">
           {infoText}
         </div>
       )}
