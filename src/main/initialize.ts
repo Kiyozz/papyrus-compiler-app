@@ -6,8 +6,8 @@
 
 import { registerContextMenu } from './context-menu.register'
 import { Env } from './env'
-import { CheckInstallationHandler } from './event-handlers/check-installation.handler'
 import { ClipboardCopyHandler } from './event-handlers/clipboard-copy.handler'
+import { ConfigCheckHandler } from './event-handlers/config-check.handler'
 import { ConfigGetHandler } from './event-handlers/config-get.handler'
 import { ConfigUpdateHandler } from './event-handlers/config-update.handler'
 import { DialogHandler } from './event-handlers/dialog.handler'
@@ -102,7 +102,7 @@ export async function initialize(
   const openFileHandler = new OpenFileHandler()
   const handlers = new Map<string, EventHandler>([
     [IpcEvent.openDialog, new DialogHandler()],
-    [IpcEvent.checkInstallation, new CheckInstallationHandler()],
+    [IpcEvent.configCheck, new ConfigCheckHandler()],
     [IpcEvent.configUpdate, new ConfigUpdateHandler()],
     [IpcEvent.configGet, new ConfigGetHandler()],
     [IpcEvent.filesStats, new FileStatHandler()],
@@ -111,7 +111,7 @@ export async function initialize(
     [IpcEvent.isProduction, new IsProductionHandler()],
     [IpcEvent.clipboardCopy, new ClipboardCopyHandler()],
     [IpcEvent.telemetry, new TelemetryHandler(telemetry)],
-    [IpcEvent.telemetryActive, new TelemetryActiveHandler(telemetry)],
+    [IpcEvent.telemetrySetActive, new TelemetryActiveHandler(telemetry)],
     [IpcEvent.recentFilesGet, new RecentFilesGetHandler()],
     [IpcEvent.recentFilesSet, new RecentFilesSetHandler()],
     [IpcEvent.recentFilesClear, new RecentFilesClearHandler()],

@@ -16,31 +16,31 @@ import { BadError } from '../../../common/types/bad-error'
 import bridge from '../../bridge'
 
 type _SettingsContext = {
-  isBadInstallation: BadError
-  checkInstallation: () => void
-  resetBadInstallation: () => void
+  configError: BadError
+  checkConfig: () => void
+  resetConfigError: () => void
 }
 
 const _Context = createContext({} as _SettingsContext)
 
 const SettingsProvider = ({ children }: React.PropsWithChildren<unknown>) => {
-  const [isBadInstallation, setBadInstallation] = useState<BadError>(false)
+  const [configError, setConfigError] = useState<BadError>(false)
 
-  const detectBadInstallation = useCallback(async () => {
-    const fileExists = await bridge.installation.check()
+  const checkConfig = useCallback(async () => {
+    const configError = await bridge.config.check()
 
-    setBadInstallation(fileExists)
+    setConfigError(configError)
   }, [])
 
-  const resetBadInstallation = useCallback(() => setBadInstallation(false), [])
+  const resetConfigError = useCallback(() => setConfigError(false), [])
 
   const value: _SettingsContext = useMemo(
     () => ({
-      isBadInstallation,
-      checkInstallation: detectBadInstallation,
-      resetBadInstallation,
+      configError,
+      checkConfig,
+      resetConfigError,
     }),
-    [detectBadInstallation, isBadInstallation, resetBadInstallation],
+    [checkConfig, configError, resetConfigError],
   )
 
   return <_Context.Provider value={value}>{children}</_Context.Provider>

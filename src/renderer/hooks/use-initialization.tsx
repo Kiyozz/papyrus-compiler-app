@@ -22,12 +22,12 @@ import { useVersion } from './use-version'
 const GITHUB_REPOSITORY =
   'https://api.github.com/repos/Kiyozz/papyrus-compiler-app'
 
-type _InitializationContext = {
+type InitializationContext = {
   latestVersion: string
   done: boolean
 }
 
-const _Context = createContext({} as _InitializationContext)
+const Context = createContext({} as InitializationContext)
 
 const InitializationProvider = ({
   children,
@@ -60,7 +60,7 @@ const InitializationProvider = ({
   )
 
   useDidMount(() => {
-    bridge.version.get().then(async v => {
+    bridge.getVersion().then(async v => {
       setVersion(v)
       setDone(true)
 
@@ -68,6 +68,7 @@ const InitializationProvider = ({
     })
   })
 
+  // TODO: move using useIpc
   useEffect(() => {
     const check = async () => {
       const foundNewVersion = await checkUpdates(version)
@@ -81,15 +82,16 @@ const InitializationProvider = ({
 
     return () => bridge.changelog.off(check)
   }, [checkUpdates, setCheckUsingLastVersion, version])
+
   return (
-    <_Context.Provider value={{ done, latestVersion }}>
+    <Context.Provider value={{ done, latestVersion }}>
       {children}
-    </_Context.Provider>
+    </Context.Provider>
   )
 }
 
-export const useInitialization = (): _InitializationContext => {
-  return useContext(_Context)
+export const useInitialization = (): InitializationContext => {
+  return useContext(Context)
 }
 
 export default InitializationProvider

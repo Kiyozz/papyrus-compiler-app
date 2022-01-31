@@ -34,8 +34,7 @@ const Settings = () => {
     setConfig,
     refreshConfig,
   } = useApp()
-  const { checkInstallation, isBadInstallation, resetBadInstallation } =
-    useSettings()
+  const { checkConfig, configError, resetConfigError } = useSettings()
   const { isLoading } = useLoading()
   const { send } = useTelemetry()
 
@@ -80,13 +79,13 @@ const Settings = () => {
     [setConfig],
   )
   const debouncedcheckInstallation = useMemo(
-    () => debounce(checkInstallation, { wait: 500 }),
-    [checkInstallation],
+    () => debounce(checkConfig, { wait: 500 }),
+    [checkConfig],
   )
 
   const onClickRadio = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      resetBadInstallation()
+      resetConfigError()
       const value = e.target.value as GameType
 
       if (
@@ -98,11 +97,11 @@ const Settings = () => {
       send(TelemetryEvents.settingsGame, { game: value })
       setGame(value)
     },
-    [resetBadInstallation, setGame, send],
+    [resetConfigError, setGame, send],
   )
 
   useEffect(() => {
-    resetBadInstallation()
+    resetConfigError()
 
     if (!game.type || !game.path || !compilation.compilerPath) {
       return
@@ -115,7 +114,7 @@ const Settings = () => {
     game.path,
     game.type,
     mo2Instance,
-    resetBadInstallation,
+    resetConfigError,
   ])
 
   const onChangeGameFolder = useCallback(
@@ -158,9 +157,9 @@ const Settings = () => {
       e.preventDefault()
 
       send(TelemetryEvents.settingsRefresh, {})
-      checkInstallation()
+      checkConfig()
     },
-    [checkInstallation, send],
+    [checkConfig, send],
   )
 
   const onClickPageRefresh = useCallback(() => {
@@ -168,13 +167,13 @@ const Settings = () => {
       return
     }
 
-    if (isBadInstallation) {
-      checkInstallation()
+    if (configError) {
+      checkConfig()
     }
 
     refreshConfig()
     send(TelemetryEvents.settingsRefresh, {})
-  }, [isLoading, isBadInstallation, refreshConfig, checkInstallation, send])
+  }, [isLoading, configError, refreshConfig, checkConfig, send])
 
   return (
     <>
@@ -185,7 +184,7 @@ const Settings = () => {
             <div className="icon">
               <RefreshIcon />
             </div>
-            {t('page.settings.actions.refresh')}
+            {t('common.refresh')}
           </button>,
         ]}
       />

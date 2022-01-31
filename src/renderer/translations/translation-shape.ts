@@ -5,12 +5,33 @@
  */
 
 export interface TranslationShape {
+  common: {
+    refresh: string
+    selectFolder: string
+    logs: {
+      nav: string
+      title: string
+      noLogs: string
+      close: string
+      scriptFailed: string
+      scriptFailedCmd: string
+      invalidConfigurationGame: string
+      invalidConfigurationCompiler: string
+      invalidConfigurationScripts: string
+    }
+  }
   loading: string
   nav: {
     compilation: string
     groups: string
     settings: string
     closePanel: string
+  }
+  config: {
+    checkError_game: string
+    checkError_compiler: string
+    checkError_scripts: string
+    'checkError_mo2-instance': string
   }
   page: {
     compilation: {
@@ -55,9 +76,6 @@ export interface TranslationShape {
     }
     settings: {
       title: string
-      actions: {
-        refresh: string
-      }
       game: string
       gameFolderInfo: string
       compilerPath: string
@@ -104,20 +122,6 @@ export interface TranslationShape {
       message: string
     }
     alreadyLastVersion: string
-  }
-  common: {
-    selectFolder: string
-    logs: {
-      nav: string
-      title: string
-      noLogs: string
-      close: string
-      scriptFailed: string
-      scriptFailedCmd: string
-      invalidConfigurationGame: string
-      invalidConfigurationCompiler: string
-      invalidConfigurationScripts: string
-    }
   }
   tutorials: {
     close: string
