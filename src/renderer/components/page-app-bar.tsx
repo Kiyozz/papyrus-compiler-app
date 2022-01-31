@@ -25,7 +25,7 @@ const PageAppBar = ({ title, actions = [] }: Props) => {
       } shadow-b text-black select-none dark:text-white`}
     >
       <div className="flex h-16 px-4 items-center">
-        <h2 className="text-2xl font-bold font-nova">{title}</h2>
+        <h2 className="text-3xl font-bold font-nova">{title}</h2>
         <div className="flex items-center ml-auto gap-2">
           {actions.map((action, index) => {
             return <React.Fragment key={index}>{action}</React.Fragment>

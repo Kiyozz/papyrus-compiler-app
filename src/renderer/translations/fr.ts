@@ -110,8 +110,7 @@ const fr: TranslationShape = {
       },
       mo2: {
         enable: 'Activer',
-        enableText:
-          "uniquement si l'application n'est pas lancé à partir de MO2",
+        enableText: "uniquement si PCA n'est pas lancé à partir de MO2",
         instance: "Dossier de l'instance",
         limit: 'Limite {{limit}}',
         errorInstance:
