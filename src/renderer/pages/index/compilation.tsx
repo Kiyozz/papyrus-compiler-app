@@ -9,7 +9,8 @@ import HistoryIcon from '@material-ui/icons/History'
 import PlayIcon from '@material-ui/icons/PlayCircleFilled'
 import SearchIcon from '@material-ui/icons/Search'
 import React, { ReactNode, useCallback, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { useDidMount } from 'rooks'
 
 import { TelemetryEvents } from '../../../common/telemetry-events'
@@ -207,7 +208,16 @@ const Compilation = () => {
         />
 
         <Toast
-          message={t('config.checkError', { context: configError })}
+          type="error"
+          message={
+            <Trans
+              tOptions={{ context: configError }}
+              i18nKey="config.checkError"
+              components={{
+                linkToSettings: <Link to="/settings" className="underline" />,
+              }}
+            />
+          }
           onClose={resetConfigError}
           in={!!configError}
           speedMs={300}

@@ -9,13 +9,16 @@ import React, { useEffect, ReactNode } from 'react'
 
 import Scale, { Delay } from './animations/scale'
 
+type ToastType = 'error' | 'normal'
+
 type Props = {
-  message?: string
+  message?: ReactNode
   actions?: ReactNode
   onClose: () => void
   in: boolean
   speedMs: Delay
   autoCloseMs?: number
+  type?: ToastType
 }
 
 const Toast = ({
@@ -25,6 +28,7 @@ const Toast = ({
   in: isEnabled,
   speedMs,
   autoCloseMs = 4_000,
+  type = 'normal',
 }: Props) => {
   useEffect(() => {
     let timer: NodeJS.Timeout | undefined
@@ -49,7 +53,8 @@ const Toast = ({
       in={isEnabled}
       speedMs={speedMs}
       className={cx(
-        'toast fixed z-20 bottom-3 left-3 bg-light-800 dark:bg-gray-800 py-1.5 px-4 items-center rounded text-sm dark:text-white flex gap-1.5',
+        'toast',
+        type === 'error' && 'toast-error',
         !isEnabled && 'pointer-events-none',
       )}
     >
