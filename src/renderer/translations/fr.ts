@@ -33,14 +33,15 @@ const fr: TranslationShape = {
     },
   },
   config: {
-    checkError_game: 'Vérifiez que le chemin du jeu est bien configuré.',
+    checkError_game:
+      'Configuration invalide: vérifiez le chemin du jeu. <linkToSettings>Plus de détails</linkToSettings>',
     checkError_compiler:
-      'Vérifiez que le chemin du compilateur est bien configuré.',
+      'Configuration invalide: vérifiez le chemin du compilateur. <linkToSettings>Plus de détails</linkToSettings>',
     'checkError_mo2-instance':
-      "Vérifiez que l'instance MO2 est bien configurée.",
+      "Configuration invalide: vérifiez l'instance MO2. <linkToSettings>Plus de détails</linkToSettings>",
     checkError_scripts:
-      'Vérifiez que votre installation de Creation Kit est valide. ' +
-      "L'application vérifie la présence du fichier Actor.psc dans les dossiers Data\\Source\\Scripts et Data\\Scripts\\Source",
+      "Configuration invalide: vérifiez l'installation de Creation Kit. " +
+      '<linkToSettings>Plus de détails</linkToSettings>',
   },
   loading: 'Chargement',
   nav: {

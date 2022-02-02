@@ -28,6 +28,17 @@ const en: TranslationShape = {
         "If you're using the app MO2 integration, the folders overwrite and mods are also checked.",
     },
   },
+  config: {
+    checkError_game:
+      'Invalid configuration: check your game path. <linkToSettings>More details</linkToSettings>',
+    checkError_compiler:
+      'Invalid configuration: check your compiler path. <linkToSettings>More details</linkToSettings>',
+    'checkError_mo2-instance':
+      'Invalid configuration: check your mo2 instance. <linkToSettings>More details</linkToSettings>',
+    checkError_scripts:
+      'Invalid configuration: check your Creation Kit installation. ' +
+      '<linkToSettings>More details</linkToSettings>',
+  },
   loading: 'Loading',
   nav: {
     compilation: 'Compilation',

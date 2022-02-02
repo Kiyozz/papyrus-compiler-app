@@ -264,7 +264,11 @@ input.MuiInputBase-inputAdornedStart {
 }
 
 .toast {
-  min-width: 33vw;
+  @apply fixed z-20 bottom-3 left-3 right-3 bg-light-800 dark:bg-gray-800 py-1.5 px-4 items-center rounded text-sm dark:text-white flex gap-1.5 shadow-md;
+}
+
+.toast-error {
+  @apply bg-red-600 text-white dark:bg-red-700;
 }
 
 /* ----- ANIMATIONS ----- */

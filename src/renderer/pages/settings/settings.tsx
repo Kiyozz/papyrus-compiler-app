@@ -78,14 +78,13 @@ const Settings = () => {
     () => setConfig({ mo2: { use: false, instance: undefined } }),
     [setConfig],
   )
-  const debouncedcheckInstallation = useMemo(
+  const debouncedCheckInstallation = useMemo(
     () => debounce(checkConfig, { wait: 500 }),
     [checkConfig],
   )
 
   const onClickRadio = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      resetConfigError()
       const value = e.target.value as GameType
 
       if (
@@ -94,6 +93,7 @@ const Settings = () => {
         return
       }
 
+      resetConfigError()
       send(TelemetryEvents.settingsGame, { game: value })
       setGame(value)
     },
@@ -107,10 +107,10 @@ const Settings = () => {
       return
     }
 
-    debouncedcheckInstallation()
+    debouncedCheckInstallation()
   }, [
     compilation.compilerPath,
-    debouncedcheckInstallation,
+    debouncedCheckInstallation,
     game.path,
     game.type,
     mo2Instance,
