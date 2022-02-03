@@ -13,7 +13,7 @@ module.exports = {
       fontFamily: {
         sans: ['Roboto', '-apple-system', 'sans-serif'],
         nova: ['Proxima Nova', 'sans-serif'],
-        mono: ['Roboto Mono', 'ui-monospace', 'monospace'],
+        mono: ['IBM Plex Mono', 'ui-monospace', 'monospace'],
         body: ['Roboto', '-apple-system', 'sans-serif'],
         segoe: ['Segoe UI', 'Roboto'],
         helvetica: ['Helvetica Neue'],

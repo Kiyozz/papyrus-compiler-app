@@ -1,8 +1,8 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@fontsource/ibm-plex-mono': ^4.5.2
   '@fontsource/roboto': ^4.5.2
-  '@fontsource/roboto-mono': ^4.5.1
   '@material-ui/core': ~4.12.3
   '@material-ui/icons': ~4.11.2
   '@sindresorhus/is': ~4.4.0
@@ -68,8 +68,8 @@ specifiers:
   vite: ^2.7.13
 
 devDependencies:
+  '@fontsource/ibm-plex-mono': 4.5.2
   '@fontsource/roboto': 4.5.2
-  '@fontsource/roboto-mono': 4.5.1
   '@material-ui/core': 4.12.3_b3482aaf5744fc7c2aeb7941b0e0a78f
   '@material-ui/icons': 4.11.2_d7c58ad036f460dedca755aa3bc1bb8f
   '@sindresorhus/is': 4.4.0
@@ -571,10 +571,10 @@ packages:
       - supports-color
     dev: true
 
-  /@fontsource/roboto-mono/4.5.1:
+  /@fontsource/ibm-plex-mono/4.5.2:
     resolution:
       {
-        integrity: sha512-uP/GMF9N2XaxrB9flM1LiZUdcrG/3YdYpGJddY2d7rvsqqitZ8fWBckbdW717WMty4V96N+k1EArilYwQOvN3A==,
+        integrity: sha512-1n+mymSnxZBGDYIxN7fhHRNMcHU/oENVp0qNshU+zbk/SGgZksrjobkjTi49kY30A2jWa/pGCY9i6ADb+VlVUw==,
       }
     dev: true
 
@@ -5435,7 +5435,7 @@ packages:
     dependencies:
       universalify: 2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
     dev: true
 
   /jss-plugin-camel-case/10.9.0:
