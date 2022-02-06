@@ -5,10 +5,12 @@
  */
 
 import ErrorIcon from '@material-ui/icons/Error'
+import cx from 'classnames'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TelemetryEvents } from '../../common/telemetry-events'
+import { ScriptStatus } from '../enums/script-status.enum'
 import { useApp } from '../hooks/use-app'
 import { useCompilation } from '../hooks/use-compilation'
 import { useDrawer } from '../hooks/use-drawer'
@@ -65,10 +67,22 @@ const OpenCompilationLogs = () => {
     setDialogOpen(false)
   }, [])
 
+  const hasErrorsInLogs = logs.some(
+    ([log]) => log.status === ScriptStatus.failed,
+  )
+  const isAllScriptsSuccessInLogs =
+    logs.length > 0 &&
+    logs.every(([log]) => log.status === ScriptStatus.success)
+
   return (
     <>
       <NavItem onClick={onClickButtonOpenLogs} className="link">
-        <ErrorIcon />
+        <ErrorIcon
+          className={cx(
+            isAllScriptsSuccessInLogs && 'text-green-500',
+            hasErrorsInLogs && !isAllScriptsSuccessInLogs && 'text-red-300',
+          )}
+        />
         <Fade in={isDrawerExpand}>
           <div className="ml-6">{t('common.logs.nav')}</div>
         </Fade>
