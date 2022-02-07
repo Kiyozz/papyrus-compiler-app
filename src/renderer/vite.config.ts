@@ -19,6 +19,7 @@ export default defineConfig({
   plugins: [reactRefresh()],
   build: {
     target: 'chrome96', // electron version target
+    sourcemap: true,
   },
   resolve: {
     alias: [
