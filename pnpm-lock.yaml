@@ -52,7 +52,7 @@ specifiers:
   queue: ^6.0.2
   react: ~17.0.2
   react-dom: ~17.0.2
-  react-dropzone: ~11.5.3
+  react-dropzone: ~12.0.4
   react-i18next: ~11.15.6
   react-markdown: ~8.0.0
   react-router-dom: ^6.2.2
@@ -119,7 +119,7 @@ devDependencies:
   queue: 6.0.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
-  react-dropzone: 11.5.3_react@17.0.2
+  react-dropzone: 12.0.4_react@17.0.2
   react-i18next: 11.15.6_f94be6b4dd1edc1d8608af374b838bd6
   react-markdown: 8.0.0_00d6772dea80510e818fd171caaa025a
   react-router-dom: 6.2.2_react-dom@17.0.2+react@17.0.2
@@ -4026,10 +4026,10 @@ packages:
       flat-cache: 3.0.4
     dev: true
 
-  /file-selector/0.2.4:
+  /file-selector/0.4.0:
     resolution:
       {
-        integrity: sha512-ZDsQNbrv6qRi1YTDOEWzf5J2KjZ9KMI1Q2SGeTkCJmNNW25Jg4TW4UMcmoqcg4WrAyKRcpBXdbWRxkfrOzVRbA==,
+        integrity: sha512-iACCiXeMYOvZqlF1kTiYINzgepRBymz1wwjiuup9u9nayhb6g4fSwiyJ/6adli+EPwrWtpgQAh2PoS7HukEGEg==,
       }
     engines: { node: '>= 10' }
     dependencies:
@@ -7030,17 +7030,17 @@ packages:
       scheduler: 0.20.2
     dev: true
 
-  /react-dropzone/11.5.3_react@17.0.2:
+  /react-dropzone/12.0.4_react@17.0.2:
     resolution:
       {
-        integrity: sha512-68+T6sWW5L89qJnn3SD1aRazhuRBhTT9JOI1W8vI5YWsfegM4C7tlGbPH1AgEbmZY5s8E8L0QhX0e3VdAa0KWA==,
+        integrity: sha512-fcqHEYe1MzAghU6/Hz86lHDlBNsA+lO48nAcm7/wA+kIzwS6uuJbUG33tBZjksj7GAZ1iUQ6NHwjUURPmSGang==,
       }
-    engines: { node: '>= 10' }
+    engines: { node: '>= 10.13' }
     peerDependencies:
       react: '>= 16.8'
     dependencies:
       attr-accept: 2.2.2
-      file-selector: 0.2.4
+      file-selector: 0.4.0
       prop-types: 15.8.1
       react: 17.0.2
     dev: true

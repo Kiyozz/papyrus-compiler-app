@@ -32,6 +32,7 @@ const DropScripts = ({
     preventDropOnDocument: true,
     noClick: true,
     noKeyboard: true,
+    useFsAccessApi: false,
   })
 
   return (
