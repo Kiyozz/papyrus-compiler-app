@@ -39,8 +39,3 @@ SE version: [NexusMods SE](https://www.nexusmods.com/skyrimspecialedition/mods/2
 ![Settings light](docs/screenshots/8_settings_view_light.png)
 
 </details>
-
-## TODO
-
-- [ ] create a gitbook
-- [ ] recent files checkbox show full path
