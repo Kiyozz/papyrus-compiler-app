@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import SearchIcon from '@material-ui/icons/Search'
+import SearchIcon from '@mui/icons-material/Search'
 import is from '@sindresorhus/is'
 import cx from 'classnames'
 import React, { useCallback, useEffect, useState } from 'react'

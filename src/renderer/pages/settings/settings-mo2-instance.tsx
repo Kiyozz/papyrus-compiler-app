@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import RefreshIcon from '@material-ui/icons/Refresh'
+import RefreshIcon from '@mui/icons-material/Refresh'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 

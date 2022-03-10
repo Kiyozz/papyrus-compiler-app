@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import React from 'react'
 
 import { ScriptRenderer } from '../../types'

@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import ErrorIcon from '@material-ui/icons/Error'
+import ErrorIcon from '@mui/icons-material/Error'
 import cx from 'classnames'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'

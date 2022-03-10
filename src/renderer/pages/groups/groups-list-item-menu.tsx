@@ -4,9 +4,9 @@
  * All rights reserved.
  */
 
-import CreateIcon from '@material-ui/icons/Create'
-import DeleteIcon from '@material-ui/icons/Delete'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
+import CreateIcon from '@mui/icons-material/Create'
+import DeleteIcon from '@mui/icons-material/Delete'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 import cx from 'classnames'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'

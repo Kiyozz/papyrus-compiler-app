@@ -4,11 +4,11 @@
  * All rights reserved.
  */
 
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import CodeIcon from '@material-ui/icons/Code'
-import LayersIcon from '@material-ui/icons/Layers'
-import SettingsIcon from '@material-ui/icons/Settings'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import CodeIcon from '@mui/icons-material/Code'
+import LayersIcon from '@mui/icons-material/Layers'
+import SettingsIcon from '@mui/icons-material/Settings'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 

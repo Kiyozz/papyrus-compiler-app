@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import CreateIcon from '@material-ui/icons/Create'
+import CreateIcon from '@mui/icons-material/Create'
 import is from '@sindresorhus/is'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'

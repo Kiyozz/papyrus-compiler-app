@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import RefreshIcon from '@material-ui/icons/Refresh'
+import RefreshIcon from '@mui/icons-material/Refresh'
 import debounce from 'debounce-fn'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'

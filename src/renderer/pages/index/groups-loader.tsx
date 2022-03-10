@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import AddIcon from '@material-ui/icons/Add'
+import AddIcon from '@mui/icons-material/Add'
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 

@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import DownloadIcon from '@material-ui/icons/GetApp'
+import DownloadIcon from '@mui/icons-material/GetApp'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown, { Components } from 'react-markdown'

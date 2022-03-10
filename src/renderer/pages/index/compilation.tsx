@@ -4,10 +4,10 @@
  * All rights reserved.
  */
 
-import ClearIcon from '@material-ui/icons/Clear'
-import HistoryIcon from '@material-ui/icons/History'
-import PlayIcon from '@material-ui/icons/PlayCircleFilled'
-import SearchIcon from '@material-ui/icons/Search'
+import ClearIcon from '@mui/icons-material/Clear'
+import HistoryIcon from '@mui/icons-material/History'
+import PlayIcon from '@mui/icons-material/PlayCircleFilled'
+import SearchIcon from '@mui/icons-material/Search'
 import React, { ReactNode, useCallback, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'

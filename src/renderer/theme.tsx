@@ -4,8 +4,8 @@
  * All rights reserved.
  */
 
-import { createTheme, ThemeProvider } from '@material-ui/core'
-import red from '@material-ui/core/colors/red'
+import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material'
+import red from '@mui/material/colors/red'
 import React from 'react'
 
 import { Theme as SettingsTheme } from '../common/theme'
@@ -18,7 +18,7 @@ const Theme = ({ children }: React.PropsWithChildren<unknown>) => {
 
   const theme = createTheme({
     palette: {
-      type:
+      mode:
         currentTheme === SettingsTheme.system
           ? isDark
             ? 'dark'
@@ -39,25 +39,33 @@ const Theme = ({ children }: React.PropsWithChildren<unknown>) => {
         light: '#e45858',
       },
     },
-    overrides: {
+    components: {
       MuiRadio: {
-        root: {
-          '&$checked$colorSecondary': {
-            color: '#539dff',
+        styleOverrides: {
+          root: {
+            '&.Mui-checked.Mui-colorSecondary': {
+              color: '#539dff',
+            },
           },
         },
       },
       MuiCheckbox: {
-        root: {
-          '&$checked$colorSecondary': {
-            color: '#539dff',
+        styleOverrides: {
+          root: {
+            '&.Mui-checked.Mui-colorSecondary': {
+              color: '#539dff',
+            },
           },
         },
       },
     },
   })
 
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>
+  return (
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </StyledEngineProvider>
+  )
 }
 
 export default Theme

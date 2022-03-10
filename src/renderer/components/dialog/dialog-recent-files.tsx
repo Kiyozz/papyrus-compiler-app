@@ -4,9 +4,9 @@
  * All rights reserved.
  */
 
-import CheckBoxIcon from '@material-ui/icons/CheckBox'
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
+import CheckBoxIcon from '@mui/icons-material/CheckBox'
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import cx from 'classnames'
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

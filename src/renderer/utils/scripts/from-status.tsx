@@ -4,9 +4,9 @@
  * All rights reserved.
  */
 
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import ErrorIcon from '@material-ui/icons/Error'
-import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import ErrorIcon from '@mui/icons-material/Error'
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty'
 import React from 'react'
 
 import { ScriptStatus } from '../../enums/script-status.enum'

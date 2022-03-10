@@ -4,8 +4,8 @@
  * All rights reserved.
  */
 
-import FolderIcon from '@material-ui/icons/Folder'
-import FolderOpenIcon from '@material-ui/icons/FolderOpen'
+import FolderIcon from '@mui/icons-material/Folder'
+import FolderOpenIcon from '@mui/icons-material/FolderOpen'
 import is from '@sindresorhus/is'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

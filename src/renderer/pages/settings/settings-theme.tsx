@@ -4,10 +4,10 @@
  * All rights reserved.
  */
 
-import FormControl from '@material-ui/core/FormControl'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -39,7 +39,7 @@ const SettingsTheme = () => {
                 label: 'dark:text-white',
               }}
               control={<Radio />}
-              label={t('page.settings.theme.options.system')}
+              label={<>{t('page.settings.theme.options.system')}</>}
             />
             <FormControlLabel
               value={Theme.light}
@@ -47,7 +47,7 @@ const SettingsTheme = () => {
                 label: 'dark:text-white',
               }}
               control={<Radio />}
-              label={t('page.settings.theme.options.light')}
+              label={<>{t('page.settings.theme.options.light')}</>}
             />
             <FormControlLabel
               value={Theme.dark}
@@ -55,7 +55,7 @@ const SettingsTheme = () => {
                 label: 'dark:text-white',
               }}
               control={<Radio />}
-              label={t('page.settings.theme.options.dark')}
+              label={<>{t('page.settings.theme.options.dark')}</>}
             />
           </RadioGroup>
         </FormControl>

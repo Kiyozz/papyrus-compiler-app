@@ -4,11 +4,11 @@
  * All rights reserved.
  */
 
-import FormControl from '@material-ui/core/FormControl'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import RefreshIcon from '@material-ui/icons/Refresh'
+import RefreshIcon from '@mui/icons-material/Refresh'
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
