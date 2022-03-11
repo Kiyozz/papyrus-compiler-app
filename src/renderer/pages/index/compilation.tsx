@@ -87,6 +87,17 @@ const Compilation = () => {
     [setScripts, send],
   )
 
+  const onClickPlayCompilation = useCallback(
+    (script: ScriptRenderer) => {
+      return () => {
+        send(TelemetryEvents.compilationSinglePlay, {})
+
+        start({ scripts: [script] })
+      }
+    },
+    [send, start],
+  )
+
   const onClickStart = useCallback(() => {
     if (scripts.length === 0) {
       return
@@ -177,11 +188,12 @@ const Compilation = () => {
         <ScriptItem
           key={script.id}
           onClickRemoveScript={onClickRemoveScriptFromScript(script)}
+          onClickPlayCompilation={onClickPlayCompilation(script)}
           script={script}
         />
       )
     })
-  }, [scripts, onClickRemoveScriptFromScript])
+  }, [scripts, onClickRemoveScriptFromScript, onClickPlayCompilation])
 
   const onClickEmpty = useCallback(() => {
     send(TelemetryEvents.compilationListEmpty, { scripts: scripts.length })

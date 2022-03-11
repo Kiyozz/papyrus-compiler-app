@@ -4,18 +4,19 @@
  * All rights reserved.
  */
 
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import ErrorIcon from '@mui/icons-material/Error'
 import cx from 'classnames'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TelemetryEvents } from '../../common/telemetry-events'
-import { ScriptStatus } from '../enums/script-status.enum'
 import { useApp } from '../hooks/use-app'
 import { useCompilation } from '../hooks/use-compilation'
 import { useDrawer } from '../hooks/use-drawer'
 import { useTelemetry } from '../hooks/use-telemetry'
 import { ScriptRenderer } from '../types'
+import { isFailedScript, isSuccessScript } from '../utils/scripts/status'
 import Fade from './animations/fade'
 import Dialog from './dialog/dialog'
 import NavItem from './nav-item'
@@ -67,22 +68,22 @@ const OpenCompilationLogs = () => {
     setDialogOpen(false)
   }, [])
 
-  const hasErrorsInLogs = logs.some(
-    ([log]) => log.status === ScriptStatus.failed,
-  )
+  const hasErrorsInLogs = logs.some(([log]) => isFailedScript(log))
   const isAllScriptsSuccessInLogs =
-    logs.length > 0 &&
-    logs.every(([log]) => log.status === ScriptStatus.success)
+    logs.length > 0 && logs.every(([log]) => isSuccessScript(log))
 
   return (
     <>
       <NavItem onClick={onClickButtonOpenLogs} className="link">
-        <ErrorIcon
-          className={cx(
-            isAllScriptsSuccessInLogs && 'text-green-500',
-            hasErrorsInLogs && !isAllScriptsSuccessInLogs && 'text-red-300',
-          )}
-        />
+        {isAllScriptsSuccessInLogs ? (
+          <CheckCircleIcon className="text-green-500" />
+        ) : (
+          <ErrorIcon
+            className={cx(
+              hasErrorsInLogs && !isAllScriptsSuccessInLogs && 'text-red-300',
+            )}
+          />
+        )}
         <Fade in={isDrawerExpand}>
           <div className="ml-6">{t('common.logs.nav')}</div>
         </Fade>

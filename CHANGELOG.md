@@ -2,6 +2,10 @@
 
 ### Features
 
+- You can now compile the script of your choice from the list
+
+  ![docs/changelog/Unreleased/script_list.png](docs/changelog/Unreleased/script_list.png)
+
 - Recent files dialog displays more scripts at once
 
   ![docs/changelog/Unreleased/recent-files.png](docs/changelog/Unreleased/recent-files.png)

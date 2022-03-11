@@ -5,25 +5,36 @@
  */
 
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
+import PlayCircleIcon from '@mui/icons-material/PlayCircle'
+import { IconButton } from '@mui/material'
+import cx from 'classnames'
 import React, { useCallback } from 'react'
 
-import { useCompilation } from '../../hooks/use-compilation'
 import { ScriptRenderer } from '../../types'
 import {
-  getClassNameFromStatus,
-  getIconFromStatus,
+  classNameFromStatus,
+  iconFromStatus,
 } from '../../utils/scripts/from-status'
+import { isRunningScript } from '../../utils/scripts/status'
 
 interface Props {
   script: ScriptRenderer
   onClickRemoveScript: (script: ScriptRenderer) => void
+  onClickPlayCompilation: (script: ScriptRenderer) => void
 }
 
-const ScriptItem = ({ script, onClickRemoveScript }: Props) => {
-  const { isRunning } = useCompilation()
+const ScriptItem = ({
+  script,
+  onClickRemoveScript,
+  onClickPlayCompilation,
+}: Props) => {
   const onClickRemove = useCallback(() => {
     onClickRemoveScript(script)
   }, [script, onClickRemoveScript])
+
+  const onClickPlay = () => {
+    onClickPlayCompilation(script)
+  }
 
   return (
     <div className="flex gap-2 select-none text-current dark:text-white">
@@ -33,15 +44,25 @@ const ScriptItem = ({ script, onClickRemoveScript }: Props) => {
       >
         <div>{script.name}</div>
         <div
-          className={`ml-auto font-sm flex ${getClassNameFromStatus(script)}`}
+          className={cx('ml-auto font-sm flex', classNameFromStatus(script))}
         >
-          {getIconFromStatus(script)}
+          {iconFromStatus(script)}
         </div>
+        <IconButton
+          onClick={onClickPlay}
+          size="small"
+          disabled={isRunningScript(script)}
+          classes={{
+            root: 'p-0 ml-1.5',
+          }}
+        >
+          <PlayCircleIcon className="text-primary-400" />
+        </IconButton>
       </div>
       <button
         className="btn-icon btn-danger"
         aria-label="delete"
-        disabled={isRunning}
+        disabled={isRunningScript(script)}
         onClick={onClickRemove}
       >
         <div className="icon">

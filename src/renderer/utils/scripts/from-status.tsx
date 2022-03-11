@@ -12,7 +12,7 @@ import React from 'react'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import { ScriptRenderer } from '../../types'
 
-export const getClassNameFromStatus = (script: ScriptRenderer): string => {
+export const classNameFromStatus = (script: ScriptRenderer): string => {
   switch (script.status) {
     case ScriptStatus.idle:
       return 'text-black-600 dark:text-gray-500'
@@ -25,7 +25,7 @@ export const getClassNameFromStatus = (script: ScriptRenderer): string => {
   }
 }
 
-export const getIconFromStatus = (script: ScriptRenderer) => {
+export const iconFromStatus = (script: ScriptRenderer) => {
   switch (script.status) {
     case ScriptStatus.idle:
       return <></>
