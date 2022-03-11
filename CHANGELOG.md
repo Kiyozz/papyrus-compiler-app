@@ -4,20 +4,22 @@
 
 - Recent files dialog displays more scripts at once
 
+  ![docs/changelog/Unreleased/recent-files.png](docs/changelog/Unreleased/recent-files.png)
+
 - A loading screen now appear when the application start
 
   ![docs/changelog/Unreleased/loading.png](docs/changelog/Unreleased/loading.png)
 
 - New application titlebar
 
-  The appplication menu is now accessible with the application icon at the left
+  The application menu is now accessible with the application icon at the left
 
   ![docs/changelog/Unreleased/new-titlebar.png](docs/changelog/Unreleased/new-titlebar.png)
 
   ![docs/changelog/Unreleased/new-titlebar-open.png](docs/changelog/Unreleased/new-titlebar-open.png)
 
 - The position of the app is now memoized
-- Bumps electron to 16.0.7
+- Bumps dependencies
 - Changelog window correctly displays images
 - The application restarts when resetting the configuration
 
