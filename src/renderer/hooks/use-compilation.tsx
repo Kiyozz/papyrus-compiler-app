@@ -8,6 +8,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react'
@@ -17,13 +18,15 @@ import bridge from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { ScriptRenderer } from '../types'
 import { chunk } from '../utils/chunk'
+import { scriptInList } from '../utils/scripts/equals'
+import { isRunningScript } from '../utils/scripts/status'
 import { useApp } from './use-app'
 
 type StartOptions = {
   scripts: ScriptRenderer[]
 }
 
-type _CompilationContext = {
+type CompilationContext = {
   start: (options: StartOptions) => void
   isRunning: boolean
   scripts: ScriptRenderer[]
@@ -32,7 +35,7 @@ type _CompilationContext = {
   setScripts: (fn: (scripts: ScriptRenderer[]) => ScriptRenderer[]) => void
 }
 
-const _Context = createContext({} as _CompilationContext)
+const Context = createContext({} as CompilationContext)
 
 const whenCompileScriptFinish = (
   script: string,
@@ -51,10 +54,10 @@ const whenCompileScriptFinish = (
 const CompilationProvider = ({
   children,
 }: React.PropsWithChildren<unknown>) => {
-  const [isRunning, setRunning] = useState(false)
   const [compilationScripts, setCompilationScripts] = useState<
     ScriptRenderer[]
   >([])
+  const [isRunning, setRunning] = useState(false)
   const [compilationLogs, setCompilationLogs] = useState<
     [ScriptRenderer, string][]
   >([])
@@ -67,11 +70,18 @@ const CompilationProvider = ({
     [config],
   )
 
+  useEffect(() => {
+    setRunning(compilationScripts.some(isRunningScript))
+  }, [compilationScripts])
+
   const start = useCallback(
     async ({ scripts }: StartOptions) => {
-      setRunning(true)
       console.log('Starting compilation for', scripts)
-      setCompilationLogs([])
+      setCompilationLogs(logs => {
+        return logs.filter(([s]) => {
+          return !scriptInList(scripts)(s)
+        })
+      })
 
       const scriptsOfScripts = chunk(scripts, concurrentScripts)
 
@@ -112,11 +122,11 @@ const CompilationProvider = ({
                   ? ScriptStatus.success
                   : ScriptStatus.failed
 
-                return cs
+                return [...cs]
               })
 
               setCompilationLogs(cl => {
-                return [...cl, [s, result.output]]
+                return [[s, result.output], ...cl]
               })
             } catch (e) {
               let errorMessage: string
@@ -136,24 +146,22 @@ const CompilationProvider = ({
 
                 cs[found].status = ScriptStatus.failed
 
-                return cs
+                return [...cs]
               })
 
               setCompilationLogs(cl => {
-                return [...cl, [s, errorMessage]]
+                return [[s, errorMessage], ...cl]
               })
             }
           }),
         )
       }
-
-      setRunning(false)
     },
     [concurrentScripts],
   )
 
   return (
-    <_Context.Provider
+    <Context.Provider
       value={{
         start,
         isRunning,
@@ -164,12 +172,12 @@ const CompilationProvider = ({
       }}
     >
       {children}
-    </_Context.Provider>
+    </Context.Provider>
   )
 }
 
-export const useCompilation = (): _CompilationContext => {
-  return useContext(_Context)
+export const useCompilation = (): CompilationContext => {
+  return useContext(Context)
 }
 
 export default CompilationProvider

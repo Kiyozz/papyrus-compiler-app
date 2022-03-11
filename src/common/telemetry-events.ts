@@ -14,6 +14,7 @@ export enum TelemetryEvents {
   compilationListEmpty = 'Compilation.ListEmpty',
   compilationLogsCopy = 'Compilation.LogsCopy',
   compilationPlay = 'Compilation.Play',
+  compilationSinglePlay = 'Compilation.SinglePlay',
   compilationRemoveScript = 'Compilation.RemoveScript',
   exception = 'Exception',
   groupCreated = 'Group.Created',
@@ -54,6 +55,7 @@ export type TelemetryEventsProperties = {
     scripts: number
     concurrentScripts: number
   }
+  [TelemetryEvents.compilationSinglePlay]: Record<string, never>
   [TelemetryEvents.compilationRemoveScript]: {
     remainingScripts: number
   }
