@@ -13,7 +13,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useDidMount } from 'rooks'
 
-import { TelemetryEvents } from '../../../common/telemetry-events'
+import { TelemetryEvent } from '../../../common/telemetry-event'
 import { Script } from '../../../common/types/script'
 import DialogRecentFiles from '../../components/dialog/dialog-recent-files'
 import Page from '../../components/page'
@@ -60,7 +60,7 @@ const Compilation = () => {
           scriptsList,
         )
 
-        send(TelemetryEvents.compilationDropScripts, {
+        send(TelemetryEvent.compilationDropScripts, {
           scripts: pscScripts.length,
         })
         const newScripts = uniqScripts([...scriptsList, ...pscScripts])
@@ -77,7 +77,7 @@ const Compilation = () => {
     (script: ScriptRenderer) => {
       return () => {
         setScripts(scriptsList => {
-          send(TelemetryEvents.compilationRemoveScript, {
+          send(TelemetryEvent.compilationRemoveScript, {
             remainingScripts: scriptsList.length - 1,
           })
           return scriptsList.filter((cs: ScriptRenderer) => cs !== script)
@@ -90,7 +90,7 @@ const Compilation = () => {
   const onClickPlayCompilation = useCallback(
     (script: ScriptRenderer) => {
       return () => {
-        send(TelemetryEvents.compilationSinglePlay, {})
+        send(TelemetryEvent.compilationSinglePlay, {})
 
         start({ scripts: [script] })
       }
@@ -110,7 +110,7 @@ const Compilation = () => {
 
     // noinspection JSIgnoredPromiseFromCall
     setRecentFiles(files)
-    send(TelemetryEvents.compilationPlay, {
+    send(TelemetryEvent.compilationPlay, {
       scripts: scripts.length,
       concurrentScripts,
     })
@@ -196,7 +196,7 @@ const Compilation = () => {
   }, [scripts, onClickRemoveScriptFromScript, onClickPlayCompilation])
 
   const onClickEmpty = useCallback(() => {
-    send(TelemetryEvents.compilationListEmpty, { scripts: scripts.length })
+    send(TelemetryEvent.compilationListEmpty, { scripts: scripts.length })
     onClearScripts()
   }, [onClearScripts, send, scripts])
 

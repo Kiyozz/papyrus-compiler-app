@@ -10,7 +10,7 @@ import cx from 'classnames'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TelemetryEvents } from '../../common/telemetry-events'
+import { TelemetryEvent } from '../../common/telemetry-event'
 import { useApp } from '../hooks/use-app'
 import { useCompilation } from '../hooks/use-compilation'
 import { useDrawer } from '../hooks/use-drawer'
@@ -31,7 +31,7 @@ const LogsListItem = ({
   const { copyToClipboard } = useApp()
   const { send } = useTelemetry()
   const onClickCopyLogs = () => {
-    send(TelemetryEvents.compilationLogsCopy, {})
+    send(TelemetryEvent.compilationLogsCopy, {})
     copyToClipboard(`${script.name}\n\n${logs}\n`)
   }
 

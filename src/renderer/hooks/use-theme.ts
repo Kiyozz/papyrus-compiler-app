@@ -6,7 +6,7 @@
 
 import { useCallback } from 'react'
 
-import { TelemetryEvents } from '../../common/telemetry-events'
+import { TelemetryEvent } from '../../common/telemetry-event'
 import { Theme } from '../../common/theme'
 import { useApp } from './use-app'
 import { useTelemetry } from './use-telemetry'
@@ -24,7 +24,7 @@ export const useTheme = (): [Theme, (theme: Theme) => void] => {
         return
       }
 
-      send(TelemetryEvents.settingsTheme, { theme })
+      send(TelemetryEvent.settingsTheme, { theme })
       setConfig({ theme })
     },
     [setConfig, send],

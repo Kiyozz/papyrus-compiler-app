@@ -10,7 +10,7 @@ import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { GameType } from '../../../common/game'
-import { TelemetryEvents } from '../../../common/telemetry-events'
+import { TelemetryEvent } from '../../../common/telemetry-event'
 import Page from '../../components/page'
 import PageAppBar from '../../components/page-app-bar'
 import { useApp } from '../../hooks/use-app'
@@ -94,7 +94,7 @@ const Settings = () => {
       }
 
       resetConfigError()
-      send(TelemetryEvents.settingsGame, { game: value })
+      send(TelemetryEvent.settingsGame, { game: value })
       setGame(value)
     },
     [resetConfigError, setGame, send],
@@ -146,7 +146,7 @@ const Settings = () => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const checked = e.currentTarget.checked
 
-      send(TelemetryEvents.modOrganizerActive, { active: checked })
+      send(TelemetryEvent.modOrganizerActive, { active: checked })
       checked ? setMo2(checked) : setDisableMo2()
     },
     [setDisableMo2, setMo2, send],
@@ -156,7 +156,7 @@ const Settings = () => {
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
 
-      send(TelemetryEvents.settingsRefresh, {})
+      send(TelemetryEvent.settingsRefresh, {})
       checkConfig()
     },
     [checkConfig, send],
@@ -172,7 +172,7 @@ const Settings = () => {
     }
 
     refreshConfig()
-    send(TelemetryEvents.settingsRefresh, {})
+    send(TelemetryEvent.settingsRefresh, {})
   }, [isLoading, configError, refreshConfig, checkConfig, send])
 
   return (

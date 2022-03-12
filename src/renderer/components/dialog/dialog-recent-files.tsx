@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { useDidMount } from 'rooks'
 
 import { shorten } from '../../../common/shorten'
-import { TelemetryEvents } from '../../../common/telemetry-events'
+import { TelemetryEvent } from '../../../common/telemetry-event'
 import { Script } from '../../../common/types/script'
 import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
@@ -66,7 +66,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
   }, [recentFiles, loadedScripts])
 
   useIpc(bridge.recentFiles.select.onAll, () => {
-    send(TelemetryEvents.recentFilesSelectAll, {})
+    send(TelemetryEvent.recentFilesSelectAll, {})
     setSelectedRecentFiles(
       new Map(
         notLoadedRecentFiles.map(notLoadedFile => [
@@ -78,12 +78,12 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
   })
 
   useIpc(bridge.recentFiles.select.onNone, () => {
-    send(TelemetryEvents.recentFilesSelectNone, {})
+    send(TelemetryEvent.recentFilesSelectNone, {})
     setSelectedRecentFiles(new Map())
   })
 
   useIpc(bridge.recentFiles.select.onInvertSelection, () => {
-    send(TelemetryEvents.recentFilesInvertSelection, {})
+    send(TelemetryEvent.recentFilesInvertSelection, {})
 
     setSelectedRecentFiles(selectedFiles => {
       return new Map(
@@ -97,7 +97,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
   })
 
   useIpc(bridge.recentFiles.select.onClear, () => {
-    send(TelemetryEvents.recentFilesClear, {})
+    send(TelemetryEvent.recentFilesClear, {})
     // noinspection JSIgnoredPromiseFromCall
     clearRecentFiles()
     setSelectedRecentFiles(new Map())
@@ -113,7 +113,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
       return
     }
 
-    send(TelemetryEvents.recentFilesLoaded, {})
+    send(TelemetryEvent.recentFilesLoaded, {})
     setScripts(scripts =>
       uniqScripts(
         scriptsToRenderer(scripts, Array.from(selectedRecentFiles.values())),
@@ -126,7 +126,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
   const onDialogClose = useCallback(
     (reason: CloseReason) => {
       if (reason === CloseReason.enter && isValid()) {
-        send(TelemetryEvents.recentFilesCloseWithEnter, {})
+        send(TelemetryEvent.recentFilesCloseWithEnter, {})
         onClickLoad()
       } else {
         onClickClose()
@@ -164,7 +164,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
         e.currentTarget.blur()
 
         removeRecentFile(script).then(() => {
-          send(TelemetryEvents.recentFileRemove, {})
+          send(TelemetryEvent.recentFileRemove, {})
           setSelectedRecentFiles(srf => {
             srf.delete(script.path)
 
@@ -279,7 +279,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
       actions={
         <>
           <button className="btn" onClick={onClickClose}>
-            {t('page.compilation.recentFilesDialog.cancel')}
+            {t('common.cancel')}
           </button>
           <button
             className="btn"

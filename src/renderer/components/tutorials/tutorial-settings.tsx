@@ -9,7 +9,7 @@ import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
-import { TelemetryEvents } from '../../../common/telemetry-events'
+import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useApp } from '../../hooks/use-app'
 import { useFocus } from '../../hooks/use-focus'
 import { useTelemetry } from '../../hooks/use-telemetry'
@@ -153,7 +153,7 @@ const TutorialSettings = () => {
   const { send } = useTelemetry()
 
   const onClickClose = () => {
-    send(TelemetryEvents.tutorialsSettingsDeny, {})
+    send(TelemetryEvent.tutorialsSettingsDeny, {})
     setConfig({
       tutorials: {
         ...config.tutorials,
@@ -190,11 +190,11 @@ const TutorialSettings = () => {
 
   useEffect(() => {
     if (step === Step.waiting) {
-      send(TelemetryEvents.appFirstLoaded, {})
+      send(TelemetryEvent.appFirstLoaded, {})
     }
 
     if (step === Step.end) {
-      send(TelemetryEvents.tutorialsSettingsEnd, {})
+      send(TelemetryEvent.tutorialsSettingsEnd, {})
     }
   }, [step, send])
 

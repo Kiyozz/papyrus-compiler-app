@@ -375,13 +375,7 @@ input.MuiInputBase-inputAdornedStart {
 }
 
 .titlebar-icon {
-  background: url('./assets/logo/vector/isolated-layout-mono.svg') no-repeat
-    bottom/cover;
-}
-
-.dark .titlebar-icon {
-  background: url('./assets/logo/vector/isolated-layout-mono-white.svg')
-    no-repeat bottom/cover;
+  background: url('./assets/logo/icon-no-text.svg') no-repeat bottom/cover;
 }
 
 .titlebar-control {

@@ -2,6 +2,10 @@
 
 ### Features
 
+- New documentation released: access the documentation via NexusMods or with the new button at the bottom left
+
+  ![docs/changelog/Unreleased/documentation.png](docs/changelog/Unreleased/documentation.png)
+
 - You can now compile the script of your choice from the list
 
   ![docs/changelog/Unreleased/script_list.png](docs/changelog/Unreleased/script_list.png)

@@ -15,6 +15,7 @@ import { Env } from '../../env'
 import { useApp } from '../../hooks/use-app'
 import { useInitialization } from '../../hooks/use-initialization'
 import { useOnKeyUp } from '../../hooks/use-on-key-up'
+import Anchor from '../anchor'
 import Toast from '../toast'
 import Dialog from './dialog'
 
@@ -24,19 +25,6 @@ const Img: Components['img'] = ({ src, alt, ...props }) => {
     : src
 
   return <img src={newSrc} alt={alt} {...props} />
-}
-
-const Anchor = ({
-  children,
-  href,
-}: React.PropsWithChildren<React.HTMLProps<HTMLAnchorElement>>) => {
-  const onClick = () => {
-    if (href) {
-      bridge.shell.openExternal(href)
-    }
-  }
-
-  return <a onClick={onClick}>{children}</a>
 }
 
 const HeadingOne = ({ children }: React.PropsWithChildren<unknown>) => (
@@ -138,7 +126,7 @@ const DialogChangelog = () => {
         }
         title={t('changelog.newVersion')}
       >
-        <div className="changelog-container dark:bg-gray-700 p-4 rounded dark:text-gray-300 text-sm">
+        <div className="changelog-container p-4 rounded dark:text-gray-300 text-sm">
           <ReactMarkdown
             components={{
               p: Paragraph,

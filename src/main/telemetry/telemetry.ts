@@ -9,14 +9,14 @@ import fetch, { Response, Headers } from 'electron-fetch'
 import createQueue from 'queue'
 
 import {
-  TelemetryEvents,
-  TelemetryEventsProperties,
-} from '../../common/telemetry-events'
+  TelemetryEvent,
+  TelemetryEventProperties,
+} from '../../common/telemetry-event'
 import { Logger } from '../logger'
 
-type Params<E extends TelemetryEvents> = {
+type Params<E extends TelemetryEvent> = {
   name: E
-  properties: TelemetryEventsProperties[E]
+  properties: TelemetryEventProperties[E]
 }
 
 export class Telemetry {
@@ -45,7 +45,7 @@ export class Telemetry {
     }
   }
 
-  event<E extends TelemetryEvents>({
+  event<E extends TelemetryEvent>({
     name,
     properties,
   }: Params<E>): Promise<void> {
@@ -58,11 +58,11 @@ export class Telemetry {
   exception({
     properties,
   }: {
-    properties: TelemetryEventsProperties[TelemetryEvents.exception]
+    properties: TelemetryEventProperties[TelemetryEvent.exception]
   }): Promise<void> {
     return this.sendRequest(
       { endpoint: '/events', method: 'POST' },
-      { type: TelemetryEvents.exception, properties, appKey: this.appKey },
+      { type: TelemetryEvent.exception, properties, appKey: this.appKey },
     )
   }
 

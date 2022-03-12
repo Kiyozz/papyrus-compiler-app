@@ -7,7 +7,7 @@
 // eslint-disable-next-line import/no-unresolved
 import { PartialDeep } from 'type-fest'
 
-import { TelemetryEvents, TelemetryEventsProperties } from '../telemetry-events'
+import { TelemetryEvent, TelemetryEventProperties } from '../telemetry-event'
 import { BadError } from './bad-error'
 import { CompilationResult } from './compilation-result'
 import { Config } from './config'
@@ -19,9 +19,9 @@ import { WindowState } from './window-state'
 
 export type Bridge = {
   telemetry: {
-    send: <T extends TelemetryEvents>(
+    send: <T extends TelemetryEvent>(
       event: T,
-      args: TelemetryEventsProperties[T],
+      args: TelemetryEventProperties[T],
     ) => void
     setActive: (active: boolean) => void
   }

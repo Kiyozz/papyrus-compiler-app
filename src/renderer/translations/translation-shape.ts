@@ -8,6 +8,7 @@ export interface TranslationShape {
   common: {
     refresh: string
     selectFolder: string
+    cancel: string
     logs: {
       nav: string
       title: string
@@ -26,6 +27,12 @@ export interface TranslationShape {
     groups: string
     settings: string
     closePanel: string
+    help: {
+      text: string
+      title: string
+      description: string
+      goTo: string
+    }
   }
   config: {
     checkError_game: string
@@ -49,7 +56,6 @@ export interface TranslationShape {
         removeFromList: string
       }
       recentFilesDialog: {
-        cancel: string
         noRecentFiles: string
         load: string
       }
@@ -71,7 +77,6 @@ export interface TranslationShape {
         editGroup: string
         name: string
         dropScripts: string
-        cancel: string
       }
     }
     settings: {

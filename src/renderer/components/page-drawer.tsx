@@ -17,6 +17,7 @@ import ActiveLink from './active-link'
 import Fade from './animations/fade'
 import NavItem from './nav-item'
 import OpenCompilationLogs from './open-compilation-logs'
+import OpenDocumentation from './open-documentation'
 
 const PageDrawer = () => {
   const [isDrawerExpand, setDrawerExpand] = useDrawer()
@@ -78,6 +79,7 @@ const PageDrawer = () => {
         </ul>
         <ul className="mt-auto">
           <OpenCompilationLogs />
+          <OpenDocumentation />
           <NavItem className="link" onClick={onDrawerExpandClick}>
             {isDrawerExpand ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             <Fade in={isDrawerExpand}>
