@@ -9,7 +9,7 @@ import is from '@sindresorhus/is'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TelemetryEvents } from '../../../common/telemetry-events'
+import { TelemetryEvent } from '../../../common/telemetry-event'
 import GroupsDialog from '../../components/groups/groups-dialog'
 import Page from '../../components/page'
 import PageAppBar from '../../components/page-app-bar'
@@ -44,7 +44,7 @@ const Groups = () => {
         return
       }
 
-      send(TelemetryEvents.groupCreated, { scripts: group.scripts.length })
+      send(TelemetryEvent.groupCreated, { scripts: group.scripts.length })
       setConfig({
         groups: [
           ...groups,
@@ -72,7 +72,7 @@ const Groups = () => {
         return
       }
 
-      send(TelemetryEvents.groupEdited, { scripts: group.scripts.length })
+      send(TelemetryEvent.groupEdited, { scripts: group.scripts.length })
       setConfig({
         groups: groups.map((g: Group) => {
           if (g.name === lastGroupName) {

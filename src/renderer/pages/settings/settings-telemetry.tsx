@@ -9,7 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TelemetryEvents } from '../../../common/telemetry-events'
+import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
 
@@ -25,7 +25,7 @@ const SettingsTelemetry = () => {
     const checked = e.currentTarget.checked
 
     if (checked) {
-      send(TelemetryEvents.telemetryEnabled, {})
+      send(TelemetryEvent.telemetryEnabled, {})
     }
 
     setActive(checked)

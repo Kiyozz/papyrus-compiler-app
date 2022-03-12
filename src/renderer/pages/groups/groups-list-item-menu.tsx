@@ -11,7 +11,7 @@ import cx from 'classnames'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TelemetryEvents } from '../../../common/telemetry-events'
+import { TelemetryEvent } from '../../../common/telemetry-event'
 import Fade from '../../components/animations/fade'
 import { useDocumentClick } from '../../hooks/use-document-click'
 import { useTelemetry } from '../../hooks/use-telemetry'
@@ -44,7 +44,7 @@ const GroupsListItemMenu = ({ className, onDelete, onEdit }: Props) => {
   }
 
   const onClickDelete = () => {
-    send(TelemetryEvents.groupDeleted, {})
+    send(TelemetryEvent.groupDeleted, {})
     setAnchor(null)
     onDelete()
   }

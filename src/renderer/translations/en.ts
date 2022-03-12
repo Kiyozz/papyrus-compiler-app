@@ -10,6 +10,7 @@ const en: TranslationShape = {
   common: {
     refresh: 'Refresh',
     selectFolder: 'Select a folder',
+    cancel: 'Cancel',
     logs: {
       nav: 'Logs',
       title: 'Compilation logs',
@@ -45,6 +46,13 @@ const en: TranslationShape = {
     groups: 'Groups',
     settings: 'Settings',
     closePanel: 'Close panel',
+    help: {
+      text: 'Documentation',
+      title: 'Link to PCA documentation',
+      description:
+        'The following link will open the documentation of PCA in your browser',
+      goTo: 'Open',
+    },
   },
   page: {
     compilation: {
@@ -64,7 +72,6 @@ const en: TranslationShape = {
         removeFromList: 'Remove from list',
       },
       recentFilesDialog: {
-        cancel: 'Cancel',
         noRecentFiles: 'No recent files',
         load: 'Load selected',
       },
@@ -87,7 +94,6 @@ const en: TranslationShape = {
         editGroup: 'Edit a group',
         name: 'Name',
         dropScripts: 'Drop your scripts files here',
-        cancel: 'Cancel',
       },
     },
     settings: {

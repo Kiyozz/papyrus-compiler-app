@@ -7,17 +7,17 @@
 import React, { createContext, useCallback, useContext } from 'react'
 
 import {
-  TelemetryEvents,
-  TelemetryEventsProperties,
-} from '../../common/telemetry-events'
+  TelemetryEvent,
+  TelemetryEventProperties,
+} from '../../common/telemetry-event'
 import bridge from '../bridge'
 import { Env } from '../env'
 import { useApp } from './use-app'
 
 type _TelemetryContext = {
-  send: <E extends TelemetryEvents>(
+  send: <E extends TelemetryEvent>(
     event: E,
-    properties: TelemetryEventsProperties[E],
+    properties: TelemetryEventProperties[E],
   ) => void
   setActive: (active: boolean) => void
 }
@@ -28,8 +28,8 @@ const TelemetryProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const { config } = useApp()
   const sendTelemetry = useCallback(
     (
-      event: TelemetryEvents,
-      properties: TelemetryEventsProperties[TelemetryEvents],
+      event: TelemetryEvent,
+      properties: TelemetryEventProperties[TelemetryEvent],
     ) => {
       if (config.telemetry?.active && Env.telemetryFeature) {
         bridge.telemetry.send(event, properties)

@@ -15,9 +15,9 @@ import useLocalStorage from 'react-use-localstorage'
 
 import { LocalStorage } from '../enums/local-storage.enum'
 
-type _DrawerContext = [boolean, Dispatch<SetStateAction<boolean>>]
+type DrawerContext = [boolean, Dispatch<SetStateAction<boolean>>]
 
-const _Context = createContext([true, () => true] as _DrawerContext)
+const Context = createContext([true, () => true] as DrawerContext)
 
 const DrawerProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const [isDrawerExpandLS, setDrawerExpandLS] = useLocalStorage(
@@ -26,7 +26,7 @@ const DrawerProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   )
 
   return (
-    <_Context.Provider
+    <Context.Provider
       value={[
         isDrawerExpandLS === 'true',
         v => {
@@ -39,10 +39,10 @@ const DrawerProvider = ({ children }: React.PropsWithChildren<unknown>) => {
       ]}
     >
       {children}
-    </_Context.Provider>
+    </Context.Provider>
   )
 }
 
-export const useDrawer = (): _DrawerContext => useContext(_Context)
+export const useDrawer = (): DrawerContext => useContext(Context)
 
 export default DrawerProvider

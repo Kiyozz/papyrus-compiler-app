@@ -8,7 +8,7 @@ import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MemoryRouter as Router } from 'react-router-dom'
 
-import { TelemetryEvents } from '../common/telemetry-events'
+import { TelemetryEvent } from '../common/telemetry-event'
 import { version as releaseVersion } from '../common/version'
 import DialogChangelog from './components/dialog/dialog-changelog'
 import PageDrawer from './components/page-drawer'
@@ -35,7 +35,7 @@ const App = () => {
 
   useEffect(() => {
     if (done) {
-      send(TelemetryEvents.appLoaded, { version, releaseVersion })
+      send(TelemetryEvent.appLoaded, { version, releaseVersion })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [done, version])

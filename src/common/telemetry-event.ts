@@ -6,7 +6,7 @@
 
 import { GameType } from './game'
 
-export enum TelemetryEvents {
+export enum TelemetryEvent {
   appFirstLoaded = 'App.FirstLoaded',
   appLoaded = 'App.Loaded',
   compilationDropScripts = 'Compilation.DropScripts',
@@ -36,62 +36,66 @@ export enum TelemetryEvents {
   telemetryEnabled = 'Telemetry.Enabled',
   tutorialsSettingsEnd = 'Tutorials.SettingsEnd',
   tutorialsSettingsDeny = 'Tutorials.SettingsDeny',
+  documentationOpenFromNav = 'Documentation.OpenFromNav',
 }
 
-export type TelemetryEventsProperties = {
-  [TelemetryEvents.appFirstLoaded]: Record<string, never>
-  [TelemetryEvents.appLoaded]: Record<'version' | 'releaseVersion', string>
-  [TelemetryEvents.compilationDropScripts]: {
+export type TelemetryEventProperties = {
+  [TelemetryEvent.appFirstLoaded]: Record<string, never>
+  [TelemetryEvent.appLoaded]: Record<'version' | 'releaseVersion', string>
+  [TelemetryEvent.compilationDropScripts]: {
     scripts: number
   }
-  [TelemetryEvents.compilationGroupLoaded]: {
+  [TelemetryEvent.compilationGroupLoaded]: {
     groups: number
   }
-  [TelemetryEvents.compilationListEmpty]: {
+  [TelemetryEvent.compilationListEmpty]: {
     scripts: number
   }
-  [TelemetryEvents.compilationLogsCopy]: Record<string, never>
-  [TelemetryEvents.compilationPlay]: {
+  [TelemetryEvent.compilationLogsCopy]: Record<string, never>
+  [TelemetryEvent.compilationPlay]: {
     scripts: number
     concurrentScripts: number
   }
-  [TelemetryEvents.compilationSinglePlay]: Record<string, never>
-  [TelemetryEvents.compilationRemoveScript]: {
+  [TelemetryEvent.compilationSinglePlay]: Record<string, never>
+  [TelemetryEvent.compilationRemoveScript]: {
     remainingScripts: number
   }
-  [TelemetryEvents.exception]: {
+  [TelemetryEvent.exception]: {
     error: string
     stack: string
   }
-  [TelemetryEvents.groupCreated]: {
+  [TelemetryEvent.groupCreated]: {
     scripts: number
   }
-  [TelemetryEvents.groupDeleted]: Record<string, never>
-  [TelemetryEvents.groupDropScripts]: {
+  [TelemetryEvent.groupDeleted]: Record<string, never>
+  [TelemetryEvent.groupDropScripts]: {
     scripts: number
   }
-  [TelemetryEvents.groupEdited]: {
+  [TelemetryEvent.groupEdited]: {
     scripts: number
   }
-  [TelemetryEvents.groupCloseWithEnter]: Record<string, never>
-  [TelemetryEvents.modOrganizerActive]: {
+  [TelemetryEvent.groupCloseWithEnter]: Record<string, never>
+  [TelemetryEvent.modOrganizerActive]: {
     active: boolean
   }
-  [TelemetryEvents.recentFilesLoaded]: Record<string, never>
-  [TelemetryEvents.recentFilesClear]: Record<string, never>
-  [TelemetryEvents.recentFilesSelectAll]: Record<string, never>
-  [TelemetryEvents.recentFilesSelectNone]: Record<string, never>
-  [TelemetryEvents.recentFilesInvertSelection]: Record<string, never>
-  [TelemetryEvents.recentFileRemove]: Record<string, never>
-  [TelemetryEvents.recentFilesCloseWithEnter]: Record<string, never>
-  [TelemetryEvents.settingsGame]: {
+  [TelemetryEvent.recentFilesLoaded]: Record<string, never>
+  [TelemetryEvent.recentFilesClear]: Record<string, never>
+  [TelemetryEvent.recentFilesSelectAll]: Record<string, never>
+  [TelemetryEvent.recentFilesSelectNone]: Record<string, never>
+  [TelemetryEvent.recentFilesInvertSelection]: Record<string, never>
+  [TelemetryEvent.recentFileRemove]: Record<string, never>
+  [TelemetryEvent.recentFilesCloseWithEnter]: Record<string, never>
+  [TelemetryEvent.settingsGame]: {
     game: GameType
   }
-  [TelemetryEvents.settingsRefresh]: Record<string, never>
-  [TelemetryEvents.settingsTheme]: {
+  [TelemetryEvent.settingsRefresh]: Record<string, never>
+  [TelemetryEvent.settingsTheme]: {
     theme: string
   }
-  [TelemetryEvents.telemetryEnabled]: Record<string, never>
-  [TelemetryEvents.tutorialsSettingsEnd]: Record<string, never>
-  [TelemetryEvents.tutorialsSettingsDeny]: Record<string, never>
+  [TelemetryEvent.telemetryEnabled]: Record<string, never>
+  [TelemetryEvent.tutorialsSettingsEnd]: Record<string, never>
+  [TelemetryEvent.tutorialsSettingsDeny]: Record<string, never>
+  [TelemetryEvent.documentationOpenFromNav]: {
+    reason: 'enter' | 'click'
+  }
 }

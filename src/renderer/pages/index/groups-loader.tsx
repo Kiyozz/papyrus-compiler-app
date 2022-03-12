@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add'
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TelemetryEvents } from '../../../common/telemetry-events'
+import { TelemetryEvent } from '../../../common/telemetry-event'
 import Fade from '../../components/animations/fade'
 import { useDocumentClick } from '../../hooks/use-document-click'
 import { useTelemetry } from '../../hooks/use-telemetry'
@@ -42,7 +42,7 @@ const GroupsLoader = ({ groups, onChangeGroup }: Props) => {
       .filter((group: Group): boolean => !group.isEmpty)
       .map(group => {
         const onClickGroup = () => {
-          send(TelemetryEvents.compilationGroupLoaded, {
+          send(TelemetryEvent.compilationGroupLoaded, {
             groups: groups.length,
           })
           setAnchor(null)

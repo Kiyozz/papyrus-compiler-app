@@ -10,7 +10,7 @@ import cx from 'classnames'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TelemetryEvents } from '../../../common/telemetry-events'
+import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useDrop, useSetDrop } from '../../hooks/use-drop'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { GroupRenderer, ScriptRenderer } from '../../types'
@@ -72,7 +72,7 @@ const GroupsDialog = ({
   const onDialogClose = useCallback(
     (reason: CloseReason) => {
       if (reason === CloseReason.enter && isValid()) {
-        send(TelemetryEvents.groupCloseWithEnter, {})
+        send(TelemetryEvent.groupCloseWithEnter, {})
         onSubmitGroup()
       } else {
         onClose()
@@ -115,7 +115,7 @@ const GroupsDialog = ({
     (pscFiles: File[]) => {
       const pscScripts = pscFilesToPscScripts(pscFiles)
 
-      send(TelemetryEvents.groupDropScripts, { scripts: pscScripts.length })
+      send(TelemetryEvent.groupDropScripts, { scripts: pscScripts.length })
       setScripts(s => uniqScripts([...s, ...pscScripts]))
     },
     [send],
@@ -150,7 +150,7 @@ const GroupsDialog = ({
             </button>
           </div>
           <button className="btn" type="button" onClick={onClose}>
-            {t('page.groups.dialog.cancel')}
+            {t('common.cancel')}
           </button>
           <button className="btn" type="submit" disabled={name === ''}>
             {isEdit
