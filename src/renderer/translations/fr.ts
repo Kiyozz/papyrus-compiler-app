@@ -28,9 +28,9 @@ const fr: TranslationShape = {
         "{{exe}} n'est pas un compilateur valide. Le fichier n'existe pas.",
       invalidConfigurationScripts:
         "Votre configuration n'est pas valide. Impossible de valider l'installation de Creation Kit. " +
-        "L'application vérifie la présence du fichier Actor.psc pour valider votre installation de Creation Kit. " +
+        'PCA vérifie la présence du fichier Actor.psc pour valider votre installation de Creation Kit. ' +
         'Impossible de trouver le fichier Actor.psc dans les dossiers Source\\Scripts ou Scripts\\Source. ' +
-        "Si vous utilisez l'intégration MO2 de l'application, " +
+        "Si vous utilisez l'intégration MO2 de PCA, " +
         'les dossiers overwrite et mods sont également vérifiés.',
     },
   },
@@ -71,9 +71,9 @@ const fr: TranslationShape = {
         recentFiles: 'Fichiers récents',
       },
       dragAndDropText:
-        "Vous pouvez glisser-déposer des fichiers psc pour les charger dans l'application.",
+        'Vous pouvez glisser-déposer des fichiers psc pour les charger dans PCA.',
       dragAndDropAdmin:
-        "Cette fonctionnalité n'est pas disponible si l'application est lancée en mode administrateur.",
+        "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur.",
       scriptItem: {
         removeFromList: 'Supprimer de la liste',
       },
@@ -114,7 +114,7 @@ const fr: TranslationShape = {
       errors: {
         installationInvalid: 'La configuration semble invalide :',
         scripts:
-          "Vérifiez que votre installation de Creation Kit est valide. L'application vérifie la présence du fichier {{file}} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de l'application, les dossiers overwrite et mods sont également vérifiés.",
+          "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {{file}} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés.",
         game: 'Vérifiez que "{{exe}}" existe dans le dossier du jeu.',
         compiler: 'Vérifiez que "{{compilerExe}}" existe.',
         mo2Instance:
@@ -164,8 +164,8 @@ const fr: TranslationShape = {
     ok: 'OK',
     settings: {
       ask: {
-        title: "Configurer l'application",
-        text: "C'est la première fois que vous lancez l'application. Suivre le tutoriel ?",
+        title: 'Configurer PCA',
+        text: "C'est la première fois que vous lancez PCA. Suivre le tutoriel ?",
         needHelp: "J'ai besoin d'aide",
       },
       game: {
@@ -180,7 +180,7 @@ const fr: TranslationShape = {
         },
       },
       mo2: {
-        text: "Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez l'application à travers MO2",
+        text: 'Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez PCA à travers MO2',
       },
     },
     telemetry: {

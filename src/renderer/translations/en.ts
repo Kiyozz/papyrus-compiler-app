@@ -66,10 +66,9 @@ const en: TranslationShape = {
         clearList: 'Clear list',
         recentFiles: 'Recent files',
       },
-      dragAndDropText:
-        'You can drag and drop psc files to load them into the application.',
+      dragAndDropText: 'You can drag and drop psc files to load them into PCA.',
       dragAndDropAdmin:
-        'This is only available when not running in administrator.',
+        'This feature is not available when running PCA in administrator.',
       scriptItem: {
         removeFromList: 'Remove from list',
       },
@@ -158,8 +157,8 @@ const en: TranslationShape = {
     ok: 'OK',
     settings: {
       ask: {
-        title: 'Setup the application',
-        text: 'This is the first time you start the application. Do you need help?',
+        title: 'Setup PCA',
+        text: 'This is the first time you start PCA. Follow the tutorial?',
         needHelp: 'I need help',
       },
       game: {
