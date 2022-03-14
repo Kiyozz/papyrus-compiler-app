@@ -6,7 +6,7 @@
 
 import is from '@sindresorhus/is'
 
-import { GamePath, GameType, validateGame } from '../../../common/game'
+import { Flag, GamePath, GameType, validateGame } from '../../../common/game'
 import { Theme } from '../../../common/theme'
 import type { Config } from '../../../common/types/config'
 import { CliArgs } from '../../cli-args'
@@ -81,10 +81,13 @@ function _checkMo2(settingsStore: SettingsStore, defaultConfig: Config) {
 }
 
 function _checkFlag(settingsStore: SettingsStore, defaultConfig: Config) {
-  const flag = settingsStore.get('compilation.flag')
+  const flag = settingsStore.get<string, Flag>('compilation.flag')
 
-  if (flag !== 'TESV_Papyrus_Flags.flg') {
-    console.warn('only TESV_Papyrus_Flags.flg flag is supported')
+  if (
+    flag !== 'TESV_Papyrus_Flags.flg' &&
+    flag !== 'Institute_Papyrus_Flags.flg'
+  ) {
+    console.warn(flag, 'is not supported')
 
     settingsStore.set('compilation.flag', defaultConfig.compilation.flag)
   }
