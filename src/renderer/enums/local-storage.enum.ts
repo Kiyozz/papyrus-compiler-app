@@ -6,4 +6,5 @@
 
 export enum LocalStorage {
   drawerExpand = 'drawer-expand',
+  showOpenDocumentationDialog = 'show-open-documentation-dialog',
 }

@@ -52,6 +52,7 @@ const en: TranslationShape = {
       description:
         'The following link will open the documentation of PCA in your browser',
       goTo: 'Open',
+      doNotShowAgain: 'Do not show again',
     },
   },
   page: {
