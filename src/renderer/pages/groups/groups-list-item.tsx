@@ -21,21 +21,21 @@ type Props = {
 const GroupsListItem = ({ group, onDelete, onEdit }: Props) => {
   const { t } = useTranslation()
   const [isDisplayPreview, setDisplayPreview] = useState(false)
-  const [isEnter, setEnter] = useState(false)
+  const [isHoveringItem, setHoveringItem] = useState(false)
 
   const onMouseEnter = useCallback(() => {
-    setEnter(true)
+    setHoveringItem(true)
   }, [])
 
   const onMouseLeave = useCallback(() => {
-    setEnter(false)
+    setHoveringItem(false)
   }, [])
 
   useEffect(() => {
     let timerDisplay: NodeJS.Timeout
 
     if (!group.isEmpty) {
-      if (isEnter) {
+      if (isHoveringItem) {
         timerDisplay = setTimeout(() => {
           setDisplayPreview(true)
         }, 500)
@@ -51,7 +51,7 @@ const GroupsListItem = ({ group, onDelete, onEdit }: Props) => {
         clearTimeout(timerDisplay)
       }
     }
-  }, [isEnter, group.isEmpty])
+  }, [isHoveringItem, group.isEmpty])
 
   return (
     <div
@@ -59,24 +59,18 @@ const GroupsListItem = ({ group, onDelete, onEdit }: Props) => {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {/* Group review */}
+      {/* Group preview */}
       <Fade in={isDisplayPreview} timeout={200}>
         <div className="absolute top-0 left-0 right-16 z-10 rounded bg-light-300 px-4 py-2 dark:bg-black-400 dark:text-white">
-          <div className="mb-6 flex">
-            <h3 className="flex-grow text-center text-xl">
-              {t('page.groups.group', { name: group.name })}
-            </h3>
-          </div>
+          <h3 className="flex-grow text-center text-xl">
+            {t('page.groups.group', { name: group.name })}
+          </h3>
 
           {/* Group list in preview */}
-          <div className="flex flex-col text-sm">
-            {group.isEmpty ? (
-              <div>{t('page.groups.noScripts')}</div>
-            ) : (
-              group.scripts.map(script => {
-                return <div key={script.id}>{script.name}</div>
-              })
-            )}
+          <div className="mt-6 flex flex-col text-sm">
+            {group.scripts.map(script => {
+              return <div key={script.id}>{script.name}</div>
+            })}
           </div>
         </div>
       </Fade>
