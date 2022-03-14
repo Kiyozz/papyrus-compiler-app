@@ -127,7 +127,7 @@ const GroupsDialog = ({
     ({ children }: React.PropsWithChildren<unknown>) => (
       <form
         onSubmit={onSubmitGroup}
-        className="flex flex-col h-screen overflow-hidden"
+        className="flex h-screen flex-col overflow-hidden"
       >
         {children}
       </form>
@@ -178,8 +178,8 @@ const GroupsDialog = ({
       <Paper
         darker
         className={cx(
-          'overflow-overlay mt-4 outline-none h-full',
-          scripts.length === 0 && 'flex justify-center items-center',
+          'overflow-overlay mt-4 h-full outline-none',
+          scripts.length === 0 && 'flex items-center justify-center',
         )}
       >
         {scripts.length > 0 ? (
@@ -188,7 +188,7 @@ const GroupsDialog = ({
             onClickRemoveScriptFromGroup={onClickRemoveScriptFromGroup}
           />
         ) : (
-          <p className="dark:text-gray-400 text-center">
+          <p className="text-center dark:text-gray-400">
             {t('page.groups.dialog.dropScripts')}
           </p>
         )}

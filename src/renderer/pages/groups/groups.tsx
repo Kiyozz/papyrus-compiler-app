@@ -195,8 +195,8 @@ const Groups = () => {
               })}
             </div>
           ) : (
-            <div className="h-full w-full gap-4 justify-center text-lg">
-              <p className="text-black-600 dark:text-white font-medium">
+            <div className="h-full w-full justify-center gap-4 text-lg">
+              <p className="font-medium text-black-600 dark:text-white">
                 {t('page.groups.createGroupText')}
               </p>
               <p>{t('page.groups.whatIsAGroup')}</p>

@@ -27,8 +27,8 @@ const Theme = ({ children }: React.PropsWithChildren<unknown>) => {
           ? 'dark'
           : 'light',
       primary: {
-        main: '#539dff',
-        light: '#539dff',
+        main: '#3388ff',
+        light: '#2c5896',
       },
       secondary: {
         main: '#2cb67d',

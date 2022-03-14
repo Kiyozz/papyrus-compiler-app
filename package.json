@@ -79,6 +79,7 @@
     "path-shorten": "^0.1.2",
     "postcss": "~8.4.8",
     "prettier": "~2.5.1",
+    "prettier-plugin-tailwindcss": "^0.1.8",
     "queue": "^6.0.2",
     "react": "~17.0.2",
     "react-dom": "~17.0.2",

@@ -70,7 +70,7 @@ const OpenDocumentation = () => {
           </>
         }
       >
-        <p className="text-justify mb-4">{t('nav.help.description')}</p>
+        <p className="mb-4 text-justify">{t('nav.help.description')}</p>
         <FormGroup>
           <FormControlLabel
             control={

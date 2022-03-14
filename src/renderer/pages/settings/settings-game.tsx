@@ -46,7 +46,7 @@ const SettingsGame = ({
 
   return (
     <div className="paper relative" id="settings-game">
-      <h1 className="text-3xl dark:text-white mb-3">
+      <h1 className="mb-3 text-3xl dark:text-white">
         {t('page.settings.game')}
       </h1>
       <FormControl component="fieldset" fullWidth>
@@ -111,7 +111,7 @@ const SettingsGame = ({
         />
       </div>
 
-      <div className="mt-3 relative" id="settings-compiler">
+      <div className="relative mt-3" id="settings-compiler">
         <DialogTextField
           id="compiler-path"
           error={configError === 'compiler'}
@@ -132,7 +132,7 @@ const SettingsGame = ({
       {configError !== false && configError !== 'mo2-instance' && (
         <Alert>
           <div className="w-full">
-            <p className="select-text mb-2">
+            <p className="mb-2 select-text">
               {t('page.settings.errors.installationInvalid')}
             </p>
 

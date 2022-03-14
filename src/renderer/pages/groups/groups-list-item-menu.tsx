@@ -55,7 +55,7 @@ const GroupsListItemMenu = ({ className, onDelete, onEdit }: Props) => {
         <MoreVertIcon />
       </button>
       <Fade in={!!anchor} timeout={150}>
-        <div className="menu absolute !z-10 top-4 right-4">
+        <div className="menu absolute top-4 right-4 !z-10">
           <button className="btn btn-justify-start" onClick={onClickEdit}>
             <div className="icon">
               <CreateIcon fontSize="small" color="primary" />

@@ -51,6 +51,7 @@ specifiers:
   path-shorten: ^0.1.2
   postcss: ~8.4.8
   prettier: ~2.5.1
+  prettier-plugin-tailwindcss: ^0.1.8
   queue: ^6.0.2
   react: ~17.0.2
   react-dom: ~17.0.2
@@ -120,6 +121,7 @@ devDependencies:
   path-shorten: 0.1.2
   postcss: 8.4.8
   prettier: 2.5.1
+  prettier-plugin-tailwindcss: 0.1.8_prettier@2.5.1
   queue: 6.0.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -7025,6 +7027,18 @@ packages:
     engines: { node: '>=6.0.0' }
     dependencies:
       fast-diff: 1.2.0
+    dev: true
+
+  /prettier-plugin-tailwindcss/0.1.8_prettier@2.5.1:
+    resolution:
+      {
+        integrity: sha512-hwarSBCswAXa+kqYtaAkFr3Vop9o04WOyZs0qo3NyvW8L7f1rif61wRyq0+ArmVThOuRBcJF5hjGXYk86cwemg==,
+      }
+    engines: { node: '>=12.17.0' }
+    peerDependencies:
+      prettier: '>=2.2.0'
+    dependencies:
+      prettier: 2.5.1
     dev: true
 
   /prettier/2.5.1:

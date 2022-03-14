@@ -17,10 +17,10 @@ type Props = {
 }
 
 const GroupsDialogList = ({ scripts, onClickRemoveScriptFromGroup }: Props) => (
-  <ul className="flex flex-col flex-grow">
+  <ul className="flex flex-grow flex-col">
     {scripts.map(script => (
       <li
-        className="flex items-center dark:text-white text-sm"
+        className="flex items-center text-sm dark:text-white"
         key={script.name}
       >
         <div className="w-full">{script.name}</div>

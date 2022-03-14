@@ -37,14 +37,14 @@ const ScriptItem = ({
   }
 
   return (
-    <div className="flex gap-2 select-none text-current dark:text-white">
+    <div className="flex select-none gap-2 text-current dark:text-white">
       <div
-        className="relative w-full flex paper overflow-hidden"
+        className="paper relative flex w-full overflow-hidden"
         aria-label="script"
       >
         <div>{script.name}</div>
         <div
-          className={cx('ml-auto font-sm flex', classNameFromStatus(script))}
+          className={cx('font-sm ml-auto flex', classNameFromStatus(script))}
         >
           {iconFromStatus(script)}
         </div>

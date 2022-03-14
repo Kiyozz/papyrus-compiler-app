@@ -7,7 +7,7 @@
 import React from 'react'
 
 const Alert = ({ children }: React.PropsWithChildren<unknown>) => (
-  <div className="text-red-700 dark:text-red-400 mt-3 text-sm flex gap-2 p-2 items-center">
+  <div className="mt-3 flex items-center gap-2 p-2 text-sm text-red-700 dark:text-red-400">
     {children}
   </div>
 )

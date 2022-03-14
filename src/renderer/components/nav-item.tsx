@@ -11,7 +11,7 @@ const NavItem = ({ className, ...props }: React.HTMLProps<HTMLLIElement>) => (
   <li
     tabIndex={-1}
     className={cx(
-      'w-full px-4 py-2 flex transition-colors whitespace-nowrap',
+      'flex w-full whitespace-nowrap px-4 py-2 transition-colors',
       className,
     )}
     {...props}

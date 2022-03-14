@@ -62,7 +62,7 @@ const GroupsLoader = ({ groups, onChangeGroup }: Props) => {
   )
 
   return (
-    <div className="inline self-center relative">
+    <div className="relative inline self-center">
       {notEmptyGroups.length > 0 && (
         <>
           <button className="btn" aria-haspopup="true" onClick={onClick}>

@@ -16,9 +16,9 @@ const DropFilesOverlay = ({ open }: Props) => {
   }
 
   return (
-    <div className="fixed bg-black-800 bg-opacity-60 z-20 top-0 right-0 bottom-0 left-0 w-full h-full flex justify-center items-center">
-      <div className="bg-light-600 dark:bg-gray-700 rounded shadow w-full max-w-screen-sm h-1/2 p-4 py-8">
-        <div className="flex items-center justify-center text-black-600 dark:text-white text-4xl font-nova font-bold h-full w-full">
+    <div className="fixed top-0 right-0 bottom-0 left-0 z-20 flex h-full w-full items-center justify-center bg-black-800 bg-opacity-60">
+      <div className="h-1/2 w-full max-w-screen-sm rounded bg-light-600 p-4 py-8 shadow dark:bg-gray-700">
+        <div className="flex h-full w-full items-center justify-center font-nova text-4xl font-bold text-black-600 dark:text-white">
           Drop files
         </div>
       </div>

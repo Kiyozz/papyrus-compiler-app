@@ -52,7 +52,7 @@ const GameSettingsStep = ({ next }: { next: Next }) => {
   }
 
   return createPortal(
-    <div className="bg-light-800 dark:bg-darker shadow top-0 left-24 tooltip tooltip-left">
+    <div className="tooltip tooltip-left top-0 left-24 bg-light-800 shadow dark:bg-darker">
       <div>{t('tutorials.settings.game.text')}</div>
       <div>
         <button className="btn btn-primary" onClick={onClickOk}>
@@ -74,7 +74,7 @@ const CompilerSettingsStep = ({ next }: { next: Next }) => {
   }
 
   return createPortal(
-    <div className="bg-light-800 dark:bg-darker -top-14 tooltip">
+    <div className="tooltip -top-14 bg-light-800 dark:bg-darker">
       <div>{t('tutorials.settings.compiler.text')}</div>
       <div>
         <button className="btn btn-primary" onClick={onClickOk}>
@@ -97,7 +97,7 @@ const Mo2SettingsStep = ({ next }: { next: Next }) => {
   }
 
   return createPortal(
-    <div className="bg-light-800 dark:bg-darker -top-12 tooltip tooltip-bottom-left">
+    <div className="tooltip tooltip-bottom-left -top-12 bg-light-800 dark:bg-darker">
       <div>{t('tutorials.settings.mo2.text')}</div>
       <div>
         <button className="btn btn-primary" onClick={onClickOk}>
@@ -119,7 +119,7 @@ const ConcurrentSettingsStep = ({ next }: { next: Next }) => {
   }
 
   return createPortal(
-    <div className="bg-light-800 dark:bg-darker -top-12 tooltip">
+    <div className="tooltip -top-12 bg-light-800 dark:bg-darker">
       <div>{t('tutorials.settings.compilation.concurrent.text')}</div>
       <div>
         <button className="btn btn-primary" onClick={onClickOk}>
@@ -132,7 +132,7 @@ const ConcurrentSettingsStep = ({ next }: { next: Next }) => {
 }
 
 const Overlay = () => (
-  <div className="fixed z-20 bg-black-800 bg-opacity-60 top-0 left-0 right-0 bottom-0" />
+  <div className="fixed top-0 left-0 right-0 bottom-0 z-20 bg-black-800 bg-opacity-60" />
 )
 
 /**
@@ -215,16 +215,16 @@ const TutorialSettings = () => {
       <Overlay />
       {(step === Step.ask || step === Step.waiting) && (
         <div
-          className={`fixed top-0 left-0 w-full h-full ${
+          className={`fixed top-0 left-0 h-full w-full ${
             isFocus
               ? 'bg-light-400 dark:bg-black-800'
               : 'bg-light-600 dark:bg-black-400'
-          } z-20 flex flex-col justify-center items-center`}
+          } z-20 flex flex-col items-center justify-center`}
         >
           <div className="text-3xl font-bold">
             {t('tutorials.settings.ask.title')}
           </div>
-          <div className="m-6 text-xl text-center">
+          <div className="m-6 text-center text-xl">
             {t('tutorials.settings.ask.text')}
           </div>
           <div className="flex gap-4">

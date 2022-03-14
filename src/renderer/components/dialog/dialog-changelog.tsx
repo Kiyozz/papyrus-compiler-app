@@ -48,7 +48,7 @@ const Paragraph = ({ children }: React.PropsWithChildren<unknown>) => (
 )
 
 const Code = ({ children }: { children: React.ReactNode[] }) => (
-  <code className="dark:bg-gray-800 markdown-code">{children}</code>
+  <code className="markdown-code dark:bg-gray-800">{children}</code>
 )
 
 const DialogChangelog = () => {
@@ -126,7 +126,7 @@ const DialogChangelog = () => {
         }
         title={t('changelog.newVersion')}
       >
-        <div className="changelog-container p-4 rounded dark:text-gray-300 text-sm">
+        <div className="changelog-container rounded p-4 text-sm dark:text-gray-300">
           <ReactMarkdown
             components={{
               p: Paragraph,

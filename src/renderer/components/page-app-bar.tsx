@@ -18,15 +18,15 @@ const PageAppBar = ({ title, actions = [] }: Props) => {
 
   return (
     <div
-      className={`sticky w-full z-10 ${
+      className={`sticky z-10 w-full ${
         isFocus
           ? 'bg-light-400 dark:bg-black-400'
           : 'bg-light-600 dark:bg-black-600'
-      } shadow-b text-black select-none dark:text-white`}
+      } text-black select-none shadow-b dark:text-white`}
     >
-      <div className="flex h-16 px-4 items-center">
-        <h2 className="text-3xl font-bold font-nova">{title}</h2>
-        <div className="flex items-center ml-auto gap-2">
+      <div className="flex h-16 items-center px-4">
+        <h2 className="font-nova text-3xl font-bold">{title}</h2>
+        <div className="ml-auto flex items-center gap-2">
           {actions.map((action, index) => {
             return <React.Fragment key={index}>{action}</React.Fragment>
           })}

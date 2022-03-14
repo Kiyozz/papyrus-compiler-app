@@ -64,11 +64,11 @@ const TextField = ({
         </label>
       )}
       <div
-        className={cx('relative input pb-0.5 flex', error && 'input-danger')}
+        className={cx('input relative flex pb-0.5', error && 'input-danger')}
       >
         {startIcon && (
           <div
-            className="text-black-600 dark:text-white mr-2 cursor-pointer"
+            className="mr-2 cursor-pointer text-black-600 dark:text-white"
             onMouseEnter={iconOnMouseEnter}
             onMouseLeave={iconOnMouseLeave}
             onClick={iconOnClick}
@@ -83,7 +83,7 @@ const TextField = ({
           name={name}
           placeholder={placeholder}
           className={cx(
-            'w-full text-black-600 dark:text-white bg-transparent',
+            'w-full bg-transparent text-black-600 dark:text-white',
             inputClassName,
           )}
           value={value}
@@ -91,7 +91,7 @@ const TextField = ({
         />
       </div>
       {is.string(infoText) && (
-        <div className="text-sm mt-1 text-black-600 dark:text-light-800">
+        <div className="mt-1 text-sm text-black-600 dark:text-light-800">
           {infoText}
         </div>
       )}

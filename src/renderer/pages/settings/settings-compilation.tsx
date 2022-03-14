@@ -44,8 +44,8 @@ const SettingsCompilation = () => {
   )
 
   return (
-    <div className="paper mt-4 relative">
-      <h1 className="text-3xl dark:text-white mb-3 flex items-center flex-wrap">
+    <div className="paper relative mt-4">
+      <h1 className="mb-3 flex flex-wrap items-center text-3xl dark:text-white">
         {t('page.settings.compilation.title')}
       </h1>
 

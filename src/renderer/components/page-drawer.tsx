@@ -50,11 +50,11 @@ const PageDrawer = () => {
 
   return (
     <nav
-      className={`h-screen-appbar fixed left-0 top-24 transition-all duration-300 ${
+      className={`fixed left-0 top-24 h-screen-appbar transition-all duration-300 ${
         isDrawerExpand ? 'w-48' : 'w-14'
-      } bg-light-600 dark:bg-black-800 select-none`}
+      } select-none bg-light-600 dark:bg-black-800`}
     >
-      <div className="h-full flex flex-col">
+      <div className="flex h-full flex-col">
         <ul className="mt-2 flex flex-col gap-2">
           {links.map(Link => {
             return (

@@ -12,7 +12,7 @@ import Compilation from './pages/index/compilation'
 import Settings from './pages/settings/settings'
 
 const Routes = () => (
-  <div className="flex flex-col w-full">
+  <div className="flex w-full flex-col">
     <RouterRoutes>
       <Route path="/compilation" element={<Compilation />} />
       <Route path="/groups/*" element={<Groups />} />

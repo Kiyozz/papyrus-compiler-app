@@ -223,12 +223,12 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
                 <CheckBoxOutlineBlankIcon fontSize="small" />
               )}
             </button>
-            <div className="text-xs text-gray-500 tracking-tight flex items-center">
+            <div className="flex items-center text-xs tracking-tight text-gray-500">
               {shortenedPath.path}
               <button
                 role="button"
                 className={cx(
-                  'px-0 font-bold hover:text-primary-400 dark:hover:text-primary-400 cursor-pointer',
+                  'cursor-pointer px-0 font-bold hover:text-primary-400 dark:hover:text-primary-400',
                   {
                     'text-primary-400 dark:text-primary-400':
                       selected && !disabled,

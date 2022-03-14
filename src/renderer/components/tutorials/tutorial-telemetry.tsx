@@ -30,18 +30,18 @@ const TutorialTelemetry = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full ${
+      className={`fixed top-0 left-0 h-full w-full ${
         isFocus
           ? 'bg-light-400 dark:bg-black-800'
           : 'bg-light-600 dark:bg-black-400'
-      } z-20 flex flex-col justify-center items-center`}
+      } z-20 flex flex-col items-center justify-center`}
     >
       <div className="px-8">
         <Trans i18nKey="tutorials.telemetry.text">
           <div className="text-md" />
           <div className="mt-2" />
           <div className="mt-2" />
-          <div className="text-sm mt-6" />
+          <div className="mt-6 text-sm" />
         </Trans>
       </div>
       <button

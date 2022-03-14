@@ -44,7 +44,7 @@ const App = () => {
     <>
       <Titlebar title={`PCA ${releaseVersion}`} />
       {!done && (
-        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-light-400 dark:bg-darker z-20">
+        <div className="fixed top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-light-400 dark:bg-darker">
           <div className="text-center text-4xl">{t('loading')}</div>
         </div>
       )}

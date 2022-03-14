@@ -65,13 +65,13 @@ const Dialog = ({
     () => (
       <>
         {title && (
-          <div className="sticky top-0 flex-initial flex text-2xl font-medium py-4 px-6">
+          <div className="sticky top-0 flex flex-initial py-4 px-6 text-2xl font-medium">
             {title}
           </div>
         )}
         <div
           className={cx(
-            'flex-auto overflow-overlay',
+            'overflow-overlay flex-auto',
             contentClassNames.content,
           )}
         >
@@ -80,7 +80,7 @@ const Dialog = ({
           </div>
         </div>
         {actions && (
-          <div className="flex-initial flex p-2 gap-2 justify-end">
+          <div className="flex flex-initial justify-end gap-2 p-2">
             {actions}
           </div>
         )}
@@ -92,13 +92,13 @@ const Dialog = ({
   return createPortal(
     open ? (
       <>
-        <div className="fixed top-0 left-0 z-10 w-full h-screen bg-black-800 bg-opacity-50 dark:bg-opacity-70" />
+        <div className="fixed top-0 left-0 z-10 h-screen w-full bg-black-800 bg-opacity-50 dark:bg-opacity-70" />
         <div
           ref={container}
-          className={`fixed top-0 bottom-0 p-8 pt-16 left-0 z-10 flex justify-center items-center w-full h-screen`}
+          className={`fixed top-0 bottom-0 left-0 z-10 flex h-screen w-full items-center justify-center p-8 pt-16`}
         >
           <Paper
-            className="text-black-600 dark:text-light-400 p-0 w-full max-h-full flex flex-col"
+            className="flex max-h-full w-full flex-col p-0 text-black-600 dark:text-light-400"
             style={
               maxWidth !== undefined
                 ? { maxWidth: `${maxWidth}%`, maxHeight: `${maxWidth}%` }

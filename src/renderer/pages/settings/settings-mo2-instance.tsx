@@ -46,7 +46,7 @@ const SettingsMo2Instance = ({
       {configError === 'mo2-instance' && (
         <Alert>
           <div className="w-full">
-            <p className="select-text mb-2">
+            <p className="mb-2 select-text">
               {t('page.settings.errors.installationInvalid')}
             </p>
 

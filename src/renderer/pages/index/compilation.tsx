@@ -241,7 +241,7 @@ const Compilation = () => {
           }
         />
 
-        <div className="flex pb-4 gap-2">
+        <div className="flex gap-2 pb-4">
           <button
             className="btn btn-primary"
             onClick={onClickStart}

@@ -37,15 +37,15 @@ const LogsListItem = ({
 
   return (
     <div>
-      <div className="flex items-center justify-between bg-light-300 dark:bg-black-400 gap-4 pb-2 sticky top-0">
+      <div className="sticky top-0 flex items-center justify-between gap-4 bg-light-300 pb-2 dark:bg-black-400">
         <h3 className="select-all">{script.name}</h3>
         <button className="btn" onClick={onClickCopyLogs}>
           Copy
         </button>
       </div>
-      <code className="p-4 paper-darker block w-full rounded">
+      <code className="paper-darker block w-full rounded p-4">
         {logs.split('\n').map((log, i) => (
-          <span className="font-mono text-xs break-words select-text" key={i}>
+          <span className="select-text break-words font-mono text-xs" key={i}>
             {log} <br />
           </span>
         ))}

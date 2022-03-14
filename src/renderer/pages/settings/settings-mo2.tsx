@@ -30,9 +30,9 @@ const SettingsMo2 = ({
   } = useApp()
 
   return (
-    <div className="paper mt-4 relative" id="settings-mo2">
-      <h1 className="text-3xl dark:text-white mb-3 flex items-center flex-wrap">
-        <span className="inline-block mr-2">Mod Organizer 2</span>
+    <div className="paper relative mt-4" id="settings-mo2">
+      <h1 className="mb-3 flex flex-wrap items-center text-3xl dark:text-white">
+        <span className="mr-2 inline-block">Mod Organizer 2</span>
         {!mo2.use && (
           <Tooltip title={t<string>('page.settings.mo2.enableText')}>
             <HelpIcon fontSize="small" />

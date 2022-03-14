@@ -50,7 +50,7 @@ const Titlebar = ({ title }: Props) => {
     await bridge.window.restore()
   }
 
-  const img = <div className="h-4 w-4 titlebar-icon" />
+  const img = <div className="titlebar-icon h-4 w-4" />
 
   return (
     <div
@@ -72,7 +72,7 @@ const Titlebar = ({ title }: Props) => {
       <span
         className={cx(
           'flex-grow',
-          isMacOs && 'font-helvetica text-center font-bold',
+          isMacOs && 'text-center font-helvetica font-bold',
           isMacOs && !isMacOsBigSur && 'text-[12px]',
           isMacOsBigSur && 'text-[14px]',
           isMacOs && !isFocus && 'text-[#6b6769]',

@@ -55,15 +55,15 @@ const GroupsListItem = ({ group, onDelete, onEdit }: Props) => {
 
   return (
     <div
-      className="paper flex items-center relative"
+      className="paper relative flex items-center"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
       {/* Group review */}
       <Fade in={isDisplayPreview} timeout={200}>
-        <div className="absolute z-10 top-0 left-0 right-16 bg-light-300 dark:bg-black-400 rounded px-4 py-2 dark:text-white">
-          <div className="flex mb-6">
-            <h3 className="text-xl text-center flex-grow">
+        <div className="absolute top-0 left-0 right-16 z-10 rounded bg-light-300 px-4 py-2 dark:bg-black-400 dark:text-white">
+          <div className="mb-6 flex">
+            <h3 className="flex-grow text-center text-xl">
               {t('page.groups.group', { name: group.name })}
             </h3>
           </div>
@@ -83,7 +83,7 @@ const GroupsListItem = ({ group, onDelete, onEdit }: Props) => {
 
       <div className="flex-grow">
         <div className="text-black-800 dark:text-white">{group.name}</div>
-        <div className="text-xs pl-2 text-black-600 dark:text-white">
+        <div className="pl-2 text-xs text-black-600 dark:text-white">
           {!group.isEmpty ? (
             <>
               {group.scripts
