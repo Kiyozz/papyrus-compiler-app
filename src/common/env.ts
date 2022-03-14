@@ -7,4 +7,4 @@
 export const MOD_URL_DEFAULT =
   'https://www.nexusmods.com/skyrim/mods/96339?tab=files'
 
-export const MOD_DOCUMENTATION_URL = 'https://pca-app.dev'
+export const MOD_DOCUMENTATION_URL = 'https://documentation.pca-app.dev'
