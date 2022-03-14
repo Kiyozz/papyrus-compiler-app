@@ -23,6 +23,7 @@ import { useIpc } from '../../hooks/use-ipc'
 import { usePlatform } from '../../hooks/use-platform'
 import { useRecentFiles } from '../../hooks/use-recent-files'
 import { useTelemetry } from '../../hooks/use-telemetry'
+import { dirname } from '../../utils/dirname'
 import { scriptsToRenderer } from '../../utils/scripts/scripts-to-renderer'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
 import Paper from '../paper'
@@ -190,32 +191,6 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
       disabled?: boolean
       script: Script
     }) => {
-      console.log('si', script.path, script.name)
-
-      const dirname = (path: string) => {
-        if (path.length === 0) return '.'
-        let code = path.charCodeAt(0)
-        const hasRoot = code === 47
-        let end = -1
-        let matchedSlash = true
-        for (let i = path.length - 1; i >= 1; --i) {
-          code = path.charCodeAt(i)
-          if (code === 47 /*/*/) {
-            if (!matchedSlash) {
-              end = i
-              break
-            }
-          } else {
-            // We saw the first non-path separator
-            matchedSlash = false
-          }
-        }
-
-        if (end === -1) return hasRoot ? '/' : '.'
-        if (hasRoot && end === 1) return '//'
-        return path.slice(0, end)
-      }
-
       const shortenedPath = isShowFullPath
         ? {
             path: `${dirname(script.path)}${

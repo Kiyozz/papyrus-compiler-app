@@ -12,7 +12,7 @@ import { Theme as SettingsTheme } from '../common/theme'
 import { useSystemDarkPreference } from './hooks/use-system-dark-preference'
 import { useTheme } from './hooks/use-theme'
 
-const Theme = ({ children }: React.PropsWithChildren<unknown>) => {
+const MuiTheme = ({ children }: React.PropsWithChildren<unknown>) => {
   const isDark = useSystemDarkPreference()
   const [currentTheme] = useTheme()
 
@@ -68,4 +68,4 @@ const Theme = ({ children }: React.PropsWithChildren<unknown>) => {
   )
 }
 
-export default Theme
+export default MuiTheme

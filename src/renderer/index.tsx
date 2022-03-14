@@ -20,8 +20,8 @@ import LoadingProvider from './hooks/use-loading'
 import RecentFilesProvider from './hooks/use-recent-files'
 import TelemetryProvider from './hooks/use-telemetry'
 import VersionProvider from './hooks/use-version'
+import MuiTheme from './mui-theme'
 import SettingsProvider from './pages/settings/use-settings'
-import Theme from './theme'
 import { loadTranslations } from './translations'
 import { isProduction } from './utils/is-production'
 
@@ -37,7 +37,7 @@ function start() {
               <CompilationProvider>
                 <SettingsProvider>
                   <FocusProvider>
-                    <Theme>
+                    <MuiTheme>
                       <TelemetryProvider>
                         <DrawerProvider>
                           <DropProvider>
@@ -47,7 +47,7 @@ function start() {
                           </DropProvider>
                         </DrawerProvider>
                       </TelemetryProvider>
-                    </Theme>
+                    </MuiTheme>
                   </FocusProvider>
                 </SettingsProvider>
               </CompilationProvider>
