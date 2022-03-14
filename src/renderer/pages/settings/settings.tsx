@@ -6,6 +6,7 @@
 
 import HelpIcon from '@mui/icons-material/Help'
 import RefreshIcon from '@mui/icons-material/Refresh'
+import is from '@sindresorhus/is'
 import debounce from 'debounce-fn'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -136,7 +137,7 @@ const Settings = () => {
 
   const onChangeMo2Instance = useCallback(
     (value: string) => {
-      if (value === '') {
+      if (is.emptyStringOrWhitespace(value)) {
         setMo2Instance(undefined)
       } else {
         setMo2Instance(value)

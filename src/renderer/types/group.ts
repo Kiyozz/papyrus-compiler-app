@@ -4,6 +4,8 @@
  * All rights reserved.
  */
 
+import is from '@sindresorhus/is'
+
 import { ScriptRenderer } from './script-renderer'
 
 export type GroupRenderer = {
@@ -15,6 +17,6 @@ export class Group {
   constructor(public name: string, public scripts: ScriptRenderer[]) {}
 
   get isEmpty(): boolean {
-    return this.scripts.length === 0
+    return is.emptyArray(this.scripts)
   }
 }
