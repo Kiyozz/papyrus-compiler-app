@@ -153,7 +153,11 @@ const GroupsDialog = ({
           <button className="btn" type="button" onClick={onClose}>
             {t('common.cancel')}
           </button>
-          <button className="btn" type="submit" disabled={name === ''}>
+          <button
+            className="btn"
+            type="submit"
+            disabled={is.emptyStringOrWhitespace(name)}
+          >
             {isEdit
               ? t('page.groups.actions.edit')
               : t('page.groups.actions.create')}

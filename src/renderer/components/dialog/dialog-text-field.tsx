@@ -45,7 +45,7 @@ const DialogTextField = ({
 
       try {
         const result = await bridge.dialog.select(type).then(response => {
-          if (response === null) {
+          if (is.null_(response)) {
             return
           }
 
