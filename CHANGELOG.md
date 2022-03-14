@@ -2,6 +2,15 @@
 
 ### Features
 
+- The configuration is now checked when you enter the compilation page, giving you any tips if your configuration is wrong.
+
+- Button to open compilation logs now changes color at the end of a compilation
+
+  Green: when all scripts compile successfully
+  Red: when a script gone wrong
+
+- Recent files: option to show the script full path (#130)
+
 - New documentation released: access the documentation via NexusMods or with the new button at the bottom left
 
   ![docs/changelog/Unreleased/documentation.png](docs/changelog/Unreleased/documentation.png)
