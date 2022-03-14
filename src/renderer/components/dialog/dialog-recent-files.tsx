@@ -232,7 +232,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
                   {
                     'text-primary-400 dark:text-primary-400':
                       selected && !disabled,
-                    'text-black-800 dark:text-white': !selected || !disabled,
+                    'text-black-800 dark:text-white': !selected && !disabled,
                   },
                 )}
                 aria-disabled={disabled}
