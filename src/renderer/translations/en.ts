@@ -11,6 +11,7 @@ const en: TranslationShape = {
     refresh: 'Refresh',
     selectFolder: 'Select a folder',
     cancel: 'Cancel',
+    documentation: 'Documentation',
     logs: {
       nav: 'Logs',
       title: 'Compilation logs',
@@ -100,8 +101,11 @@ const en: TranslationShape = {
     settings: {
       title: 'Settings',
       game: 'Game',
-      gameFolderInfo: '{{gameType}} folder (where {{exe}} is located)',
-      compilerPath: 'Where is the PapyrusCompiler.exe file located?',
+      gameFolderInfo: 'Game folder',
+      gameFolderTooltip: 'Folder where {{exe}} is located.',
+      compilerPath: 'Papyrus Compiler',
+      compilerPathTooltip:
+        "Path to PapyrusCompiler.exe. This file comes from the CreationKit installation. More details on PCA's documentation.",
       errors: {
         installationInvalid: 'Configuration seems invalid:',
         scripts:
@@ -112,7 +116,8 @@ const en: TranslationShape = {
       },
       mo2: {
         enable: 'Enable',
-        enableText: 'only if PCA is not started from MO2',
+        enableText:
+          "Enable MO2 integration only if PCA is not started from MO2. More details on PCA's documentation.",
         instance: 'Instance folder',
         limit: 'Limit {{limit}}',
         errorInstance:

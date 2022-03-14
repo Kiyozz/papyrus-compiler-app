@@ -4,7 +4,9 @@
  * All rights reserved.
  */
 
+import HelpIcon from '@mui/icons-material/Help'
 import RefreshIcon from '@mui/icons-material/Refresh'
+import { Tooltip } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
@@ -93,10 +95,16 @@ const SettingsGame = ({
         <DialogTextField
           id="game-folder"
           error={configError === 'game'}
-          label={t('page.settings.gameFolderInfo', {
-            gameType: game.type,
-            exe,
-          })}
+          label={
+            <>
+              {t('page.settings.gameFolderInfo')}
+              <Tooltip
+                title={t<string>('page.settings.gameFolderTooltip', { exe })}
+              >
+                <HelpIcon fontSize="inherit" classes={{ root: 'ml-1' }} />
+              </Tooltip>
+            </>
+          }
           defaultValue={game.path}
           onChange={onChangeGameFolder}
           type="folder"
@@ -107,7 +115,14 @@ const SettingsGame = ({
         <DialogTextField
           id="compiler-path"
           error={configError === 'compiler'}
-          label={t('page.settings.compilerPath')}
+          label={
+            <>
+              {t('page.settings.compilerPath')}
+              <Tooltip title={t<string>('page.settings.compilerPathTooltip')}>
+                <HelpIcon fontSize="inherit" classes={{ root: 'ml-1' }} />
+              </Tooltip>
+            </>
+          }
           defaultValue={compilation.compilerPath}
           onChange={onChangeCompilerPath}
           type="file"

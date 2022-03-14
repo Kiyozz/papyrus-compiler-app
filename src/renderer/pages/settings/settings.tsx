@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+import HelpIcon from '@mui/icons-material/Help'
 import RefreshIcon from '@mui/icons-material/Refresh'
 import debounce from 'debounce-fn'
 import React, { useCallback, useEffect, useMemo } from 'react'
@@ -14,6 +15,7 @@ import { TelemetryEvent } from '../../../common/telemetry-event'
 import Page from '../../components/page'
 import PageAppBar from '../../components/page-app-bar'
 import { useApp } from '../../hooks/use-app'
+import { useDocumentation } from '../../hooks/use-documentation'
 import { useLoading } from '../../hooks/use-loading'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import SettingsCompilation from './settings-compilation'
@@ -37,6 +39,7 @@ const Settings = () => {
   const { checkConfig, configError, resetConfigError } = useSettings()
   const { isLoading } = useLoading()
   const { send } = useTelemetry()
+  const { open: openDocumentation } = useDocumentation()
 
   const debouncedUpdateConfig = useMemo(
     () => debounce(setConfig, { wait: 500 }),
@@ -180,6 +183,16 @@ const Settings = () => {
       <PageAppBar
         title={t('page.settings.title')}
         actions={[
+          <button
+            key={2}
+            className="btn"
+            onClick={() => openDocumentation('settings-app-bar')}
+          >
+            <span className="icon">
+              <HelpIcon />
+            </span>
+            {t('common.documentation')}
+          </button>,
           <button className="btn" key={1} onClick={onClickPageRefresh}>
             <div className="icon">
               <RefreshIcon />

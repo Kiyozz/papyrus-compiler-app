@@ -9,6 +9,7 @@ export interface TranslationShape {
     refresh: string
     selectFolder: string
     cancel: string
+    documentation: string
     logs: {
       nav: string
       title: string
@@ -84,7 +85,9 @@ export interface TranslationShape {
       title: string
       game: string
       gameFolderInfo: string
+      gameFolderTooltip: string
       compilerPath: string
+      compilerPathTooltip: string
       errors: {
         installationInvalid: string
         scripts: string

@@ -9,28 +9,19 @@ import { Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import {
-  MOD_DOCUMENTATION_URL,
-  MOD_DOCUMENTATION_URL_DEV,
-} from '../../common/env'
-import { TelemetryEvent } from '../../common/telemetry-event'
-import { useBridge } from '../hooks/use-bridge'
+import { useDocumentation } from '../hooks/use-documentation'
 import { useDrawer } from '../hooks/use-drawer'
-import { useProduction } from '../hooks/use-production'
 import { useShowOpenDocumentationDialog } from '../hooks/use-show-open-documentation-dialog'
-import { useTelemetry } from '../hooks/use-telemetry'
 import Fade from './animations/fade'
 import Dialog, { CloseReason } from './dialog/dialog'
 import NavItem from './nav-item'
 
 const OpenDocumentation = () => {
-  const isProduction = useProduction()
   const [isShowDialog, toggleShowDialog] = useShowOpenDocumentationDialog()
-  const { shell } = useBridge()
   const [isDrawerExpand] = useDrawer()
   const { t } = useTranslation()
-  const { send } = useTelemetry()
   const [isDialogOpen, setDialogOpen] = useState(false)
+  const { open } = useDocumentation()
 
   const onClickGoToDocumentation = () => {
     if (isShowDialog) {
@@ -41,10 +32,7 @@ const OpenDocumentation = () => {
   }
 
   const openTheDocumentation = (reason: 'enter' | 'click') => {
-    send(TelemetryEvent.documentationOpenFromNav, { reason })
-    shell.openExternal(
-      isProduction ? MOD_DOCUMENTATION_URL : MOD_DOCUMENTATION_URL_DEV,
-    )
+    open(reason)
   }
 
   const onCloseDialog = (reason?: CloseReason) => {
