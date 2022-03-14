@@ -32,6 +32,7 @@ export interface TranslationShape {
       title: string
       description: string
       goTo: string
+      doNotShowAgain: string
     }
   }
   config: {
