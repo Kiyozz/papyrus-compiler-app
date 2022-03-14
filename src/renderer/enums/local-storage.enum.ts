@@ -7,4 +7,5 @@
 export enum LocalStorage {
   drawerExpand = 'drawer-expand',
   showOpenDocumentationDialog = 'show-open-documentation-dialog',
+  recentFilesShowFullPath = 'recent-files-show-full-path',
 }

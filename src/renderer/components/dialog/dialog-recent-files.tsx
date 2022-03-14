@@ -7,6 +7,7 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import cx from 'classnames'
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,6 +20,7 @@ import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
 import { useCompilation } from '../../hooks/use-compilation'
 import { useIpc } from '../../hooks/use-ipc'
+import { usePlatform } from '../../hooks/use-platform'
 import { useRecentFiles } from '../../hooks/use-recent-files'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { scriptsToRenderer } from '../../utils/scripts/scripts-to-renderer'
@@ -37,15 +39,18 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
   const { send } = useTelemetry()
   const { setScripts, scripts: loadedScripts } = useCompilation()
   const { config } = useApp()
-  const { clearRecentFiles, removeRecentFile, recentFiles } = useRecentFiles()
+  const platform = usePlatform()
+  const {
+    clearRecentFiles,
+    removeRecentFile,
+    recentFiles,
+    showFullPath: [isShowFullPath, setShowFullPath],
+  } = useRecentFiles()
   const [selectedRecentFiles, setSelectedRecentFiles] = useState(
     new Map<string, Script>(),
   )
   const [isFirstRender, setFirstRender] = useState(true)
-  const isValid = useCallback(
-    () => selectedRecentFiles.size > 0,
-    [selectedRecentFiles.size],
-  )
+  const isValid = selectedRecentFiles.size > 0
 
   useEffect(() => {
     if (!isFirstRender) {
@@ -103,13 +108,13 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
     setSelectedRecentFiles(new Map())
   })
 
-  const onClickClose = useCallback(() => {
+  const onClickClose = () => {
     setSelectedRecentFiles(new Map())
     onClose()
-  }, [onClose])
+  }
 
-  const onClickLoad = useCallback(() => {
-    if (!isValid()) {
+  const onClickLoad = () => {
+    if (!isValid) {
       return
     }
 
@@ -121,67 +126,55 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
     )
     setSelectedRecentFiles(new Map())
     onClose()
-  }, [isValid, onClose, selectedRecentFiles, send, setScripts])
+  }
 
-  const onDialogClose = useCallback(
-    (reason: CloseReason) => {
-      if (reason === CloseReason.enter && isValid()) {
-        send(TelemetryEvent.recentFilesCloseWithEnter, {})
-        onClickLoad()
+  const onDialogClose = (reason: CloseReason) => {
+    if (reason === CloseReason.enter && isValid) {
+      send(TelemetryEvent.recentFilesCloseWithEnter, {})
+      onClickLoad()
+    } else {
+      onClickClose()
+    }
+  }
+
+  const onClickFile = (script: Script) => {
+    return (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.currentTarget.blur()
+
+      if (selectedRecentFiles.has(script.path)) {
+        setSelectedRecentFiles(list => {
+          list.delete(script.path)
+
+          return new Map(list)
+        })
       } else {
-        onClickClose()
-      }
-    },
-    [isValid, send, onClickLoad, onClickClose],
-  )
+        setSelectedRecentFiles(list => {
+          list.set(script.path, script)
 
-  const onClickFile = useCallback(
-    (script: Script) => {
-      return (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.currentTarget.blur()
-
-        if (selectedRecentFiles.has(script.path)) {
-          setSelectedRecentFiles(list => {
-            list.delete(script.path)
-
-            return new Map(list)
-          })
-        } else {
-          setSelectedRecentFiles(list => {
-            list.set(script.path, script)
-
-            return new Map(list)
-          })
-        }
-      }
-    },
-    [selectedRecentFiles],
-  )
-
-  const onClickDeleteFile = useCallback(
-    (script: Script) => {
-      return (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.currentTarget.blur()
-
-        removeRecentFile(script).then(() => {
-          send(TelemetryEvent.recentFileRemove, {})
-          setSelectedRecentFiles(srf => {
-            srf.delete(script.path)
-
-            return new Map(srf)
-          })
+          return new Map(list)
         })
       }
-    },
-    [removeRecentFile, send],
-  )
+    }
+  }
 
-  const isAlreadyLoaded = useCallback(
-    (script: Script) => {
-      return !!loadedScripts.find(s => s.path === script.path)
-    },
-    [loadedScripts],
-  )
+  const onClickDeleteFile = (script: Script) => {
+    return (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.currentTarget.blur()
+
+      removeRecentFile(script).then(() => {
+        send(TelemetryEvent.recentFileRemove, {})
+        setSelectedRecentFiles(srf => {
+          srf.delete(script.path)
+
+          return new Map(srf)
+        })
+      })
+    }
+  }
+
+  const isAlreadyLoaded = (script: Script) => {
+    return !!loadedScripts.find(s => s.path === script.path)
+  }
 
   const Line = useCallback(
     ({
@@ -197,11 +190,44 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
       disabled?: boolean
       script: Script
     }) => {
-      const shortenedPath = shorten(script.path, {
-        length: 20,
-        home: true,
-        homedir: config.game?.path ?? '',
-      })
+      console.log('si', script.path, script.name)
+
+      const dirname = (path: string) => {
+        if (path.length === 0) return '.'
+        let code = path.charCodeAt(0)
+        const hasRoot = code === 47
+        let end = -1
+        let matchedSlash = true
+        for (let i = path.length - 1; i >= 1; --i) {
+          code = path.charCodeAt(i)
+          if (code === 47 /*/*/) {
+            if (!matchedSlash) {
+              end = i
+              break
+            }
+          } else {
+            // We saw the first non-path separator
+            matchedSlash = false
+          }
+        }
+
+        if (end === -1) return hasRoot ? '/' : '.'
+        if (hasRoot && end === 1) return '//'
+        return path.slice(0, end)
+      }
+
+      const shortenedPath = isShowFullPath
+        ? {
+            path: `${dirname(script.path)}${
+              platform === 'windows' ? '\\' : '/'
+            }`,
+            filename: script.name,
+          }
+        : shorten(script.path, {
+            length: 20,
+            home: true,
+            homedir: config.game?.path ?? '',
+          })
 
       return (
         <>
@@ -223,8 +249,13 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
                 <CheckBoxOutlineBlankIcon fontSize="small" />
               )}
             </button>
-            <div className="flex items-center text-xs tracking-tight text-gray-500">
-              {shortenedPath.path}
+            <div
+              className={cx(
+                'flex items-center text-xs tracking-tight text-gray-500',
+                isShowFullPath ? 'h-6' : '',
+              )}
+            >
+              <span className="whitespace-nowrap">{shortenedPath.path}</span>
               <button
                 role="button"
                 className={cx(
@@ -245,37 +276,30 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
         </>
       )
     },
-    [config.game],
+    [config.game?.path, isShowFullPath, platform],
   )
-
-  const processedList = useMemo(() => {
-    return recentFiles.map(script => {
-      return (
-        <div key={script.path}>
-          <Line
-            onClickFile={onClickFile(script)}
-            onClickDelete={onClickDeleteFile(script)}
-            disabled={isAlreadyLoaded(script)}
-            selected={selectedRecentFiles.has(script.path)}
-            script={script}
-          />
-        </div>
-      )
-    })
-  }, [
-    Line,
-    isAlreadyLoaded,
-    onClickDeleteFile,
-    onClickFile,
-    recentFiles,
-    selectedRecentFiles,
-  ])
 
   return (
     <Dialog
       id="recent-files"
       open={isOpen}
-      title={t('page.compilation.actions.recentFiles')}
+      title={
+        <>
+          {t('page.compilation.actions.recentFiles')}
+
+          <FormGroup classes={{ root: 'ml-4' }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isShowFullPath}
+                  onChange={() => setShowFullPath(v => !v)}
+                />
+              }
+              label="Show full path"
+            />
+          </FormGroup>
+        </>
+      }
       onClose={onDialogClose}
       actions={
         <>
@@ -298,7 +322,21 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
         </span>
       ) : (
         <div className="flex flex-col gap-2">
-          <Paper darker>{processedList}</Paper>
+          <Paper darker className="overflow-x-hidden">
+            {recentFiles.map(script => {
+              return (
+                <div key={script.path}>
+                  <Line
+                    onClickFile={onClickFile(script)}
+                    onClickDelete={onClickDeleteFile(script)}
+                    disabled={isAlreadyLoaded(script)}
+                    selected={selectedRecentFiles.has(script.path)}
+                    script={script}
+                  />
+                </div>
+              )
+            })}
+          </Paper>
         </div>
       )}
     </Dialog>

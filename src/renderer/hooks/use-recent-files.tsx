@@ -4,42 +4,51 @@
  * All rights reserved.
  */
 
+import is from '@sindresorhus/is'
 import React, {
   createContext,
+  Dispatch,
+  SetStateAction,
   useCallback,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from 'react'
+import useLocalStorage from 'react-use-localstorage'
 import { Observable, Subject } from 'rxjs'
 
 import { Script } from '../../common/types/script'
 import bridge from '../bridge'
+import { LocalStorage } from '../enums/local-storage.enum'
 
-type _RecentFilesContext = {
+type RecentFilesContext = {
   recentFiles: Script[]
   onRecentFilesChanges: Observable<Script[]>
   setRecentFiles(scripts: Script[]): Promise<void>
   clearRecentFiles(): Promise<void>
   removeRecentFile(script: Script): Promise<Script[]>
+  showFullPath: [boolean, Dispatch<SetStateAction<boolean>>]
 }
 
-const _Context = createContext({} as _RecentFilesContext)
-const _recentFiles$ = new Subject<Script[]>()
-const _onRecentFilesChanges = _recentFiles$.asObservable()
+const Context = createContext({} as RecentFilesContext)
+const recentFiles$ = new Subject<Script[]>()
+const onRecentFilesChanges = recentFiles$.asObservable()
 
 const RecentFilesProvider = ({
   children,
 }: React.PropsWithChildren<unknown>) => {
   const [recentFiles, setRecentFilesMemory] = useState<Script[]>([])
+  const [isShowFullPath, setShowFullPath] = useLocalStorage(
+    LocalStorage.recentFilesShowFullPath,
+    'false',
+  )
 
   useEffect(() => {
-    const sub = _onRecentFilesChanges.subscribe(scripts => {
+    const sub = onRecentFilesChanges.subscribe(scripts => {
       setRecentFilesMemory(scripts)
     })
 
-    bridge.recentFiles.get().then(scripts => _recentFiles$.next(scripts))
+    bridge.recentFiles.get().then(scripts => recentFiles$.next(scripts))
 
     return () => sub.unsubscribe()
   }, [])
@@ -47,7 +56,7 @@ const RecentFilesProvider = ({
   const setRecentFiles = useCallback(async (scripts: Script[]) => {
     const newScripts = await bridge.recentFiles.set(scripts)
 
-    _recentFiles$.next(newScripts)
+    recentFiles$.next(newScripts)
   }, [])
 
   const clearRecentFiles = useCallback(async () => {
@@ -55,31 +64,42 @@ const RecentFilesProvider = ({
 
     await bridge.recentFiles.clear()
 
-    _recentFiles$.next([])
+    recentFiles$.next([])
   }, [])
 
   const removeRecentFile = useCallback(async (script: Script) => {
     const scripts = await bridge.recentFiles.remove(script)
 
-    _recentFiles$.next(scripts)
+    recentFiles$.next(scripts)
 
     return scripts
   }, [])
 
-  const value: _RecentFilesContext = useMemo(
-    () => ({
-      setRecentFiles,
-      clearRecentFiles,
-      removeRecentFile,
-      onRecentFilesChanges: _onRecentFilesChanges,
-      recentFiles,
-    }),
-    [setRecentFiles, clearRecentFiles, removeRecentFile, recentFiles],
+  return (
+    <Context.Provider
+      value={{
+        setRecentFiles,
+        clearRecentFiles,
+        removeRecentFile,
+        onRecentFilesChanges: onRecentFilesChanges,
+        recentFiles,
+        showFullPath: [
+          isShowFullPath === 'true',
+          (v => {
+            if (is.function_(v)) {
+              setShowFullPath(v(isShowFullPath === 'true') ? 'true' : 'false')
+            } else {
+              setShowFullPath(v ? 'true' : 'false')
+            }
+          }) as Dispatch<SetStateAction<boolean>>,
+        ],
+      }}
+    >
+      {children}
+    </Context.Provider>
   )
-
-  return <_Context.Provider value={value}>{children}</_Context.Provider>
 }
 
-export const useRecentFiles = (): _RecentFilesContext => useContext(_Context)
+export const useRecentFiles = (): RecentFilesContext => useContext(Context)
 
 export default RecentFilesProvider
