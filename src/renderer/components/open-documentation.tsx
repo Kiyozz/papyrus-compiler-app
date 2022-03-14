@@ -8,16 +8,21 @@ import HelpIcon from '@mui/icons-material/Help'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { MOD_DOCUMENTATION_URL } from '../../common/env'
+import {
+  MOD_DOCUMENTATION_URL,
+  MOD_DOCUMENTATION_URL_DEV,
+} from '../../common/env'
 import { TelemetryEvent } from '../../common/telemetry-event'
 import { useBridge } from '../hooks/use-bridge'
 import { useDrawer } from '../hooks/use-drawer'
+import { useProduction } from '../hooks/use-production'
 import { useTelemetry } from '../hooks/use-telemetry'
 import Fade from './animations/fade'
 import Dialog, { CloseReason } from './dialog/dialog'
 import NavItem from './nav-item'
 
 const OpenDocumentation = () => {
+  const isProduction = useProduction()
   const { shell } = useBridge()
   const [isDrawerExpand] = useDrawer()
   const { t } = useTranslation()
@@ -30,7 +35,9 @@ const OpenDocumentation = () => {
 
   const openTheDocumentation = (reason: 'enter' | 'click') => {
     send(TelemetryEvent.documentationOpenFromNav, { reason })
-    shell.openExternal(MOD_DOCUMENTATION_URL)
+    shell.openExternal(
+      isProduction ? MOD_DOCUMENTATION_URL : MOD_DOCUMENTATION_URL_DEV,
+    )
   }
 
   const onCloseDialog = (reason?: CloseReason) => {
