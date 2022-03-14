@@ -23,8 +23,6 @@ const PageDrawer = () => {
   const [isDrawerExpand, setDrawerExpand] = useDrawer()
   const { t } = useTranslation()
 
-  const onClick = () => setDrawerExpand(false)
-
   const links = useMemo(
     () => [
       {
@@ -65,7 +63,6 @@ const PageDrawer = () => {
                 notFocusedActiveClassName="link-not-focused-active"
                 className="link"
                 to={Link.path}
-                onClick={onClick}
               >
                 <NavItem>
                   <Link.Icon />
