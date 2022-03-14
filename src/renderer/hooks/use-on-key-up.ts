@@ -15,6 +15,7 @@ type UseOnKeyUpOptions = {
 export const useOnKeyUp = (
   key: string,
   action: () => void,
+  isActive: boolean,
   options?: UseOnKeyUpOptions,
 ) => {
   const onKeyUp = useCallback(
@@ -43,10 +44,18 @@ export const useOnKeyUp = (
   )
 
   useEffect(() => {
-    document.body.addEventListener('keyup', onKeyUp)
-
-    return () => {
+    const unSub = () => {
       document.body.removeEventListener('keyup', onKeyUp)
     }
-  }, [onKeyUp])
+
+    if (isActive) {
+      document.body.addEventListener('keyup', onKeyUp)
+    } else {
+      unSub()
+    }
+
+    return () => {
+      unSub()
+    }
+  }, [onKeyUp, isActive])
 }

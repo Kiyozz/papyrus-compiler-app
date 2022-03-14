@@ -23,6 +23,7 @@ type DialogProps = {
     content?: string
     child?: string
   }
+  id: string
 }
 
 enum CloseReason {
@@ -40,26 +41,33 @@ const Dialog = ({
   content: Content,
   contentClassNames = {},
   children,
+  id,
 }: React.PropsWithChildren<DialogProps>) => {
   const container = useRef<HTMLDivElement | null>(null)
 
   useDocumentClick(
     () => {
-      onClose?.(CloseReason.outside)
+      if (open) {
+        onClose?.(CloseReason.outside)
+      }
     },
     clicked => clicked === container.current,
   )
 
   const onEscape = useCallback(() => {
-    onClose?.(CloseReason.escape)
-  }, [onClose])
+    if (open) {
+      onClose?.(CloseReason.escape)
+    }
+  }, [onClose, open])
 
   const onEnter = useCallback(() => {
-    onClose?.(CloseReason.enter)
-  }, [onClose])
+    if (open) {
+      onClose?.(CloseReason.enter)
+    }
+  }, [onClose, open])
 
-  useOnKeyUp('Escape', onEscape)
-  useOnKeyUp('Enter', onEnter)
+  useOnKeyUp('Escape', onEscape, open)
+  useOnKeyUp('Enter', onEnter, open)
 
   const dialogContent = useMemo(
     () => (
@@ -111,6 +119,7 @@ const Dialog = ({
       </>
     ) : null,
     document.body,
+    id,
   )
 }
 

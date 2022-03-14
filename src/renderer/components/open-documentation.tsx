@@ -55,6 +55,7 @@ const OpenDocumentation = () => {
   return (
     <>
       <Dialog
+        id="documentation"
         open={isDialogOpen}
         maxWidth={70}
         title={t('nav.help.title')}

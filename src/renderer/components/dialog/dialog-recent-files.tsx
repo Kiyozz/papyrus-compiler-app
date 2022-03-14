@@ -273,6 +273,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
 
   return (
     <Dialog
+      id="recent-files"
       open={isOpen}
       title={t('page.compilation.actions.recentFiles')}
       onClose={onDialogClose}

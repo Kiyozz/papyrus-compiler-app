@@ -90,6 +90,7 @@ const OpenCompilationLogs = () => {
       </NavItem>
 
       <Dialog
+        id="compilation-logs"
         open={isDialogOpen}
         onClose={onClickButtonCloseLogs}
         actions={

@@ -10,7 +10,7 @@ import { useFocus } from '../hooks/use-focus'
 
 type Props = {
   title?: string
-  actions?: ReactNode[]
+  actions?: ReactNode
 }
 
 const PageAppBar = ({ title, actions = [] }: Props) => {
@@ -26,11 +26,7 @@ const PageAppBar = ({ title, actions = [] }: Props) => {
     >
       <div className="flex h-16 items-center px-4">
         <h2 className="font-nova text-3xl font-bold">{title}</h2>
-        <div className="ml-auto flex items-center gap-2">
-          {actions.map((action, index) => {
-            return <React.Fragment key={index}>{action}</React.Fragment>
-          })}
-        </div>
+        <div className="ml-auto flex items-center gap-2">{actions}</div>
       </div>
     </div>
   )

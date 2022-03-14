@@ -82,9 +82,13 @@ const DialogChangelog = () => {
     setCheckUsingLastVersion(false)
   }
 
-  useOnKeyUp('Escape', () => {
-    setShowChangelog(false)
-  })
+  useOnKeyUp(
+    'Escape',
+    () => {
+      setShowChangelog(false)
+    },
+    isShowChangelog,
+  )
 
   return (
     <>
@@ -109,6 +113,7 @@ const DialogChangelog = () => {
       />
 
       <Dialog
+        id="user-note"
         open={isUserShowNotes}
         onClose={onCloseDialog}
         actions={

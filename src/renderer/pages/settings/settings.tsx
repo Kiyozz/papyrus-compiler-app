@@ -182,24 +182,25 @@ const Settings = () => {
     <>
       <PageAppBar
         title={t('page.settings.title')}
-        actions={[
-          <button
-            key={2}
-            className="btn"
-            onClick={() => openDocumentation('settings-app-bar')}
-          >
-            <span className="icon">
-              <HelpIcon />
-            </span>
-            {t('common.documentation')}
-          </button>,
-          <button className="btn" key={1} onClick={onClickPageRefresh}>
-            <div className="icon">
-              <RefreshIcon />
-            </div>
-            {t('common.refresh')}
-          </button>,
-        ]}
+        actions={
+          <>
+            <button
+              className="btn"
+              onClick={() => openDocumentation('settings-app-bar')}
+            >
+              <span className="icon">
+                <HelpIcon />
+              </span>
+              {t('common.documentation')}
+            </button>
+            <button className="btn" onClick={onClickPageRefresh}>
+              <div className="icon">
+                <RefreshIcon />
+              </div>
+              {t('common.refresh')}
+            </button>
+          </>
+        }
       />
 
       <Page>

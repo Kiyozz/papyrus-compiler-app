@@ -137,6 +137,7 @@ const GroupsDialog = ({
 
   return (
     <Dialog
+      id="group"
       open={open}
       onClose={onDialogClose}
       actions={
