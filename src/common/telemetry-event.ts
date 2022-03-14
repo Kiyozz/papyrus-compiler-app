@@ -96,6 +96,6 @@ export type TelemetryEventProperties = {
   [TelemetryEvent.tutorialsSettingsEnd]: Record<string, never>
   [TelemetryEvent.tutorialsSettingsDeny]: Record<string, never>
   [TelemetryEvent.documentationOpenFromNav]: {
-    reason: 'enter' | 'click'
+    reason: 'enter' | 'click' | 'settings-app-bar'
   }
 }

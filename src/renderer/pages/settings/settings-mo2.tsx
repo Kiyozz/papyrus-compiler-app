@@ -4,6 +4,8 @@
  * All rights reserved.
  */
 
+import HelpIcon from '@mui/icons-material/Help'
+import { Tooltip } from '@mui/material'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -32,9 +34,9 @@ const SettingsMo2 = ({
       <h1 className="text-3xl dark:text-white mb-3 flex items-center flex-wrap">
         <span className="inline-block mr-2">Mod Organizer 2</span>
         {!mo2.use && (
-          <span className="text-xs dark:text-light-800">
-            ({t('page.settings.mo2.enableText')})
-          </span>
+          <Tooltip title={t<string>('page.settings.mo2.enableText')}>
+            <HelpIcon fontSize="small" />
+          </Tooltip>
         )}
       </h1>
 

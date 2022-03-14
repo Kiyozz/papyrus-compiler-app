@@ -13,7 +13,7 @@ type Props = {
   name?: string
   error?: boolean
   id: string
-  label?: string
+  label?: ReactNode
   value: string | number
   placeholder?: string
   infoText?: string
@@ -55,7 +55,7 @@ const TextField = ({
       {label && (
         <label
           className={cx(
-            'block text-black-600 dark:text-gray-300',
+            'flex items-center text-black-600 dark:text-gray-300',
             error && 'label-danger',
           )}
           htmlFor={id}

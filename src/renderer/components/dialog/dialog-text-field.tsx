@@ -7,7 +7,7 @@
 import FolderIcon from '@mui/icons-material/Folder'
 import FolderOpenIcon from '@mui/icons-material/FolderOpen'
 import is from '@sindresorhus/is'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { DialogType } from '../../../common/types/dialog'
@@ -19,7 +19,7 @@ type Props = {
   id: string
   className?: string
   error?: boolean
-  label?: string
+  label?: ReactNode
   defaultValue: string
   onChange: (value: string) => void
   type: DialogType

@@ -13,6 +13,7 @@ const fr: TranslationShape = {
     refresh: 'Rafraîchir',
     selectFolder: 'Sélectionner un dossier',
     cancel: 'Annuler',
+    documentation: 'Documentation',
     logs: {
       nav: 'Logs',
       title: 'Logs de compilation',
@@ -105,8 +106,11 @@ const fr: TranslationShape = {
     settings: {
       title: 'Paramètres',
       game: 'Jeu',
-      gameFolderInfo: 'Dossier de {{gameType}} (où {{exe}} se trouve)',
-      compilerPath: 'Où se trouve le fichier PapyrusCompiler.exe ?',
+      gameFolderInfo: 'Dossier du jeu',
+      gameFolderTooltip: 'Dossier où se trouve {{exe}}',
+      compilerPath: 'Compilateur Papyrus',
+      compilerPathTooltip:
+        "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA.",
       errors: {
         installationInvalid: 'La configuration semble invalide :',
         scripts:
@@ -118,7 +122,8 @@ const fr: TranslationShape = {
       },
       mo2: {
         enable: 'Activer',
-        enableText: "uniquement si PCA n'est pas lancé à partir de MO2",
+        enableText:
+          "Activer l'intégration MO2 uniquement si PCA n'est pas lancé à partir de MO2. Plus d'informations sur la documentation de PCA.",
         instance: "Dossier de l'instance",
         limit: 'Limite {{limit}}',
         errorInstance:
