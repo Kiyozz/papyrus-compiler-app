@@ -16,7 +16,6 @@ import DrawerProvider from './hooks/use-drawer'
 import DropProvider from './hooks/use-drop'
 import FocusProvider from './hooks/use-focus'
 import InitializationProvider from './hooks/use-initialization'
-import LoadingProvider from './hooks/use-loading'
 import RecentFilesProvider from './hooks/use-recent-files'
 import TelemetryProvider from './hooks/use-telemetry'
 import VersionProvider from './hooks/use-version'
@@ -41,9 +40,7 @@ function start() {
                       <TelemetryProvider>
                         <DrawerProvider>
                           <DropProvider>
-                            <LoadingProvider>
-                              <App />
-                            </LoadingProvider>
+                            <App />
                           </DropProvider>
                         </DrawerProvider>
                       </TelemetryProvider>
