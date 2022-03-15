@@ -17,7 +17,6 @@ import Page from '../../components/page'
 import PageAppBar from '../../components/page-app-bar'
 import { useApp } from '../../hooks/use-app'
 import { useDocumentation } from '../../hooks/use-documentation'
-import { useLoading } from '../../hooks/use-loading'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import SettingsCompilation from './settings-compilation'
 import SettingsGame from './settings-game'
@@ -38,7 +37,6 @@ const Settings = () => {
     refreshConfig,
   } = useApp()
   const { checkConfig, configError, resetConfigError } = useSettings()
-  const { isLoading } = useLoading()
   const { send } = useTelemetry()
   const { open: openDocumentation } = useDocumentation()
 
@@ -167,17 +165,13 @@ const Settings = () => {
   )
 
   const onClickPageRefresh = useCallback(() => {
-    if (isLoading) {
-      return
-    }
-
     if (configError) {
       checkConfig()
     }
 
     refreshConfig()
     send(TelemetryEvent.settingsRefresh, {})
-  }, [isLoading, configError, refreshConfig, checkConfig, send])
+  }, [configError, refreshConfig, checkConfig, send])
 
   return (
     <>
