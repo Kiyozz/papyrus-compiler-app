@@ -7,10 +7,11 @@
 import { useState } from 'react'
 
 import { Platform } from '../../common/types/platform'
-import bridge from '../bridge'
+import { useBridge } from './use-bridge'
 
 export const usePlatform = (): Platform => {
-  const [platform] = useState(bridge.os.platform)
+  const { os } = useBridge()
+  const [platform] = useState(os.platform)
 
   return platform
 }

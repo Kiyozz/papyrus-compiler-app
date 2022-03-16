@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+import is from '@sindresorhus/is'
 import cx from 'classnames'
 import React, { useEffect, ReactNode } from 'react'
 
@@ -42,7 +43,7 @@ const Toast = ({
     }
 
     return () => {
-      if (timer !== undefined) {
+      if (!is.undefined(timer)) {
         clearTimeout(timer)
       }
     }

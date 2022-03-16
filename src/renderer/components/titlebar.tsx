@@ -7,7 +7,7 @@
 import cx from 'classnames'
 import React, { MouseEvent } from 'react'
 
-import bridge from '../bridge'
+import { useBridge } from '../hooks/use-bridge'
 import { useFocus } from '../hooks/use-focus'
 import { usePlatform } from '../hooks/use-platform'
 import { useWindowState } from '../hooks/use-window-state'
@@ -20,6 +20,7 @@ const Titlebar = ({ title }: Props) => {
   const isFocus = useFocus()
   const platform = usePlatform()
   const windowState = useWindowState()
+  const bridge = useBridge()
 
   const handleClickMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.blur()

@@ -14,7 +14,7 @@ import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useDrop, useSetDrop } from '../../hooks/use-drop'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { GroupRenderer, ScriptRenderer } from '../../types'
-import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
+import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
 import Dialog, { CloseReason } from '../dialog/dialog'
 import Paper from '../paper'
@@ -113,7 +113,7 @@ const GroupsDialog = ({
 
   const onDrop = useCallback(
     (pscFiles: File[]) => {
-      const pscScripts = pscFilesToPscScripts(pscFiles)
+      const pscScripts = pscFilesToScript(pscFiles)
 
       send(TelemetryEvent.groupDropScripts, { scripts: pscScripts.length })
       setScripts(s => uniqScripts([...s, ...pscScripts]))

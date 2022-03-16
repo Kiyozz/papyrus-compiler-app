@@ -103,4 +103,6 @@ export type Bridge = {
     restore: () => Promise<WindowState>
     onStateChange: (cb: (state: WindowState) => void) => Disposable
   }
+
+  uuid: () => string
 }

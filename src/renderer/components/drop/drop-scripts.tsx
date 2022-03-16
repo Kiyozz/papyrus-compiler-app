@@ -35,8 +35,10 @@ const DropScripts = ({
     useFsAccessApi: false,
   })
 
+  const { role, ...rootProps } = getRootProps()
+
   return (
-    <div className={cx('h-full w-full', className)} {...getRootProps()}>
+    <div className={cx('h-full w-full', className)} {...rootProps}>
       <input {...getInputProps()} />
       {children({ isDragActive, open })}
     </div>

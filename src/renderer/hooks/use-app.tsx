@@ -5,24 +5,19 @@
  */
 
 import is from '@sindresorhus/is'
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
+import { useDidMount } from 'rooks'
 import { Observable, Subject } from 'rxjs'
 // eslint-disable-next-line import/no-unresolved
 import { PartialDeep } from 'type-fest'
 
 import { Config } from '../../common/types/config'
-import bridge from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { Group } from '../types'
+import { useBridge } from './use-bridge'
 import { useIpc } from './use-ipc'
 
-type _AppContext = {
+type AppContext = {
   setShowChangelog: (show: boolean) => void
   setChangelog: (changelog: string) => void
   setConfig: (config: PartialDeep<Config>, override?: boolean) => void
@@ -37,33 +32,13 @@ type _AppContext = {
   onRefreshConfig: Observable<Config>
 }
 
-const _Context = React.createContext({} as _AppContext)
-
-const _selectGroups = (config: Config): Group[] => {
-  if (config.groups.length === 0) {
-    return []
-  }
-
-  return config.groups.map(
-    g =>
-      new Group(
-        g.name,
-        g.scripts.map((s, i) => {
-          return {
-            status: ScriptStatus.idle,
-            id: i,
-            name: s.name,
-            path: s.path,
-          }
-        }),
-      ),
-  )
-}
+const Context = React.createContext({} as AppContext)
 
 const _refresh$ = new Subject<Config>()
 const _onRefreshConfig = _refresh$.asObservable()
 
 const AppProvider = ({ children }: React.PropsWithChildren<unknown>) => {
+  const bridge = useBridge()
   const [config, setConfig] = useState<Config>({} as Config)
   const [groups, setGroups] = useState<Group[]>([])
   const [isShowChangelog, setShowChangelog] = useState(false)
@@ -74,36 +49,62 @@ const AppProvider = ({ children }: React.PropsWithChildren<unknown>) => {
     window.location.reload()
   })
 
-  const updateConfig = (
-    partialConfig: PartialDeep<Config>,
-    override?: boolean,
-  ) => {
-    bridge.config.update(partialConfig, override).then(updatedConfig => {
+  const selectGroupsFromConfig = useCallback(
+    (config: Config): Group[] => {
+      if (config.groups.length === 0) return []
+
+      return config.groups.map(
+        g =>
+          new Group(
+            g.name,
+            g.scripts.map(s => {
+              return {
+                status: ScriptStatus.idle,
+                id: bridge.uuid(),
+                name: s.name,
+                path: s.path,
+              }
+            }),
+          ),
+      )
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [bridge.uuid],
+  )
+
+  useDidMount(async () => {
+    const initialConfig = await bridge.config.get()
+
+    setConfig(initialConfig)
+    setGroups(selectGroupsFromConfig(initialConfig))
+  })
+
+  const updateConfig = useCallback(
+    async (partialConfig: PartialDeep<Config>, override?: boolean) => {
+      const updatedConfig = await bridge.config.update(partialConfig, override)
+
       setConfig(updatedConfig)
-      setGroups(_selectGroups(updatedConfig))
-    })
-  }
+      setGroups(selectGroupsFromConfig(updatedConfig))
+    },
+    [bridge.config, selectGroupsFromConfig],
+  )
 
-  const copyToClipboard = async (text: string) => {
-    await bridge.clipboard.copy(text)
-  }
+  const copyToClipboard = useCallback(
+    async (text: string) => {
+      await bridge.clipboard.copy(text)
+    },
+    [bridge.clipboard],
+  )
 
-  const refreshConfig = useCallback(() => {
-    return bridge.config.get().then(refreshedConfig => {
-      setConfig(refreshedConfig)
-      setGroups(_selectGroups(refreshedConfig))
-      _refresh$.next(refreshedConfig)
-    })
-  }, [])
+  const refreshConfig = useCallback(async () => {
+    const refreshedConfig = await bridge.config.get()
 
-  useEffect(() => {
-    bridge.config.get().then(initialConfig => {
-      setConfig(initialConfig)
-      setGroups(_selectGroups(initialConfig))
-    })
-  }, [])
+    setConfig(refreshedConfig)
+    setGroups(selectGroupsFromConfig(refreshedConfig))
+    _refresh$.next(refreshedConfig)
+  }, [bridge.config, selectGroupsFromConfig])
 
-  const value: _AppContext = useMemo(
+  const value: AppContext = useMemo(
     () => ({
       setShowChangelog,
       setChangelog,
@@ -121,10 +122,12 @@ const AppProvider = ({ children }: React.PropsWithChildren<unknown>) => {
     [
       changelog,
       config,
+      copyToClipboard,
       groups,
       isCheckUsingLastVersion,
       isShowChangelog,
       refreshConfig,
+      updateConfig,
     ],
   )
 
@@ -132,9 +135,9 @@ const AppProvider = ({ children }: React.PropsWithChildren<unknown>) => {
     return null
   }
 
-  return <_Context.Provider value={value}>{children}</_Context.Provider>
+  return <Context.Provider value={value}>{children}</Context.Provider>
 }
 
-export const useApp = (): _AppContext => useContext(_Context)
+export const useApp = (): AppContext => useContext(Context)
 
 export default AppProvider

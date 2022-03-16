@@ -8,7 +8,7 @@ import ClearIcon from '@mui/icons-material/Clear'
 import HistoryIcon from '@mui/icons-material/History'
 import PlayIcon from '@mui/icons-material/PlayCircleFilled'
 import SearchIcon from '@mui/icons-material/Search'
-import React, { ReactNode, useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useDidMount } from 'rooks'
@@ -24,9 +24,8 @@ import { useCompilation } from '../../hooks/use-compilation'
 import { useDrop, useSetDrop } from '../../hooks/use-drop'
 import { useRecentFiles } from '../../hooks/use-recent-files'
 import { useTelemetry } from '../../hooks/use-telemetry'
-import { ScriptRenderer } from '../../types'
-import { pscFilesToPscScripts } from '../../utils/scripts/psc-files-to-psc-scripts'
-import { reorderScripts } from '../../utils/scripts/reorder-scripts'
+import { isAllGroupsEmpty, ScriptRenderer } from '../../types'
+import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
 import { useSettings } from '../settings/use-settings'
 import GroupsLoader from './groups-loader'
@@ -35,6 +34,36 @@ import ScriptItem from './script-item'
 enum DialogRecentFilesState {
   open,
   close,
+}
+
+const RecentFilesButton = ({
+  onClick,
+}: {
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+}) => {
+  const { t } = useTranslation()
+
+  return (
+    <button className="btn" onClick={onClick}>
+      <div className="icon">
+        <HistoryIcon />
+      </div>
+      {t('page.compilation.actions.recentFiles')}
+    </button>
+  )
+}
+
+const SearchButton = ({ onClick }: { onClick: () => void }) => {
+  const { t } = useTranslation()
+
+  return (
+    <button className="btn" onClick={onClick}>
+      <div className="icon">
+        <SearchIcon />
+      </div>
+      {t('page.compilation.actions.searchScripts')}
+    </button>
+  )
 }
 
 const Compilation = () => {
@@ -54,51 +83,41 @@ const Compilation = () => {
 
   const onDrop = useCallback(
     (pscFiles: File[]) => {
-      setScripts((scriptsList: ScriptRenderer[]) => {
-        const pscScripts: ScriptRenderer[] = pscFilesToPscScripts(
-          pscFiles,
-          scriptsList,
-        )
+      setScripts(scriptsList => {
+        const pscScripts = pscFilesToScript(pscFiles)
 
         send(TelemetryEvent.compilationDropScripts, {
           scripts: pscScripts.length,
         })
-        const newScripts = uniqScripts([...scriptsList, ...pscScripts])
 
-        return reorderScripts(newScripts)
+        return uniqScripts([...scriptsList, ...pscScripts])
       })
     },
-    [setScripts, send],
+    [send, setScripts],
   )
 
   useSetDrop(onDrop)
 
-  const onClickRemoveScriptFromScript = useCallback(
-    (script: ScriptRenderer) => {
-      return () => {
-        setScripts(scriptsList => {
-          send(TelemetryEvent.compilationRemoveScript, {
-            remainingScripts: scriptsList.length - 1,
-          })
-          return scriptsList.filter((cs: ScriptRenderer) => cs !== script)
+  const onClickRemoveScriptFromScript = (script: ScriptRenderer) => {
+    return () => {
+      setScripts(scriptsList => {
+        send(TelemetryEvent.compilationRemoveScript, {
+          remainingScripts: scriptsList.length - 1,
         })
-      }
-    },
-    [setScripts, send],
-  )
+        return scriptsList.filter((cs: ScriptRenderer) => cs !== script)
+      })
+    }
+  }
 
-  const onClickPlayCompilation = useCallback(
-    (script: ScriptRenderer) => {
-      return () => {
-        send(TelemetryEvent.compilationSinglePlay, {})
+  const onClickPlayCompilation = (script: ScriptRenderer) => {
+    return () => {
+      send(TelemetryEvent.compilationSinglePlay, {})
 
-        start({ scripts: [script] })
-      }
-    },
-    [send, start],
-  )
+      start({ scripts: [script] })
+    }
+  }
 
-  const onClickStart = useCallback(() => {
+  const onClickStart = () => {
     if (scripts.length === 0) {
       return
     }
@@ -115,7 +134,7 @@ const Compilation = () => {
       concurrentScripts,
     })
     start({ scripts })
-  }, [scripts, send, start, concurrentScripts, setRecentFiles])
+  }
 
   const onClickRecentFiles = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.blur()
@@ -123,93 +142,50 @@ const Compilation = () => {
     setDialogState(DialogRecentFilesState.open)
   }
 
-  const onChangeGroup = useCallback(
-    (groupName: string) => {
-      const group = groups.find(g => g.name === groupName)
+  const onChangeGroup = (groupName: string) => {
+    const group = groups.find(g => g.name === groupName)
 
-      if (!group) {
-        return
-      }
+    if (!group) {
+      return
+    }
 
-      setScripts(scriptList =>
-        reorderScripts(uniqScripts([...scriptList, ...group.scripts])),
-      )
-    },
-    [setScripts, groups],
-  )
+    setScripts(scriptList => uniqScripts([...scriptList, ...group.scripts]))
+  }
 
   const onClearScripts = useCallback(() => {
     setScripts(() => [])
   }, [setScripts])
 
-  const searchButton = useMemo(
-    () => (
-      <button className="btn" onClick={drop} key="search">
-        <div className="icon">
-          <SearchIcon />
-        </div>
-        {t('page.compilation.actions.searchScripts')}
-      </button>
-    ),
-    [t, drop],
-  )
-
-  const recentFilesButton = useMemo(
-    () => (
-      <button className="btn" onClick={onClickRecentFiles} key="recent-files">
-        <div className="icon">
-          <HistoryIcon />
-        </div>
-        {t('page.compilation.actions.recentFiles')}
-      </button>
-    ),
-    [t],
-  )
-
-  const pageActions = useMemo(() => {
-    const possibleActions: ReactNode[] = [recentFilesButton, searchButton]
-
-    if (groups.filter(group => !group.isEmpty).length > 0) {
-      possibleActions.push(
-        <GroupsLoader
-          groups={groups}
-          onChangeGroup={onChangeGroup}
-          key="groups"
-        />,
-      )
-    }
-
-    return possibleActions
-  }, [searchButton, recentFilesButton, groups, onChangeGroup])
-
-  const scriptsList: ReactNode[] = useMemo(() => {
-    return scripts.map(script => {
-      return (
-        <ScriptItem
-          key={script.id}
-          onClickRemoveScript={onClickRemoveScriptFromScript(script)}
-          onClickPlayCompilation={onClickPlayCompilation(script)}
-          script={script}
-        />
-      )
-    })
-  }, [scripts, onClickRemoveScriptFromScript, onClickPlayCompilation])
+  const scriptsList = scripts.map(script => {
+    return (
+      <ScriptItem
+        key={script.id}
+        onClickRemoveScript={onClickRemoveScriptFromScript(script)}
+        onClickPlayCompilation={onClickPlayCompilation(script)}
+        script={script}
+      />
+    )
+  })
 
   const onClickEmpty = useCallback(() => {
     send(TelemetryEvent.compilationListEmpty, { scripts: scripts.length })
     onClearScripts()
-  }, [onClearScripts, send, scripts])
-
-  const Icon = useCallback(
-    ({ className }: { className?: string }) => (
-      <PlayIcon className={className} />
-    ),
-    [],
-  )
+  }, [onClearScripts, scripts.length, send])
 
   return (
     <>
-      <PageAppBar title={t('page.compilation.title')} actions={pageActions} />
+      <PageAppBar
+        title={t('page.compilation.title')}
+        actions={
+          <>
+            <RecentFilesButton onClick={onClickRecentFiles} />
+            <SearchButton onClick={drop} />
+            {!isAllGroupsEmpty(groups) && (
+              <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
+            )}
+          </>
+        }
+      />
       <Page>
         <DialogRecentFiles
           isOpen={dialogState == DialogRecentFilesState.open}
@@ -248,7 +224,7 @@ const Compilation = () => {
             disabled={!!configError || scripts.length === 0 || isRunning}
           >
             <div className="icon">
-              <Icon />
+              <PlayIcon />
             </div>{' '}
             {t('page.compilation.actions.start')}
           </button>
