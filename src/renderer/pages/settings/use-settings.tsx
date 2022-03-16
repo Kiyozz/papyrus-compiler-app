@@ -13,28 +13,29 @@ import React, {
 } from 'react'
 
 import { BadError } from '../../../common/types/bad-error'
-import bridge from '../../bridge'
+import { useBridge } from '../../hooks/use-bridge'
 
-type _SettingsContext = {
+type SettingsContext = {
   configError: BadError
   checkConfig: () => void
   resetConfigError: () => void
 }
 
-const _Context = createContext({} as _SettingsContext)
+const Context = createContext({} as SettingsContext)
 
 const SettingsProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const [configError, setConfigError] = useState<BadError>(false)
+  const { config } = useBridge()
 
   const checkConfig = useCallback(async () => {
-    const configError = await bridge.config.check()
+    const configError = await config.check()
 
     setConfigError(configError)
-  }, [])
+  }, [config])
 
   const resetConfigError = useCallback(() => setConfigError(false), [])
 
-  const value: _SettingsContext = useMemo(
+  const value: SettingsContext = useMemo(
     () => ({
       configError,
       checkConfig,
@@ -43,11 +44,11 @@ const SettingsProvider = ({ children }: React.PropsWithChildren<unknown>) => {
     [checkConfig, configError, resetConfigError],
   )
 
-  return <_Context.Provider value={value}>{children}</_Context.Provider>
+  return <Context.Provider value={value}>{children}</Context.Provider>
 }
 
-export const useSettings = (): _SettingsContext => {
-  return useContext(_Context)
+export const useSettings = (): SettingsContext => {
+  return useContext(Context)
 }
 
 export default SettingsProvider

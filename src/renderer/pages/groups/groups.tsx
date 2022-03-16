@@ -70,7 +70,7 @@ const Groups = () => {
         }
       />
 
-      <Page mainClassName="h-full">
+      <Page classes={{ main: 'h-full' }}>
         <GroupsDialog
           group={editingGroup}
           open={showAddPopup}

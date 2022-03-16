@@ -5,23 +5,23 @@
  */
 
 import { Script } from '../../../common/types/script'
+import bridge from '../../bridge'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import { ScriptRenderer } from '../../types'
-import { reorderScripts } from './reorder-scripts'
 
 export const scriptsToRenderer = (
-  interfaces: ScriptRenderer[],
+  scriptsRenderer: ScriptRenderer[],
   scripts: Script[],
 ): ScriptRenderer[] => {
-  return reorderScripts([
-    ...interfaces,
+  return [
+    ...scriptsRenderer,
     ...scripts.map(
       s =>
         ({
           ...s,
-          id: 1,
+          id: bridge.uuid(),
           status: ScriptStatus.idle,
         } as ScriptRenderer),
     ),
-  ])
+  ]
 }

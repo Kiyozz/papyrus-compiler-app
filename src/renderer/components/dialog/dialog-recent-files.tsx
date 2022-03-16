@@ -9,15 +9,15 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import cx from 'classnames'
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDidMount } from 'rooks'
+import { useDidUpdate } from 'rooks'
 
 import { shorten } from '../../../common/shorten'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { Script } from '../../../common/types/script'
-import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
+import { useBridge } from '../../hooks/use-bridge'
 import { useCompilation } from '../../hooks/use-compilation'
 import { useIpc } from '../../hooks/use-ipc'
 import { usePlatform } from '../../hooks/use-platform'
@@ -36,6 +36,7 @@ type Props = {
 }
 
 const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
+  const bridge = useBridge()
   const { t } = useTranslation()
   const { send } = useTelemetry()
   const { setScripts, scripts: loadedScripts } = useCompilation()
@@ -50,20 +51,15 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
   const [selectedRecentFiles, setSelectedRecentFiles] = useState(
     new Map<string, Script>(),
   )
-  const [isFirstRender, setFirstRender] = useState(true)
   const isValid = selectedRecentFiles.size > 0
 
-  useEffect(() => {
-    if (!isFirstRender) {
-      if (isOpen) {
-        bridge.recentFiles.dialog.open()
-      } else {
-        bridge.recentFiles.dialog.close()
-      }
+  useDidUpdate(() => {
+    if (isOpen) {
+      bridge.recentFiles.dialog.open()
+    } else {
+      bridge.recentFiles.dialog.close()
     }
-  }, [isOpen, isFirstRender])
-
-  useDidMount(() => setFirstRender(false))
+  }, [isOpen])
 
   const notLoadedRecentFiles = useMemo(() => {
     return recentFiles.filter(rf => {
@@ -114,7 +110,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
     onClose()
   }
 
-  const onClickLoad = () => {
+  const onClickLoad = async () => {
     if (!isValid) {
       return
     }

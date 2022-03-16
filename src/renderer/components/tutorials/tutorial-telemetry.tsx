@@ -25,7 +25,9 @@ const TutorialTelemetry = () => {
   }
 
   useEffect(() => {
-    setTimeout(() => setWaiting(false), 2000)
+    const time = setTimeout(() => setWaiting(false), 2000)
+
+    return () => clearTimeout(time)
   }, [])
 
   return (

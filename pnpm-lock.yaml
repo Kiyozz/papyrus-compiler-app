@@ -15,6 +15,7 @@ specifiers:
   '@types/react-router': ^5.1.18
   '@types/react-router-dom': ^5.3.3
   '@types/react-transition-group': ^4.4.4
+  '@types/uuid': ^8.3.4
   '@typescript-eslint/eslint-plugin': ~5.14.0
   '@typescript-eslint/parser': ~5.14.0
   '@vitejs/plugin-react-refresh': ^1.3.6
@@ -68,6 +69,7 @@ specifiers:
   ts-pattern: ^3.3.5
   type-fest: ^2.12.0
   typescript: ~4.6.2
+  uuid: ^8.3.2
   vite: ^2.8.6
 
 devDependencies:
@@ -85,6 +87,7 @@ devDependencies:
   '@types/react-router': 5.1.18
   '@types/react-router-dom': 5.3.3
   '@types/react-transition-group': 4.4.4
+  '@types/uuid': 8.3.4
   '@typescript-eslint/eslint-plugin': 5.14.0_f4054b8c3cd621db16ae1b9d571bccc0
   '@typescript-eslint/parser': 5.14.0_eslint@8.10.0+typescript@4.6.2
   '@vitejs/plugin-react-refresh': 1.3.6
@@ -138,6 +141,7 @@ devDependencies:
   ts-pattern: 3.3.5
   type-fest: 2.12.0
   typescript: 4.6.2
+  uuid: 8.3.2
   vite: 2.8.6
 
 packages:
@@ -1344,6 +1348,13 @@ packages:
     resolution:
       {
         integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==,
+      }
+    dev: true
+
+  /@types/uuid/8.3.4:
+    resolution:
+      {
+        integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==,
       }
     dev: true
 
@@ -8687,6 +8698,14 @@ packages:
   /utils-merge/1.0.1:
     resolution: { integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM= }
     engines: { node: '>= 0.4.0' }
+    dev: true
+
+  /uuid/8.3.2:
+    resolution:
+      {
+        integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==,
+      }
+    hasBin: true
     dev: true
 
   /uvu/0.5.3:

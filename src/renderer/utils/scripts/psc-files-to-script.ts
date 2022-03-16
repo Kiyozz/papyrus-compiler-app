@@ -4,16 +4,14 @@
  * All rights reserved.
  */
 
+import bridge from '../../bridge'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import { ScriptRenderer } from '../../types'
 
-export const pscFilesToPscScripts = (
-  pscFiles: File[],
-  actualList?: ScriptRenderer[],
-): ScriptRenderer[] => {
-  return pscFiles.map(({ name, path }, index) => {
+export const pscFilesToScript = (pscFiles: File[]): ScriptRenderer[] => {
+  return pscFiles.map(({ name, path }) => {
     return {
-      id: (actualList?.length ?? 0) + index,
+      id: bridge.uuid(),
       name,
       path,
       status: ScriptStatus.idle,

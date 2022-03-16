@@ -10,11 +10,11 @@ import {
   TelemetryEvent,
   TelemetryEventProperties,
 } from '../../common/telemetry-event'
-import bridge from '../bridge'
 import { Env } from '../env'
 import { useApp } from './use-app'
+import { useBridge } from './use-bridge'
 
-type _TelemetryContext = {
+type TelemetryContext = {
   send: <E extends TelemetryEvent>(
     event: E,
     properties: TelemetryEventProperties[E],
@@ -22,34 +22,38 @@ type _TelemetryContext = {
   setActive: (active: boolean) => void
 }
 
-const _Context = createContext({} as _TelemetryContext)
+const Context = createContext({} as TelemetryContext)
 
 const TelemetryProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const { config } = useApp()
+  const { telemetry } = useBridge()
   const sendTelemetry = useCallback(
     (
       event: TelemetryEvent,
       properties: TelemetryEventProperties[TelemetryEvent],
     ) => {
       if (config.telemetry?.active && Env.telemetryFeature) {
-        bridge.telemetry.send(event, properties)
+        telemetry.send(event, properties)
       }
     },
-    [config.telemetry],
+    [config.telemetry?.active, telemetry],
   )
-  const setActive = useCallback((active: boolean) => {
-    bridge.telemetry.setActive(active)
-  }, [])
+  const setActive = useCallback(
+    (active: boolean) => {
+      telemetry.setActive(active)
+    },
+    [telemetry],
+  )
 
   return (
-    <_Context.Provider value={{ send: sendTelemetry, setActive }}>
+    <Context.Provider value={{ send: sendTelemetry, setActive }}>
       {children}
-    </_Context.Provider>
+    </Context.Provider>
   )
 }
 
-export const useTelemetry = (): _TelemetryContext => {
-  return useContext(_Context)
+export const useTelemetry = (): TelemetryContext => {
+  return useContext(Context)
 }
 
 export default TelemetryProvider

@@ -4,16 +4,17 @@
  * All rights reserved.
  */
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useDidMount } from 'rooks'
 
 import { isProduction } from '../utils/is-production'
 
 export const useProduction = (): boolean => {
   const [isProductionState, setProduction] = useState(false)
 
-  useEffect(() => {
-    isProduction().then(value => setProduction(value))
-  }, [])
+  useDidMount(async () => {
+    setProduction(await isProduction())
+  })
 
   return isProductionState
 }

@@ -25,6 +25,7 @@ import { RecentFilesSetHandler } from './event-handlers/recent-files-set.handler
 import { ScriptCompileEvent } from './event-handlers/script-compile.event'
 import { TelemetryActiveHandler } from './event-handlers/telemetry-active.handler'
 import { TelemetryHandler } from './event-handlers/telemetry.handler'
+import { UuidSync } from './event-handlers/uuid.sync'
 import {
   listenToWindowState,
   WindowCloseHandler,
@@ -44,6 +45,7 @@ import { ensureFiles, move, writeFile } from './path/path'
 import { settingsStore } from './store/settings/store'
 import { WindowStore } from './store/window/store'
 import { Telemetry } from './telemetry/telemetry'
+
 import './translations/index'
 
 const logger = new Logger('Initialize')
@@ -131,6 +133,7 @@ export async function initialize(
 
   const syncs = new Map<string, EventSync>([
     [IpcEvent.platform, new PlatformSync()],
+    [IpcEvent.uuid, new UuidSync()],
   ])
 
   logger.debug(settingsStore.path)

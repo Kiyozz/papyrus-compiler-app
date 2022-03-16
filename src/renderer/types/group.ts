@@ -13,6 +13,10 @@ export type GroupRenderer = {
   scripts: ScriptRenderer[]
 }
 
+export const isAllGroupsEmpty = (groups: Group[]): boolean => {
+  return groups.every(g => g.isEmpty)
+}
+
 export class Group {
   constructor(public name: string, public scripts: ScriptRenderer[]) {}
 

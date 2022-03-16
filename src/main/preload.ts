@@ -155,6 +155,7 @@ const api: Bridge = {
       }
     },
   },
+  uuid: () => ipcRenderer.sendSync(IpcEvent.uuid),
 }
 
 contextBridge.exposeInMainWorld('bridge', api)

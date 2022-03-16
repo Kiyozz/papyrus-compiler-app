@@ -6,15 +6,17 @@
 
 import React from 'react'
 
-import bridge from '../bridge'
+import { useBridge } from '../hooks/use-bridge'
 
 const Anchor = ({
   children,
   href,
 }: React.PropsWithChildren<React.HTMLProps<HTMLAnchorElement>>) => {
+  const { shell } = useBridge()
+
   const onClick = () => {
     if (href) {
-      bridge.shell.openExternal(href)
+      shell.openExternal(href)
     }
   }
 

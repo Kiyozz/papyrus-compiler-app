@@ -13,14 +13,15 @@ import React, {
   useState,
 } from 'react'
 
+import { Bridge } from '../../common/types/bridge'
 import { CompilationResult } from '../../common/types/compilation-result'
-import bridge from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { ScriptRenderer } from '../types'
 import { chunk } from '../utils/chunk'
 import { scriptInList } from '../utils/scripts/equals'
 import { isRunningScript } from '../utils/scripts/status'
 import { useApp } from './use-app'
+import { useBridge } from './use-bridge'
 
 type StartOptions = {
   scripts: ScriptRenderer[]
@@ -39,9 +40,10 @@ const Context = createContext({} as CompilationContext)
 
 const whenCompileScriptFinish = (
   script: string,
+  compilation: Bridge['compilation'],
 ): Promise<CompilationResult> => {
   return new Promise<CompilationResult>((resolve, reject) => {
-    bridge.compilation.onceFinish(script, result => {
+    compilation.onceFinish(script, result => {
       if (result.success) {
         resolve(result)
       } else {
@@ -54,6 +56,8 @@ const whenCompileScriptFinish = (
 const CompilationProvider = ({
   children,
 }: React.PropsWithChildren<unknown>) => {
+  const { compilation } = useBridge()
+
   const [compilationScripts, setCompilationScripts] = useState<
     ScriptRenderer[]
   >([])
@@ -101,7 +105,7 @@ const CompilationProvider = ({
         })
 
         for (const script of partialScripts) {
-          bridge.compilation.start(script.name)
+          compilation.start(script.name)
         }
 
         await Promise.all(
@@ -109,6 +113,7 @@ const CompilationProvider = ({
             try {
               const result: CompilationResult = await whenCompileScriptFinish(
                 s.name,
+                compilation,
               )
 
               setCompilationScripts((cs: ScriptRenderer[]) => {
@@ -157,7 +162,7 @@ const CompilationProvider = ({
         )
       }
     },
-    [concurrentScripts],
+    [compilation, concurrentScripts],
   )
 
   return (
