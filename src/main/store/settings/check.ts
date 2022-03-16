@@ -89,7 +89,12 @@ function _checkFlag(settingsStore: SettingsStore, defaultConfig: Config) {
   ) {
     console.warn(flag, 'is not supported')
 
-    settingsStore.set('compilation.flag', defaultConfig.compilation.flag)
+    settingsStore.set(
+      'compilation.flag',
+      settingsStore.get('game.type') === GameType.fo4
+        ? 'Institute_Papyrus_Flags.flg'
+        : defaultConfig.compilation.flag,
+    )
   }
 }
 

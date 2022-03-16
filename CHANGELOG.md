@@ -1,5 +1,11 @@
 ## Unreleased
 
+### Bug fixes
+
+- Fallout 4 support
+
+- When closing the drawer panel, links could break into multiple lines
+
 ### Features
 
 - The configuration is now checked when you enter the compilation page, giving you any tips if your configuration is wrong.
@@ -39,10 +45,6 @@
 - Bumps dependencies
 - Changelog window correctly displays images
 - The application restarts when resetting the configuration
-
-### Bug fixes
-
-- When closing the drawer panel, links could break into multiple lines
 
 ## 5.7.0 (2021-08-17)
 

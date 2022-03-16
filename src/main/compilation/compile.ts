@@ -6,7 +6,12 @@
 
 import is from '@sindresorhus/is'
 
-import { toExecutable, toOtherSource, toSource } from '../../common/game'
+import {
+  GameType,
+  toExecutable,
+  toOtherSource,
+  toSource,
+} from '../../common/game'
 import { executeCommand } from '../command/execute'
 import { CompilationException } from '../exceptions/compilation.exception'
 import { ConfigurationException } from '../exceptions/configuration.exception'
@@ -91,6 +96,18 @@ export async function compile(scriptName: string): Promise<string> {
     logger.debug(`import of the ${otherSource} folder`)
 
     runner.imports = [otherSourceAbsolute, ...runner.imports]
+  }
+
+  if (gameType === GameType.fo4) {
+    logger.debug('import of fo4 sources')
+
+    runner.imports = [
+      ...(await path.getPathsInFolder([`${gamePath}/Data/Scripts/Source/**`], {
+        onlyDirectories: true,
+        deep: 4,
+      })),
+      ...runner.imports,
+    ]
   }
 
   if (mo2Config.use) {
