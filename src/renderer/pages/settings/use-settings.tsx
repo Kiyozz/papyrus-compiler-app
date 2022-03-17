@@ -13,7 +13,7 @@ import React, {
 } from 'react'
 
 import { BadError } from '../../../common/types/bad-error'
-import { useBridge } from '../../hooks/use-bridge'
+import bridge from '../../bridge'
 
 type SettingsContext = {
   configError: BadError
@@ -25,13 +25,12 @@ const Context = createContext({} as SettingsContext)
 
 const SettingsProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const [configError, setConfigError] = useState<BadError>(false)
-  const { config } = useBridge()
 
   const checkConfig = useCallback(async () => {
-    const configError = await config.check()
+    const configError = await bridge.config.check()
 
     setConfigError(configError)
-  }, [config])
+  }, [])
 
   const resetConfigError = useCallback(() => setConfigError(false), [])
 

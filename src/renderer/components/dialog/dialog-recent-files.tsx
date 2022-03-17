@@ -16,8 +16,8 @@ import { useDidUpdate } from 'rooks'
 import { shorten } from '../../../common/shorten'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { Script } from '../../../common/types/script'
+import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
-import { useBridge } from '../../hooks/use-bridge'
 import { useCompilation } from '../../hooks/use-compilation'
 import { useIpc } from '../../hooks/use-ipc'
 import { usePlatform } from '../../hooks/use-platform'
@@ -36,7 +36,6 @@ type Props = {
 }
 
 const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
-  const bridge = useBridge()
   const { t } = useTranslation()
   const { send } = useTelemetry()
   const { setScripts, scripts: loadedScripts } = useCompilation()

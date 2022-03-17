@@ -10,9 +10,9 @@ import { useTranslation } from 'react-i18next'
 import ReactMarkdown, { Components } from 'react-markdown'
 
 import { GITHUB_LINK } from '../../../common/constants'
+import bridge from '../../bridge'
 import { Env } from '../../env'
 import { useApp } from '../../hooks/use-app'
-import { useBridge } from '../../hooks/use-bridge'
 import { useInitialization } from '../../hooks/use-initialization'
 import { useOnKeyUp } from '../../hooks/use-on-key-up'
 import Anchor from '../anchor'
@@ -52,7 +52,6 @@ const Code = ({ children }: { children: React.ReactNode[] }) => (
 )
 
 const DialogChangelog = () => {
-  const { shell } = useBridge()
   const { t } = useTranslation()
   const {
     isShowChangelog,
@@ -68,7 +67,7 @@ const DialogChangelog = () => {
   const onClickDownloadRelease = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    shell.openExternal(Env.modUrl)
+    bridge.shell.openExternal(Env.modUrl)
   }
 
   const onClickShowNotes = () => {

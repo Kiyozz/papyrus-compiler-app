@@ -18,8 +18,8 @@ import useLocalStorage from 'react-use-localstorage'
 import { Observable, Subject } from 'rxjs'
 
 import { Script } from '../../common/types/script'
+import bridge from '../bridge'
 import { LocalStorage } from '../enums/local-storage.enum'
-import { useBridge } from './use-bridge'
 
 type RecentFilesContext = {
   recentFiles: Script[]
@@ -42,7 +42,6 @@ const RecentFilesProvider = ({
     LocalStorage.recentFilesShowFullPath,
     'false',
   )
-  const bridge = useBridge()
 
   useEffect(() => {
     const sub = onRecentFilesChanges.subscribe(scripts => {
@@ -52,16 +51,13 @@ const RecentFilesProvider = ({
     bridge.recentFiles.get().then(scripts => recentFiles$.next(scripts))
 
     return () => sub.unsubscribe()
-  }, [bridge.recentFiles])
+  }, [])
 
-  const setRecentFiles = useCallback(
-    async (scripts: Script[]) => {
-      const newScripts = await bridge.recentFiles.set(scripts)
+  const setRecentFiles = useCallback(async (scripts: Script[]) => {
+    const newScripts = await bridge.recentFiles.set(scripts)
 
-      recentFiles$.next(newScripts)
-    },
-    [bridge.recentFiles],
-  )
+    recentFiles$.next(newScripts)
+  }, [])
 
   const clearRecentFiles = useCallback(async () => {
     console.log()
@@ -69,18 +65,15 @@ const RecentFilesProvider = ({
     await bridge.recentFiles.clear()
 
     recentFiles$.next([])
-  }, [bridge.recentFiles])
+  }, [])
 
-  const removeRecentFile = useCallback(
-    async (script: Script) => {
-      const scripts = await bridge.recentFiles.remove(script)
+  const removeRecentFile = useCallback(async (script: Script) => {
+    const scripts = await bridge.recentFiles.remove(script)
 
-      recentFiles$.next(scripts)
+    recentFiles$.next(scripts)
 
-      return scripts
-    },
-    [bridge.recentFiles],
-  )
+    return scripts
+  }, [])
 
   return (
     <Context.Provider

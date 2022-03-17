@@ -12,9 +12,9 @@ import { Observable, Subject } from 'rxjs'
 import { PartialDeep } from 'type-fest'
 
 import { Config } from '../../common/types/config'
+import bridge from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { Group } from '../types'
-import { useBridge } from './use-bridge'
 import { useIpc } from './use-ipc'
 
 type AppContext = {
@@ -38,7 +38,6 @@ const _refresh$ = new Subject<Config>()
 const _onRefreshConfig = _refresh$.asObservable()
 
 const AppProvider = ({ children }: React.PropsWithChildren<unknown>) => {
-  const bridge = useBridge()
   const [config, setConfig] = useState<Config>({} as Config)
   const [groups, setGroups] = useState<Group[]>([])
   const [isShowChangelog, setShowChangelog] = useState(false)
@@ -86,15 +85,12 @@ const AppProvider = ({ children }: React.PropsWithChildren<unknown>) => {
       setConfig(updatedConfig)
       setGroups(selectGroupsFromConfig(updatedConfig))
     },
-    [bridge.config, selectGroupsFromConfig],
+    [selectGroupsFromConfig],
   )
 
-  const copyToClipboard = useCallback(
-    async (text: string) => {
-      await bridge.clipboard.copy(text)
-    },
-    [bridge.clipboard],
-  )
+  const copyToClipboard = useCallback(async (text: string) => {
+    await bridge.clipboard.copy(text)
+  }, [])
 
   const refreshConfig = useCallback(async () => {
     const refreshedConfig = await bridge.config.get()
@@ -102,7 +98,7 @@ const AppProvider = ({ children }: React.PropsWithChildren<unknown>) => {
     setConfig(refreshedConfig)
     setGroups(selectGroupsFromConfig(refreshedConfig))
     _refresh$.next(refreshedConfig)
-  }, [bridge.config, selectGroupsFromConfig])
+  }, [selectGroupsFromConfig])
 
   const value: AppContext = useMemo(
     () => ({

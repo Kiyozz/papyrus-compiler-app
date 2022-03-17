@@ -7,10 +7,9 @@
 import { useEffect, useState } from 'react'
 
 import { WindowState } from '../../common/types/window-state'
-import { useBridge } from './use-bridge'
+import bridge from '../bridge'
 
 export const useWindowState = (): WindowState => {
-  const bridge = useBridge()
   const [windowState, setWindowState] = useState<WindowState>('normal')
 
   useEffect(() => {
@@ -19,7 +18,7 @@ export const useWindowState = (): WindowState => {
     })
 
     return () => unsubscribe.dispose()
-  }, [bridge.window])
+  }, [])
 
   return windowState
 }

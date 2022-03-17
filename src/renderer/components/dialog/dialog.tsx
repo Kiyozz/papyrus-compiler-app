@@ -5,7 +5,13 @@
  */
 
 import cx from 'classnames'
-import React, { ReactNode, useCallback, useMemo, useRef } from 'react'
+import React, {
+  ComponentType,
+  ReactNode,
+  useCallback,
+  useMemo,
+  useRef,
+} from 'react'
 import { createPortal } from 'react-dom'
 
 import { useDocumentClick } from '../../hooks/use-document-click'
@@ -18,7 +24,7 @@ type DialogProps = {
   onClose?: (reason: CloseReason) => void
   actions?: ReactNode
   title?: ReactNode
-  content?: (props: React.PropsWithChildren<unknown>) => JSX.Element
+  content?: ComponentType
   contentClassNames?: {
     content?: string
     child?: string

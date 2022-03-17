@@ -11,8 +11,8 @@ import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { DialogType } from '../../../common/types/dialog'
+import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
-import { useBridge } from '../../hooks/use-bridge'
 import TextField from '../text-field'
 
 type Props = {
@@ -33,7 +33,6 @@ const DialogTextField = ({
   onChange,
   type,
 }: Props) => {
-  const { dialog } = useBridge()
   const { onRefreshConfig } = useApp()
   const { t } = useTranslation()
   const [value, setValue] = useState(defaultValue)
@@ -45,7 +44,7 @@ const DialogTextField = ({
       e.currentTarget.blur()
 
       try {
-        const result = await dialog.select(type).then(response => {
+        const result = await bridge.dialog.select(type).then(response => {
           if (is.null_(response)) {
             return
           }
@@ -61,7 +60,7 @@ const DialogTextField = ({
         console.log(err)
       }
     },
-    [dialog, onChange, type],
+    [onChange, type],
   )
 
   useEffect(() => {

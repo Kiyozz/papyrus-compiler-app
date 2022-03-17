@@ -14,9 +14,9 @@ import React, {
 } from 'react'
 import { useDidMount } from 'rooks'
 
+import bridge from '../bridge'
 import { GithubRelease } from '../types'
 import { useApp } from './use-app'
-import { useBridge } from './use-bridge'
 import { useVersion } from './use-version'
 
 const GITHUB_REPOSITORY =
@@ -36,7 +36,6 @@ const InitializationProvider = ({
   const [latestVersion, setLatestVersion] = useState('')
   const { setShowChangelog, setChangelog, setCheckUsingLastVersion } = useApp()
   const [version, setVersion] = useVersion()
-  const { getVersion, changelog } = useBridge()
 
   const checkUpdates = useCallback(
     async (version: string) => {
@@ -61,7 +60,7 @@ const InitializationProvider = ({
   )
 
   useDidMount(async () => {
-    const v = await getVersion()
+    const v = await bridge.getVersion()
 
     setVersion(v)
     setDone(true)
@@ -79,10 +78,10 @@ const InitializationProvider = ({
       }
     }
 
-    changelog.on(check)
+    bridge.changelog.on(check)
 
-    return () => changelog.off(check)
-  }, [changelog, checkUpdates, setCheckUsingLastVersion, version])
+    return () => bridge.changelog.off(check)
+  }, [checkUpdates, setCheckUsingLastVersion, version])
 
   return (
     <Context.Provider value={{ done, latestVersion }}>
