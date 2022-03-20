@@ -249,12 +249,14 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
       scroll="paper"
       fullWidth
       maxWidth="xl"
+      aria-labelledby="recent-files-title"
+      aria-describedby="recent-files-content"
     >
-      <Toolbar className="p-0">
-        <DialogTitle className="grow">
+      <Toolbar sx={{ padding: 0 }}>
+        <DialogTitle className="grow" id="recent-files-title">
           {t('page.compilation.actions.recentFiles')}
         </DialogTitle>
-        <FormGroup>
+        <FormGroup id="recent-files-content">
           <FormControlLabel
             control={
               <Checkbox
@@ -268,7 +270,10 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
       </Toolbar>
       <DialogContent
         dividers
-        className={cx('overflow-overlay', recentFiles.length !== 0 && 'p-0')}
+        className={cx('overflow-overlay')}
+        sx={{
+          padding: recentFiles.length !== 0 ? 0 : undefined,
+        }}
       >
         {recentFiles.length === 0 ? (
           <DialogContentText>

@@ -22,9 +22,15 @@ const Page = ({ children, classes }: React.PropsWithChildren<Props>) => {
   return (
     <Paper
       className={cx(
-        'page overflow-overlay h-screen w-screen p-6 transition-[padding] duration-300',
+        'page overflow-overlay h-screen w-screen p-6',
         isDrawerExpand ? 'pl-48' : 'pl-14',
       )}
+      sx={theme => ({
+        transition: theme.transitions.create('padding', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+      })}
     >
       <main className={classes?.main}>{children}</main>
     </Paper>

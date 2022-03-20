@@ -59,6 +59,13 @@ const MuiTheme = ({ children }: React.PropsWithChildren<unknown>) => {
           className: 'shadow-b',
         },
       },
+      MuiDialog: {
+        styleOverrides: {
+          paper: {
+            marginTop: 64,
+          },
+        },
+      },
       MuiList: {
         defaultProps: {
           dense: true,
@@ -94,7 +101,7 @@ const MuiTheme = ({ children }: React.PropsWithChildren<unknown>) => {
   })
 
   return (
-    <StyledEngineProvider injectFirst>
+    <StyledEngineProvider>
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </StyledEngineProvider>
   )

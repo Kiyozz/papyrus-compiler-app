@@ -60,16 +60,17 @@ const PageDrawer = () => {
       variant="permanent"
       open={isDrawerExpand}
       classes={{
-        paper: cx(
-          'overflow-x-hidden transition-[width] duration-300',
-          isDrawerExpand ? 'w-48' : 'w-14',
-        ),
+        paper: cx('overflow-x-hidden', isDrawerExpand ? 'w-48' : 'w-14'),
       }}
       PaperProps={{
-        sx: {
+        sx: theme => ({
           top: titlebarHeight + 64,
           height: `calc(100% - ${titlebarHeight + 64}px)`,
-        },
+          transition: theme.transitions.create(['width'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+        }),
       }}
     >
       <List>
@@ -90,7 +91,7 @@ const PageDrawer = () => {
           )
         })}
       </List>
-      <List className="mt-auto">
+      <List sx={{ marginTop: 'auto' }}>
         <OpenCompilationLogs />
         <OpenDocumentation />
         <ListItem disablePadding>
