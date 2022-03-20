@@ -6,7 +6,7 @@
 
 import HelpIcon from '@mui/icons-material/Help'
 import RefreshIcon from '@mui/icons-material/Refresh'
-import { Tooltip } from '@mui/material'
+import { Button, Tooltip } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
@@ -99,7 +99,7 @@ const SettingsGame = ({
               <Tooltip
                 title={t<string>('page.settings.gameFolderTooltip', { exe })}
               >
-                <HelpIcon classes={{ root: 'ml-1' }} />
+                <HelpIcon className="ml-1" />
               </Tooltip>
             </>
           }
@@ -117,7 +117,7 @@ const SettingsGame = ({
             <>
               {t('page.settings.compilerPath')}
               <Tooltip title={t<string>('page.settings.compilerPathTooltip')}>
-                <HelpIcon classes={{ root: 'ml-1' }} />
+                <HelpIcon className="ml-1" />
               </Tooltip>
             </>
           }
@@ -148,12 +148,14 @@ const SettingsGame = ({
             </p>
           </div>
           <div>
-            <button className="btn mr-2" onClick={onClickRefreshInstallation}>
-              <div className="icon">
-                <RefreshIcon />
-              </div>
+            <Button
+              className="mr-2"
+              onClick={onClickRefreshInstallation}
+              startIcon={<RefreshIcon />}
+              color="error"
+            >
               {t('common.refresh')}
-            </button>
+            </Button>
           </div>
         </Alert>
       )}

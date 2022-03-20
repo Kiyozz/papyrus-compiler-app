@@ -22,12 +22,10 @@ import { useTranslation } from 'react-i18next'
 import { TelemetryEvent } from '../../common/telemetry-event'
 import { useApp } from '../hooks/use-app'
 import { useCompilation } from '../hooks/use-compilation'
-import { useDrawer } from '../hooks/use-drawer'
 import { useTelemetry } from '../hooks/use-telemetry'
 import { ScriptRenderer } from '../types'
 import { isFailedScript, isSuccessScript } from '../utils/scripts/status'
-import Fade from './animations/fade'
-import NavItem from './nav-item'
+import DrawerButton from './drawer-button'
 
 const LogsListItem = ({
   script,
@@ -95,7 +93,6 @@ const LogsListItem = ({
 
 const OpenCompilationLogs = () => {
   const { t } = useTranslation()
-  const [isDrawerExpand] = useDrawer()
   const { logs } = useCompilation()
   const [isDialogOpen, setDialogOpen] = useState(false)
 
@@ -119,20 +116,21 @@ const OpenCompilationLogs = () => {
 
   return (
     <>
-      <NavItem onClick={onClickButtonOpenLogs} className="link">
-        {isAllScriptsSuccessInLogs ? (
-          <CheckCircleIcon className="text-green-500" />
-        ) : (
-          <ErrorIcon
-            className={cx(
-              hasErrorsInLogs && !isAllScriptsSuccessInLogs && 'text-red-300',
-            )}
-          />
-        )}
-        <Fade in={isDrawerExpand}>
-          <div className="ml-6">{t('common.logs.nav')}</div>
-        </Fade>
-      </NavItem>
+      <DrawerButton
+        icon={
+          isAllScriptsSuccessInLogs ? (
+            <CheckCircleIcon className="text-green-500" />
+          ) : (
+            <ErrorIcon
+              className={cx(
+                hasErrorsInLogs && !isAllScriptsSuccessInLogs && 'text-red-300',
+              )}
+            />
+          )
+        }
+        text={t('common.logs.nav')}
+        onClick={onClickButtonOpenLogs}
+      />
 
       <Dialog
         open={isDialogOpen}

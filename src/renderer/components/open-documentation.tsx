@@ -19,14 +19,11 @@ import React, { useState, KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useDocumentation } from '../hooks/use-documentation'
-import { useDrawer } from '../hooks/use-drawer'
 import { useShowOpenDocumentationDialog } from '../hooks/use-show-open-documentation-dialog'
-import Fade from './animations/fade'
-import NavItem from './nav-item'
+import DrawerButton from './drawer-button'
 
 const OpenDocumentation = () => {
   const [isShowDialog, toggleShowDialog] = useShowOpenDocumentationDialog()
-  const [isDrawerExpand] = useDrawer()
   const { t } = useTranslation()
   const [isDialogOpen, setDialogOpen] = useState(false)
   const { open } = useDocumentation()
@@ -65,12 +62,12 @@ const OpenDocumentation = () => {
 
   return (
     <>
-      <NavItem className="link" onClick={onClickGoToDocumentation}>
-        <HelpIcon />
-        <Fade in={isDrawerExpand}>
-          <div className="ml-6">{t('nav.help.text')}</div>
-        </Fade>
-      </NavItem>
+      <DrawerButton
+        icon={<HelpIcon />}
+        text={t('nav.help.text')}
+        onClick={onClickGoToDocumentation}
+      />
+
       <Dialog
         open={isDialogOpen}
         onClose={onCloseDialog}

@@ -56,7 +56,7 @@ const en: TranslationShape = {
     help: {
       text: 'Documentation',
       title: 'Open the PCA documentation website?',
-      description: 'Will allow you to learn about PCA.',
+      description: 'This will learn you how to use PCA.',
       doNotShowAgain: "Don't show me that anymore",
     },
   },

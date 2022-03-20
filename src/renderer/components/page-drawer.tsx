@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next'
 import { useDrawer } from '../hooks/use-drawer'
 import { useTitlebarHeight } from '../hooks/use-titlebar-height'
 import ActiveLink from './active-link'
+import DrawerButton from './drawer-button'
 import OpenCompilationLogs from './open-compilation-logs'
 import OpenDocumentation from './open-documentation'
 
@@ -93,17 +94,11 @@ const PageDrawer = () => {
       <List className="mt-auto">
         <OpenCompilationLogs />
         <OpenDocumentation />
-        <ListItem disablePadding>
-          <ListItemButton onClick={onDrawerExpandClick}>
-            <ListItemIcon>
-              {isDrawerExpand ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </ListItemIcon>
-            <ListItemText
-              primary={t<string>('nav.closePanel')}
-              primaryTypographyProps={{ noWrap: true }}
-            />
-          </ListItemButton>
-        </ListItem>
+        <DrawerButton
+          icon={isDrawerExpand ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          text={t('nav.closePanel')}
+          onClick={onDrawerExpandClick}
+        />
       </List>
     </Drawer>
   )

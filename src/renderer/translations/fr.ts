@@ -61,7 +61,7 @@ const fr: TranslationShape = {
       text: 'Documentation',
       title: 'Ouvrir le site web de la documentation de PCA ?',
       description:
-        "Vous permettra de vous renseigner sur l'utilisation de PCA.",
+        "Cela vous permettra de vous renseigner sur l'utilisation de PCA.",
       doNotShowAgain: 'Ne plus afficher',
     },
   },
