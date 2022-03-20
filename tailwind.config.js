@@ -51,6 +51,12 @@ module.exports = {
           600: '#27a571',
         },
       },
+      transitionTimingFunction: {
+        sharp: 'cubic-bezier(0.4, 0, 0.6, 1)',
+      },
+      transitionDuration: {
+        225: '225ms',
+      },
     },
   },
   variants: {

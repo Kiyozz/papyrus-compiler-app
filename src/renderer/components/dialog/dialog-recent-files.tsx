@@ -24,7 +24,13 @@ import {
   IconButton,
 } from '@mui/material'
 import cx from 'classnames'
-import React, { memo, useCallback, useMemo, useState } from 'react'
+import React, {
+  memo,
+  useCallback,
+  useMemo,
+  useState,
+  KeyboardEvent,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDidUpdate } from 'rooks'
 
@@ -39,7 +45,6 @@ import { useTelemetry } from '../../hooks/use-telemetry'
 import { dirname } from '../../utils/dirname'
 import { scriptsToRenderer } from '../../utils/scripts/scripts-to-renderer'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
-import { CloseReason } from './dialog'
 
 type Props = {
   isOpen: boolean
@@ -135,12 +140,14 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
     onClose()
   }
 
-  const onDialogClose = (reason: CloseReason) => {
-    if (reason === CloseReason.enter && isValid) {
+  const onDialogClose = () => {
+    onClickClose()
+  }
+
+  const onDialogKeyDown = (evt: KeyboardEvent) => {
+    if (evt.key === 'Enter' && isValid) {
       send(TelemetryEvent.recentFilesCloseWithEnter, {})
       onClickLoad()
-    } else {
-      onClickClose()
     }
   }
 
@@ -249,10 +256,11 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
       scroll="paper"
       fullWidth
       maxWidth="xl"
+      onKeyDown={onDialogKeyDown}
       aria-labelledby="recent-files-title"
       aria-describedby="recent-files-content"
     >
-      <Toolbar sx={{ padding: 0 }}>
+      <Toolbar className="p-0">
         <DialogTitle className="grow" id="recent-files-title">
           {t('page.compilation.actions.recentFiles')}
         </DialogTitle>
@@ -270,10 +278,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
       </Toolbar>
       <DialogContent
         dividers
-        className={cx('overflow-overlay')}
-        sx={{
-          padding: recentFiles.length !== 0 ? 0 : undefined,
-        }}
+        className={cx('overflow-overlay', recentFiles.length !== 0 && 'p-0')}
       >
         {recentFiles.length === 0 ? (
           <DialogContentText>

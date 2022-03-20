@@ -10,6 +10,7 @@ import {
   StyledEngineProvider,
   PaletteMode,
   PaletteOptions,
+  CssBaseline,
 } from '@mui/material'
 import red from '@mui/material/colors/red'
 import React from 'react'
@@ -101,9 +102,11 @@ const MuiTheme = ({ children }: React.PropsWithChildren<unknown>) => {
   })
 
   return (
-    <StyledEngineProvider>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
-    </StyledEngineProvider>
+    <CssBaseline>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      </StyledEngineProvider>
+    </CssBaseline>
   )
 }
 

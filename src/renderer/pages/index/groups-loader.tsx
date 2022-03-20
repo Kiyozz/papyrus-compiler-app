@@ -93,8 +93,8 @@ const GroupsLoader = ({ groups, onChangeGroup }: Props) => {
               vertical: 'top',
               horizontal: 'left',
             }}
-            MenuListProps={{
-              sx: { minWidth: '100px' },
+            classes={{
+              list: 'min-w-[100px]',
             }}
           >
             {groupSelectOptions}
