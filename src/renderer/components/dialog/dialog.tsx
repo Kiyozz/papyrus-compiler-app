@@ -5,17 +5,10 @@
  */
 
 import cx from 'classnames'
-import React, {
-  ComponentType,
-  ReactNode,
-  useCallback,
-  useMemo,
-  useRef,
-} from 'react'
+import React, { ComponentType, ReactNode, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 import { useDocumentClick } from '../../hooks/use-document-click'
-import { useOnKeyUp } from '../../hooks/use-on-key-up'
 import Paper from '../paper'
 
 type DialogProps = {
@@ -33,7 +26,6 @@ type DialogProps = {
 }
 
 enum CloseReason {
-  escape,
   outside,
   enter,
 }
@@ -60,20 +52,8 @@ const Dialog = ({
     clicked => clicked === container.current,
   )
 
-  const onEscape = useCallback(() => {
-    if (open) {
-      onClose?.(CloseReason.escape)
-    }
-  }, [onClose, open])
-
-  const onEnter = useCallback(() => {
-    if (open) {
-      onClose?.(CloseReason.enter)
-    }
-  }, [onClose, open])
-
-  useOnKeyUp('Escape', onEscape, open)
-  useOnKeyUp('Enter', onEnter, open)
+  // useOnKeyUp('Escape', onEscape, open)
+  // useOnKeyUp('Enter', onEnter, open)
 
   const dialogContent = useMemo(
     () => (

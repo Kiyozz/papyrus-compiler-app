@@ -53,7 +53,7 @@ const fr: TranslationShape = {
     closePanel: 'Fermer',
     help: {
       text: 'Documentation',
-      title: 'Lien vers la documentation',
+      title: 'Documentation',
       description:
         'Le lien suivant ouvrira la documentation de PCA dans le navigateur',
       goTo: 'Ouvrir',

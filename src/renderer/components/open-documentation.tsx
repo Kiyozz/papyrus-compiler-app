@@ -5,15 +5,24 @@
  */
 
 import HelpIcon from '@mui/icons-material/Help'
-import { Checkbox, FormControlLabel, FormGroup } from '@mui/material'
-import React, { useState } from 'react'
+import {
+  Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
+  FormGroup,
+} from '@mui/material'
+import React, { useState, KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useDocumentation } from '../hooks/use-documentation'
 import { useDrawer } from '../hooks/use-drawer'
 import { useShowOpenDocumentationDialog } from '../hooks/use-show-open-documentation-dialog'
 import Fade from './animations/fade'
-import Dialog, { CloseReason } from './dialog/dialog'
+import DialogOld from './dialog/dialog'
 import NavItem from './nav-item'
 
 const OpenDocumentation = () => {
@@ -23,6 +32,10 @@ const OpenDocumentation = () => {
   const [isDialogOpen, setDialogOpen] = useState(false)
   const { open } = useDocumentation()
 
+  const openTheDocumentation = (reason: 'enter' | 'click') => {
+    open(reason)
+  }
+
   const onClickGoToDocumentation = () => {
     if (isShowDialog) {
       setDialogOpen(true)
@@ -31,16 +44,15 @@ const OpenDocumentation = () => {
     }
   }
 
-  const openTheDocumentation = (reason: 'enter' | 'click') => {
-    open(reason)
+  const onCloseDialog = () => {
+    setDialogOpen(false)
   }
 
-  const onCloseDialog = (reason?: CloseReason) => {
-    if (reason === CloseReason.enter) {
+  const onDialogKeyDown = (evt: KeyboardEvent) => {
+    if (evt.key === 'Enter') {
       openTheDocumentation('enter')
+      setDialogOpen(false)
     }
-
-    setDialogOpen(false)
   }
 
   const onClickCancel = () => {
@@ -55,8 +67,38 @@ const OpenDocumentation = () => {
   return (
     <>
       <Dialog
-        id="documentation"
         open={isDialogOpen}
+        onClose={onCloseDialog}
+        onKeyDown={onDialogKeyDown}
+        aria-labelledby="open-doc-title"
+        aria-describedby="open-doc-content"
+      >
+        <DialogTitle id="open-doc-title">{t('nav.help.title')}</DialogTitle>
+        <DialogContent id="open-doc-content">
+          <p className="mb-4 text-justify">{t('nav.help.description')}</p>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={!isShowDialog}
+                  onChange={toggleShowDialog}
+                  inputProps={{ 'aria-label': 'controlled' }}
+                />
+              }
+              label={t<string>('nav.help.doNotShowAgain')}
+            />
+          </FormGroup>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onClickCancel}>{t('common.cancel')}</Button>
+          <Button onClick={onClickConfirmGoToDocumentation}>
+            {t('nav.help.goTo')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <DialogOld
+        id="documentation"
+        open={false}
         maxWidth={70}
         title={t('nav.help.title')}
         onClose={onCloseDialog}
@@ -84,7 +126,7 @@ const OpenDocumentation = () => {
             label={t<string>('nav.help.doNotShowAgain')}
           />
         </FormGroup>
-      </Dialog>
+      </DialogOld>
       <NavItem className="link" onClick={onClickGoToDocumentation}>
         <HelpIcon />
         <Fade in={isDrawerExpand}>
