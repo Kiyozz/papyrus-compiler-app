@@ -100,9 +100,9 @@ const CompilationProvider = ({
           })
         })
 
-        for (const script of partialScripts) {
+        partialScripts.forEach(script => {
           bridge.compilation.start(script.name)
-        }
+        })
 
         await Promise.all(
           partialScripts.map(async (s: ScriptRenderer) => {

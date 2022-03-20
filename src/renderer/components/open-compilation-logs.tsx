@@ -61,6 +61,7 @@ const LogsListItem = ({
           component="div"
           className="flex items-center justify-between"
           id={`${script.id}-title`}
+          aria-label={script.name}
         >
           <Typography
             variant="h6"
@@ -142,12 +143,18 @@ const OpenCompilationLogs = () => {
         aria-labelledby="logs-title"
         aria-describedby="logs-content"
       >
-        <DialogTitle id="logs-title">{t('common.logs.title')}</DialogTitle>
-        <DialogContent id="logs-content">
+        <DialogTitle id="logs-title" className="-mb-1">
+          {t('common.logs.title')}
+        </DialogTitle>
+        <DialogContent id="logs-content" className="!pt-1">
           <div className="flex flex-col gap-4">
             {logs.length > 0 ? (
-              logs.map(([script, scriptLogs], index) => (
-                <LogsListItem key={index} script={script} logs={scriptLogs} />
+              logs.map(([script, scriptLogs]) => (
+                <LogsListItem
+                  key={script.id}
+                  script={script}
+                  logs={scriptLogs}
+                />
               ))
             ) : (
               <Typography>{t('common.logs.noLogs')}</Typography>

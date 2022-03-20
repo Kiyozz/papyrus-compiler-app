@@ -8,13 +8,11 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import PlayCircleIcon from '@mui/icons-material/PlayCircle'
 import { IconButton } from '@mui/material'
 import cx from 'classnames'
-import React, { useCallback } from 'react'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { ScriptRenderer } from '../../types'
-import {
-  classNameFromStatus,
-  iconFromStatus,
-} from '../../utils/scripts/from-status'
+import { iconFromStatus } from '../../utils/scripts/from-status'
 import { isRunningScript } from '../../utils/scripts/status'
 
 interface Props {
@@ -23,14 +21,16 @@ interface Props {
   onClickPlayCompilation: (script: ScriptRenderer) => void
 }
 
-const ScriptItem = ({
+const ScriptLine = ({
   script,
   onClickRemoveScript,
   onClickPlayCompilation,
 }: Props) => {
-  const onClickRemove = useCallback(() => {
+  const { t } = useTranslation()
+
+  const onClickRemove = () => {
     onClickRemoveScript(script)
-  }, [script, onClickRemoveScript])
+  }
 
   const onClickPlay = () => {
     onClickPlayCompilation(script)
@@ -43,34 +43,29 @@ const ScriptItem = ({
         aria-label="script"
       >
         <div>{script.name}</div>
-        <div
-          className={cx('font-sm ml-auto flex', classNameFromStatus(script))}
-        >
+        <div className={cx('font-sm ml-auto flex')}>
           {iconFromStatus(script)}
         </div>
         <IconButton
           onClick={onClickPlay}
           size="small"
           disabled={isRunningScript(script)}
-          classes={{
-            root: 'p-0 ml-1.5',
-          }}
+          className="ml-1.5 p-0"
         >
           <PlayCircleIcon className="text-primary-400" />
         </IconButton>
       </div>
-      <button
-        className="btn-icon btn-danger"
-        aria-label="delete"
+      <IconButton
+        color="error"
+        aria-label={t('common.remove')}
         disabled={isRunningScript(script)}
+        aria-disabled={isRunningScript(script)}
         onClick={onClickRemove}
       >
-        <div className="icon">
-          <DeleteOutlinedIcon />
-        </div>
-      </button>
+        <DeleteOutlinedIcon />
+      </IconButton>
     </div>
   )
 }
 
-export default ScriptItem
+export default ScriptLine

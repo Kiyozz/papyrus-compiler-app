@@ -20,7 +20,7 @@ interface Props {
   onChangeGroup: (groupName: string) => void
 }
 
-const GroupsLoader = ({ groups, onChangeGroup }: Props) => {
+const GroupsMenu = ({ groups, onChangeGroup }: Props) => {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const { send } = useTelemetry()
@@ -82,7 +82,7 @@ const GroupsLoader = ({ groups, onChangeGroup }: Props) => {
             onClick={onClick}
             startIcon={<AddIcon />}
           >
-            {t('page.compilation.actions.loadGroup')}
+            {t('page.compilation.actions.group')}
           </Button>
           <Menu
             id="group-loader-menu"
@@ -105,4 +105,4 @@ const GroupsLoader = ({ groups, onChangeGroup }: Props) => {
   )
 }
 
-export default GroupsLoader
+export default GroupsMenu

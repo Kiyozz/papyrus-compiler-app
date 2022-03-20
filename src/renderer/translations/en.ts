@@ -16,6 +16,7 @@ const en: TranslationShape = {
     drop: 'Drop files',
     yes: 'Yes',
     no: 'No',
+    remove: 'Remove',
     logs: {
       nav: 'Logs',
       title: 'Compilation logs',
@@ -63,7 +64,7 @@ const en: TranslationShape = {
       title: 'Compilation',
       actions: {
         searchScripts: 'Search scripts',
-        loadGroup: 'Load group',
+        group: 'Group',
         start: 'Start',
         clearList: 'Clear list',
         recentFiles: 'Recent files',

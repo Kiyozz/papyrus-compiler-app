@@ -18,6 +18,7 @@ const fr: TranslationShape = {
     drop: 'Déposer',
     yes: 'Oui',
     no: 'Non',
+    remove: 'Retirer',
     logs: {
       nav: 'Logs',
       title: 'Logs de compilation',
@@ -68,7 +69,7 @@ const fr: TranslationShape = {
       title: 'Compilation',
       actions: {
         searchScripts: 'Rechercher',
-        loadGroup: 'Groupe',
+        group: 'Groupe',
         start: 'Lancer',
         clearList: 'Vider la liste',
         recentFiles: 'Fichiers récents',

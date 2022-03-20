@@ -29,8 +29,8 @@ import { isAllGroupsEmpty, ScriptRenderer } from '../../types'
 import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
 import { useSettings } from '../settings/use-settings'
-import GroupsLoader from './groups-loader'
-import ScriptItem from './script-item'
+import GroupsMenu from './groups-menu'
+import ScriptLine from './script-line'
 
 enum DialogRecentFilesState {
   open,
@@ -178,7 +178,7 @@ const Compilation = () => {
           aria-disabled={isFileDialogActive}
         />
         {!isAllGroupsEmpty(groups) && (
-          <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
+          <GroupsMenu groups={groups} onChangeGroup={onChangeGroup} />
         )}
       </PageAppBar>
       <Page>
@@ -238,7 +238,7 @@ const Compilation = () => {
           <div className="flex flex-col gap-2">
             {scripts.map(script => {
               return (
-                <ScriptItem
+                <ScriptLine
                   key={script.id}
                   onClickRemoveScript={onClickRemoveScriptFromScript(script)}
                   onClickPlayCompilation={onClickPlayCompilation(script)}

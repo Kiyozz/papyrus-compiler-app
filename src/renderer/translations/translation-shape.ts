@@ -14,6 +14,7 @@ export interface TranslationShape {
     drop: string
     yes: string
     no: string
+    remove: string
     logs: {
       nav: string
       title: string
@@ -50,7 +51,7 @@ export interface TranslationShape {
       title: string
       actions: {
         searchScripts: string
-        loadGroup: string
+        group: string
         start: string
         clearList: string
         recentFiles: string
