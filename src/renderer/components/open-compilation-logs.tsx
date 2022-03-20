@@ -88,10 +88,6 @@ const LogsListItem = ({
           </span>
         ))}
       </Paper>
-      {/*<div className="sticky top-0 flex items-center justify-between gap-4 bg-light-300 pb-2 dark:bg-black-400">
-        <h3 className="select-all">{script.name}</h3>
-        <Button onClick={onClickCopyLogs}>Copy</Button>
-      </div>*/}
     </Paper>
   )
 }

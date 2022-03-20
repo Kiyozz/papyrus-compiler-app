@@ -10,12 +10,12 @@ import { IconButton } from '@mui/material'
 import cx from 'classnames'
 import React, { useCallback } from 'react'
 
-import { ScriptRenderer } from '../../types'
+import { ScriptRenderer } from '../../../types'
 import {
   classNameFromStatus,
   iconFromStatus,
-} from '../../utils/scripts/from-status'
-import { isRunningScript } from '../../utils/scripts/status'
+} from '../../../utils/scripts/from-status'
+import { isRunningScript } from '../../../utils/scripts/status'
 
 interface Props {
   script: ScriptRenderer

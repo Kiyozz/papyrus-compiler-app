@@ -8,27 +8,27 @@ import ClearIcon from '@mui/icons-material/Clear'
 import HistoryIcon from '@mui/icons-material/History'
 import PlayIcon from '@mui/icons-material/PlayCircleFilled'
 import SearchIcon from '@mui/icons-material/Search'
-import { Button } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import React, { useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useDidMount } from 'rooks'
 
-import { TelemetryEvent } from '../../../common/telemetry-event'
-import { Script } from '../../../common/types/script'
-import DialogRecentFiles from '../../components/dialog/dialog-recent-files'
-import Page from '../../components/page'
-import PageAppBar from '../../components/page-app-bar'
-import Toast from '../../components/toast'
-import { useApp } from '../../hooks/use-app'
-import { useCompilation } from '../../hooks/use-compilation'
-import { useDrop, useSetDrop } from '../../hooks/use-drop'
-import { useRecentFiles } from '../../hooks/use-recent-files'
-import { useTelemetry } from '../../hooks/use-telemetry'
-import { isAllGroupsEmpty, ScriptRenderer } from '../../types'
-import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
-import { uniqScripts } from '../../utils/scripts/uniq-scripts'
-import { useSettings } from '../settings/use-settings'
+import { TelemetryEvent } from '../../../../common/telemetry-event'
+import { Script } from '../../../../common/types/script'
+import DialogRecentFiles from '../../../components/dialog/dialog-recent-files'
+import Page from '../../../components/page'
+import PageAppBar from '../../../components/page-app-bar'
+import Toast from '../../../components/toast'
+import { useApp } from '../../../hooks/use-app'
+import { useCompilation } from '../../../hooks/use-compilation'
+import { useDrop, useSetDrop } from '../../../hooks/use-drop'
+import { useRecentFiles } from '../../../hooks/use-recent-files'
+import { useTelemetry } from '../../../hooks/use-telemetry'
+import { isAllGroupsEmpty, ScriptRenderer } from '../../../types'
+import { pscFilesToScript } from '../../../utils/scripts/psc-files-to-script'
+import { uniqScripts } from '../../../utils/scripts/uniq-scripts'
+import { useSettings } from '../../settings/use-settings'
 import GroupsLoader from './groups-loader'
 import ScriptItem from './script-item'
 
@@ -147,25 +147,14 @@ const Compilation = () => {
     setScripts(scriptList => uniqScripts([...scriptList, ...group.scripts]))
   }
 
-  const onClearScripts = useCallback(() => {
+  const onClearScripts = () => {
     setScripts(() => [])
-  }, [setScripts])
+  }
 
-  const scriptsList = scripts.map(script => {
-    return (
-      <ScriptItem
-        key={script.id}
-        onClickRemoveScript={onClickRemoveScriptFromScript(script)}
-        onClickPlayCompilation={onClickPlayCompilation(script)}
-        script={script}
-      />
-    )
-  })
-
-  const onClickEmpty = useCallback(() => {
+  const onClickEmpty = () => {
     send(TelemetryEvent.compilationListEmpty, { scripts: scripts.length })
     onClearScripts()
-  }, [onClearScripts, scripts.length, send])
+  }
 
   return (
     <>
@@ -219,36 +208,47 @@ const Compilation = () => {
           }
         />
 
-        <div className="flex gap-2 pb-4">
-          <button
-            className="btn btn-primary"
+        <div className="mb-4 flex gap-2">
+          <Button
             onClick={onClickStart}
+            color="primary"
+            variant="contained"
             disabled={!!configError || scripts.length === 0 || isRunning}
+            aria-disabled={!!configError || scripts.length === 0 || isRunning}
+            startIcon={<PlayIcon />}
           >
-            <div className="icon">
-              <PlayIcon />
-            </div>{' '}
             {t('page.compilation.actions.start')}
-          </button>
+          </Button>
 
-          <button
-            className="btn"
+          <Button
             onClick={onClickEmpty}
             disabled={isRunning || scripts.length === 0}
+            aria-disabled={isRunning || scripts.length === 0}
+            startIcon={<ClearIcon />}
           >
-            <ClearIcon className="mr-2" />{' '}
             {t('page.compilation.actions.clearList')}
-          </button>
+          </Button>
         </div>
 
         {scripts.length > 0 ? (
-          <div className="flex flex-col gap-2">{scriptsList}</div>
+          <div className="flex flex-col gap-2">
+            {scripts.map(script => {
+              return (
+                <ScriptItem
+                  key={script.id}
+                  onClickRemoveScript={onClickRemoveScriptFromScript(script)}
+                  onClickPlayCompilation={onClickPlayCompilation(script)}
+                  script={script}
+                />
+              )
+            })}
+          </div>
         ) : (
           <>
-            <p>{t('page.compilation.dragAndDropText')}</p>
-            <p className="font-bold">
+            <Typography>{t('page.compilation.dragAndDropText')}</Typography>
+            <Typography className="font-bold">
               {t('page.compilation.dragAndDropAdmin')}
-            </p>
+            </Typography>
           </>
         )}
       </Page>

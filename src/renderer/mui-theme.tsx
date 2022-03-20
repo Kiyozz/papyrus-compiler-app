@@ -89,7 +89,6 @@ const MuiTheme = ({ children }: React.PropsWithChildren<unknown>) => {
       },
       MuiButton: {
         defaultProps: {
-          disableRipple: true,
           color: 'inherit',
         },
         styleOverrides: {
