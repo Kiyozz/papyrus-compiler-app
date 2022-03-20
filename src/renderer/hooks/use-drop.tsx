@@ -16,15 +16,24 @@ type DropContext = {
   setOnDrop: (on: (() => OnDrop) | null) => void
   drop: () => void
   isDragActive: boolean
+  isFileDialogActive: boolean
 }
 
 const Context = createContext({} as DropContext)
 
 const DropProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const [onDrop, setOnDrop] = useState<OnDrop | null>(null)
+  const [isFileDialogActive, setFileDialogActive] = useState(false)
 
   return (
-    <DropScripts onDrop={onDrop}>
+    <DropScripts
+      onDrop={files => {
+        onDrop?.(files)
+        setFileDialogActive(false)
+      }}
+      onFileDialogOpen={() => setFileDialogActive(true)}
+      onFileDialogCancel={() => setFileDialogActive(false)}
+    >
       {({ isDragActive, open }) => (
         <Context.Provider
           value={{
@@ -32,6 +41,7 @@ const DropProvider = ({ children }: React.PropsWithChildren<unknown>) => {
             drop: open,
             onDrop,
             setOnDrop,
+            isFileDialogActive,
           }}
         >
           <DropFilesOverlay open={isDragActive && onDrop !== null} />

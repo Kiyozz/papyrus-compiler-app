@@ -6,6 +6,7 @@
 
 import HelpIcon from '@mui/icons-material/Help'
 import RefreshIcon from '@mui/icons-material/Refresh'
+import { Button } from '@mui/material'
 import is from '@sindresorhus/is'
 import debounce from 'debounce-fn'
 import React, { useCallback, useEffect, useMemo } from 'react'
@@ -175,28 +176,17 @@ const Settings = () => {
 
   return (
     <>
-      <PageAppBar
-        title={t('page.settings.title')}
-        actions={
-          <>
-            <button
-              className="btn"
-              onClick={() => openDocumentation('settings-app-bar')}
-            >
-              <span className="icon">
-                <HelpIcon />
-              </span>
-              {t('common.documentation')}
-            </button>
-            <button className="btn" onClick={onClickPageRefresh}>
-              <div className="icon">
-                <RefreshIcon />
-              </div>
-              {t('common.refresh')}
-            </button>
-          </>
-        }
-      />
+      <PageAppBar title={t('page.settings.title')}>
+        <Button
+          onClick={() => openDocumentation('settings-app-bar')}
+          startIcon={<HelpIcon />}
+        >
+          {t('common.documentation')}
+        </Button>
+        <Button onClick={onClickPageRefresh} startIcon={<RefreshIcon />}>
+          {t('common.refresh')}
+        </Button>
+      </PageAppBar>
 
       <Page>
         <SettingsGame

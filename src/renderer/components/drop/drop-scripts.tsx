@@ -16,6 +16,8 @@ type RenderChildren = {
 type Props = {
   className?: string
   onDrop?: OnDrop
+  onFileDialogOpen: () => void
+  onFileDialogCancel: () => void
   children: (renderProps: RenderChildren) => React.ReactNode
 }
 
@@ -23,6 +25,8 @@ type OnDrop = ((files: File[]) => void) | null
 
 const DropScripts = ({
   onDrop,
+  onFileDialogOpen,
+  onFileDialogCancel,
   className,
   children,
 }: React.PropsWithChildren<Props>) => {
@@ -33,6 +37,8 @@ const DropScripts = ({
     noClick: true,
     noKeyboard: true,
     useFsAccessApi: false,
+    onFileDialogOpen,
+    onFileDialogCancel,
   })
 
   const { role, ...rootProps } = getRootProps()

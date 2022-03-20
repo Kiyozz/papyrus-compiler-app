@@ -95,9 +95,9 @@ const OpenDocumentation = () => {
           </FormGroup>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClickCancel}>{t('common.cancel')}</Button>
+          <Button onClick={onClickCancel}>{t('common.no')}</Button>
           <Button onClick={onClickConfirmGoToDocumentation}>
-            {t('nav.help.goTo')}
+            {t('common.yes')}
           </Button>
         </DialogActions>
       </Dialog>

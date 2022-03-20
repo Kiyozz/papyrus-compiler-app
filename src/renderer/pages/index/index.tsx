@@ -8,27 +8,27 @@ import ClearIcon from '@mui/icons-material/Clear'
 import HistoryIcon from '@mui/icons-material/History'
 import PlayIcon from '@mui/icons-material/PlayCircleFilled'
 import SearchIcon from '@mui/icons-material/Search'
-import { Button, Typography } from '@mui/material'
+import { Button, ButtonProps, Typography } from '@mui/material'
 import React, { useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useDidMount } from 'rooks'
 
-import { TelemetryEvent } from '../../../../common/telemetry-event'
-import { Script } from '../../../../common/types/script'
-import DialogRecentFiles from '../../../components/dialog/dialog-recent-files'
-import Page from '../../../components/page'
-import PageAppBar from '../../../components/page-app-bar'
-import Toast from '../../../components/toast'
-import { useApp } from '../../../hooks/use-app'
-import { useCompilation } from '../../../hooks/use-compilation'
-import { useDrop, useSetDrop } from '../../../hooks/use-drop'
-import { useRecentFiles } from '../../../hooks/use-recent-files'
-import { useTelemetry } from '../../../hooks/use-telemetry'
-import { isAllGroupsEmpty, ScriptRenderer } from '../../../types'
-import { pscFilesToScript } from '../../../utils/scripts/psc-files-to-script'
-import { uniqScripts } from '../../../utils/scripts/uniq-scripts'
-import { useSettings } from '../../settings/use-settings'
+import { TelemetryEvent } from '../../../common/telemetry-event'
+import { Script } from '../../../common/types/script'
+import DialogRecentFiles from '../../components/dialog/dialog-recent-files'
+import Page from '../../components/page'
+import PageAppBar from '../../components/page-app-bar'
+import Toast from '../../components/toast'
+import { useApp } from '../../hooks/use-app'
+import { useCompilation } from '../../hooks/use-compilation'
+import { useDrop, useSetDrop } from '../../hooks/use-drop'
+import { useRecentFiles } from '../../hooks/use-recent-files'
+import { useTelemetry } from '../../hooks/use-telemetry'
+import { isAllGroupsEmpty, ScriptRenderer } from '../../types'
+import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
+import { uniqScripts } from '../../utils/scripts/uniq-scripts'
+import { useSettings } from '../settings/use-settings'
 import GroupsLoader from './groups-loader'
 import ScriptItem from './script-item'
 
@@ -51,11 +51,23 @@ const RecentFilesButton = ({
   )
 }
 
-const SearchButton = ({ onClick }: { onClick: () => void }) => {
+const SearchButton = ({
+  onClick,
+  disabled,
+  'aria-disabled': ariaDisabled,
+}: { onClick: () => void } & Pick<
+  ButtonProps,
+  'disabled' | 'aria-disabled'
+>) => {
   const { t } = useTranslation()
 
   return (
-    <Button onClick={onClick} startIcon={<SearchIcon />}>
+    <Button
+      onClick={onClick}
+      startIcon={<SearchIcon />}
+      disabled={disabled}
+      aria-disabled={ariaDisabled}
+    >
       {t('page.compilation.actions.searchScripts')}
     </Button>
   )
@@ -68,7 +80,7 @@ const Compilation = () => {
     useCompilation()
   const { setRecentFiles } = useRecentFiles()
   const { send } = useTelemetry()
-  const { drop } = useDrop()
+  const { drop, isFileDialogActive } = useDrop()
   const [dialogState, setDialogState] = useState(DialogRecentFilesState.close)
   const { checkConfig, configError, resetConfigError } = useSettings()
 
@@ -160,23 +172,15 @@ const Compilation = () => {
     <>
       <PageAppBar title={t('page.compilation.title')}>
         <RecentFilesButton onClick={onClickRecentFiles} />
-        <SearchButton onClick={drop} />
+        <SearchButton
+          onClick={drop}
+          disabled={isFileDialogActive}
+          aria-disabled={isFileDialogActive}
+        />
         {!isAllGroupsEmpty(groups) && (
           <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
         )}
       </PageAppBar>
-      {/*<PageAppBar
-        title={t('page.compilation.title')}
-        actions={
-          <>
-            <RecentFilesButton onClick={onClickRecentFiles} />
-            <SearchButton onClick={drop} />
-            {!isAllGroupsEmpty(groups) && (
-              <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
-            )}
-          </>
-        }
-      />*/}
       <Page>
         <DialogRecentFiles
           isOpen={dialogState == DialogRecentFilesState.open}

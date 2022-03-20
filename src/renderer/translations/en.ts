@@ -13,6 +13,9 @@ const en: TranslationShape = {
     cancel: 'Cancel',
     documentation: 'Documentation',
     copy: 'Copier',
+    drop: 'Drop files',
+    yes: 'Yes',
+    no: 'No',
     logs: {
       nav: 'Logs',
       title: 'Compilation logs',
@@ -50,11 +53,9 @@ const en: TranslationShape = {
     closePanel: 'Close panel',
     help: {
       text: 'Documentation',
-      title: 'Documentation',
-      description:
-        'The following link will open the documentation of PCA in your browser',
-      goTo: 'Open',
-      doNotShowAgain: 'Do not show again',
+      title: 'Open the PCA documentation website?',
+      description: 'Will allow you to learn about PCA.',
+      doNotShowAgain: "Don't show me that anymore",
     },
   },
   page: {

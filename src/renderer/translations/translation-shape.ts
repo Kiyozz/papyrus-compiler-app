@@ -11,6 +11,9 @@ export interface TranslationShape {
     cancel: string
     documentation: string
     copy: string
+    drop: string
+    yes: string
+    no: string
     logs: {
       nav: string
       title: string
@@ -33,7 +36,6 @@ export interface TranslationShape {
       text: string
       title: string
       description: string
-      goTo: string
       doNotShowAgain: string
     }
   }

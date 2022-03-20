@@ -9,11 +9,11 @@ import { Button, Menu, MenuItem } from '@mui/material'
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TelemetryEvent } from '../../../../common/telemetry-event'
-import { useDocumentClick } from '../../../hooks/use-document-click'
-import { useTelemetry } from '../../../hooks/use-telemetry'
-import { isChildren } from '../../../html/is-child'
-import { Group } from '../../../types'
+import { TelemetryEvent } from '../../../common/telemetry-event'
+import { useDocumentClick } from '../../hooks/use-document-click'
+import { useTelemetry } from '../../hooks/use-telemetry'
+import { isChildren } from '../../html/is-child'
+import { Group } from '../../types'
 
 interface Props {
   groups: Group[]
