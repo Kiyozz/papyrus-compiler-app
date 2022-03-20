@@ -6,14 +6,20 @@
 
 import FolderIcon from '@mui/icons-material/Folder'
 import FolderOpenIcon from '@mui/icons-material/FolderOpen'
+import {
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from '@mui/material'
 import is from '@sindresorhus/is'
-import React, { ReactNode, useCallback, useEffect, useState } from 'react'
+import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { DialogType } from '../../../common/types/dialog'
 import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
-import TextField from '../text-field'
 
 type Props = {
   id: string
@@ -37,31 +43,29 @@ const DialogTextField = ({
   const { t } = useTranslation()
   const [value, setValue] = useState(defaultValue)
   const [isHover, setHover] = useState(false)
-  const onClickInput = useCallback(
-    async (e: React.MouseEvent<HTMLDivElement>) => {
-      setHover(false)
-      e.preventDefault()
-      e.currentTarget.blur()
 
-      try {
-        const result = await bridge.dialog.select(type).then(response => {
-          if (is.null_(response)) {
-            return
-          }
+  const onClickInput = async (e: React.MouseEvent<HTMLElement>) => {
+    setHover(false)
+    e.preventDefault()
+    e.currentTarget.blur()
 
-          return response
-        })
-
-        if (typeof result !== 'undefined') {
-          setValue(result)
-          onChange(result)
+    try {
+      const result = await bridge.dialog.select(type).then(response => {
+        if (is.null_(response)) {
+          return
         }
-      } catch (err) {
-        console.log(err)
+
+        return response
+      })
+
+      if (typeof result !== 'undefined') {
+        setValue(result)
+        onChange(result)
       }
-    },
-    [onChange, type],
-  )
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   useEffect(() => {
     const sub = onRefreshConfig.subscribe(() => {
@@ -71,37 +75,46 @@ const DialogTextField = ({
     return () => sub.unsubscribe()
   }, [defaultValue, onRefreshConfig])
 
-  const handleMouseEnter = useCallback(() => {
+  const onMouseEnter = () => {
     setHover(true)
-  }, [])
-  const handleMouseLeave = useCallback(() => {
+  }
+  const onMouseLeave = () => {
     setHover(false)
-  }, [])
+  }
 
-  const onChangeInput = useCallback(
-    (newValue: string | number) => {
-      if (is.string(newValue)) {
-        setValue(newValue)
-        onChange(newValue)
-      }
-    },
-    [onChange],
-  )
+  const onChangeInput = (evt: ChangeEvent<HTMLInputElement>) => {
+    const newValue = evt.currentTarget.value
+
+    setValue(newValue)
+    onChange(newValue)
+  }
 
   return (
-    <TextField
-      id={id}
-      error={error}
-      startIcon={isHover ? <FolderOpenIcon /> : <FolderIcon />}
-      value={value}
-      onChange={onChangeInput}
-      label={label}
-      placeholder={t('common.selectFolder')}
-      iconOnMouseEnter={handleMouseEnter}
-      iconOnMouseLeave={handleMouseLeave}
-      iconOnClick={onClickInput}
-      inputClassName="text-xs"
-    />
+    <FormControl variant="outlined" fullWidth error={error}>
+      <InputLabel htmlFor={id} className="flex items-center">
+        {label}
+      </InputLabel>
+      <OutlinedInput
+        id={id}
+        startAdornment={
+          <InputAdornment position="start">
+            <IconButton
+              onClick={onClickInput}
+              edge="start"
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
+            >
+              {isHover ? <FolderOpenIcon /> : <FolderIcon />}
+            </IconButton>
+          </InputAdornment>
+        }
+        size="small"
+        label={label}
+        placeholder={t('common.selectFolder')}
+        onChange={onChangeInput}
+        value={value}
+      />
+    </FormControl>
   )
 }
 

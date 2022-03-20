@@ -22,6 +22,7 @@ import {
 import Alert from '../../components/alert'
 import DialogTextField from '../../components/dialog/dialog-text-field'
 import { useApp } from '../../hooks/use-app'
+import SettingsSection from './settings-section'
 import { useSettings } from './use-settings'
 
 type Props = {
@@ -45,10 +46,7 @@ const SettingsGame = ({
   const exe = toExecutable(game.type)
 
   return (
-    <div className="paper relative" id="settings-game">
-      <h1 className="mb-3 text-3xl dark:text-white">
-        {t('page.settings.game')}
-      </h1>
+    <SettingsSection title={t('page.settings.game')} gutterTop={false}>
       <FormControl component="fieldset" fullWidth>
         <RadioGroup
           row
@@ -91,9 +89,9 @@ const SettingsGame = ({
         </RadioGroup>
       </FormControl>
 
-      <div className="mt-3">
+      <div className="mt-3" id="settings-game">
         <DialogTextField
-          id="game-folder"
+          id="game-path"
           error={configError === 'game'}
           label={
             <>
@@ -101,7 +99,7 @@ const SettingsGame = ({
               <Tooltip
                 title={t<string>('page.settings.gameFolderTooltip', { exe })}
               >
-                <HelpIcon fontSize="inherit" classes={{ root: 'ml-1' }} />
+                <HelpIcon classes={{ root: 'ml-1' }} />
               </Tooltip>
             </>
           }
@@ -119,7 +117,7 @@ const SettingsGame = ({
             <>
               {t('page.settings.compilerPath')}
               <Tooltip title={t<string>('page.settings.compilerPathTooltip')}>
-                <HelpIcon fontSize="inherit" classes={{ root: 'ml-1' }} />
+                <HelpIcon classes={{ root: 'ml-1' }} />
               </Tooltip>
             </>
           }
@@ -159,7 +157,7 @@ const SettingsGame = ({
           </div>
         </Alert>
       )}
-    </div>
+    </SettingsSection>
   )
 }
 

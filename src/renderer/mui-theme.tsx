@@ -15,22 +15,11 @@ import {
 import red from '@mui/material/colors/red'
 import React from 'react'
 
-import { Theme as SettingsTheme } from '../common/theme'
-import { useSystemDarkPreference } from './hooks/use-system-dark-preference'
-import { useTheme } from './hooks/use-theme'
+import { useIsDarkTheme } from './hooks/use-is-dark-theme'
 
 const MuiTheme = ({ children }: React.PropsWithChildren<unknown>) => {
-  const isDark = useSystemDarkPreference()
-  const [currentTheme] = useTheme()
-  const mode: PaletteMode =
-    currentTheme === SettingsTheme.system
-      ? isDark
-        ? 'dark'
-        : 'light'
-      : currentTheme === SettingsTheme.dark
-      ? 'dark'
-      : 'light'
-
+  const isDarkTheme = useIsDarkTheme()
+  const mode: PaletteMode = isDarkTheme ? 'dark' : 'light'
   const palette: PaletteOptions =
     mode === 'light'
       ? {

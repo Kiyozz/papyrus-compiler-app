@@ -6,27 +6,18 @@
 
 import { useEffect } from 'react'
 
-import { Theme } from '../../common/theme'
-import { useSystemDarkPreference } from './use-system-dark-preference'
-import { useTheme } from './use-theme'
+import { useIsDarkTheme } from './use-is-dark-theme'
 
 export const useSyncHtmlTheme = (): void => {
-  const isSystemThemeDark = useSystemDarkPreference()
-  const [theme] = useTheme()
+  const isDark = useIsDarkTheme()
 
   useEffect(() => {
     const list = document.documentElement.classList
 
-    if (theme === Theme.dark) {
+    if (isDark) {
       list.add('dark')
-    } else if (theme === Theme.light) {
-      list.remove('dark')
     } else {
-      if (isSystemThemeDark) {
-        list.add('dark')
-      } else {
-        list.remove('dark')
-      }
+      list.remove('dark')
     }
-  }, [theme, isSystemThemeDark])
+  }, [isDark])
 }

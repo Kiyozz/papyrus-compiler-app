@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Theme } from '../../../common/theme'
 import { useTheme } from '../../hooks/use-theme'
+import SettingsSection from './settings-section'
 
 const SettingsTheme = () => {
   const { t } = useTranslation()
@@ -25,12 +26,8 @@ const SettingsTheme = () => {
   }
 
   return (
-    <div className="paper relative mt-4">
-      <h1 className="mb-3 flex flex-wrap items-center text-3xl dark:text-white">
-        {t('page.settings.theme.title')}
-      </h1>
-
-      <div className="relative" id="telemetry-active">
+    <SettingsSection title={t('page.settings.theme.title')} id="settings-theme">
+      <div className="relative">
         <FormControl component="fieldset" fullWidth>
           <RadioGroup row value={theme} onChange={onChangeTheme}>
             <FormControlLabel
@@ -60,7 +57,7 @@ const SettingsTheme = () => {
           </RadioGroup>
         </FormControl>
       </div>
-    </div>
+    </SettingsSection>
   )
 }
 

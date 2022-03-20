@@ -15,6 +15,7 @@ export interface TranslationShape {
     yes: string
     no: string
     remove: string
+    skip: string
     logs: {
       nav: string
       title: string
@@ -141,6 +142,7 @@ export interface TranslationShape {
     close: string
     ok: string
     settings: {
+      documentation: string
       ask: {
         title: string
         text: string

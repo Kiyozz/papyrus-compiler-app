@@ -202,7 +202,7 @@ body {
   border-right: 20px solid transparent;
   border-top: 20px solid;
   transform: translate3d(-50%, 50%, 0);
-  @apply border-t-black-400;
+  @apply border-t-light-800 dark:border-t-black-400;
 }
 
 .tooltip.tooltip-bottom-left::after {

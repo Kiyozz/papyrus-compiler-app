@@ -4,13 +4,16 @@
  * All rights reserved.
  */
 
-import { Button } from '@mui/material'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { Button, Typography } from '@mui/material'
+import cx from 'classnames'
+import React, { MouseEvent, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
+import { MOD_DOCUMENTATION_URL } from '../../../common/env'
 import { TelemetryEvent } from '../../../common/telemetry-event'
+import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
 
@@ -26,108 +29,96 @@ enum Step {
 
 type Next = () => void
 
-const getGameSettingsAnchor = () => document.querySelector('#settings-game')
-
-const getCompilerSettingsAnchor = () =>
-  document.querySelector('#settings-compiler')
-
-const getMo2SettingsAnchor = () => document.querySelector('#settings-mo2')
-
-const getConcurrentSettingsAnchor = () =>
-  document.querySelector('#compilation-concurrentScripts')
-
-const GameSettingsStep = ({ next }: { next: Next }) => {
+const StepTooltip = ({
+  next,
+  text,
+  selector,
+  arrowPosition,
+}: {
+  next: Next
+  text: string
+  selector: string
+  arrowPosition?: 'left' | 'bottom-left'
+}) => {
   const { t } = useTranslation()
-  const [stepAnchor, setAnchor] = useState(getGameSettingsAnchor)
+  const [stepAnchor, setAnchor] = useState(() =>
+    document.querySelector(selector),
+  )
 
   useEffect(() => {
-    setAnchor(getGameSettingsAnchor())
+    setAnchor(document.querySelector(selector))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname])
 
   const onClickOk = () => next()
 
-  if (!stepAnchor) {
-    return null
-  }
+  if (!stepAnchor) return null
 
   return createPortal(
-    <div className="tooltip tooltip-left">
-      <div>{t('tutorials.settings.game.text')}</div>
-      <div>
-        <button className="btn btn-primary" onClick={onClickOk}>
-          {t('tutorials.ok')}
-        </button>
-      </div>
+    <div
+      className={cx(
+        'tooltip',
+        arrowPosition === 'left' && 'tooltip-left',
+        arrowPosition === 'bottom-left' && 'tooltip-bottom-left',
+      )}
+    >
+      <Typography>{text}</Typography>
+      <Button color="primary" variant="contained" onClick={onClickOk}>
+        {t('tutorials.ok')}
+      </Button>
     </div>,
     stepAnchor,
+  )
+}
+
+const GameSettingsStep = ({ next }: { next: Next }) => {
+  const { t } = useTranslation()
+
+  return (
+    <StepTooltip
+      next={next}
+      text={t('tutorials.settings.game.text')}
+      selector="#settings-game"
+      arrowPosition="bottom-left"
+    />
   )
 }
 
 const CompilerSettingsStep = ({ next }: { next: Next }) => {
   const { t } = useTranslation()
-  const stepAnchor = useMemo(() => getCompilerSettingsAnchor(), [])
-  const onClickOk = () => next()
 
-  if (!stepAnchor) {
-    return null
-  }
-
-  return createPortal(
-    <div className="tooltip -top-14 bg-light-800 dark:bg-darker">
-      <div>{t('tutorials.settings.compiler.text')}</div>
-      <div>
-        <button className="btn btn-primary" onClick={onClickOk}>
-          {t('tutorials.ok')}
-        </button>
-      </div>
-    </div>,
-    stepAnchor,
-  )
-}
-
-const Mo2SettingsStep = ({ next }: { next: Next }) => {
-  const { t } = useTranslation()
-  const stepAnchor = useMemo(() => getMo2SettingsAnchor(), [])
-
-  const onClickOk = () => next()
-
-  if (!stepAnchor) {
-    return null
-  }
-
-  return createPortal(
-    <div className="tooltip tooltip-bottom-left -top-12 bg-light-800 dark:bg-darker">
-      <div>{t('tutorials.settings.mo2.text')}</div>
-      <div>
-        <button className="btn btn-primary" onClick={onClickOk}>
-          {t('tutorials.ok')}
-        </button>
-      </div>
-    </div>,
-    stepAnchor,
+  return (
+    <StepTooltip
+      next={next}
+      text={t('tutorials.settings.compiler.text')}
+      selector="#settings-compiler"
+      arrowPosition="left"
+    />
   )
 }
 
 const ConcurrentSettingsStep = ({ next }: { next: Next }) => {
   const { t } = useTranslation()
-  const stepAnchor = useMemo(() => getConcurrentSettingsAnchor(), [])
-  const onClickOk = () => next()
 
-  if (!stepAnchor) {
-    return null
-  }
+  return (
+    <StepTooltip
+      next={next}
+      text={t('tutorials.settings.compilation.concurrent.text')}
+      selector="#compilation-concurrentScripts"
+    />
+  )
+}
 
-  return createPortal(
-    <div className="tooltip -top-12 bg-light-800 dark:bg-darker">
-      <div>{t('tutorials.settings.compilation.concurrent.text')}</div>
-      <div>
-        <button className="btn btn-primary" onClick={onClickOk}>
-          {t('tutorials.ok')}
-        </button>
-      </div>
-    </div>,
-    stepAnchor,
+const Mo2SettingsStep = ({ next }: { next: Next }) => {
+  const { t } = useTranslation()
+
+  return (
+    <StepTooltip
+      next={next}
+      text={t('tutorials.settings.mo2.text')}
+      selector="#settings-mo2"
+      arrowPosition="bottom-left"
+    />
   )
 }
 
@@ -151,41 +142,51 @@ const TutorialSettings = () => {
   const [step, setStep] = useState(Step.waiting)
   const { send } = useTelemetry()
 
-  const onClickClose = () => {
-    send(TelemetryEvent.tutorialsSettingsDeny, {})
+  const finishTutorial = (reason: 'skip' | 'end' | 'deny') => {
+    setStep(Step.end)
     setConfig({
       tutorials: {
         ...config.tutorials,
         settings: false,
       },
     })
+
+    if (reason === 'skip') {
+      send(TelemetryEvent.tutorialsSettingsSkip, { step })
+    } else if (reason === 'deny') {
+      send(TelemetryEvent.tutorialsSettingsDeny, {})
+    } else if (reason === 'end') {
+      send(TelemetryEvent.tutorialsSettingsEnd, {})
+    }
+  }
+  const onClickDeny = () => {
+    finishTutorial('deny')
   }
 
-  const onClickNeedHelp = useCallback(() => {
+  const onClickNeedHelp = () => {
     navigate('/settings')
     setStep(Step.game)
-  }, [navigate])
+  }
 
-  const onNextStepGame = useCallback(() => {
+  const onNextStepGame = () => {
     setStep(Step.compiler)
-  }, [])
+  }
 
-  const onNextStepCompiler = useCallback(() => {
+  const onNextStepCompiler = () => {
     setStep(Step.concurrent)
-  }, [])
+  }
 
-  const onNextStepConcurrent = useCallback(() => {
+  const onNextStepConcurrent = () => {
     setStep(Step.mo2)
-  }, [])
+  }
 
-  const onNextStepMo2 = useCallback(() => {
-    setStep(Step.end)
-    setConfig({
-      tutorials: {
-        settings: false,
-      },
-    })
-  }, [setConfig])
+  const onNextStepMo2 = () => {
+    finishTutorial('end')
+  }
+
+  const onClickSkip = () => {
+    finishTutorial('skip')
+  }
 
   useEffect(() => {
     if (step === Step.waiting) {
@@ -205,6 +206,12 @@ const TutorialSettings = () => {
     return () => clearTimeout(time)
   }, [])
 
+  const onClickOpenDocumentation = (evt: MouseEvent) => {
+    evt.preventDefault()
+
+    bridge.shell.openExternal(MOD_DOCUMENTATION_URL)
+  }
+
   if (!config.tutorials.settings) {
     return null
   }
@@ -216,12 +223,26 @@ const TutorialSettings = () => {
         <div
           className={`fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400 dark:text-white`}
         >
-          <div className="text-3xl font-bold">
+          <Typography variant="h3">
             {t('tutorials.settings.ask.title')}
-          </div>
-          <div className="m-6 text-center text-xl">
+          </Typography>
+          <Typography component="div" className="m-6 text-center text-xl">
             {t('tutorials.settings.ask.text')}
-          </div>
+          </Typography>
+          <Typography variant="h6" component="div" className="mb-4 text-center">
+            <Trans
+              i18nKey="tutorials.settings.documentation"
+              components={{
+                1: (
+                  <a
+                    className="text-gray-700 dark:text-white"
+                    href="/"
+                    onClick={onClickOpenDocumentation}
+                  />
+                ),
+              }}
+            />
+          </Typography>
           <div className="flex gap-4">
             <Button
               color="primary"
@@ -231,12 +252,26 @@ const TutorialSettings = () => {
             >
               {t('tutorials.settings.ask.needHelp')}
             </Button>
-            <Button onClick={onClickClose} disabled={step === Step.waiting}>
+            <Button onClick={onClickDeny} disabled={step === Step.waiting}>
               {t('tutorials.close')}
             </Button>
           </div>
         </div>
       )}
+
+      {step !== Step.ask &&
+        step !== Step.waiting &&
+        createPortal(
+          <Button
+            onClick={onClickSkip}
+            color="primary"
+            variant="contained"
+            className="fixed top-12 right-4 z-40 text-right text-white"
+          >
+            {t('common.skip')}
+          </Button>,
+          document.body,
+        )}
 
       {step === Step.game && <GameSettingsStep next={onNextStepGame} />}
 

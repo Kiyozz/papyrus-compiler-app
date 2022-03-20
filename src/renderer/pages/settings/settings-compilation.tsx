@@ -4,12 +4,13 @@
  * All rights reserved.
  */
 
+import { TextField } from '@mui/material'
 import is from '@sindresorhus/is'
-import React, { useCallback } from 'react'
+import React, { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import TextField from '../../components/text-field'
 import { useApp } from '../../hooks/use-app'
+import SettingsSection from './settings-section'
 
 const maxConcurrentCompilationScripts = 100
 
@@ -20,50 +21,49 @@ const SettingsCompilation = () => {
     setConfig,
   } = useApp()
 
-  const onChangeConcurrentScripts = useCallback(
-    (value: string | number) => {
-      if (value === '') {
-        value = '0'
+  const onChangeConcurrentScripts = (evt: ChangeEvent<HTMLInputElement>) => {
+    let value = evt.currentTarget.value
+
+    if (value === '') {
+      value = '0'
+    }
+
+    if (is.numericString(value)) {
+      let parsedValue = parseInt(value, 10)
+
+      if (parsedValue > maxConcurrentCompilationScripts) {
+        parsedValue = maxConcurrentCompilationScripts
       }
 
-      if (is.numericString(value)) {
-        let parsedValue = parseInt(value, 10)
-
-        if (parsedValue > maxConcurrentCompilationScripts) {
-          parsedValue = maxConcurrentCompilationScripts
-        }
-
-        if (parsedValue < 0) {
-          parsedValue = 1
-        }
-
-        setConfig({ compilation: { concurrentScripts: parsedValue } })
+      if (parsedValue < 0) {
+        parsedValue = 1
       }
-    },
-    [setConfig],
-  )
+
+      setConfig({ compilation: { concurrentScripts: parsedValue } })
+    }
+  }
 
   return (
-    <div className="paper relative mt-4">
-      <h1 className="mb-3 flex flex-wrap items-center text-3xl dark:text-white">
-        {t('page.settings.compilation.title')}
-      </h1>
-
-      <div className="relative" id="compilation-concurrentScripts">
-        <TextField
-          id="compilation-concurrentScripts-input"
-          value={
-            compilation.concurrentScripts === 0
-              ? ''
-              : compilation.concurrentScripts
-          }
-          onChange={onChangeConcurrentScripts}
-          label={t('page.settings.compilation.concurrentScripts.label')}
-          name="compilation-concurrentScripts"
-          infoText={t('page.settings.compilation.concurrentScripts.info')}
-        />
-      </div>
-    </div>
+    <SettingsSection
+      title={t('page.settings.compilation.title')}
+      className="relative"
+      id="compilation-concurrentScripts"
+    >
+      <TextField
+        id="compilation-concurrentScripts-input"
+        value={
+          compilation.concurrentScripts === 0
+            ? ''
+            : compilation.concurrentScripts
+        }
+        size="small"
+        fullWidth
+        onChange={onChangeConcurrentScripts}
+        label={t('page.settings.compilation.concurrentScripts.label')}
+        name="compilation-concurrentScripts"
+        helperText={t('page.settings.compilation.concurrentScripts.info')}
+      />
+    </SettingsSection>
   )
 }
 

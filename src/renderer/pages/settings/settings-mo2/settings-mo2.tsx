@@ -4,11 +4,9 @@
  * All rights reserved.
  */
 
-import HelpIcon from '@mui/icons-material/Help'
-import { Tooltip } from '@mui/material'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 
+import SettingsSection from '../settings-section'
 import SettingsMo2Activation from './settings-mo2-activation'
 import SettingsMo2Instance from './settings-mo2-instance'
 
@@ -23,23 +21,18 @@ const SettingsMo2 = ({
   onChangeMo2Instance,
   onClickRefreshInstallation,
 }: Props) => {
-  const { t } = useTranslation()
-
   return (
-    <div className="paper relative mt-4" id="settings-mo2">
-      <h1 className="mb-3 flex flex-wrap items-center text-3xl dark:text-white">
-        <span className="mr-2 inline-block">Mod Organizer 2</span>
-        <Tooltip title={t<string>('page.settings.mo2.enableText')}>
-          <HelpIcon fontSize="small" />
-        </Tooltip>
-      </h1>
-
+    <SettingsSection
+      title="Mod Organizer 2"
+      aria-label="Mod Organizer 2"
+      titleId="settings-mo2"
+    >
       <SettingsMo2Activation onChangeMo2={onChangeMo2} />
       <SettingsMo2Instance
         onChangeMo2Instance={onChangeMo2Instance}
         onClickRefreshInstallation={onClickRefreshInstallation}
       />
-    </div>
+    </SettingsSection>
   )
 }
 

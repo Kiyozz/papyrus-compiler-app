@@ -19,6 +19,7 @@ const fr: TranslationShape = {
     yes: 'Oui',
     no: 'Non',
     remove: 'Retirer',
+    skip: 'Passer',
     logs: {
       nav: 'Logs',
       title: 'Logs de compilation',
@@ -168,9 +169,11 @@ const fr: TranslationShape = {
     close: 'Fermer',
     ok: 'OK',
     settings: {
+      documentation:
+        'Il existe une documentation de PCA. <1>Disponible ici</1>.',
       ask: {
         title: 'Configurer PCA',
-        text: "C'est la première fois que vous lancez PCA. Suivre le tutoriel ?",
+        text: "C'est la première fois que vous lancez PCA.",
         needHelp: "J'ai besoin d'aide",
       },
       game: {

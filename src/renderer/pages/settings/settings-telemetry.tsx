@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
+import SettingsSection from './settings-section'
 
 const SettingsTelemetry = () => {
   const { t } = useTranslation()
@@ -33,11 +34,10 @@ const SettingsTelemetry = () => {
   }
 
   return (
-    <div className="paper relative mt-4">
-      <h1 className="mb-3 flex flex-wrap items-center text-3xl dark:text-white">
-        {t('page.settings.telemetry.title')}
-      </h1>
-
+    <SettingsSection
+      title={t('page.settings.telemetry.title')}
+      id="settings-telemetry"
+    >
       <div className="relative" id="telemetry-active">
         <FormControlLabel
           control={
@@ -55,7 +55,7 @@ const SettingsTelemetry = () => {
           }
         />
       </div>
-    </div>
+    </SettingsSection>
   )
 }
 

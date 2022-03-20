@@ -15,8 +15,8 @@ const Routes = () => (
   <div className="flex w-full flex-col">
     <RouterRoutes>
       <Route path="/compilation" element={<Compilation />} />
-      <Route path="/groups/*" element={<Groups />} />
-      <Route path="/settings/*" element={<Settings />} />
+      <Route path="/groups" element={<Groups />} />
+      <Route path="/settings" element={<Settings />} />
       <Route path="*" element={<Navigate to="/compilation" replace />} />
     </RouterRoutes>
   </div>

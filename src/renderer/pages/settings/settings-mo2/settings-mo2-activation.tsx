@@ -9,7 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useApp } from '../../hooks/use-app'
+import { useApp } from '../../../hooks/use-app'
 
 interface Props {
   onChangeMo2: (e: React.ChangeEvent<HTMLInputElement>) => void

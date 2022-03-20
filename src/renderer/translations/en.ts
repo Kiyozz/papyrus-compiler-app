@@ -17,6 +17,7 @@ const en: TranslationShape = {
     yes: 'Yes',
     no: 'No',
     remove: 'Remove',
+    skip: 'Skip',
     logs: {
       nav: 'Logs',
       title: 'Compilation logs',
@@ -160,9 +161,10 @@ const en: TranslationShape = {
     close: 'Close',
     ok: 'OK',
     settings: {
+      documentation: 'You can read the documentation <1>here</1>.',
       ask: {
         title: 'Setup PCA',
-        text: 'This is the first time you start PCA. Follow the tutorial?',
+        text: 'This is the first time you start PCA.',
         needHelp: 'I need help',
       },
       game: {

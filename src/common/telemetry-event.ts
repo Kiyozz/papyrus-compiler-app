@@ -36,6 +36,7 @@ export enum TelemetryEvent {
   telemetryEnabled = 'Telemetry.Enabled',
   tutorialsSettingsEnd = 'Tutorials.SettingsEnd',
   tutorialsSettingsDeny = 'Tutorials.SettingsDeny',
+  tutorialsSettingsSkip = 'Tutorials.SettingsSkip',
   documentationOpenFromNav = 'Documentation.OpenFromNav',
 }
 
@@ -95,6 +96,7 @@ export type TelemetryEventProperties = {
   [TelemetryEvent.telemetryEnabled]: Record<string, never>
   [TelemetryEvent.tutorialsSettingsEnd]: Record<string, never>
   [TelemetryEvent.tutorialsSettingsDeny]: Record<string, never>
+  [TelemetryEvent.tutorialsSettingsSkip]: Record<'step', number>
   [TelemetryEvent.documentationOpenFromNav]: {
     reason: 'enter' | 'click' | 'settings-app-bar'
   }

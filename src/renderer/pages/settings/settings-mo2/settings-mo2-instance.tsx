@@ -8,10 +8,10 @@ import RefreshIcon from '@mui/icons-material/Refresh'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import Alert from '../../components/alert'
-import DialogTextField from '../../components/dialog/dialog-text-field'
-import { useApp } from '../../hooks/use-app'
-import { useSettings } from './use-settings'
+import Alert from '../../../components/alert'
+import DialogTextField from '../../../components/dialog/dialog-text-field'
+import { useApp } from '../../../hooks/use-app'
+import { useSettings } from '../use-settings'
 
 interface Props {
   onChangeMo2Instance: (value: string) => void
