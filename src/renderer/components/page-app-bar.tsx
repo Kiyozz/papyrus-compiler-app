@@ -4,31 +4,24 @@
  * All rights reserved.
  */
 
-import React, { ReactNode } from 'react'
-
-import { useFocus } from '../hooks/use-focus'
+import { AppBar, Toolbar, Typography } from '@mui/material'
+import React, { PropsWithChildren, ReactNode } from 'react'
 
 type Props = {
   title?: string
   actions?: ReactNode
 }
 
-const PageAppBar = ({ title, actions = [] }: Props) => {
-  const isFocus = useFocus()
-
+const PageAppBar = ({ title, children }: PropsWithChildren<Props>) => {
   return (
-    <div
-      className={`sticky z-10 w-full ${
-        isFocus
-          ? 'bg-light-400 dark:bg-black-400'
-          : 'bg-light-600 dark:bg-black-600'
-      } text-black select-none shadow-b dark:text-white`}
-    >
-      <div className="flex h-16 items-center px-4">
-        <h2 className="font-nova text-3xl font-bold">{title}</h2>
-        <div className="ml-auto flex items-center gap-2">{actions}</div>
-      </div>
-    </div>
+    <AppBar aria-label={title}>
+      <Toolbar disableGutters className="pr-6 pl-4">
+        <Typography variant="h4" className="grow font-nova" fontWeight="bold">
+          {title}
+        </Typography>
+        {children}
+      </Toolbar>
+    </AppBar>
   )
 }
 

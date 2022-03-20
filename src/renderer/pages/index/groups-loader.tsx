@@ -5,11 +5,11 @@
  */
 
 import AddIcon from '@mui/icons-material/Add'
+import { Button, Menu, MenuItem } from '@mui/material'
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TelemetryEvent } from '../../../common/telemetry-event'
-import Fade from '../../components/animations/fade'
 import { useDocumentClick } from '../../hooks/use-document-click'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { isChildren } from '../../html/is-child'
@@ -37,6 +37,10 @@ const GroupsLoader = ({ groups, onChangeGroup }: Props) => {
     setAnchor(e.currentTarget)
   }
 
+  const onClose = () => {
+    setAnchor(null)
+  }
+
   const groupSelectOptions = useMemo(() => {
     return groups
       .filter((group: Group): boolean => !group.isEmpty)
@@ -50,9 +54,13 @@ const GroupsLoader = ({ groups, onChangeGroup }: Props) => {
         }
 
         return (
-          <button className="btn item" key={group.name} onClick={onClickGroup}>
+          <MenuItem
+            key={group.name}
+            onClick={onClickGroup}
+            className="justify-center"
+          >
             {group.name}
-          </button>
+          </MenuItem>
         )
       })
   }, [groups, onChangeGroup, send])
@@ -61,21 +69,36 @@ const GroupsLoader = ({ groups, onChangeGroup }: Props) => {
     (group: Group): boolean => !group.isEmpty,
   )
 
+  const isOpen = !!anchor
+
   return (
-    <div className="relative inline self-center">
+    <div>
       {notEmptyGroups.length > 0 && (
         <>
-          <button className="btn" aria-haspopup="true" onClick={onClick}>
-            <div className="icon">
-              <AddIcon />
-            </div>
+          <Button
+            aria-haspopup="true"
+            aria-controls={isOpen ? 'group-loader-menu' : undefined}
+            aria-expanded={isOpen ? 'true' : undefined}
+            onClick={onClick}
+            startIcon={<AddIcon />}
+          >
             {t('page.compilation.actions.loadGroup')}
-          </button>
-          <Fade in={!!anchor} timeout={100}>
-            <div className="menu absolute top-4 -left-4">
-              {groupSelectOptions}
-            </div>
-          </Fade>
+          </Button>
+          <Menu
+            id="group-loader-menu"
+            open={isOpen}
+            anchorEl={anchor}
+            onClose={onClose}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+            MenuListProps={{
+              sx: { minWidth: '100px' },
+            }}
+          >
+            {groupSelectOptions}
+          </Menu>
         </>
       )}
     </div>

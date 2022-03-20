@@ -60,6 +60,7 @@ export interface TranslationShape {
       recentFilesDialog: {
         noRecentFiles: string
         load: string
+        moreDetails: string
       }
     }
     groups: {

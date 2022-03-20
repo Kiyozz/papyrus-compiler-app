@@ -15,10 +15,12 @@
 }
 
 .drag {
+  /*noinspection CssUnknownProperty*/
   -webkit-app-region: drag;
 }
 
 .drag button {
+  /*noinspection CssUnknownProperty*/
   -webkit-app-region: no-drag;
 }
 
@@ -27,7 +29,7 @@ img {
 }
 
 button {
-  @apply focus:outline-none px-2;
+  @apply px-2 focus:outline-none;
 }
 
 * {
@@ -42,7 +44,7 @@ button:focus {
 }
 
 body {
-  @apply overflow-hidden antialiased dark:text-gray-400 bg-light-600 dark:bg-black-800;
+  @apply overflow-hidden bg-light-600 antialiased dark:bg-black-800 dark:text-gray-400;
 }
 
 .page {
@@ -50,7 +52,7 @@ body {
 }
 
 .page > main {
-  @apply max-w-screen-md mx-auto px-6;
+  @apply mx-auto max-w-screen-md px-6;
 }
 
 .overflow-overlay,
@@ -66,21 +68,21 @@ body {
 .btn,
 .btn-icon {
   @apply select-none font-medium tracking-wide;
-  @apply rounded inline-flex items-center justify-center;
+  @apply inline-flex items-center justify-center rounded;
   @apply px-2 py-1.5;
   @apply transition;
-  @apply bg-transparent hover:bg-black-600 focus:bg-black-800 hover:bg-opacity-10 focus:bg-opacity-20;
+  @apply bg-transparent hover:bg-black-600 hover:bg-opacity-10 focus:bg-black-800 focus:bg-opacity-20;
   @apply dark:hover:bg-darker;
 
-  @apply focus:ring-2 ring-gray-900/70 dark:ring-white/40;
+  @apply ring-gray-900/70 focus:ring-2 dark:ring-white/40;
 }
 
 .btn-default {
-  @apply cursor-default bg-transparent hover:bg-transparent focus:bg-transparent hover:bg-opacity-100 !important;
+  @apply cursor-default bg-transparent hover:bg-transparent hover:bg-opacity-100 focus:bg-transparent !important;
 }
 
 [role='button'] {
-  @apply rounded-sm focus:ring-2 ring-gray-900/70 dark:ring-white/40;
+  @apply rounded-sm ring-gray-900/70 focus:ring-2 dark:ring-white/40;
 }
 
 .icon {
@@ -135,7 +137,7 @@ body {
 .input::before {
   content: '';
   z-index: -1;
-  @apply absolute left-0 top-0 w-full h-full border-b border-b-black-600 dark:border-b-white;
+  @apply absolute left-0 top-0 h-full w-full border-b border-b-black-600 dark:border-b-white;
 }
 
 .input-danger::before {
@@ -148,11 +150,11 @@ body {
 }
 
 .link {
-  @apply text-black-600 hover:bg-light-700 dark:hover:bg-black-600 dark:text-light-600 flex hover:no-underline outline-none transition-colors cursor-pointer;
+  @apply flex cursor-pointer text-black-600 outline-none transition-colors hover:bg-light-700 hover:no-underline dark:text-light-600 dark:hover:bg-black-600;
 }
 
 .link-active {
-  @apply bg-light-800 hover:bg-light-800 dark:text-white dark:hover:text-white dark:bg-black-400 dark:hover:bg-black-400;
+  @apply bg-light-800 hover:bg-light-800 dark:bg-black-400 dark:text-white dark:hover:bg-black-400 dark:hover:text-white;
 }
 
 .link-not-focused-active {
@@ -160,7 +162,7 @@ body {
 }
 
 .paper {
-  @apply bg-light-300 dark:bg-black-400 px-4 p-2 rounded;
+  @apply rounded bg-light-300 p-2 px-4 dark:bg-black-400;
 }
 
 .paper-darker {
@@ -168,7 +170,7 @@ body {
 }
 
 .changelog-container ul {
-  @apply pl-4 list-disc;
+  @apply list-disc pl-4;
 }
 
 .changelog-container li + li {
@@ -184,11 +186,11 @@ body {
 }
 
 .changelog-container a {
-  @apply underline dark:text-blue-300 cursor-pointer;
+  @apply cursor-pointer underline dark:text-blue-300;
 }
 
 .tooltip {
-  @apply absolute text-sm p-2 rounded dark:text-white shadow-2xl flex gap-4 items-center z-20;
+  @apply absolute top-0 left-24 z-30 flex items-center gap-4 rounded bg-light-800 p-2 text-sm shadow dark:bg-black-400 dark:text-white;
 }
 
 .tooltip::after {
@@ -198,8 +200,9 @@ body {
   height: 0;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
-  border-top: 20px solid var(--bg-darker);
+  border-top: 20px solid;
   transform: translate3d(-50%, 50%, 0);
+  @apply border-t-black-400;
 }
 
 .tooltip.tooltip-bottom-left::after {
@@ -229,7 +232,7 @@ input.MuiInputBase-inputAdornedStart {
 /* ----- COMPONENTS ----- */
 
 .menu {
-  @apply bg-white shadow flex flex-col gap-1 py-1.5 dark:bg-black-600 rounded min-w-full;
+  @apply flex min-w-full flex-col gap-1 rounded bg-white py-1.5 shadow dark:bg-black-600;
   z-index: 1;
 }
 
@@ -247,7 +250,7 @@ input.MuiInputBase-inputAdornedStart {
   min-height: 40px;
   background-clip: padding-box;
   border: 4px solid transparent;
-  @apply bg-gray-400 dark:bg-black-600 rounded-lg hover:bg-light-800 dark:hover:bg-opacity-20;
+  @apply rounded-lg bg-gray-400 hover:bg-light-800 dark:bg-black-600 dark:hover:bg-opacity-20;
 }
 
 ::-webkit-scrollbar-track {
@@ -264,7 +267,7 @@ input.MuiInputBase-inputAdornedStart {
 }
 
 .toast {
-  @apply fixed z-20 bottom-3 left-3 right-3 bg-light-800 dark:bg-gray-800 py-1.5 px-4 items-center rounded text-sm dark:text-white flex gap-1.5 shadow-md;
+  @apply fixed bottom-3 left-3 right-3 z-20 flex items-center gap-1.5 rounded bg-light-800 py-1.5 px-4 text-sm shadow-md dark:bg-gray-800 dark:text-white;
 }
 
 .toast-error {
@@ -337,11 +340,23 @@ input.MuiInputBase-inputAdornedStart {
   opacity: 0;
 }
 
+.app-drawer-paper.other-platform {
+  top: 32px;
+}
+
+.app-drawer-paper.macos {
+  top: 22px;
+}
+
+.app-drawer-paper.macos-bigsur {
+  top: 34px;
+}
+
 /* WINDOW CONTROLS */
 .titlebar {
   font-size: 12px;
   color: #171717;
-  @apply flex z-30 relative select-none w-full items-center bg-light-600 dark:bg-black-600;
+  @apply relative z-50 flex w-full select-none items-center bg-light-600 dark:bg-black-600;
 }
 
 .titlebar.focused {

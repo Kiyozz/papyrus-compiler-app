@@ -27,7 +27,7 @@ type RecentFilesContext = {
   setRecentFiles(scripts: Script[]): Promise<void>
   clearRecentFiles(): Promise<void>
   removeRecentFile(script: Script): Promise<Script[]>
-  showFullPath: [boolean, Dispatch<SetStateAction<boolean>>]
+  showPath: [boolean, Dispatch<SetStateAction<boolean>>]
 }
 
 const Context = createContext({} as RecentFilesContext)
@@ -38,7 +38,7 @@ const RecentFilesProvider = ({
   children,
 }: React.PropsWithChildren<unknown>) => {
   const [recentFiles, setRecentFilesMemory] = useState<Script[]>([])
-  const [isShowFullPath, setShowFullPath] = useLocalStorage(
+  const [isShowPath, setShowPath] = useLocalStorage(
     LocalStorage.recentFilesShowFullPath,
     'false',
   )
@@ -83,13 +83,13 @@ const RecentFilesProvider = ({
         removeRecentFile,
         onRecentFilesChanges,
         recentFiles,
-        showFullPath: [
-          isShowFullPath === 'true',
+        showPath: [
+          isShowPath === 'true',
           (v => {
             if (is.function_(v)) {
-              setShowFullPath(v(isShowFullPath === 'true') ? 'true' : 'false')
+              setShowPath(v(isShowPath === 'true') ? 'true' : 'false')
             } else {
-              setShowFullPath(v ? 'true' : 'false')
+              setShowPath(v ? 'true' : 'false')
             }
           }) as Dispatch<SetStateAction<boolean>>,
         ],

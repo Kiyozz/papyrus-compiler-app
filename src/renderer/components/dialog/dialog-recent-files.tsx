@@ -4,20 +4,33 @@
  * All rights reserved.
  */
 
-import CheckBoxIcon from '@mui/icons-material/CheckBox'
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
-import { Checkbox, FormControlLabel, FormGroup } from '@mui/material'
+import {
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  DialogContentText,
+  Toolbar,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  ListItemIcon,
+  IconButton,
+} from '@mui/material'
 import cx from 'classnames'
 import React, { memo, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDidUpdate } from 'rooks'
 
-import { shorten } from '../../../common/shorten'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { Script } from '../../../common/types/script'
 import bridge from '../../bridge'
-import { useApp } from '../../hooks/use-app'
 import { useCompilation } from '../../hooks/use-compilation'
 import { useIpc } from '../../hooks/use-ipc'
 import { usePlatform } from '../../hooks/use-platform'
@@ -26,8 +39,7 @@ import { useTelemetry } from '../../hooks/use-telemetry'
 import { dirname } from '../../utils/dirname'
 import { scriptsToRenderer } from '../../utils/scripts/scripts-to-renderer'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
-import Paper from '../paper'
-import Dialog, { CloseReason } from './dialog'
+import { CloseReason } from './dialog'
 
 type Props = {
   isOpen: boolean
@@ -39,13 +51,12 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
   const { t } = useTranslation()
   const { send } = useTelemetry()
   const { setScripts, scripts: loadedScripts } = useCompilation()
-  const { config } = useApp()
   const platform = usePlatform()
   const {
     clearRecentFiles,
     removeRecentFile,
     recentFiles,
-    showFullPath: [isShowFullPath, setShowFullPath],
+    showPath: [isShowPath, setShowPath],
   } = useRecentFiles()
   const [selectedRecentFiles, setSelectedRecentFiles] = useState(
     new Map<string, Script>(),
@@ -172,7 +183,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
     return !!loadedScripts.find(s => s.path === script.path)
   }
 
-  const Line = useCallback(
+  const Item = useCallback(
     ({
       onClickFile,
       onClickDelete,
@@ -186,129 +197,106 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
       disabled?: boolean
       script: Script
     }) => {
-      const shortenedPath = isShowFullPath
-        ? {
-            path: `${dirname(script.path)}${
-              platform === 'windows' ? '\\' : '/'
-            }`,
-            filename: script.name,
-          }
-        : shorten(script.path, {
-            length: 20,
-            home: true,
-            homedir: config.game?.path ?? '',
-          })
+      const scriptInfo = {
+        path: `${dirname(script.path)}${platform === 'windows' ? '\\' : '/'}`,
+        filename: script.name,
+      }
 
       return (
-        <>
-          <div className="flex gap-1">
-            <button
-              className="btn-icon btn-danger !p-0.5"
-              onClick={onClickDelete}
-            >
-              <DeleteOutlinedIcon fontSize="small" />
-            </button>
-            <button
-              className={cx('btn-icon !p-0.5', selected && 'text-primary-400')}
-              onClick={onClickFile}
-              disabled={disabled}
-            >
-              {selected ? (
-                <CheckBoxIcon fontSize="small" />
-              ) : (
-                <CheckBoxOutlineBlankIcon fontSize="small" />
-              )}
-            </button>
-            <div
-              className={cx(
-                'flex items-center text-xs tracking-tight text-gray-500',
-                isShowFullPath ? 'h-6' : '',
-              )}
-            >
-              <span className="whitespace-nowrap">{shortenedPath.path}</span>
-              <button
-                role="button"
-                className={cx(
-                  'cursor-pointer px-0 font-bold hover:text-primary-400 dark:hover:text-primary-400',
-                  {
-                    'text-primary-400 dark:text-primary-400':
-                      selected && !disabled,
-                    'text-black-800 dark:text-white': !selected && !disabled,
-                  },
-                )}
-                aria-disabled={disabled}
-                onClick={onClickFile}
-              >
-                {shortenedPath.filename}
-              </button>
-            </div>
-          </div>
-        </>
+        <ListItem
+          disablePadding
+          secondaryAction={
+            <IconButton color="error" onClick={onClickDelete}>
+              <DeleteOutlinedIcon />
+            </IconButton>
+          }
+        >
+          <ListItemButton
+            role="checkbox"
+            component="button"
+            onClick={onClickFile}
+            disabled={disabled}
+            classes={{ root: 'py-0' }}
+          >
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                checked={selected}
+                tabIndex={-1}
+                disableRipple
+                inputProps={{
+                  'aria-labelledby': script.name,
+                }}
+              />
+            </ListItemIcon>
+            <ListItemText
+              id={script.name}
+              secondary={isShowPath ? scriptInfo.path : undefined}
+              primary={scriptInfo.filename}
+              secondaryTypographyProps={{ variant: 'caption' }}
+            />
+          </ListItemButton>
+        </ListItem>
       )
     },
-    [config.game?.path, isShowFullPath, platform],
+    [isShowPath, platform],
   )
 
   return (
     <Dialog
-      id="recent-files"
       open={isOpen}
-      title={
-        <>
-          {t('page.compilation.actions.recentFiles')}
-
-          <FormGroup classes={{ root: 'ml-4' }}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isShowFullPath}
-                  onChange={() => setShowFullPath(v => !v)}
-                />
-              }
-              label="Show full path"
-            />
-          </FormGroup>
-        </>
-      }
       onClose={onDialogClose}
-      actions={
-        <>
-          <button className="btn" onClick={onClickClose}>
-            {t('common.cancel')}
-          </button>
-          <button
-            className="btn"
-            onClick={onClickLoad}
-            disabled={selectedRecentFiles.size === 0}
-          >
-            {t('page.compilation.recentFilesDialog.load')}
-          </button>
-        </>
-      }
+      scroll="paper"
+      fullWidth
+      maxWidth="xl"
     >
-      {recentFiles.length === 0 ? (
-        <span className="text-sm text-gray-500">
-          {t('page.compilation.recentFilesDialog.noRecentFiles')}
-        </span>
-      ) : (
-        <div className="flex flex-col gap-2">
-          <Paper darker className="overflow-x-hidden">
+      <Toolbar className="p-0">
+        <DialogTitle className="grow">
+          {t('page.compilation.actions.recentFiles')}
+        </DialogTitle>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isShowPath}
+                onChange={() => setShowPath(v => !v)}
+              />
+            }
+            label={t<string>('page.compilation.recentFilesDialog.moreDetails')}
+          />
+        </FormGroup>
+      </Toolbar>
+      <DialogContent
+        dividers
+        className={cx('overflow-overlay', recentFiles.length !== 0 && 'p-0')}
+      >
+        {recentFiles.length === 0 ? (
+          <DialogContentText>
+            {t('page.compilation.recentFilesDialog.noRecentFiles')}
+          </DialogContentText>
+        ) : (
+          <List className="overflow-x-hidden">
             {recentFiles.map(script => {
               return (
-                <div key={script.path}>
-                  <Line
-                    onClickFile={onClickFile(script)}
-                    onClickDelete={onClickDeleteFile(script)}
-                    disabled={isAlreadyLoaded(script)}
-                    selected={selectedRecentFiles.has(script.path)}
-                    script={script}
-                  />
-                </div>
+                <Item
+                  key={script.path}
+                  onClickFile={onClickFile(script)}
+                  onClickDelete={onClickDeleteFile(script)}
+                  disabled={isAlreadyLoaded(script)}
+                  selected={selectedRecentFiles.has(script.path)}
+                  script={script}
+                />
               )
             })}
-          </Paper>
-        </div>
-      )}
+          </List>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClickClose}>{t('common.cancel')}</Button>
+        <Button onClick={onClickLoad} disabled={selectedRecentFiles.size === 0}>
+          {t('page.compilation.recentFilesDialog.load')}
+        </Button>
+      </DialogActions>
     </Dialog>
   )
 }

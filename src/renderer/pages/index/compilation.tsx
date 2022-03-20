@@ -8,6 +8,7 @@ import ClearIcon from '@mui/icons-material/Clear'
 import HistoryIcon from '@mui/icons-material/History'
 import PlayIcon from '@mui/icons-material/PlayCircleFilled'
 import SearchIcon from '@mui/icons-material/Search'
+import { Button } from '@mui/material'
 import React, { useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -44,12 +45,9 @@ const RecentFilesButton = ({
   const { t } = useTranslation()
 
   return (
-    <button className="btn" onClick={onClick}>
-      <div className="icon">
-        <HistoryIcon />
-      </div>
+    <Button onClick={onClick} startIcon={<HistoryIcon />}>
       {t('page.compilation.actions.recentFiles')}
-    </button>
+    </Button>
   )
 }
 
@@ -57,12 +55,9 @@ const SearchButton = ({ onClick }: { onClick: () => void }) => {
   const { t } = useTranslation()
 
   return (
-    <button className="btn" onClick={onClick}>
-      <div className="icon">
-        <SearchIcon />
-      </div>
+    <Button onClick={onClick} startIcon={<SearchIcon />}>
       {t('page.compilation.actions.searchScripts')}
-    </button>
+    </Button>
   )
 }
 
@@ -174,7 +169,14 @@ const Compilation = () => {
 
   return (
     <>
-      <PageAppBar
+      <PageAppBar title={t('page.compilation.title')}>
+        <RecentFilesButton onClick={onClickRecentFiles} />
+        <SearchButton onClick={drop} />
+        {!isAllGroupsEmpty(groups) && (
+          <GroupsLoader groups={groups} onChangeGroup={onChangeGroup} />
+        )}
+      </PageAppBar>
+      {/*<PageAppBar
         title={t('page.compilation.title')}
         actions={
           <>
@@ -185,7 +187,7 @@ const Compilation = () => {
             )}
           </>
         }
-      />
+      />*/}
       <Page>
         <DialogRecentFiles
           isOpen={dialogState == DialogRecentFilesState.open}

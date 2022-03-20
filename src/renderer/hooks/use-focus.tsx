@@ -4,15 +4,19 @@
  * All rights reserved.
  */
 
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
-type _FocusContext = boolean
-
-const _Context = createContext<_FocusContext>(true)
+const Context = createContext<boolean>(true)
 
 const hasFocus = () => document.hasFocus()
 
-const FocusProvider = ({ children }: React.PropsWithChildren<unknown>) => {
+const FocusProvider = ({ children }: PropsWithChildren<unknown>) => {
   const [isFocus, setFocus] = useState(hasFocus)
 
   useEffect(() => {
@@ -33,9 +37,9 @@ const FocusProvider = ({ children }: React.PropsWithChildren<unknown>) => {
     }
   }, [])
 
-  return <_Context.Provider value={isFocus}>{children}</_Context.Provider>
+  return <Context.Provider value={isFocus}>{children}</Context.Provider>
 }
 
-export const useFocus = (): boolean => useContext(_Context)
+export const useFocus = (): boolean => useContext(Context)
 
 export default FocusProvider

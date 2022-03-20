@@ -106,10 +106,10 @@ const Dialog = ({
   return createPortal(
     open ? (
       <>
-        <div className="fixed top-0 left-0 z-10 h-screen w-full bg-black-800 bg-opacity-50 dark:bg-opacity-70" />
+        <div className="fixed top-0 left-0 z-[99999] h-screen w-full bg-black-800 bg-opacity-50 dark:bg-opacity-70" />
         <div
           ref={container}
-          className={`fixed top-0 bottom-0 left-0 z-10 flex h-screen w-full items-center justify-center p-8 pt-16`}
+          className={`fixed top-0 bottom-0 left-0 z-[100000] flex h-screen w-full items-center justify-center p-8 pt-16`}
         >
           <Paper
             className="flex max-h-full w-full flex-col p-0 text-black-600 dark:text-light-400"

@@ -10,6 +10,7 @@ import React, { MouseEvent } from 'react'
 import bridge from '../bridge'
 import { useFocus } from '../hooks/use-focus'
 import { usePlatform } from '../hooks/use-platform'
+import { useTitlebarHeight } from '../hooks/use-titlebar-height'
 import { useWindowState } from '../hooks/use-window-state'
 
 type Props = {
@@ -20,6 +21,7 @@ const Titlebar = ({ title }: Props) => {
   const isFocus = useFocus()
   const platform = usePlatform()
   const windowState = useWindowState()
+  const titlebarHeight = useTitlebarHeight()
 
   const handleClickMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.blur()
@@ -62,6 +64,7 @@ const Titlebar = ({ title }: Props) => {
         isFocus && 'focused',
         windowState === 'maximized' && 'maximized',
       )}
+      data-height={titlebarHeight}
     >
       {isNotMacOs && (
         <button className="btn btn-default ml-0" onClick={handleClickMenu}>
@@ -71,7 +74,7 @@ const Titlebar = ({ title }: Props) => {
 
       <span
         className={cx(
-          'flex-grow',
+          'grow',
           isMacOs && 'text-center font-helvetica font-bold',
           isMacOs && !isMacOsBigSur && 'text-[12px]',
           isMacOsBigSur && 'text-[14px]',

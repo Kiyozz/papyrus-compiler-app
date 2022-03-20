@@ -5,41 +5,29 @@
  */
 
 import cx from 'classnames'
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { NavLink, NavLinkProps } from 'react-router-dom'
-
-import { useFocus } from '../hooks/use-focus'
 
 interface ActiveLinkProps extends NavLinkProps {
   to: string
   className?: string
   activeClassName?: string
-  notFocusedActiveClassName?: string
 }
 
-const ActiveLink = ({
-  children,
-  className,
-  activeClassName,
-  notFocusedActiveClassName,
-  ...props
-}: ActiveLinkProps) => {
-  const isFocus = useFocus()
-
-  return (
-    <NavLink
-      {...props}
-      className={({ isActive }) => {
-        return cx(
-          className,
-          isActive && activeClassName,
-          !isFocus && isActive && notFocusedActiveClassName,
-        )
-      }}
-    >
-      {children}
-    </NavLink>
-  )
-}
+const ActiveLink = forwardRef<HTMLAnchorElement, ActiveLinkProps>(
+  function ActiveLink({ className, activeClassName, children, ...props }, ref) {
+    return (
+      <NavLink
+        {...props}
+        ref={ref}
+        className={({ isActive }) => {
+          return cx(className, isActive && activeClassName)
+        }}
+      >
+        {children}
+      </NavLink>
+    )
+  },
+)
 
 export default ActiveLink

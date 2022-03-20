@@ -59,7 +59,7 @@ const Toast = ({
         !isEnabled && 'pointer-events-none',
       )}
     >
-      <div className="flex-grow">{message}</div>
+      <div className="grow">{message}</div>
       <div className="flex gap-2">{actions}</div>
     </Scale>
   )

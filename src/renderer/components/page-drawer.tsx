@@ -9,19 +9,28 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import CodeIcon from '@mui/icons-material/Code'
 import LayersIcon from '@mui/icons-material/Layers'
 import SettingsIcon from '@mui/icons-material/Settings'
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material'
+import cx from 'classnames'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useDrawer } from '../hooks/use-drawer'
+import { useTitlebarHeight } from '../hooks/use-titlebar-height'
 import ActiveLink from './active-link'
-import Fade from './animations/fade'
-import NavItem from './nav-item'
 import OpenCompilationLogs from './open-compilation-logs'
 import OpenDocumentation from './open-documentation'
 
 const PageDrawer = () => {
   const [isDrawerExpand, setDrawerExpand] = useDrawer()
   const { t } = useTranslation()
+  const titlebarHeight = useTitlebarHeight()
 
   const links = useMemo(
     () => [
@@ -47,46 +56,104 @@ const PageDrawer = () => {
   const onDrawerExpandClick = () => setDrawerExpand(c => !c)
 
   return (
-    <nav
-      className={`fixed left-0 top-24 h-screen-appbar transition-all duration-300 ${
-        isDrawerExpand ? 'w-48' : 'w-14'
-      } select-none bg-light-600 dark:bg-black-800`}
+    <Drawer
+      variant="permanent"
+      open={isDrawerExpand}
+      classes={{
+        paper: cx(
+          'overflow-x-hidden transition-[width] duration-300',
+          isDrawerExpand ? 'w-48' : 'w-14',
+        ),
+      }}
+      PaperProps={{
+        sx: {
+          top: titlebarHeight + 64,
+          height: `calc(100% - ${titlebarHeight + 64}px)`,
+        },
+      }}
     >
-      <div className="flex h-full flex-col">
-        <ul className="mt-2 flex flex-col gap-2">
+      <List>
+        {links.map(Link => {
+          return (
+            <ListItem key={Link.path} disablePadding>
+              <ListItemButton
+                component={ActiveLink}
+                to={Link.path}
+                activeClassName="link-active"
+              >
+                <ListItemIcon>
+                  <Link.Icon />
+                </ListItemIcon>
+                <ListItemText primary={Link.text} />
+              </ListItemButton>
+            </ListItem>
+          )
+        })}
+      </List>
+      <List className="mt-auto">
+        <OpenCompilationLogs />
+        <OpenDocumentation />
+        <ListItem disablePadding>
+          <ListItemButton onClick={onDrawerExpandClick}>
+            <ListItemIcon>
+              {isDrawerExpand ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </ListItemIcon>
+            <ListItemText
+              primary={t<string>('nav.closePanel')}
+              primaryTypographyProps={{ noWrap: true }}
+            />
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </Drawer>
+  )
+
+  /*return (
+    <Paper
+      component="nav"
+      elevation={1}
+      className={`fixed left-0 top-24 h-screen-appbar transition-[width] duration-300 ${
+        isDrawerExpand ? 'w-48' : 'w-14'
+      } select-none rounded-none`}
+    >
+      <div className="flex h-full flex-col overflow-x-hidden">
+        <List>
           {links.map(Link => {
             return (
-              <ActiveLink
-                tabIndex={-1}
-                key={Link.path}
-                activeClassName="link-active"
-                notFocusedActiveClassName="link-not-focused-active"
-                className="link"
-                to={Link.path}
-              >
-                <NavItem>
-                  <Link.Icon />
-                  <Fade in={isDrawerExpand}>
-                    <div className="ml-6">{Link.text}</div>
-                  </Fade>
-                </NavItem>
-              </ActiveLink>
+              <ListItem key={Link.path} disablePadding>
+                <ListItemButton
+                  disableRipple
+                  component={ActiveLink}
+                  to={Link.path}
+                  activeClassName="link-active"
+                >
+                  <ListItemIcon>
+                    <Link.Icon />
+                  </ListItemIcon>
+                  <ListItemText primary={Link.text} />
+                </ListItemButton>
+              </ListItem>
             )
           })}
-        </ul>
-        <ul className="mt-auto">
+        </List>
+        <List className="mt-auto">
           <OpenCompilationLogs />
           <OpenDocumentation />
-          <NavItem className="link" onClick={onDrawerExpandClick}>
-            {isDrawerExpand ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            <Fade in={isDrawerExpand}>
-              <div className="ml-6">{t('nav.closePanel')}</div>
-            </Fade>
-          </NavItem>
-        </ul>
+          <ListItem disablePadding>
+            <ListItemButton onClick={onDrawerExpandClick}>
+              <ListItemIcon>
+                {isDrawerExpand ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+              </ListItemIcon>
+              <ListItemText
+                primary={t<string>('nav.closePanel')}
+                primaryTypographyProps={{ noWrap: true }}
+              />
+            </ListItemButton>
+          </ListItem>
+        </List>
       </div>
-    </nav>
-  )
+    </Paper>
+  )*/
 }
 
 export default PageDrawer

@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+import { Paper } from '@mui/material'
 import cx from 'classnames'
 import React from 'react'
 
@@ -19,14 +20,14 @@ const Page = ({ children, classes }: React.PropsWithChildren<Props>) => {
   const [isDrawerExpand] = useDrawer()
 
   return (
-    <div
+    <Paper
       className={cx(
-        'page overflow-overlay h-screen w-screen bg-light-600 p-6 transition-all duration-300 dark:bg-black-800',
+        'page overflow-overlay h-screen w-screen p-6 transition-[padding] duration-300',
         isDrawerExpand ? 'pl-48' : 'pl-14',
       )}
     >
       <main className={classes?.main}>{children}</main>
-    </div>
+    </Paper>
   )
 }
 

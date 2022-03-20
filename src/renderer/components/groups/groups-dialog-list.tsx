@@ -17,7 +17,7 @@ type Props = {
 }
 
 const GroupsDialogList = ({ scripts, onClickRemoveScriptFromGroup }: Props) => (
-  <ul className="flex flex-grow flex-col">
+  <ul className="flex grow flex-col">
     {scripts.map(script => (
       <li
         className="flex items-center text-sm dark:text-white"

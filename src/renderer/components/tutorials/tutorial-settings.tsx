@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+import { Button } from '@mui/material'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
@@ -11,7 +12,6 @@ import { useNavigate } from 'react-router-dom'
 
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useApp } from '../../hooks/use-app'
-import { useFocus } from '../../hooks/use-focus'
 import { useTelemetry } from '../../hooks/use-telemetry'
 
 enum Step {
@@ -52,7 +52,7 @@ const GameSettingsStep = ({ next }: { next: Next }) => {
   }
 
   return createPortal(
-    <div className="tooltip tooltip-left top-0 left-24 bg-light-800 shadow dark:bg-darker">
+    <div className="tooltip tooltip-left">
       <div>{t('tutorials.settings.game.text')}</div>
       <div>
         <button className="btn btn-primary" onClick={onClickOk}>
@@ -131,8 +131,8 @@ const ConcurrentSettingsStep = ({ next }: { next: Next }) => {
   )
 }
 
-const Overlay = () => (
-  <div className="fixed top-0 left-0 right-0 bottom-0 z-20 bg-black-800 bg-opacity-60" />
+const Backdrop = () => (
+  <div className="fixed top-0 left-0 right-0 bottom-0 z-30 bg-black-800 bg-opacity-60" />
 )
 
 /**
@@ -149,7 +149,6 @@ const TutorialSettings = () => {
   const { config, setConfig } = useApp()
   const navigate = useNavigate()
   const [step, setStep] = useState(Step.waiting)
-  const isFocus = useFocus()
   const { send } = useTelemetry()
 
   const onClickClose = () => {
@@ -212,14 +211,10 @@ const TutorialSettings = () => {
 
   return (
     <>
-      <Overlay />
+      <Backdrop />
       {(step === Step.ask || step === Step.waiting) && (
         <div
-          className={`fixed top-0 left-0 h-full w-full ${
-            isFocus
-              ? 'bg-light-400 dark:bg-black-800'
-              : 'bg-light-600 dark:bg-black-400'
-          } z-20 flex flex-col items-center justify-center`}
+          className={`fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400 dark:text-white`}
         >
           <div className="text-3xl font-bold">
             {t('tutorials.settings.ask.title')}
@@ -228,20 +223,17 @@ const TutorialSettings = () => {
             {t('tutorials.settings.ask.text')}
           </div>
           <div className="flex gap-4">
-            <button
-              className="btn btn-primary"
+            <Button
+              color="primary"
+              variant="contained"
               onClick={onClickNeedHelp}
               disabled={step === Step.waiting}
             >
               {t('tutorials.settings.ask.needHelp')}
-            </button>
-            <button
-              className="btn"
-              onClick={onClickClose}
-              disabled={step === Step.waiting}
-            >
+            </Button>
+            <Button onClick={onClickClose} disabled={step === Step.waiting}>
               {t('tutorials.close')}
-            </button>
+            </Button>
           </div>
         </div>
       )}

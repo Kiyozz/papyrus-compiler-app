@@ -75,6 +75,7 @@ const en: TranslationShape = {
       recentFilesDialog: {
         noRecentFiles: 'No recent files',
         load: 'Load selected',
+        moreDetails: 'More details',
       },
     },
     groups: {
@@ -179,7 +180,7 @@ const en: TranslationShape = {
     telemetry: {
       text:
         '<0>Starting with version 5.5.0, PCA will collect telemetry data for the purpose of analyzing used functionality and improving relevant features.</0>' +
-        '<1>All transmitted data is anonymous.</1>' +
+        '<1>All transmitted data are anonymous.</1>' +
         '<2>Examples of collected data include group and compilation data, errors, and timestamps of various app events.</2>' +
         '<3>Data telemetry can be disabled in the settings.</3>',
       close: 'I get it',

@@ -62,7 +62,7 @@ const GroupsListItem = ({ group, onDelete, onEdit }: Props) => {
       {/* Group preview */}
       <Fade in={isDisplayPreview} timeout={200}>
         <div className="absolute top-0 left-0 right-16 z-10 rounded bg-light-300 px-4 py-2 dark:bg-black-400 dark:text-white">
-          <h3 className="flex-grow text-center text-xl">
+          <h3 className="grow text-center text-xl">
             {t('page.groups.group', { name: group.name })}
           </h3>
 
@@ -75,7 +75,7 @@ const GroupsListItem = ({ group, onDelete, onEdit }: Props) => {
         </div>
       </Fade>
 
-      <div className="flex-grow">
+      <div className="grow">
         <div className="text-black-800 dark:text-white">{group.name}</div>
         <div className="pl-2 text-xs text-black-600 dark:text-white">
           {!group.isEmpty ? (

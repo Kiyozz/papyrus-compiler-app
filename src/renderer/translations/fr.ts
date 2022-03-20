@@ -80,6 +80,7 @@ const fr: TranslationShape = {
       recentFilesDialog: {
         noRecentFiles: 'Aucun fichiers récents',
         load: 'Charger sélectionnés',
+        moreDetails: 'Plus de détails',
       },
     },
     groups: {

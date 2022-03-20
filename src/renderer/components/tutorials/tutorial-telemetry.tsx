@@ -8,11 +8,9 @@ import React, { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
 import { useApp } from '../../hooks/use-app'
-import { useFocus } from '../../hooks/use-focus'
 
 const TutorialTelemetry = () => {
   const { setConfig } = useApp()
-  const isFocus = useFocus()
   const { t } = useTranslation()
   const [isWaiting, setWaiting] = useState(true)
 
@@ -32,11 +30,7 @@ const TutorialTelemetry = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 h-full w-full ${
-        isFocus
-          ? 'bg-light-400 dark:bg-black-800'
-          : 'bg-light-600 dark:bg-black-400'
-      } z-20 flex flex-col items-center justify-center`}
+      className={`fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400`}
     >
       <div className="px-8">
         <Trans i18nKey="tutorials.telemetry.text">
