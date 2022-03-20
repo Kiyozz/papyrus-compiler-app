@@ -14,6 +14,7 @@ const fr: TranslationShape = {
     selectFolder: 'Sélectionner un dossier',
     cancel: 'Annuler',
     documentation: 'Documentation',
+    copy: 'Copier',
     logs: {
       nav: 'Logs',
       title: 'Logs de compilation',

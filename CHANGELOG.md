@@ -8,6 +8,8 @@
 
 ### Features
 
+- New overall design
+
 - The configuration is now checked when you enter the compilation page, giving you any tips if your configuration is wrong.
 
 - Button to open compilation logs now changes color at the end of a compilation

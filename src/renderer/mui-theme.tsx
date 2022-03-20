@@ -67,6 +67,11 @@ const MuiTheme = ({ children }: React.PropsWithChildren<unknown>) => {
           },
         },
       },
+      MuiTypography: {
+        defaultProps: {
+          gutterBottom: false,
+        },
+      },
       MuiList: {
         defaultProps: {
           dense: true,

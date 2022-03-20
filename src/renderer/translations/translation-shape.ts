@@ -10,6 +10,7 @@ export interface TranslationShape {
     selectFolder: string
     cancel: string
     documentation: string
+    copy: string
     logs: {
       nav: string
       title: string

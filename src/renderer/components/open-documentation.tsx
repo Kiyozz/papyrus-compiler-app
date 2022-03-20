@@ -22,7 +22,6 @@ import { useDocumentation } from '../hooks/use-documentation'
 import { useDrawer } from '../hooks/use-drawer'
 import { useShowOpenDocumentationDialog } from '../hooks/use-show-open-documentation-dialog'
 import Fade from './animations/fade'
-import DialogOld from './dialog/dialog'
 import NavItem from './nav-item'
 
 const OpenDocumentation = () => {
@@ -66,6 +65,12 @@ const OpenDocumentation = () => {
 
   return (
     <>
+      <NavItem className="link" onClick={onClickGoToDocumentation}>
+        <HelpIcon />
+        <Fade in={isDrawerExpand}>
+          <div className="ml-6">{t('nav.help.text')}</div>
+        </Fade>
+      </NavItem>
       <Dialog
         open={isDialogOpen}
         onClose={onCloseDialog}
@@ -96,43 +101,6 @@ const OpenDocumentation = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      <DialogOld
-        id="documentation"
-        open={false}
-        maxWidth={70}
-        title={t('nav.help.title')}
-        onClose={onCloseDialog}
-        actions={
-          <>
-            <button className="btn" onClick={onClickCancel}>
-              {t('common.cancel')}
-            </button>
-            <button className="btn" onClick={onClickConfirmGoToDocumentation}>
-              {t('nav.help.goTo')}
-            </button>
-          </>
-        }
-      >
-        <p className="mb-4 text-justify">{t('nav.help.description')}</p>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={!isShowDialog}
-                onChange={toggleShowDialog}
-                inputProps={{ 'aria-label': 'controlled' }}
-              />
-            }
-            label={t<string>('nav.help.doNotShowAgain')}
-          />
-        </FormGroup>
-      </DialogOld>
-      <NavItem className="link" onClick={onClickGoToDocumentation}>
-        <HelpIcon />
-        <Fade in={isDrawerExpand}>
-          <div className="ml-6">{t('nav.help.text')}</div>
-        </Fade>
-      </NavItem>
     </>
   )
 }

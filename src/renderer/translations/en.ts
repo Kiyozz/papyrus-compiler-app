@@ -12,6 +12,7 @@ const en: TranslationShape = {
     selectFolder: 'Select a folder',
     cancel: 'Cancel',
     documentation: 'Documentation',
+    copy: 'Copier',
     logs: {
       nav: 'Logs',
       title: 'Compilation logs',
