@@ -39,7 +39,7 @@ const RecentFilesProvider = ({
 }: React.PropsWithChildren<unknown>) => {
   const [recentFiles, setRecentFilesMemory] = useState<Script[]>([])
   const [isShowPath, setShowPath] = useLocalStorage(
-    LocalStorage.recentFilesShowFullPath,
+    LocalStorage.recentFilesMoreDetails,
     'false',
   )
 
@@ -60,8 +60,6 @@ const RecentFilesProvider = ({
   }, [])
 
   const clearRecentFiles = useCallback(async () => {
-    console.log()
-
     await bridge.recentFiles.clear()
 
     recentFiles$.next([])

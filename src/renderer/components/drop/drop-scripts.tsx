@@ -44,7 +44,7 @@ const DropScripts = ({
   const { role, ...rootProps } = getRootProps()
 
   return (
-    <div className={cx('h-full w-full', className)} {...rootProps}>
+    <div className={cx('relative z-30', className)} {...rootProps}>
       <input {...getInputProps()} />
       {children({ isDragActive, open })}
     </div>

@@ -7,23 +7,30 @@
 import CreateIcon from '@mui/icons-material/Create'
 import DeleteIcon from '@mui/icons-material/Delete'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import {
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+} from '@mui/material'
 import cx from 'classnames'
-import React, { useState } from 'react'
+import React, { useState, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TelemetryEvent } from '../../../common/telemetry-event'
-import Fade from '../../components/animations/fade'
 import { useDocumentClick } from '../../hooks/use-document-click'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { isChildren } from '../../html/is-child'
 
 interface Props {
   className?: string
-  onEdit: () => void
-  onDelete: () => void
+  id?: string
+  onEdit: (evt: MouseEvent<HTMLElement>) => void
+  onDelete: (evt: MouseEvent<HTMLElement>) => void
 }
 
-const GroupsListItemMenu = ({ className, onDelete, onEdit }: Props) => {
+const GroupsListItemMenu = ({ className, id, onDelete, onEdit }: Props) => {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const { send } = useTelemetry()
@@ -38,38 +45,55 @@ const GroupsListItemMenu = ({ className, onDelete, onEdit }: Props) => {
     setAnchor(e.currentTarget)
   }
 
-  const onClickEdit = () => {
+  const onClickEdit = (evt: MouseEvent<HTMLElement>) => {
     setAnchor(null)
-    onEdit()
+    onEdit(evt)
   }
 
-  const onClickDelete = () => {
+  const onClickDelete = (evt: MouseEvent<HTMLElement>) => {
     send(TelemetryEvent.groupDeleted, {})
     setAnchor(null)
-    onDelete()
+    onDelete(evt)
   }
 
   return (
     <div className={cx('relative', className)}>
-      <button className="btn-icon" onClick={onOpen} aria-haspopup="true">
+      <IconButton
+        onClick={onOpen}
+        id={`${id}-group-opener`}
+        aria-haspopup="true"
+        aria-expanded={anchor ? 'true' : undefined}
+        aria-controls={anchor ? `${id}-group-button-menu` : undefined}
+      >
         <MoreVertIcon />
-      </button>
-      <Fade in={!!anchor} timeout={150}>
-        <div className="menu absolute top-4 right-4 !z-10">
-          <button className="btn btn-justify-start" onClick={onClickEdit}>
-            <div className="icon">
-              <CreateIcon fontSize="small" color="primary" />
-            </div>
-            <div className="ml-4">{t('page.groups.actions.edit')}</div>
-          </button>
-          <button className="btn btn-justify-start" onClick={onClickDelete}>
-            <div className="icon">
-              <DeleteIcon fontSize="small" color="error" />
-            </div>
-            <div className="ml-4">{t('page.groups.actions.remove')}</div>
-          </button>
-        </div>
-      </Fade>
+      </IconButton>
+      <Menu
+        open={!!anchor}
+        anchorEl={anchor}
+        id={`${id}-group-button-menu`}
+        MenuListProps={{
+          'aria-labelledby': `${id}-group-opener`,
+        }}
+      >
+        <MenuItem
+          aria-label={t('page.groups.actions.edit')}
+          onClick={onClickEdit}
+        >
+          <ListItemIcon>
+            <CreateIcon />
+          </ListItemIcon>
+          <ListItemText primary={t('page.groups.actions.edit')} />
+        </MenuItem>
+        <MenuItem
+          aria-label={t('page.groups.actions.remove')}
+          onClick={onClickDelete}
+        >
+          <ListItemIcon>
+            <DeleteIcon color="error" />
+          </ListItemIcon>
+          <ListItemText primary={t('page.groups.actions.remove')} />
+        </MenuItem>
+      </Menu>
     </div>
   )
 }

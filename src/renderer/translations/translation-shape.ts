@@ -81,8 +81,6 @@ export interface TranslationShape {
       noScripts: string
       dialog: {
         searchScripts: string
-        createGroup: string
-        editGroup: string
         name: string
         dropScripts: string
       }

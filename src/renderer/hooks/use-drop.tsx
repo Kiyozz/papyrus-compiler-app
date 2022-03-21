@@ -8,7 +8,6 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-import DropFilesOverlay from '../components/drop/drop-files-overlay'
 import DropScripts, { OnDrop } from '../components/drop/drop-scripts'
 
 type DropContext = {
@@ -44,7 +43,6 @@ const DropProvider = ({ children }: React.PropsWithChildren<unknown>) => {
             isFileDialogActive,
           }}
         >
-          <DropFilesOverlay open={isDragActive && onDrop !== null} />
           {children}
         </Context.Provider>
       )}

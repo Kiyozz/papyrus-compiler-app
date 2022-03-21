@@ -49,10 +49,21 @@ const MuiTheme = ({ children }: React.PropsWithChildren<unknown>) => {
           className: 'shadow-b',
         },
       },
+      MuiBackdrop: {
+        styleOverrides: {
+          root: {
+            top: 34,
+          },
+        },
+      },
       MuiDialog: {
         styleOverrides: {
-          paper: {
-            marginTop: 64,
+          root: {
+            top: 34,
+          },
+          scrollBody: {
+            // Intentional, overlay is chromium specific, and no standard
+            overflowY: 'overlay' as unknown as 'hidden',
           },
         },
       },

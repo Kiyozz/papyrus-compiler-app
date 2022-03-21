@@ -5,12 +5,23 @@
  */
 
 import CreateIcon from '@mui/icons-material/Create'
-import React, { useState } from 'react'
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  List,
+  Toolbar,
+  Typography,
+} from '@mui/material'
+import React, { useState, MouseEvent, ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+import useLocalStorage from 'react-use-localstorage'
 
-import GroupsDialog from '../../components/groups/groups-dialog'
+import DialogGroup from '../../components/dialog/dialog-group'
 import Page from '../../components/page'
 import PageAppBar from '../../components/page-app-bar'
+import { LocalStorage } from '../../enums/local-storage.enum'
 import { useApp } from '../../hooks/use-app'
 import { useGroups } from '../../hooks/use-groups'
 import { GroupRenderer } from '../../types'
@@ -20,84 +31,107 @@ const Groups = () => {
   const { t } = useTranslation()
   const { groups } = useApp()
   const { add, edit, remove } = useGroups()
+  const [isMoreDetails, setMoreDetails] = useLocalStorage(
+    LocalStorage.groupMoreDetails,
+    'false',
+  )
 
-  const [showAddPopup, setShowPopup] = useState(false)
+  const [isDialogOpen, setDialogOpen] = useState(false)
   const [editingGroup, setEditingGroup] = useState<GroupRenderer | undefined>()
 
   const onClickRemoveGroup = (group: GroupRenderer) => {
-    return () => {
+    return (evt: MouseEvent<HTMLElement>) => {
+      evt.currentTarget.blur()
+
       remove(group)
     }
   }
 
   const onClickEditGroup = (group: GroupRenderer) => {
-    return () => {
+    return (evt: MouseEvent<HTMLElement>) => {
+      evt.currentTarget.blur()
+
       setEditingGroup(group)
-      setShowPopup(true)
+      setDialogOpen(true)
     }
   }
 
-  const onClickAddButton = () => {
+  const onClickAddButton = (evt: MouseEvent<HTMLElement>) => {
+    evt.currentTarget.blur()
+
     setEditingGroup(undefined)
-    setShowPopup(true)
+    setDialogOpen(true)
   }
 
   const onGroupAdd = (group: GroupRenderer) => {
-    setShowPopup(false)
+    setDialogOpen(false)
     add(group)
   }
 
   const onGroupEdit = (lastGroupName: string, group: GroupRenderer) => {
-    setShowPopup(false)
+    setDialogOpen(false)
     edit({ group, lastGroupName })
   }
 
   const onClosePopup = () => {
-    setShowPopup(false)
+    setDialogOpen(false)
+  }
+
+  const onChangeMoreDetails = (evt: ChangeEvent<HTMLInputElement>) => {
+    setMoreDetails(evt.currentTarget.checked ? 'true' : 'false')
   }
 
   return (
     <>
-      <PageAppBar
-        title={t('page.groups.title')}
-        actions={
-          <button className="btn" onClick={onClickAddButton}>
-            <div className="icon">
-              <CreateIcon />
-            </div>
-            {t('page.groups.actions.create')}
-          </button>
-        }
-      />
+      <PageAppBar title={t('page.groups.title')}>
+        <Button onClick={onClickAddButton} startIcon={<CreateIcon />}>
+          {t('page.groups.actions.create')}
+        </Button>
+      </PageAppBar>
 
-      <Page classes={{ main: 'h-full' }}>
-        <GroupsDialog
+      <Page className="pt-0">
+        <DialogGroup
           group={editingGroup}
-          open={showAddPopup}
+          open={isDialogOpen}
           onGroupAdd={onGroupAdd}
           onGroupEdit={onGroupEdit}
           onClose={onClosePopup}
         />
 
-        {groups.length > 0 ? (
-          <div className="relative flex flex-col gap-2">
-            {groups.map(group => {
-              return (
-                <GroupsListItem
-                  onDelete={onClickRemoveGroup}
-                  onEdit={onClickEditGroup}
-                  group={group}
-                  key={group.name}
+        <Toolbar className="p-0">
+          <FormGroup className="ml-auto">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isMoreDetails === 'true'}
+                  onChange={onChangeMoreDetails}
                 />
-              )
-            })}
-          </div>
+              }
+              label="More details"
+            />
+          </FormGroup>
+        </Toolbar>
+
+        {groups.length > 0 ? (
+          <List className="flex flex-col gap-2">
+            {groups.map(group => (
+              <GroupsListItem
+                key={group.name}
+                onDelete={onClickRemoveGroup}
+                onEdit={onClickEditGroup}
+                moreDetails={isMoreDetails === 'true'}
+                group={group}
+              />
+            ))}
+          </List>
         ) : (
           <div className="h-full w-full justify-center gap-4 text-lg">
-            <p className="font-medium text-black-600 dark:text-white">
+            <Typography variant="h6" gutterBottom>
               {t('page.groups.createGroupText')}
-            </p>
-            <p>{t('page.groups.whatIsAGroup')}</p>
+            </Typography>
+            <Typography variant="body2">
+              {t('page.groups.whatIsAGroup')}
+            </Typography>
           </div>
         )}
       </Page>

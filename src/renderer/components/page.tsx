@@ -11,12 +11,10 @@ import React from 'react'
 import { useDrawer } from '../hooks/use-drawer'
 
 type Props = {
-  classes?: {
-    main?: string
-  }
+  className?: string
 }
 
-const Page = ({ children, classes }: React.PropsWithChildren<Props>) => {
+const Page = ({ children, className }: React.PropsWithChildren<Props>) => {
   const [isDrawerExpand] = useDrawer()
 
   return (
@@ -24,9 +22,10 @@ const Page = ({ children, classes }: React.PropsWithChildren<Props>) => {
       className={cx(
         'page overflow-overlay h-screen w-screen p-6 transition-[padding] duration-225 ease-sharp',
         isDrawerExpand ? 'pl-48' : 'pl-14',
+        className,
       )}
     >
-      <main className={classes?.main}>{children}</main>
+      <main>{children}</main>
     </Paper>
   )
 }

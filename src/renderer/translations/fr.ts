@@ -103,8 +103,6 @@ const fr: TranslationShape = {
       noScripts: 'Aucun scripts',
       dialog: {
         searchScripts: 'Rechercher',
-        createGroup: 'Créer un groupe',
-        editGroup: 'Modifier un groupe',
         name: 'Nom',
         dropScripts: 'Glisser-déposer vos scripts ici',
       },

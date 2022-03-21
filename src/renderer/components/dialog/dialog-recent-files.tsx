@@ -26,10 +26,10 @@ import {
 import cx from 'classnames'
 import React, {
   memo,
-  useCallback,
   useMemo,
   useState,
   KeyboardEvent,
+  MouseEvent,
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDidUpdate } from 'rooks'
@@ -147,6 +147,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
   const onDialogKeyDown = (evt: KeyboardEvent) => {
     if (evt.key === 'Enter' && isValid) {
       send(TelemetryEvent.recentFilesCloseWithEnter, {})
+      // noinspection JSIgnoredPromiseFromCall
       onClickLoad()
     }
   }
@@ -190,73 +191,70 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
     return !!loadedScripts.find(s => s.path === script.path)
   }
 
-  const Item = useCallback(
-    ({
-      onClickFile,
-      onClickDelete,
-      disabled = false,
-      selected,
-      script,
-    }: {
-      onClickFile: (evt: React.MouseEvent<HTMLButtonElement>) => void
-      onClickDelete: (evt: React.MouseEvent<HTMLButtonElement>) => void
-      selected: boolean
-      disabled?: boolean
-      script: Script
-    }) => {
-      const scriptInfo = {
-        path: `${dirname(script.path)}${platform === 'windows' ? '\\' : '/'}`,
-        filename: script.name,
-      }
+  const Item = ({
+    onClickFile,
+    onClickDelete,
+    disabled = false,
+    selected,
+    script,
+  }: {
+    onClickFile: (evt: MouseEvent<HTMLButtonElement>) => void
+    onClickDelete: (evt: MouseEvent<HTMLButtonElement>) => void
+    selected: boolean
+    disabled?: boolean
+    script: Script
+  }) => {
+    const scriptInfo = {
+      path: `${dirname(script.path)}${platform === 'windows' ? '\\' : '/'}`,
+      filename: script.name,
+    }
 
-      return (
-        <ListItem
-          disablePadding
-          secondaryAction={
-            <IconButton color="error" onClick={onClickDelete}>
-              <DeleteOutlinedIcon />
-            </IconButton>
-          }
+    return (
+      <ListItem
+        disablePadding
+        secondaryAction={
+          <IconButton color="error" onClick={onClickDelete}>
+            <DeleteOutlinedIcon />
+          </IconButton>
+        }
+      >
+        <ListItemButton
+          role="checkbox"
+          component="button"
+          onClick={onClickFile}
+          disabled={disabled}
+          classes={{ root: 'py-0' }}
         >
-          <ListItemButton
-            role="checkbox"
-            component="button"
-            onClick={onClickFile}
-            disabled={disabled}
-            classes={{ root: 'py-0' }}
-          >
-            <ListItemIcon>
-              <Checkbox
-                edge="start"
-                checked={selected}
-                tabIndex={-1}
-                disableRipple
-                inputProps={{
-                  'aria-labelledby': script.name,
-                }}
-              />
-            </ListItemIcon>
-            <ListItemText
-              id={script.name}
-              secondary={isShowPath ? scriptInfo.path : undefined}
-              primary={scriptInfo.filename}
-              secondaryTypographyProps={{ variant: 'caption' }}
+          <ListItemIcon>
+            <Checkbox
+              edge="start"
+              checked={selected}
+              tabIndex={-1}
+              disableRipple
+              inputProps={{
+                'aria-labelledby': script.name,
+              }}
             />
-          </ListItemButton>
-        </ListItem>
-      )
-    },
-    [isShowPath, platform],
-  )
+          </ListItemIcon>
+          <ListItemText
+            id={script.name}
+            secondary={isShowPath ? scriptInfo.path : undefined}
+            primary={scriptInfo.filename}
+            secondaryTypographyProps={{ variant: 'caption' }}
+          />
+        </ListItemButton>
+      </ListItem>
+    )
+  }
 
   return (
     <Dialog
       open={isOpen}
       onClose={onDialogClose}
+      onKeyDown={onDialogKeyDown}
       scroll="paper"
       fullWidth
       maxWidth="xl"
-      onKeyDown={onDialogKeyDown}
       aria-labelledby="recent-files-title"
       aria-describedby="recent-files-content"
     >

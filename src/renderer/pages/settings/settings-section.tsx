@@ -9,8 +9,6 @@ import is from '@sindresorhus/is'
 import cx from 'classnames'
 import React, { PropsWithChildren, ReactNode } from 'react'
 
-import { useIsDarkTheme } from '../../hooks/use-is-dark-theme'
-
 type Props = {
   title: ReactNode
   className?: string
@@ -29,8 +27,6 @@ const SettingsSection = ({
   titleId,
   children,
 }: PropsWithChildren<Props>) => {
-  const isDark = useIsDarkTheme()
-
   return (
     <Paper
       id={id}
@@ -40,7 +36,7 @@ const SettingsSection = ({
         className,
       )}
       aria-label={is.string(title) ? title : ariaLabel}
-      elevation={isDark ? 6 : undefined}
+      variant="outlined"
     >
       <Typography
         variant="h5"
