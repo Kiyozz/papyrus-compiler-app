@@ -62,8 +62,16 @@ const MuiTheme = ({ children }: React.PropsWithChildren<unknown>) => {
             top: 34,
           },
           scrollBody: {
-            // Intentional, overlay is chromium specific, and no standard
-            overflowY: 'overlay' as unknown as 'hidden',
+            '& .MuiDialog-paper': {
+              // Intentional, overlay is chromium specific, and no standard
+              overflowY: 'overlay' as unknown as 'hidden',
+            },
+          },
+          scrollPaper: {
+            '& .MuiDialogContent-root': {
+              // Intentional, overlay is chromium specific, and no standard
+              overflowY: 'overlay' as unknown as 'hidden',
+            },
           },
         },
       },

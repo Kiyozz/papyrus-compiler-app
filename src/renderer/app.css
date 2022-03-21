@@ -169,26 +169,6 @@ body {
   @apply bg-light-700 dark:bg-darker;
 }
 
-.changelog-container ul {
-  @apply list-disc pl-4;
-}
-
-.changelog-container li + li {
-  margin-top: 0.25em;
-}
-
-.changelog-container p {
-  @apply mt-0 mb-4;
-}
-
-.changelog-container li > p {
-  @apply mt-4;
-}
-
-.changelog-container a {
-  @apply cursor-pointer underline dark:text-blue-300;
-}
-
 .tooltip {
   @apply absolute top-0 left-24 z-30 flex items-center gap-4 rounded bg-light-800 p-2 text-sm shadow dark:bg-black-400 dark:text-white;
 }

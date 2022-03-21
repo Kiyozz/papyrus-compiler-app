@@ -23,9 +23,16 @@ const GITHUB_REPOSITORY =
   'https://api.github.com/repos/Kiyozz/papyrus-compiler-app'
 
 type InitializationContext = {
-  latestVersion: string
+  latestVersion?: string
   done: boolean
 }
+
+type CheckUpdateReturn =
+  | false
+  | {
+      latestVersion: string
+      changelogs: string
+    }
 
 const Context = createContext({} as InitializationContext)
 
@@ -33,30 +40,31 @@ const InitializationProvider = ({
   children,
 }: React.PropsWithChildren<unknown>) => {
   const [done, setDone] = useState(false)
-  const [latestVersion, setLatestVersion] = useState('')
-  const { setShowChangelog, setChangelog, setCheckUsingLastVersion } = useApp()
+  const [latestVersion, setLatestVersion] = useState<string | undefined>()
+  const {
+    showChangelogs: [, setShowChangelogs],
+    changelogs: [, setChangelogs],
+    showLatestVersionAlert: [, setShowLatestVersionAlert],
+  } = useApp()
   const [version, setVersion] = useVersion()
 
   const checkUpdates = useCallback(
-    async (version: string) => {
+    async (version: string): Promise<CheckUpdateReturn> => {
       const response = await fetch(`${GITHUB_REPOSITORY}/releases?per_page=1`)
       const [release]: GithubRelease[] = await response.json()
 
       if (typeof release !== 'undefined' && version.length !== 0) {
         if (compare(release.tag_name, version, '>')) {
-          setLatestVersion(release.tag_name)
-          setShowChangelog(true)
-          setChangelog(release.body)
-
-          return true
-        } else {
-          setShowChangelog(false)
+          return {
+            latestVersion: release.tag_name,
+            changelogs: release.body,
+          }
         }
       }
 
       return false
     },
-    [setChangelog, setShowChangelog],
+    [],
   )
 
   useDidMount(async () => {
@@ -65,23 +73,40 @@ const InitializationProvider = ({
     setVersion(v)
     setDone(true)
 
-    await checkUpdates(v)
+    const payload = await checkUpdates(v)
+
+    if (payload) {
+      setChangelogs(payload.changelogs)
+      setLatestVersion(payload.latestVersion)
+      setShowChangelogs(true)
+    }
   })
 
   // TODO: move using useIpc
   useEffect(() => {
     const check = async () => {
-      const foundNewVersion = await checkUpdates(version)
+      const payload = await checkUpdates(version)
 
-      if (!foundNewVersion) {
-        setCheckUsingLastVersion(true)
+      if (!payload) {
+        setShowLatestVersionAlert(true)
+      } else {
+        setLatestVersion(payload.latestVersion)
+        setChangelogs(payload.changelogs)
+        setShowChangelogs(true)
+        setShowLatestVersionAlert(false)
       }
     }
 
     bridge.changelog.on(check)
 
     return () => bridge.changelog.off(check)
-  }, [checkUpdates, setCheckUsingLastVersion, version])
+  }, [
+    checkUpdates,
+    setChangelogs,
+    setShowChangelogs,
+    setShowLatestVersionAlert,
+    version,
+  ])
 
   return (
     <Context.Provider value={{ done, latestVersion }}>

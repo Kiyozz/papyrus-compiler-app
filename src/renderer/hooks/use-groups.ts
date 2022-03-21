@@ -7,26 +7,26 @@
 import is from '@sindresorhus/is'
 
 import { TelemetryEvent } from '../../common/telemetry-event'
-import { Group, GroupRenderer } from '../types'
+import { Group } from '../types'
 import { useApp } from './use-app'
 import { useTelemetry } from './use-telemetry'
 
 type EditGroupParams = {
-  group: GroupRenderer
+  group: Group
   lastGroupName: string
 }
 
 type UseGroupsReturns = {
-  add: (group: GroupRenderer) => void
+  add: (group: Group) => void
   edit: (params: EditGroupParams) => void
-  remove: (group: GroupRenderer) => void
+  remove: (group: Group) => void
 }
 
 export const useGroups = (): UseGroupsReturns => {
   const { groups, setConfig } = useApp()
   const { send } = useTelemetry()
 
-  const addGroup = (group: GroupRenderer) => {
+  const addGroup = (group: Group) => {
     if (
       !is.undefined(
         groups.find(
@@ -63,7 +63,7 @@ export const useGroups = (): UseGroupsReturns => {
 
     send(TelemetryEvent.groupEdited, { scripts: group.scripts.length })
     setConfig({
-      groups: groups.map((g: Group) => {
+      groups: groups.map(g => {
         if (g.name === lastGroupName) {
           return {
             scripts: group.scripts.map(s => ({ name: s.name, path: s.path })),
@@ -79,7 +79,7 @@ export const useGroups = (): UseGroupsReturns => {
     })
   }
 
-  const removeGroup = (group: GroupRenderer) => {
+  const removeGroup = (group: Group) => {
     if (
       is.undefined(
         groups.find(

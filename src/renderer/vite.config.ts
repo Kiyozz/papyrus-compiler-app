@@ -18,8 +18,9 @@ const { version }: { version: string } = JSON.parse(
 export default defineConfig({
   plugins: [reactRefresh()],
   build: {
-    target: 'chrome96', // electron version target
+    target: 'chrome98', // electron version target
     sourcemap: true,
+    chunkSizeWarningLimit: 3000,
   },
   resolve: {
     alias: [

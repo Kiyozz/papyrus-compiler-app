@@ -5,7 +5,13 @@
  */
 
 import is from '@sindresorhus/is'
-import React, { useCallback, useContext, useMemo, useState } from 'react'
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useContext,
+  useState,
+} from 'react'
 import { useDidMount } from 'rooks'
 import { Observable, Subject } from 'rxjs'
 // eslint-disable-next-line import/no-unresolved
@@ -18,13 +24,13 @@ import { Group } from '../types'
 import { useIpc } from './use-ipc'
 
 type AppContext = {
-  setShowChangelog: (show: boolean) => void
-  setChangelog: (changelog: string) => void
+  showChangelogs: readonly [boolean, Dispatch<SetStateAction<boolean>>]
+  showLatestVersionAlert: readonly [boolean, Dispatch<SetStateAction<boolean>>]
+  changelogs: readonly [
+    string | undefined,
+    Dispatch<SetStateAction<string | undefined>>,
+  ]
   setConfig: (config: PartialDeep<Config>, override?: boolean) => void
-  setCheckUsingLastVersion: (check: boolean) => void
-  isShowChangelog: boolean
-  isCheckUsingLastVersion: boolean
-  changelog: string
   config: Config
   groups: Group[]
   refreshConfig: () => void
@@ -40,9 +46,9 @@ const _onRefreshConfig = _refresh$.asObservable()
 const AppProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const [config, setConfig] = useState<Config>({} as Config)
   const [groups, setGroups] = useState<Group[]>([])
-  const [isShowChangelog, setShowChangelog] = useState(false)
-  const [changelog, setChangelog] = useState('')
-  const [isCheckUsingLastVersion, setCheckUsingLastVersion] = useState(false)
+  const [isShowChangelogs, setShowChangelogs] = useState(false)
+  const [isShowLatestVersionAlert, setShowLatestVersionAlert] = useState(false)
+  const [changelogs, setChangelogs] = useState<string | undefined>()
 
   useIpc(bridge.config.onReset, () => {
     window.location.reload()
@@ -100,38 +106,30 @@ const AppProvider = ({ children }: React.PropsWithChildren<unknown>) => {
     _refresh$.next(refreshedConfig)
   }, [selectGroupsFromConfig])
 
-  const value: AppContext = useMemo(
-    () => ({
-      setShowChangelog,
-      setChangelog,
-      setConfig: updateConfig,
-      setCheckUsingLastVersion,
-      isShowChangelog,
-      isCheckUsingLastVersion,
-      changelog,
-      config,
-      groups,
-      refreshConfig,
-      copyToClipboard,
-      onRefreshConfig: _onRefreshConfig,
-    }),
-    [
-      changelog,
-      config,
-      copyToClipboard,
-      groups,
-      isCheckUsingLastVersion,
-      isShowChangelog,
-      refreshConfig,
-      updateConfig,
-    ],
-  )
-
   if (is.undefined(config)) {
     return null
   }
 
-  return <Context.Provider value={value}>{children}</Context.Provider>
+  return (
+    <Context.Provider
+      value={{
+        showChangelogs: [isShowChangelogs, setShowChangelogs] as const,
+        changelogs: [changelogs, setChangelogs] as const,
+        showLatestVersionAlert: [
+          isShowLatestVersionAlert,
+          setShowLatestVersionAlert,
+        ] as const,
+        setConfig: updateConfig,
+        config,
+        groups,
+        refreshConfig,
+        copyToClipboard,
+        onRefreshConfig: _onRefreshConfig,
+      }}
+    >
+      {children}
+    </Context.Provider>
+  )
 }
 
 export const useApp = (): AppContext => useContext(Context)

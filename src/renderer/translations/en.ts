@@ -18,6 +18,8 @@ const en: TranslationShape = {
     no: 'No',
     remove: 'Remove',
     skip: 'Skip',
+    close: 'Close',
+    download: 'Download',
     logs: {
       nav: 'Logs',
       title: 'Compilation logs',
@@ -78,7 +80,7 @@ const en: TranslationShape = {
       },
       recentFilesDialog: {
         noRecentFiles: 'No recent files',
-        load: 'Load selected',
+        load: 'Load',
         moreDetails: 'More details',
       },
     },
@@ -149,8 +151,9 @@ const en: TranslationShape = {
   },
   changelog: {
     newVersion: 'New version available',
+    changelogs: 'Changelogs',
     available: {
-      view: 'View patch notes',
+      notes: 'Changelogs',
       message: 'New version available: {{version}}',
     },
     alreadyLastVersion: 'PCA is up to date',

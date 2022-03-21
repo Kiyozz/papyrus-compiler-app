@@ -17,9 +17,11 @@ import React, {
 import useLocalStorage from 'react-use-localstorage'
 import { Observable, Subject } from 'rxjs'
 
+import { TelemetryEvent } from '../../common/telemetry-event'
 import { Script } from '../../common/types/script'
 import bridge from '../bridge'
 import { LocalStorage } from '../enums/local-storage.enum'
+import { useTelemetry } from './use-telemetry'
 
 type RecentFilesContext = {
   recentFiles: Script[]
@@ -27,7 +29,7 @@ type RecentFilesContext = {
   setRecentFiles(scripts: Script[]): Promise<void>
   clearRecentFiles(): Promise<void>
   removeRecentFile(script: Script): Promise<Script[]>
-  showPath: [boolean, Dispatch<SetStateAction<boolean>>]
+  moreDetails: [boolean, Dispatch<SetStateAction<boolean>>]
 }
 
 const Context = createContext({} as RecentFilesContext)
@@ -37,8 +39,9 @@ const onRecentFilesChanges = recentFiles$.asObservable()
 const RecentFilesProvider = ({
   children,
 }: React.PropsWithChildren<unknown>) => {
+  const { send } = useTelemetry()
   const [recentFiles, setRecentFilesMemory] = useState<Script[]>([])
-  const [isShowPath, setShowPath] = useLocalStorage(
+  const [isMoreDetails, setMoreDetails] = useLocalStorage(
     LocalStorage.recentFilesMoreDetails,
     'false',
   )
@@ -81,14 +84,14 @@ const RecentFilesProvider = ({
         removeRecentFile,
         onRecentFilesChanges,
         recentFiles,
-        showPath: [
-          isShowPath === 'true',
+        moreDetails: [
+          isMoreDetails === 'true',
           (v => {
-            if (is.function_(v)) {
-              setShowPath(v(isShowPath === 'true') ? 'true' : 'false')
-            } else {
-              setShowPath(v ? 'true' : 'false')
-            }
+            const enable = is.function_(v) ? v(isMoreDetails === 'true') : v
+
+            send(TelemetryEvent.recentFilesMoreDetails, { moreDetails: enable })
+
+            setMoreDetails(enable ? 'true' : 'false')
           }) as Dispatch<SetStateAction<boolean>>,
         ],
       }}

@@ -18,16 +18,19 @@ import React, { useState, MouseEvent, ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import useLocalStorage from 'react-use-localstorage'
 
+import { TelemetryEvent } from '../../../common/telemetry-event'
 import DialogGroup from '../../components/dialog/dialog-group'
 import Page from '../../components/page'
 import PageAppBar from '../../components/page-app-bar'
 import { LocalStorage } from '../../enums/local-storage.enum'
 import { useApp } from '../../hooks/use-app'
 import { useGroups } from '../../hooks/use-groups'
-import { GroupRenderer } from '../../types'
+import { useTelemetry } from '../../hooks/use-telemetry'
+import { Group } from '../../types'
 import GroupsListItem from './groups-list-item'
 
 const Groups = () => {
+  const { send } = useTelemetry()
   const { t } = useTranslation()
   const { groups } = useApp()
   const { add, edit, remove } = useGroups()
@@ -37,9 +40,9 @@ const Groups = () => {
   )
 
   const [isDialogOpen, setDialogOpen] = useState(false)
-  const [editingGroup, setEditingGroup] = useState<GroupRenderer | undefined>()
+  const [editingGroup, setEditingGroup] = useState<Group | undefined>()
 
-  const onClickRemoveGroup = (group: GroupRenderer) => {
+  const onClickRemoveGroup = (group: Group) => {
     return (evt: MouseEvent<HTMLElement>) => {
       evt.currentTarget.blur()
 
@@ -47,7 +50,7 @@ const Groups = () => {
     }
   }
 
-  const onClickEditGroup = (group: GroupRenderer) => {
+  const onClickEditGroup = (group: Group) => {
     return (evt: MouseEvent<HTMLElement>) => {
       evt.currentTarget.blur()
 
@@ -63,12 +66,12 @@ const Groups = () => {
     setDialogOpen(true)
   }
 
-  const onGroupAdd = (group: GroupRenderer) => {
+  const onGroupAdd = (group: Group) => {
     setDialogOpen(false)
     add(group)
   }
 
-  const onGroupEdit = (lastGroupName: string, group: GroupRenderer) => {
+  const onGroupEdit = (lastGroupName: string, group: Group) => {
     setDialogOpen(false)
     edit({ group, lastGroupName })
   }
@@ -78,6 +81,9 @@ const Groups = () => {
   }
 
   const onChangeMoreDetails = (evt: ChangeEvent<HTMLInputElement>) => {
+    send(TelemetryEvent.groupMoreDetails, {
+      moreDetails: evt.currentTarget.checked,
+    })
     setMoreDetails(evt.currentTarget.checked ? 'true' : 'false')
   }
 

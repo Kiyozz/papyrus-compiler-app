@@ -20,6 +20,8 @@ const fr: TranslationShape = {
     no: 'Non',
     remove: 'Retirer',
     skip: 'Passer',
+    close: 'Fermer',
+    download: 'Télécharger',
     logs: {
       nav: 'Logs',
       title: 'Logs de compilation',
@@ -85,7 +87,7 @@ const fr: TranslationShape = {
       },
       recentFilesDialog: {
         noRecentFiles: 'Aucun fichiers récents',
-        load: 'Charger sélectionnés',
+        load: 'Charger',
         moreDetails: 'Plus de détails',
       },
     },
@@ -158,8 +160,9 @@ const fr: TranslationShape = {
   },
   changelog: {
     newVersion: 'Nouvelle version disponible',
+    changelogs: 'Notes de mise à jour',
     available: {
-      view: 'Voir les nouveautés',
+      notes: 'Nouveautés',
       message: 'Nouvelle version disponible : {{version}}',
     },
     alreadyLastVersion: 'Vous disposez de la dernière version',

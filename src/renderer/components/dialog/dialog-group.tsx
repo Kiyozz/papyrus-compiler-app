@@ -12,6 +12,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
+  DialogTitle,
   IconButton,
   List,
   ListItem,
@@ -32,17 +33,18 @@ import React, {
 import { useTranslation } from 'react-i18next'
 
 import { TelemetryEvent } from '../../../common/telemetry-event'
+import { Script } from '../../../common/types/script'
 import { useDrop, useSetDrop } from '../../hooks/use-drop'
 import { useTelemetry } from '../../hooks/use-telemetry'
-import { GroupRenderer, ScriptRenderer } from '../../types'
+import { Group } from '../../types'
 import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
 
 type Props = {
-  onGroupAdd: (group: GroupRenderer) => void
-  onGroupEdit: (lastGroupName: string, group: GroupRenderer) => void
+  onGroupAdd: (group: Group) => void
+  onGroupEdit: (lastGroupName: string, group: Group) => void
   onClose: () => void
-  group?: GroupRenderer
+  group?: Group
   open: boolean
 }
 
@@ -55,7 +57,7 @@ const DialogGroup = ({
 }: Props) => {
   const { t } = useTranslation()
   const [name, setName] = useState('')
-  const [scripts, setScripts] = useState<ScriptRenderer[]>([])
+  const [scripts, setScripts] = useState<Script[]>([])
   const [isEdit, setEdit] = useState(false)
   const { send } = useTelemetry()
   const { drop, isFileDialogActive } = useDrop()
@@ -69,18 +71,12 @@ const DialogGroup = ({
     }
 
     if (isEdit && group) {
-      onGroupEdit(group.name, {
-        name: name.trim(),
-        scripts,
-      })
+      onGroupEdit(group.name, new Group(name.trim(), scripts))
 
       return
     }
 
-    onGroupAdd({
-      name: name.trim(),
-      scripts,
-    })
+    onGroupAdd(new Group(name.trim(), scripts))
   }
 
   const onDialogClose = () => {
@@ -110,7 +106,7 @@ const DialogGroup = ({
     }
   }, [isOpen, group])
 
-  const onClickRemoveScriptFromGroup = (script: ScriptRenderer) => {
+  const onClickRemoveScriptFromGroup = (script: Script) => {
     return () => {
       setScripts(s =>
         s.filter(scriptFromList => scriptFromList.name !== script.name),
@@ -143,14 +139,12 @@ const DialogGroup = ({
       open={isOpen}
       onClose={onDialogClose}
       onKeyDown={onDialogKeyDown}
-      scroll="body"
-      fullWidth
-      maxWidth="xl"
+      fullScreen
       aria-describedby="group-content"
       className="overflow-overlay"
     >
-      <form onSubmit={onSubmitGroup}>
-        <DialogContent id="group-content">
+      <form onSubmit={onSubmitGroup} className="flex min-h-full flex-col">
+        <DialogTitle>
           <TextField
             placeholder={t('page.groups.dialog.name')}
             name="group-name"
@@ -161,14 +155,17 @@ const DialogGroup = ({
             fullWidth
             size="small"
           />
-        </DialogContent>
-        <div
+        </DialogTitle>
+        <DialogContent
+          id="group-content"
           className={cx(
+            'px-0',
             scripts.length === 0 && 'flex items-center justify-center',
           )}
+          dividers
         >
           {scripts.length > 0 ? (
-            <List className="overflow-x-hidden">
+            <List className="overflow-x-hidden" disablePadding>
               {scripts.map(script => (
                 <ListItem
                   key={script.name}
@@ -198,7 +195,7 @@ const DialogGroup = ({
               {t('page.groups.dialog.dropScripts')}
             </DialogContentText>
           )}
-        </div>
+        </DialogContent>
         <DialogActions>
           <Button
             className="mr-auto"

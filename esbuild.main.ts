@@ -31,7 +31,7 @@ const config: BuildOptions = {
     path.resolve(mainPath, 'preload.ts'),
   ],
   bundle: true,
-  target: 'node16.9.1',
+  target: 'node16.13.0',
   define: {
     'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`,
     'process.env.ELECTRON_WEBPACK_APP_MOD_URL': `'${

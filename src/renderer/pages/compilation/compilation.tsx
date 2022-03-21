@@ -246,7 +246,7 @@ const Compilation = () => {
         </div>
 
         {scripts.length > 0 ? (
-          <List className="flex flex-col gap-2">
+          <List className="flex flex-col gap-0.5">
             {scripts.map(script => {
               return (
                 <ScriptLine

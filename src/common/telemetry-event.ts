@@ -22,6 +22,7 @@ export enum TelemetryEvent {
   groupDropScripts = 'Group.DropScripts',
   groupEdited = 'Group.Edited',
   groupCloseWithEnter = 'Group.CloseWithEnter',
+  groupMoreDetails = 'Group.MoreDetails',
   modOrganizerActive = 'ModOrganizer.Active',
   recentFilesLoaded = 'RecentFiles.Loaded',
   recentFileRemove = 'RecentFile.Remove',
@@ -30,6 +31,7 @@ export enum TelemetryEvent {
   recentFilesSelectNone = 'RecentFiles.SelectNone',
   recentFilesInvertSelection = 'RecentFiles.InvertSelection',
   recentFilesCloseWithEnter = 'RecentFiles.CloseWithEnter',
+  recentFilesMoreDetails = 'RecentFiles.MoreDetails',
   settingsGame = 'Settings.Game',
   settingsTheme = 'Settings.Theme',
   settingsRefresh = 'Settings.Refresh',
@@ -43,42 +45,27 @@ export enum TelemetryEvent {
 export type TelemetryEventProperties = {
   [TelemetryEvent.appFirstLoaded]: Record<string, never>
   [TelemetryEvent.appLoaded]: Record<'version' | 'releaseVersion', string>
-  [TelemetryEvent.compilationDropScripts]: {
-    scripts: number
-  }
-  [TelemetryEvent.compilationGroupLoaded]: {
-    groups: number
-  }
-  [TelemetryEvent.compilationListEmpty]: {
-    scripts: number
-  }
+  [TelemetryEvent.compilationDropScripts]: { scripts: number }
+  [TelemetryEvent.compilationGroupLoaded]: { groups: number }
+  [TelemetryEvent.compilationListEmpty]: { scripts: number }
   [TelemetryEvent.compilationLogsCopy]: Record<string, never>
   [TelemetryEvent.compilationPlay]: {
     scripts: number
     concurrentScripts: number
   }
   [TelemetryEvent.compilationSinglePlay]: Record<string, never>
-  [TelemetryEvent.compilationRemoveScript]: {
-    remainingScripts: number
-  }
+  [TelemetryEvent.compilationRemoveScript]: { remainingScripts: number }
   [TelemetryEvent.exception]: {
     error: string
     stack: string
   }
-  [TelemetryEvent.groupCreated]: {
-    scripts: number
-  }
+  [TelemetryEvent.groupCreated]: { scripts: number }
   [TelemetryEvent.groupDeleted]: Record<string, never>
-  [TelemetryEvent.groupDropScripts]: {
-    scripts: number
-  }
-  [TelemetryEvent.groupEdited]: {
-    scripts: number
-  }
+  [TelemetryEvent.groupDropScripts]: { scripts: number }
+  [TelemetryEvent.groupEdited]: { scripts: number }
   [TelemetryEvent.groupCloseWithEnter]: Record<string, never>
-  [TelemetryEvent.modOrganizerActive]: {
-    active: boolean
-  }
+  [TelemetryEvent.groupMoreDetails]: { moreDetails: boolean }
+  [TelemetryEvent.modOrganizerActive]: { active: boolean }
   [TelemetryEvent.recentFilesLoaded]: Record<string, never>
   [TelemetryEvent.recentFilesClear]: Record<string, never>
   [TelemetryEvent.recentFilesSelectAll]: Record<string, never>
@@ -86,17 +73,14 @@ export type TelemetryEventProperties = {
   [TelemetryEvent.recentFilesInvertSelection]: Record<string, never>
   [TelemetryEvent.recentFileRemove]: Record<string, never>
   [TelemetryEvent.recentFilesCloseWithEnter]: Record<string, never>
-  [TelemetryEvent.settingsGame]: {
-    game: GameType
-  }
+  [TelemetryEvent.recentFilesMoreDetails]: { moreDetails: boolean }
+  [TelemetryEvent.settingsGame]: { game: GameType }
   [TelemetryEvent.settingsRefresh]: Record<string, never>
-  [TelemetryEvent.settingsTheme]: {
-    theme: string
-  }
+  [TelemetryEvent.settingsTheme]: { theme: string }
   [TelemetryEvent.telemetryEnabled]: Record<string, never>
   [TelemetryEvent.tutorialsSettingsEnd]: Record<string, never>
   [TelemetryEvent.tutorialsSettingsDeny]: Record<string, never>
-  [TelemetryEvent.tutorialsSettingsSkip]: Record<'step', number>
+  [TelemetryEvent.tutorialsSettingsSkip]: { step: number }
   [TelemetryEvent.documentationOpenFromNav]: {
     reason: 'enter' | 'click' | 'settings-app-bar'
   }

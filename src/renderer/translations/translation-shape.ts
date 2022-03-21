@@ -16,6 +16,8 @@ export interface TranslationShape {
     no: string
     remove: string
     skip: string
+    close: string
+    download: string
     logs: {
       nav: string
       title: string
@@ -132,8 +134,9 @@ export interface TranslationShape {
   }
   changelog: {
     newVersion: string
+    changelogs: string
     available: {
-      view: string
+      notes: string
       message: string
     }
     alreadyLastVersion: string

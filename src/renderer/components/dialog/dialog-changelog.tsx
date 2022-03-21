@@ -5,7 +5,26 @@
  */
 
 import DownloadIcon from '@mui/icons-material/GetApp'
-import React, { useState } from 'react'
+import {
+  Button,
+  Snackbar,
+  Typography,
+  Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  List,
+  ListItem,
+  ListItemText,
+  SnackbarProps,
+} from '@mui/material'
+import React, {
+  useState,
+  MouseEvent,
+  ReactNode,
+  PropsWithChildren,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown, { Components } from 'react-markdown'
 
@@ -14,139 +33,182 @@ import bridge from '../../bridge'
 import { Env } from '../../env'
 import { useApp } from '../../hooks/use-app'
 import { useInitialization } from '../../hooks/use-initialization'
-import { useOnKeyUp } from '../../hooks/use-on-key-up'
 import Anchor from '../anchor'
-import Toast from '../toast'
-import Dialog from './dialog'
 
 const Img: Components['img'] = ({ src, alt, ...props }) => {
   const newSrc = src?.startsWith('docs')
     ? `${GITHUB_LINK}/blob/master/${src}?raw=true`
     : src
 
-  return <img src={newSrc} alt={alt} {...props} />
+  return (
+    <img
+      src={newSrc}
+      alt={alt}
+      className="mt-2 max-w-full rounded"
+      {...props}
+    />
+  )
 }
 
-const HeadingOne = ({ children }: React.PropsWithChildren<unknown>) => (
-  <h1 className="mb-2 text-4xl">{children}</h1>
+const HeadingOne = ({ children }: PropsWithChildren<unknown>) => (
+  <Typography variant="h3" component="h1" gutterBottom>
+    {children}
+  </Typography>
 )
 
-const HeadingTwo = ({ children }: React.PropsWithChildren<unknown>) => (
-  <h6 className="mb-2 text-2xl">{children}</h6>
+const HeadingTwo = ({ children }: PropsWithChildren<unknown>) => (
+  <Typography variant="h4" component="h2" gutterBottom>
+    {children}
+  </Typography>
 )
 
-const HeadingFive = ({ children }: React.PropsWithChildren<unknown>) => (
-  <h5 className="mb-2 text-xl">{children}</h5>
+const HeadingThree = ({ children }: PropsWithChildren<unknown>) => (
+  <Typography variant="h5" component="h3" gutterBottom className="mt-2">
+    {children}
+  </Typography>
 )
 
-const HeadingThree = ({ children }: React.PropsWithChildren<unknown>) => (
-  <h3 className="mb-2 text-xl">{children}</h3>
+const HeadingFive = ({ children }: PropsWithChildren<unknown>) => (
+  <Typography variant="h6" component="h5" gutterBottom>
+    {children}
+  </Typography>
 )
 
-const Paragraph = ({ children }: React.PropsWithChildren<unknown>) => (
-  <p className="text-sm">{children}</p>
+const Paragraph = ({ children }: PropsWithChildren<unknown>) => (
+  <Typography>{children}</Typography>
 )
 
-const Code = ({ children }: { children: React.ReactNode[] }) => (
-  <code className="markdown-code dark:bg-gray-800">{children}</code>
+const Code = ({ children }: { children: ReactNode[] }) => (
+  <Typography component="code" className="markdown-code dark:bg-gray-800">
+    {children}
+  </Typography>
 )
+
+const UnorderedList = ({ children }: PropsWithChildren<unknown>) => {
+  return <List disablePadding>{children}</List>
+}
+
+const HtmlListItem = ({ children }: PropsWithChildren<unknown>) => {
+  return (
+    <ListItem disablePadding>
+      <ListItemText primary={children} />
+    </ListItem>
+  )
+}
 
 const DialogChangelog = () => {
   const { t } = useTranslation()
   const {
-    isShowChangelog,
-    changelog,
-    setShowChangelog,
-    isCheckUsingLastVersion,
-    setCheckUsingLastVersion,
+    showChangelogs: [isShowChangelogs, setShowChangelogs],
+    changelogs: [changelogs],
+    showLatestVersionAlert: [
+      isShowLatestVersionAlert,
+      setShowLastestVersionAlert,
+    ],
   } = useApp()
   const { latestVersion } = useInitialization()
 
-  const [isUserShowNotes, setUserShowNotes] = useState(false)
+  const [isShowChangelogsDialoag, setShowChangelogsDialog] = useState(false)
 
-  const onClickDownloadRelease = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  const onClickDownloadRelease = (evt: MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault()
 
     bridge.shell.openExternal(Env.modUrl)
   }
 
-  const onClickShowNotes = () => {
-    if (isShowChangelog) {
-      setUserShowNotes(true)
-    }
+  const onClickShowChangelogs = () => {
+    setShowChangelogsDialog(true)
   }
 
-  const onCloseDialog = () => {
-    setUserShowNotes(false)
-    setShowChangelog(false)
-    setCheckUsingLastVersion(false)
+  const onCloseChangelogsDialog = () => {
+    setShowChangelogsDialog(false)
+    setShowChangelogs(false)
   }
 
-  useOnKeyUp(
-    'Escape',
-    () => {
-      setShowChangelog(false)
-    },
-    isShowChangelog,
-  )
+  const onCloseShowLatestVersionAlert: SnackbarProps['onClose'] = (
+    evt,
+    reason,
+  ) => {
+    if (reason !== 'timeout') return
+
+    setShowLastestVersionAlert(false)
+  }
+
+  const onCloseNewVersionAlert: SnackbarProps['onClose'] = (evt, reason) => {
+    if (reason !== 'timeout') return
+
+    setShowChangelogs(false)
+  }
 
   return (
     <>
-      <Toast
-        message={t('changelog.available.message', { version: latestVersion })}
-        actions={
-          <button className="btn btn-text-primary" onClick={onClickShowNotes}>
-            {t('changelog.available.view')}
-          </button>
-        }
-        onClose={onCloseDialog}
-        in={isShowChangelog && !isCheckUsingLastVersion && !isUserShowNotes}
-        speedMs={150}
-        autoCloseMs={8_000}
-      />
+      <Snackbar
+        open={isShowLatestVersionAlert}
+        onClose={onCloseShowLatestVersionAlert}
+        autoHideDuration={3_000}
+      >
+        <Alert severity="info">{t('changelog.alreadyLastVersion')}</Alert>
+      </Snackbar>
 
-      <Toast
-        message={t('changelog.alreadyLastVersion')}
-        onClose={onCloseDialog}
-        in={isCheckUsingLastVersion}
-        speedMs={150}
-      />
+      <Snackbar
+        open={
+          isShowChangelogs &&
+          !isShowLatestVersionAlert &&
+          !isShowChangelogsDialoag
+        }
+        autoHideDuration={8_000}
+        onClose={onCloseNewVersionAlert}
+      >
+        <Alert
+          severity="info"
+          action={
+            <Button onClick={onClickShowChangelogs} size="small">
+              {t('changelog.available.notes')}
+            </Button>
+          }
+        >
+          <Typography>
+            {t('changelog.available.message', { version: latestVersion })}
+          </Typography>
+        </Alert>
+      </Snackbar>
 
       <Dialog
-        id="user-note"
-        open={isUserShowNotes}
-        onClose={onCloseDialog}
-        actions={
-          <>
-            <button className="btn" onClick={onCloseDialog}>
-              Close
-            </button>
-            <button className="btn" onClick={onClickDownloadRelease}>
-              <div className="icon">
-                <DownloadIcon />
-              </div>
-              Download
-            </button>
-          </>
-        }
-        title={t('changelog.newVersion')}
+        open={isShowChangelogsDialoag}
+        onClose={onCloseChangelogsDialog}
+        fullScreen
+        aria-labelledby="dialog-notes-title"
+        aria-describedby="dialog-notes-content"
       >
-        <div className="changelog-container rounded p-4 text-sm dark:text-gray-300">
-          <ReactMarkdown
-            components={{
-              p: Paragraph,
-              h1: HeadingOne,
-              h2: HeadingTwo,
-              h3: HeadingThree,
-              h5: HeadingFive,
-              code: Code,
-              a: Anchor,
-              img: Img,
-            }}
-          >
-            {changelog}
-          </ReactMarkdown>
-        </div>
+        <DialogTitle id="dialog-notes-title">
+          {t('changelog.changelogs')}
+        </DialogTitle>
+        <DialogContent id="dialog-notes-content" dividers>
+          {changelogs && (
+            <ReactMarkdown
+              components={{
+                p: Paragraph,
+                h1: HeadingOne,
+                h2: HeadingTwo,
+                h3: HeadingThree,
+                h5: HeadingFive,
+                code: Code,
+                a: Anchor,
+                img: Img,
+                ul: UnorderedList,
+                li: HtmlListItem,
+              }}
+            >
+              {changelogs}
+            </ReactMarkdown>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onCloseChangelogsDialog}>{t('common.close')}</Button>
+          <Button onClick={onClickDownloadRelease} startIcon={<DownloadIcon />}>
+            {t('common.download')}
+          </Button>
+        </DialogActions>
       </Dialog>
     </>
   )

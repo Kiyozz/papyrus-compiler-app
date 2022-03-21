@@ -8,12 +8,12 @@ import { ListItem, ListItemText, Paper } from '@mui/material'
 import React, { MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Group, GroupRenderer } from '../../types'
+import { Group } from '../../types'
 import GroupsListItemMenu from './groups-list-item-menu'
 
 type Props = {
-  onEdit: (group: GroupRenderer) => (evt: MouseEvent<HTMLElement>) => void
-  onDelete: (group: GroupRenderer) => (evt: MouseEvent<HTMLElement>) => void
+  onEdit: (group: Group) => (evt: MouseEvent<HTMLElement>) => void
+  onDelete: (group: Group) => (evt: MouseEvent<HTMLElement>) => void
   group: Group
   moreDetails: boolean
 }

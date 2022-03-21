@@ -61,7 +61,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
     clearRecentFiles,
     removeRecentFile,
     recentFiles,
-    showPath: [isShowPath, setShowPath],
+    moreDetails: [isMoreDetails, setMoreDetails],
   } = useRecentFiles()
   const [selectedRecentFiles, setSelectedRecentFiles] = useState(
     new Map<string, Script>(),
@@ -239,7 +239,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
           </ListItemIcon>
           <ListItemText
             id={script.name}
-            secondary={isShowPath ? scriptInfo.path : undefined}
+            secondary={isMoreDetails ? scriptInfo.path : undefined}
             primary={scriptInfo.filename}
             secondaryTypographyProps={{ variant: 'caption' }}
           />
@@ -253,9 +253,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
       open={isOpen}
       onClose={onDialogClose}
       onKeyDown={onDialogKeyDown}
-      scroll="paper"
-      fullWidth
-      maxWidth="xl"
+      fullScreen
       aria-labelledby="recent-files-title"
       aria-describedby="recent-files-content"
     >
@@ -267,18 +265,15 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={isShowPath}
-                onChange={() => setShowPath(v => !v)}
+                checked={isMoreDetails}
+                onChange={() => setMoreDetails(v => !v)}
               />
             }
             label={t<string>('page.compilation.recentFilesDialog.moreDetails')}
           />
         </FormGroup>
       </Toolbar>
-      <DialogContent
-        dividers
-        className={cx('overflow-overlay', recentFiles.length !== 0 && 'p-0')}
-      >
+      <DialogContent dividers className={cx(recentFiles.length !== 0 && 'p-0')}>
         {recentFiles.length === 0 ? (
           <DialogContentText>
             {t('page.compilation.recentFilesDialog.noRecentFiles')}
