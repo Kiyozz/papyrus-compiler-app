@@ -58,7 +58,8 @@ const api: Bridge = {
         },
       }
     },
-    check: () => ipcRenderer.invoke<BadError>(IpcEvent.configCheck),
+    check: checkMo2 =>
+      ipcRenderer.invoke<BadError>(IpcEvent.configCheck, { checkMo2 }),
   },
   isProduction: () => ipcRenderer.invoke<boolean>(IpcEvent.isProduction),
   compilation: {

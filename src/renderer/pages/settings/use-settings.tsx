@@ -17,7 +17,7 @@ import bridge from '../../bridge'
 
 type SettingsContext = {
   configError: BadError
-  checkConfig: () => void
+  checkConfig: (checkMo2?: boolean) => void
   resetConfigError: () => void
 }
 
@@ -26,8 +26,8 @@ const Context = createContext({} as SettingsContext)
 const SettingsProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const [configError, setConfigError] = useState<BadError>(false)
 
-  const checkConfig = useCallback(async () => {
-    const configError = await bridge.config.check()
+  const checkConfig = useCallback(async (checkMo2 = false) => {
+    const configError = await bridge.config.check(checkMo2)
 
     setConfigError(configError)
   }, [])

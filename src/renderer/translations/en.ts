@@ -43,6 +43,8 @@ const en: TranslationShape = {
       'Invalid configuration: check your Creation Kit installation.',
     'checkError_mo2-instance':
       'Invalid configuration: check your mo2 instance.',
+    'checkError_mo2-use-no-instance':
+      'Invalid configuration: mo2 integration is enabled, but your mo2 instance is invalid.',
     moreDetails: 'More details',
   },
   loading: 'Loading',

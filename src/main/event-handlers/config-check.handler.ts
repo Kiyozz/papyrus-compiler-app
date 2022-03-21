@@ -1,3 +1,5 @@
+// noinspection JSMethodCanBeStatic
+
 /*
  * Copyright (c) 2022 Kiyozz~WK~WushuLate.
  *
@@ -27,7 +29,7 @@ import { settingsStore } from '../store/settings/store'
 const _logger = new Logger(IpcEvent.configCheck)
 
 export class ConfigCheckHandler implements EventHandler {
-  async listen(): Promise<BadError> {
+  async listen({ checkMo2 = false }: { checkMo2: boolean }): Promise<BadError> {
     const gameType: GameType = settingsStore.get('game.type')
 
     _logger.debug('the game type is', gameType)
@@ -48,7 +50,7 @@ export class ConfigCheckHandler implements EventHandler {
     const isUsingMo2: boolean = settingsStore.get('mo2.use')
 
     if (isUsingMo2) {
-      const hasMo2Instance = await this.checkMo2Instance()
+      const hasMo2Instance = await this.checkMo2Instance(checkMo2)
 
       if (hasMo2Instance !== false) {
         return hasMo2Instance
@@ -69,9 +71,13 @@ export class ConfigCheckHandler implements EventHandler {
     )
   }
 
-  private checkMo2Instance(): Promise<BadError> {
+  private checkMo2Instance(checkMo2: boolean): Promise<BadError> {
     _logger.debug('checking mo2 instance')
     const { use: mo2Use, instance: mo2Instance } = settingsStore.get('mo2')
+
+    if (checkMo2 && mo2Use && !mo2Instance) {
+      return Promise.resolve('mo2-use-no-instance')
+    }
 
     return Promise.resolve(
       mo2Use && mo2Instance

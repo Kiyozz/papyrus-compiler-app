@@ -4,4 +4,10 @@
  * All rights reserved.
  */
 
-export type BadError = false | 'compiler' | 'game' | 'scripts' | 'mo2-instance'
+export type BadError =
+  | false
+  | 'compiler'
+  | 'game'
+  | 'scripts'
+  | 'mo2-instance'
+  | 'mo2-use-no-instance'

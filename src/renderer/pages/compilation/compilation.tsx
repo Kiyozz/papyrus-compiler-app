@@ -91,11 +91,15 @@ const Compilation = () => {
   const { send } = useTelemetry()
   const { drop, isFileDialogActive } = useDrop()
   const [dialogState, setDialogState] = useState(DialogRecentFilesState.close)
-  const { checkConfig, configError, resetConfigError } = useSettings()
+  const { checkConfig, configError } = useSettings()
 
   useDidMount(() => {
-    checkConfig()
+    checkConfig(true)
   })
+
+  const onClickRefreshCheckConfig = () => {
+    checkConfig(true)
+  }
 
   const onDrop = useCallback(
     (pscFiles: File[]) => {
@@ -201,7 +205,7 @@ const Compilation = () => {
           onClose={() => setDialogState(DialogRecentFilesState.close)}
         />
 
-        <Snackbar open={!!configError} onClose={resetConfigError}>
+        <Snackbar open={!!configError}>
           <Alert
             severity="error"
             action={
@@ -209,7 +213,7 @@ const Compilation = () => {
                 <MuiLink component={Link} to="/settings">
                   {t('config.moreDetails')}
                 </MuiLink>
-                <Button onClick={checkConfig} size="small">
+                <Button onClick={onClickRefreshCheckConfig} size="small">
                   {t('common.refresh')}
                 </Button>
               </Stack>

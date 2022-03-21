@@ -224,6 +224,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
           onClick={onClickFile}
           disabled={disabled}
           classes={{ root: 'py-0' }}
+          disableRipple
         >
           <ListItemIcon>
             <Checkbox

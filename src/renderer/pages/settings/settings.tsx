@@ -37,7 +37,7 @@ const Settings = () => {
     setConfig,
     refreshConfig,
   } = useApp()
-  const { checkConfig, configError, resetConfigError } = useSettings()
+  const { checkConfig, resetConfigError } = useSettings()
   const { send } = useTelemetry()
   const { open: openDocumentation } = useDocumentation()
 
@@ -166,13 +166,10 @@ const Settings = () => {
   )
 
   const onClickPageRefresh = useCallback(() => {
-    if (configError) {
-      checkConfig()
-    }
-
+    checkConfig()
     refreshConfig()
     send(TelemetryEvent.settingsRefresh, {})
-  }, [configError, refreshConfig, checkConfig, send])
+  }, [refreshConfig, checkConfig, send])
 
   return (
     <>

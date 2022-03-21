@@ -48,7 +48,7 @@ export type Bridge = {
     ) => Promise<Config>
     get: () => Promise<Config>
     onReset: (cb: () => void) => Disposable
-    check: () => Promise<BadError>
+    check: (checkMo2: boolean) => Promise<BadError>
   }
 
   isProduction: () => Promise<boolean>
