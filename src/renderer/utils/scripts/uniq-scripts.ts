@@ -4,9 +4,12 @@
  * All rights reserved.
  */
 
+import { Script } from '../../../common/types/script'
 import { uniqArray } from '../../../common/uniq-array'
 import { ScriptRenderer } from '../../types'
 
-export const uniqScripts = (scripts: ScriptRenderer[]): ScriptRenderer[] => {
+export const uniqScripts = <T extends Script | ScriptRenderer>(
+  scripts: T[],
+): T[] => {
   return uniqArray(scripts, ['name'])
 }

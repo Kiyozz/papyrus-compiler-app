@@ -28,7 +28,7 @@ const classNameFromStatus = (script: ScriptRenderer): string => {
 export const iconFromStatus = (script: ScriptRenderer) => {
   switch (script.status) {
     case ScriptStatus.idle:
-      return <></>
+      return null
     case ScriptStatus.running:
       return <HourglassEmptyIcon className={classNameFromStatus(script)} />
     case ScriptStatus.success:

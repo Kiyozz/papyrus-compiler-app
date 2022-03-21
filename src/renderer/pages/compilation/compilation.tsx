@@ -8,7 +8,7 @@ import ClearIcon from '@mui/icons-material/Clear'
 import HistoryIcon from '@mui/icons-material/History'
 import PlayIcon from '@mui/icons-material/PlayCircleFilled'
 import SearchIcon from '@mui/icons-material/Search'
-import { Button, ButtonProps, Typography } from '@mui/material'
+import { Button, ButtonProps, List, Typography } from '@mui/material'
 import React, { useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -27,6 +27,7 @@ import { useRecentFiles } from '../../hooks/use-recent-files'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { isAllGroupsEmpty, ScriptRenderer } from '../../types'
 import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
+import { scriptsToRenderer } from '../../utils/scripts/scripts-to-renderer'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
 import { useSettings } from '../settings/use-settings'
 import GroupsMenu from './groups-menu'
@@ -111,7 +112,7 @@ const Compilation = () => {
         send(TelemetryEvent.compilationRemoveScript, {
           remainingScripts: scriptsList.length - 1,
         })
-        return scriptsList.filter((cs: ScriptRenderer) => cs !== script)
+        return scriptsList.filter(cs => cs !== script)
       })
     }
   }
@@ -156,7 +157,9 @@ const Compilation = () => {
       return
     }
 
-    setScripts(scriptList => uniqScripts([...scriptList, ...group.scripts]))
+    setScripts(scriptList =>
+      uniqScripts(scriptsToRenderer(scriptList, group.scripts)),
+    )
   }
 
   const onClearScripts = () => {
@@ -235,7 +238,7 @@ const Compilation = () => {
         </div>
 
         {scripts.length > 0 ? (
-          <div className="flex flex-col gap-2">
+          <List className="flex flex-col gap-2">
             {scripts.map(script => {
               return (
                 <ScriptLine
@@ -246,7 +249,7 @@ const Compilation = () => {
                 />
               )
             })}
-          </div>
+          </List>
         ) : (
           <>
             <Typography>{t('page.compilation.dragAndDropText')}</Typography>

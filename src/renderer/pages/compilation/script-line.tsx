@@ -6,8 +6,13 @@
 
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import PlayCircleIcon from '@mui/icons-material/PlayCircle'
-import { IconButton } from '@mui/material'
-import cx from 'classnames'
+import {
+  IconButton,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+} from '@mui/material'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -36,35 +41,43 @@ const ScriptLine = ({
     onClickPlayCompilation(script)
   }
 
+  const StatusIcon = () => {
+    const icon = iconFromStatus(script)
+
+    if (!icon) return null
+
+    return <ListItemIcon>{icon}</ListItemIcon>
+  }
+
   return (
-    <div className="flex select-none gap-2 text-current dark:text-white">
-      <div
-        className="paper relative flex w-full overflow-hidden"
-        aria-label="script"
-      >
-        <div>{script.name}</div>
-        <div className={cx('font-sm ml-auto flex')}>
-          {iconFromStatus(script)}
-        </div>
+    <ListItem
+      component={Paper}
+      variant="outlined"
+      secondaryAction={
+        <IconButton
+          color="error"
+          aria-label={t('common.remove')}
+          disabled={isRunningScript(script)}
+          aria-disabled={isRunningScript(script)}
+          onClick={onClickRemove}
+        >
+          <DeleteOutlinedIcon />
+        </IconButton>
+      }
+    >
+      <ListItemIcon>
         <IconButton
           onClick={onClickPlay}
           size="small"
           disabled={isRunningScript(script)}
-          className="ml-1.5 p-0"
+          edge="end"
         >
           <PlayCircleIcon className="text-primary-400" />
         </IconButton>
-      </div>
-      <IconButton
-        color="error"
-        aria-label={t('common.remove')}
-        disabled={isRunningScript(script)}
-        aria-disabled={isRunningScript(script)}
-        onClick={onClickRemove}
-      >
-        <DeleteOutlinedIcon />
-      </IconButton>
-    </div>
+      </ListItemIcon>
+      <ListItemText aria-label={script.name} primary={script.name} />
+      <StatusIcon />
+    </ListItem>
   )
 }
 

@@ -6,6 +6,7 @@
 
 import is from '@sindresorhus/is'
 
+import { Script } from '../../common/types/script'
 import { ScriptRenderer } from './script-renderer'
 
 export type GroupRenderer = {
@@ -18,7 +19,7 @@ export const isAllGroupsEmpty = (groups: Group[]): boolean => {
 }
 
 export class Group {
-  constructor(public name: string, public scripts: ScriptRenderer[]) {}
+  constructor(public name: string, public scripts: Script[]) {}
 
   get isEmpty(): boolean {
     return is.emptyArray(this.scripts)
