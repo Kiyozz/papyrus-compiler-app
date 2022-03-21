@@ -99,8 +99,8 @@ const DialogTextField = ({
         startAdornment={
           <InputAdornment position="start">
             <IconButton
-              onClick={onClickInput}
               edge="start"
+              onClick={onClickInput}
               onMouseEnter={onMouseEnter}
               onMouseLeave={onMouseLeave}
             >
@@ -113,6 +113,9 @@ const DialogTextField = ({
         placeholder={t('common.selectFolder')}
         onChange={onChangeInput}
         value={value}
+        classes={{
+          inputSizeSmall: '!text-xs',
+        }}
       />
     </FormControl>
   )
