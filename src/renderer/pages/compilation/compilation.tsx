@@ -8,9 +8,18 @@ import ClearIcon from '@mui/icons-material/Clear'
 import HistoryIcon from '@mui/icons-material/History'
 import PlayIcon from '@mui/icons-material/PlayCircleFilled'
 import SearchIcon from '@mui/icons-material/Search'
-import { Button, ButtonProps, List, Typography } from '@mui/material'
+import {
+  Alert,
+  Button,
+  ButtonProps,
+  List,
+  Snackbar,
+  Stack,
+  Typography,
+  Link as MuiLink,
+} from '@mui/material'
 import React, { useCallback, useState } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useDidMount } from 'rooks'
 
@@ -19,7 +28,6 @@ import { Script } from '../../../common/types/script'
 import DialogRecentFiles from '../../components/dialog/dialog-recent-files'
 import Page from '../../components/page'
 import PageAppBar from '../../components/page-app-bar'
-import Toast from '../../components/toast'
 import { useApp } from '../../hooks/use-app'
 import { useCompilation } from '../../hooks/use-compilation'
 import { useDrop, useSetDrop } from '../../hooks/use-drop'
@@ -193,27 +201,23 @@ const Compilation = () => {
           onClose={() => setDialogState(DialogRecentFilesState.close)}
         />
 
-        <Toast
-          type="error"
-          message={
-            <Trans
-              tOptions={{ context: configError }}
-              i18nKey="config.checkError"
-              components={{
-                linkToSettings: <Link to="/settings" className="underline" />,
-              }}
-            />
-          }
-          onClose={resetConfigError}
-          in={!!configError}
-          speedMs={300}
-          autoCloseMs={0}
-          actions={
-            <button className="btn" onClick={checkConfig}>
-              {t('common.refresh')}
-            </button>
-          }
-        />
+        <Snackbar open={!!configError} onClose={resetConfigError}>
+          <Alert
+            severity="error"
+            action={
+              <Stack direction="row" alignItems="center" gap={1}>
+                <MuiLink component={Link} to="/settings">
+                  {t('config.moreDetails')}
+                </MuiLink>
+                <Button onClick={checkConfig} size="small">
+                  {t('common.refresh')}
+                </Button>
+              </Stack>
+            }
+          >
+            {t('config.checkError', { context: configError })}
+          </Alert>
+        </Snackbar>
 
         <div className="mb-4 flex gap-2">
           <Button

@@ -41,15 +41,14 @@ const fr: TranslationShape = {
     },
   },
   config: {
-    checkError_game:
-      'Configuration invalide: vérifiez le chemin du jeu. <linkToSettings>Plus de détails</linkToSettings>',
+    checkError_game: 'Configuration invalide: vérifiez le chemin du jeu.',
     checkError_compiler:
-      'Configuration invalide: vérifiez le chemin du compilateur. <linkToSettings>Plus de détails</linkToSettings>',
+      'Configuration invalide: vérifiez le chemin du compilateur.',
     'checkError_mo2-instance':
-      "Configuration invalide: vérifiez l'instance MO2. <linkToSettings>Plus de détails</linkToSettings>",
+      "Configuration invalide: vérifiez l'instance MO2.",
     checkError_scripts:
-      "Configuration invalide: vérifiez l'installation de Creation Kit. " +
-      '<linkToSettings>Plus de détails</linkToSettings>',
+      "Configuration invalide: vérifiez l'installation de Creation Kit.",
+    moreDetails: 'Plus de détails',
   },
   loading: 'Chargement',
   nav: {

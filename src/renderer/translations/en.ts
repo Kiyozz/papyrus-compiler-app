@@ -37,15 +37,13 @@ const en: TranslationShape = {
     },
   },
   config: {
-    checkError_game:
-      'Invalid configuration: check your game path. <linkToSettings>More details</linkToSettings>',
-    checkError_compiler:
-      'Invalid configuration: check your compiler path. <linkToSettings>More details</linkToSettings>',
-    'checkError_mo2-instance':
-      'Invalid configuration: check your mo2 instance. <linkToSettings>More details</linkToSettings>',
+    checkError_game: 'Invalid configuration: check your game path.',
+    checkError_compiler: 'Invalid configuration: check your compiler path.',
     checkError_scripts:
-      'Invalid configuration: check your Creation Kit installation. ' +
-      '<linkToSettings>More details</linkToSettings>',
+      'Invalid configuration: check your Creation Kit installation.',
+    'checkError_mo2-instance':
+      'Invalid configuration: check your mo2 instance.',
+    moreDetails: 'More details',
   },
   loading: 'Loading',
   nav: {

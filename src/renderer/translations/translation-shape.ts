@@ -46,6 +46,7 @@ export interface TranslationShape {
     checkError_compiler: string
     checkError_scripts: string
     'checkError_mo2-instance': string
+    moreDetails: string
   }
   page: {
     compilation: {
