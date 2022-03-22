@@ -31,25 +31,25 @@ function start() {
     render(
       <VersionProvider>
         <AppProvider>
-          <InitializationProvider>
-            <RecentFilesProvider>
-              <CompilationProvider>
-                <SettingsProvider>
-                  <FocusProvider>
-                    <MuiTheme>
-                      <TelemetryProvider>
+          <TelemetryProvider>
+            <InitializationProvider>
+              <RecentFilesProvider>
+                <CompilationProvider>
+                  <SettingsProvider>
+                    <FocusProvider>
+                      <MuiTheme>
                         <DrawerProvider>
                           <DropProvider>
                             <App />
                           </DropProvider>
                         </DrawerProvider>
-                      </TelemetryProvider>
-                    </MuiTheme>
-                  </FocusProvider>
-                </SettingsProvider>
-              </CompilationProvider>
-            </RecentFilesProvider>
-          </InitializationProvider>
+                      </MuiTheme>
+                    </FocusProvider>
+                  </SettingsProvider>
+                </CompilationProvider>
+              </RecentFilesProvider>
+            </InitializationProvider>
+          </TelemetryProvider>
         </AppProvider>
       </VersionProvider>,
       document.getElementById('app'),
