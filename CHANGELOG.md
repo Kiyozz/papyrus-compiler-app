@@ -8,7 +8,7 @@
 
 ### Features
 
-- New overall design
+- New design
 
 - The configuration is now checked when you enter the compilation page, giving you any tips if your configuration is wrong.
 

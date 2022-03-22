@@ -134,8 +134,7 @@ const OpenCompilationLogs = () => {
 
       <Dialog
         open={isDialogOpen}
-        maxWidth="xl"
-        fullWidth
+        fullScreen
         onClose={onClickButtonCloseLogs}
         onKeyDown={onDialogKeyDown}
         aria-labelledby="logs-title"
@@ -144,20 +143,23 @@ const OpenCompilationLogs = () => {
         <DialogTitle id="logs-title" className="-mb-1">
           {t('common.logs.title')}
         </DialogTitle>
-        <DialogContent id="logs-content" className="!pt-1">
-          <div className="flex flex-col gap-4">
-            {logs.length > 0 ? (
-              logs.map(([script, scriptLogs]) => (
-                <LogsListItem
-                  key={script.id}
-                  script={script}
-                  logs={scriptLogs}
-                />
-              ))
-            ) : (
-              <Typography>{t('common.logs.noLogs')}</Typography>
-            )}
-          </div>
+        <DialogContent
+          id="logs-content"
+          dividers
+          className={cx(
+            'flex flex-col gap-4',
+            logs.length === 0 && 'items-center justify-center',
+          )}
+        >
+          {logs.length > 0 ? (
+            logs.map(([script, scriptLogs]) => (
+              <LogsListItem key={script.id} script={script} logs={scriptLogs} />
+            ))
+          ) : (
+            <Typography variant="h5" component="span">
+              {t('common.logs.noLogs')}
+            </Typography>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={onClickButtonCloseLogs}>
