@@ -72,7 +72,7 @@ const en: TranslationShape = {
         clearList: 'Clear list',
         recentFiles: 'Recent files',
       },
-      dragAndDropText: 'You can drag and drop psc files to load them into PCA.',
+      dragAndDropText: 'Start by dropping psc files to load them',
       dragAndDropAdmin:
         'This feature is not available when running PCA in administrator.',
       scriptItem: {

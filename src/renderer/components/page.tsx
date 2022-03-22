@@ -25,7 +25,7 @@ const Page = ({ children, className }: React.PropsWithChildren<Props>) => {
         className,
       )}
     >
-      <main>{children}</main>
+      <main className="flex min-h-full flex-col">{children}</main>
     </Paper>
   )
 }

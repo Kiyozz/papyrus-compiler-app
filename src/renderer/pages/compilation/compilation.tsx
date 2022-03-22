@@ -5,6 +5,7 @@
  */
 
 import ClearIcon from '@mui/icons-material/Clear'
+import HelpIcon from '@mui/icons-material/Help'
 import HistoryIcon from '@mui/icons-material/History'
 import PlayIcon from '@mui/icons-material/PlayCircleFilled'
 import SearchIcon from '@mui/icons-material/Search'
@@ -17,6 +18,7 @@ import {
   Stack,
   Typography,
   Link as MuiLink,
+  Tooltip,
 } from '@mui/material'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -223,27 +225,29 @@ const Compilation = () => {
           </Alert>
         </Snackbar>
 
-        <div className="mb-4 flex gap-2">
-          <Button
-            onClick={onClickStart}
-            color="primary"
-            variant="contained"
-            disabled={!!configError || scripts.length === 0 || isRunning}
-            aria-disabled={!!configError || scripts.length === 0 || isRunning}
-            startIcon={<PlayIcon />}
-          >
-            {t('page.compilation.actions.start')}
-          </Button>
+        {scripts.length > 0 && (
+          <div className="mb-4 flex gap-2">
+            <Button
+              onClick={onClickStart}
+              color="primary"
+              variant="contained"
+              disabled={!!configError || isRunning}
+              aria-disabled={!!configError || isRunning}
+              startIcon={<PlayIcon />}
+            >
+              {t('page.compilation.actions.start')}
+            </Button>
 
-          <Button
-            onClick={onClickEmpty}
-            disabled={isRunning || scripts.length === 0}
-            aria-disabled={isRunning || scripts.length === 0}
-            startIcon={<ClearIcon />}
-          >
-            {t('page.compilation.actions.clearList')}
-          </Button>
-        </div>
+            <Button
+              onClick={onClickEmpty}
+              disabled={isRunning}
+              aria-disabled={isRunning}
+              startIcon={<ClearIcon />}
+            >
+              {t('page.compilation.actions.clearList')}
+            </Button>
+          </div>
+        )}
 
         {scripts.length > 0 ? (
           <List className="flex flex-col gap-0.5">
@@ -259,12 +263,14 @@ const Compilation = () => {
             })}
           </List>
         ) : (
-          <>
-            <Typography>{t('page.compilation.dragAndDropText')}</Typography>
-            <Typography className="font-bold">
-              {t('page.compilation.dragAndDropAdmin')}
+          <div className="m-auto text-center">
+            <Typography variant="h5">
+              <span>{t('page.compilation.dragAndDropText')}</span>
             </Typography>
-          </>
+            <Tooltip title={t<string>('page.compilation.dragAndDropAdmin')}>
+              <HelpIcon className="mt-3" />
+            </Tooltip>
+          </div>
         )}
       </Page>
     </>

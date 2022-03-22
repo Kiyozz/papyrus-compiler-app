@@ -30,13 +30,13 @@ SE version: [NexusMods SE](https://www.nexusmods.com/skyrimspecialedition/mods/2
 <summary>Open</summary>
 
 ![Main page](docs/screenshots/2022_1_compilation.png)
-![Main page with scripts](docs/screenshots/2022_9_compilation_list.png)
-![Compilation logs dialog](docs/screenshots/2022_8_compilation_logs.png)
-![Recent files dialog](docs/screenshots/2022_2_recent_files.png)
-![Recent files more dialog](docs/screenshots/2022_3_recent_files_more.png)
-![Group page](docs/screenshots/2022_4_groups.png)
-![Group more page](docs/screenshots/2022_5_groups_more.png)
-![Edit a group](docs/screenshots/2022_6_groups_edit.png)
-![Settings dark](docs/screenshots/2022_7_settings.png)
+![Main page with scripts](docs/screenshots/2022_2_compilation_list.png)
+![Compilation logs dialog](docs/screenshots/2022_3_compilation_logs.png)
+![Recent files dialog](docs/screenshots/2022_4_recent_files.png)
+![Recent files more dialog](docs/screenshots/2022_5_recent_files_more.png)
+![Group page](docs/screenshots/2022_6_groups.png)
+![Group more page](docs/screenshots/2022_7_groups_more.png)
+![Edit a group](docs/screenshots/2022_8_groups_edit.png)
+![Settings dark](docs/screenshots/2022_9_settings.png)
 
 </details>

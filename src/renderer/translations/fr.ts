@@ -79,7 +79,7 @@ const fr: TranslationShape = {
         recentFiles: 'Fichiers récents',
       },
       dragAndDropText:
-        'Vous pouvez glisser-déposer des fichiers psc pour les charger dans PCA.',
+        'Commencez par glisser-déposer des fichiers psc pour les charger',
       dragAndDropAdmin:
         "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur.",
       scriptItem: {
