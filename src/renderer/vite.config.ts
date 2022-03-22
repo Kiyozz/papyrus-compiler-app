@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import reactRefresh from '@vitejs/plugin-react-refresh'
+import react from '@vitejs/plugin-react'
 import * as fsSync from 'node:fs'
 import * as path from 'node:path'
 import { defineConfig } from 'vite'
@@ -16,7 +16,7 @@ const { version }: { version: string } = JSON.parse(
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [reactRefresh()],
+  plugins: [react()],
   build: {
     target: 'chrome98', // electron version target
     sourcemap: true,

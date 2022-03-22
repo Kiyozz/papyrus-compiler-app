@@ -269,7 +269,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
                 onChange={() => setMoreDetails(v => !v)}
               />
             }
-            label={t<string>('page.compilation.recentFilesDialog.moreDetails')}
+            label={t<string>('common.moreDetails')}
           />
         </FormGroup>
       </Toolbar>

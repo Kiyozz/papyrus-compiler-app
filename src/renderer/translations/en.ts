@@ -20,6 +20,7 @@ const en: TranslationShape = {
     skip: 'Skip',
     close: 'Close',
     download: 'Download',
+    moreDetails: 'More details',
     logs: {
       nav: 'Logs',
       title: 'Compilation logs',
@@ -47,7 +48,6 @@ const en: TranslationShape = {
       'Invalid configuration: check your mo2 instance.',
     'checkError_mo2-use-no-instance':
       'Invalid configuration: mo2 integration is enabled, but your mo2 instance is invalid.',
-    moreDetails: 'More details',
   },
   loading: 'Loading',
   nav: {
@@ -81,7 +81,6 @@ const en: TranslationShape = {
       recentFilesDialog: {
         noRecentFiles: 'No recent files',
         load: 'Load',
-        moreDetails: 'More details',
       },
     },
     groups: {

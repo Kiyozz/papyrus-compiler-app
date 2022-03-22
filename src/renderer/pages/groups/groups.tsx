@@ -113,7 +113,7 @@ const Groups = () => {
                   onChange={onChangeMoreDetails}
                 />
               }
-              label="More details"
+              label={t<string>('common.moreDetails')}
             />
           </FormGroup>
         </Toolbar>

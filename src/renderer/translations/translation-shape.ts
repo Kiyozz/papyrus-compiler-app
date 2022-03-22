@@ -18,6 +18,7 @@ export interface TranslationShape {
     skip: string
     close: string
     download: string
+    moreDetails: string
     logs: {
       nav: string
       title: string
@@ -49,7 +50,6 @@ export interface TranslationShape {
     checkError_scripts: string
     'checkError_mo2-instance': string
     'checkError_mo2-use-no-instance': string
-    moreDetails: string
   }
   page: {
     compilation: {
@@ -69,7 +69,6 @@ export interface TranslationShape {
       recentFilesDialog: {
         noRecentFiles: string
         load: string
-        moreDetails: string
       }
     }
     groups: {

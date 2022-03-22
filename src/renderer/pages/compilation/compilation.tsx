@@ -211,7 +211,7 @@ const Compilation = () => {
             action={
               <Stack direction="row" alignItems="center" gap={1}>
                 <MuiLink component={Link} to="/settings">
-                  {t('config.moreDetails')}
+                  {t('common.moreDetails')}
                 </MuiLink>
                 <Button onClick={onClickRefreshCheckConfig} size="small">
                   {t('common.refresh')}
