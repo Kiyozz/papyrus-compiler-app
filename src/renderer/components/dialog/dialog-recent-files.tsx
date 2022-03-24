@@ -213,7 +213,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
       <ListItem
         disablePadding
         secondaryAction={
-          <IconButton color="error" onClick={onClickDelete}>
+          <IconButton color="error" onClick={onClickDelete} tabIndex={2}>
             <DeleteOutlinedIcon />
           </IconButton>
         }
@@ -225,6 +225,7 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
           disabled={disabled}
           classes={{ root: 'py-0' }}
           disableRipple
+          tabIndex={1}
         >
           <ListItemIcon>
             <Checkbox
@@ -296,8 +297,14 @@ const DialogRecentFiles = ({ isOpen, onClose }: Props) => {
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClickClose}>{t('common.cancel')}</Button>
-        <Button onClick={onClickLoad} disabled={selectedRecentFiles.size === 0}>
+        <Button onClick={onClickClose} tabIndex={4}>
+          {t('common.cancel')}
+        </Button>
+        <Button
+          onClick={onClickLoad}
+          disabled={selectedRecentFiles.size === 0}
+          tabIndex={3}
+        >
           {t('page.compilation.recentFilesDialog.load')}
         </Button>
       </DialogActions>

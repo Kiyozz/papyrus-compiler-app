@@ -104,19 +104,21 @@ const Groups = () => {
           onClose={onClosePopup}
         />
 
-        <Toolbar className="p-0">
-          <FormGroup className="ml-auto">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isMoreDetails === 'true'}
-                  onChange={onChangeMoreDetails}
-                />
-              }
-              label={t<string>('common.moreDetails')}
-            />
-          </FormGroup>
-        </Toolbar>
+        {groups.length > 0 && (
+          <Toolbar className="p-0">
+            <FormGroup className="ml-auto">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isMoreDetails === 'true'}
+                    onChange={onChangeMoreDetails}
+                  />
+                }
+                label={t<string>('common.moreDetails')}
+              />
+            </FormGroup>
+          </Toolbar>
+        )}
 
         {groups.length > 0 ? (
           <List className="flex flex-col gap-2">
