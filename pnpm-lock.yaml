@@ -67,7 +67,7 @@ specifiers:
   rooks: ^5.10.5
   rxjs: ~7.5.5
   tailwindcss: ~3.0.23
-  ts-pattern: ^3.3.5
+  ts-pattern: ^4.0.1
   type-fest: ^2.12.1
   typescript: ~4.6.3
   uuid: ^8.3.2
@@ -140,7 +140,7 @@ devDependencies:
   rooks: 5.10.5_react-dom@17.0.2+react@17.0.2
   rxjs: 7.5.5
   tailwindcss: 3.0.23_autoprefixer@10.4.4
-  ts-pattern: 3.3.5
+  ts-pattern: 4.0.1
   type-fest: 2.12.1
   typescript: 4.6.3
   uuid: 8.3.2
@@ -8802,10 +8802,10 @@ packages:
       utf8-byte-length: 1.0.4
     dev: true
 
-  /ts-pattern/3.3.5:
+  /ts-pattern/4.0.1:
     resolution:
       {
-        integrity: sha512-LD+wFR/RNckk1DrKV0LTH4KIT9wRqnnOjtEf77ovhKcVi8gf83Uf6U7OdywEua6KD9SbHadUdfolayfIUiPxzw==,
+        integrity: sha512-UaEFiG0xvCAa0tXBi242rD2WU28RlurzQe27t7vc2+3difhtA58Q6BiFl3YQbDlDiWfantdP05YICJPpGo/ulg==,
       }
     dev: true
 
