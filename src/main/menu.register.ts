@@ -114,16 +114,16 @@ export async function registerMenu({
 
   if (is.array(menu.submenu)) {
     for (const item of menu.submenu) {
-      const label = match<string, string | undefined>(item.role as string)
+      const label = match(item.role as string)
         .with('about', 'hide', 'quit', role => {
           const key = role === 'hide' ? 'hideSelf' : role
 
-          return t(`appMenu.app.${key}`, { app: 'PCA' })
+          return t<string>(`appMenu.app.${key}`, { app: 'PCA' })
         })
         .with('hideothers', 'unhide', role => {
           const key = role === 'hideothers' ? 'hideOthers' : 'showAll'
 
-          return t(`appMenu.app.${key}`)
+          return t<string>(`appMenu.app.${key}`)
         })
         .otherwise(() => undefined)
 
