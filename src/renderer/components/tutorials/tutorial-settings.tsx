@@ -12,10 +12,10 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { MOD_DOCUMENTATION_URL } from '../../../common/env'
 import { TelemetryEvent } from '../../../common/telemetry-event'
-import bridge from '../../bridge'
+import { bridge } from '../../bridge'
 import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
-import type { MouseEvent} from 'react';
+import type { MouseEvent } from 'react'
 
 enum Step {
   waiting,
@@ -123,7 +123,9 @@ function Mo2SettingsStep({ next }: { next: Next }) {
 }
 
 function Backdrop() {
-  return <div className="fixed top-0 left-0 right-0 bottom-0 z-30 bg-black-800 bg-opacity-60" />
+  return (
+    <div className="fixed top-0 left-0 right-0 bottom-0 z-30 bg-black-800 bg-opacity-60" />
+  )
 }
 
 /**
@@ -155,7 +157,7 @@ function TutorialSettings() {
       send(TelemetryEvent.tutorialsSettingsSkip, { step })
     } else if (reason === 'deny') {
       send(TelemetryEvent.tutorialsSettingsDeny, {})
-    } else if (reason === 'end') {
+    } else {
       send(TelemetryEvent.tutorialsSettingsEnd, {})
     }
   }
@@ -209,7 +211,7 @@ function TutorialSettings() {
   const onClickOpenDocumentation = (evt: MouseEvent) => {
     evt.preventDefault()
 
-    bridge.shell.openExternal(MOD_DOCUMENTATION_URL)
+    void bridge.shell.openExternal(MOD_DOCUMENTATION_URL)
   }
 
   if (!config.tutorials.settings) {
@@ -220,9 +222,7 @@ function TutorialSettings() {
     <>
       <Backdrop />
       {(step === Step.ask || step === Step.waiting) && (
-        <div
-          className="fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400 dark:text-white"
-        >
+        <div className="fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400 dark:text-white">
           <Typography variant="h3">
             {t('tutorials.settings.ask.title')}
           </Typography>
@@ -233,6 +233,7 @@ function TutorialSettings() {
             <Trans
               components={{
                 1: (
+                  // eslint-disable-next-line jsx-a11y/anchor-has-content
                   <a
                     className="text-gray-700 dark:text-white"
                     href="/"

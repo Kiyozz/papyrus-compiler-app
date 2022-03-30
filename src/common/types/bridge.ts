@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+import type { FromError } from '../from-error'
 import type { PartialDeep } from 'type-fest'
 import type {
   TelemetryEvent,
@@ -34,7 +35,7 @@ export interface Bridge {
     off: (fn: (args: unknown) => unknown) => void
   }
 
-  error: (error: Error) => Promise<void>
+  error: (error: Error | FromError) => Promise<void>
 
   online: (online: boolean) => void
 

@@ -18,13 +18,13 @@ export const useTheme = (): [Theme, (theme: Theme) => void] => {
   const { send } = useTelemetry()
 
   const setTheme = useCallback(
-    (theme: Theme) => {
-      if (![Theme.system, Theme.light, Theme.dark].includes(theme)) {
+    (newTheme: Theme) => {
+      if (![Theme.system, Theme.light, Theme.dark].includes(newTheme)) {
         return
       }
 
-      send(TelemetryEvent.settingsTheme, { theme })
-      setConfig({ theme })
+      send(TelemetryEvent.settingsTheme, { theme: newTheme })
+      setConfig({ theme: newTheme })
     },
     [setConfig, send],
   )

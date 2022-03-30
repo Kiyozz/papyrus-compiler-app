@@ -19,7 +19,7 @@ import { iconFromStatus } from '../../utils/scripts/from-status'
 import { isRunningScript } from '../../utils/scripts/status'
 import type { ScriptRenderer } from '../../types'
 
-interface Props {
+interface ScriptLineProps {
   script: ScriptRenderer
   onClickRemoveScript: (script: ScriptRenderer) => void
   onClickPlayCompilation: (script: ScriptRenderer) => void
@@ -29,7 +29,7 @@ function ScriptLine({
   script,
   onClickRemoveScript,
   onClickPlayCompilation,
-}: Props) {
+}: ScriptLineProps) {
   const { t } = useTranslation()
 
   const onClickRemove = () => {

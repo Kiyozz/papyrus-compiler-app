@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import bridge from '../../bridge'
+import { bridge } from '../../bridge'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import type { Script } from '../../../common/types/script'
 import type { ScriptRenderer } from '../../types'
@@ -15,13 +15,14 @@ export const scriptsToRenderer = (
 ): ScriptRenderer[] => {
   return [
     ...scriptsRenderer,
-    ...scripts.map(
-      s =>
-        ({
-          ...s,
-          id: bridge.uuid(),
-          status: ScriptStatus.idle,
-        } as ScriptRenderer),
-    ),
+    ...scripts.map(s => {
+      const script: ScriptRenderer = {
+        ...s,
+        id: bridge.uuid(),
+        status: ScriptStatus.idle,
+      }
+
+      return script
+    }),
   ]
 }

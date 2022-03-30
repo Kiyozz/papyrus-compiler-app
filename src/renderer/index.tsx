@@ -7,8 +7,9 @@
 import debounce from 'debounce-fn'
 import React from 'react'
 import { render } from 'react-dom'
+import { fromError } from '../common/from-error'
 import App from './app'
-import bridge from './bridge'
+import { bridge } from './bridge'
 import AppProvider from './hooks/use-app'
 import CompilationProvider from './hooks/use-compilation'
 import DrawerProvider from './hooks/use-drawer'
@@ -23,7 +24,7 @@ import SettingsProvider from './pages/settings/use-settings'
 import { loadTranslations } from './translations'
 import { isProduction } from './utils/is-production'
 
-function start() {
+async function start() {
   loadTranslations()
 
   try {
@@ -61,10 +62,10 @@ function start() {
     } else if (typeof e === 'string') {
       err = new Error(e)
     } else {
-      err = new Error(`unknown error: ${e}`)
+      err = new Error(`unknown error: ${fromError(e).message}`)
     }
 
-    bridge.error(err)
+    await bridge.error(err)
   }
 
   function sendIsOnline(): void {
@@ -76,26 +77,28 @@ function start() {
   window.addEventListener('online', () => sendIsOnline())
   window.addEventListener('offline', () => sendIsOnline())
 
-  isProduction().then(production => {
-    if (!production) {
-      const handle = debounce(
-        (error: Error) => {
-          bridge.error(error)
-        },
-        { wait: 200 },
-      )
+  const production = await isProduction()
 
-      window.addEventListener('error', event => {
-        event.preventDefault()
-        handle(event.error || event)
-      })
+  if (!production) {
+    const handle = debounce(
+      (error: Error) => {
+        void bridge.error(error)
+      },
+      { wait: 200 },
+    )
 
-      window.addEventListener('unhandledrejection', event => {
-        event.preventDefault()
-        handle(event.reason || event)
-      })
-    }
-  })
+    window.addEventListener('error', event => {
+      event.preventDefault()
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      handle(event.error || event)
+    })
+
+    window.addEventListener('unhandledrejection', event => {
+      event.preventDefault()
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      handle(event.reason || event)
+    })
+  }
 }
 
-start()
+void start()

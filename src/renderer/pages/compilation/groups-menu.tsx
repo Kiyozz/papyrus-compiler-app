@@ -14,12 +14,12 @@ import { useTelemetry } from '../../hooks/use-telemetry'
 import { isChildren } from '../../html/is-child'
 import type { Group } from '../../types'
 
-interface Props {
+interface GroupsMenuProps {
   groups: Group[]
   onChangeGroup: (groupName: string) => void
 }
 
-function GroupsMenu({ groups, onChangeGroup }: Props) {
+function GroupsMenu({ groups, onChangeGroup }: GroupsMenuProps) {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const { send } = useTelemetry()

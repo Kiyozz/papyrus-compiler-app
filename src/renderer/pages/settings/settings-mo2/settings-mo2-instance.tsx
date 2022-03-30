@@ -12,7 +12,7 @@ import DialogTextField from '../../../components/dialog/dialog-text-field'
 import { useApp } from '../../../hooks/use-app'
 import { useSettings } from '../use-settings'
 
-interface Props {
+interface SettingsMo2InstanceProps {
   onChangeMo2Instance: (value: string) => void
   onClickRefreshInstallation: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
@@ -20,7 +20,7 @@ interface Props {
 function SettingsMo2Instance({
   onChangeMo2Instance,
   onClickRefreshInstallation,
-}: Props) {
+}: SettingsMo2InstanceProps) {
   const { t } = useTranslation()
   const {
     config: { mo2 },
@@ -56,7 +56,11 @@ function SettingsMo2Instance({
             </p>
           </div>
           <div>
-            <button className="btn mr-2" onClick={onClickRefreshInstallation}>
+            <button
+              className="btn mr-2"
+              onClick={onClickRefreshInstallation}
+              type="button"
+            >
               <div className="icon">
                 <RefreshIcon />
               </div>

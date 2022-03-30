@@ -9,7 +9,7 @@ import {
   MOD_DOCUMENTATION_URL_DEV,
 } from '../../common/env'
 import { TelemetryEvent } from '../../common/telemetry-event'
-import bridge from '../bridge'
+import { bridge } from '../bridge'
 import { useProduction } from './use-production'
 import { useTelemetry } from './use-telemetry'
 
@@ -22,7 +22,7 @@ export const useDocumentation = () => {
     reason: 'enter' | 'click' | 'settings-app-bar',
   ) => {
     send(TelemetryEvent.documentationOpenFromNav, { reason })
-    bridge.shell.openExternal(url)
+    void bridge.shell.openExternal(url)
   }
 
   return {

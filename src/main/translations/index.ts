@@ -4,14 +4,14 @@
  * All rights reserved.
  */
 
-import i18next from 'i18next'
+import { init } from 'i18next'
 import { settingsStore } from '../store/settings/store'
-import en from './en'
-import fr from './fr'
-import type { TFunction } from 'i18next';
+import { en } from './en'
+import { fr } from './fr'
 
 const locale = settingsStore.get('locale').includes('fr') ? 'fr' : 'en'
-const instance = i18next.init({
+
+export const instance = init({
   resources: {
     en: {
       translation: en,
@@ -23,7 +23,3 @@ const instance = i18next.init({
   lng: locale,
   fallbackLng: 'en',
 })
-
-export default function getInstance(): Promise<TFunction> {
-  return instance
-}

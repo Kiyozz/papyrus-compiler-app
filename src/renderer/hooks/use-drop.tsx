@@ -4,11 +4,9 @@
  * All rights reserved.
  */
 
- 
-
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import DropScripts from '../components/drop/drop-scripts'
-import type { OnDrop } from '../components/drop/drop-scripts';
+import type { OnDrop } from '../components/drop/drop-scripts'
 
 interface DropContext {
   onDrop: OnDrop | null

@@ -18,7 +18,9 @@ export class RecentFilesSetHandler implements EventHandler {
     this._logger.debug('set recent files')
 
     if (is.undefined(scripts)) {
-      throw new ApplicationException('recent-files-set-handler: scripts is undefined')
+      throw new ApplicationException(
+        'recent-files-set-handler: scripts is undefined',
+      )
     }
 
     recentFilesStore.files = scripts

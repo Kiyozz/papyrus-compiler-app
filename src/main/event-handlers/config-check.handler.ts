@@ -23,7 +23,8 @@ import type {
   CompilerPath,
   CompilerSourceFile,
   GamePath,
-  GameType} from '../../common/game';
+  GameType,
+} from '../../common/game'
 import type { BadError } from '../../common/types/bad-error'
 
 const _logger = new Logger(IpcEvent.configCheck)
@@ -85,7 +86,7 @@ export class ConfigCheckHandler implements EventHandler {
 
     return Promise.resolve(
       mo2Use && mo2Instance && !path.exists(mo2Instance)
-          ? 'mo2-instance'
+        ? 'mo2-instance'
         : false,
     )
   }

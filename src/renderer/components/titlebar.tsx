@@ -6,18 +6,18 @@
 
 import cx from 'classnames'
 import React from 'react'
-import bridge from '../bridge'
+import { bridge } from '../bridge'
 import { useFocus } from '../hooks/use-focus'
 import { usePlatform } from '../hooks/use-platform'
 import { useTitlebarHeight } from '../hooks/use-titlebar-height'
 import { useWindowState } from '../hooks/use-window-state'
-import type { MouseEvent } from 'react';
+import type { MouseEvent } from 'react'
 
-interface Props {
+interface TitlebarProps {
   title: string
 }
 
-function Titlebar({ title }: Props) {
+function Titlebar({ title }: TitlebarProps) {
   const isFocus = useFocus()
   const platform = usePlatform()
   const windowState = useWindowState()
@@ -25,7 +25,7 @@ function Titlebar({ title }: Props) {
 
   const handleClickMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.blur()
-    bridge.titlebar.openMenu({ x: e.pageX, y: e.pageY })
+    void bridge.titlebar.openMenu({ x: e.pageX, y: e.pageY })
   }
 
   const isNotMacOs = platform !== 'macos' && platform !== 'macos-bigsur'
@@ -34,7 +34,7 @@ function Titlebar({ title }: Props) {
 
   const handleCloseWindow = (e: MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.blur()
-    bridge.window.close()
+    void bridge.window.close()
   }
 
   const handleMinimizeWindow = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -67,7 +67,11 @@ function Titlebar({ title }: Props) {
       data-height={titlebarHeight}
     >
       {isNotMacOs && (
-        <button className="btn btn-default ml-0" onClick={handleClickMenu}>
+        <button
+          className="btn btn-default ml-0"
+          onClick={handleClickMenu}
+          type="button"
+        >
           {img}
         </button>
       )}
@@ -89,6 +93,7 @@ function Titlebar({ title }: Props) {
             className="titlebar-control"
             onClick={handleMinimizeWindow}
             tabIndex={-1}
+            type="button"
           >
             &#xE921;
           </button>
@@ -97,6 +102,7 @@ function Titlebar({ title }: Props) {
               className="titlebar-control"
               onClick={handleRestoreWindow}
               tabIndex={-1}
+              type="button"
             >
               &#xE923;
             </button>
@@ -105,6 +111,7 @@ function Titlebar({ title }: Props) {
               className="titlebar-control"
               onClick={handleMaximizeWindow}
               tabIndex={-1}
+              type="button"
             >
               &#xE922;
             </button>
@@ -113,6 +120,7 @@ function Titlebar({ title }: Props) {
             className="titlebar-control titlebar-control-close"
             onClick={handleCloseWindow}
             tabIndex={-1}
+            type="button"
           >
             &#xE8BB;
           </button>

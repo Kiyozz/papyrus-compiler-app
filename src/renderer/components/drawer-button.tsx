@@ -11,17 +11,16 @@ import {
   ListItemText,
 } from '@mui/material'
 import React from 'react'
-import type {
-  ListItemButtonProps} from '@mui/material';
-import type { ReactNode } from 'react';
+import type { ListItemButtonProps } from '@mui/material'
+import type { ReactNode } from 'react'
 
-interface Props {
+interface DrawerButtonProps {
   icon: ReactNode
   text: string
   onClick: ListItemButtonProps['onClick']
 }
 
-function DrawerButton({ icon, text, onClick }: Props) {
+function DrawerButton({ icon, text, onClick }: DrawerButtonProps) {
   return (
     <ListItem aria-label={text} disablePadding>
       <ListItemButton onClick={onClick}>

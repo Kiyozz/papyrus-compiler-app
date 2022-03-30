@@ -5,7 +5,7 @@
  */
 
 import React, { createContext, useContext } from 'react'
-import bridge from '../bridge'
+import { bridge } from '../bridge'
 import { Env } from '../env'
 import { useApp } from './use-app'
 import type {
@@ -31,12 +31,12 @@ function TelemetryProvider({ children }: React.PropsWithChildren<unknown>) {
     properties: TelemetryEventProperties[TelemetryEvent],
   ) => {
     if (config.telemetry.active && Env.telemetryFeature) {
-      bridge.telemetry.send(event, properties)
+      void bridge.telemetry.send(event, properties)
     }
   }
 
   const setActive = (active: boolean) => {
-    bridge.telemetry.setActive(active)
+    void bridge.telemetry.setActive(active)
   }
 
   return (

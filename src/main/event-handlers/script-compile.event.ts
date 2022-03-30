@@ -42,7 +42,7 @@ export class ScriptCompileEvent implements Event {
     if (is.undefined(script)) {
       throw new ApplicationException('script-compile-on: script is undefined')
     }
-    
+
     this.logger.info('start compilation of scripts', script)
     this.logger.debug('checking the current store values')
 

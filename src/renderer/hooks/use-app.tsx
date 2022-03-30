@@ -5,23 +5,17 @@
  */
 
 import is from '@sindresorhus/is'
-import React, {
-  useCallback,
-  useContext,
-  useState,
-} from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { useDidMount } from 'rooks'
 import { Subject } from 'rxjs'
-import bridge from '../bridge'
+import { bridge } from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { Group } from '../types'
 import { useIpc } from './use-ipc'
 import type { PartialDeep } from 'type-fest'
 import type { Config } from '../../common/types/config'
-import type { Observable} from 'rxjs';
-import type {
-  Dispatch,
-  SetStateAction} from 'react';
+import type { Observable } from 'rxjs'
+import type { Dispatch, SetStateAction } from 'react'
 
 interface AppContext {
   showChangelogs: readonly [boolean, Dispatch<SetStateAction<boolean>>]
@@ -55,10 +49,10 @@ function AppProvider({ children }: React.PropsWithChildren<unknown>) {
   })
 
   const selectGroupsFromConfig = useCallback(
-    (config: Config): Group[] => {
-      if (config.groups.length === 0) return []
+    (sgfConfig: Config): Group[] => {
+      if (sgfConfig.groups.length === 0) return []
 
-      return config.groups.map(
+      return sgfConfig.groups.map(
         g =>
           new Group(
             g.name,

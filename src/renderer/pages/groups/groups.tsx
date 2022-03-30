@@ -27,7 +27,7 @@ import { useGroups } from '../../hooks/use-groups'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import GroupsListItem from './groups-list-item'
 import type { Group } from '../../types'
-import type { MouseEvent, ChangeEvent } from 'react';
+import type { MouseEvent, ChangeEvent } from 'react'
 
 function Groups() {
   const { send } = useTelemetry()

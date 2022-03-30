@@ -105,11 +105,11 @@ function Settings() {
   useEffect(() => {
     resetConfigError()
 
-    if (!game.type || !game.path || !compilation.compilerPath) {
+    if (!game.path || !compilation.compilerPath) {
       return
     }
 
-    debouncedCheckInstallation()
+    void debouncedCheckInstallation()
   }, [
     compilation.compilerPath,
     debouncedCheckInstallation,
@@ -159,13 +159,13 @@ function Settings() {
       e.preventDefault()
 
       send(TelemetryEvent.settingsRefresh, {})
-      checkConfig()
+      void checkConfig()
     },
     [checkConfig, send],
   )
 
   const onClickPageRefresh = useCallback(() => {
-    checkConfig()
+    void checkConfig()
     refreshConfig()
     send(TelemetryEvent.settingsRefresh, {})
   }, [refreshConfig, checkConfig, send])

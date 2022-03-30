@@ -9,7 +9,7 @@ import SettingsSection from '../settings-section'
 import SettingsMo2Activation from './settings-mo2-activation'
 import SettingsMo2Instance from './settings-mo2-instance'
 
-interface Props {
+interface SettingsMo2Props {
   onChangeMo2: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeMo2Instance: (value: string) => void
   onClickRefreshInstallation: (e: React.MouseEvent<HTMLButtonElement>) => void
@@ -19,7 +19,7 @@ function SettingsMo2({
   onChangeMo2,
   onChangeMo2Instance,
   onClickRefreshInstallation,
-}: Props) {
+}: SettingsMo2Props) {
   return (
     <SettingsSection
       aria-label="Mod Organizer 2"

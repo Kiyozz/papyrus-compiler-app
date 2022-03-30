@@ -5,19 +5,24 @@
  */
 
 import React from 'react'
-import bridge from '../bridge'
+import { bridge } from '../bridge'
+import type { HTMLProps, PropsWithChildren } from 'react'
 
 function Anchor({
   children,
   href,
-}: React.PropsWithChildren<React.HTMLProps<HTMLAnchorElement>>) {
+}: PropsWithChildren<HTMLProps<HTMLAnchorElement>>) {
   const onClick = () => {
     if (href) {
-      bridge.shell.openExternal(href)
+      void bridge.shell.openExternal(href)
     }
   }
 
-  return <a onClick={onClick}>{children}</a>
+  return (
+    <button onClick={onClick} type="button">
+      {children}
+    </button>
+  )
 }
 
 export default Anchor

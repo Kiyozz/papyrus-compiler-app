@@ -5,7 +5,7 @@
  */
 
 import { useState } from 'react'
-import bridge from '../bridge'
+import { bridge } from '../bridge'
 import type { Platform } from '../../common/types/platform'
 
 export const usePlatform = (): Platform => {

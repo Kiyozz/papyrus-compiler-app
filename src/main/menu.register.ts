@@ -17,7 +17,7 @@ import { IpcEvent } from './ipc-event'
 import { Logger } from './logger'
 import { exists } from './path/path'
 import { settingsStore, defaultConfig } from './store/settings/store'
-import type { MenuItemConstructorOptions} from 'electron';
+import type { MenuItemConstructorOptions } from 'electron'
 
 interface RegisterMenusCallbacks {
   openLogFile: (file: string) => Promise<void>
@@ -30,7 +30,7 @@ export async function registerMenu({
   win,
   openLogFile,
 }: RegisterMenusCallbacks): Promise<Menu> {
-  const t = await (await import('./translations/index')).default()
+  const t = await (await import('./translations/index')).instance
 
   const menu = appMenu([
     {
@@ -151,9 +151,15 @@ export async function registerMenu({
   defaultMenus.push(helpMenu)
   defaultMenus.unshift(fileMenu)
 
-  const editMenu = defaultMenus.find(defaultMenu => defaultMenu.label === 'Edit')
-  const viewMenu = defaultMenus.find(defaultMenu => defaultMenu.label === 'View')
-  const windowMenu = defaultMenus.find(defaultMenu => defaultMenu.label === 'Window')
+  const editMenu = defaultMenus.find(
+    defaultMenu => defaultMenu.label === 'Edit',
+  )
+  const viewMenu = defaultMenus.find(
+    defaultMenu => defaultMenu.label === 'View',
+  )
+  const windowMenu = defaultMenus.find(
+    defaultMenu => defaultMenu.label === 'Window',
+  )
 
   if (!is.nullOrUndefined(editMenu)) {
     editMenu.role = 'editMenu'

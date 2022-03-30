@@ -25,7 +25,7 @@ import { useTelemetry } from '../hooks/use-telemetry'
 import { isFailedScript, isSuccessScript } from '../utils/scripts/status'
 import DrawerButton from './drawer-button'
 import type { ScriptRenderer } from '../types'
-import type { KeyboardEvent} from 'react';
+import type { KeyboardEvent } from 'react'
 
 function LogsListItem({
   script,
@@ -78,14 +78,19 @@ function LogsListItem({
         id={`${script.id}-logs`}
         role="log"
       >
-        {logs.split('\n').map((log, i) => (
-          <span
-            className="select-text break-words text-justify font-mono text-xs"
-            key={i}
-          >
-            {log} <br />
-          </span>
-        ))}
+        {logs.split('\n').map((log, i) => {
+          /* eslint-disable react/no-array-index-key */
+          return (
+            <span
+              className="select-text break-words text-justify font-mono text-xs"
+              key={i}
+            >
+              {log}
+              <br />
+            </span>
+          )
+          /* eslint-enable react/no-array-index-key */
+        })}
       </Paper>
     </Paper>
   )
@@ -121,11 +126,7 @@ function OpenCompilationLogs() {
           isAllScriptsSuccessInLogs ? (
             <CheckCircleIcon className="text-green-500" />
           ) : (
-            <ErrorIcon
-              className={cx(
-                hasErrorsInLogs && !isAllScriptsSuccessInLogs && 'text-red-300',
-              )}
-            />
+            <ErrorIcon className={cx(hasErrorsInLogs && 'text-red-300')} />
           )
         }
         onClick={onClickButtonOpenLogs}

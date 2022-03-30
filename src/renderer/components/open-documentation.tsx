@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next'
 import { useDocumentation } from '../hooks/use-documentation'
 import { useShowOpenDocumentationDialog } from '../hooks/use-show-open-documentation-dialog'
 import DrawerButton from './drawer-button'
-import type { KeyboardEvent } from 'react';
+import type { KeyboardEvent } from 'react'
 
 function OpenDocumentation() {
   const [isShowDialog, toggleShowDialog] = useShowOpenDocumentationDialog()

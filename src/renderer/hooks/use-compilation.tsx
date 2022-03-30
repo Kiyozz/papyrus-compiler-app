@@ -12,11 +12,13 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import bridge from '../bridge'
+import is from '@sindresorhus/is'
+import { bridge } from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { chunk } from '../utils/chunk'
 import { scriptInList } from '../utils/scripts/equals'
 import { isRunningScript } from '../utils/scripts/status'
+import { fromError } from '../../common/from-error'
 import { useApp } from './use-app'
 import type { ScriptRenderer } from '../types'
 import type { CompilationResult } from '../../common/types/compilation-result'
@@ -50,9 +52,7 @@ const whenCompileScriptFinish = (
   })
 }
 
-function CompilationProvider({
-  children,
-}: React.PropsWithChildren<unknown>) {
+function CompilationProvider({ children }: React.PropsWithChildren<unknown>) {
   const [compilationScripts, setCompilationScripts] = useState<
     ScriptRenderer[]
   >([])
@@ -63,9 +63,9 @@ function CompilationProvider({
   const { config } = useApp()
   const concurrentScripts = useMemo(
     () =>
-      (config.compilation.concurrentScripts ?? 0) === 0
+      config.compilation.concurrentScripts === 0
         ? 1
-        : config.compilation.concurrentScripts ?? 1,
+        : config.compilation.concurrentScripts,
     [config],
   )
 
@@ -103,6 +103,7 @@ function CompilationProvider({
           bridge.compilation.start(script.name)
         })
 
+        // eslint-disable-next-line no-await-in-loop
         await Promise.all(
           partialScripts.map(async (s: ScriptRenderer) => {
             try {
@@ -117,7 +118,13 @@ function CompilationProvider({
                   return cs
                 }
 
-                cs[found].status = result.success
+                const foundCs = cs[found]
+
+                if (is.undefined(foundCs)) {
+                  throw new TypeError('foundCs is undefined')
+                }
+
+                foundCs.status = result.success
                   ? ScriptStatus.success
                   : ScriptStatus.failed
 
@@ -128,13 +135,7 @@ function CompilationProvider({
                 return [[s, result.output], ...cl]
               })
             } catch (e) {
-              let errorMessage: string
-
-              if (e instanceof Error) {
-                errorMessage = e.message
-              } else {
-                errorMessage = `unknown error ${e}`
-              }
+              const errorMessage = fromError(e).message
 
               setCompilationScripts((cs: ScriptRenderer[]) => {
                 const found = cs.findIndex(incs => incs.id === s.id)
@@ -143,7 +144,13 @@ function CompilationProvider({
                   return cs
                 }
 
-                cs[found].status = ScriptStatus.failed
+                const foundCs = cs[found]
+
+                if (is.undefined(foundCs)) {
+                  throw new TypeError('foundCs is undefined')
+                }
+
+                foundCs.status = ScriptStatus.failed
 
                 return [...cs]
               })

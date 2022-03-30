@@ -24,15 +24,11 @@ import {
   IconButton,
 } from '@mui/material'
 import cx from 'classnames'
-import React, {
-  memo,
-  useMemo,
-  useState
-} from 'react'
+import React, { memo, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDidUpdate } from 'rooks'
 import { TelemetryEvent } from '../../../common/telemetry-event'
-import bridge from '../../bridge'
+import { bridge } from '../../bridge'
 import { useCompilation } from '../../hooks/use-compilation'
 import { useIpc } from '../../hooks/use-ipc'
 import { usePlatform } from '../../hooks/use-platform'
@@ -42,17 +38,15 @@ import { dirname } from '../../utils/dirname'
 import { scriptsToRenderer } from '../../utils/scripts/scripts-to-renderer'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
 import type { Script } from '../../../common/types/script'
-import type {
-  KeyboardEvent,
-  MouseEvent} from 'react';
+import type { KeyboardEvent, MouseEvent } from 'react'
 
-interface Props {
+interface DialogRecentFilesProps {
   isOpen: boolean
   onClose: () => void
   onSelectFile: (files: Script[]) => void
 }
 
-function DialogRecentFiles({ isOpen, onClose }: Props) {
+function DialogRecentFiles({ isOpen, onClose }: DialogRecentFilesProps) {
   const { t } = useTranslation()
   const { send } = useTelemetry()
   const { setScripts, scripts: loadedScripts } = useCompilation()
@@ -116,7 +110,7 @@ function DialogRecentFiles({ isOpen, onClose }: Props) {
   useIpc(bridge.recentFiles.select.onClear, () => {
     send(TelemetryEvent.recentFilesClear, {})
     // noinspection JSIgnoredPromiseFromCall
-    clearRecentFiles()
+    void clearRecentFiles()
     setSelectedRecentFiles(new Map())
   })
 
@@ -125,7 +119,7 @@ function DialogRecentFiles({ isOpen, onClose }: Props) {
     onClose()
   }
 
-  const onClickLoad = async () => {
+  const onClickLoad = () => {
     if (!isValid) {
       return
     }
@@ -152,7 +146,7 @@ function DialogRecentFiles({ isOpen, onClose }: Props) {
     }
   }
 
-  const onClickFile = (script: Script) => {
+  const onClickItem = (script: Script) => {
     return (e: React.MouseEvent<HTMLButtonElement>) => {
       e.currentTarget.blur()
 
@@ -173,16 +167,16 @@ function DialogRecentFiles({ isOpen, onClose }: Props) {
   }
 
   const onClickDeleteFile = (script: Script) => {
-    return (e: React.MouseEvent<HTMLButtonElement>) => {
+    return async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.currentTarget.blur()
 
-      removeRecentFile(script).then(() => {
-        send(TelemetryEvent.recentFileRemove, {})
-        setSelectedRecentFiles(srf => {
-          srf.delete(script.path)
+      await removeRecentFile(script)
 
-          return new Map(srf)
-        })
+      send(TelemetryEvent.recentFileRemove, {})
+      setSelectedRecentFiles(srf => {
+        srf.delete(script.path)
+
+        return new Map(srf)
       })
     }
   }
@@ -287,7 +281,7 @@ function DialogRecentFiles({ isOpen, onClose }: Props) {
                   disabled={isAlreadyLoaded(script)}
                   key={script.path}
                   onClickDelete={onClickDeleteFile(script)}
-                  onClickFile={onClickFile(script)}
+                  onClickFile={onClickItem(script)}
                   script={script}
                   selected={selectedRecentFiles.has(script.path)}
                 />

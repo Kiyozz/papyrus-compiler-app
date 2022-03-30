@@ -10,11 +10,11 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useApp } from '../../../hooks/use-app'
 
-interface Props {
+interface SettingsMo2ActivationProps {
   onChangeMo2: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-function SettingsMo2Activation({ onChangeMo2 }: Props) {
+function SettingsMo2Activation({ onChangeMo2 }: SettingsMo2ActivationProps) {
   const { t } = useTranslation()
   const {
     config: { mo2 },

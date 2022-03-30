@@ -30,6 +30,6 @@ export const fromError = (err?: unknown): FromError => {
       }
 
       return stack
-    }
+    },
   }
 }

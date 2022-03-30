@@ -18,7 +18,11 @@ export class GetVersionHandler implements EventHandler {
 
     if (is.development) {
       try {
-        const json = JSON.parse((await readFile(join(process.env.PWD ?? '', 'package.json'))).toString()) as { version: string }
+        const json = JSON.parse(
+          (
+            await readFile(join(process.env.PWD ?? '', 'package.json'))
+          ).toString(),
+        ) as { version: string }
 
         return json.version
       } catch {

@@ -16,12 +16,12 @@ import {
 import is from '@sindresorhus/is'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import bridge from '../../bridge'
+import { bridge } from '../../bridge'
 import { useApp } from '../../hooks/use-app'
 import type { DialogType } from '../../../common/types/dialog'
-import type { ChangeEvent, ReactNode} from 'react';
+import type { ChangeEvent, ReactNode } from 'react'
 
-interface Props {
+interface DialogTextFieldProps {
   id: string
   className?: string
   error?: boolean
@@ -38,7 +38,7 @@ function DialogTextField({
   defaultValue,
   onChange,
   type,
-}: Props) {
+}: DialogTextFieldProps) {
   const { onRefreshConfig } = useApp()
   const { t } = useTranslation()
   const [value, setValue] = useState(defaultValue)

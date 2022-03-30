@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useState } from 'react'
-import bridge from '../bridge'
+import { bridge } from '../bridge'
 import type { WindowState } from '../../common/types/window-state'
 
 export const useWindowState = (): WindowState => {

@@ -21,16 +21,21 @@ import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useDocumentClick } from '../../hooks/use-document-click'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { isChildren } from '../../html/is-child'
-import type { MouseEvent } from 'react';
+import type { MouseEvent } from 'react'
 
-interface Props {
+interface GroupsListItemMenuProps {
   className?: string
-  id?: string
+  id: string
   onEdit: (evt: MouseEvent<HTMLElement>) => void
   onDelete: (evt: MouseEvent<HTMLElement>) => void
 }
 
-function GroupsListItemMenu({ className, id, onDelete, onEdit }: Props) {
+function GroupsListItemMenu({
+  className,
+  id,
+  onDelete,
+  onEdit,
+}: GroupsListItemMenuProps) {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const { send } = useTelemetry()

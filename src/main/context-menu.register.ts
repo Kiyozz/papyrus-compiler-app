@@ -12,7 +12,7 @@ import type { MenuItemConstructorOptions } from 'electron'
 export async function registerContextMenu(
   win: Electron.BrowserWindow,
 ): Promise<void> {
-  const t = await (await import('./translations/index')).default()
+  const t = await (await import('./translations/index')).instance
 
   const recentFilesMenus: MenuItemConstructorOptions[] = [
     {

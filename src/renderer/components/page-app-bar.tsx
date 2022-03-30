@@ -6,14 +6,14 @@
 
 import { AppBar, Toolbar, Typography } from '@mui/material'
 import React from 'react'
-import type { PropsWithChildren, ReactNode } from 'react';
+import type { PropsWithChildren, ReactNode } from 'react'
 
-interface Props {
+interface PageAppBarProps {
   title?: string
   actions?: ReactNode
 }
 
-function PageAppBar({ title, children }: PropsWithChildren<Props>) {
+function PageAppBar({ title, children }: PropsWithChildren<PageAppBarProps>) {
   return (
     <AppBar aria-label={title}>
       <Toolbar className="pr-6 pl-4" disableGutters>

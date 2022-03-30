@@ -9,17 +9,32 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import GroupsListItemMenu from './groups-list-item-menu'
 import type { Group } from '../../types'
-import type { MouseEvent } from 'react';
+import type { MouseEvent, ReactNode } from 'react'
 
-interface Props {
+interface GroupsListItemProps {
   onEdit: (group: Group) => (evt: MouseEvent<HTMLElement>) => void
   onDelete: (group: Group) => (evt: MouseEvent<HTMLElement>) => void
   group: Group
   moreDetails: boolean
 }
 
-function GroupsListItem({ group, onDelete, onEdit, moreDetails }: Props) {
+function GroupsListItem({
+  group,
+  onDelete,
+  onEdit,
+  moreDetails,
+}: GroupsListItemProps) {
   const { t } = useTranslation()
+
+  let secondaryText: ReactNode | undefined
+
+  if (moreDetails) {
+    if (group.isEmpty) {
+      secondaryText = t('page.groups.noScripts')
+    } else {
+      secondaryText = group.scripts.map(s => s.name).join(', ')
+    }
+  }
 
   return (
     <ListItem
@@ -34,16 +49,7 @@ function GroupsListItem({ group, onDelete, onEdit, moreDetails }: Props) {
       }
       variant="outlined"
     >
-      <ListItemText
-        primary={group.name}
-        secondary={
-          moreDetails
-            ? group.isEmpty
-              ? t('page.groups.noScripts')
-              : group.scripts.map(s => s.name).join(', ')
-            : undefined
-        }
-      />
+      <ListItemText primary={group.name} secondary={secondaryText} />
     </ListItem>
   )
 }

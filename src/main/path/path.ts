@@ -79,13 +79,15 @@ export async function ensureDirs(items: string[]): Promise<void> {
     ...items.map(i => `"${i}"`),
   )
 
-  for (const item of items) {
-    try {
-      await ensureDir(item)
-    } catch (e) {
-      throw new FileEnsureException(item, e)
-    }
-  }
+  await Promise.all(
+    items.map(async item => {
+      try {
+        await ensureDir(item)
+      } catch (e) {
+        throw new FileEnsureException(item, e)
+      }
+    }),
+  )
 }
 
 export async function ensureFiles(items: string[]): Promise<void> {
@@ -94,13 +96,15 @@ export async function ensureFiles(items: string[]): Promise<void> {
     ...items.map(i => `"${i}"`),
   )
 
-  for (const item of items) {
-    try {
-      await ensureFile(item)
-    } catch (e) {
-      throw new FileEnsureException(item)
-    }
-  }
+  await Promise.all(
+    items.map(async item => {
+      try {
+        await ensureFile(item)
+      } catch (e) {
+        throw new FileEnsureException(item, e)
+      }
+    }),
+  )
 }
 
 export async function getPathsInFolder(

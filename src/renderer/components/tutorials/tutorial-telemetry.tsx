@@ -28,9 +28,7 @@ function TutorialTelemetry() {
   }, [])
 
   return (
-    <div
-      className="fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400"
-    >
+    <div className="fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400">
       <div className="px-8">
         <Trans i18nKey="tutorials.telemetry.text">
           <div className="text-md" />
@@ -43,6 +41,7 @@ function TutorialTelemetry() {
         className="btn btn-primary mt-8"
         disabled={isWaiting}
         onClick={onClickOk}
+        type="button"
       >
         {t('tutorials.telemetry.close')}
       </button>

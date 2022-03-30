@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import bridge from '../bridge'
+import { bridge } from '../bridge'
 
 let isProductionRegistered = false
 let isProductionSaved = false

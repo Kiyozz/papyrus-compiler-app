@@ -13,9 +13,7 @@ import {
 import red from '@mui/material/colors/red'
 import React from 'react'
 import { useIsDarkTheme } from './hooks/use-is-dark-theme'
-import type {
-  PaletteMode,
-  PaletteOptions} from '@mui/material';
+import type { PaletteMode, PaletteOptions } from '@mui/material'
 
 function MuiTheme({ children }: React.PropsWithChildren<unknown>) {
   const isDarkTheme = useIsDarkTheme()

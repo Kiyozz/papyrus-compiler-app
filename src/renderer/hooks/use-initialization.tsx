@@ -13,7 +13,7 @@ import React, {
   useState,
 } from 'react'
 import { useDidMount } from 'rooks'
-import bridge from '../bridge'
+import { bridge } from '../bridge'
 import { useApp } from './use-app'
 import { useVersion } from './use-version'
 import type { GithubRelease } from '../types'
@@ -48,12 +48,12 @@ function InitializationProvider({
   const [version, setVersion] = useVersion()
 
   const checkUpdates = useCallback(
-    async (version: string): Promise<CheckUpdateReturn> => {
+    async (checkForVersion: string): Promise<CheckUpdateReturn> => {
       const response = await fetch(`${GITHUB_REPOSITORY}/releases?per_page=1`)
-      const [release]: GithubRelease[] = await response.json()
+      const [release] = (await response.json()) as GithubRelease[]
 
-      if (typeof release !== 'undefined' && version.length !== 0) {
-        if (compare(release.tag_name, version, '>')) {
+      if (typeof release !== 'undefined' && checkForVersion.length !== 0) {
+        if (compare(release.tag_name, checkForVersion, '>')) {
           return {
             latestVersion: release.tag_name,
             changelogs: release.body,

@@ -15,14 +15,12 @@ import React, {
 import useLocalStorage from 'react-use-localstorage'
 import { Subject } from 'rxjs'
 import { TelemetryEvent } from '../../common/telemetry-event'
-import bridge from '../bridge'
+import { bridge } from '../bridge'
 import { LocalStorage } from '../enums/local-storage.enum'
 import { useTelemetry } from './use-telemetry'
 import type { Script } from '../../common/types/script'
-import type { Observable} from 'rxjs';
-import type {
-  Dispatch,
-  SetStateAction} from 'react';
+import type { Observable } from 'rxjs'
+import type { Dispatch, SetStateAction } from 'react'
 
 interface RecentFilesContext {
   recentFiles: Script[]
@@ -37,9 +35,7 @@ const Context = createContext({} as RecentFilesContext)
 const recentFiles$ = new Subject<Script[]>()
 const onRecentFilesChanges = recentFiles$.asObservable()
 
-function RecentFilesProvider({
-  children,
-}: React.PropsWithChildren<unknown>) {
+function RecentFilesProvider({ children }: React.PropsWithChildren<unknown>) {
   const { send } = useTelemetry()
   const [recentFiles, setRecentFilesMemory] = useState<Script[]>([])
   const [isMoreDetails, setMoreDetails] = useLocalStorage(
@@ -52,7 +48,7 @@ function RecentFilesProvider({
       setRecentFilesMemory(scripts)
     })
 
-    bridge.recentFiles.get().then(scripts => recentFiles$.next(scripts))
+    void bridge.recentFiles.get().then(scripts => recentFiles$.next(scripts))
 
     return () => sub.unsubscribe()
   }, [])

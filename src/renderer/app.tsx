@@ -56,8 +56,9 @@ function App() {
           {done && (
             <>
               {tutorials.settings && <TutorialSettings />}
-              {tutorials.telemetry &&
-                !tutorials.settings && <TutorialTelemetry />}
+              {tutorials.telemetry && !tutorials.settings && (
+                <TutorialTelemetry />
+              )}
               <Routes />
             </>
           )}

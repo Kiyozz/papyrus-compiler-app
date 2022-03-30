@@ -124,7 +124,6 @@ async function createWindow() {
   })
 }
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {

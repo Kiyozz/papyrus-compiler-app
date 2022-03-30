@@ -7,13 +7,14 @@
 import cx from 'classnames'
 import React from 'react'
 import { useDropzone } from 'react-dropzone'
+import type { AriaRole } from 'react'
 
 interface RenderChildren {
   isDragActive: boolean
   open: () => void
 }
 
-interface Props {
+interface DropScriptsProps {
   className?: string
   onDrop?: OnDrop
   onFileDialogOpen: () => void
@@ -29,7 +30,7 @@ function DropScripts({
   onFileDialogCancel,
   className,
   children,
-}: React.PropsWithChildren<Props>) {
+}: React.PropsWithChildren<DropScriptsProps>) {
   const { getRootProps, isDragActive, getInputProps, open } = useDropzone({
     onDrop: files => onDrop?.(files),
     accept: '.psc',
@@ -41,7 +42,7 @@ function DropScripts({
     onFileDialogCancel,
   })
 
-  const { role, ...rootProps } = getRootProps()
+  const { role, ...rootProps } = getRootProps<{ role: AriaRole }>()
 
   return (
     <div className={cx('relative z-30', className)} {...rootProps}>

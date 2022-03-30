@@ -12,5 +12,9 @@ export const useTitlebarHeight = () => {
   const isMacOs = !isNotMacOs
   const isMacOsBigSur = platform === 'macos-bigsur'
 
-  return isMacOsBigSur ? 34 : isMacOs ? 22 : 32
+  if (isMacOsBigSur) return 34
+
+  if (isMacOs) return 22
+
+  return 32
 }

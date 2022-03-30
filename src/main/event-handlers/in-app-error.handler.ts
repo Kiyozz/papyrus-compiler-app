@@ -26,8 +26,11 @@ export class InAppErrorHandler implements EventHandler<Error> {
     await this.telemetry.exception({
       properties: {
         error: args.message,
-        stack:
-          !args.stack ? 'unknown stack' : `[${args.stack.length}] ${args.stack.slice(0, 600)}${args.stack.length > 600 ? '...' : ''}`,
+        stack: !args.stack
+          ? 'unknown stack'
+          : `[${args.stack.length}] ${args.stack.slice(0, 600)}${
+              args.stack.length > 600 ? '...' : ''
+            }`,
       },
     })
 

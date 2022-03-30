@@ -24,7 +24,7 @@ import { useApp } from '../../hooks/use-app'
 import SettingsSection from './settings-section'
 import { useSettings } from './use-settings'
 
-interface Props {
+interface SettingsGameProps {
   onClickRadio: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeGameFolder: (value: string) => void
   onChangeCompilerPath: (value: string) => void
@@ -36,7 +36,7 @@ function SettingsGame({
   onClickRadio,
   onChangeCompilerPath,
   onClickRefreshInstallation,
-}: Props) {
+}: SettingsGameProps) {
   const { t } = useTranslation()
   const {
     config: { game, compilation },

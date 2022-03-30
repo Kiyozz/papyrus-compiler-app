@@ -5,7 +5,13 @@
  */
 
 import type { Group } from './group'
-import type { CompilerPath, Flag, GameType, GamePath, OutputPath } from '../game'
+import type {
+  CompilerPath,
+  Flag,
+  GameType,
+  GamePath,
+  OutputPath,
+} from '../game'
 import type { Theme } from '../theme'
 
 interface Game {

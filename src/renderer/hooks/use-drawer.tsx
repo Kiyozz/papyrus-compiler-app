@@ -5,15 +5,10 @@
  */
 
 import is from '@sindresorhus/is'
-import React, {
-  createContext,
-  useContext,
-} from 'react'
+import React, { createContext, useContext } from 'react'
 import useLocalStorage from 'react-use-localstorage'
 import { LocalStorage } from '../enums/local-storage.enum'
-import type {
-  Dispatch,
-  SetStateAction} from 'react';
+import type { Dispatch, SetStateAction } from 'react'
 
 type DrawerContext = [boolean, Dispatch<SetStateAction<boolean>>]
 
@@ -31,9 +26,9 @@ function DrawerProvider({ children }: React.PropsWithChildren<unknown>) {
         isDrawerExpandLS === 'true',
         v => {
           if (is.function_(v)) {
-            setDrawerExpandLS(`${v(isDrawerExpandLS === 'true')}`)
+            setDrawerExpandLS(`${v(isDrawerExpandLS === 'true').toString()}`)
           } else {
-            setDrawerExpandLS(`${v}`)
+            setDrawerExpandLS(`${v.toString()}`)
           }
         },
       ]}

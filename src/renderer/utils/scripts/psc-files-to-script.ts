@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import bridge from '../../bridge'
+import { bridge } from '../../bridge'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import type { ScriptRenderer } from '../../types'
 

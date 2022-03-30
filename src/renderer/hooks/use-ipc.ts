@@ -20,6 +20,5 @@ export const useIpc = <
     return () => {
       disposable.dispose()
     }
-     
   }, [cb, start])
 }

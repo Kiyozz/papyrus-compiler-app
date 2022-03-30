@@ -10,7 +10,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useApp } from '../../hooks/use-app'
 import SettingsSection from './settings-section'
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent } from 'react'
 
 const maxConcurrentCompilationScripts = 100
 

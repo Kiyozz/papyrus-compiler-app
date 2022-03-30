@@ -18,7 +18,9 @@ export class RecentFilesRemoveHandler implements EventHandler {
     this._logger.info('remove recent file')
 
     if (is.undefined(script)) {
-      throw new ApplicationException('recent-files-remove-handler: script is undefined')
+      throw new ApplicationException(
+        'recent-files-remove-handler: script is undefined',
+      )
     }
 
     recentFilesStore.removeFile(script)

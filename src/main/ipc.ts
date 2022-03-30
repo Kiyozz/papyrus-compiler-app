@@ -14,7 +14,10 @@ import type {
   IpcRendererEvent,
 } from 'electron'
 
-type MainInvokeListener<Args> = (event: IpcMainInvokeEvent, args: Args) => void
+type MainInvokeListener<Args> = (
+  event: IpcMainInvokeEvent,
+  args: Args,
+) => Promise<unknown>
 type MainListener<Args> = (event: IpcMainEvent, args: Args) => void
 
 class IpcException extends Error {

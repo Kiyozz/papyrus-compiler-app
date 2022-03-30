@@ -6,7 +6,7 @@
 
 import type { TranslationShape } from './translation-shape'
 
-const en: TranslationShape = {
+export const en: TranslationShape = {
   contextMenu: {
     select: {
       all: 'Select all',
@@ -78,5 +78,3 @@ const en: TranslationShape = {
     },
   },
 }
-
-export default en

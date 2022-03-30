@@ -9,11 +9,11 @@ import cx from 'classnames'
 import React from 'react'
 import { useDrawer } from '../hooks/use-drawer'
 
-interface Props {
+interface PageProps {
   className?: string
 }
 
-function Page({ children, className }: React.PropsWithChildren<Props>) {
+function Page({ children, className }: React.PropsWithChildren<PageProps>) {
   const [isDrawerExpand] = useDrawer()
 
   return (

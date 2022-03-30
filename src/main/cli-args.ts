@@ -5,7 +5,12 @@
  */
 
 import minimist from 'minimist'
-import type { CompilerPath, GamePath, GameType, OutputPath } from '../common/game'
+import type {
+  CompilerPath,
+  GamePath,
+  GameType,
+  OutputPath,
+} from '../common/game'
 
 interface CliArgs {
   'game-path'?: GamePath

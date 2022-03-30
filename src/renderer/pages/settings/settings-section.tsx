@@ -8,9 +8,9 @@ import { Paper, Typography } from '@mui/material'
 import is from '@sindresorhus/is'
 import cx from 'classnames'
 import React from 'react'
-import type { PropsWithChildren, ReactNode } from 'react';
+import type { PropsWithChildren, ReactNode } from 'react'
 
-interface Props {
+interface SettingsSectionProps {
   title: ReactNode
   className?: string
   titleId?: string
@@ -27,7 +27,7 @@ function SettingsSection({
   'aria-label': ariaLabel,
   titleId,
   children,
-}: PropsWithChildren<Props>) {
+}: PropsWithChildren<SettingsSectionProps>) {
   return (
     <Paper
       aria-label={is.string(title) ? title : ariaLabel}

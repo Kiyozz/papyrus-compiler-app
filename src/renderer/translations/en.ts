@@ -6,7 +6,7 @@
 
 import type { TranslationShape } from './translation-shape'
 
-const en: TranslationShape = {
+export const en: TranslationShape = {
   common: {
     refresh: 'Refresh',
     selectFolder: 'Select a folder',
@@ -192,5 +192,3 @@ const en: TranslationShape = {
     },
   },
 }
-
-export default en

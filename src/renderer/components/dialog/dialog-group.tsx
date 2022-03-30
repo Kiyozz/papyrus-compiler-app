@@ -22,11 +22,7 @@ import {
 } from '@mui/material'
 import is from '@sindresorhus/is'
 import cx from 'classnames'
-import React, {
-  useCallback,
-  useEffect,
-  useState
-} from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useDrop, useSetDrop } from '../../hooks/use-drop'
@@ -35,12 +31,9 @@ import { Group } from '../../types'
 import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
 import type { Script } from '../../../common/types/script'
-import type {
-  ChangeEvent,
-  KeyboardEvent,
-  FormEvent} from 'react';
+import type { ChangeEvent, KeyboardEvent, FormEvent } from 'react'
 
-interface Props {
+interface DialogGroupProps {
   onGroupAdd: (group: Group) => void
   onGroupEdit: (lastGroupName: string, group: Group) => void
   onClose: () => void
@@ -54,7 +47,7 @@ function DialogGroup({
   open: isOpen,
   onClose,
   group,
-}: Props) {
+}: DialogGroupProps) {
   const { t } = useTranslation()
   const [name, setName] = useState('')
   const [scripts, setScripts] = useState<Script[]>([])

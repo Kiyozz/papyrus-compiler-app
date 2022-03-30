@@ -39,10 +39,9 @@ import { uniqScripts } from '../../utils/scripts/uniq-scripts'
 import { useSettings } from '../settings/use-settings'
 import GroupsMenu from './groups-menu'
 import ScriptLine from './script-line'
-import type { ScriptRenderer } from '../../types';
+import type { ScriptRenderer } from '../../types'
 import type { Script } from '../../../common/types/script'
-import type {
-  ButtonProps} from '@mui/material';
+import type { ButtonProps } from '@mui/material'
 
 enum DialogRecentFilesState {
   open,
@@ -67,10 +66,7 @@ function SearchButton({
   onClick,
   disabled,
   'aria-disabled': ariaDisabled,
-}: { onClick: () => void } & Pick<
-  ButtonProps,
-  'disabled' | 'aria-disabled'
->) {
+}: { onClick: () => void } & Pick<ButtonProps, 'disabled' | 'aria-disabled'>) {
   const { t } = useTranslation()
 
   return (
@@ -97,11 +93,11 @@ function Compilation() {
   const { checkConfig, configError } = useSettings()
 
   useDidMount(() => {
-    checkConfig(true)
+    void checkConfig(true)
   })
 
   const onClickRefreshCheckConfig = () => {
-    checkConfig(true)
+    void checkConfig(true)
   }
 
   const onDrop = useCallback(
@@ -151,7 +147,7 @@ function Compilation() {
     }))
 
     // noinspection JSIgnoredPromiseFromCall
-    setRecentFiles(files)
+    void setRecentFiles(files)
     send(TelemetryEvent.compilationPlay, {
       scripts: scripts.length,
       concurrentScripts,
@@ -201,7 +197,7 @@ function Compilation() {
       </PageAppBar>
       <Page>
         <DialogRecentFiles
-          isOpen={dialogState == DialogRecentFilesState.open}
+          isOpen={dialogState === DialogRecentFilesState.open}
           onClose={() => setDialogState(DialogRecentFilesState.close)}
           onSelectFile={() => {
             setDialogState(DialogRecentFilesState.close)

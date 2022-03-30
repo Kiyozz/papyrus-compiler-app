@@ -16,28 +16,26 @@ import {
   DialogActions,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
 } from '@mui/material'
-import React, {
-  useState
-} from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
 import { GITHUB_LINK } from '../../../common/constants'
-import bridge from '../../bridge'
+import { bridge } from '../../bridge'
 import { Env } from '../../env'
 import { useApp } from '../../hooks/use-app'
 import { useInitialization } from '../../hooks/use-initialization'
 import Anchor from '../anchor'
-import type { Components } from 'react-markdown';
 import type {
   MouseEvent,
   ReactNode,
-  PropsWithChildren} from 'react';
-import type {
-  SnackbarProps} from '@mui/material';
+  PropsWithChildren,
+  ImgHTMLAttributes,
+} from 'react'
+import type { SnackbarProps } from '@mui/material'
 
-const Img: Components['img'] = ({ src, alt, ...props }) => {
+function Img({ src, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
   const newSrc = src?.startsWith('docs')
     ? `${GITHUB_LINK}/blob/master/${src}?raw=true`
     : src
@@ -53,27 +51,35 @@ const Img: Components['img'] = ({ src, alt, ...props }) => {
 }
 
 function HeadingOne({ children }: PropsWithChildren<unknown>) {
-  return <Typography component="h1" gutterBottom variant="h3">
-    {children}
-  </Typography>
+  return (
+    <Typography component="h1" gutterBottom variant="h3">
+      {children}
+    </Typography>
+  )
 }
 
 function HeadingTwo({ children }: PropsWithChildren<unknown>) {
-  return <Typography component="h2" gutterBottom variant="h4">
-    {children}
-  </Typography>
+  return (
+    <Typography component="h2" gutterBottom variant="h4">
+      {children}
+    </Typography>
+  )
 }
 
 function HeadingThree({ children }: PropsWithChildren<unknown>) {
-  return <Typography className="mt-2" component="h3" gutterBottom variant="h5">
-    {children}
-  </Typography>
+  return (
+    <Typography className="mt-2" component="h3" gutterBottom variant="h5">
+      {children}
+    </Typography>
+  )
 }
 
 function HeadingFive({ children }: PropsWithChildren<unknown>) {
-  return <Typography component="h5" gutterBottom variant="h6">
-    {children}
-  </Typography>
+  return (
+    <Typography component="h5" gutterBottom variant="h6">
+      {children}
+    </Typography>
+  )
 }
 
 function Paragraph({ children }: PropsWithChildren<unknown>) {
@@ -81,9 +87,11 @@ function Paragraph({ children }: PropsWithChildren<unknown>) {
 }
 
 function Code({ children }: { children: ReactNode[] }) {
-  return <Typography className="markdown-code dark:bg-gray-800" component="code">
-    {children}
-  </Typography>
+  return (
+    <Typography className="markdown-code dark:bg-gray-800" component="code">
+      {children}
+    </Typography>
+  )
 }
 
 function UnorderedList({ children }: PropsWithChildren<unknown>) {
@@ -115,7 +123,7 @@ function DialogChangelog() {
   const onClickDownloadRelease = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault()
 
-    bridge.shell.openExternal(Env.modUrl)
+    void bridge.shell.openExternal(Env.modUrl)
   }
 
   const onClickShowChangelogs = () => {

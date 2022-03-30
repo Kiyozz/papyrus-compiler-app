@@ -10,11 +10,12 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 const versionPath = path.resolve('release-version.json')
-const { version }: { version: string } = JSON.parse(
+const { version } = JSON.parse(
   fsSync.readFileSync(versionPath).toString('utf-8'),
-)
+) as { version: string }
 
 // https://vitejs.dev/config/
+// eslint-disable-next-line import/no-default-export
 export default defineConfig({
   plugins: [react()],
   build: {
@@ -25,6 +26,7 @@ export default defineConfig({
   resolve: {
     alias: [
       {
+        // eslint-disable-next-line prefer-named-capture-group
         find: /^~(.*)/,
         replacement: path.join('node_modules/$1'),
       },
