@@ -6,20 +6,19 @@
 
 import React from 'react'
 import { Navigate, Route, Routes as RouterRoutes } from 'react-router-dom'
-
 import Compilation from './pages/compilation/compilation'
 import Groups from './pages/groups/groups'
 import Settings from './pages/settings/settings'
 
-const Routes = () => (
-  <div className="flex w-full flex-col">
+function Routes() {
+  return <div className="flex w-full flex-col">
     <RouterRoutes>
-      <Route path="/compilation" element={<Compilation />} />
-      <Route path="/groups" element={<Groups />} />
-      <Route path="/settings" element={<Settings />} />
-      <Route path="*" element={<Navigate to="/compilation" replace />} />
+      <Route element={<Compilation />} path="/compilation" />
+      <Route element={<Groups />} path="/groups" />
+      <Route element={<Settings />} path="/settings" />
+      <Route element={<Navigate replace to="/compilation" />} path="*" />
     </RouterRoutes>
   </div>
-)
+}
 
 export default Routes

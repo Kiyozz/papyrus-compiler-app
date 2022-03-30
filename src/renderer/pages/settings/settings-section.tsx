@@ -7,9 +7,10 @@
 import { Paper, Typography } from '@mui/material'
 import is from '@sindresorhus/is'
 import cx from 'classnames'
-import React, { PropsWithChildren, ReactNode } from 'react'
+import React from 'react'
+import type { PropsWithChildren, ReactNode } from 'react';
 
-type Props = {
+interface Props {
   title: ReactNode
   className?: string
   titleId?: string
@@ -18,7 +19,7 @@ type Props = {
   'aria-label'?: string
 }
 
-const SettingsSection = ({
+function SettingsSection({
   title,
   className,
   id,
@@ -26,25 +27,25 @@ const SettingsSection = ({
   'aria-label': ariaLabel,
   titleId,
   children,
-}: PropsWithChildren<Props>) => {
+}: PropsWithChildren<Props>) {
   return (
     <Paper
-      id={id}
+      aria-label={is.string(title) ? title : ariaLabel}
       className={cx(
         'relative p-4 transition-none',
         gutterTop && 'mt-4',
         className,
       )}
-      aria-label={is.string(title) ? title : ariaLabel}
+      id={id}
       variant="outlined"
     >
       <Typography
-        variant="h5"
-        fontWeight="bold"
-        gutterBottom
         className="dark:text-white"
         component="h3"
+        fontWeight="bold"
+        gutterBottom
         id={titleId}
+        variant="h5"
       >
         {title}
       </Typography>

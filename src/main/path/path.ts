@@ -4,29 +4,29 @@
  * All rights reserved.
  */
 
+import { promises as fs, existsSync } from 'fs'
 import { is } from 'electron-util'
 import fg from 'fast-glob'
-import { promises as fs, existsSync, Stats } from 'fs'
 import { moveFile } from 'move-file'
-import * as path from 'path'
-
 import { FileAccessException } from '../exceptions/files/file-access.exception'
 import { FileEnsureException } from '../exceptions/files/file-ensure.exception'
 import { Logger } from '../logger'
 import { toSlash } from '../slash'
 import { pluralize } from '../utils/pluralize.util'
+import type { Stats } from 'fs'
 
 const logger = new Logger('Path')
 
+export { join } from 'path'
+
 export function normalize(value: string): string {
-  if (is.linux || is.macos) {
+  if (is.linux || is.macos || value.length === 0) {
     return value
   }
 
-  return value[0] + value.substring(1).toLowerCase()
+  return `${value[0] as string}${value.substring(1).toLowerCase()}`
 }
 
-export const join = path.join
 export const move = (from: string, to: string): Promise<void> => {
   logger.debug('move file', from, 'to', to)
   return moveFile(from, to)

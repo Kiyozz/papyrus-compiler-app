@@ -6,7 +6,6 @@
 
 import { exec as originalExec } from 'child_process'
 import { promisify } from 'util'
-
 import { Logger } from '../logger'
 
 const exec = promisify(originalExec)

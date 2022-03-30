@@ -4,11 +4,10 @@
  * All rights reserved.
  */
 
-import { is } from 'electron-util'
 import { release } from 'os'
-
-import { Platform } from '../../common/types/platform'
-import { EventSync } from '../interfaces/event-sync'
+import { is } from 'electron-util'
+import type { Platform } from '../../common/types/platform'
+import type { EventSync } from '../interfaces/event-sync'
 
 export class PlatformSync implements EventSync {
   onSync(): Platform {

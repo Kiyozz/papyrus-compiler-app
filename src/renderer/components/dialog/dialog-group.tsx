@@ -23,24 +23,24 @@ import {
 import is from '@sindresorhus/is'
 import cx from 'classnames'
 import React, {
-  ChangeEvent,
   useCallback,
   useEffect,
-  useState,
-  KeyboardEvent,
-  FormEvent,
+  useState
 } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { TelemetryEvent } from '../../../common/telemetry-event'
-import { Script } from '../../../common/types/script'
 import { useDrop, useSetDrop } from '../../hooks/use-drop'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { Group } from '../../types'
 import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
+import type { Script } from '../../../common/types/script'
+import type {
+  ChangeEvent,
+  KeyboardEvent,
+  FormEvent} from 'react';
 
-type Props = {
+interface Props {
   onGroupAdd: (group: Group) => void
   onGroupEdit: (lastGroupName: string, group: Group) => void
   onClose: () => void
@@ -48,13 +48,13 @@ type Props = {
   open: boolean
 }
 
-const DialogGroup = ({
+function DialogGroup({
   onGroupAdd,
   onGroupEdit,
   open: isOpen,
   onClose,
   group,
-}: Props) => {
+}: Props) {
   const { t } = useTranslation()
   const [name, setName] = useState('')
   const [scripts, setScripts] = useState<Script[]>([])
@@ -136,40 +136,40 @@ const DialogGroup = ({
 
   return (
     <Dialog
-      open={isOpen}
-      onClose={onDialogClose}
-      onKeyDown={onDialogKeyDown}
-      fullScreen
       aria-describedby="group-content"
       className="overflow-overlay"
+      fullScreen
+      onClose={onDialogClose}
+      onKeyDown={onDialogKeyDown}
+      open={isOpen}
     >
-      <form onSubmit={onSubmitGroup} className="flex min-h-full flex-col">
+      <form className="flex min-h-full flex-col" onSubmit={onSubmitGroup}>
         <DialogTitle>
           <TextField
-            placeholder={t('page.groups.dialog.name')}
-            name="group-name"
-            id="group-name"
             autoFocus
-            value={name}
-            onChange={onChangeName}
             fullWidth
+            id="group-name"
+            name="group-name"
+            onChange={onChangeName}
+            placeholder={t('page.groups.dialog.name')}
             size="small"
+            value={name}
           />
         </DialogTitle>
         <DialogContent
-          id="group-content"
           className={cx(
             'px-0',
             scripts.length === 0 && 'flex items-center justify-center',
           )}
           dividers
+          id="group-content"
         >
           {scripts.length > 0 ? (
             <List className="overflow-x-hidden" disablePadding>
               {scripts.map(script => (
                 <ListItem
-                  key={script.name}
                   disablePadding
+                  key={script.name}
                   secondaryAction={
                     <IconButton
                       aria-label={t('common.remove')}
@@ -181,9 +181,9 @@ const DialogGroup = ({
                   }
                 >
                   <ListItemButton
-                    role="listitem"
-                    disableRipple
                     className="cursor-default"
+                    disableRipple
+                    role="listitem"
                   >
                     <ListItemText primary={script.name} />
                   </ListItemButton>
@@ -198,16 +198,16 @@ const DialogGroup = ({
         </DialogContent>
         <DialogActions>
           <Button
+            aria-disabled={isFileDialogActive}
             className="mr-auto"
+            disabled={isFileDialogActive}
             onClick={drop}
             startIcon={<SearchIcon />}
-            disabled={isFileDialogActive}
-            aria-disabled={isFileDialogActive}
           >
             {t('page.compilation.actions.searchScripts')}
           </Button>
           <Button onClick={onClose}>{t('common.cancel')}</Button>
-          <Button type="submit" aria-disabled={!isValid} disabled={!isValid}>
+          <Button aria-disabled={!isValid} disabled={!isValid} type="submit">
             {isEdit
               ? t('page.groups.actions.edit')
               : t('page.groups.actions.create')}

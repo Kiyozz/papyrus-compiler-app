@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
-export interface EventHandler<T = unknown> {
-  listen(args?: T): unknown
+export interface EventHandler {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  listen: (args: any) => unknown | Promise<unknown>
 }

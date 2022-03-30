@@ -5,20 +5,19 @@
  */
 
 import is from '@sindresorhus/is'
-
-import {
+import type {
   TelemetryEvent,
   TelemetryEventProperties,
 } from '../../common/telemetry-event'
-import { EventHandler } from '../interfaces/event-handler'
-import { Telemetry } from '../telemetry/telemetry'
+import type { EventHandler } from '../interfaces/event-handler'
+import type { Telemetry } from '../telemetry/telemetry'
 
-type Payload<E extends TelemetryEvent> = {
+interface Payload<E extends TelemetryEvent> {
   name: E
   properties: TelemetryEventProperties[E]
 }
 
-export class TelemetryHandler implements EventHandler<Payload<TelemetryEvent>> {
+export class TelemetryHandler implements EventHandler {
   constructor(private telemetry: Telemetry) {}
 
   async listen(args?: Payload<TelemetryEvent>): Promise<void> {

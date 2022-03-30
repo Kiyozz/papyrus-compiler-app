@@ -4,17 +4,19 @@
  * All rights reserved.
  */
 
-import { IpcMainEvent } from 'electron'
-
-import { CompilationResult } from '../../common/types/compilation-result'
+import is from '@sindresorhus/is'
 import { compile } from '../compilation/compile'
-import { Event } from '../interfaces/event'
 import { IpcEvent } from '../ipc-event'
 import { Logger } from '../logger'
 import { checkStore } from '../store/settings/check'
 import { settingsStore, defaultConfig } from '../store/settings/store'
+import { ApplicationException } from '../exceptions/application.exception'
+import { fromError } from '../../common/from-error'
+import type { Event } from '../interfaces/event'
+import type { CompilationResult } from '../../common/types/compilation-result'
+import type { IpcMainEvent } from 'electron'
 
-export class ScriptCompileEvent implements Event<string> {
+export class ScriptCompileEvent implements Event {
   private logger = new Logger('ScriptCompileEvent')
 
   private static _cleanSuccessLog(script: string, log: string): string {
@@ -37,6 +39,10 @@ export class ScriptCompileEvent implements Event<string> {
   }
 
   async on(ipcEvent: IpcMainEvent, script: string): Promise<void> {
+    if (is.undefined(script)) {
+      throw new ApplicationException('script-compile-on: script is undefined')
+    }
+    
     this.logger.info('start compilation of scripts', script)
     this.logger.debug('checking the current store values')
 
@@ -58,13 +64,7 @@ export class ScriptCompileEvent implements Event<string> {
         script,
       } as CompilationResult)
     } catch (e) {
-      let errorMessage: string
-
-      if (e instanceof Error) {
-        errorMessage = e.message
-      } else {
-        errorMessage = `unknown error ${e}`
-      }
+      const errorMessage: string = fromError(e).message
 
       ipcEvent.reply(endEvent, {
         success: false,

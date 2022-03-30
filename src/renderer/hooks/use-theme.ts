@@ -5,7 +5,6 @@
  */
 
 import { useCallback } from 'react'
-
 import { TelemetryEvent } from '../../common/telemetry-event'
 import { Theme } from '../../common/theme'
 import { useApp } from './use-app'

@@ -20,7 +20,6 @@ import {
 import cx from 'classnames'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { useDrawer } from '../hooks/use-drawer'
 import { useTitlebarHeight } from '../hooks/use-titlebar-height'
 import ActiveLink from './active-link'
@@ -28,7 +27,7 @@ import DrawerButton from './drawer-button'
 import OpenCompilationLogs from './open-compilation-logs'
 import OpenDocumentation from './open-documentation'
 
-const PageDrawer = () => {
+function PageDrawer() {
   const [isDrawerExpand, setDrawerExpand] = useDrawer()
   const { t } = useTranslation()
   const titlebarHeight = useTitlebarHeight()
@@ -58,29 +57,29 @@ const PageDrawer = () => {
 
   return (
     <Drawer
-      variant="permanent"
-      open={isDrawerExpand}
-      classes={{
-        paper: cx(
-          'overflow-x-hidden transition-[width] ease-sharp duration-225',
-          isDrawerExpand ? 'w-48' : 'w-14',
-        ),
-      }}
       PaperProps={{
         sx: {
           top: titlebarHeight + 64,
           height: `calc(100% - ${titlebarHeight + 64}px)`,
         },
       }}
+      classes={{
+        paper: cx(
+          'overflow-x-hidden transition-[width] ease-sharp duration-225',
+          isDrawerExpand ? 'w-48' : 'w-14',
+        ),
+      }}
+      open={isDrawerExpand}
+      variant="permanent"
     >
       <List>
         {links.map(Link => {
           return (
-            <ListItem key={Link.path} disablePadding>
+            <ListItem disablePadding key={Link.path}>
               <ListItemButton
+                activeClassName="link-active"
                 component={ActiveLink}
                 to={Link.path}
-                activeClassName="link-active"
               >
                 <ListItemIcon>
                   <Link.Icon />
@@ -96,8 +95,8 @@ const PageDrawer = () => {
         <OpenDocumentation />
         <DrawerButton
           icon={isDrawerExpand ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          text={t('nav.closePanel')}
           onClick={onDrawerExpandClick}
+          text={t('nav.closePanel')}
         />
       </List>
     </Drawer>

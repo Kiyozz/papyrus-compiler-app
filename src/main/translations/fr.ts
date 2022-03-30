@@ -6,7 +6,7 @@
 
 // noinspection SpellCheckingInspection
 
-import { TranslationShape } from './translation-shape'
+import type { TranslationShape } from './translation-shape'
 
 const fr: TranslationShape = {
   contextMenu: {

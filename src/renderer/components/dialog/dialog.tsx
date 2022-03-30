@@ -5,13 +5,13 @@
  */
 
 import cx from 'classnames'
-import React, { ComponentType, ReactNode, useMemo, useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
-
 import { useDocumentClick } from '../../hooks/use-document-click'
 import Paper from '../paper'
+import type { ComponentType, ReactNode} from 'react';
 
-type DialogProps = {
+interface DialogProps {
   open: boolean
   maxWidth?: number
   onClose?: (reason: CloseReason) => void
@@ -88,8 +88,8 @@ const Dialog = ({
       <>
         <div className="fixed top-0 left-0 z-[99999] h-screen w-full bg-black-800 bg-opacity-50 dark:bg-opacity-70" />
         <div
+          className="fixed top-0 bottom-0 left-0 z-[100000] flex h-screen w-full items-center justify-center p-8 pt-16"
           ref={container}
-          className={`fixed top-0 bottom-0 left-0 z-[100000] flex h-screen w-full items-center justify-center p-8 pt-16`}
         >
           <Paper
             className="flex max-h-full w-full flex-col p-0 text-black-600 dark:text-light-400"

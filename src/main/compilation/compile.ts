@@ -5,7 +5,6 @@
  */
 
 import is from '@sindresorhus/is'
-
 import {
   GameType,
   toExecutable,
@@ -15,14 +14,14 @@ import {
 import { executeCommand } from '../command/execute'
 import { CompilationException } from '../exceptions/compilation.exception'
 import { ConfigurationException } from '../exceptions/configuration.exception'
-import { ExecException } from '../exceptions/exec.exception'
 import { Logger } from '../logger'
 import * as mo2 from '../mo2/mo2'
 import * as path from '../path/path'
 import { settingsStore } from '../store/settings/store'
 import { generateCompilerCmd } from '../utils/generate-compiler-cmd.util'
+import type { ExecException } from '../exceptions/exec.exception'
 
-type Runner = {
+interface Runner {
   exe: string
   imports: string[]
   cwd: string
@@ -35,7 +34,7 @@ function checkCommandResult(
   script: string,
   result: { stdout: string; stderr: string },
 ) {
-  const isSuccess = /0 failed/.test(result.stdout)
+  const isSuccess = result.stdout.includes('0 failed')
 
   if (!isSuccess) {
     throw new CompilationException(script, result.stderr)
@@ -136,7 +135,7 @@ export async function compile(scriptName: string): Promise<string> {
     scriptName,
     imports: runner.imports,
     output: runner.output,
-    flag: flag,
+    flag,
   })
 
   try {

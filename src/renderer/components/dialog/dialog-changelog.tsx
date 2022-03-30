@@ -16,24 +16,26 @@ import {
   DialogActions,
   List,
   ListItem,
-  ListItemText,
-  SnackbarProps,
+  ListItemText
 } from '@mui/material'
 import React, {
-  useState,
-  MouseEvent,
-  ReactNode,
-  PropsWithChildren,
+  useState
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import ReactMarkdown, { Components } from 'react-markdown'
-
+import ReactMarkdown from 'react-markdown'
 import { GITHUB_LINK } from '../../../common/constants'
 import bridge from '../../bridge'
 import { Env } from '../../env'
 import { useApp } from '../../hooks/use-app'
 import { useInitialization } from '../../hooks/use-initialization'
 import Anchor from '../anchor'
+import type { Components } from 'react-markdown';
+import type {
+  MouseEvent,
+  ReactNode,
+  PropsWithChildren} from 'react';
+import type {
+  SnackbarProps} from '@mui/material';
 
 const Img: Components['img'] = ({ src, alt, ...props }) => {
   const newSrc = src?.startsWith('docs')
@@ -42,53 +44,53 @@ const Img: Components['img'] = ({ src, alt, ...props }) => {
 
   return (
     <img
-      src={newSrc}
       alt={alt}
       className="mt-2 max-w-full rounded"
+      src={newSrc}
       {...props}
     />
   )
 }
 
-const HeadingOne = ({ children }: PropsWithChildren<unknown>) => (
-  <Typography variant="h3" component="h1" gutterBottom>
+function HeadingOne({ children }: PropsWithChildren<unknown>) {
+  return <Typography component="h1" gutterBottom variant="h3">
     {children}
   </Typography>
-)
+}
 
-const HeadingTwo = ({ children }: PropsWithChildren<unknown>) => (
-  <Typography variant="h4" component="h2" gutterBottom>
+function HeadingTwo({ children }: PropsWithChildren<unknown>) {
+  return <Typography component="h2" gutterBottom variant="h4">
     {children}
   </Typography>
-)
+}
 
-const HeadingThree = ({ children }: PropsWithChildren<unknown>) => (
-  <Typography variant="h5" component="h3" gutterBottom className="mt-2">
+function HeadingThree({ children }: PropsWithChildren<unknown>) {
+  return <Typography className="mt-2" component="h3" gutterBottom variant="h5">
     {children}
   </Typography>
-)
+}
 
-const HeadingFive = ({ children }: PropsWithChildren<unknown>) => (
-  <Typography variant="h6" component="h5" gutterBottom>
+function HeadingFive({ children }: PropsWithChildren<unknown>) {
+  return <Typography component="h5" gutterBottom variant="h6">
     {children}
   </Typography>
-)
+}
 
-const Paragraph = ({ children }: PropsWithChildren<unknown>) => (
-  <Typography>{children}</Typography>
-)
+function Paragraph({ children }: PropsWithChildren<unknown>) {
+  return <Typography>{children}</Typography>
+}
 
-const Code = ({ children }: { children: ReactNode[] }) => (
-  <Typography component="code" className="markdown-code dark:bg-gray-800">
+function Code({ children }: { children: ReactNode[] }) {
+  return <Typography className="markdown-code dark:bg-gray-800" component="code">
     {children}
   </Typography>
-)
+}
 
-const UnorderedList = ({ children }: PropsWithChildren<unknown>) => {
+function UnorderedList({ children }: PropsWithChildren<unknown>) {
   return <List disablePadding>{children}</List>
 }
 
-const HtmlListItem = ({ children }: PropsWithChildren<unknown>) => {
+function HtmlListItem({ children }: PropsWithChildren<unknown>) {
   return (
     <ListItem disablePadding>
       <ListItemText primary={children} />
@@ -96,7 +98,7 @@ const HtmlListItem = ({ children }: PropsWithChildren<unknown>) => {
   )
 }
 
-const DialogChangelog = () => {
+function DialogChangelog() {
   const { t } = useTranslation()
   const {
     showChangelogs: [isShowChangelogs, setShowChangelogs],
@@ -143,29 +145,29 @@ const DialogChangelog = () => {
   return (
     <>
       <Snackbar
-        open={isShowLatestVersionAlert}
-        onClose={onCloseShowLatestVersionAlert}
         autoHideDuration={3_000}
+        onClose={onCloseShowLatestVersionAlert}
+        open={isShowLatestVersionAlert}
       >
         <Alert severity="info">{t('changelog.alreadyLastVersion')}</Alert>
       </Snackbar>
 
       <Snackbar
+        autoHideDuration={8_000}
+        onClose={onCloseNewVersionAlert}
         open={
           isShowChangelogs &&
           !isShowLatestVersionAlert &&
           !isShowChangelogsDialoag
         }
-        autoHideDuration={8_000}
-        onClose={onCloseNewVersionAlert}
       >
         <Alert
-          severity="info"
           action={
             <Button onClick={onClickShowChangelogs} size="small">
               {t('changelog.available.notes')}
             </Button>
           }
+          severity="info"
         >
           <Typography>
             {t('changelog.available.message', { version: latestVersion })}
@@ -174,16 +176,16 @@ const DialogChangelog = () => {
       </Snackbar>
 
       <Dialog
-        open={isShowChangelogsDialoag}
-        onClose={onCloseChangelogsDialog}
-        fullScreen
-        aria-labelledby="dialog-notes-title"
         aria-describedby="dialog-notes-content"
+        aria-labelledby="dialog-notes-title"
+        fullScreen
+        onClose={onCloseChangelogsDialog}
+        open={isShowChangelogsDialoag}
       >
         <DialogTitle id="dialog-notes-title">
           {t('changelog.changelogs')}
         </DialogTitle>
-        <DialogContent id="dialog-notes-content" dividers>
+        <DialogContent dividers id="dialog-notes-content">
           {changelogs && (
             <ReactMarkdown
               components={{

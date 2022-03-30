@@ -6,16 +6,16 @@
 
 import { Button, Typography } from '@mui/material'
 import cx from 'classnames'
-import React, { MouseEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Trans, useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-
 import { MOD_DOCUMENTATION_URL } from '../../../common/env'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
+import type { MouseEvent} from 'react';
 
 enum Step {
   waiting,
@@ -29,7 +29,7 @@ enum Step {
 
 type Next = () => void
 
-const StepTooltip = ({
+function StepTooltip({
   next,
   text,
   selector,
@@ -39,7 +39,7 @@ const StepTooltip = ({
   text: string
   selector: string
   arrowPosition?: 'left' | 'bottom-left'
-}) => {
+}) {
   const { t } = useTranslation()
   const [stepAnchor, setAnchor] = useState(() =>
     document.querySelector(selector),
@@ -63,7 +63,7 @@ const StepTooltip = ({
       )}
     >
       <Typography>{text}</Typography>
-      <Button color="primary" variant="contained" onClick={onClickOk}>
+      <Button color="primary" onClick={onClickOk} variant="contained">
         {t('tutorials.ok')}
       </Button>
     </div>,
@@ -71,60 +71,60 @@ const StepTooltip = ({
   )
 }
 
-const GameSettingsStep = ({ next }: { next: Next }) => {
+function GameSettingsStep({ next }: { next: Next }) {
   const { t } = useTranslation()
 
   return (
     <StepTooltip
+      arrowPosition="bottom-left"
       next={next}
-      text={t('tutorials.settings.game.text')}
       selector="#settings-game"
-      arrowPosition="bottom-left"
+      text={t('tutorials.settings.game.text')}
     />
   )
 }
 
-const CompilerSettingsStep = ({ next }: { next: Next }) => {
+function CompilerSettingsStep({ next }: { next: Next }) {
   const { t } = useTranslation()
 
   return (
     <StepTooltip
-      next={next}
-      text={t('tutorials.settings.compiler.text')}
-      selector="#settings-compiler"
       arrowPosition="left"
+      next={next}
+      selector="#settings-compiler"
+      text={t('tutorials.settings.compiler.text')}
     />
   )
 }
 
-const ConcurrentSettingsStep = ({ next }: { next: Next }) => {
+function ConcurrentSettingsStep({ next }: { next: Next }) {
   const { t } = useTranslation()
 
   return (
     <StepTooltip
       next={next}
-      text={t('tutorials.settings.compilation.concurrent.text')}
       selector="#compilation-concurrentScripts"
+      text={t('tutorials.settings.compilation.concurrent.text')}
     />
   )
 }
 
-const Mo2SettingsStep = ({ next }: { next: Next }) => {
+function Mo2SettingsStep({ next }: { next: Next }) {
   const { t } = useTranslation()
 
   return (
     <StepTooltip
-      next={next}
-      text={t('tutorials.settings.mo2.text')}
-      selector="#settings-mo2"
       arrowPosition="bottom-left"
+      next={next}
+      selector="#settings-mo2"
+      text={t('tutorials.settings.mo2.text')}
     />
   )
 }
 
-const Backdrop = () => (
-  <div className="fixed top-0 left-0 right-0 bottom-0 z-30 bg-black-800 bg-opacity-60" />
-)
+function Backdrop() {
+  return <div className="fixed top-0 left-0 right-0 bottom-0 z-30 bg-black-800 bg-opacity-60" />
+}
 
 /**
  * Display a help to user to configure the application
@@ -135,7 +135,7 @@ const Backdrop = () => (
  * 4. Information about MO2
  * 5. Show concurrent scripts
  */
-const TutorialSettings = () => {
+function TutorialSettings() {
   const { t } = useTranslation()
   const { config, setConfig } = useApp()
   const navigate = useNavigate()
@@ -221,17 +221,16 @@ const TutorialSettings = () => {
       <Backdrop />
       {(step === Step.ask || step === Step.waiting) && (
         <div
-          className={`fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400 dark:text-white`}
+          className="fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400 dark:text-white"
         >
           <Typography variant="h3">
             {t('tutorials.settings.ask.title')}
           </Typography>
-          <Typography component="div" className="m-6 text-center text-xl">
+          <Typography className="m-6 text-center text-xl" component="div">
             {t('tutorials.settings.ask.text')}
           </Typography>
-          <Typography variant="h6" component="div" className="mb-4 text-center">
+          <Typography className="mb-4 text-center" component="div" variant="h6">
             <Trans
-              i18nKey="tutorials.settings.documentation"
               components={{
                 1: (
                   <a
@@ -241,18 +240,19 @@ const TutorialSettings = () => {
                   />
                 ),
               }}
+              i18nKey="tutorials.settings.documentation"
             />
           </Typography>
           <div className="flex gap-4">
             <Button
               color="primary"
-              variant="contained"
-              onClick={onClickNeedHelp}
               disabled={step === Step.waiting}
+              onClick={onClickNeedHelp}
+              variant="contained"
             >
               {t('tutorials.settings.ask.needHelp')}
             </Button>
-            <Button onClick={onClickDeny} disabled={step === Step.waiting}>
+            <Button disabled={step === Step.waiting} onClick={onClickDeny}>
               {t('tutorials.close')}
             </Button>
           </div>
@@ -263,10 +263,10 @@ const TutorialSettings = () => {
         step !== Step.waiting &&
         createPortal(
           <Button
-            onClick={onClickSkip}
-            color="primary"
-            variant="contained"
             className="fixed top-12 right-4 z-40 text-right text-white"
+            color="primary"
+            onClick={onClickSkip}
+            variant="contained"
           >
             {t('common.skip')}
           </Button>,

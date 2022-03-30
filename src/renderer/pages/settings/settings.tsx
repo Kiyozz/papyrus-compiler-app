@@ -11,7 +11,6 @@ import is from '@sindresorhus/is'
 import debounce from 'debounce-fn'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { GameType } from '../../../common/game'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import Page from '../../components/page'
@@ -26,7 +25,7 @@ import SettingsTelemetry from './settings-telemetry'
 import SettingsTheme from './settings-theme'
 import { useSettings } from './use-settings'
 
-const Settings = () => {
+function Settings() {
   const { t } = useTranslation()
   const {
     config: {
@@ -187,10 +186,10 @@ const Settings = () => {
 
       <Page>
         <SettingsGame
-          onClickRadio={onClickRadio}
-          onChangeGameFolder={onChangeGameFolder}
-          onClickRefreshInstallation={onClickRefreshInstallation}
           onChangeCompilerPath={onChangeCompilerPath}
+          onChangeGameFolder={onChangeGameFolder}
+          onClickRadio={onClickRadio}
+          onClickRefreshInstallation={onClickRefreshInstallation}
         />
 
         <SettingsCompilation />

@@ -5,8 +5,7 @@
  */
 
 import { v4 } from 'uuid'
-
-import { EventSync } from '../interfaces/event-sync'
+import type { EventSync } from '../interfaces/event-sync'
 
 export class UuidSync implements EventSync {
   onSync(): string {

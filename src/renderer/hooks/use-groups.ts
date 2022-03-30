@@ -5,18 +5,17 @@
  */
 
 import is from '@sindresorhus/is'
-
 import { TelemetryEvent } from '../../common/telemetry-event'
-import { Group } from '../types'
 import { useApp } from './use-app'
 import { useTelemetry } from './use-telemetry'
+import type { Group } from '../types'
 
-type EditGroupParams = {
+interface EditGroupParams {
   group: Group
   lastGroupName: string
 }
 
-type UseGroupsReturns = {
+interface UseGroupsReturns {
   add: (group: Group) => void
   edit: (params: EditGroupParams) => void
   remove: (group: Group) => void

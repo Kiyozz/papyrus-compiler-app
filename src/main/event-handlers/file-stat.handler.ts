@@ -5,20 +5,20 @@
  */
 
 import is from '@sindresorhus/is'
-import { Stats } from 'fs'
-
-import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 import { stat } from '../path/path'
+import { ApplicationException } from '../exceptions/application.exception'
+import type { EventHandler } from '../interfaces/event-handler'
+import type { Stats } from 'fs'
 
-export class FileStatHandler implements EventHandler<string[]> {
+export class FileStatHandler implements EventHandler {
   private logger = new Logger('FileStatHandler')
 
   async listen(files?: string[]): Promise<Map<string, Stats>> {
     this.logger.debug('getting stat of', files)
 
     if (is.undefined(files)) {
-      throw new TypeError('"files" is undefined.')
+      throw new ApplicationException('"files" is undefined.')
     }
 
     const map = new Map<string, Stats>()

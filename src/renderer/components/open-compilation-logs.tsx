@@ -16,24 +16,24 @@ import {
   Paper,
 } from '@mui/material'
 import cx from 'classnames'
-import React, { KeyboardEvent, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { TelemetryEvent } from '../../common/telemetry-event'
 import { useApp } from '../hooks/use-app'
 import { useCompilation } from '../hooks/use-compilation'
 import { useTelemetry } from '../hooks/use-telemetry'
-import { ScriptRenderer } from '../types'
 import { isFailedScript, isSuccessScript } from '../utils/scripts/status'
 import DrawerButton from './drawer-button'
+import type { ScriptRenderer } from '../types'
+import type { KeyboardEvent} from 'react';
 
-const LogsListItem = ({
+function LogsListItem({
   script,
   logs,
 }: {
   script: ScriptRenderer
   logs: string
-}) => {
+}) {
   const { t } = useTranslation()
   const { copyToClipboard } = useApp()
   const { send } = useTelemetry()
@@ -47,8 +47,8 @@ const LogsListItem = ({
 
   return (
     <Paper
-      aria-labelledby={`${script.id}-title`}
       aria-describedby={`${script.id}-logs`}
+      aria-labelledby={`${script.id}-title`}
       elevation={3}
     >
       <Paper
@@ -56,14 +56,14 @@ const LogsListItem = ({
         elevation={4}
       >
         <Typography
-          component="div"
-          className="flex items-center justify-between"
-          id={`${script.id}-title`}
           aria-label={script.name}
+          className="flex items-center justify-between"
+          component="div"
+          id={`${script.id}-title`}
         >
           <Typography
-            variant="h6"
             className={cx('flex items-center gap-2 overflow-x-hidden')}
+            variant="h6"
           >
             {isSuccess && <CheckCircleIcon className="text-green-500" />}
             {isFailed && <ErrorIcon className="text-red-300" />} {script.name}
@@ -72,11 +72,11 @@ const LogsListItem = ({
         </Typography>
       </Paper>
       <Paper
-        component="code"
         className="block w-full rounded-tr-none rounded-tl-none bg-gray-800 p-4 text-white dark:bg-black-800"
+        component="code"
         elevation={0}
-        role="log"
         id={`${script.id}-logs`}
+        role="log"
       >
         {logs.split('\n').map((log, i) => (
           <span
@@ -91,7 +91,7 @@ const LogsListItem = ({
   )
 }
 
-const OpenCompilationLogs = () => {
+function OpenCompilationLogs() {
   const { t } = useTranslation()
   const { logs } = useCompilation()
   const [isDialogOpen, setDialogOpen] = useState(false)
@@ -128,35 +128,35 @@ const OpenCompilationLogs = () => {
             />
           )
         }
-        text={t('common.logs.nav')}
         onClick={onClickButtonOpenLogs}
+        text={t('common.logs.nav')}
       />
 
       <Dialog
-        open={isDialogOpen}
+        aria-describedby="logs-content"
+        aria-labelledby="logs-title"
         fullScreen
         onClose={onClickButtonCloseLogs}
         onKeyDown={onDialogKeyDown}
-        aria-labelledby="logs-title"
-        aria-describedby="logs-content"
+        open={isDialogOpen}
       >
-        <DialogTitle id="logs-title" className="-mb-1">
+        <DialogTitle className="-mb-1" id="logs-title">
           {t('common.logs.title')}
         </DialogTitle>
         <DialogContent
-          id="logs-content"
-          dividers
           className={cx(
             'flex flex-col gap-4',
             logs.length === 0 && 'items-center justify-center',
           )}
+          dividers
+          id="logs-content"
         >
           {logs.length > 0 ? (
             logs.map(([script, scriptLogs]) => (
-              <LogsListItem key={script.id} script={script} logs={scriptLogs} />
+              <LogsListItem key={script.id} logs={scriptLogs} script={script} />
             ))
           ) : (
-            <Typography variant="h5" component="span">
+            <Typography component="span" variant="h5">
               {t('common.logs.noLogs')}
             </Typography>
           )}

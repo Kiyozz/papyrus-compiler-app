@@ -5,19 +5,19 @@
  */
 
 import cx from 'classnames'
-import React, { MouseEvent } from 'react'
-
+import React from 'react'
 import bridge from '../bridge'
 import { useFocus } from '../hooks/use-focus'
 import { usePlatform } from '../hooks/use-platform'
 import { useTitlebarHeight } from '../hooks/use-titlebar-height'
 import { useWindowState } from '../hooks/use-window-state'
+import type { MouseEvent } from 'react';
 
-type Props = {
+interface Props {
   title: string
 }
 
-const Titlebar = ({ title }: Props) => {
+function Titlebar({ title }: Props) {
   const isFocus = useFocus()
   const platform = usePlatform()
   const windowState = useWindowState()
@@ -86,32 +86,32 @@ const Titlebar = ({ title }: Props) => {
       {isNotMacOs && (
         <div className="flex">
           <button
-            onClick={handleMinimizeWindow}
             className="titlebar-control"
+            onClick={handleMinimizeWindow}
             tabIndex={-1}
           >
             &#xE921;
           </button>
           {windowState === 'maximized' ? (
             <button
-              onClick={handleRestoreWindow}
               className="titlebar-control"
+              onClick={handleRestoreWindow}
               tabIndex={-1}
             >
               &#xE923;
             </button>
           ) : (
             <button
-              onClick={handleMaximizeWindow}
               className="titlebar-control"
+              onClick={handleMaximizeWindow}
               tabIndex={-1}
             >
               &#xE922;
             </button>
           )}
           <button
-            onClick={handleCloseWindow}
             className="titlebar-control titlebar-control-close"
+            onClick={handleCloseWindow}
             tabIndex={-1}
           >
             &#xE8BB;

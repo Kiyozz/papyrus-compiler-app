@@ -4,11 +4,10 @@
  * All rights reserved.
  */
 
-import { BrowserWindow } from 'electron'
-
-import { WindowState } from '../../common/types/window-state'
-import { EventHandler } from '../interfaces/event-handler'
 import { IpcEvent } from '../ipc-event'
+import type { BrowserWindow } from 'electron'
+import type { WindowState } from '../../common/types/window-state'
+import type { EventHandler } from '../interfaces/event-handler'
 
 export function listenToWindowState(win: BrowserWindow) {
   win.on('minimize', () =>

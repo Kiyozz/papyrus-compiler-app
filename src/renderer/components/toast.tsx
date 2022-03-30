@@ -6,13 +6,14 @@
 
 import is from '@sindresorhus/is'
 import cx from 'classnames'
-import React, { useEffect, ReactNode } from 'react'
-
-import Scale, { Delay } from './animations/scale'
+import React, { useEffect } from 'react'
+import Scale from './animations/scale'
+import type { Delay } from './animations/scale';
+import type { ReactNode } from 'react';
 
 type ToastType = 'error' | 'normal'
 
-type Props = {
+interface Props {
   message?: ReactNode
   actions?: ReactNode
   onClose: () => void
@@ -22,7 +23,7 @@ type Props = {
   type?: ToastType
 }
 
-const Toast = ({
+function Toast({
   message,
   actions,
   onClose,
@@ -30,7 +31,7 @@ const Toast = ({
   speedMs,
   autoCloseMs = 4_000,
   type = 'normal',
-}: Props) => {
+}: Props) {
   useEffect(() => {
     let timer: NodeJS.Timeout | undefined
 
@@ -51,13 +52,13 @@ const Toast = ({
 
   return (
     <Scale
-      in={isEnabled}
-      speedMs={speedMs}
       className={cx(
         'toast',
         type === 'error' && 'toast-error',
         !isEnabled && 'pointer-events-none',
       )}
+      in={isEnabled}
+      speedMs={speedMs}
     >
       <div className="grow">{message}</div>
       <div className="flex gap-2">{actions}</div>

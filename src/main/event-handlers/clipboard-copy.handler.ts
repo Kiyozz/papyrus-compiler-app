@@ -5,18 +5,17 @@
  */
 
 import { clipboard } from 'electron'
-
-import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
+import type { EventHandler } from '../interfaces/event-handler'
 
-type Entry = {
+interface ClipboardCopyArgs {
   text: string
 }
 
-export class ClipboardCopyHandler implements EventHandler<Entry> {
+export class ClipboardCopyHandler implements EventHandler {
   private logger = new Logger('ClipboardCopyHandler')
 
-  listen({ text }: Entry): void {
+  listen({ text }: ClipboardCopyArgs): void {
     this.logger.debug('Copy logs to clipboard', text)
 
     clipboard.writeText(text, 'selection')

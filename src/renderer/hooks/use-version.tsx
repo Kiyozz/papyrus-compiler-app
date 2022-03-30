@@ -6,17 +6,18 @@
 
 import React, {
   createContext,
-  Dispatch,
-  SetStateAction,
   useContext,
   useState,
 } from 'react'
+import type {
+  Dispatch,
+  SetStateAction} from 'react';
 
 type _VersionContext = [string, Dispatch<SetStateAction<string>>]
 
 const _Context = createContext(['', () => ''] as _VersionContext)
 
-const VersionProvider = ({ children }: React.PropsWithChildren<unknown>) => {
+function VersionProvider({ children }: React.PropsWithChildren<unknown>) {
   const [version, setVersion] = useState('')
 
   return (

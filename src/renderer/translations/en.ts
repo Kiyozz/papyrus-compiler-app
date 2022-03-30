@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { TranslationShape } from './translation-shape'
+import type { TranslationShape } from './translation-shape'
 
 const en: TranslationShape = {
   common: {

@@ -5,10 +5,9 @@
  */
 
 import Store from 'electron-store'
-
-import { RecentFiles } from '../../../common/types/recent-files'
-import { Script } from '../../../common/types/script'
 import { uniqArray } from '../../../common/uniq-array'
+import type { RecentFiles } from '../../../common/types/recent-files'
+import type { Script } from '../../../common/types/script'
 
 const defaultRecentFiles: RecentFiles = {
   files: [] as Script[],

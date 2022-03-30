@@ -7,7 +7,6 @@
 import debounce from 'debounce-fn'
 import React from 'react'
 import { render } from 'react-dom'
-
 import App from './app'
 import bridge from './bridge'
 import AppProvider from './hooks/use-app'

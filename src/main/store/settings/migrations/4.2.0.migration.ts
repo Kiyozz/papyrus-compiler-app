@@ -4,10 +4,9 @@
  * All rights reserved.
  */
 
+import * as path from 'path'
 import is from '@sindresorhus/is'
 import * as util from 'electron-util'
-import * as path from 'path'
-
 import { toAntiSlash, toSlash } from '../../../slash'
 import type { SettingsStore } from '../store'
 

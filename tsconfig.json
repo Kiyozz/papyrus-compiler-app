@@ -1,16 +1,12 @@
 {
+  "extends": "@vercel/style-guide/typescript.json",
   "compilerOptions": {
     "jsx": "react",
     "target": "es2015",
     "module": "esnext",
     "moduleResolution": "node",
-    "strict": true,
     "noEmit": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "noImplicitReturns": false,
-    "experimentalDecorators": false,
-    "baseUrl": "./",
+    "noImplicitReturns": true,
     "isolatedModules": true
   }
 }

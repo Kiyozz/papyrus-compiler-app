@@ -4,17 +4,16 @@
  * All rights reserved.
  */
 
+import * as fs from 'fs'
 import { app } from 'electron'
 import Store from 'electron-store'
 import { is } from 'electron-util'
-import * as fs from 'fs'
 import { osLocaleSync } from 'os-locale'
-
 import { GameType } from '../../../common/game'
 import { Theme } from '../../../common/theme'
-import { Config } from '../../../common/types/config'
 import { cliArgs } from '../../cli-args'
 import { Env } from '../../env'
+// noinspection ES6PreferShortImport
 import { join } from '../../path/path'
 import { checkStore } from './check'
 import { migrate410 } from './migrations/4.1.0.migration'
@@ -23,13 +22,14 @@ import { migrate510 } from './migrations/5.1.0.migration'
 import { migrate520 } from './migrations/5.2.0.migration'
 import { migrate550 } from './migrations/5.5.0.migration'
 import { migrate560 } from './migrations/5.6.0.migration'
+import type { Config } from '../../../common/types/config'
 
 const jsonPath = is.development
   ? join(__dirname, '../..', 'package.json')
   : join(app.getAppPath(), 'package.json')
-const json: { version: string } = JSON.parse(
-  fs.readFileSync(jsonPath).toString(),
-)
+const json = JSON.parse(fs.readFileSync(jsonPath).toString()) as {
+  version: string
+}
 
 const defaultConfig: Config = {
   game: {

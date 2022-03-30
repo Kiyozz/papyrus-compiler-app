@@ -7,14 +7,13 @@
 import { Paper } from '@mui/material'
 import cx from 'classnames'
 import React from 'react'
-
 import { useDrawer } from '../hooks/use-drawer'
 
-type Props = {
+interface Props {
   className?: string
 }
 
-const Page = ({ children, className }: React.PropsWithChildren<Props>) => {
+function Page({ children, className }: React.PropsWithChildren<Props>) {
   const [isDrawerExpand] = useDrawer()
 
   return (

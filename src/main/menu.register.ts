@@ -7,21 +7,20 @@
 // noinspection SpellCheckingInspection
 
 import is from '@sindresorhus/is'
-import { app, Menu, MenuItemConstructorOptions, shell } from 'electron'
+import { app, Menu, shell } from 'electron'
 import createDefaultMenu from 'electron-default-menu'
-import { is as isUtil } from 'electron-util'
-import { appMenu, openUrlMenuItem, is as isPlatform } from 'electron-util'
+import { is as isUtil, appMenu, openUrlMenuItem } from 'electron-util'
 import { match } from 'ts-pattern'
-
 import { GITHUB_LINK } from '../common/constants'
 import { GITHUB_ISSUES_NEW_LINK } from './constants'
 import { IpcEvent } from './ipc-event'
 import { Logger } from './logger'
 import { exists } from './path/path'
 import { settingsStore, defaultConfig } from './store/settings/store'
+import type { MenuItemConstructorOptions} from 'electron';
 
-type RegisterMenusCallbacks = {
-  openLogFile: (file: string) => void
+interface RegisterMenusCallbacks {
+  openLogFile: (file: string) => Promise<void>
   win: Electron.BrowserWindow
 }
 
@@ -79,7 +78,7 @@ export async function registerMenu({
       {
         label: t('appMenu.file.actions.logs'),
         click() {
-          openLogFile(logger.file.path)
+          void openLogFile(logger.file.path)
         },
       },
       {
@@ -88,7 +87,7 @@ export async function registerMenu({
           {
             label: t('appMenu.file.actions.previousLogs.actions.logs'),
             click() {
-              openLogFile(logger.previousSessionFilePath)
+              void openLogFile(logger.previousSessionFilePath)
             },
             enabled: exists(logger.previousSessionFilePath),
           },
@@ -118,22 +117,24 @@ export async function registerMenu({
         .with('about', 'hide', 'quit', role => {
           const key = role === 'hide' ? 'hideSelf' : role
 
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
           return t<string>(`appMenu.app.${key}`, { app: 'PCA' })
         })
         .with('hideothers', 'unhide', role => {
           const key = role === 'hideothers' ? 'hideOthers' : 'showAll'
 
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
           return t<string>(`appMenu.app.${key}`)
         })
         .otherwise(() => undefined)
 
-      if (label !== undefined) {
+      if (!is.undefined(label)) {
         item.label = label
       }
     }
   }
 
-  if (isPlatform.windows || isPlatform.linux) {
+  if (isUtil.windows || isUtil.linux) {
     if (is.array(menu.submenu)) {
       menu.submenu = menu.submenu.filter(item => {
         return !['services', 'hide', 'unhide', 'hideothers'].includes(
@@ -150,9 +151,9 @@ export async function registerMenu({
   defaultMenus.push(helpMenu)
   defaultMenus.unshift(fileMenu)
 
-  const editMenu = defaultMenus.find(menu => menu.label === 'Edit')
-  const viewMenu = defaultMenus.find(menu => menu.label === 'View')
-  const windowMenu = defaultMenus.find(menu => menu.label === 'Window')
+  const editMenu = defaultMenus.find(defaultMenu => defaultMenu.label === 'Edit')
+  const viewMenu = defaultMenus.find(defaultMenu => defaultMenu.label === 'View')
+  const windowMenu = defaultMenus.find(defaultMenu => defaultMenu.label === 'Window')
 
   if (!is.nullOrUndefined(editMenu)) {
     editMenu.role = 'editMenu'

@@ -4,8 +4,8 @@
  * All rights reserved.
  */
 
-import { Script } from './script'
+import type { Script } from './script'
 
-export type RecentFiles = {
+export interface RecentFiles {
   files: Script[]
 }

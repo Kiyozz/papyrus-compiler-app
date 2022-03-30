@@ -5,16 +5,16 @@
  */
 
 import { is } from 'electron-util'
-
-import { GameType, toOtherSource, toSource } from '../../common/game'
+import { toOtherSource, toSource } from '../../common/game'
 import { ApplicationException } from '../exceptions/application.exception'
 import { ConfigurationException } from '../exceptions/configuration.exception'
 import { Logger } from '../logger'
 import * as path from '../path/path'
 import { toAntiSlash, toSlash } from '../slash'
 import { settingsStore } from '../store/settings/store'
+import type { GameType } from '../../common/game'
 
-type GenerateImportsOptions = {
+interface GenerateImportsOptions {
   gameType: GameType
   mo2: {
     instance: string
@@ -52,9 +52,9 @@ async function getModsSourcesPath(gameType: GameType, instance: string) {
         return false
       }
 
-      return isSame && new RegExp(sourcesPath).test(file) ? file : before
+      return new RegExp(sourcesPath).test(file) ? file : before
     })
-    .filter(f => !!f) as readonly string[]
+    .filter(f => Boolean(f)) as readonly string[]
 
   logger.debug('[MO2] DoubleSourceFolders', doubleSourceFolders)
 

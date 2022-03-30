@@ -5,9 +5,10 @@
  */
 
 import cx from 'classnames'
-import React, { HTMLProps } from 'react'
+import React from 'react'
+import type { HTMLProps } from 'react';
 
-type Props = {
+interface Props {
   in: boolean
   speedMs: Delay
   className?: HTMLProps<HTMLDivElement>['className']
@@ -15,12 +16,12 @@ type Props = {
 
 type Delay = 150 | 300
 
-const Scale = ({
+function Scale({
   in: enabled,
   speedMs,
   children,
   className,
-}: React.PropsWithChildren<Props>) => {
+}: React.PropsWithChildren<Props>) {
   if (!children) {
     return null
   }

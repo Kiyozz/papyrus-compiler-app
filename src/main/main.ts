@@ -4,23 +4,20 @@
  * All rights reserved.
  */
 
-import isType from '@sindresorhus/is'
-import {
-  app,
-  BrowserWindow,
-  BrowserWindowConstructorOptions,
-  Menu,
-  MenuItemConstructorOptions,
-} from 'electron'
-import { debugInfo, is } from 'electron-util'
 import { format } from 'url'
-
+import isType from '@sindresorhus/is'
+import { app, BrowserWindow, Menu } from 'electron'
+import { debugInfo, is } from 'electron-util'
 import { version } from '../common/version'
 import { initialize } from './initialize'
 import { Logger } from './logger'
 import { join } from './path/path'
 import { createWindowStore } from './store/window/store'
 import { unhandled } from './unhandled'
+import type {
+  BrowserWindowConstructorOptions,
+  MenuItemConstructorOptions,
+} from 'electron'
 
 const logger = new Logger('Main')
 let win: BrowserWindow | null = null
@@ -79,7 +76,7 @@ async function createWindow() {
 
     startingWin.setMenu(Menu.buildFromTemplate(startingWinTemplate))
 
-    startingWin?.loadURL(
+    void startingWin.loadURL(
       format({
         pathname: join(__dirname, 'browser-windows', 'starting.html'),
         protocol: 'file',
@@ -92,10 +89,10 @@ async function createWindow() {
 
   if (isDev) {
     // noinspection ES6MissingAwait
-    win.loadURL('http://localhost:9080')
+    void win.loadURL('http://localhost:9080')
   } else {
     // noinspection ES6MissingAwait
-    win.loadURL(
+    void win.loadURL(
       format({
         pathname: join(__dirname, 'index.html'),
         protocol: 'file',
@@ -127,6 +124,7 @@ async function createWindow() {
   })
 }
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
@@ -138,6 +136,6 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (win === null && app.isReady()) {
     // noinspection JSIgnoredPromiseFromCall
-    createWindow()
+    void createWindow()
   }
 })

@@ -4,10 +4,16 @@
  * All rights reserved.
  */
 
-import log, { LogFile, LogFunctions, Transports } from 'electron-log'
+import log from 'electron-log'
 import { is } from 'electron-util'
-
 import { cliArgs } from './cli-args'
+import type {
+  LogFile,
+  LogFunctions,
+  Transports,
+  CatchErrorsOptions,
+  CatchErrorsResult,
+} from 'electron-log'
 
 const isDev = is.development
 const isDebug = cliArgs.debug ?? false
@@ -18,7 +24,6 @@ if (!isDev && !isDebug) {
 
 export class Logger {
   private logger: LogFunctions
-  catchErrors = log.catchErrors
 
   constructor(namespace: string) {
     this.logger = log.scope(namespace)
@@ -34,6 +39,10 @@ export class Logger {
 
   get previousSessionFilePath(): string {
     return this.file.path.replace('.log', '.1.log')
+  }
+
+  catchErrors(options?: CatchErrorsOptions): CatchErrorsResult {
+    return log.catchErrors(options)
   }
 
   debug(...params: unknown[]): void {

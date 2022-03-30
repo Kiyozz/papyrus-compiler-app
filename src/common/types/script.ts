@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-export type Script = {
+export interface Script {
   name: string
   path: string
 }

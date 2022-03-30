@@ -4,6 +4,6 @@
  * All rights reserved.
  */
 
-export type Disposable = {
+export interface Disposable {
   dispose: () => void
 }

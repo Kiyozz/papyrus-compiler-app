@@ -5,16 +5,17 @@
  */
 
 import is from '@sindresorhus/is'
-import fetch, { Response, Headers } from 'electron-fetch'
+import fetch, { Headers } from 'electron-fetch'
 import createQueue from 'queue'
-
 import {
-  TelemetryEvent,
-  TelemetryEventProperties,
+  TelemetryEvent
 } from '../../common/telemetry-event'
 import { Logger } from '../logger'
+import type {
+  TelemetryEventProperties} from '../../common/telemetry-event';
+import type { Response} from 'electron-fetch';
 
-type Params<E extends TelemetryEvent> = {
+interface Params<E extends TelemetryEvent> {
   name: E
   properties: TelemetryEventProperties[E]
 }

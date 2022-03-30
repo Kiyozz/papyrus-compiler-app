@@ -15,14 +15,14 @@ import {
   FormControlLabel,
   FormGroup,
 } from '@mui/material'
-import React, { useState, KeyboardEvent } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { useDocumentation } from '../hooks/use-documentation'
 import { useShowOpenDocumentationDialog } from '../hooks/use-show-open-documentation-dialog'
 import DrawerButton from './drawer-button'
+import type { KeyboardEvent } from 'react';
 
-const OpenDocumentation = () => {
+function OpenDocumentation() {
   const [isShowDialog, toggleShowDialog] = useShowOpenDocumentationDialog()
   const { t } = useTranslation()
   const [isDialogOpen, setDialogOpen] = useState(false)
@@ -64,16 +64,16 @@ const OpenDocumentation = () => {
     <>
       <DrawerButton
         icon={<HelpIcon />}
-        text={t('nav.help.text')}
         onClick={onClickGoToDocumentation}
+        text={t('nav.help.text')}
       />
 
       <Dialog
-        open={isDialogOpen}
+        aria-describedby="open-doc-content"
+        aria-labelledby="open-doc-title"
         onClose={onCloseDialog}
         onKeyDown={onDialogKeyDown}
-        aria-labelledby="open-doc-title"
-        aria-describedby="open-doc-content"
+        open={isDialogOpen}
       >
         <DialogTitle id="open-doc-title">{t('nav.help.title')}</DialogTitle>
         <DialogContent id="open-doc-content">
@@ -83,8 +83,8 @@ const OpenDocumentation = () => {
               control={
                 <Checkbox
                   checked={!isShowDialog}
-                  onChange={toggleShowDialog}
                   inputProps={{ 'aria-label': 'controlled' }}
+                  onChange={toggleShowDialog}
                 />
               }
               label={t<string>('nav.help.doNotShowAgain')}

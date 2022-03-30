@@ -4,10 +4,10 @@
  * All rights reserved.
  */
 
-import { Script } from '../../../common/types/script'
 import bridge from '../../bridge'
 import { ScriptStatus } from '../../enums/script-status.enum'
-import { ScriptRenderer } from '../../types'
+import type { Script } from '../../../common/types/script'
+import type { ScriptRenderer } from '../../types'
 
 export const scriptsToRenderer = (
   scriptsRenderer: ScriptRenderer[],

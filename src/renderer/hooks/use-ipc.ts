@@ -5,8 +5,7 @@
  */
 
 import { useEffect } from 'react'
-
-import { Disposable } from '../../common/types/disposable'
+import type { Disposable } from '../../common/types/disposable'
 
 export const useIpc = <
   IpcCb extends (cb: (...args: unknown[]) => void) => Disposable,
@@ -21,6 +20,6 @@ export const useIpc = <
     return () => {
       disposable.dispose()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [cb, start])
 }

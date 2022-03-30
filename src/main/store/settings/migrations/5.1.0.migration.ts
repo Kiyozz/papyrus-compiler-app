@@ -12,8 +12,6 @@ const _logger = new Logger('migration-5.1.0')
 
 /**
  * Migrate old game type to the new format
- *
- * @param {SettingsStore} store
  */
 export function migrate510(store: SettingsStore): void {
   _logger.debug('starting')

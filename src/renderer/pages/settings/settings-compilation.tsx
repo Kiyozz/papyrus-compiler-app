@@ -6,15 +6,15 @@
 
 import { TextField } from '@mui/material'
 import is from '@sindresorhus/is'
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { useApp } from '../../hooks/use-app'
 import SettingsSection from './settings-section'
+import type { ChangeEvent } from 'react';
 
 const maxConcurrentCompilationScripts = 100
 
-const SettingsCompilation = () => {
+function SettingsCompilation() {
   const { t } = useTranslation()
   const {
     config: { compilation },
@@ -45,23 +45,23 @@ const SettingsCompilation = () => {
 
   return (
     <SettingsSection
-      title={t('page.settings.compilation.title')}
       className="relative"
       id="compilation-concurrentScripts"
+      title={t('page.settings.compilation.title')}
     >
       <TextField
+        fullWidth
+        helperText={t('page.settings.compilation.concurrentScripts.info')}
         id="compilation-concurrentScripts-input"
+        label={t('page.settings.compilation.concurrentScripts.label')}
+        name="compilation-concurrentScripts"
+        onChange={onChangeConcurrentScripts}
+        size="small"
         value={
           compilation.concurrentScripts === 0
             ? ''
             : compilation.concurrentScripts
         }
-        size="small"
-        fullWidth
-        onChange={onChangeConcurrentScripts}
-        label={t('page.settings.compilation.concurrentScripts.label')}
-        name="compilation-concurrentScripts"
-        helperText={t('page.settings.compilation.concurrentScripts.info')}
       />
     </SettingsSection>
   )

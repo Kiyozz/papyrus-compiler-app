@@ -5,9 +5,8 @@
  */
 
 import { shell } from 'electron'
-
-import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
+import type { EventHandler } from '../interfaces/event-handler'
 
 export class OpenFileHandler implements EventHandler {
   private logger = new Logger('OpenFileHandler')

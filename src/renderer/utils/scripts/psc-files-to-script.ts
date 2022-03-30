@@ -6,7 +6,7 @@
 
 import bridge from '../../bridge'
 import { ScriptStatus } from '../../enums/script-status.enum'
-import { ScriptRenderer } from '../../types'
+import type { ScriptRenderer } from '../../types'
 
 export const pscFilesToScript = (pscFiles: File[]): ScriptRenderer[] => {
   return pscFiles.map(({ name, path }) => {

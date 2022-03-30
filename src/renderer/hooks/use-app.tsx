@@ -6,24 +6,24 @@
 
 import is from '@sindresorhus/is'
 import React, {
-  Dispatch,
-  SetStateAction,
   useCallback,
   useContext,
   useState,
 } from 'react'
 import { useDidMount } from 'rooks'
-import { Observable, Subject } from 'rxjs'
-// eslint-disable-next-line import/no-unresolved
-import { PartialDeep } from 'type-fest'
-
-import { Config } from '../../common/types/config'
+import { Subject } from 'rxjs'
 import bridge from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { Group } from '../types'
 import { useIpc } from './use-ipc'
+import type { PartialDeep } from 'type-fest'
+import type { Config } from '../../common/types/config'
+import type { Observable} from 'rxjs';
+import type {
+  Dispatch,
+  SetStateAction} from 'react';
 
-type AppContext = {
+interface AppContext {
   showChangelogs: readonly [boolean, Dispatch<SetStateAction<boolean>>]
   showLatestVersionAlert: readonly [boolean, Dispatch<SetStateAction<boolean>>]
   changelogs: readonly [
@@ -43,7 +43,7 @@ const Context = React.createContext({} as AppContext)
 const _refresh$ = new Subject<Config>()
 const _onRefreshConfig = _refresh$.asObservable()
 
-const AppProvider = ({ children }: React.PropsWithChildren<unknown>) => {
+function AppProvider({ children }: React.PropsWithChildren<unknown>) {
   const [config, setConfig] = useState<Config>({} as Config)
   const [groups, setGroups] = useState<Group[]>([])
   const [isShowChangelogs, setShowChangelogs] = useState(false)

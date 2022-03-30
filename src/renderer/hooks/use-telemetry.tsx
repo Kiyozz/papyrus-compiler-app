@@ -5,16 +5,15 @@
  */
 
 import React, { createContext, useContext } from 'react'
-
-import {
-  TelemetryEvent,
-  TelemetryEventProperties,
-} from '../../common/telemetry-event'
 import bridge from '../bridge'
 import { Env } from '../env'
 import { useApp } from './use-app'
+import type {
+  TelemetryEvent,
+  TelemetryEventProperties,
+} from '../../common/telemetry-event'
 
-type TelemetryContext = {
+interface TelemetryContext {
   send: <E extends TelemetryEvent>(
     event: E,
     properties: TelemetryEventProperties[E],
@@ -24,14 +23,14 @@ type TelemetryContext = {
 
 const Context = createContext({} as TelemetryContext)
 
-const TelemetryProvider = ({ children }: React.PropsWithChildren<unknown>) => {
+function TelemetryProvider({ children }: React.PropsWithChildren<unknown>) {
   const { config } = useApp()
 
   const sendTelemetry = (
     event: TelemetryEvent,
     properties: TelemetryEventProperties[TelemetryEvent],
   ) => {
-    if (config.telemetry?.active && Env.telemetryFeature) {
+    if (config.telemetry.active && Env.telemetryFeature) {
       bridge.telemetry.send(event, properties)
     }
   }

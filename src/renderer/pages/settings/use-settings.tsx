@@ -11,11 +11,10 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-
-import { BadError } from '../../../common/types/bad-error'
 import bridge from '../../bridge'
+import type { BadError } from '../../../common/types/bad-error'
 
-type SettingsContext = {
+interface SettingsContext {
   configError: BadError
   checkConfig: (checkMo2?: boolean) => void
   resetConfigError: () => void
@@ -23,7 +22,7 @@ type SettingsContext = {
 
 const Context = createContext({} as SettingsContext)
 
-const SettingsProvider = ({ children }: React.PropsWithChildren<unknown>) => {
+function SettingsProvider({ children }: React.PropsWithChildren<unknown>) {
   const [configError, setConfigError] = useState<BadError>(false)
 
   const checkConfig = useCallback(async (checkMo2 = false) => {

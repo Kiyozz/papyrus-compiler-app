@@ -4,9 +4,8 @@
  * All rights reserved.
  */
 
-import { BrowserWindow, Menu } from 'electron'
-
-import { EventHandler } from '../interfaces/event-handler'
+import type { BrowserWindow, Menu } from 'electron'
+import type { EventHandler } from '../interfaces/event-handler'
 
 export class OpenMenuHandler implements EventHandler {
   private readonly _win: BrowserWindow

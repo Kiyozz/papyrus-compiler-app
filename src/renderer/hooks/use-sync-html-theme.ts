@@ -5,7 +5,6 @@
  */
 
 import { useEffect } from 'react'
-
 import { useIsDarkTheme } from './use-is-dark-theme'
 
 export const useSyncHtmlTheme = (): void => {

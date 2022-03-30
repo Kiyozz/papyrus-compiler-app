@@ -8,19 +8,18 @@ import AddIcon from '@mui/icons-material/Add'
 import { Button, Menu, MenuItem } from '@mui/material'
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useDocumentClick } from '../../hooks/use-document-click'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { isChildren } from '../../html/is-child'
-import { Group } from '../../types'
+import type { Group } from '../../types'
 
 interface Props {
   groups: Group[]
   onChangeGroup: (groupName: string) => void
 }
 
-const GroupsMenu = ({ groups, onChangeGroup }: Props) => {
+function GroupsMenu({ groups, onChangeGroup }: Props) {
   const { t } = useTranslation()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
   const { send } = useTelemetry()
@@ -55,9 +54,9 @@ const GroupsMenu = ({ groups, onChangeGroup }: Props) => {
 
         return (
           <MenuItem
+            className="justify-center"
             key={group.name}
             onClick={onClickGroup}
-            className="justify-center"
           >
             {group.name}
           </MenuItem>
@@ -69,26 +68,23 @@ const GroupsMenu = ({ groups, onChangeGroup }: Props) => {
     (group: Group): boolean => !group.isEmpty,
   )
 
-  const isOpen = !!anchor
+  const isOpen = Boolean(anchor)
 
   return (
     <div>
       {notEmptyGroups.length > 0 && (
         <>
           <Button
-            aria-haspopup="true"
             aria-controls={isOpen ? 'group-loader-menu' : undefined}
             aria-expanded={isOpen ? 'true' : undefined}
+            aria-haspopup="true"
             onClick={onClick}
             startIcon={<AddIcon />}
           >
             {t('page.compilation.actions.group')}
           </Button>
           <Menu
-            id="group-loader-menu"
-            open={isOpen}
             anchorEl={anchor}
-            onClose={onClose}
             anchorOrigin={{
               vertical: 'top',
               horizontal: 'left',
@@ -96,6 +92,9 @@ const GroupsMenu = ({ groups, onChangeGroup }: Props) => {
             classes={{
               list: 'min-w-[100px]',
             }}
+            id="group-loader-menu"
+            onClose={onClose}
+            open={isOpen}
           >
             {groupSelectOptions}
           </Menu>

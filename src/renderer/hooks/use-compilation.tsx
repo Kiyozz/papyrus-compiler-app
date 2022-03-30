@@ -12,21 +12,20 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-
-import { CompilationResult } from '../../common/types/compilation-result'
 import bridge from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
-import { ScriptRenderer } from '../types'
 import { chunk } from '../utils/chunk'
 import { scriptInList } from '../utils/scripts/equals'
 import { isRunningScript } from '../utils/scripts/status'
 import { useApp } from './use-app'
+import type { ScriptRenderer } from '../types'
+import type { CompilationResult } from '../../common/types/compilation-result'
 
-type StartOptions = {
+interface StartOptions {
   scripts: ScriptRenderer[]
 }
 
-type CompilationContext = {
+interface CompilationContext {
   start: (options: StartOptions) => void
   isRunning: boolean
   scripts: ScriptRenderer[]
@@ -51,9 +50,9 @@ const whenCompileScriptFinish = (
   })
 }
 
-const CompilationProvider = ({
+function CompilationProvider({
   children,
-}: React.PropsWithChildren<unknown>) => {
+}: React.PropsWithChildren<unknown>) {
   const [compilationScripts, setCompilationScripts] = useState<
     ScriptRenderer[]
   >([])
@@ -64,9 +63,9 @@ const CompilationProvider = ({
   const { config } = useApp()
   const concurrentScripts = useMemo(
     () =>
-      (config?.compilation?.concurrentScripts ?? 0) === 0
+      (config.compilation.concurrentScripts ?? 0) === 0
         ? 1
-        : config?.compilation?.concurrentScripts ?? 1,
+        : config.compilation.concurrentScripts ?? 1,
     [config],
   )
 

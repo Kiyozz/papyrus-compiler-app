@@ -4,13 +4,13 @@
  * All rights reserved.
  */
 
-/* eslint-disable react-hooks/exhaustive-deps */
+ 
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import DropScripts from '../components/drop/drop-scripts'
+import type { OnDrop } from '../components/drop/drop-scripts';
 
-import DropScripts, { OnDrop } from '../components/drop/drop-scripts'
-
-type DropContext = {
+interface DropContext {
   onDrop: OnDrop | null
   setOnDrop: (on: (() => OnDrop) | null) => void
   drop: () => void
@@ -20,7 +20,7 @@ type DropContext = {
 
 const Context = createContext({} as DropContext)
 
-const DropProvider = ({ children }: React.PropsWithChildren<unknown>) => {
+function DropProvider({ children }: React.PropsWithChildren<unknown>) {
   const [onDrop, setOnDrop] = useState<OnDrop | null>(null)
   const [isFileDialogActive, setFileDialogActive] = useState(false)
 
@@ -30,8 +30,8 @@ const DropProvider = ({ children }: React.PropsWithChildren<unknown>) => {
         onDrop?.(files)
         setFileDialogActive(false)
       }}
-      onFileDialogOpen={() => setFileDialogActive(true)}
       onFileDialogCancel={() => setFileDialogActive(false)}
+      onFileDialogOpen={() => setFileDialogActive(true)}
     >
       {({ isDragActive, open }) => (
         <Context.Provider

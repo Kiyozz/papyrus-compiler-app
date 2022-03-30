@@ -13,7 +13,6 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-
 import {
   GameType,
   toCompilerSourceFile,
@@ -25,19 +24,19 @@ import { useApp } from '../../hooks/use-app'
 import SettingsSection from './settings-section'
 import { useSettings } from './use-settings'
 
-type Props = {
+interface Props {
   onClickRadio: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeGameFolder: (value: string) => void
   onChangeCompilerPath: (value: string) => void
   onClickRefreshInstallation: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const SettingsGame = ({
+function SettingsGame({
   onChangeGameFolder,
   onClickRadio,
   onChangeCompilerPath,
   onClickRefreshInstallation,
-}: Props) => {
+}: Props) {
   const { t } = useTranslation()
   const {
     config: { game, compilation },
@@ -46,53 +45,54 @@ const SettingsGame = ({
   const exe = toExecutable(game.type)
 
   return (
-    <SettingsSection title={t('page.settings.game')} gutterTop={false}>
+    <SettingsSection gutterTop={false} title={t('page.settings.game')}>
       <FormControl component="fieldset" fullWidth>
         <RadioGroup
+          classes={{ row: 'justify-between' }}
+          onChange={onClickRadio}
           row
           value={game.type}
-          onChange={onClickRadio}
-          classes={{ row: 'justify-between' }}
         >
           <FormControlLabel
-            value={GameType.le}
             classes={{
               label: 'dark:text-white',
             }}
             control={<Radio />}
             label={GameType.le}
+            value={GameType.le}
           />
           <FormControlLabel
-            value={GameType.se}
             classes={{
               label: 'dark:text-white',
             }}
             control={<Radio />}
             label={GameType.se}
+            value={GameType.se}
           />
           <FormControlLabel
-            value={GameType.vr}
             classes={{
               label: 'dark:text-white',
             }}
             control={<Radio />}
             label={GameType.vr}
+            value={GameType.vr}
           />
           <FormControlLabel
-            value={GameType.fo4}
             classes={{
               label: 'dark:text-white',
             }}
             control={<Radio />}
             label={GameType.fo4}
+            value={GameType.fo4}
           />
         </RadioGroup>
       </FormControl>
 
       <div className="mt-3" id="settings-game">
         <DialogTextField
-          id="game-path"
+          defaultValue={game.path}
           error={configError === 'game'}
+          id="game-path"
           label={
             <>
               {t('page.settings.gameFolderInfo')}
@@ -103,7 +103,6 @@ const SettingsGame = ({
               </Tooltip>
             </>
           }
-          defaultValue={game.path}
           onChange={onChangeGameFolder}
           type="folder"
         />
@@ -111,8 +110,9 @@ const SettingsGame = ({
 
       <div className="relative mt-3" id="settings-compiler">
         <DialogTextField
-          id="compiler-path"
+          defaultValue={compilation.compilerPath}
           error={configError === 'compiler'}
+          id="compiler-path"
           label={
             <>
               {t('page.settings.compilerPath')}
@@ -121,7 +121,6 @@ const SettingsGame = ({
               </Tooltip>
             </>
           }
-          defaultValue={compilation.compilerPath}
           onChange={onChangeCompilerPath}
           type="file"
         />
@@ -150,9 +149,9 @@ const SettingsGame = ({
           <div>
             <Button
               className="mr-2"
+              color="error"
               onClick={onClickRefreshInstallation}
               startIcon={<RefreshIcon />}
-              color="error"
             >
               {t('common.refresh')}
             </Button>

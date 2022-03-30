@@ -5,13 +5,12 @@
  */
 
 import is from '@sindresorhus/is'
-
-import { Script } from '../../common/types/script'
+import type { Script } from '../../common/types/script'
 
 const hasValidValues = (script: Script): boolean => {
   return (
-    is.nonEmptyString(script.name?.trim()) &&
-    is.nonEmptyString(script.path?.trim())
+    is.nonEmptyString(script.name.trim()) &&
+    is.nonEmptyString(script.path.trim())
   )
 }
 

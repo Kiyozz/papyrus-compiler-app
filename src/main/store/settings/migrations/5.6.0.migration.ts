@@ -6,7 +6,6 @@
 
 import is from '@sindresorhus/is'
 import { osLocaleSync } from 'os-locale'
-
 import type { SettingsStore } from '../store'
 
 export function migrate560(store: SettingsStore): void {

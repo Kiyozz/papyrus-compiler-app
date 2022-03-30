@@ -5,11 +5,10 @@
  */
 
 import is from '@sindresorhus/is'
+import type { Script } from '../../common/types/script'
+import type { ScriptRenderer } from './script-renderer'
 
-import { Script } from '../../common/types/script'
-import { ScriptRenderer } from './script-renderer'
-
-export type GroupRenderer = {
+export interface GroupRenderer {
   name: string
   scripts: ScriptRenderer[]
 }

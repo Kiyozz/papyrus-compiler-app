@@ -7,7 +7,6 @@
 import RefreshIcon from '@mui/icons-material/Refresh'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-
 import Alert from '../../../components/alert'
 import DialogTextField from '../../../components/dialog/dialog-text-field'
 import { useApp } from '../../../hooks/use-app'
@@ -18,10 +17,10 @@ interface Props {
   onClickRefreshInstallation: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const SettingsMo2Instance = ({
+function SettingsMo2Instance({
   onChangeMo2Instance,
   onClickRefreshInstallation,
-}: Props) => {
+}: Props) {
   const { t } = useTranslation()
   const {
     config: { mo2 },
@@ -35,9 +34,9 @@ const SettingsMo2Instance = ({
   return (
     <>
       <DialogTextField
-        id="mo2-instance"
-        error={configError === 'mo2-instance'}
         defaultValue={mo2.instance ?? ''}
+        error={configError === 'mo2-instance'}
+        id="mo2-instance"
         label={t('page.settings.mo2.instance')}
         onChange={onChangeMo2Instance}
         type="folder"

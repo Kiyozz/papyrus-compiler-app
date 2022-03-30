@@ -6,10 +6,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-
 import { useApp } from '../../hooks/use-app'
 
-const TutorialTelemetry = () => {
+function TutorialTelemetry() {
   const { setConfig } = useApp()
   const { t } = useTranslation()
   const [isWaiting, setWaiting] = useState(true)
@@ -30,7 +29,7 @@ const TutorialTelemetry = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400`}
+      className="fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400"
     >
       <div className="px-8">
         <Trans i18nKey="tutorials.telemetry.text">
@@ -42,8 +41,8 @@ const TutorialTelemetry = () => {
       </div>
       <button
         className="btn btn-primary mt-8"
-        onClick={onClickOk}
         disabled={isWaiting}
+        onClick={onClickOk}
       >
         {t('tutorials.telemetry.close')}
       </button>

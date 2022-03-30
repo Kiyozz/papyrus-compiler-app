@@ -5,7 +5,6 @@
  */
 
 import { useEffect, useState } from 'react'
-
 import { isDark, onDarkPreferenceChanges } from '../utils/dark'
 
 export const useSystemDarkPreference = (): boolean => {

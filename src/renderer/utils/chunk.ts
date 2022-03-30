@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { ScriptRenderer } from '../types'
+import type { ScriptRenderer } from '../types'
 
 export const chunk = (
   scripts: ScriptRenderer[],

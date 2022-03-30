@@ -6,7 +6,7 @@
 
 import { useCallback, useEffect } from 'react'
 
-type UseOnKeyUpOptions = {
+interface UseOnKeyUpOptions {
   ctrl?: boolean
   shift?: boolean
   alt?: boolean

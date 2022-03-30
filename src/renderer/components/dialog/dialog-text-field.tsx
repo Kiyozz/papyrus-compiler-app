@@ -14,14 +14,14 @@ import {
   OutlinedInput,
 } from '@mui/material'
 import is from '@sindresorhus/is'
-import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { DialogType } from '../../../common/types/dialog'
 import bridge from '../../bridge'
 import { useApp } from '../../hooks/use-app'
+import type { DialogType } from '../../../common/types/dialog'
+import type { ChangeEvent, ReactNode} from 'react';
 
-type Props = {
+interface Props {
   id: string
   className?: string
   error?: boolean
@@ -31,14 +31,14 @@ type Props = {
   type: DialogType
 }
 
-const DialogTextField = ({
+function DialogTextField({
   error = false,
   id,
   label,
   defaultValue,
   onChange,
   type,
-}: Props) => {
+}: Props) {
   const { onRefreshConfig } = useApp()
   const { t } = useTranslation()
   const [value, setValue] = useState(defaultValue)
@@ -90,12 +90,19 @@ const DialogTextField = ({
   }
 
   return (
-    <FormControl variant="outlined" fullWidth error={error}>
-      <InputLabel htmlFor={id} className="flex items-center">
+    <FormControl error={error} fullWidth variant="outlined">
+      <InputLabel className="flex items-center" htmlFor={id}>
         {label}
       </InputLabel>
       <OutlinedInput
+        classes={{
+          inputSizeSmall: '!text-xs',
+        }}
         id={id}
+        label={label}
+        onChange={onChangeInput}
+        placeholder={t('common.selectFolder')}
+        size="small"
         startAdornment={
           <InputAdornment position="start">
             <IconButton
@@ -108,14 +115,7 @@ const DialogTextField = ({
             </IconButton>
           </InputAdornment>
         }
-        size="small"
-        label={label}
-        placeholder={t('common.selectFolder')}
-        onChange={onChangeInput}
         value={value}
-        classes={{
-          inputSizeSmall: '!text-xs',
-        }}
       />
     </FormControl>
   )

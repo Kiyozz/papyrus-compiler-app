@@ -23,7 +23,7 @@ export const uniqArray = <T>(
     return [key, value]
   })
 
-  const kvMap = new Map<keyof T, T>(keyValues as [keyof T, T][])
+  const kvMap = new Map<keyof T, T>(keyValues )
 
   return [...kvMap.values()]
 }

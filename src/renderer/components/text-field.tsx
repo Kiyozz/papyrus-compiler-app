@@ -6,9 +6,10 @@
 
 import is from '@sindresorhus/is'
 import cx from 'classnames'
-import React, { ReactNode, useCallback } from 'react'
+import React, { useCallback } from 'react'
+import type { ReactNode} from 'react';
 
-type Props = {
+interface Props {
   autoFocus?: boolean
   name?: string
   error?: boolean
@@ -25,7 +26,7 @@ type Props = {
   iconOnClick?: (e: React.MouseEvent<HTMLDivElement>) => void
 }
 
-const TextField = ({
+function TextField({
   autoFocus,
   name,
   error,
@@ -40,7 +41,7 @@ const TextField = ({
   iconOnClick,
   inputClassName = '',
   infoText,
-}: Props) => {
+}: Props) {
   const onChangeInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.currentTarget.value
@@ -69,25 +70,25 @@ const TextField = ({
         {startIcon && (
           <div
             className="mr-2 cursor-pointer text-black-600 dark:text-white"
+            onClick={iconOnClick}
             onMouseEnter={iconOnMouseEnter}
             onMouseLeave={iconOnMouseLeave}
-            onClick={iconOnClick}
           >
             {startIcon}
           </div>
         )}
         <input
-          spellCheck={false}
           autoFocus={autoFocus}
-          id={id}
-          name={name}
-          placeholder={placeholder}
           className={cx(
             'w-full bg-transparent text-black-600 dark:text-white',
             inputClassName,
           )}
-          value={value}
+          id={id}
+          name={name}
           onChange={onChangeInput}
+          placeholder={placeholder}
+          spellCheck={false}
+          value={value}
         />
       </div>
       {is.string(infoText) && (

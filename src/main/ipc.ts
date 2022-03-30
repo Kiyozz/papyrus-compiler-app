@@ -6,9 +6,11 @@
 
 import {
   ipcMain as baseIpcMain,
+  ipcRenderer as baseIpcRenderer,
+} from 'electron'
+import type {
   IpcMainEvent,
   IpcMainInvokeEvent,
-  ipcRenderer as baseIpcRenderer,
   IpcRendererEvent,
 } from 'electron'
 
@@ -19,6 +21,7 @@ class IpcException extends Error {
   constructor(message: string) {
     super(
       message.replace(
+        // eslint-disable-next-line prefer-named-capture-group
         /Error invoking remote method ('.*'): Error: (.*)/,
         (s, event: string, errorMessage: string) => errorMessage,
       ),
@@ -43,15 +46,13 @@ class IpcRenderer {
   }
 
   send<Params = unknown>(channel: string, ...args: Params[]): void {
-    baseIpcRenderer.send(channel, ...(args ?? []))
+    baseIpcRenderer.send(channel, ...args)
   }
 
   // noinspection JSUnusedGlobalSymbols
-  sendSync<Result = unknown, Params = unknown>(
-    channel: string,
-    ...args: Params[]
-  ): Result {
-    return baseIpcRenderer.sendSync(channel, ...(args ?? []))
+  sendSync<Result, Params>(channel: string, ...args: Params[]): Result {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return baseIpcRenderer.sendSync(channel, ...args)
   }
 
   once<Result = unknown>(

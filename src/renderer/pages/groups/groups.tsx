@@ -14,10 +14,9 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material'
-import React, { useState, MouseEvent, ChangeEvent } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useLocalStorage from 'react-use-localstorage'
-
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import DialogGroup from '../../components/dialog/dialog-group'
 import Page from '../../components/page'
@@ -26,10 +25,11 @@ import { LocalStorage } from '../../enums/local-storage.enum'
 import { useApp } from '../../hooks/use-app'
 import { useGroups } from '../../hooks/use-groups'
 import { useTelemetry } from '../../hooks/use-telemetry'
-import { Group } from '../../types'
 import GroupsListItem from './groups-list-item'
+import type { Group } from '../../types'
+import type { MouseEvent, ChangeEvent } from 'react';
 
-const Groups = () => {
+function Groups() {
   const { send } = useTelemetry()
   const { t } = useTranslation()
   const { groups } = useApp()
@@ -98,10 +98,10 @@ const Groups = () => {
       <Page className="pt-0">
         <DialogGroup
           group={editingGroup}
-          open={isDialogOpen}
+          onClose={onClosePopup}
           onGroupAdd={onGroupAdd}
           onGroupEdit={onGroupEdit}
-          onClose={onClosePopup}
+          open={isDialogOpen}
         />
 
         {groups.length > 0 && (
@@ -124,17 +124,17 @@ const Groups = () => {
           <List className="flex flex-col gap-2">
             {groups.map(group => (
               <GroupsListItem
+                group={group}
                 key={group.name}
+                moreDetails={isMoreDetails === 'true'}
                 onDelete={onClickRemoveGroup}
                 onEdit={onClickEditGroup}
-                moreDetails={isMoreDetails === 'true'}
-                group={group}
               />
             ))}
           </List>
         ) : (
           <div className="h-full w-full justify-center gap-4 text-lg">
-            <Typography variant="h6" gutterBottom>
+            <Typography gutterBottom variant="h6">
               {t('page.groups.createGroupText')}
             </Typography>
             <Typography variant="body2">

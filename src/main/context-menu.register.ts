@@ -4,11 +4,10 @@
  * All rights reserved.
  */
 
-import { MenuItemConstructorOptions } from 'electron'
 import contextMenu from 'electron-context-menu'
-
 import { ipcMain } from './ipc'
 import { IpcEvent } from './ipc-event'
+import type { MenuItemConstructorOptions } from 'electron'
 
 export async function registerContextMenu(
   win: Electron.BrowserWindow,

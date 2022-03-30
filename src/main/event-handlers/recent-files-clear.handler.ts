@@ -4,14 +4,14 @@
  * All rights reserved.
  */
 
-import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 import { recentFilesStore } from '../store/recent-files/store'
+import type { EventHandler } from '../interfaces/event-handler'
 
 export class RecentFilesClearHandler implements EventHandler {
   private _logger = new Logger('RecentFilesClearHandler')
 
-  async listen(): Promise<void> {
+  listen() {
     this._logger.debug('clear recent files')
 
     recentFilesStore.clearFiles()

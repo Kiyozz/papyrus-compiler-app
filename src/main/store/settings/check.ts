@@ -5,15 +5,19 @@
  */
 
 import is from '@sindresorhus/is'
-
-import { Flag, GamePath, GameType, validateGame } from '../../../common/game'
+import { GameType, validateGame } from '../../../common/game'
 import { Theme } from '../../../common/theme'
-import type { Config } from '../../../common/types/config'
-import { CliArgs } from '../../cli-args'
 import { DEFAULT_COMPILER_PATH } from '../../constants'
+// noinspection ES6PreferShortImport
 import { join } from '../../path/path'
 import { validateGroup } from '../../validators/group.validator'
+import { Logger } from '../../logger'
+import type { CliArgs } from '../../cli-args'
+import type { Flag, GamePath } from '../../../common/game'
+import type { Config } from '../../../common/types/config'
 import type { SettingsStore } from './store'
+
+const logger = new Logger('check')
 
 function _checkLocale(settingsStore: SettingsStore, defaultConfig: Config) {
   const locale = settingsStore.get('locale')
@@ -81,13 +85,13 @@ function _checkMo2(settingsStore: SettingsStore, defaultConfig: Config) {
 }
 
 function _checkFlag(settingsStore: SettingsStore, defaultConfig: Config) {
-  const flag = settingsStore.get<string, Flag>('compilation.flag')
+  const flag = settingsStore.get<string, Flag | string>('compilation.flag')
 
   if (
     flag !== 'TESV_Papyrus_Flags.flg' &&
     flag !== 'Institute_Papyrus_Flags.flg'
   ) {
-    console.warn(flag, 'is not supported')
+    logger.warn(flag, 'is not supported')
 
     settingsStore.set(
       'compilation.flag',

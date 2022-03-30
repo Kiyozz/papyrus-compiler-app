@@ -5,7 +5,7 @@
  */
 
 import { ScriptStatus } from '../../enums/script-status.enum'
-import { ScriptRenderer } from '../../types'
+import type { ScriptRenderer } from '../../types'
 
 export function isRunningScript(script: ScriptRenderer) {
   return script.status === ScriptStatus.running

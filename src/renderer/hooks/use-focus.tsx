@@ -6,17 +6,18 @@
 
 import React, {
   createContext,
-  PropsWithChildren,
   useContext,
   useEffect,
   useState,
 } from 'react'
+import type {
+  PropsWithChildren} from 'react';
 
 const Context = createContext<boolean>(true)
 
 const hasFocus = () => document.hasFocus()
 
-const FocusProvider = ({ children }: PropsWithChildren<unknown>) => {
+function FocusProvider({ children }: PropsWithChildren<unknown>) {
   const [isFocus, setFocus] = useState(hasFocus)
 
   useEffect(() => {

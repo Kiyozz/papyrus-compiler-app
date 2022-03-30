@@ -7,10 +7,9 @@
 import is from '@sindresorhus/is'
 import { dialog } from 'electron'
 import { debugInfo } from 'electron-util'
-
-import { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
-import { Telemetry } from '../telemetry/telemetry'
+import type { EventHandler } from '../interfaces/event-handler'
+import type { Telemetry } from '../telemetry/telemetry'
 
 export class InAppErrorHandler implements EventHandler<Error> {
   private logger = new Logger('InAppErrorHandler')
@@ -28,7 +27,7 @@ export class InAppErrorHandler implements EventHandler<Error> {
       properties: {
         error: args.message,
         stack:
-          `[${args.stack?.length}] ${args.stack?.slice(0, 600)}` ?? 'unknown',
+          !args.stack ? 'unknown stack' : `[${args.stack.length}] ${args.stack.slice(0, 600)}${args.stack.length > 600 ? '...' : ''}`,
       },
     })
 
@@ -36,7 +35,9 @@ export class InAppErrorHandler implements EventHandler<Error> {
       'A JavaScript error occurred in the renderer process.',
       `${debugInfo()}
       
-      ${args ?? 'unknown error'}`,
+      ${args.message}
+      
+      ${args.stack ?? 'unknown stack'}`,
     )
   }
 }

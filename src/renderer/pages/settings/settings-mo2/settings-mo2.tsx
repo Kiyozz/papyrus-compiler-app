@@ -5,26 +5,25 @@
  */
 
 import React from 'react'
-
 import SettingsSection from '../settings-section'
 import SettingsMo2Activation from './settings-mo2-activation'
 import SettingsMo2Instance from './settings-mo2-instance'
 
-type Props = {
+interface Props {
   onChangeMo2: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeMo2Instance: (value: string) => void
   onClickRefreshInstallation: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const SettingsMo2 = ({
+function SettingsMo2({
   onChangeMo2,
   onChangeMo2Instance,
   onClickRefreshInstallation,
-}: Props) => {
+}: Props) {
   return (
     <SettingsSection
-      title="Mod Organizer 2"
       aria-label="Mod Organizer 2"
+      title="Mod Organizer 2"
       titleId="settings-mo2"
     >
       <SettingsMo2Activation onChangeMo2={onChangeMo2} />

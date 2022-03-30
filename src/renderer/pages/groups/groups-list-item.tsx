@@ -5,34 +5,34 @@
  */
 
 import { ListItem, ListItemText, Paper } from '@mui/material'
-import React, { MouseEvent } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { Group } from '../../types'
 import GroupsListItemMenu from './groups-list-item-menu'
+import type { Group } from '../../types'
+import type { MouseEvent } from 'react';
 
-type Props = {
+interface Props {
   onEdit: (group: Group) => (evt: MouseEvent<HTMLElement>) => void
   onDelete: (group: Group) => (evt: MouseEvent<HTMLElement>) => void
   group: Group
   moreDetails: boolean
 }
 
-const GroupsListItem = ({ group, onDelete, onEdit, moreDetails }: Props) => {
+function GroupsListItem({ group, onDelete, onEdit, moreDetails }: Props) {
   const { t } = useTranslation()
 
   return (
     <ListItem
+      className="py-4"
+      component={Paper}
       secondaryAction={
         <GroupsListItemMenu
           id={`${group.name}-menu`}
-          onEdit={onEdit(group)}
           onDelete={onDelete(group)}
+          onEdit={onEdit(group)}
         />
       }
-      component={Paper}
       variant="outlined"
-      className="py-4"
     >
       <ListItemText
         primary={group.name}

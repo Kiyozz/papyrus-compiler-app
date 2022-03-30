@@ -4,8 +4,9 @@
  * All rights reserved.
  */
 
-import { IpcMainEvent } from 'electron'
+import type { IpcMainEvent } from 'electron'
 
-export interface Event<T = unknown> {
-  on(ipcEvent: IpcMainEvent, args: T | undefined): void
+export interface Event {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  on: (ipcEvent: IpcMainEvent, args: any) => void
 }

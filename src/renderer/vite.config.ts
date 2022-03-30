@@ -4,9 +4,9 @@
  * All rights reserved.
  */
 
-import react from '@vitejs/plugin-react'
 import * as fsSync from 'node:fs'
 import * as path from 'node:path'
+import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 const versionPath = path.resolve('release-version.json')

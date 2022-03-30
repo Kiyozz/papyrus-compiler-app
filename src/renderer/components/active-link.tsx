@@ -6,7 +6,8 @@
 
 import cx from 'classnames'
 import React, { forwardRef } from 'react'
-import { NavLink, NavLinkProps } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import type { NavLinkProps } from 'react-router-dom';
 
 interface ActiveLinkProps extends NavLinkProps {
   to: string
@@ -19,10 +20,10 @@ const ActiveLink = forwardRef<HTMLAnchorElement, ActiveLinkProps>(
     return (
       <NavLink
         {...props}
-        ref={ref}
         className={({ isActive }) => {
           return cx(className, isActive && activeClassName)
         }}
+        ref={ref}
       >
         {children}
       </NavLink>

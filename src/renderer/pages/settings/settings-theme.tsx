@@ -10,12 +10,11 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { Theme } from '../../../common/theme'
 import { useTheme } from '../../hooks/use-theme'
 import SettingsSection from './settings-section'
 
-const SettingsTheme = () => {
+function SettingsTheme() {
   const { t } = useTranslation()
   const [theme, setTheme] = useTheme()
 
@@ -26,33 +25,33 @@ const SettingsTheme = () => {
   }
 
   return (
-    <SettingsSection title={t('page.settings.theme.title')} id="settings-theme">
+    <SettingsSection id="settings-theme" title={t('page.settings.theme.title')}>
       <div className="relative">
         <FormControl component="fieldset" fullWidth>
-          <RadioGroup row value={theme} onChange={onChangeTheme}>
+          <RadioGroup onChange={onChangeTheme} row value={theme}>
             <FormControlLabel
-              value={Theme.system}
               classes={{
                 label: 'dark:text-white',
               }}
               control={<Radio />}
               label={<>{t('page.settings.theme.options.system')}</>}
+              value={Theme.system}
             />
             <FormControlLabel
-              value={Theme.light}
               classes={{
                 label: 'dark:text-white',
               }}
               control={<Radio />}
               label={<>{t('page.settings.theme.options.light')}</>}
+              value={Theme.light}
             />
             <FormControlLabel
-              value={Theme.dark}
               classes={{
                 label: 'dark:text-white',
               }}
               control={<Radio />}
               label={<>{t('page.settings.theme.options.dark')}</>}
+              value={Theme.dark}
             />
           </RadioGroup>
         </FormControl>

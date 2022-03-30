@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { GameType } from './game'
+import type { GameType } from './game'
 
 export enum TelemetryEvent {
   appFirstLoaded = 'App.FirstLoaded',
@@ -42,7 +42,7 @@ export enum TelemetryEvent {
   documentationOpenFromNav = 'Documentation.OpenFromNav',
 }
 
-export type TelemetryEventProperties = {
+export interface TelemetryEventProperties {
   [TelemetryEvent.appFirstLoaded]: Record<string, never>
   [TelemetryEvent.appLoaded]: Record<'version' | 'releaseVersion', string>
   [TelemetryEvent.compilationDropScripts]: { scripts: number }

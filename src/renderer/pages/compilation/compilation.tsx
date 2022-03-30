@@ -12,7 +12,6 @@ import SearchIcon from '@mui/icons-material/Search'
 import {
   Alert,
   Button,
-  ButtonProps,
   List,
   Snackbar,
   Stack,
@@ -24,9 +23,7 @@ import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useDidMount } from 'rooks'
-
 import { TelemetryEvent } from '../../../common/telemetry-event'
-import { Script } from '../../../common/types/script'
 import DialogRecentFiles from '../../components/dialog/dialog-recent-files'
 import Page from '../../components/page'
 import PageAppBar from '../../components/page-app-bar'
@@ -35,24 +32,28 @@ import { useCompilation } from '../../hooks/use-compilation'
 import { useDrop, useSetDrop } from '../../hooks/use-drop'
 import { useRecentFiles } from '../../hooks/use-recent-files'
 import { useTelemetry } from '../../hooks/use-telemetry'
-import { isAllGroupsEmpty, ScriptRenderer } from '../../types'
+import { isAllGroupsEmpty } from '../../types'
 import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
 import { scriptsToRenderer } from '../../utils/scripts/scripts-to-renderer'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
 import { useSettings } from '../settings/use-settings'
 import GroupsMenu from './groups-menu'
 import ScriptLine from './script-line'
+import type { ScriptRenderer } from '../../types';
+import type { Script } from '../../../common/types/script'
+import type {
+  ButtonProps} from '@mui/material';
 
 enum DialogRecentFilesState {
   open,
   close,
 }
 
-const RecentFilesButton = ({
+function RecentFilesButton({
   onClick,
 }: {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
-}) => {
+}) {
   const { t } = useTranslation()
 
   return (
@@ -62,29 +63,29 @@ const RecentFilesButton = ({
   )
 }
 
-const SearchButton = ({
+function SearchButton({
   onClick,
   disabled,
   'aria-disabled': ariaDisabled,
 }: { onClick: () => void } & Pick<
   ButtonProps,
   'disabled' | 'aria-disabled'
->) => {
+>) {
   const { t } = useTranslation()
 
   return (
     <Button
+      aria-disabled={ariaDisabled}
+      disabled={disabled}
       onClick={onClick}
       startIcon={<SearchIcon />}
-      disabled={disabled}
-      aria-disabled={ariaDisabled}
     >
       {t('page.compilation.actions.searchScripts')}
     </Button>
   )
 }
 
-const Compilation = () => {
+function Compilation() {
   const { t } = useTranslation()
   const { groups } = useApp()
   const { scripts, start, setScripts, concurrentScripts, isRunning } =
@@ -190,9 +191,9 @@ const Compilation = () => {
       <PageAppBar title={t('page.compilation.title')}>
         <RecentFilesButton onClick={onClickRecentFiles} />
         <SearchButton
-          onClick={drop}
-          disabled={isFileDialogActive}
           aria-disabled={isFileDialogActive}
+          disabled={isFileDialogActive}
+          onClick={drop}
         />
         {!isAllGroupsEmpty(groups) && (
           <GroupsMenu groups={groups} onChangeGroup={onChangeGroup} />
@@ -201,17 +202,16 @@ const Compilation = () => {
       <Page>
         <DialogRecentFiles
           isOpen={dialogState == DialogRecentFilesState.open}
+          onClose={() => setDialogState(DialogRecentFilesState.close)}
           onSelectFile={() => {
             setDialogState(DialogRecentFilesState.close)
           }}
-          onClose={() => setDialogState(DialogRecentFilesState.close)}
         />
 
-        <Snackbar open={!!configError}>
+        <Snackbar open={Boolean(configError)}>
           <Alert
-            severity="error"
             action={
-              <Stack direction="row" alignItems="center" gap={1}>
+              <Stack alignItems="center" direction="row" gap={1}>
                 <MuiLink component={Link} to="/settings">
                   {t('common.moreDetails')}
                 </MuiLink>
@@ -220,6 +220,7 @@ const Compilation = () => {
                 </Button>
               </Stack>
             }
+            severity="error"
           >
             {t('config.checkError', { context: configError })}
           </Alert>
@@ -228,20 +229,20 @@ const Compilation = () => {
         {scripts.length > 0 && (
           <div className="mb-4 flex gap-2">
             <Button
-              onClick={onClickStart}
+              aria-disabled={Boolean(configError) || isRunning}
               color="primary"
-              variant="contained"
-              disabled={!!configError || isRunning}
-              aria-disabled={!!configError || isRunning}
+              disabled={Boolean(configError) || isRunning}
+              onClick={onClickStart}
               startIcon={<PlayIcon />}
+              variant="contained"
             >
               {t('page.compilation.actions.start')}
             </Button>
 
             <Button
-              onClick={onClickEmpty}
-              disabled={isRunning}
               aria-disabled={isRunning}
+              disabled={isRunning}
+              onClick={onClickEmpty}
               startIcon={<ClearIcon />}
             >
               {t('page.compilation.actions.clearList')}
@@ -255,8 +256,8 @@ const Compilation = () => {
               return (
                 <ScriptLine
                   key={script.id}
-                  onClickRemoveScript={onClickRemoveScriptFromScript(script)}
                   onClickPlayCompilation={onClickPlayCompilation(script)}
+                  onClickRemoveScript={onClickRemoveScriptFromScript(script)}
                   script={script}
                 />
               )

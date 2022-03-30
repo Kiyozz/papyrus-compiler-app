@@ -7,21 +7,23 @@
 import {
   ListItem,
   ListItemButton,
-  ListItemButtonProps,
   ListItemIcon,
   ListItemText,
 } from '@mui/material'
-import React, { ReactNode } from 'react'
+import React from 'react'
+import type {
+  ListItemButtonProps} from '@mui/material';
+import type { ReactNode } from 'react';
 
-type Props = {
+interface Props {
   icon: ReactNode
   text: string
   onClick: ListItemButtonProps['onClick']
 }
 
-const DrawerButton = ({ icon, text, onClick }: Props) => {
+function DrawerButton({ icon, text, onClick }: Props) {
   return (
-    <ListItem disablePadding aria-label={text}>
+    <ListItem aria-label={text} disablePadding>
       <ListItemButton onClick={onClick}>
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText

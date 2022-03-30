@@ -7,28 +7,29 @@
 import is from '@sindresorhus/is'
 import React, {
   createContext,
-  Dispatch,
-  SetStateAction,
   useCallback,
   useContext,
   useEffect,
   useState,
 } from 'react'
 import useLocalStorage from 'react-use-localstorage'
-import { Observable, Subject } from 'rxjs'
-
+import { Subject } from 'rxjs'
 import { TelemetryEvent } from '../../common/telemetry-event'
-import { Script } from '../../common/types/script'
 import bridge from '../bridge'
 import { LocalStorage } from '../enums/local-storage.enum'
 import { useTelemetry } from './use-telemetry'
+import type { Script } from '../../common/types/script'
+import type { Observable} from 'rxjs';
+import type {
+  Dispatch,
+  SetStateAction} from 'react';
 
-type RecentFilesContext = {
+interface RecentFilesContext {
   recentFiles: Script[]
   onRecentFilesChanges: Observable<Script[]>
-  setRecentFiles(scripts: Script[]): Promise<void>
-  clearRecentFiles(): Promise<void>
-  removeRecentFile(script: Script): Promise<Script[]>
+  setRecentFiles: (scripts: Script[]) => Promise<void>
+  clearRecentFiles: () => Promise<void>
+  removeRecentFile: (script: Script) => Promise<Script[]>
   moreDetails: [boolean, Dispatch<SetStateAction<boolean>>]
 }
 
@@ -36,9 +37,9 @@ const Context = createContext({} as RecentFilesContext)
 const recentFiles$ = new Subject<Script[]>()
 const onRecentFilesChanges = recentFiles$.asObservable()
 
-const RecentFilesProvider = ({
+function RecentFilesProvider({
   children,
-}: React.PropsWithChildren<unknown>) => {
+}: React.PropsWithChildren<unknown>) {
   const { send } = useTelemetry()
   const [recentFiles, setRecentFilesMemory] = useState<Script[]>([])
   const [isMoreDetails, setMoreDetails] = useLocalStorage(

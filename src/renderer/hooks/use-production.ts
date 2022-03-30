@@ -6,7 +6,6 @@
 
 import { useState } from 'react'
 import { useDidMount } from 'rooks'
-
 import { isProduction } from '../utils/is-production'
 
 export const useProduction = (): boolean => {

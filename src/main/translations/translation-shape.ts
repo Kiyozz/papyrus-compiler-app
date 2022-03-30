@@ -3,7 +3,7 @@
  *
  * All rights reserved.
  */
-export type TranslationShape = {
+export interface TranslationShape {
   contextMenu: {
     select: {
       all: string

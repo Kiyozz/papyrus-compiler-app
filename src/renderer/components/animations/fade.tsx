@@ -4,25 +4,26 @@
  * All rights reserved.
  */
 
-import React, { memo, PropsWithChildren } from 'react'
+import React, { memo } from 'react'
 import { CSSTransition } from 'react-transition-group'
+import type { PropsWithChildren } from 'react';
 
-type Props = {
+interface Props {
   in: boolean
   timeout?: 100 | 150 | 200
 }
 
-const Fade = ({
+function Fade({
   in: on,
   timeout = 200,
   children,
-}: PropsWithChildren<Props>) => {
+}: PropsWithChildren<Props>) {
   return (
     <CSSTransition
+      classNames={`fade-${timeout}`}
       in={on}
       timeout={timeout}
       unmountOnExit
-      classNames={`fade-${timeout}`}
     >
       {children}
     </CSSTransition>

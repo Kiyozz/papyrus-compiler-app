@@ -7,29 +7,33 @@
  */
 
 import is from '@sindresorhus/is'
-
 import {
-  CompilerPath,
-  CompilerSourceFile,
-  GamePath,
-  GameType,
   toCompilerSourceFile,
   toExecutable,
   toOtherSource,
   toSource,
 } from '../../common/game'
-import { BadError } from '../../common/types/bad-error'
-import { EventHandler } from '../interfaces/event-handler'
 import { IpcEvent } from '../ipc-event'
 import { Logger } from '../logger'
 import * as path from '../path/path'
 import { toSlash } from '../slash'
 import { settingsStore } from '../store/settings/store'
+import type { EventHandler } from '../interfaces/event-handler'
+import type {
+  CompilerPath,
+  CompilerSourceFile,
+  GamePath,
+  GameType} from '../../common/game';
+import type { BadError } from '../../common/types/bad-error'
 
 const _logger = new Logger(IpcEvent.configCheck)
 
+interface Args {
+  checkMo2: boolean
+}
+
 export class ConfigCheckHandler implements EventHandler {
-  async listen({ checkMo2 = false }: { checkMo2: boolean }): Promise<BadError> {
+  async listen({ checkMo2 }: Args = { checkMo2: false }): Promise<BadError> {
     const gameType: GameType = settingsStore.get('game.type')
 
     _logger.debug('the game type is', gameType)
@@ -80,10 +84,8 @@ export class ConfigCheckHandler implements EventHandler {
     }
 
     return Promise.resolve(
-      mo2Use && mo2Instance
-        ? !path.exists(mo2Instance)
+      mo2Use && mo2Instance && !path.exists(mo2Instance)
           ? 'mo2-instance'
-          : false
         : false,
     )
   }

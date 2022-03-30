@@ -8,16 +8,16 @@ import {
   createTheme,
   ThemeProvider,
   StyledEngineProvider,
-  PaletteMode,
-  PaletteOptions,
   CssBaseline,
 } from '@mui/material'
 import red from '@mui/material/colors/red'
 import React from 'react'
-
 import { useIsDarkTheme } from './hooks/use-is-dark-theme'
+import type {
+  PaletteMode,
+  PaletteOptions} from '@mui/material';
 
-const MuiTheme = ({ children }: React.PropsWithChildren<unknown>) => {
+function MuiTheme({ children }: React.PropsWithChildren<unknown>) {
   const isDarkTheme = useIsDarkTheme()
   const mode: PaletteMode = isDarkTheme ? 'dark' : 'light'
   const palette: PaletteOptions =

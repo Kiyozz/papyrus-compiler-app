@@ -4,26 +4,27 @@
  * All rights reserved.
  */
 
-// eslint-disable-next-line import/no-unresolved
-import { PartialDeep } from 'type-fest'
+import type { PartialDeep } from 'type-fest'
+import type {
+  TelemetryEvent,
+  TelemetryEventProperties,
+} from '../telemetry-event'
+import type { BadError } from './bad-error'
+import type { CompilationResult } from './compilation-result'
+import type { Config } from './config'
+import type { DialogType } from './dialog'
+import type { Disposable } from './disposable'
+import type { Platform } from './platform'
+import type { Script } from './script'
+import type { WindowState } from './window-state'
 
-import { TelemetryEvent, TelemetryEventProperties } from '../telemetry-event'
-import { BadError } from './bad-error'
-import { CompilationResult } from './compilation-result'
-import { Config } from './config'
-import { DialogType } from './dialog'
-import { Disposable } from './disposable'
-import { Platform } from './platform'
-import { Script } from './script'
-import { WindowState } from './window-state'
-
-export type Bridge = {
+export interface Bridge {
   telemetry: {
     send: <T extends TelemetryEvent>(
       event: T,
       args: TelemetryEventProperties[T],
-    ) => void
-    setActive: (active: boolean) => void
+    ) => Promise<void>
+    setActive: (active: boolean) => Promise<void>
   }
 
   getVersion: () => Promise<string>
@@ -33,7 +34,7 @@ export type Bridge = {
     off: (fn: (args: unknown) => unknown) => void
   }
 
-  error: (error: Error) => void
+  error: (error: Error) => Promise<void>
 
   online: (online: boolean) => void
 
@@ -66,7 +67,7 @@ export type Bridge = {
   }
 
   shell: {
-    openExternal: (href: string) => void
+    openExternal: (href: string) => Promise<void>
   }
 
   recentFiles: {
@@ -89,7 +90,7 @@ export type Bridge = {
   }
 
   titlebar: {
-    openMenu: (args: { x: number; y: number }) => void
+    openMenu: (args: { x: number; y: number }) => Promise<void>
   }
 
   os: {
@@ -97,7 +98,7 @@ export type Bridge = {
   }
 
   window: {
-    close: () => void
+    close: () => Promise<void>
     minimize: () => Promise<WindowState>
     maximize: () => Promise<WindowState>
     restore: () => Promise<WindowState>

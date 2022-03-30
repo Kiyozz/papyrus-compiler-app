@@ -7,15 +7,15 @@
 import cx from 'classnames'
 import React from 'react'
 
-const NavItem = ({ className, ...props }: React.HTMLProps<HTMLLIElement>) => (
-  <li
-    tabIndex={-1}
+function NavItem({ className, ...props }: React.HTMLProps<HTMLLIElement>) {
+  return <li
     className={cx(
       'flex w-full whitespace-nowrap px-4 py-2 transition-colors',
       className,
     )}
+    tabIndex={-1}
     {...props}
   />
-)
+}
 
 export default NavItem

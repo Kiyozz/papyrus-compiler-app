@@ -8,14 +8,13 @@ import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { useApp } from '../../../hooks/use-app'
 
 interface Props {
   onChangeMo2: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const SettingsMo2Activation = ({ onChangeMo2 }: Props) => {
+function SettingsMo2Activation({ onChangeMo2 }: Props) {
   const { t } = useTranslation()
   const {
     config: { mo2 },
@@ -25,9 +24,9 @@ const SettingsMo2Activation = ({ onChangeMo2 }: Props) => {
     <FormControlLabel
       control={
         <Checkbox
+          checked={mo2.use}
           id="mo2"
           name="mo2"
-          checked={mo2.use}
           onChange={onChangeMo2}
         />
       }

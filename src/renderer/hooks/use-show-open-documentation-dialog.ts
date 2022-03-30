@@ -5,7 +5,6 @@
  */
 
 import useLocalStorage from 'react-use-localstorage'
-
 import { LocalStorage } from '../enums/local-storage.enum'
 
 export const useShowOpenDocumentationDialog = () => {

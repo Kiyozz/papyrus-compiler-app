@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-export type GithubRelease = {
+export interface GithubRelease {
   id: number
   tag_name: string
   body: string

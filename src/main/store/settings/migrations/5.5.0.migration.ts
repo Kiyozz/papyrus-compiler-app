@@ -5,7 +5,6 @@
  */
 
 import is from '@sindresorhus/is'
-
 import { Theme } from '../../../../common/theme'
 import type { SettingsStore } from '../store'
 

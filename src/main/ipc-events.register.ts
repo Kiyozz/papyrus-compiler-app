@@ -4,11 +4,11 @@
  * All rights reserved.
  */
 
-import { Event } from './interfaces/event'
-import { EventHandler } from './interfaces/event-handler'
-import { EventSync } from './interfaces/event-sync'
 import { ipcMain } from './ipc'
 import { Logger } from './logger'
+import type { Event } from './interfaces/event'
+import type { EventHandler } from './interfaces/event-handler'
+import type { EventSync } from './interfaces/event-sync'
 
 const logger = new Logger('RegisterIpcEvents')
 

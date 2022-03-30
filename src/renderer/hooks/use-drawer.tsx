@@ -7,19 +7,19 @@
 import is from '@sindresorhus/is'
 import React, {
   createContext,
-  Dispatch,
-  SetStateAction,
   useContext,
 } from 'react'
 import useLocalStorage from 'react-use-localstorage'
-
 import { LocalStorage } from '../enums/local-storage.enum'
+import type {
+  Dispatch,
+  SetStateAction} from 'react';
 
 type DrawerContext = [boolean, Dispatch<SetStateAction<boolean>>]
 
 const Context = createContext([true, () => true] as DrawerContext)
 
-const DrawerProvider = ({ children }: React.PropsWithChildren<unknown>) => {
+function DrawerProvider({ children }: React.PropsWithChildren<unknown>) {
   const [isDrawerExpandLS, setDrawerExpandLS] = useLocalStorage(
     LocalStorage.drawerExpand,
     'false',

@@ -5,13 +5,12 @@
  */
 
 import is from '@sindresorhus/is'
-
-import { Group } from '../../common/types/group'
 import { validateScript } from './script.validator'
+import type { Group } from '../../common/types/group'
 
 function hasValidValues(group: Group): boolean {
   return (
-    is.nonEmptyString(group.name?.trim()) && group.scripts.every(validateScript)
+    is.nonEmptyString(group.name.trim()) && group.scripts.every(validateScript)
   )
 }
 

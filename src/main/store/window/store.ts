@@ -8,7 +8,7 @@ import is from '@sindresorhus/is'
 import { screen } from 'electron'
 import Store from 'electron-store'
 
-type StoreValues = {
+interface StoreValues {
   x: number | null
   y: number | null
 }

@@ -13,16 +13,15 @@ import React, {
   useState,
 } from 'react'
 import { useDidMount } from 'rooks'
-
 import bridge from '../bridge'
-import { GithubRelease } from '../types'
 import { useApp } from './use-app'
 import { useVersion } from './use-version'
+import type { GithubRelease } from '../types'
 
 const GITHUB_REPOSITORY =
   'https://api.github.com/repos/Kiyozz/papyrus-compiler-app'
 
-type InitializationContext = {
+interface InitializationContext {
   latestVersion?: string
   done: boolean
 }
@@ -36,9 +35,9 @@ type CheckUpdateReturn =
 
 const Context = createContext({} as InitializationContext)
 
-const InitializationProvider = ({
+function InitializationProvider({
   children,
-}: React.PropsWithChildren<unknown>) => {
+}: React.PropsWithChildren<unknown>) {
   const [done, setDone] = useState(false)
   const [latestVersion, setLatestVersion] = useState<string | undefined>()
   const {

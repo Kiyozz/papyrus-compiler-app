@@ -4,39 +4,39 @@
  * All rights reserved.
  */
 
-import { CompilerPath, Flag, GameType, GamePath, OutputPath } from '../game'
+import type { Group } from './group'
+import type { CompilerPath, Flag, GameType, GamePath, OutputPath } from '../game'
 import type { Theme } from '../theme'
-import { Group } from './group'
 
-type Game = {
+interface Game {
   type: GameType
   path: GamePath
 }
 
-type Compilation = {
+interface Compilation {
   concurrentScripts: number
   compilerPath: CompilerPath
   flag: Flag
   output: OutputPath
 }
 
-type Tutorials = {
+interface Tutorials {
   settings: boolean
   telemetry: boolean
 }
 
-type ConfigMo2 = {
+interface ConfigMo2 {
   use: boolean
   instance?: string
   output: OutputPath
   mods: string
 }
 
-type Telemetry = {
+interface Telemetry {
   active: boolean
 }
 
-export type Config = {
+export interface Config {
   game: Game
   compilation: Compilation
   tutorials: Tutorials

@@ -7,7 +7,6 @@
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MemoryRouter as Router } from 'react-router-dom'
-
 import { TelemetryEvent } from '../common/telemetry-event'
 import { version as releaseVersion } from '../common/version'
 import DialogChangelog from './components/dialog/dialog-changelog'
@@ -22,7 +21,7 @@ import { useTelemetry } from './hooks/use-telemetry'
 import { useVersion } from './hooks/use-version'
 import Routes from './routes'
 
-const App = () => {
+function App() {
   const { t } = useTranslation()
   const { done } = useInitialization()
   const { send } = useTelemetry()
@@ -56,9 +55,9 @@ const App = () => {
 
           {done && (
             <>
-              {tutorials?.settings === true && <TutorialSettings />}
-              {tutorials?.telemetry === true &&
-                tutorials?.settings === false && <TutorialTelemetry />}
+              {tutorials.settings && <TutorialSettings />}
+              {tutorials.telemetry &&
+                !tutorials.settings && <TutorialTelemetry />}
               <Routes />
             </>
           )}

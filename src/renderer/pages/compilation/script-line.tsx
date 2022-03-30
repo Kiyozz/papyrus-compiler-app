@@ -15,10 +15,9 @@ import {
 } from '@mui/material'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { ScriptRenderer } from '../../types'
 import { iconFromStatus } from '../../utils/scripts/from-status'
 import { isRunningScript } from '../../utils/scripts/status'
+import type { ScriptRenderer } from '../../types'
 
 interface Props {
   script: ScriptRenderer
@@ -26,11 +25,11 @@ interface Props {
   onClickPlayCompilation: (script: ScriptRenderer) => void
 }
 
-const ScriptLine = ({
+function ScriptLine({
   script,
   onClickRemoveScript,
   onClickPlayCompilation,
-}: Props) => {
+}: Props) {
   const { t } = useTranslation()
 
   const onClickRemove = () => {
@@ -41,7 +40,7 @@ const ScriptLine = ({
     onClickPlayCompilation(script)
   }
 
-  const StatusIcon = () => {
+  function StatusIcon() {
     const icon = iconFromStatus(script)
 
     if (!icon) return null
@@ -52,25 +51,25 @@ const ScriptLine = ({
   return (
     <ListItem
       component={Paper}
-      variant="outlined"
       secondaryAction={
         <IconButton
-          color="error"
-          aria-label={t('common.remove')}
-          disabled={isRunningScript(script)}
           aria-disabled={isRunningScript(script)}
+          aria-label={t('common.remove')}
+          color="error"
+          disabled={isRunningScript(script)}
           onClick={onClickRemove}
         >
           <DeleteOutlinedIcon />
         </IconButton>
       }
+      variant="outlined"
     >
       <ListItemIcon>
         <IconButton
-          onClick={onClickPlay}
-          size="small"
           disabled={isRunningScript(script)}
           edge="end"
+          onClick={onClickPlay}
+          size="small"
         >
           <PlayCircleIcon className="text-primary-400" />
         </IconButton>

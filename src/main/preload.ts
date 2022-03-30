@@ -4,29 +4,35 @@
  * All rights reserved.
  */
 
-import { contextBridge, IpcRendererEvent, shell } from 'electron'
-
-import { BadError } from '../common/types/bad-error'
-import { Bridge } from '../common/types/bridge'
-import { CompilationResult } from '../common/types/compilation-result'
-import { Config } from '../common/types/config'
-import { Disposable } from '../common/types/disposable'
-import { Script } from '../common/types/script'
-import { WindowState } from '../common/types/window-state'
+import { contextBridge, shell } from 'electron'
+import { fromError } from '../common/from-error'
 import { ipcRenderer } from './ipc'
 import { IpcEvent } from './ipc-event'
+import type { IpcRendererEvent } from 'electron'
+import type { BadError } from '../common/types/bad-error'
+import type { Bridge } from '../common/types/bridge'
+import type { CompilationResult } from '../common/types/compilation-result'
+import type { Config } from '../common/types/config'
+import type { Disposable } from '../common/types/disposable'
+import type { Script } from '../common/types/script'
+import type { WindowState } from '../common/types/window-state'
 
 const api: Bridge = {
   telemetry: {
     send: (event, args) => {
       return ipcRenderer
-        .invoke(IpcEvent.telemetry, { name: event, properties: args })
-        .catch(e =>
+        .invoke<undefined>(IpcEvent.telemetry, {
+          name: event,
+          properties: args,
+        })
+        .catch(e => {
+          const err = fromError(e)
+
           console.error(
             "can't send telemetry event to main process",
-            e.message || e,
-          ),
-        )
+            err.message,
+          )
+        })
     },
     setActive: active =>
       ipcRenderer.invoke(IpcEvent.telemetrySetActive, active),
@@ -36,7 +42,7 @@ const api: Bridge = {
     on: fn => ipcRenderer.on(IpcEvent.checkForUpdates, fn),
     off: fn => ipcRenderer.removeListener(IpcEvent.checkForUpdates, fn),
   },
-  error: e => ipcRenderer.invoke(IpcEvent.appError, e),
+  error: err => ipcRenderer.invoke(IpcEvent.appError, err),
   online: online => ipcRenderer.send(IpcEvent.online, { online }),
   clipboard: {
     copy: text => ipcRenderer.invoke(IpcEvent.clipboardCopy, { text }),

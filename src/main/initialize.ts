@@ -33,9 +33,6 @@ import {
   WindowMinimizeHandler,
   WindowRestoreHandler,
 } from './event-handlers/window.handlers'
-import { Event } from './interfaces/event'
-import { EventHandler } from './interfaces/event-handler'
-import { EventSync } from './interfaces/event-sync'
 import { ipcMain } from './ipc'
 import { IpcEvent } from './ipc-event'
 import { registerIpcEvents } from './ipc-events.register'
@@ -43,8 +40,11 @@ import { Logger } from './logger'
 import { registerMenu } from './menu.register'
 import { ensureFiles, move, writeFile } from './path/path'
 import { settingsStore } from './store/settings/store'
-import { WindowStore } from './store/window/store'
 import { Telemetry } from './telemetry/telemetry'
+import type { WindowStore } from './store/window/store'
+import type { EventSync } from './interfaces/event-sync'
+import type { EventHandler } from './interfaces/event-handler'
+import type { Event } from './interfaces/event'
 
 import './translations/index'
 
@@ -96,8 +96,8 @@ export async function initialize(
 
   const menu = await registerMenu({
     win,
-    openLogFile: (file: string) => {
-      openFileHandler.listen(file)
+    openLogFile: async (file: string) => {
+      await openFileHandler.listen(file)
     },
   })
 
@@ -127,7 +127,7 @@ export async function initialize(
 
   listenToWindowState(win)
 
-  const events = new Map<string, Event>([
+  const events = new Map<IpcEvent, Event>([
     [IpcEvent.compileScriptStart, new ScriptCompileEvent()],
   ])
 
