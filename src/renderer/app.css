@@ -254,84 +254,6 @@ input.MuiInputBase-inputAdornedStart {
   @apply bg-red-600 text-white dark:bg-red-700;
 }
 
-/* ----- ANIMATIONS ----- */
-.scale-transition-150 {
-  transition-duration: 0.15s;
-}
-
-.scale-transition-300 {
-  transition-duration: 0.3s;
-}
-
-.scale-transition-150,
-.scale-transition-300 {
-  transition-property: transform, opacity;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1),
-    cubic-bezier(0.87, 0.21, 0.35, 0.99);
-}
-
-.fade-enter,
-.fade-200-enter,
-.fade-100-enter {
-  opacity: 0;
-}
-
-.fade-enter-active,
-.fade-200-enter-active,
-.fade-100-enter-active,
-.fade-150-enter-active {
-  opacity: 1;
-  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.fade-100-enter-active {
-  transition-duration: 0.1s;
-}
-
-.fade-150-enter-active {
-  transition-duration: 0.15s;
-}
-
-.fade-exit,
-.fade-200-exit,
-.fade-100-exit {
-  opacity: 1;
-}
-
-.fade-exit-active,
-.fade-200-exit-active,
-.fade-100-exit-active,
-.fade-150-exit-active {
-  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.fade-100-exit-active {
-  transition-duration: 0.1s;
-}
-
-.fade-150-exit-active {
-  transition-duration: 0.15s;
-}
-
-.fade-exit-active,
-.fade-200-exit-active,
-.fade-100-exit-active,
-.fade-150-exit-active {
-  opacity: 0;
-}
-
-.app-drawer-paper.other-platform {
-  top: 32px;
-}
-
-.app-drawer-paper.macos {
-  top: 22px;
-}
-
-.app-drawer-paper.macos-bigsur {
-  top: 34px;
-}
-
 /* WINDOW CONTROLS */
 .titlebar {
   font-size: 12px;
@@ -380,7 +302,7 @@ input.MuiInputBase-inputAdornedStart {
   font-family: 'Segoe MDL2 Assets';
   font-size: 10px;
   color: inherit;
-  @apply cursor-default;
+  @apply cursor-default border-none bg-transparent;
 }
 
 .titlebar .titlebar-control:hover {

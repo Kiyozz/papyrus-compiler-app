@@ -14,6 +14,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material'
+import cx from 'classnames'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useLocalStorage from 'react-use-localstorage'
@@ -95,7 +96,7 @@ function Groups() {
         </Button>
       </PageAppBar>
 
-      <Page className="pt-0">
+      <Page className={cx(groups.length > 0 && 'pt-0')}>
         <DialogGroup
           group={editingGroup}
           onClose={onClosePopup}

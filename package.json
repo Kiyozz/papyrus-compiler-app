@@ -11,8 +11,8 @@
     "prepare": "husky install"
   },
   "engines": {
-    "node": "16.9.1",
-    "pnpm": "^6.26.1"
+    "node": "16.13.1",
+    "pnpm": "^6.32.4"
   },
   "repository": {
     "type": "git",

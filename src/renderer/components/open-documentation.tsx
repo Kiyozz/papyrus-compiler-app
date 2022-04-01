@@ -14,6 +14,7 @@ import {
   DialogTitle,
   FormControlLabel,
   FormGroup,
+  Typography,
 } from '@mui/material'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -77,7 +78,9 @@ function OpenDocumentation() {
       >
         <DialogTitle id="open-doc-title">{t('nav.help.title')}</DialogTitle>
         <DialogContent id="open-doc-content">
-          <p className="mb-4 text-justify">{t('nav.help.description')}</p>
+          <Typography className="text-justify" gutterBottom>
+            {t('nav.help.description')}
+          </Typography>
           <FormGroup>
             <FormControlLabel
               control={

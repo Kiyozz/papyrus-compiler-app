@@ -5,9 +5,9 @@
  */
 
 import RefreshIcon from '@mui/icons-material/Refresh'
+import { Button, Alert, Typography } from '@mui/material'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import Alert from '../../../components/alert'
 import DialogTextField from '../../../components/dialog/dialog-text-field'
 import { useApp } from '../../../hooks/use-app'
 import { useSettings } from '../use-settings'
@@ -34,6 +34,7 @@ function SettingsMo2Instance({
   return (
     <>
       <DialogTextField
+        className="mt-2"
         defaultValue={mo2.instance ?? ''}
         error={configError === 'mo2-instance'}
         id="mo2-instance"
@@ -42,31 +43,26 @@ function SettingsMo2Instance({
         type="folder"
       />
 
-      {configError === 'mo2-instance' && (
-        <Alert>
-          <div className="w-full">
-            <p className="mb-2 select-text">
-              {t('page.settings.errors.installationInvalid')}
-            </p>
+      {(configError === 'mo2-instance' ||
+        configError === 'mo2-instance-mods') && (
+        <Alert className="mt-3" severity="error">
+          <Typography className="select-text" gutterBottom>
+            {t('page.settings.errors.installationInvalid')}
+          </Typography>
 
-            <p className="select-text">
-              {t('page.settings.errors.mo2Instance', {
-                mo2Instance: mo2.instance,
-              })}
-            </p>
-          </div>
-          <div>
-            <button
-              className="btn mr-2"
-              onClick={onClickRefreshInstallation}
-              type="button"
-            >
-              <div className="icon">
-                <RefreshIcon />
-              </div>
-              {t('common.refresh')}
-            </button>
-          </div>
+          <Typography className="select-text" gutterBottom>
+            {configError === 'mo2-instance'
+              ? t('page.settings.errors.mo2Instance', {
+                  mo2Instance: mo2.instance,
+                })
+              : t('page.settings.errors.mo2InstanceMods')}
+          </Typography>
+          <Button
+            onClick={onClickRefreshInstallation}
+            startIcon={<RefreshIcon />}
+          >
+            {t('common.refresh')}
+          </Button>
         </Alert>
       )}
     </>

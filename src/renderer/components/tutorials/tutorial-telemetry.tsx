@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+import { Button } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useApp } from '../../hooks/use-app'
@@ -37,14 +38,15 @@ function TutorialTelemetry() {
           <div className="mt-6 text-sm" />
         </Trans>
       </div>
-      <button
-        className="btn btn-primary mt-8"
+      <Button
+        className="mt-8"
+        color="primary"
         disabled={isWaiting}
         onClick={onClickOk}
-        type="button"
+        variant="contained"
       >
         {t('tutorials.telemetry.close')}
-      </button>
+      </Button>
     </div>
   )
 }

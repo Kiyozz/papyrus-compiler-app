@@ -19,7 +19,7 @@ function Page({ children, className }: React.PropsWithChildren<PageProps>) {
   return (
     <Paper
       className={cx(
-        'page overflow-overlay h-screen w-screen p-6 transition-[padding] duration-225 ease-sharp',
+        'page overflow-overlay h-screen w-screen p-6 transition-[padding-left] duration-225 ease-sharp',
         isDrawerExpand ? 'pl-48' : 'pl-14',
         className,
       )}

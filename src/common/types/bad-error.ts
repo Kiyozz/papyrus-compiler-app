@@ -10,4 +10,5 @@ export type BadError =
   | 'game'
   | 'scripts'
   | 'mo2-instance'
+  | 'mo2-instance-mods'
   | 'mo2-use-no-instance'

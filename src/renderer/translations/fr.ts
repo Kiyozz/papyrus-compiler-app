@@ -51,6 +51,8 @@ export const fr: TranslationShape = {
       "Configuration invalide : vérifiez l'installation de Creation Kit.",
     'checkError_mo2-instance':
       "Configuration invalide : vérifiez l'instance MO2.",
+    'checkError_mo2-instance-mods':
+      "Configuration invalide : vérifiez l'instance MO2.",
     'checkError_mo2-use-no-instance':
       "Configuration invalide : L'intégration mo2 est activée, mais votre instance n'est pas valide.",
   },
@@ -125,6 +127,7 @@ export const fr: TranslationShape = {
         compiler: 'Vérifiez que "{{compilerExe}}" existe.',
         mo2Instance:
           'Vérifiez que le dossier de l\'instance "{{mo2Instance}}" existe.',
+        mo2InstanceMods: 'Vérifiez que le dossier "mods" existe.',
       },
       mo2: {
         enable: 'Activer',
@@ -170,8 +173,7 @@ export const fr: TranslationShape = {
     close: 'Fermer',
     ok: 'OK',
     settings: {
-      documentation:
-        'Il existe une documentation de PCA. <1>Disponible ici</1>.',
+      documentation: 'La documentation de PCA est <1>disponible ici</1>.',
       ask: {
         title: 'Configurer PCA',
         text: "C'est la première fois que vous lancez PCA.",

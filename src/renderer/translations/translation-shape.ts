@@ -49,6 +49,7 @@ export interface TranslationShape {
     checkError_compiler: string
     checkError_scripts: string
     'checkError_mo2-instance': string
+    'checkError_mo2-instance-mods': string
     'checkError_mo2-use-no-instance': string
   }
   page: {
@@ -101,6 +102,7 @@ export interface TranslationShape {
         game: string
         compiler: string
         mo2Instance: string
+        mo2InstanceMods: string
       }
       mo2: {
         enable: string

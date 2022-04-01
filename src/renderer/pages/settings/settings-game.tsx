@@ -6,7 +6,7 @@
 
 import HelpIcon from '@mui/icons-material/Help'
 import RefreshIcon from '@mui/icons-material/Refresh'
-import { Button, Tooltip } from '@mui/material'
+import { Button, Tooltip, Alert, Typography } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
@@ -18,7 +18,6 @@ import {
   toCompilerSourceFile,
   toExecutable,
 } from '../../../common/game'
-import Alert from '../../components/alert'
 import DialogTextField from '../../components/dialog/dialog-text-field'
 import { useApp } from '../../hooks/use-app'
 import SettingsSection from './settings-section'
@@ -126,14 +125,15 @@ function SettingsGame({
         />
       </div>
 
-      {configError !== false && configError !== 'mo2-instance' && (
-        <Alert>
-          <div className="w-full">
-            <p className="mb-2 select-text">
+      {configError !== false &&
+        configError !== 'mo2-instance' &&
+        configError !== 'mo2-instance-mods' && (
+          <Alert className="mt-3" severity="error">
+            <Typography className="select-text" gutterBottom>
               {t('page.settings.errors.installationInvalid')}
-            </p>
+            </Typography>
 
-            <p className="select-text">
+            <Typography className="select-text" gutterBottom>
               {configError === 'game' &&
                 t('page.settings.errors.game', { exe })}
               {configError === 'compiler' &&
@@ -144,20 +144,15 @@ function SettingsGame({
                 t('page.settings.errors.scripts', {
                   file: toCompilerSourceFile(game.type),
                 })}
-            </p>
-          </div>
-          <div>
+            </Typography>
             <Button
-              className="mr-2"
-              color="error"
               onClick={onClickRefreshInstallation}
               startIcon={<RefreshIcon />}
             >
               {t('common.refresh')}
             </Button>
-          </div>
-        </Alert>
-      )}
+          </Alert>
+        )}
     </SettingsSection>
   )
 }

@@ -46,6 +46,8 @@ export const en: TranslationShape = {
       'Invalid configuration: check your Creation Kit installation.',
     'checkError_mo2-instance':
       'Invalid configuration: check your mo2 instance.',
+    'checkError_mo2-instance-mods':
+      'Invalid configuration: check your mo2 instance.',
     'checkError_mo2-use-no-instance':
       'Invalid configuration: mo2 integration is enabled, but your mo2 instance is invalid.',
   },
@@ -116,6 +118,7 @@ export const en: TranslationShape = {
         game: 'Check that "{{exe}}" exists in the game folder.',
         compiler: 'Check that "{{compilerExe}}" exists.',
         mo2Instance: 'Check that instance folder "{{mo2Instance}}" exists.',
+        mo2InstanceMods: 'Check that folder "mods" exists.',
       },
       mo2: {
         enable: 'Enable',

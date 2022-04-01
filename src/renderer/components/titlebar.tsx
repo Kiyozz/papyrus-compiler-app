@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+import { Button } from '@mui/material'
 import cx from 'classnames'
 import React from 'react'
 import { bridge } from '../bridge'
@@ -67,13 +68,12 @@ function Titlebar({ title }: TitlebarProps) {
       data-height={titlebarHeight}
     >
       {isNotMacOs && (
-        <button
-          className="btn btn-default ml-0"
+        <Button
+          className="ml-0 mr-1 min-w-0 rounded-none"
           onClick={handleClickMenu}
-          type="button"
         >
           {img}
-        </button>
+        </Button>
       )}
 
       <span

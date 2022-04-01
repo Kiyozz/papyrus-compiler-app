@@ -13,10 +13,12 @@ import {
 import red from '@mui/material/colors/red'
 import React from 'react'
 import { useIsDarkTheme } from './hooks/use-is-dark-theme'
+import { usePlatform } from './hooks/use-platform'
 import type { PaletteMode, PaletteOptions } from '@mui/material'
 
 function MuiTheme({ children }: React.PropsWithChildren<unknown>) {
   const isDarkTheme = useIsDarkTheme()
+  const platform = usePlatform()
   const mode: PaletteMode = isDarkTheme ? 'dark' : 'light'
   const palette: PaletteOptions =
     mode === 'light'
@@ -50,14 +52,14 @@ function MuiTheme({ children }: React.PropsWithChildren<unknown>) {
       MuiBackdrop: {
         styleOverrides: {
           root: {
-            top: 34,
+            top: platform === 'windows' ? 32 : 34,
           },
         },
       },
       MuiDialog: {
         styleOverrides: {
           root: {
-            top: 34,
+            top: 32,
           },
           scrollBody: {
             '& .MuiDialog-paper': {
@@ -96,6 +98,7 @@ function MuiTheme({ children }: React.PropsWithChildren<unknown>) {
       MuiButton: {
         defaultProps: {
           color: 'inherit',
+          type: 'button',
         },
         styleOverrides: {
           root: {

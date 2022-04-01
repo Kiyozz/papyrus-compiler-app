@@ -38,6 +38,7 @@ function DialogTextField({
   defaultValue,
   onChange,
   type,
+  className,
 }: DialogTextFieldProps) {
   const { onRefreshConfig } = useApp()
   const { t } = useTranslation()
@@ -90,7 +91,12 @@ function DialogTextField({
   }
 
   return (
-    <FormControl error={error} fullWidth variant="outlined">
+    <FormControl
+      className={className}
+      error={error}
+      fullWidth
+      variant="outlined"
+    >
       <InputLabel className="flex items-center" htmlFor={id}>
         {label}
       </InputLabel>

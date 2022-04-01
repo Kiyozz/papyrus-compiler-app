@@ -15,6 +15,7 @@ import {
 } from '../../common/game'
 import { IpcEvent } from '../ipc-event'
 import { Logger } from '../logger'
+import { getModsPath } from '../mo2/mo2'
 import * as path from '../path/path'
 import { toSlash } from '../slash'
 import { settingsStore } from '../store/settings/store'
@@ -55,7 +56,7 @@ export class ConfigCheckHandler implements EventHandler {
     const isUsingMo2: boolean = settingsStore.get('mo2.use')
 
     if (isUsingMo2) {
-      const hasMo2Instance = await this.checkMo2Instance(checkMo2)
+      const hasMo2Instance = this.checkMo2Instance(checkMo2)
 
       if (hasMo2Instance !== false) {
         return hasMo2Instance
@@ -76,19 +77,26 @@ export class ConfigCheckHandler implements EventHandler {
     )
   }
 
-  private checkMo2Instance(checkMo2: boolean): Promise<BadError> {
+  private checkMo2Instance(checkMo2: boolean): BadError {
     _logger.debug('checking mo2 instance')
     const { use: mo2Use, instance: mo2Instance } = settingsStore.get('mo2')
 
-    if (checkMo2 && mo2Use && !mo2Instance) {
-      return Promise.resolve('mo2-use-no-instance')
+    if (checkMo2 && mo2Use && is.undefined(mo2Instance)) {
+      return 'mo2-use-no-instance'
     }
 
-    return Promise.resolve(
-      mo2Use && mo2Instance && !path.exists(mo2Instance)
-        ? 'mo2-instance'
-        : false,
-    )
+    if (!mo2Instance || (mo2Use && mo2Instance && !path.exists(mo2Instance))) {
+      return 'mo2-instance'
+    }
+
+    try {
+      // check this path
+      getModsPath(mo2Instance)
+    } catch (err) {
+      return 'mo2-instance-mods'
+    }
+
+    return false
   }
 
   private async checkInMo2(file: CompilerSourceFile): Promise<BadError> {

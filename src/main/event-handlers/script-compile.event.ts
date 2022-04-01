@@ -21,8 +21,14 @@ export class ScriptCompileEvent implements Event {
 
   private static _cleanSuccessLog(script: string, log: string): string {
     return log
+      .replace(
+        /Papyrus Compiler Version (?<version>.*) for (?<game>Fallout 4|Skyrim)/,
+        '',
+      )
       .replace('Starting 1 compile threads for 1 files...', '')
       .replace(`Compiling "${script.replace('.psc', '')}"...`, '')
+      .replace(`Compiling "${script}"...`, '')
+      .replace(/Copyright (?<text>.*). All rights reserved\.?/, '')
       .replace(`Starting assembly of ${script.replace('.psc', '')}`, '')
       .replace('Assembly succeeded', '')
       .replace('Compilation succeeded.', '')
