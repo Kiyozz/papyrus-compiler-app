@@ -17,9 +17,7 @@ interface ConfigUpdateHandlerParams {
   override?: boolean
 }
 
-export class ConfigUpdateHandler
-  implements EventHandler<ConfigUpdateHandlerParams>
-{
+export class ConfigUpdateHandler implements EventHandler {
   private logger = new Logger('ConfigUpdateHandler')
 
   listen(args?: ConfigUpdateHandlerParams): Config {

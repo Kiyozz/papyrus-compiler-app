@@ -1,21 +1,23 @@
+// noinspection JSUnusedGlobalSymbols
+
 /*
  * Copyright (c) 2022 Kiyozz~WK~WushuLate.
  *
  * All rights reserved.
  */
 
-import { BuildOptions, PluginBuild } from 'esbuild'
 import * as fsSync from 'node:fs'
 import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
+import type { BuildOptions, PluginBuild } from 'esbuild'
 
 const versionPath = path.resolve('release-version.json')
 const mainPath = path.resolve('src/main')
 const distMainPath = path.resolve('dist/main')
 const distBrowserWindows = path.join(distMainPath, 'browser-windows')
-const { version }: { version: string } = JSON.parse(
+const { version } = JSON.parse(
   fsSync.readFileSync(versionPath).toString('utf-8'),
-)
+) as { version: string }
 
 const files = [
   {
@@ -60,21 +62,23 @@ const config: BuildOptions = {
             })
           }
 
-          for (const file of files) {
-            const from = await fs.readFile(file.from)
+          await Promise.all(
+            files.map(async file => {
+              const from = await fs.readFile(file.from)
 
-            try {
-              await fs.writeFile(file.to, from)
-            } catch (e) {
-              console.error(e)
-              process.exit(1)
-            }
-          }
+              try {
+                await fs.writeFile(file.to, from)
+              } catch (e) {
+                console.error(e)
+                process.exit(1)
+              }
+            }),
+          )
         })
       },
     },
   ],
 }
 
-// noinspection JSUnusedGlobalSymbols
+// eslint-disable-next-line import/no-default-export
 export default config

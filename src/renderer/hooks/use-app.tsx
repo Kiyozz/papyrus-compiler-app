@@ -121,7 +121,7 @@ function AppProvider({ children }: React.PropsWithChildren<unknown>) {
         onRefreshConfig: _onRefreshConfig,
       }}
     >
-      {children}
+      {!is.emptyObject(config) && children}
     </Context.Provider>
   )
 }

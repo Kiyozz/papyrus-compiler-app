@@ -12,7 +12,7 @@ interface DialogHandlerArgs {
   type: DialogType
 }
 
-export class DialogHandler implements EventHandler<DialogHandlerArgs> {
+export class DialogHandler implements EventHandler {
   async listen(args: DialogHandlerArgs | undefined): Promise<string | null> {
     const type = args?.type
 

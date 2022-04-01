@@ -148,7 +148,6 @@ function TutorialSettings() {
     setStep(Step.end)
     setConfig({
       tutorials: {
-        ...config.tutorials,
         settings: false,
       },
     })

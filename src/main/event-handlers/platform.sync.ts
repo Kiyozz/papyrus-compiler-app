@@ -15,7 +15,7 @@ export class PlatformSync implements EventSync {
 
     if (is.linux) return 'linux'
 
-    const isBigsur = parseInt(release().split('.')[0]) >= 11
+    const isBigsur = parseInt(release().split('.')[0] ?? '0') >= 11
 
     if (isBigsur) return 'macos-bigsur'
 

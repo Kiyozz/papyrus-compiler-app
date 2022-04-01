@@ -11,7 +11,7 @@ import { Logger } from '../logger'
 import type { EventHandler } from '../interfaces/event-handler'
 import type { Telemetry } from '../telemetry/telemetry'
 
-export class InAppErrorHandler implements EventHandler<Error> {
+export class InAppErrorHandler implements EventHandler {
   private logger = new Logger('InAppErrorHandler')
 
   constructor(private telemetry: Telemetry) {}
