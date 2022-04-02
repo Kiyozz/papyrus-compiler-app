@@ -5,12 +5,12 @@
   -->
 
 <!doctype html>
-<html lang='en'>
+<html lang="en">
   <head>
-    <meta charset='UTF-8'>
-    <meta name='viewport'
-          content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'>
-    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Starting PCA</title>
     <style>
       html {
@@ -21,7 +21,7 @@
         font-family: Arial, sans-serif;
         font-size: 1rem;
         margin: 0;
-        background: #000;
+        background: #121212;
         color: #fff;
         height: 100vh;
         overflow: hidden;
@@ -46,26 +46,31 @@
 
       svg {
         vertical-align: middle;
-        animation: rotate 1.5s infinite cubic-bezier(0.55, 0.32, 0.26, 0.4);
+        animation: scale 1.5s infinite cubic-bezier(0.55, 0.32, 0.26, 0.4);
+        width: 50%;
+        height: 50%;
       }
 
       div {
         text-align: center;
         font-size: 5rem;
         width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
-      @keyframes rotate {
+      @keyframes scale {
         0% {
-          transform: rotate(0deg) scale(1);
+          transform: scale(1);
         }
 
         50% {
-          transform: rotate(180deg) scale(1.2);
+          transform: scale(1.2);
         }
 
         100% {
-          transform: rotate(360deg) scale(1);
+          transform: scale(1);
         }
       }
     </style>
@@ -73,10 +78,52 @@
   <body>
     <main>
       <div>
-        <svg width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" x='0' y='0' viewBox='0 0 1024 1024'>
-          <g fill="currentColor" transform="matrix(11.07810326687287,0,0,11.07810326687287,149.97218195081322,154.81885626911432) ">
-            <path d="m70.529584,7.529587l-35.8,-20.7c-1.6,-0.9 -3.6,-0.9 -5.2,0l-36.3,20.9l0.4,0c-1.7,0.9 -2.5,2.7 -2.5,4.7l0,39.5c0,1.9 0.5,3.6 2.2,4.5l36.4,21.2c0.8,0.5 1.6,0.7 2.5,0.7l0.2,0c0.9,0 1.8,-0.2 2.6,-0.7l36.6,-21.2c1.6,-0.9 2.6,-2.7 2.6,-4.5l0,-39.5c-0.1,-2.3 -1.6,-4.2 -3.7,-4.9zm-38.4,-10.2l25.8,14.9l-25.8,14.9l-25.8,-14.9l25.8,-14.9zm-31,51.6l0,-27.9l25,15.1l0,28l-25,-15.2zm35,15.2l0,-28.1l28,-15.1l0,28.1l-28,15.1z" id="svg_1"/>
+        <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="5.24335in" height="5.24758in"
+             style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+             viewBox="0 0 5045.83 5049.91">
+         <defs>
+          <style type="text/css">
+           .fil0 {
+             fill: #006CB0;
+             fill-rule: nonzero
+           }
+
+           .fil1 {
+             fill: #0081D1;
+             fill-rule: nonzero
+           }
+
+           .fil2 {
+             fill: #202020;
+             fill-rule: nonzero
+           }
+
+           .fil3 {
+             fill: #333333;
+             fill-rule: nonzero
+           }
+          </style>
+         </defs>
+          <g id="Layer_x0020_1">
+            <metadata id="CorelCorpID_0Corel-Layer" />
+            <polygon class="fil0"
+                     points="1342.99,0 5045.83,0 5045.83,4409.73 2300.46,4409.73 2300.46,2995.97 3632.08,2995.97 3632.08,1413.75 2049.86,1413.75 2049.86,2745.34 636.11,2745.34 636.11,0 " />
           </g>
+          <g id="Layer_x0020_2">
+          <metadata id="CorelCorpID_1Corel-Layer" />
+            <polygon class="fil1"
+                     points="5045.83,7.02 5045.83,4409.73 2300.46,4409.73 2300.46,2995.98 3632.08,2995.98 3632.08,1430.72 " />
+         </g>
+          <g id="Layer_x0020_3">
+          <metadata id="CorelCorpID_2Corel-Layer" />
+            <polygon class="fil2"
+                     points="2049.86,4409.73 2049.86,4616.76 2049.86,5049.91 636.11,5049.91 636.11,4409.73 -0,4409.73 -0,2995.97 636.11,2995.97 636.11,2995.94 2049.86,2995.94 2049.86,2995.97 " />
+         </g>
+          <g id="Layer_x0020_4">
+          <metadata id="CorelCorpID_3Corel-Layer" />
+            <path class="fil3"
+                  d="M2049.86 4409.73l0 207.03 0 433.15 -1413.75 0c0,-213.39 0,-426.79 0,-640.18l1413.75 -1413.79 0 0.03 0 1413.75z" />
+         </g>
         </svg>
       </div>
       <h1>Starting PCA</h1>

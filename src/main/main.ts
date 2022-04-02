@@ -64,6 +64,8 @@ async function createWindow() {
       width: 400,
       height: 400,
       frame: false,
+      x: isType.null_(x) ? undefined : x,
+      y: isType.null_(y) ? undefined : y,
     })
 
     const startingWinTemplate: MenuItemConstructorOptions[] = []
@@ -83,7 +85,7 @@ async function createWindow() {
         slashes: true,
       }),
     )
-  }, 800)
+  }, 1000)
 
   win = new BrowserWindow(windowOptions)
 
