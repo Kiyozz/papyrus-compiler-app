@@ -21,11 +21,12 @@ export const en: TranslationShape = {
     close: 'Close',
     download: 'Download',
     moreDetails: 'More details',
+    clear: 'Clear',
     logs: {
       nav: 'Logs',
       title: 'Compilation logs',
       noLogs: 'No logs',
-      close: 'Close',
+      successCopy: 'Successfully copied',
       scriptFailed: 'Script {{script}} failed to compile: {{message}}',
       scriptFailedCmd: 'Executed command: {{cmd}}',
       invalidConfigurationGame:
@@ -56,7 +57,6 @@ export const en: TranslationShape = {
     compilation: 'Compilation',
     groups: 'Groups',
     settings: 'Settings',
-    closePanel: 'Close panel',
     help: {
       text: 'Documentation',
       title: 'Open the PCA documentation website?',

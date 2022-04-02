@@ -16,7 +16,7 @@ import is from '@sindresorhus/is'
 import { bridge } from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { chunk } from '../utils/chunk'
-import { scriptInList } from '../utils/scripts/equals'
+import { scriptEquals, scriptInList } from '../utils/scripts/equals'
 import { isRunningScript } from '../utils/scripts/status'
 import { fromError } from '../../common/from-error'
 import { useApp } from './use-app'
@@ -34,6 +34,7 @@ interface CompilationContext {
   concurrentScripts: number
   logs: [ScriptRenderer, string][]
   setScripts: (fn: (scripts: ScriptRenderer[]) => ScriptRenderer[]) => void
+  clearCompilationLogs: (script?: ScriptRenderer) => void
 }
 
 const Context = createContext({} as CompilationContext)
@@ -72,6 +73,18 @@ function CompilationProvider({ children }: React.PropsWithChildren<unknown>) {
   useEffect(() => {
     setRunning(compilationScripts.some(isRunningScript))
   }, [compilationScripts])
+
+  const clearCompilationLogs = useCallback((script?: ScriptRenderer) => {
+    if (script) {
+      setCompilationLogs(logs => {
+        return logs.filter(([s]) => {
+          return !scriptEquals(script)(s)
+        })
+      })
+    } else {
+      setCompilationLogs([])
+    }
+  }, [])
 
   const start = useCallback(
     async ({ scripts }: StartOptions) => {
@@ -175,6 +188,7 @@ function CompilationProvider({ children }: React.PropsWithChildren<unknown>) {
         logs: compilationLogs,
         setScripts: setCompilationScripts,
         concurrentScripts,
+        clearCompilationLogs,
       }}
     >
       {children}

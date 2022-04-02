@@ -33,6 +33,7 @@ import { useDrop, useSetDrop } from '../../hooks/use-drop'
 import { useRecentFiles } from '../../hooks/use-recent-files'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { isAllGroupsEmpty } from '../../types'
+import { scriptEquals } from '../../utils/scripts/equals'
 import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
 import { scriptsToRenderer } from '../../utils/scripts/scripts-to-renderer'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
@@ -84,8 +85,14 @@ function SearchButton({
 function Compilation() {
   const { t } = useTranslation()
   const { groups } = useApp()
-  const { scripts, start, setScripts, concurrentScripts, isRunning } =
-    useCompilation()
+  const {
+    scripts,
+    start,
+    setScripts,
+    concurrentScripts,
+    isRunning,
+    clearCompilationLogs,
+  } = useCompilation()
   const { setRecentFiles } = useRecentFiles()
   const { send } = useTelemetry()
   const { drop, isFileDialogActive } = useDrop()
@@ -119,11 +126,12 @@ function Compilation() {
 
   const onClickRemoveScriptFromScript = (script: ScriptRenderer) => {
     return () => {
+      clearCompilationLogs(script)
       setScripts(scriptsList => {
         send(TelemetryEvent.compilationRemoveScript, {
           remainingScripts: scriptsList.length - 1,
         })
-        return scriptsList.filter(cs => cs !== script)
+        return scriptsList.filter(cs => !scriptEquals(script)(cs))
       })
     }
   }
@@ -131,6 +139,7 @@ function Compilation() {
   const onClickPlayCompilation = (script: ScriptRenderer) => {
     return () => {
       send(TelemetryEvent.compilationSinglePlay, {})
+      clearCompilationLogs(script)
 
       start({ scripts: [script] })
     }
@@ -140,6 +149,8 @@ function Compilation() {
     if (scripts.length === 0) {
       return
     }
+
+    clearCompilationLogs()
 
     const files: Script[] = scripts.map(s => ({
       name: s.name,
@@ -173,13 +184,10 @@ function Compilation() {
     )
   }
 
-  const onClearScripts = () => {
-    setScripts(() => [])
-  }
-
   const onClickEmpty = () => {
     send(TelemetryEvent.compilationListEmpty, { scripts: scripts.length })
-    onClearScripts()
+    clearCompilationLogs()
+    setScripts(() => [])
   }
 
   return (

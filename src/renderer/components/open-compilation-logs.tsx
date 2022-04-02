@@ -14,6 +14,10 @@ import {
   DialogTitle,
   Typography,
   Paper,
+  Toolbar,
+  Snackbar,
+  Alert,
+  Portal,
 } from '@mui/material'
 import cx from 'classnames'
 import React, { useState } from 'react'
@@ -30,16 +34,21 @@ import type { KeyboardEvent } from 'react'
 function LogsListItem({
   script,
   logs,
+  onClickClear,
+  onClickCopyLogs,
 }: {
   script: ScriptRenderer
   logs: string
+  onClickClear: () => void
+  onClickCopyLogs: () => void
 }) {
   const { t } = useTranslation()
   const { copyToClipboard } = useApp()
   const { send } = useTelemetry()
-  const onClickCopyLogs = () => {
+  const onClickCopy = () => {
     send(TelemetryEvent.compilationLogsCopy, {})
     copyToClipboard(`${script.name}\n\n${logs}\n`)
+    onClickCopyLogs()
   }
 
   const isSuccess = isSuccessScript(script)
@@ -68,7 +77,10 @@ function LogsListItem({
             {isSuccess && <CheckCircleIcon className="text-green-500" />}
             {isFailed && <ErrorIcon className="text-red-300" />} {script.name}
           </Typography>
-          <Button onClick={onClickCopyLogs}>{t('common.copy')}</Button>
+          <div className="flex">
+            <Button onClick={onClickCopy}>{t('common.copy')}</Button>
+            <Button onClick={onClickClear}>{t('common.remove')}</Button>
+          </div>
         </Typography>
       </Paper>
       <Paper
@@ -98,8 +110,19 @@ function LogsListItem({
 
 function OpenCompilationLogs() {
   const { t } = useTranslation()
-  const { logs } = useCompilation()
+  const { logs, clearCompilationLogs } = useCompilation()
   const [isDialogOpen, setDialogOpen] = useState(false)
+  const [isCopySnackOpen, setCopySnackOpen] = useState(false)
+
+  const onCloseSnackbar = () => {
+    setCopySnackOpen(false)
+  }
+
+  const onClickCopyLogs = () => {
+    return () => {
+      setCopySnackOpen(true)
+    }
+  }
 
   const onClickButtonOpenLogs = () => {
     setDialogOpen(true)
@@ -115,9 +138,21 @@ function OpenCompilationLogs() {
     }
   }
 
+  const onClickClearLogs = () => {
+    clearCompilationLogs()
+  }
+
+  const onClickClearOneLog = (script: ScriptRenderer) => {
+    return () => {
+      clearCompilationLogs(script)
+    }
+  }
+
+  const hasNoLogs = logs.length === 0
+  const hasLogs = logs.length > 0
   const hasErrorsInLogs = logs.some(([log]) => isFailedScript(log))
   const isAllScriptsSuccessInLogs =
-    logs.length > 0 && logs.every(([log]) => isSuccessScript(log))
+    hasLogs && logs.every(([log]) => isSuccessScript(log))
 
   return (
     <>
@@ -133,6 +168,20 @@ function OpenCompilationLogs() {
         text={t('common.logs.nav')}
       />
 
+      <Portal>
+        <Snackbar
+          autoHideDuration={3000}
+          key="snackbar-copy-logs"
+          onClose={onCloseSnackbar}
+          open={isCopySnackOpen}
+          sx={theme => ({
+            zIndex: theme.zIndex.modal + 1,
+          })}
+        >
+          <Alert severity="success">{t('common.logs.successCopy')}</Alert>
+        </Snackbar>
+      </Portal>
+
       <Dialog
         aria-describedby="logs-content"
         aria-labelledby="logs-title"
@@ -141,20 +190,35 @@ function OpenCompilationLogs() {
         onKeyDown={onDialogKeyDown}
         open={isDialogOpen}
       >
-        <DialogTitle className="-mb-1" id="logs-title">
-          {t('common.logs.title')}
-        </DialogTitle>
+        <Toolbar className="p-0">
+          <DialogTitle className="grow" id="logs-title">
+            {t('common.logs.title')}
+          </DialogTitle>
+          <Button
+            className="mr-4"
+            disabled={hasNoLogs}
+            onClick={onClickClearLogs}
+          >
+            {t('common.clear')}
+          </Button>
+        </Toolbar>
         <DialogContent
           className={cx(
             'flex flex-col gap-4',
-            logs.length === 0 && 'items-center justify-center',
+            hasNoLogs && 'items-center justify-center',
           )}
           dividers
           id="logs-content"
         >
-          {logs.length > 0 ? (
+          {hasLogs ? (
             logs.map(([script, scriptLogs]) => (
-              <LogsListItem key={script.id} logs={scriptLogs} script={script} />
+              <LogsListItem
+                key={script.id}
+                logs={scriptLogs}
+                onClickClear={onClickClearOneLog(script)}
+                onClickCopyLogs={onClickCopyLogs()}
+                script={script}
+              />
             ))
           ) : (
             <Typography component="span" variant="h5">
@@ -163,9 +227,7 @@ function OpenCompilationLogs() {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClickButtonCloseLogs}>
-            {t('common.logs.close')}
-          </Button>
+          <Button onClick={onClickButtonCloseLogs}>{t('common.close')}</Button>
         </DialogActions>
       </Dialog>
     </>

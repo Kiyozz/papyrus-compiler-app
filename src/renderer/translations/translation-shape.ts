@@ -19,11 +19,12 @@ export interface TranslationShape {
     close: string
     download: string
     moreDetails: string
+    clear: string
     logs: {
       nav: string
       title: string
       noLogs: string
-      close: string
+      successCopy: string
       scriptFailed: string
       scriptFailedCmd: string
       invalidConfigurationGame: string
@@ -36,7 +37,6 @@ export interface TranslationShape {
     compilation: string
     groups: string
     settings: string
-    closePanel: string
     help: {
       text: string
       title: string

@@ -23,11 +23,12 @@ export const fr: TranslationShape = {
     close: 'Fermer',
     download: 'Télécharger',
     moreDetails: 'Plus de détails',
+    clear: 'Vider',
     logs: {
       nav: 'Logs',
       title: 'Logs de compilation',
       noLogs: 'Aucun logs',
-      close: 'Fermer',
+      successCopy: 'Copier avec succès',
       scriptFailed: 'Problème avec le script {{script}} : {{message}}',
       scriptFailedCmd: 'Commande éxécutée : {{cmd}}',
       // Check if those trads are useful
@@ -61,7 +62,6 @@ export const fr: TranslationShape = {
     compilation: 'Compilation',
     groups: 'Groupes',
     settings: 'Paramètres',
-    closePanel: 'Fermer',
     help: {
       text: 'Documentation',
       title: 'Ouvrir le site web de la documentation de PCA ?',

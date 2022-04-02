@@ -96,7 +96,7 @@ function PageDrawer() {
         <DrawerButton
           icon={isDrawerExpand ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           onClick={onDrawerExpandClick}
-          text={t('nav.closePanel')}
+          text={t('common.close')}
         />
       </List>
     </Drawer>
