@@ -17,5 +17,5 @@ export function executeCommand(
 ): Promise<{ stdout: string; stderr: string }> {
   logger.debug('running the command', cmd, 'in the folder', cwd)
 
-  return exec(cmd, { cwd })
+  return exec(cmd, { cwd, shell: 'powershell' })
 }
