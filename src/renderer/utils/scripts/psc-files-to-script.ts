@@ -4,14 +4,14 @@
  * All rights reserved.
  */
 
-import { bridge } from '../../bridge'
 import { ScriptStatus } from '../../enums/script-status.enum'
+import { uuid } from '../uuid'
 import type { ScriptRenderer } from '../../types'
 
 export const pscFilesToScript = (pscFiles: File[]): ScriptRenderer[] => {
   return pscFiles.map(({ name, path }) => {
     return {
-      id: bridge.uuid(),
+      id: uuid(),
       name,
       path,
       status: ScriptStatus.idle,

@@ -4,8 +4,8 @@
  * All rights reserved.
  */
 
-import { bridge } from '../../bridge'
 import { ScriptStatus } from '../../enums/script-status.enum'
+import { uuid } from '../uuid'
 import type { Script } from '../../../common/types/script'
 import type { ScriptRenderer } from '../../types'
 
@@ -18,7 +18,7 @@ export const scriptsToRenderer = (
     ...scripts.map(s => {
       const script: ScriptRenderer = {
         ...s,
-        id: bridge.uuid(),
+        id: uuid(),
         status: ScriptStatus.idle,
       }
 

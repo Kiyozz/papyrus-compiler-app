@@ -38,5 +38,4 @@ export enum IpcEvent {
   windowMaximize = 'event-window-maximize',
   windowRestore = 'event-window-restore',
   windowStateChange = 'event-window-state-change',
-  uuid = 'uuid',
 }

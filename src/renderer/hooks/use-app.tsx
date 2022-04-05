@@ -11,6 +11,7 @@ import { Subject } from 'rxjs'
 import { bridge } from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { Group } from '../types'
+import { uuid } from '../utils/uuid'
 import { useIpc } from './use-ipc'
 import type { PartialDeep } from 'type-fest'
 import type { Config } from '../../common/types/config'
@@ -59,7 +60,7 @@ function AppProvider({ children }: React.PropsWithChildren<unknown>) {
             g.scripts.map(s => {
               return {
                 status: ScriptStatus.idle,
-                id: bridge.uuid(),
+                id: uuid(),
                 name: s.name,
                 path: s.path,
               }
@@ -67,8 +68,8 @@ function AppProvider({ children }: React.PropsWithChildren<unknown>) {
           ),
       )
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [bridge.uuid],
+
+    [],
   )
 
   useDidMount(async () => {
