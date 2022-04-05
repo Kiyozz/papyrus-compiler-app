@@ -4,12 +4,11 @@
  * All rights reserved.
  */
 
-import { useState } from 'react'
 import { bridge } from '../bridge'
 import type { Platform } from '../../common/types/platform'
 
-export const usePlatform = (): Platform => {
-  const [platform] = useState(bridge.os.platform)
+const platform = bridge.os.platform()
 
+export const usePlatform = (): Platform => {
   return platform
 }
