@@ -35,7 +35,7 @@
 
   ![docs/changelog/Unreleased/documentation.png](docs/changelog/Unreleased/documentation.png)
 
-- You can now compile the script of your choice from the list
+- You can now compile a single script in the list
 
   ![docs/changelog/Unreleased/script_list.png](docs/changelog/Unreleased/script_list.png)
 
