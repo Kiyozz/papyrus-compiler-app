@@ -17,11 +17,11 @@ import { IpcEvent } from './ipc-event'
 import { Logger } from './logger'
 import { exists } from './path/path'
 import { settingsStore, defaultConfig } from './store/settings/store'
-import type { MenuItemConstructorOptions } from 'electron'
+import type { MenuItemConstructorOptions, BrowserWindow } from 'electron'
 
 interface RegisterMenusCallbacks {
   openLogFile: (file: string) => Promise<void>
-  win: Electron.BrowserWindow
+  win: BrowserWindow
 }
 
 const logger = new Logger('RegisterMenu')

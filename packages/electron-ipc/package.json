@@ -1,0 +1,44 @@
+{
+  "name": "@pca/electron-ipc",
+  "version": "1.0.0",
+  "description": "Electron IPC Framework",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "node": "./dist/index.cjs",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kiyozz/papyrus-compiler-app.git"
+  },
+  "keywords": [
+    "electron",
+    "ipc",
+    "framework"
+  ],
+  "author": "Kiyozz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kiyozz/papyrus-compiler-app/issues"
+  },
+  "homepage": "https://github.com/Kiyozz/papyrus-compiler-app#readme",
+  "sideEffects": false,
+  "devDependencies": {
+    "electron": "^18.1.0",
+    "tsup": "^5.12.6"
+  },
+  "peerDependencies": {
+    "electron": ">= 12"
+  }
+}
