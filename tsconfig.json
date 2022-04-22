@@ -7,6 +7,10 @@
     "moduleResolution": "node",
     "noEmit": true,
     "noImplicitReturns": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@pca/electron-ipc": ["./packages/electron-ipc/src"]
+    }
   }
 }
