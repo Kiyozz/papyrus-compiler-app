@@ -3,10 +3,9 @@
 ### Bug fixes
 
 - **Fallout 4 support**
-
 - When closing the drawer panel, links could break into multiple lines
-
 - Duplicated logs entry
+- Changelog window correctly displays images
 
 ### Features
 
@@ -20,11 +19,8 @@
   ![docs/changelog/Unreleased/group_preview_open.png](docs/changelog/Unreleased/group_preview_open.png)
 
 - New design
-
 - The configuration is now checked when you enter the compilation page, giving you any tips if your configuration is wrong.
-
 - Better mo2 configuration check
-
 - Button to open compilation logs now changes color at the end of a compilation
 
   _Green_: when all scripts compile successfully
@@ -40,7 +36,6 @@
   ![docs/changelog/Unreleased/script_list.png](docs/changelog/Unreleased/script_list.png)
 
 - Recent files: option to show the script's full path (#130)
-
 - Recent files dialog displays more scripts at once
 
   It is now easier to click on a line
@@ -57,9 +52,8 @@
 
   ![docs/changelog/Unreleased/new-titlebar-open.png](docs/changelog/Unreleased/new-titlebar-open.png)
 
-- The position of the app is now memoized between launchs
+- The position of the app is now memoized between launch
 - Bumps dependencies
-- Changelog window correctly displays images
 - The application restarts when resetting the configuration
 
 ## 5.7.0 (2021-08-17)
