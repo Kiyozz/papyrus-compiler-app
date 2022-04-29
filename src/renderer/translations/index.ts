@@ -11,7 +11,6 @@ import { en } from './en'
 import { fr } from './fr'
 
 export const loadTranslations = () => {
-  // noinspection JSIgnoredPromiseFromCall
   void use(LanguageDetector)
     .use(initReactI18next)
     .init({

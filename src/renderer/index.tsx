@@ -6,7 +6,7 @@
 
 import debounce from 'debounce-fn'
 import React from 'react'
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { fromError } from '../common/from-error'
 import App from './app'
 import { bridge } from './bridge'
@@ -25,10 +25,18 @@ import { loadTranslations } from './translations'
 import { isProduction } from './utils/is-production'
 
 async function start() {
+  const root = document.getElementById('app')
+
+  if (!root) {
+    throw new Error('Something went wrong. #app element is missing.')
+  }
+
+  const rootReact = createRoot(root)
+
   loadTranslations()
 
   try {
-    render(
+    rootReact.render(
       <VersionProvider>
         <AppProvider>
           <TelemetryProvider>
@@ -52,7 +60,6 @@ async function start() {
           </TelemetryProvider>
         </AppProvider>
       </VersionProvider>,
-      document.getElementById('app'),
     )
   } catch (e) {
     let err: Error
