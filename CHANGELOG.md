@@ -3,6 +3,7 @@
 ### Bug fixes
 
 - **Fallout 4 support**
+- "Command line is too long" error should occur less by using Powershell. Powershell is installed by default starting with Windows 7.
 - When closing the drawer panel, links could break into multiple lines
 - Duplicated logs entry
 - Changelog window correctly displays images

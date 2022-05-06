@@ -152,6 +152,13 @@ export async function compile(scriptName: string): Promise<string> {
     }
 
     if (err instanceof Error) {
+      if (err.message.includes('ENAMETOOLONG')) {
+        throw new CompilationException(
+          scriptName,
+          "Cannot compile this script: 'Command line is too long'. You have too many mods source scripts. Try to reduce the number of mods that have psc files. This is a Windows limitation and PCA can't do anything. Refer to https://documentation.pca-dev.app/docs/troubleshooting/command-line-too-long",
+        )
+      }
+
       const e = err as ExecException
       logger.error('compilation error', {
         message: e.message,

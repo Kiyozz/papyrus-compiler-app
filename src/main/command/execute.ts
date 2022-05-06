@@ -18,5 +18,8 @@ export function executeCommand(
 ): Promise<{ stdout: string; stderr: string }> {
   logger.debug('running the command', cmd, 'in the folder', cwd)
 
-  return exec(cmd, { cwd, shell: is.windows ? 'powershell' : undefined })
+  return exec(`${is.windows ? '& ' : ''}${cmd}`, {
+    cwd,
+    shell: is.windows ? 'powershell' : undefined,
+  })
 }
