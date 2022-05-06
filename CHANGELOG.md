@@ -1,4 +1,4 @@
-## Unreleased
+## 5.8.0 (2022-05-06)
 
 ### Bug fixes
 
@@ -12,12 +12,12 @@
 
 - New compilation logs view
 
-  ![docs/changelog/Unreleased/new_logs.png](docs/changelog/Unreleased/new_logs.png)
+  ![docs/changelog/Unreleased/new_logs.png](docs/changelog/5.8.0/new_logs.png)
 
 - Group preview is replaced with a new "more details" button
 
-  ![docs/changelog/Unreleased/group_preview.png](docs/changelog/Unreleased/group_preview.png)
-  ![docs/changelog/Unreleased/group_preview_open.png](docs/changelog/Unreleased/group_preview_open.png)
+  ![docs/changelog/Unreleased/group_preview.png](docs/changelog/5.8.0/group_preview.png)
+  ![docs/changelog/Unreleased/group_preview_open.png](docs/changelog/5.8.0/group_preview_open.png)
 
 - New design
 - The configuration is now checked when you enter the compilation page, giving you any tips if your configuration is wrong.
@@ -30,28 +30,28 @@
 
 - New documentation released: access the documentation via NexusMods or with the new button at the bottom left
 
-  ![docs/changelog/Unreleased/documentation.png](docs/changelog/Unreleased/documentation.png)
+  ![docs/changelog/Unreleased/documentation.png](docs/changelog/5.8.0/documentation.png)
 
 - You can now compile a single script in the list
 
-  ![docs/changelog/Unreleased/script_list.png](docs/changelog/Unreleased/script_list.png)
+  ![docs/changelog/Unreleased/script_list.png](docs/changelog/5.8.0/script_list.png)
 
 - Recent files: option to show the script's full path (#130)
 - Recent files dialog displays more scripts at once
 
   It is now easier to click on a line
 
-  ![docs/changelog/Unreleased/recent-files.png](docs/changelog/Unreleased/recent-files.png)
+  ![docs/changelog/Unreleased/recent-files.png](docs/changelog/5.8.0/recent-files.png)
 
 - A loading screen now appear when the application start
 
-  ![docs/changelog/Unreleased/loading.png](docs/changelog/Unreleased/loading.png)
+  ![docs/changelog/Unreleased/loading.png](docs/changelog/5.8.0/loading.png)
 
 - New application titlebar
 
   The application menu is now accessible with the application icon at the left
 
-  ![docs/changelog/Unreleased/new-titlebar-open.png](docs/changelog/Unreleased/new-titlebar-open.png)
+  ![docs/changelog/Unreleased/new-titlebar-open.png](docs/changelog/5.8.0/new-titlebar-open.png)
 
 - The position of the app is now memoized between launch
 - Bumps dependencies
