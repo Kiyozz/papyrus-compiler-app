@@ -22,6 +22,7 @@ export default defineConfig({
     target: 'chrome98', // electron version target
     sourcemap: true,
     chunkSizeWarningLimit: 3000,
+    emptyOutDir: true,
   },
   resolve: {
     alias: [
