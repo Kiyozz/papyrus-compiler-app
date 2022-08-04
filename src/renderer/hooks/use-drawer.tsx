@@ -14,7 +14,7 @@ type DrawerContext = [boolean, Dispatch<SetStateAction<boolean>>]
 
 const Context = createContext([true, () => true] as DrawerContext)
 
-function DrawerProvider({ children }: React.PropsWithChildren<unknown>) {
+function DrawerProvider({ children }: React.PropsWithChildren) {
   const [isDrawerExpandLS, setDrawerExpandLS] = useLocalStorage(
     LocalStorage.drawerExpand,
     'false',

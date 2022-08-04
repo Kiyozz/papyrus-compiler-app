@@ -22,7 +22,7 @@ interface SettingsContext {
 
 const Context = createContext({} as SettingsContext)
 
-function SettingsProvider({ children }: React.PropsWithChildren<unknown>) {
+function SettingsProvider({ children }: React.PropsWithChildren) {
   const [configError, setConfigError] = useState<BadError>(false)
 
   const checkConfig: SettingsContext['checkConfig'] = useCallback(

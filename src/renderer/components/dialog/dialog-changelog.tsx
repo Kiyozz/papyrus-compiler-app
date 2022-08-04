@@ -50,7 +50,7 @@ function Img({ src, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
   )
 }
 
-function HeadingOne({ children }: PropsWithChildren<unknown>) {
+function HeadingOne({ children }: PropsWithChildren) {
   return (
     <Typography component="h1" gutterBottom variant="h3">
       {children}
@@ -58,7 +58,7 @@ function HeadingOne({ children }: PropsWithChildren<unknown>) {
   )
 }
 
-function HeadingTwo({ children }: PropsWithChildren<unknown>) {
+function HeadingTwo({ children }: PropsWithChildren) {
   return (
     <Typography component="h2" gutterBottom variant="h4">
       {children}
@@ -66,7 +66,7 @@ function HeadingTwo({ children }: PropsWithChildren<unknown>) {
   )
 }
 
-function HeadingThree({ children }: PropsWithChildren<unknown>) {
+function HeadingThree({ children }: PropsWithChildren) {
   return (
     <Typography className="mt-2" component="h3" gutterBottom variant="h5">
       {children}
@@ -74,7 +74,7 @@ function HeadingThree({ children }: PropsWithChildren<unknown>) {
   )
 }
 
-function HeadingFive({ children }: PropsWithChildren<unknown>) {
+function HeadingFive({ children }: PropsWithChildren) {
   return (
     <Typography component="h5" gutterBottom variant="h6">
       {children}
@@ -82,7 +82,7 @@ function HeadingFive({ children }: PropsWithChildren<unknown>) {
   )
 }
 
-function Paragraph({ children }: PropsWithChildren<unknown>) {
+function Paragraph({ children }: PropsWithChildren) {
   return <Typography>{children}</Typography>
 }
 
@@ -94,11 +94,11 @@ function Code({ children }: { children: ReactNode[] }) {
   )
 }
 
-function UnorderedList({ children }: PropsWithChildren<unknown>) {
+function UnorderedList({ children }: PropsWithChildren) {
   return <List disablePadding>{children}</List>
 }
 
-function HtmlListItem({ children }: PropsWithChildren<unknown>) {
+function HtmlListItem({ children }: PropsWithChildren) {
   return (
     <ListItem disablePadding>
       <ListItemText primary={children} />

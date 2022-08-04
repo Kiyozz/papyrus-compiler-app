@@ -53,7 +53,7 @@ const whenCompileScriptFinish = (
   })
 }
 
-function CompilationProvider({ children }: React.PropsWithChildren<unknown>) {
+function CompilationProvider({ children }: React.PropsWithChildren) {
   const [compilationScripts, setCompilationScripts] = useState<
     ScriptRenderer[]
   >([])

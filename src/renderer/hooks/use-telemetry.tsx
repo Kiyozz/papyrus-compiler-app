@@ -23,7 +23,7 @@ interface TelemetryContext {
 
 const Context = createContext({} as TelemetryContext)
 
-function TelemetryProvider({ children }: React.PropsWithChildren<unknown>) {
+function TelemetryProvider({ children }: React.PropsWithChildren) {
   const { config } = useApp()
 
   const sendTelemetry = (

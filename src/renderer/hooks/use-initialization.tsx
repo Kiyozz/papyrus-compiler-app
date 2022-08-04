@@ -35,9 +35,7 @@ type CheckUpdateReturn =
 
 const Context = createContext({} as InitializationContext)
 
-function InitializationProvider({
-  children,
-}: React.PropsWithChildren<unknown>) {
+function InitializationProvider({ children }: React.PropsWithChildren) {
   const [done, setDone] = useState(false)
   const [latestVersion, setLatestVersion] = useState<string | undefined>()
   const {

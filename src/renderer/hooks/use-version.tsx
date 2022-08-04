@@ -11,7 +11,7 @@ type VersionContext = [string, Dispatch<SetStateAction<string>>]
 
 const Context = createContext(['', () => ''] as VersionContext)
 
-function VersionProvider({ children }: React.PropsWithChildren<unknown>) {
+function VersionProvider({ children }: React.PropsWithChildren) {
   const [version, setVersion] = useState('')
 
   return (

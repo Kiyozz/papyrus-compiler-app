@@ -16,7 +16,7 @@ import { useIsDarkTheme } from './hooks/use-is-dark-theme'
 import { usePlatform } from './hooks/use-platform'
 import type { PaletteMode, PaletteOptions } from '@mui/material'
 
-function MuiTheme({ children }: React.PropsWithChildren<unknown>) {
+function MuiTheme({ children }: React.PropsWithChildren) {
   const isDarkTheme = useIsDarkTheme()
   const platform = usePlatform()
   const mode: PaletteMode = isDarkTheme ? 'dark' : 'light'

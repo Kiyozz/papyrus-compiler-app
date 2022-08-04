@@ -38,7 +38,7 @@ const Context = React.createContext({} as AppContext)
 const _refresh$ = new Subject<Config>()
 const _onRefreshConfig = _refresh$.asObservable()
 
-function AppProvider({ children }: React.PropsWithChildren<unknown>) {
+function AppProvider({ children }: React.PropsWithChildren) {
   const [config, setConfig] = useState<Config>({} as Config)
   const [groups, setGroups] = useState<Group[]>([])
   const [isShowChangelogs, setShowChangelogs] = useState(false)

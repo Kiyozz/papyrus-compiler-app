@@ -11,7 +11,7 @@ const Context = createContext<boolean>(true)
 
 const hasFocus = () => document.hasFocus()
 
-function FocusProvider({ children }: PropsWithChildren<unknown>) {
+function FocusProvider({ children }: PropsWithChildren) {
   const [isFocus, setFocus] = useState(hasFocus)
 
   useEffect(() => {

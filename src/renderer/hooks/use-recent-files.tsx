@@ -35,7 +35,7 @@ const Context = createContext({} as RecentFilesContext)
 const recentFiles$ = new Subject<Script[]>()
 const onRecentFilesChanges = recentFiles$.asObservable()
 
-function RecentFilesProvider({ children }: React.PropsWithChildren<unknown>) {
+function RecentFilesProvider({ children }: React.PropsWithChildren) {
   const { send } = useTelemetry()
   const [recentFiles, setRecentFilesMemory] = useState<Script[]>([])
   const [isMoreDetails, setMoreDetails] = useLocalStorage(
