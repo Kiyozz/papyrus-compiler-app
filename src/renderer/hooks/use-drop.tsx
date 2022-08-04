@@ -18,7 +18,7 @@ interface DropContext {
 
 const Context = createContext({} as DropContext)
 
-function DropProvider({ children }: React.PropsWithChildren<unknown>) {
+function DropProvider({ children }: React.PropsWithChildren) {
   const [onDrop, setOnDrop] = useState<OnDrop | null>(null)
   const [isFileDialogActive, setFileDialogActive] = useState(false)
 

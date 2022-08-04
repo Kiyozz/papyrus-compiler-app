@@ -157,7 +157,6 @@ function Compilation() {
       path: s.path,
     }))
 
-    // noinspection JSIgnoredPromiseFromCall
     void setRecentFiles(files)
     send(TelemetryEvent.compilationPlay, {
       scripts: scripts.length,

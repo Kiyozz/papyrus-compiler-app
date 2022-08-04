@@ -30,7 +30,7 @@ function DropScripts({
   onFileDialogCancel,
   className,
   children,
-}: React.PropsWithChildren<DropScriptsProps>) {
+}: DropScriptsProps) {
   const { getRootProps, isDragActive, getInputProps, open } = useDropzone({
     onDrop: files => onDrop?.(files),
     accept: {
