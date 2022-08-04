@@ -33,7 +33,9 @@ function DropScripts({
 }: React.PropsWithChildren<DropScriptsProps>) {
   const { getRootProps, isDragActive, getInputProps, open } = useDropzone({
     onDrop: files => onDrop?.(files),
-    accept: '.psc',
+    accept: {
+      'text/psc': ['.psc'],
+    },
     preventDropOnDocument: true,
     noClick: true,
     noKeyboard: true,

@@ -38,4 +38,7 @@ export default defineConfig({
     'process.env.debug_path_shorten': 'false',
     'process.env.RELEASE_VERSION': `'${version}'`,
   },
+  server: {
+    port: 9080,
+  },
 })
