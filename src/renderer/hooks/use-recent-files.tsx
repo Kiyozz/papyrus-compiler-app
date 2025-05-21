@@ -5,22 +5,16 @@
  */
 
 import is from '@sindresorhus/is'
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 import useLocalStorage from 'react-use-localstorage'
 import { Subject } from 'rxjs'
+import type { Observable } from 'rxjs'
 import { TelemetryEvent } from '../../common/telemetry-event'
+import type { Script } from '../../common/types/script'
 import { bridge } from '../bridge'
 import { LocalStorage } from '../enums/local-storage.enum'
 import { useTelemetry } from './use-telemetry'
-import type { Script } from '../../common/types/script'
-import type { Observable } from 'rxjs'
-import type { Dispatch, SetStateAction } from 'react'
 
 interface RecentFilesContext {
   recentFiles: Script[]
@@ -38,17 +32,14 @@ const onRecentFilesChanges = recentFiles$.asObservable()
 function RecentFilesProvider({ children }: React.PropsWithChildren) {
   const { send } = useTelemetry()
   const [recentFiles, setRecentFilesMemory] = useState<Script[]>([])
-  const [isMoreDetails, setMoreDetails] = useLocalStorage(
-    LocalStorage.recentFilesMoreDetails,
-    'false',
-  )
+  const [isMoreDetails, setMoreDetails] = useLocalStorage(LocalStorage.recentFilesMoreDetails, 'false')
 
   useEffect(() => {
-    const sub = onRecentFilesChanges.subscribe(scripts => {
+    const sub = onRecentFilesChanges.subscribe((scripts) => {
       setRecentFilesMemory(scripts)
     })
 
-    void bridge.recentFiles.get().then(scripts => recentFiles$.next(scripts))
+    void bridge.recentFiles.get().then((scripts) => recentFiles$.next(scripts))
 
     return () => sub.unsubscribe()
   }, [])
@@ -83,8 +74,8 @@ function RecentFilesProvider({ children }: React.PropsWithChildren) {
         recentFiles,
         moreDetails: [
           isMoreDetails === 'true',
-          (v => {
-            const enable = is.function_(v) ? v(isMoreDetails === 'true') : v
+          ((v) => {
+            const enable = is.function(v) ? v(isMoreDetails === 'true') : v
 
             send(TelemetryEvent.recentFilesMoreDetails, { moreDetails: enable })
 

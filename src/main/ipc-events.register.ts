@@ -5,10 +5,10 @@
  */
 
 import { IpcManager } from '@pca/electron-ipc'
-import { Logger } from './logger'
 import type { Event } from './interfaces/event'
 import type { EventHandler } from './interfaces/event-handler'
 import type { EventSync } from './interfaces/event-sync'
+import { Logger } from './logger'
 
 const logger = new Logger('RegisterIpcEvents')
 

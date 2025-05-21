@@ -7,7 +7,7 @@
 import * as fs from 'fs'
 import { app } from 'electron'
 import Store from 'electron-store'
-import { is } from 'electron-util'
+import { isDev } from 'electron-util/main'
 import { osLocaleSync } from 'os-locale'
 import { GameType } from '../../../common/game'
 import { Theme } from '../../../common/theme'
@@ -24,7 +24,7 @@ import { migrate550 } from './migrations/5.5.0.migration'
 import { migrate560 } from './migrations/5.6.0.migration'
 import type { Config } from '../../../common/types/config'
 
-const jsonPath = is.development
+const jsonPath = isDev
   ? join(__dirname, '../..', 'package.json')
   : join(app.getAppPath(), 'package.json')
 const json = JSON.parse(fs.readFileSync(jsonPath).toString()) as {

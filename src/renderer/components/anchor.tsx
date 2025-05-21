@@ -4,14 +4,10 @@
  * All rights reserved.
  */
 
-import React from 'react'
+import type { ComponentProps } from 'react'
 import { bridge } from '../bridge'
-import type { HTMLProps, PropsWithChildren } from 'react'
 
-function Anchor({
-  children,
-  href,
-}: PropsWithChildren<HTMLProps<HTMLAnchorElement>>) {
+function Anchor({ children, href }: ComponentProps<'a'>) {
   const onClick = () => {
     if (href) {
       void bridge.shell.openExternal(href)

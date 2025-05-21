@@ -7,29 +7,29 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import ErrorIcon from '@mui/icons-material/Error'
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  Typography,
   Paper,
-  Toolbar,
-  Snackbar,
-  Alert,
   Portal,
+  Snackbar,
+  Toolbar,
+  Typography,
 } from '@mui/material'
 import cx from 'classnames'
-import React, { useState } from 'react'
+import { useState } from 'react'
+import type { KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TelemetryEvent } from '../../common/telemetry-event'
 import { useApp } from '../hooks/use-app'
 import { useCompilation } from '../hooks/use-compilation'
 import { useTelemetry } from '../hooks/use-telemetry'
+import type { ScriptRenderer } from '../types'
 import { isFailedScript, isSuccessScript } from '../utils/scripts/status'
 import DrawerButton from './drawer-button'
-import type { ScriptRenderer } from '../types'
-import type { KeyboardEvent } from 'react'
 
 function LogsListItem({
   script,
@@ -55,25 +55,15 @@ function LogsListItem({
   const isFailed = isFailedScript(script)
 
   return (
-    <Paper
-      aria-describedby={`${script.id}-logs`}
-      aria-labelledby={`${script.id}-title`}
-      elevation={3}
-    >
-      <Paper
-        className="sticky -top-1 rounded-bl-none rounded-br-none p-2 shadow-none"
-        elevation={4}
-      >
+    <Paper aria-describedby={`${script.id}-logs`} aria-labelledby={`${script.id}-title`} elevation={3}>
+      <Paper className="sticky -top-1 rounded-bl-none rounded-br-none p-2 shadow-none" elevation={4}>
         <Typography
           aria-label={script.name}
           className="flex items-center justify-between"
           component="div"
           id={`${script.id}-title`}
         >
-          <Typography
-            className={cx('flex items-center gap-2 overflow-x-hidden')}
-            variant="h6"
-          >
+          <Typography className={cx('flex items-center gap-2 overflow-x-hidden')} variant="h6">
             {isSuccess && <CheckCircleIcon className="text-green-500" />}
             {isFailed && <ErrorIcon className="text-red-300" />} {script.name}
           </Typography>
@@ -93,10 +83,7 @@ function LogsListItem({
         {logs.split('\n').map((log, i) => {
           /* eslint-disable react/no-array-index-key */
           return (
-            <span
-              className="select-text break-words text-justify font-mono text-xs"
-              key={i}
-            >
+            <span className="select-text break-words text-justify font-mono text-xs" key={i}>
               {log}
               <br />
             </span>
@@ -151,8 +138,7 @@ function OpenCompilationLogs() {
   const hasNoLogs = logs.length === 0
   const hasLogs = logs.length > 0
   const hasErrorsInLogs = logs.some(([log]) => isFailedScript(log))
-  const isAllScriptsSuccessInLogs =
-    hasLogs && logs.every(([log]) => isSuccessScript(log))
+  const isAllScriptsSuccessInLogs = hasLogs && logs.every(([log]) => isSuccessScript(log))
 
   return (
     <>
@@ -174,7 +160,7 @@ function OpenCompilationLogs() {
           key="snackbar-copy-logs"
           onClose={onCloseSnackbar}
           open={isCopySnackOpen}
-          sx={theme => ({
+          sx={(theme) => ({
             zIndex: theme.zIndex.modal + 1,
           })}
         >
@@ -194,19 +180,12 @@ function OpenCompilationLogs() {
           <DialogTitle className="grow" id="logs-title">
             {t('common.logs.title')}
           </DialogTitle>
-          <Button
-            className="mr-4"
-            disabled={hasNoLogs}
-            onClick={onClickClearLogs}
-          >
+          <Button className="mr-4" disabled={hasNoLogs} onClick={onClickClearLogs}>
             {t('common.clear')}
           </Button>
         </Toolbar>
         <DialogContent
-          className={cx(
-            'flex flex-col gap-4',
-            hasNoLogs && 'items-center justify-center',
-          )}
+          className={cx('flex flex-col gap-4', hasNoLogs && 'items-center justify-center')}
           dividers
           id="logs-content"
         >

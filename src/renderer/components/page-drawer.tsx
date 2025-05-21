@@ -9,16 +9,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import CodeIcon from '@mui/icons-material/Code'
 import LayersIcon from '@mui/icons-material/Layers'
 import SettingsIcon from '@mui/icons-material/Settings'
-import {
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material'
+import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import cx from 'classnames'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDrawer } from '../hooks/use-drawer'
 import { useTitlebarHeight } from '../hooks/use-titlebar-height'
@@ -53,7 +46,7 @@ function PageDrawer() {
     [t],
   )
 
-  const onDrawerExpandClick = () => setDrawerExpand(c => !c)
+  const onDrawerExpandClick = () => setDrawerExpand((c) => !c)
 
   return (
     <Drawer
@@ -64,23 +57,16 @@ function PageDrawer() {
         },
       }}
       classes={{
-        paper: cx(
-          'overflow-x-hidden transition-[width] ease-sharp duration-225',
-          isDrawerExpand ? 'w-48' : 'w-14',
-        ),
+        paper: cx('overflow-x-hidden transition-[width] ease-sharp duration-225', isDrawerExpand ? 'w-48' : 'w-14'),
       }}
       open={isDrawerExpand}
       variant="permanent"
     >
       <List>
-        {links.map(Link => {
+        {links.map((Link) => {
           return (
             <ListItem disablePadding key={Link.path}>
-              <ListItemButton
-                activeClassName="link-active"
-                component={ActiveLink}
-                to={Link.path}
-              >
+              <ListItemButton activeClassName="link-active" component={ActiveLink} to={Link.path}>
                 <ListItemIcon>
                   <Link.Icon />
                 </ListItemIcon>

@@ -18,7 +18,7 @@ type Checker = (store: WindowStore) => boolean
 function validatePosition(store: WindowStore): boolean {
   const { x, y } = store.store
 
-  if ((!is.null_(x) && !is.number(x)) || (!is.null_(y) && !is.number(y))) {
+  if ((!is.null(x) && !is.number(x)) || (!is.null(y) && !is.number(y))) {
     store.reset()
 
     return false
@@ -30,14 +30,14 @@ function validatePosition(store: WindowStore): boolean {
 function validateCurrentScreen(store: WindowStore, checkers: Checker[]) {
   const allScreens = screen.getAllDisplays()
 
-  if (checkers.some(checker => checker(store))) {
+  if (checkers.some((checker) => checker(store))) {
     const { x, y } = store.store
 
-    if (is.null_(x) || is.null_(y)) {
+    if (is.null(x) || is.null(y)) {
       return
     }
 
-    allScreens.forEach(monitor => {
+    allScreens.forEach((monitor) => {
       const { width, height } = monitor.size
 
       if (x > width || y > height) {

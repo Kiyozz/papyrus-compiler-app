@@ -1,2 +1,8 @@
 packages:
-  - 'packages/electron-ipc'
+  - packages/electron-ipc
+onlyBuiltDependencies:
+  - '@biomejs/biome'
+  - core-js-pure
+  - electron
+  - electron-winstaller
+  - esbuild

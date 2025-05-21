@@ -6,19 +6,21 @@
 
 import DownloadIcon from '@mui/icons-material/GetApp'
 import {
-  Button,
-  Snackbar,
-  Typography,
   Alert,
+  Button,
   Dialog,
-  DialogTitle,
-  DialogContent,
   DialogActions,
+  DialogContent,
+  DialogTitle,
   List,
   ListItem,
   ListItemText,
+  Snackbar,
+  Typography,
 } from '@mui/material'
-import React, { useState } from 'react'
+import type { SnackbarProps } from '@mui/material'
+import { type ComponentProps, type ReactNode, useState } from 'react'
+import type { ImgHTMLAttributes, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
 import { GITHUB_LINK } from '../../../common/constants'
@@ -27,81 +29,67 @@ import { Env } from '../../env'
 import { useApp } from '../../hooks/use-app'
 import { useInitialization } from '../../hooks/use-initialization'
 import Anchor from '../anchor'
-import type {
-  MouseEvent,
-  ReactNode,
-  PropsWithChildren,
-  ImgHTMLAttributes,
-} from 'react'
-import type { SnackbarProps } from '@mui/material'
 
 function Img({ src, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
-  const newSrc = src?.startsWith('docs')
-    ? `${GITHUB_LINK}/blob/master/${src}?raw=true`
-    : src
+  const newSrc = src?.startsWith('docs') ? `${GITHUB_LINK}/blob/master/${src}?raw=true` : src
 
-  return (
-    <img
-      alt={alt}
-      className="mt-2 max-w-full rounded"
-      src={newSrc}
-      {...props}
-    />
-  )
+  return <img alt={alt} className="mt-2 max-w-full rounded" src={newSrc} {...props} />
 }
 
-function HeadingOne({ children }: PropsWithChildren) {
+function HeadingOne({ children }: ComponentProps<'h1'>) {
   return (
     <Typography component="h1" gutterBottom variant="h3">
-      {children}
+      {/* ReactI18Next error */}
+      {children as ReactNode}
     </Typography>
   )
 }
 
-function HeadingTwo({ children }: PropsWithChildren) {
+function HeadingTwo({ children }: ComponentProps<'h2'>) {
   return (
     <Typography component="h2" gutterBottom variant="h4">
-      {children}
+      {/* ReactI18Next error */}
+      {children as ReactNode}
     </Typography>
   )
 }
 
-function HeadingThree({ children }: PropsWithChildren) {
+function HeadingThree({ children }: ComponentProps<'h3'>) {
   return (
     <Typography className="mt-2" component="h3" gutterBottom variant="h5">
-      {children}
+      {children as ReactNode}
     </Typography>
   )
 }
 
-function HeadingFive({ children }: PropsWithChildren) {
+function HeadingFive({ children }: ComponentProps<'h5'>) {
   return (
     <Typography component="h5" gutterBottom variant="h6">
-      {children}
+      {children as ReactNode}
     </Typography>
   )
 }
 
-function Paragraph({ children }: PropsWithChildren) {
-  return <Typography>{children}</Typography>
+function Paragraph({ children }: ComponentProps<'p'>) {
+  return <Typography>{children as ReactNode}</Typography>
 }
 
-function Code({ children }: { children: ReactNode[] }) {
+function Code({ children }: ComponentProps<'code'>) {
   return (
     <Typography className="markdown-code dark:bg-gray-800" component="code">
-      {children}
+      {children as ReactNode}
     </Typography>
   )
 }
 
-function UnorderedList({ children }: PropsWithChildren) {
-  return <List disablePadding>{children}</List>
+function UnorderedList({ children }: ComponentProps<'ul'>) {
+  return <List disablePadding>{children as ReactNode}</List>
 }
 
-function HtmlListItem({ children }: PropsWithChildren) {
+function HtmlListItem({ children }: ComponentProps<'li'>) {
   return (
     <ListItem disablePadding>
-      <ListItemText primary={children} />
+      <ListItemText primary={children as ReactNode} />
     </ListItem>
   )
 }
@@ -111,10 +99,7 @@ function DialogChangelog() {
   const {
     showChangelogs: [isShowChangelogs, setShowChangelogs],
     changelogs: [changelogs],
-    showLatestVersionAlert: [
-      isShowLatestVersionAlert,
-      setShowLastestVersionAlert,
-    ],
+    showLatestVersionAlert: [isShowLatestVersionAlert, setShowLastestVersionAlert],
   } = useApp()
   const { latestVersion } = useInitialization()
 
@@ -135,16 +120,13 @@ function DialogChangelog() {
     setShowChangelogs(false)
   }
 
-  const onCloseShowLatestVersionAlert: SnackbarProps['onClose'] = (
-    evt,
-    reason,
-  ) => {
+  const onCloseShowLatestVersionAlert: SnackbarProps['onClose'] = (_evt, reason) => {
     if (reason !== 'timeout') return
 
     setShowLastestVersionAlert(false)
   }
 
-  const onCloseNewVersionAlert: SnackbarProps['onClose'] = (evt, reason) => {
+  const onCloseNewVersionAlert: SnackbarProps['onClose'] = (_evt, reason) => {
     if (reason !== 'timeout') return
 
     setShowChangelogs(false)
@@ -152,22 +134,14 @@ function DialogChangelog() {
 
   return (
     <>
-      <Snackbar
-        autoHideDuration={3_000}
-        onClose={onCloseShowLatestVersionAlert}
-        open={isShowLatestVersionAlert}
-      >
+      <Snackbar autoHideDuration={3_000} onClose={onCloseShowLatestVersionAlert} open={isShowLatestVersionAlert}>
         <Alert severity="info">{t('changelog.alreadyLastVersion')}</Alert>
       </Snackbar>
 
       <Snackbar
         autoHideDuration={8_000}
         onClose={onCloseNewVersionAlert}
-        open={
-          isShowChangelogs &&
-          !isShowLatestVersionAlert &&
-          !isShowChangelogsDialoag
-        }
+        open={isShowChangelogs && !isShowLatestVersionAlert && !isShowChangelogsDialoag}
       >
         <Alert
           action={
@@ -177,9 +151,7 @@ function DialogChangelog() {
           }
           severity="info"
         >
-          <Typography>
-            {t('changelog.available.message', { version: latestVersion })}
-          </Typography>
+          <Typography>{t('changelog.available.message', { version: latestVersion })}</Typography>
         </Alert>
       </Snackbar>
 
@@ -190,9 +162,7 @@ function DialogChangelog() {
         onClose={onCloseChangelogsDialog}
         open={isShowChangelogsDialoag}
       >
-        <DialogTitle id="dialog-notes-title">
-          {t('changelog.changelogs')}
-        </DialogTitle>
+        <DialogTitle id="dialog-notes-title">{t('changelog.changelogs')}</DialogTitle>
         <DialogContent dividers id="dialog-notes-content">
           {changelogs && (
             <ReactMarkdown

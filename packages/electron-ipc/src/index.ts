@@ -6,36 +6,7 @@
 
 import { ipcMain } from 'electron'
 import type { IpcMainEvent } from 'electron'
-
-export interface Logger {
-  debug: (...args: unknown[]) => void
-  info: (...params: unknown[]) => void
-  error: (...params: unknown[]) => void
-  warn: (...params: unknown[]) => void
-}
-
-export type Disposable = () => void
-
-export interface EventHandler {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  listen: (args: any) => unknown | Promise<unknown>
-}
-
-export interface Event {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  on: (ipcEvent: IpcMainEvent, args: any) => void
-}
-
-export interface EventSync {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onSync: (ipcEvent: IpcMainEvent, args: any) => unknown
-}
-
-export interface IpcManagerOptions {
-  useLogging?: boolean
-  usePayloadLogging?: boolean
-  useErrorLogging?: boolean
-}
+import type { Disposable, Event, EventHandler, EventSync, IpcManagerOptions, Logger } from '../index.d.ts'
 
 export class IpcManager<
   EventMap extends string,
@@ -70,11 +41,7 @@ export class IpcManager<
             this.logger.info(`handler "${name}" succeeded`)
           }
 
-          if (
-            this.options.useLogging &&
-            this.options.usePayloadLogging &&
-            payload
-          ) {
+          if (this.options.useLogging && this.options.usePayloadLogging && payload) {
             this.logger.debug(`handler "${name}" payload`, payload)
           }
 
@@ -101,17 +68,14 @@ export class IpcManager<
   }
 
   registerEvents(events: Map<EventMap, AsyncEvent>): Disposable {
-    const evtFuncList: [
-      EventMap,
-      (evt: IpcMainEvent, args: unknown) => unknown,
-    ][] = []
+    const evtFuncList: [EventMap, (evt: IpcMainEvent, args: unknown) => unknown][] = []
 
     events.forEach((event, name) => {
       if (this.options.useLogging) {
         this.logger.info(`+event "${name}"`)
       }
 
-      const eventFunc: typeof evtFuncList[0][1] = (ipcEvent, args) => {
+      const eventFunc: (typeof evtFuncList)[0][1] = (ipcEvent, args) => {
         if (this.options.useLogging) {
           this.logger.debug(`event "${name}" started`)
         }
@@ -136,28 +100,21 @@ export class IpcManager<
   }
 
   registerSyncs(events: Map<EventMap, SyncEvent>): Disposable {
-    const evtFuncList: [
-      EventMap,
-      (evt: IpcMainEvent, args: unknown) => unknown,
-    ][] = []
+    const evtFuncList: [EventMap, (evt: IpcMainEvent, args: unknown) => unknown][] = []
 
     events.forEach((event, name) => {
       if (this.options.useLogging) {
         this.logger.info(`+sync event "${name}"`)
       }
 
-      const evtFunc: typeof evtFuncList[0][1] = (ipcEvent, args) => {
+      const evtFunc: (typeof evtFuncList)[0][1] = (ipcEvent, args) => {
         if (this.options.useLogging) {
           this.logger.debug(`sync event "${name}" started`)
         }
 
         const payload = event.onSync(ipcEvent, args)
 
-        if (
-          this.options.useLogging &&
-          this.options.usePayloadLogging &&
-          payload
-        ) {
+        if (this.options.useLogging && this.options.usePayloadLogging && payload) {
           this.logger.debug(`sync event "${name}" payload`, payload)
         }
 

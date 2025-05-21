@@ -6,20 +6,14 @@
 
 import FolderIcon from '@mui/icons-material/Folder'
 import FolderOpenIcon from '@mui/icons-material/FolderOpen'
-import {
-  FormControl,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-} from '@mui/material'
+import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material'
 import is from '@sindresorhus/is'
 import React, { useEffect, useState } from 'react'
+import type { ChangeEvent, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { DialogType } from '../../../common/types/dialog'
 import { bridge } from '../../bridge'
 import { useApp } from '../../hooks/use-app'
-import type { DialogType } from '../../../common/types/dialog'
-import type { ChangeEvent, ReactNode } from 'react'
 
 interface DialogTextFieldProps {
   id: string
@@ -31,15 +25,7 @@ interface DialogTextFieldProps {
   type: DialogType
 }
 
-function DialogTextField({
-  error = false,
-  id,
-  label,
-  defaultValue,
-  onChange,
-  type,
-  className,
-}: DialogTextFieldProps) {
+function DialogTextField({ error = false, id, label, defaultValue, onChange, type, className }: DialogTextFieldProps) {
   const { onRefreshConfig } = useApp()
   const { t } = useTranslation()
   const [value, setValue] = useState(defaultValue)
@@ -51,8 +37,8 @@ function DialogTextField({
     e.currentTarget.blur()
 
     try {
-      const result = await bridge.dialog.select(type).then(response => {
-        if (is.null_(response)) {
+      const result = await bridge.dialog.select(type).then((response) => {
+        if (is.null(response)) {
           return
         }
 
@@ -91,12 +77,7 @@ function DialogTextField({
   }
 
   return (
-    <FormControl
-      className={className}
-      error={error}
-      fullWidth
-      variant="outlined"
-    >
+    <FormControl className={className} error={error} fullWidth variant="outlined">
       <InputLabel className="flex items-center" htmlFor={id}>
         {label}
       </InputLabel>
@@ -111,12 +92,7 @@ function DialogTextField({
         size="small"
         startAdornment={
           <InputAdornment position="start">
-            <IconButton
-              edge="start"
-              onClick={onClickInput}
-              onMouseEnter={onMouseEnter}
-              onMouseLeave={onMouseLeave}
-            >
+            <IconButton edge="start" onClick={onClickInput} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
               {isHover ? <FolderOpenIcon /> : <FolderIcon />}
             </IconButton>
           </InputAdornment>

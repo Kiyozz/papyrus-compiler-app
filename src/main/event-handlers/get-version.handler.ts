@@ -5,10 +5,10 @@
  */
 
 import { app } from 'electron'
-import { is } from 'electron-util'
+import { isDev } from 'electron-util/main'
+import type { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 import { join, readFile } from '../path/path'
-import type { EventHandler } from '../interfaces/event-handler'
 
 export class GetVersionHandler implements EventHandler {
   private logger = new Logger('GetVersionHandler')
@@ -16,13 +16,11 @@ export class GetVersionHandler implements EventHandler {
   async listen(): Promise<string> {
     this.logger.debug('getting the app version')
 
-    if (is.development) {
+    if (isDev) {
       try {
-        const json = JSON.parse(
-          (
-            await readFile(join(process.env.PWD ?? '', 'package.json'))
-          ).toString(),
-        ) as { version: string }
+        const json = JSON.parse((await readFile(join(process.env.PWD ?? '', 'package.json'))).toString()) as {
+          version: string
+        }
 
         return json.version
       } catch {

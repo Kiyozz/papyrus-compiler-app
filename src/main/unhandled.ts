@@ -5,7 +5,7 @@
  */
 
 import { dialog } from 'electron'
-import { debugInfo } from 'electron-util'
+import { debugInfo } from 'electron-util/main'
 import { fromError } from '../common/from-error'
 import { Logger } from './logger'
 
@@ -14,7 +14,7 @@ const logger = new Logger('Unhandled')
 export function unhandled(onError: () => void): void {
   logger.catchErrors({
     showDialog: false,
-    onError(error: Error) {
+    onError({ error }) {
       const err = fromError(error)
 
       dialog.showErrorBox(

@@ -1,16 +1,8 @@
 {
-  "extends": "@vercel/style-guide/typescript.json",
-  "compilerOptions": {
-    "jsx": "react",
-    "target": "es2015",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "noImplicitReturns": true,
-    "isolatedModules": true,
-    "baseUrl": ".",
-    "paths": {
-      "@pca/electron-ipc": ["./packages/electron-ipc/src"]
-    }
-  }
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.renderer.json" },
+    { "path": "./tsconfig.main.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }

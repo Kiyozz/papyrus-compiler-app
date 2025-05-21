@@ -4,7 +4,6 @@
  * All rights reserved.
  */
 
-import React from 'react'
 import { Navigate, Route, Routes as RouterRoutes } from 'react-router-dom'
 import Compilation from './pages/compilation/compilation'
 import Groups from './pages/groups/groups'

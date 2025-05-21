@@ -15,8 +15,7 @@ export default defineConfig([
     splitting: false,
     bundle: false,
     minify: false,
-    dts: true,
-    target: 'node16',
+    target: 'node22',
     banner: {
       js: '// @pca/electron-ipc - MIT',
     },

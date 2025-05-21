@@ -6,7 +6,7 @@
 
 import is from '@sindresorhus/is'
 import { dialog } from 'electron'
-import { debugInfo } from 'electron-util'
+import { debugInfo } from 'electron-util/main'
 import { Logger } from '../logger'
 import type { EventHandler } from '../interfaces/event-handler'
 import type { Telemetry } from '../telemetry/telemetry'

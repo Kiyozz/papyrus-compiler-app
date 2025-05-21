@@ -5,11 +5,10 @@
  */
 
 import { ListItem, ListItemText, Paper } from '@mui/material'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import GroupsListItemMenu from './groups-list-item-menu'
-import type { Group } from '../../types'
 import type { MouseEvent, ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
+import type { Group } from '../../types'
+import GroupsListItemMenu from './groups-list-item-menu'
 
 interface GroupsListItemProps {
   onEdit: (group: Group) => (evt: MouseEvent<HTMLElement>) => void
@@ -18,12 +17,7 @@ interface GroupsListItemProps {
   moreDetails: boolean
 }
 
-function GroupsListItem({
-  group,
-  onDelete,
-  onEdit,
-  moreDetails,
-}: GroupsListItemProps) {
+function GroupsListItem({ group, onDelete, onEdit, moreDetails }: GroupsListItemProps) {
   const { t } = useTranslation()
 
   let secondaryText: ReactNode | undefined
@@ -32,7 +26,7 @@ function GroupsListItem({
     if (group.isEmpty) {
       secondaryText = t('page.groups.noScripts')
     } else {
-      secondaryText = group.scripts.map(s => s.name).join(', ')
+      secondaryText = group.scripts.map((s) => s.name).join(', ')
     }
   }
 
@@ -41,11 +35,7 @@ function GroupsListItem({
       className="py-4"
       component={Paper}
       secondaryAction={
-        <GroupsListItemMenu
-          id={`${group.name}-menu`}
-          onDelete={onDelete(group)}
-          onEdit={onEdit(group)}
-        />
+        <GroupsListItemMenu id={`${group.name}-menu`} onDelete={onDelete(group)} onEdit={onEdit(group)} />
       }
       variant="outlined"
     >

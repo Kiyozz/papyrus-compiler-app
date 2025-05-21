@@ -6,34 +6,24 @@
  * All rights reserved.
  */
 
-import * as fsSync from 'node:fs'
 import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
-import type { BuildOptions, PluginBuild } from 'esbuild'
+import type { BuildOptions } from 'esbuild'
 
-const versionPath = path.resolve('release-version.json')
+const releaseVersionPath = path.resolve('release-version.json')
 const mainPath = path.resolve('src/main')
-const distMainPath = path.resolve('dist/main')
-const distBrowserWindows = path.join(distMainPath, 'browser-windows')
-const { version } = JSON.parse(
-  fsSync.readFileSync(versionPath).toString('utf-8'),
-) as { version: string }
 
-const files = [
-  {
-    from: path.resolve(mainPath, 'browser-windows/starting.html'),
-    to: path.join(distBrowserWindows, 'starting.html'),
-  },
-]
+const releaseVersion = JSON.parse(await fs.readFile(releaseVersionPath, 'utf-8')) as {
+  version: string
+}
 
-const config: BuildOptions = {
+const main: BuildOptions = {
   platform: 'node',
   entryPoints: [
     path.resolve(mainPath, 'main.ts'),
-    path.resolve(mainPath, 'preload.ts'),
   ],
   bundle: true,
-  target: 'node16.13.0',
+  target: 'node22',
   define: {
     'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`,
     'process.env.ELECTRON_WEBPACK_APP_MOD_URL': `'${
@@ -49,36 +39,21 @@ const config: BuildOptions = {
     'process.env.ELECTRON_TELEMETRY_FEATURE': `'${
       process.env.ELECTRON_TELEMETRY_FEATURE ?? 'false'
     }'`,
-    'process.env.RELEASE_VERSION': `'${version}'`,
+    'process.env.RELEASE_VERSION': `'${releaseVersion.version}'`,
   },
-  plugins: [
-    {
-      name: 'copy-plugin',
-      setup(build: PluginBuild): void {
-        build.onEnd(async () => {
-          if (!fsSync.existsSync(distBrowserWindows)) {
-            await fs.mkdir(path.join(distMainPath, 'browser-windows'), {
-              recursive: true,
-            })
-          }
+}
 
-          await Promise.all(
-            files.map(async file => {
-              const from = await fs.readFile(file.from)
-
-              try {
-                await fs.writeFile(file.to, from)
-              } catch (e) {
-                console.error(e)
-                process.exit(1)
-              }
-            }),
-          )
-        })
-      },
-    },
-  ],
+const preload: BuildOptions = {
+  platform: 'node',
+  entryPoints: [path.resolve(mainPath, 'preload.ts')],
+  bundle: true,
+  format: 'esm',
+  target: 'node22', // electron version target
+  // it is important to use .mjs extension for preload script because of how electron load preload script
+  outExtension: {
+    '.js': '.mjs',
+  }
 }
 
 // eslint-disable-next-line import/no-default-export
-export default config
+export default [main, preload]

@@ -5,17 +5,10 @@
  */
 
 import CreateIcon from '@mui/icons-material/Create'
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  List,
-  Toolbar,
-  Typography,
-} from '@mui/material'
+import { Button, Checkbox, FormControlLabel, FormGroup, List, Toolbar, Typography } from '@mui/material'
 import cx from 'classnames'
-import React, { useState } from 'react'
+import { useState } from 'react'
+import type { ChangeEvent, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import useLocalStorage from 'react-use-localstorage'
 import { TelemetryEvent } from '../../../common/telemetry-event'
@@ -26,19 +19,15 @@ import { LocalStorage } from '../../enums/local-storage.enum'
 import { useApp } from '../../hooks/use-app'
 import { useGroups } from '../../hooks/use-groups'
 import { useTelemetry } from '../../hooks/use-telemetry'
-import GroupsListItem from './groups-list-item'
 import type { Group } from '../../types'
-import type { MouseEvent, ChangeEvent } from 'react'
+import GroupsListItem from './groups-list-item'
 
 function Groups() {
   const { send } = useTelemetry()
   const { t } = useTranslation()
   const { groups } = useApp()
   const { add, edit, remove } = useGroups()
-  const [isMoreDetails, setMoreDetails] = useLocalStorage(
-    LocalStorage.groupMoreDetails,
-    'false',
-  )
+  const [isMoreDetails, setMoreDetails] = useLocalStorage(LocalStorage.groupMoreDetails, 'false')
 
   const [isDialogOpen, setDialogOpen] = useState(false)
   const [editingGroup, setEditingGroup] = useState<Group | undefined>()
@@ -109,12 +98,7 @@ function Groups() {
           <Toolbar className="p-0">
             <FormGroup className="ml-auto">
               <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isMoreDetails === 'true'}
-                    onChange={onChangeMoreDetails}
-                  />
-                }
+                control={<Checkbox checked={isMoreDetails === 'true'} onChange={onChangeMoreDetails} />}
                 label={t<string>('common.moreDetails')}
               />
             </FormGroup>
@@ -123,7 +107,7 @@ function Groups() {
 
         {groups.length > 0 ? (
           <List className="flex flex-col gap-2">
-            {groups.map(group => (
+            {groups.map((group) => (
               <GroupsListItem
                 group={group}
                 key={group.name}
@@ -138,9 +122,7 @@ function Groups() {
             <Typography gutterBottom variant="h6">
               {t('page.groups.createGroupText')}
             </Typography>
-            <Typography variant="body2">
-              {t('page.groups.whatIsAGroup')}
-            </Typography>
+            <Typography variant="body2">{t('page.groups.whatIsAGroup')}</Typography>
           </div>
         )}
       </Page>

@@ -5,7 +5,7 @@
  */
 
 import { Button } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useApp } from '../../hooks/use-app'
 
@@ -38,13 +38,7 @@ function TutorialTelemetry() {
           <div className="mt-6 text-sm" />
         </Trans>
       </div>
-      <Button
-        className="mt-8"
-        color="primary"
-        disabled={isWaiting}
-        onClick={onClickOk}
-        variant="contained"
-      >
+      <Button className="mt-8" color="primary" disabled={isWaiting} onClick={onClickOk} variant="contained">
         {t('tutorials.telemetry.close')}
       </Button>
     </div>

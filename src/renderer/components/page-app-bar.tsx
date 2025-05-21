@@ -5,7 +5,6 @@
  */
 
 import { AppBar, Toolbar, Typography } from '@mui/material'
-import React from 'react'
 import type { PropsWithChildren, ReactNode } from 'react'
 
 interface PageAppBarProps {

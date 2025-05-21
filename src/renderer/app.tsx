@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { TelemetryEvent } from '../common/telemetry-event'
@@ -56,9 +56,7 @@ function App() {
           {done && (
             <>
               {tutorials.settings && <TutorialSettings />}
-              {tutorials.telemetry && !tutorials.settings && (
-                <TutorialTelemetry />
-              )}
+              {tutorials.telemetry && !tutorials.settings && <TutorialTelemetry />}
               <Routes />
             </>
           )}

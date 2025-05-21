@@ -7,7 +7,6 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import ErrorIcon from '@mui/icons-material/Error'
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty'
-import React from 'react'
 import { ScriptStatus } from '../../enums/script-status.enum'
 import type { ScriptRenderer } from '../../types'
 

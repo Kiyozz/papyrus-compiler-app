@@ -5,10 +5,8 @@
  */
 
 import { contextBridge, shell } from 'electron'
-import { fromError } from '../common/from-error'
-import { ipcRenderer } from './ipc'
-import { IpcEvent } from './ipc-event'
 import type { IpcRendererEvent } from 'electron'
+import { fromError } from '../common/from-error'
 import type { BadError } from '../common/types/bad-error'
 import type { Bridge } from '../common/types/bridge'
 import type { CompilationResult } from '../common/types/compilation-result'
@@ -16,6 +14,8 @@ import type { Config } from '../common/types/config'
 import type { Disposable } from '../common/types/disposable'
 import type { Script } from '../common/types/script'
 import type { WindowState } from '../common/types/window-state'
+import { ipcRenderer } from './ipc'
+import { IpcEvent } from './ipc-event'
 
 const api: Bridge = {
   telemetry: {
@@ -25,27 +25,23 @@ const api: Bridge = {
           name: event,
           properties: args,
         })
-        .catch(e => {
+        .catch((e) => {
           const err = fromError(e)
 
-          console.error(
-            "can't send telemetry event to main process",
-            err.message,
-          )
+          console.error("can't send telemetry event to main process", err.message)
         })
     },
-    setActive: active =>
-      ipcRenderer.invoke(IpcEvent.telemetrySetActive, active),
+    setActive: (active) => ipcRenderer.invoke(IpcEvent.telemetrySetActive, active),
   },
   getVersion: () => ipcRenderer.invoke<string>(IpcEvent.getVersion),
   changelog: {
-    on: fn => ipcRenderer.on(IpcEvent.checkForUpdates, fn),
-    off: fn => ipcRenderer.removeListener(IpcEvent.checkForUpdates, fn),
+    on: (fn) => ipcRenderer.on(IpcEvent.checkForUpdates, fn),
+    off: (fn) => ipcRenderer.removeListener(IpcEvent.checkForUpdates, fn),
   },
-  error: err => ipcRenderer.invoke(IpcEvent.appError, err),
-  online: online => ipcRenderer.send(IpcEvent.online, { online }),
+  error: (err) => ipcRenderer.invoke(IpcEvent.appError, err),
+  online: (online) => ipcRenderer.send(IpcEvent.online, { online }),
   clipboard: {
-    copy: text => ipcRenderer.invoke(IpcEvent.clipboardCopy, { text }),
+    copy: (text) => ipcRenderer.invoke(IpcEvent.clipboardCopy, { text }),
   },
   config: {
     update: (partialConfig, override) => {
@@ -55,7 +51,7 @@ const api: Bridge = {
       })
     },
     get: () => ipcRenderer.invoke<Config>(IpcEvent.configGet),
-    onReset: cb => {
+    onReset: (cb) => {
       ipcRenderer.on(IpcEvent.configReset, cb)
 
       return {
@@ -64,38 +60,34 @@ const api: Bridge = {
         },
       }
     },
-    check: checkMo2 =>
-      ipcRenderer.invoke<BadError>(IpcEvent.configCheck, { checkMo2 }),
+    check: (checkMo2) => ipcRenderer.invoke<BadError>(IpcEvent.configCheck, { checkMo2 }),
   },
   isProduction: () => ipcRenderer.invoke<boolean>(IpcEvent.isProduction),
   compilation: {
-    start: script => ipcRenderer.send(IpcEvent.compileScriptStart, script),
+    start: (script) => ipcRenderer.send(IpcEvent.compileScriptStart, script),
     onceFinish: (script, listener) => {
-      return ipcRenderer.once<CompilationResult>(
-        `${IpcEvent.compileScriptFinish}-${script}`,
-        listener,
-      )
+      return ipcRenderer.once<CompilationResult>(`${IpcEvent.compileScriptFinish}-${script}`, listener)
     },
   },
   dialog: {
-    select: type => {
+    select: (type) => {
       return ipcRenderer.invoke<string | null>(IpcEvent.openDialog, {
         type,
       })
     },
   },
   shell: {
-    openExternal: href => shell.openExternal(href),
+    openExternal: (href) => shell.openExternal(href),
   },
   recentFiles: {
     get: () => ipcRenderer.invoke<Script[]>(IpcEvent.recentFilesGet),
-    set: scripts => {
+    set: (scripts) => {
       return ipcRenderer.invoke<Script[]>(IpcEvent.recentFilesSet, scripts)
     },
     clear: () => ipcRenderer.invoke(IpcEvent.recentFilesClear),
-    remove: script => ipcRenderer.invoke(IpcEvent.recentFileRemove, script),
+    remove: (script) => ipcRenderer.invoke(IpcEvent.recentFileRemove, script),
     select: {
-      onAll: cb => {
+      onAll: (cb) => {
         ipcRenderer.on(IpcEvent.recentFilesSelectAll, cb)
 
         return {
@@ -104,7 +96,7 @@ const api: Bridge = {
           },
         }
       },
-      onNone: cb => {
+      onNone: (cb) => {
         ipcRenderer.on(IpcEvent.recentFilesSelectNone, cb)
 
         return {
@@ -113,7 +105,7 @@ const api: Bridge = {
           },
         }
       },
-      onInvertSelection: cb => {
+      onInvertSelection: (cb) => {
         ipcRenderer.on(IpcEvent.recentFilesInvertSelection, cb)
 
         return {
@@ -122,7 +114,7 @@ const api: Bridge = {
           },
         }
       },
-      onClear: cb => {
+      onClear: (cb) => {
         ipcRenderer.on(IpcEvent.recentFilesOnClear, cb)
 
         return {
@@ -138,7 +130,7 @@ const api: Bridge = {
     },
   },
   titlebar: {
-    openMenu: args => ipcRenderer.invoke(IpcEvent.openMenu, args),
+    openMenu: (args) => ipcRenderer.invoke(IpcEvent.openMenu, args),
   },
   os: {
     platform: () => ipcRenderer.sendSync(IpcEvent.platform),
@@ -149,7 +141,7 @@ const api: Bridge = {
     maximize: () => ipcRenderer.invoke(IpcEvent.windowMaximize),
     restore: () => ipcRenderer.invoke(IpcEvent.windowRestore),
     onStateChange: (cb: (state: WindowState) => void): Disposable => {
-      const handler = (e: IpcRendererEvent, args: WindowState) => {
+      const handler = (_e: IpcRendererEvent, args: WindowState) => {
         cb(args)
       }
 

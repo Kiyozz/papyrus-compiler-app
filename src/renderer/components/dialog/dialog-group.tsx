@@ -22,16 +22,16 @@ import {
 } from '@mui/material'
 import is from '@sindresorhus/is'
 import cx from 'classnames'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import type { ChangeEvent, FormEvent, KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TelemetryEvent } from '../../../common/telemetry-event'
+import type { Script } from '../../../common/types/script'
 import { useDrop, useSetDrop } from '../../hooks/use-drop'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import { Group } from '../../types'
 import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
 import { uniqScripts } from '../../utils/scripts/uniq-scripts'
-import type { Script } from '../../../common/types/script'
-import type { ChangeEvent, KeyboardEvent, FormEvent } from 'react'
 
 interface DialogGroupProps {
   onGroupAdd: (group: Group) => void
@@ -41,13 +41,7 @@ interface DialogGroupProps {
   open: boolean
 }
 
-function DialogGroup({
-  onGroupAdd,
-  onGroupEdit,
-  open: isOpen,
-  onClose,
-  group,
-}: DialogGroupProps) {
+function DialogGroup({ onGroupAdd, onGroupEdit, open: isOpen, onClose, group }: DialogGroupProps) {
   const { t } = useTranslation()
   const [name, setName] = useState('')
   const [scripts, setScripts] = useState<Script[]>([])
@@ -101,9 +95,7 @@ function DialogGroup({
 
   const onClickRemoveScriptFromGroup = (script: Script) => {
     return () => {
-      setScripts(s =>
-        s.filter(scriptFromList => scriptFromList.name !== script.name),
-      )
+      setScripts((s) => s.filter((scriptFromList) => scriptFromList.name !== script.name))
     }
   }
 
@@ -120,7 +112,7 @@ function DialogGroup({
       const pscScripts = pscFilesToScript(pscFiles)
 
       send(TelemetryEvent.groupDropScripts, { scripts: pscScripts.length })
-      setScripts(s => uniqScripts([...s, ...pscScripts]))
+      setScripts((s) => uniqScripts([...s, ...pscScripts]))
     },
     [send],
   )
@@ -150,16 +142,13 @@ function DialogGroup({
           />
         </DialogTitle>
         <DialogContent
-          className={cx(
-            'px-0',
-            scripts.length === 0 && 'flex items-center justify-center',
-          )}
+          className={cx('px-0', scripts.length === 0 && 'flex items-center justify-center')}
           dividers
           id="group-content"
         >
           {scripts.length > 0 ? (
             <List className="overflow-x-hidden" disablePadding>
-              {scripts.map(script => (
+              {scripts.map((script) => (
                 <ListItem
                   disablePadding
                   key={script.name}
@@ -173,20 +162,14 @@ function DialogGroup({
                     </IconButton>
                   }
                 >
-                  <ListItemButton
-                    className="cursor-default"
-                    disableRipple
-                    role="listitem"
-                  >
+                  <ListItemButton className="cursor-default" disableRipple role="listitem">
                     <ListItemText primary={script.name} />
                   </ListItemButton>
                 </ListItem>
               ))}
             </List>
           ) : (
-            <DialogContentText className="py-12">
-              {t('page.groups.dialog.dropScripts')}
-            </DialogContentText>
+            <DialogContentText className="py-12">{t('page.groups.dialog.dropScripts')}</DialogContentText>
           )}
         </DialogContent>
         <DialogActions>
@@ -201,9 +184,7 @@ function DialogGroup({
           </Button>
           <Button onClick={onClose}>{t('common.cancel')}</Button>
           <Button aria-disabled={!isValid} disabled={!isValid} type="submit">
-            {isEdit
-              ? t('page.groups.actions.edit')
-              : t('page.groups.actions.create')}
+            {isEdit ? t('page.groups.actions.edit') : t('page.groups.actions.create')}
           </Button>
         </DialogActions>
       </form>

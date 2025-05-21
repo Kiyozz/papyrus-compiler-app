@@ -5,17 +5,10 @@
  */
 
 import log from 'electron-log'
-import { is } from 'electron-util'
+import type { ErrorHandler, ErrorHandlerOptions, LogFile, LogFunctions, MainTransports } from 'electron-log'
+import { isDev } from 'electron-util/main'
 import { cliArgs } from './cli-args'
-import type {
-  LogFile,
-  LogFunctions,
-  Transports,
-  CatchErrorsOptions,
-  CatchErrorsResult,
-} from 'electron-log'
 
-const isDev = is.development
 const isDebug = cliArgs.debug ?? false
 
 if (!isDev && !isDebug) {
@@ -29,7 +22,7 @@ export class Logger {
     this.logger = log.scope(namespace)
   }
 
-  get transports(): Transports {
+  get transports(): MainTransports {
     return log.transports
   }
 
@@ -41,7 +34,7 @@ export class Logger {
     return this.file.path.replace('.log', '.1.log')
   }
 
-  catchErrors(options?: CatchErrorsOptions): CatchErrorsResult {
+  catchErrors(options?: ErrorHandlerOptions): ErrorHandler {
     return log.catchErrors(options)
   }
 
@@ -65,6 +58,6 @@ export class Logger {
   }
 
   isDebugEnabled(): boolean {
-    return is.development || isDebug
+    return isDev || isDebug
   }
 }

@@ -6,11 +6,11 @@
 
 import is from '@sindresorhus/is'
 import fetch, { Headers } from 'electron-fetch'
-import createQueue from 'queue'
-import { TelemetryEvent } from '../../common/telemetry-event'
-import { Logger } from '../logger'
-import type { TelemetryEventProperties } from '../../common/telemetry-event'
 import type { Response } from 'electron-fetch'
+import Queue from 'queue'
+import { TelemetryEvent } from '../../common/telemetry-event'
+import type { TelemetryEventProperties } from '../../common/telemetry-event'
+import { Logger } from '../logger'
 
 interface Params<E extends TelemetryEvent> {
   name: E
@@ -19,7 +19,7 @@ interface Params<E extends TelemetryEvent> {
 
 export class Telemetry {
   private readonly _logger: Logger
-  private readonly _telemetryQueue = createQueue({
+  private readonly _telemetryQueue = new Queue({
     concurrency: 3,
     autostart: true,
   })
@@ -32,25 +32,14 @@ export class Telemetry {
   ) {
     this._logger = new Logger('Telemetry')
 
-    if (
-      !is.string(api) ||
-      !is.string(appKey) ||
-      is.emptyString(api) ||
-      is.emptyString(appKey)
-    ) {
+    if (!is.string(api) || !is.string(appKey) || is.emptyString(api) || is.emptyString(appKey)) {
       this._logger.debug('no configuration provided. Telemetry is disabled.')
       this.isActive = false
     }
   }
 
-  event<E extends TelemetryEvent>({
-    name,
-    properties,
-  }: Params<E>): Promise<void> {
-    return this.sendRequest(
-      { endpoint: '/events', method: 'POST' },
-      { type: name, properties, appKey: this.appKey },
-    )
+  event<E extends TelemetryEvent>({ name, properties }: Params<E>): Promise<void> {
+    return this.sendRequest({ endpoint: '/events', method: 'POST' }, { type: name, properties, appKey: this.appKey })
   }
 
   exception({
@@ -101,18 +90,12 @@ export class Telemetry {
           })
 
           if (!response.ok) {
-            this._logger.debug(
-              "can't send telemetry data",
-              await Telemetry._getData(response),
-            )
+            this._logger.debug("can't send telemetry data", await Telemetry._getData(response))
           }
 
           resolve()
         } catch (error) {
-          this._logger.debug(
-            "can't send telemetry data",
-            error instanceof Error ? error.message : error,
-          )
+          this._logger.debug("can't send telemetry data", error instanceof Error ? error.message : error)
           this._logger.info(
             'disabling telemetry for this session because api is either unreachable or an error has occurred',
           )
@@ -129,8 +112,6 @@ export class Telemetry {
   }
 
   private static _getData(response: Response): Promise<string | unknown> {
-    return response.headers.get('Content-Type')?.includes('json')
-      ? response.json()
-      : response.text()
+    return response.headers.get('Content-Type')?.includes('json') ? response.json() : response.text()
   }
 }

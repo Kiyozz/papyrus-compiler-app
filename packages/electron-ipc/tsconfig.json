@@ -1,11 +1,4 @@
 {
-  "extends": "@vercel/style-guide/typescript.json",
-  "compilerOptions": {
-    "target": "es2015",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "noImplicitReturns": true,
-    "isolatedModules": true
-  }
+  "files": [],
+  "references": [{ "path": "./tsconfig.main.json" }]
 }

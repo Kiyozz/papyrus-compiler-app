@@ -6,18 +6,11 @@
 
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import PlayCircleIcon from '@mui/icons-material/PlayCircle'
-import {
-  IconButton,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Paper,
-} from '@mui/material'
-import React from 'react'
+import { IconButton, ListItem, ListItemIcon, ListItemText, Paper } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import type { ScriptRenderer } from '../../types'
 import { iconFromStatus } from '../../utils/scripts/from-status'
 import { isRunningScript } from '../../utils/scripts/status'
-import type { ScriptRenderer } from '../../types'
 
 interface ScriptLineProps {
   script: ScriptRenderer
@@ -25,11 +18,7 @@ interface ScriptLineProps {
   onClickPlayCompilation: (script: ScriptRenderer) => void
 }
 
-function ScriptLine({
-  script,
-  onClickRemoveScript,
-  onClickPlayCompilation,
-}: ScriptLineProps) {
+function ScriptLine({ script, onClickRemoveScript, onClickPlayCompilation }: ScriptLineProps) {
   const { t } = useTranslation()
 
   const onClickRemove = () => {
@@ -65,12 +54,7 @@ function ScriptLine({
       variant="outlined"
     >
       <ListItemIcon>
-        <IconButton
-          disabled={isRunningScript(script)}
-          edge="end"
-          onClick={onClickPlay}
-          size="small"
-        >
+        <IconButton disabled={isRunningScript(script)} edge="end" onClick={onClickPlay} size="small">
           <PlayCircleIcon className="text-primary-400" />
         </IconButton>
       </ListItemIcon>

@@ -4,13 +4,7 @@
  * All rights reserved.
  */
 
-import {
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material'
-import React from 'react'
+import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import type { ListItemButtonProps } from '@mui/material'
 import type { ReactNode } from 'react'
 
@@ -25,10 +19,7 @@ function DrawerButton({ icon, text, onClick }: DrawerButtonProps) {
     <ListItem aria-label={text} disablePadding>
       <ListItemButton onClick={onClick}>
         <ListItemIcon>{icon}</ListItemIcon>
-        <ListItemText
-          primary={text}
-          primaryTypographyProps={{ noWrap: true }}
-        />
+        <ListItemText primary={text} primaryTypographyProps={{ noWrap: true }} />
       </ListItemButton>
     </ListItem>
   )

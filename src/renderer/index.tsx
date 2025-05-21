@@ -5,7 +5,6 @@
  */
 
 import debounce from 'debounce-fn'
-import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { fromError } from '../common/from-error'
 import App from './app'
@@ -94,13 +93,13 @@ async function start() {
       { wait: 200 },
     )
 
-    window.addEventListener('error', event => {
+    window.addEventListener('error', (event) => {
       event.preventDefault()
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       handle(event.error || event)
     })
 
-    window.addEventListener('unhandledrejection', event => {
+    window.addEventListener('unhandledrejection', (event) => {
       event.preventDefault()
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       handle(event.reason || event)

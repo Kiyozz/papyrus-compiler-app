@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import type { PropsWithChildren } from 'react'
 
 const Context = createContext<boolean>(true)

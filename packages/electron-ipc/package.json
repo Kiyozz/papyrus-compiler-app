@@ -2,16 +2,12 @@
   "name": "@pca/electron-ipc",
   "version": "1.0.0",
   "description": "Electron IPC Framework",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
   "type": "module",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "node": "./dist/index.cjs",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "default": "./dist/index.js"
+      "types": "./index.d.ts",
+      "default": "./dist/index.cjs"
     }
   },
   "scripts": {
@@ -22,11 +18,7 @@
     "type": "git",
     "url": "git+https://github.com/Kiyozz/papyrus-compiler-app.git"
   },
-  "keywords": [
-    "electron",
-    "ipc",
-    "framework"
-  ],
+  "keywords": ["electron", "ipc", "framework"],
   "author": "Kiyozz",
   "license": "MIT",
   "bugs": {
@@ -35,10 +27,12 @@
   "homepage": "https://github.com/Kiyozz/papyrus-compiler-app#readme",
   "sideEffects": false,
   "devDependencies": {
-    "electron": "^18.1.0",
-    "tsup": "^5.12.6"
+    "@microsoft/api-extractor": "^7.52.8",
+    "electron": "^36.2.1",
+    "tsup": "^8.5.0",
+    "typescript": "~5.8.3"
   },
   "peerDependencies": {
-    "electron": ">= 12"
+    "electron": ">=36"
   }
 }

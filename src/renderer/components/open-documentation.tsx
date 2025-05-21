@@ -16,12 +16,12 @@ import {
   FormGroup,
   Typography,
 } from '@mui/material'
-import React, { useState } from 'react'
+import { useState } from 'react'
+import type { KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDocumentation } from '../hooks/use-documentation'
 import { useShowOpenDocumentationDialog } from '../hooks/use-show-open-documentation-dialog'
 import DrawerButton from './drawer-button'
-import type { KeyboardEvent } from 'react'
 
 function OpenDocumentation() {
   const [isShowDialog, toggleShowDialog] = useShowOpenDocumentationDialog()
@@ -63,11 +63,7 @@ function OpenDocumentation() {
 
   return (
     <>
-      <DrawerButton
-        icon={<HelpIcon />}
-        onClick={onClickGoToDocumentation}
-        text={t('nav.help.text')}
-      />
+      <DrawerButton icon={<HelpIcon />} onClick={onClickGoToDocumentation} text={t('nav.help.text')} />
 
       <Dialog
         aria-describedby="open-doc-content"
@@ -96,9 +92,7 @@ function OpenDocumentation() {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClickCancel}>{t('common.no')}</Button>
-          <Button onClick={onClickConfirmGoToDocumentation}>
-            {t('common.yes')}
-          </Button>
+          <Button onClick={onClickConfirmGoToDocumentation}>{t('common.yes')}</Button>
         </DialogActions>
       </Dialog>
     </>
