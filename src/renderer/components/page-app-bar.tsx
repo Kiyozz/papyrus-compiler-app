@@ -4,7 +4,6 @@
  * All rights reserved.
  */
 
-import { AppBar, Toolbar, Typography } from '@mui/material'
 import type { PropsWithChildren, ReactNode } from 'react'
 
 interface PageAppBarProps {
@@ -14,14 +13,12 @@ interface PageAppBarProps {
 
 function PageAppBar({ title, children }: PropsWithChildren<PageAppBarProps>) {
   return (
-    <AppBar aria-label={title}>
-      <Toolbar className="pr-6 pl-4" disableGutters>
-        <Typography className="grow font-nova" fontWeight="bold" variant="h4">
-          {title}
-        </Typography>
+    <div aria-label={title} className="pl-40">
+      <div className="pr-6 pl-4">
+        <h4>{title}</h4>
         {children}
-      </Toolbar>
-    </AppBar>
+      </div>
+    </div>
   )
 }
 

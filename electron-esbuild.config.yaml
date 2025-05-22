@@ -7,7 +7,7 @@ mainConfig:
     filename: main.js
 rendererConfig:
   type: vite
-  path: src/renderer/vite.config.ts
+  path: src/renderer/vite.config.mts
   src: src/renderer/index.tsx
   output:
     dir: dist/renderer

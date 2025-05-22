@@ -4,17 +4,16 @@
  * All rights reserved.
  */
 
-import { Paper, Typography } from '@mui/material'
 import is from '@sindresorhus/is'
 import cx from 'classnames'
 import type { PropsWithChildren, ReactNode } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.tsx'
 
 interface SettingsSectionProps {
   title: ReactNode
   className?: string
   titleId?: string
   id?: string
-  gutterTop?: boolean
   'aria-label'?: string
 }
 
@@ -22,24 +21,21 @@ function SettingsSection({
   title,
   className,
   id,
-  gutterTop = true,
   'aria-label': ariaLabel,
   titleId,
   children,
 }: PropsWithChildren<SettingsSectionProps>) {
   return (
-    <Paper
+    <Card
       aria-label={is.string(title) ? title : ariaLabel}
-      className={cx('relative p-4 transition-none', gutterTop && 'mt-4', className)}
+      className={cx('relative p-4 transition-none', className)}
       id={id}
-      variant="outlined"
     >
-      <Typography className="dark:text-white" component="h3" fontWeight="bold" gutterBottom id={titleId} variant="h5">
-        {title}
-      </Typography>
-
-      {children}
-    </Paper>
+      <CardHeader>
+        <CardTitle id={titleId}>{title}</CardTitle>
+      </CardHeader>
+      <CardContent>{children}</CardContent>
+    </Card>
   )
 }
 

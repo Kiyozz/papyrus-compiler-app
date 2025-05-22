@@ -1,0 +1,120 @@
+/*
+ * Copyright (c) 2022 Kiyozz~WK~WushuLate.
+ *
+ * All rights reserved.
+ */
+
+import { useTranslation } from 'react-i18next'
+import { GameType, toCompilerSourceFile, toExecutable } from '../../../common/game'
+import DialogTextField from '@/components/dialog/dialog-text-field.tsx'
+import { useApp } from '@/hooks/use-app.tsx'
+import SettingsSection from './settings-section.tsx'
+import { useSettings } from './use-settings.tsx'
+import { InfoIcon, TriangleAlertIcon } from 'lucide-react'
+import { TooltipContent, TooltipProvider, Tooltip, TooltipTrigger } from '@/components/ui/tooltip.tsx'
+import { FormItem, FormControl, FormField, FormLabel, FormMessage } from '@/components/ui/form.tsx'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.tsx'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert.tsx'
+
+function SettingsGameSection() {
+  const { t } = useTranslation()
+  const {
+    config: { game, compilation },
+  } = useApp()
+  const { configError } = useSettings()
+  const exe = toExecutable(game.type)
+
+  return (
+    <SettingsSection
+      title={t('page.settings.game')}
+      className="[&_[data-slot=card-content]]:flex [&_[data-slot=card-content]]:flex-col [&_[data-slot=card-content]]:gap-2"
+    >
+      <div className="flex flex-col gap-2" id="settings-game">
+        <FormField
+          name="game"
+          render={({ field }) => (
+            <FormItem className="flex flex-col gap-3">
+              <FormLabel>Select your game</FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your game" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={GameType.se}>{GameType.se}</SelectItem>
+                    <SelectItem value={GameType.le}>{GameType.le}</SelectItem>
+                    <SelectItem value={GameType.vr}>{GameType.vr}</SelectItem>
+                    <SelectItem value={GameType.fo4}>{GameType.fo4}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <DialogTextField
+          name="gamePath"
+          label={
+            <>
+              <span>{t('page.settings.gameFolderInfo')}</span>
+              <TooltipProvider>
+                <Tooltip delayDuration={150}>
+                  <TooltipTrigger className="flex items-center">
+                    <InfoIcon className="size-4" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-sm text-balance">
+                    {t<string>('page.settings.gameFolderTooltip', { exe })}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </>
+          }
+          type="folder"
+        />
+      </div>
+
+      <div className="relative" id="settings-compiler">
+        <DialogTextField
+          name="compilerPath"
+          label={
+            <>
+              <span>{t('page.settings.compilerPath')}</span>
+              <TooltipProvider>
+                <Tooltip delayDuration={150}>
+                  <TooltipTrigger className="flex items-center">
+                    <InfoIcon className="size-4" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-sm text-balance">
+                    {t('page.settings.compilerPathTooltip')}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </>
+          }
+          type="file"
+        />
+      </div>
+
+      {configError !== false && configError !== 'mo2-instance' && configError !== 'mo2-instance-mods' && (
+        <Alert variant="destructive">
+          <TriangleAlertIcon className="size-4" />
+          <AlertTitle>{t('page.settings.errors.installationInvalid')}</AlertTitle>
+          <AlertDescription>
+            {configError === 'game' && t('page.settings.errors.game', { exe })}
+            {configError === 'compiler' &&
+              t('page.settings.errors.compiler', {
+                compilerExe: compilation.compilerPath,
+              })}
+            {configError === 'scripts' &&
+              t('page.settings.errors.scripts', {
+                file: toCompilerSourceFile(game.type),
+              })}
+          </AlertDescription>
+        </Alert>
+      )}
+    </SettingsSection>
+  )
+}
+
+export default SettingsGameSection

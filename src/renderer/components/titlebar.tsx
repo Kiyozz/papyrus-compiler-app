@@ -68,10 +68,7 @@ function Titlebar({ title }: TitlebarProps) {
       data-height={titlebarHeight}
     >
       {isNotMacOs && (
-        <Button
-          className="ml-0 mr-1 min-w-0 rounded-none"
-          onClick={handleClickMenu}
-        >
+        <Button className="mr-1 ml-0 min-w-0 rounded-none" onClick={handleClickMenu}>
           {img}
         </Button>
       )}
@@ -79,7 +76,7 @@ function Titlebar({ title }: TitlebarProps) {
       <span
         className={cx(
           'grow',
-          isMacOs && 'text-center font-helvetica font-bold',
+          isMacOs && 'text-center font-bold font-helvetica',
           isMacOs && !isMacOsBigSur && 'text-[12px]',
           isMacOsBigSur && 'text-[14px]',
           isMacOs && !isFocus && 'text-[#6b6769]',
@@ -89,30 +86,15 @@ function Titlebar({ title }: TitlebarProps) {
       </span>
       {isNotMacOs && (
         <div className="flex">
-          <button
-            className="titlebar-control"
-            onClick={handleMinimizeWindow}
-            tabIndex={-1}
-            type="button"
-          >
+          <button className="titlebar-control" onClick={handleMinimizeWindow} tabIndex={-1} type="button">
             &#xE921;
           </button>
           {windowState === 'maximized' ? (
-            <button
-              className="titlebar-control"
-              onClick={handleRestoreWindow}
-              tabIndex={-1}
-              type="button"
-            >
+            <button className="titlebar-control" onClick={handleRestoreWindow} tabIndex={-1} type="button">
               &#xE923;
             </button>
           ) : (
-            <button
-              className="titlebar-control"
-              onClick={handleMaximizeWindow}
-              tabIndex={-1}
-              type="button"
-            >
+            <button className="titlebar-control" onClick={handleMaximizeWindow} tabIndex={-1} type="button">
               &#xE922;
             </button>
           )}

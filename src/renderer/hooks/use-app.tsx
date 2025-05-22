@@ -21,14 +21,11 @@ import type { Dispatch, SetStateAction } from 'react'
 interface AppContext {
   showChangelogs: readonly [boolean, Dispatch<SetStateAction<boolean>>]
   showLatestVersionAlert: readonly [boolean, Dispatch<SetStateAction<boolean>>]
-  changelogs: readonly [
-    string | undefined,
-    Dispatch<SetStateAction<string | undefined>>,
-  ]
+  changelogs: readonly [string | undefined, Dispatch<SetStateAction<string | undefined>>]
   setConfig: (config: PartialDeep<Config>, override?: boolean) => void
   config: Config
   groups: Group[]
-  refreshConfig: () => void
+  refreshConfig: () => Promise<void>
   copyToClipboard: (text: string) => void
   onRefreshConfig: Observable<Config>
 }
@@ -54,10 +51,10 @@ function AppProvider({ children }: React.PropsWithChildren) {
       if (sgfConfig.groups.length === 0) return []
 
       return sgfConfig.groups.map(
-        g =>
+        (g) =>
           new Group(
             g.name,
-            g.scripts.map(s => {
+            g.scripts.map((s) => {
               return {
                 status: ScriptStatus.idle,
                 id: uuid(),
@@ -110,10 +107,7 @@ function AppProvider({ children }: React.PropsWithChildren) {
       value={{
         showChangelogs: [isShowChangelogs, setShowChangelogs] as const,
         changelogs: [changelogs, setChangelogs] as const,
-        showLatestVersionAlert: [
-          isShowLatestVersionAlert,
-          setShowLatestVersionAlert,
-        ] as const,
+        showLatestVersionAlert: [isShowLatestVersionAlert, setShowLatestVersionAlert] as const,
         setConfig: updateConfig,
         config,
         groups,

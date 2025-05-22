@@ -4,25 +4,26 @@
  * All rights reserved.
  */
 
-import CreateIcon from '@mui/icons-material/Create'
-import { Button, Checkbox, FormControlLabel, FormGroup, List, Toolbar, Typography } from '@mui/material'
+import { Checkbox, FormControlLabel, FormGroup, List, Toolbar, Typography } from '@mui/material'
 import cx from 'classnames'
 import { useState } from 'react'
 import type { ChangeEvent, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import useLocalStorage from 'react-use-localstorage'
 import { TelemetryEvent } from '../../../common/telemetry-event'
-import DialogGroup from '../../components/dialog/dialog-group'
-import Page from '../../components/page'
-import PageAppBar from '../../components/page-app-bar'
-import { LocalStorage } from '../../enums/local-storage.enum'
-import { useApp } from '../../hooks/use-app'
-import { useGroups } from '../../hooks/use-groups'
-import { useTelemetry } from '../../hooks/use-telemetry'
-import type { Group } from '../../types'
+import DialogGroup from '@/components/dialog/dialog-group.tsx'
+import Page from '@/components/page.tsx'
+import { LocalStorage } from '@/enums/local-storage.enum.ts'
+import { useApp } from '@/hooks/use-app'
+import { useGroups } from '@/hooks/use-groups.ts'
+import { useTelemetry } from '@/hooks/use-telemetry'
+import { type Group } from '@/types'
 import GroupsListItem from './groups-list-item'
+import { LayoutHeader, LayoutHeaderTitle } from '@/pages/layout.tsx'
+import { Button } from '@/components/ui/button.tsx'
+import { PlusIcon } from 'lucide-react'
 
-function Groups() {
+export function GroupsPage() {
   const { send } = useTelemetry()
   const { t } = useTranslation()
   const { groups } = useApp()
@@ -79,11 +80,13 @@ function Groups() {
 
   return (
     <>
-      <PageAppBar title={t('page.groups.title')}>
-        <Button onClick={onClickAddButton} startIcon={<CreateIcon />}>
-          {t('page.groups.actions.create')}
+      <LayoutHeader>
+        <LayoutHeaderTitle>{t('page.groups.title')}</LayoutHeaderTitle>
+        <Button onClick={onClickAddButton}>
+          <PlusIcon />
+          <span>{t('page.groups.actions.create')}</span>
         </Button>
-      </PageAppBar>
+      </LayoutHeader>
 
       <Page className={cx(groups.length > 0 && 'pt-0')}>
         <DialogGroup
@@ -129,5 +132,3 @@ function Groups() {
     </>
   )
 }
-
-export default Groups

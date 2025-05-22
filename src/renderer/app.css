@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-@import 'assets/fonts/fonts.css';
+@import './assets/fonts/fonts.css';
 
 :root {
   --bg-darker: theme('colors.light.800');
@@ -14,41 +14,8 @@
   --bg-darker: theme('colors.darker');
 }
 
-.drag {
-  /*noinspection CssUnknownProperty*/
-  -webkit-app-region: drag;
-}
-
-.drag button {
-  /*noinspection CssUnknownProperty*/
-  -webkit-app-region: no-drag;
-}
-
-img {
-  @apply pointer-events-none;
-}
-
-button {
-  @apply px-2 focus:outline-none;
-}
-
-* {
-  @apply select-none;
-}
-
-*,
-*:focus,
-button,
-button:focus {
-  @apply outline-none;
-}
-
-body {
-  @apply overflow-hidden bg-light-600 antialiased dark:bg-black-800 dark:text-gray-400;
-}
-
 .page {
-  @apply h-screen-appbar;
+  @apply h-screen-sidebar-header;
 }
 
 .page > main {

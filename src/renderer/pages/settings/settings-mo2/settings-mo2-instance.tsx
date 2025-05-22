@@ -4,67 +4,43 @@
  * All rights reserved.
  */
 
-import RefreshIcon from '@mui/icons-material/Refresh'
-import { Button, Alert, Typography } from '@mui/material'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
-import DialogTextField from '../../../components/dialog/dialog-text-field'
-import { useApp } from '../../../hooks/use-app'
+import DialogTextField from '@/components/dialog/dialog-text-field.tsx'
 import { useSettings } from '../use-settings'
+import { useFormContext } from 'react-hook-form'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert.tsx'
+import { TriangleAlertIcon } from 'lucide-react'
 
-interface SettingsMo2InstanceProps {
-  onChangeMo2Instance: (value: string) => void
-  onClickRefreshInstallation: (e: React.MouseEvent<HTMLButtonElement>) => void
-}
-
-function SettingsMo2Instance({
-  onChangeMo2Instance,
-  onClickRefreshInstallation,
-}: SettingsMo2InstanceProps) {
+function SettingsMo2Instance() {
   const { t } = useTranslation()
-  const {
-    config: { mo2 },
-  } = useApp()
   const { configError } = useSettings()
+  const formContext = useFormContext()
+  const mo2 = formContext.watch('mo2') as boolean
+  const mo2Instance = formContext.watch('mo2Instance') as boolean
 
-  if (!mo2.use) {
+  if (!mo2) {
     return null
   }
 
   return (
     <>
-      <DialogTextField
-        className="mt-2"
-        defaultValue={mo2.instance ?? ''}
-        error={configError === 'mo2-instance'}
-        id="mo2-instance"
-        label={t('page.settings.mo2.instance')}
-        onChange={onChangeMo2Instance}
-        type="folder"
-      />
+      <div className="flex flex-col gap-2">
+        <DialogTextField name="mo2Instance" label={t('page.settings.mo2.instance')} type="folder" />
 
-      {(configError === 'mo2-instance' ||
-        configError === 'mo2-instance-mods') && (
-        <Alert className="mt-3" severity="error">
-          <Typography className="select-text" gutterBottom>
-            {t('page.settings.errors.installationInvalid')}
-          </Typography>
-
-          <Typography className="select-text" gutterBottom>
-            {configError === 'mo2-instance'
-              ? t('page.settings.errors.mo2Instance', {
-                  mo2Instance: mo2.instance,
-                })
-              : t('page.settings.errors.mo2InstanceMods')}
-          </Typography>
-          <Button
-            onClick={onClickRefreshInstallation}
-            startIcon={<RefreshIcon />}
-          >
-            {t('common.refresh')}
-          </Button>
-        </Alert>
-      )}
+        {(configError === 'mo2-instance' || configError === 'mo2-instance-mods') && (
+          <Alert variant="destructive">
+            <TriangleAlertIcon className="size-4" />
+            <AlertTitle>{t('page.settings.errors.installationInvalid')}</AlertTitle>
+            <AlertDescription>
+              {configError === 'mo2-instance'
+                ? t('page.settings.errors.mo2Instance', {
+                    mo2Instance,
+                  })
+                : t('page.settings.errors.mo2InstanceMods')}
+            </AlertDescription>
+          </Alert>
+        )}
+      </div>
     </>
   )
 }

@@ -5,20 +5,21 @@
  */
 
 import { Navigate, Route, Routes as RouterRoutes } from 'react-router-dom'
-import Compilation from './pages/compilation/compilation'
-import Groups from './pages/groups/groups'
-import Settings from './pages/settings/settings'
+import { CompilationPage } from './pages/compilation/compilation-page.tsx'
+import { GroupsPage } from './pages/groups/groups-page.tsx'
+import { SettingsPage } from './pages/settings/settings-page.tsx'
+import { Layout } from '@/pages/layout.tsx'
 
 function Routes() {
   return (
-    <div className="flex w-full flex-col">
-      <RouterRoutes>
-        <Route element={<Compilation />} path="/compilation" />
-        <Route element={<Groups />} path="/groups" />
-        <Route element={<Settings />} path="/settings" />
-        <Route element={<Navigate replace to="/compilation" />} path="*" />
-      </RouterRoutes>
-    </div>
+    <RouterRoutes>
+      <Route element={<Layout />}>
+        <Route index element={<CompilationPage />} path="/compilation" />
+        <Route element={<GroupsPage />} path="/groups" />
+        <Route element={<SettingsPage />} path="/settings" />
+      </Route>
+      <Route element={<Navigate replace to="/compilation" />} path="*" />
+    </RouterRoutes>
   )
 }
 

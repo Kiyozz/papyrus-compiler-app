@@ -1,0 +1,242 @@
+/*
+ * Copyright (c) 2022 Kiyozz~WK~WushuLate.
+ *
+ * All rights reserved.
+ */
+
+import is from '@sindresorhus/is'
+import debounce from 'debounce-fn'
+import { useCallback, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { GameType } from '../../../common/game'
+import { TelemetryEvent } from '../../../common/telemetry-event'
+import { useApp } from '../../hooks/use-app'
+import { useDocumentation } from '@/hooks/use-documentation.ts'
+import { useTelemetry } from '../../hooks/use-telemetry'
+import SettingsCompilation from './settings-compilation'
+import SettingsGameSection from './settings-game-section.tsx'
+import SettingsMo2 from './settings-mo2/settings-mo2'
+import SettingsTelemetrySection from './settings-telemetry-section.tsx'
+import SettingsThemeSection from './settings-theme-section.tsx'
+import { useSettings } from './use-settings'
+import { LayoutHeader, LayoutHeaderTitle } from '@/pages/layout.tsx'
+import { Button } from '@/components/ui/button.tsx'
+import { BookIcon, RotateCcwIcon } from 'lucide-react'
+import { useForm } from 'react-hook-form'
+import { Form } from '@/components/ui/form.tsx'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
+import { Theme } from '../../../common/theme.ts'
+import { bridge } from '@/bridge.ts'
+
+const maxConcurrentCompilationScripts = 100
+
+export function SettingsPage() {
+  const { t } = useTranslation()
+  const {
+    config: {
+      game,
+      compilation,
+      mo2: { use: mo2, instance: mo2Instance },
+      telemetry: { active: telemetry },
+      theme,
+    },
+    setConfig,
+    refreshConfig,
+  } = useApp()
+  const { checkConfig, resetConfigError } = useSettings()
+  const { send } = useTelemetry()
+  const { open: openDocumentation } = useDocumentation()
+
+  const form = useForm({
+    defaultValues: {
+      game: game.type,
+      gamePath: game.path,
+      compilerPath: compilation.compilerPath,
+      concurrentScripts: compilation.concurrentScripts,
+      mo2,
+      mo2Instance,
+      telemetry,
+      theme,
+    },
+    mode: 'onChange',
+    delayError: 400,
+  })
+
+  const debouncedSetConfig = useMemo(() => debounce(setConfig, { wait: 500 }), [setConfig])
+  const debouncedCheckInstallation = useMemo(() => debounce(checkConfig, { wait: 500 }), [checkConfig])
+
+  useEffect(() => {
+    resetConfigError()
+
+    if (!game.path || !compilation.compilerPath) {
+      return
+    }
+
+    void debouncedCheckInstallation()
+  }, [compilation.compilerPath, debouncedCheckInstallation, game.path, game.type, mo2Instance, resetConfigError])
+
+  const onClickPageRefresh = useCallback(async () => {
+    send(TelemetryEvent.settingsRefresh, {})
+    await refreshConfig()
+    await checkConfig()
+  }, [refreshConfig, checkConfig, send])
+
+  useEffect(() => {
+    const { unsubscribe } = form.watch((value, info) => {
+      if (info.type === 'change') {
+        switch (info.name) {
+          case 'game': {
+            const gameType = value.game as GameType
+
+            if (![GameType.le, GameType.se, GameType.vr, GameType.fo4].includes(gameType)) {
+              return
+            }
+
+            resetConfigError()
+            send(TelemetryEvent.settingsGame, { game: gameType })
+            setConfig({
+              game: { type: gameType },
+              compilation: {
+                flag: gameType === GameType.fo4 ? 'Institute_Papyrus_Flags.flg' : 'TESV_Papyrus_Flags.flg',
+              },
+            })
+
+            break
+          }
+          case 'gamePath': {
+            const gamePath = value.gamePath
+
+            debouncedSetConfig({ game: { path: gamePath?.trim() } })
+
+            break
+          }
+          case 'compilerPath': {
+            const compilerPath = value.compilerPath?.trim()
+
+            debouncedSetConfig({
+              compilation: {
+                compilerPath,
+              },
+            })
+
+            break
+          }
+          case 'concurrentScripts': {
+            let concurrentScripts = value.concurrentScripts as number | string | undefined
+
+            if (concurrentScripts === '') {
+              concurrentScripts = '0'
+            }
+
+            if (is.numericString(concurrentScripts)) {
+              let parsedValue = parseInt(concurrentScripts, 10)
+
+              if (parsedValue > maxConcurrentCompilationScripts) {
+                parsedValue = maxConcurrentCompilationScripts
+              }
+
+              if (parsedValue < 0) {
+                parsedValue = 1
+              }
+
+              setConfig({ compilation: { concurrentScripts: parsedValue } })
+            }
+
+            break
+          }
+          case 'mo2': {
+            const checked = value.mo2 === true
+
+            if (checked) {
+              setConfig({ mo2: { use: checked } })
+            } else {
+              setConfig({ mo2: { use: false, instance: undefined } })
+            }
+
+            send(TelemetryEvent.modOrganizerActive, { active: checked })
+
+            break
+          }
+          case 'mo2Instance': {
+            const mo2Instance = value.mo2Instance
+
+            resetConfigError()
+            debouncedSetConfig({
+              mo2: { instance: mo2Instance?.trim() },
+            })
+
+            break
+          }
+          case 'theme': {
+            const newTheme = value.theme!
+
+            if (![Theme.system, Theme.light, Theme.dark].includes(newTheme)) {
+              return
+            }
+
+            send(TelemetryEvent.settingsTheme, { theme: newTheme })
+            setConfig({ theme: newTheme })
+
+            break
+          }
+          case 'telemetry': {
+            const checked = value.telemetry === true
+
+            if (checked) {
+              send(TelemetryEvent.telemetryEnabled, {})
+            }
+
+            setConfig({ telemetry: { active: checked } })
+            bridge.telemetry.setActive(checked)
+          }
+        }
+      }
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [send, setConfig, debouncedSetConfig, resetConfigError])
+
+  return (
+    <>
+      <LayoutHeader>
+        <LayoutHeaderTitle>{t('page.settings.title')}</LayoutHeaderTitle>
+        <div className="flex gap-2">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button onClick={() => openDocumentation('settings-app-bar')}>
+                  <BookIcon />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{t('common.documentation')}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button onClick={onClickPageRefresh}>
+                  <RotateCcwIcon />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{t('common.refresh')}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+      </LayoutHeader>
+
+      <Form {...form}>
+        <form className="page flex flex-col gap-4 overflow-y-scroll p-4">
+          <SettingsGameSection />
+          <SettingsCompilation />
+          <SettingsMo2 />
+          <div className="grid grid-cols-2 gap-4">
+            <SettingsThemeSection />
+            <SettingsTelemetrySection />
+          </div>
+        </form>
+      </Form>
+    </>
+  )
+}

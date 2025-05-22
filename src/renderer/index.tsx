@@ -18,10 +18,10 @@ import InitializationProvider from './hooks/use-initialization'
 import RecentFilesProvider from './hooks/use-recent-files'
 import TelemetryProvider from './hooks/use-telemetry'
 import VersionProvider from './hooks/use-version'
-import MuiTheme from './mui-theme'
 import SettingsProvider from './pages/settings/use-settings'
 import { loadTranslations } from './translations'
 import { isProduction } from './utils/is-production'
+import { StrictMode } from 'react'
 
 async function start() {
   const root = document.getElementById('app')
@@ -34,31 +34,33 @@ async function start() {
 
   loadTranslations()
 
+  const production = await isProduction()
+
   try {
     rootReact.render(
-      <VersionProvider>
-        <AppProvider>
-          <TelemetryProvider>
-            <InitializationProvider>
-              <RecentFilesProvider>
-                <CompilationProvider>
-                  <SettingsProvider>
-                    <FocusProvider>
-                      <MuiTheme>
+      <StrictMode>
+        <VersionProvider>
+          <AppProvider>
+            <TelemetryProvider>
+              <InitializationProvider>
+                <RecentFilesProvider>
+                  <CompilationProvider>
+                    <SettingsProvider>
+                      <FocusProvider>
                         <DrawerProvider>
                           <DropProvider>
                             <App />
                           </DropProvider>
                         </DrawerProvider>
-                      </MuiTheme>
-                    </FocusProvider>
-                  </SettingsProvider>
-                </CompilationProvider>
-              </RecentFilesProvider>
-            </InitializationProvider>
-          </TelemetryProvider>
-        </AppProvider>
-      </VersionProvider>,
+                      </FocusProvider>
+                    </SettingsProvider>
+                  </CompilationProvider>
+                </RecentFilesProvider>
+              </InitializationProvider>
+            </TelemetryProvider>
+          </AppProvider>
+        </VersionProvider>
+      </StrictMode>,
     )
   } catch (e) {
     let err: Error
@@ -71,7 +73,9 @@ async function start() {
       err = new Error(`unknown error: ${fromError(e).message}`)
     }
 
-    await bridge.error(err)
+    if (production) {
+      await bridge.error(err)
+    }
   }
 
   function sendIsOnline(): void {
@@ -83,9 +87,7 @@ async function start() {
   window.addEventListener('online', () => sendIsOnline())
   window.addEventListener('offline', () => sendIsOnline())
 
-  const production = await isProduction()
-
-  if (!production) {
+  if (production) {
     const handle = debounce(
       (error: Error) => {
         void bridge.error(error)
@@ -107,4 +109,4 @@ async function start() {
   }
 }
 
-void start()
+await start()

@@ -33,7 +33,7 @@ import Anchor from '../anchor'
 function Img({ src, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
   const newSrc = src?.startsWith('docs') ? `${GITHUB_LINK}/blob/master/${src}?raw=true` : src
 
-  return <img alt={alt} className="mt-2 max-w-full rounded" src={newSrc} {...props} />
+  return <img alt={alt} className="mt-2 max-w-full rounded-sm" src={newSrc} {...props} />
 }
 
 function HeadingOne({ children }: ComponentProps<'h1'>) {

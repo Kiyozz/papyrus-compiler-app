@@ -4,63 +4,24 @@
  * All rights reserved.
  */
 
-import FolderIcon from '@mui/icons-material/Folder'
-import FolderOpenIcon from '@mui/icons-material/FolderOpen'
-import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material'
-import is from '@sindresorhus/is'
-import React, { useEffect, useState } from 'react'
-import type { ChangeEvent, ReactNode } from 'react'
+import React, { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { DialogType } from '../../../common/types/dialog'
-import { bridge } from '../../bridge'
-import { useApp } from '../../hooks/use-app'
+import { bridge } from '@/bridge.ts'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form.tsx'
+import { Input } from '@/components/ui/input.tsx'
+import { Button } from '@/components/ui/button.tsx'
+import { FolderIcon, FolderOpenIcon } from 'lucide-react'
 
 interface DialogTextFieldProps {
-  id: string
-  className?: string
-  error?: boolean
+  name: string
   label?: ReactNode
-  defaultValue: string
-  onChange: (value: string) => void
   type: DialogType
 }
 
-function DialogTextField({ error = false, id, label, defaultValue, onChange, type, className }: DialogTextFieldProps) {
-  const { onRefreshConfig } = useApp()
+function DialogTextField({ name, label, type }: DialogTextFieldProps) {
   const { t } = useTranslation()
-  const [value, setValue] = useState(defaultValue)
   const [isHover, setHover] = useState(false)
-
-  const onClickInput = async (e: React.MouseEvent<HTMLElement>) => {
-    setHover(false)
-    e.preventDefault()
-    e.currentTarget.blur()
-
-    try {
-      const result = await bridge.dialog.select(type).then((response) => {
-        if (is.null(response)) {
-          return
-        }
-
-        return response
-      })
-
-      if (typeof result !== 'undefined') {
-        setValue(result)
-        onChange(result)
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  useEffect(() => {
-    const sub = onRefreshConfig.subscribe(() => {
-      setValue(defaultValue)
-    })
-
-    return () => sub.unsubscribe()
-  }, [defaultValue, onRefreshConfig])
 
   const onMouseEnter = () => {
     setHover(true)
@@ -69,37 +30,49 @@ function DialogTextField({ error = false, id, label, defaultValue, onChange, typ
     setHover(false)
   }
 
-  const onChangeInput = (evt: ChangeEvent<HTMLInputElement>) => {
-    const newValue = evt.currentTarget.value
-
-    setValue(newValue)
-    onChange(newValue)
-  }
-
   return (
-    <FormControl className={className} error={error} fullWidth variant="outlined">
-      <InputLabel className="flex items-center" htmlFor={id}>
-        {label}
-      </InputLabel>
-      <OutlinedInput
-        classes={{
-          inputSizeSmall: '!text-xs',
-        }}
-        id={id}
-        label={label}
-        onChange={onChangeInput}
-        placeholder={t('common.selectFolder')}
-        size="small"
-        startAdornment={
-          <InputAdornment position="start">
-            <IconButton edge="start" onClick={onClickInput} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-              {isHover ? <FolderOpenIcon /> : <FolderIcon />}
-            </IconButton>
-          </InputAdornment>
-        }
-        value={value}
-      />
-    </FormControl>
+    <FormField
+      name={name}
+      render={({ field }) => {
+        return (
+          <FormItem>
+            <FormLabel>{label}</FormLabel>
+            <div className="relative">
+              <FormControl>
+                <Input className="pl-10 text-xs" placeholder={t('common.selectFolder')} {...field} />
+              </FormControl>
+              <Button
+                variant="ghost"
+                className="-translate-y-1/2 absolute top-1/2 left-0 rounded-r-none"
+                size="icon"
+                onClick={async (evt: React.MouseEvent<HTMLElement>) => {
+                  setHover(false)
+                  evt.preventDefault()
+                  evt.currentTarget.blur()
+
+                  try {
+                    const result = await bridge.dialog.select(type).then((response) => {
+                      return response ?? undefined
+                    })
+
+                    if (typeof result !== 'undefined') {
+                      field.onChange(result)
+                    }
+                  } catch (err) {
+                    console.log(err)
+                  }
+                }}
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
+              >
+                {isHover ? <FolderOpenIcon className="size-4" /> : <FolderIcon className="size-4" />}
+              </Button>
+            </div>
+            <FormMessage />
+          </FormItem>
+        )
+      }}
+    />
   )
 }
 

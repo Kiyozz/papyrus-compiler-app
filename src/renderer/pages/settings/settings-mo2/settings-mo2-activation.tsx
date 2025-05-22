@@ -4,35 +4,26 @@
  * All rights reserved.
  */
 
-import Checkbox from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import React from 'react'
+import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form.tsx'
 import { useTranslation } from 'react-i18next'
-import { useApp } from '../../../hooks/use-app'
+import { Switch } from '@/components/ui/switch.tsx'
 
-interface SettingsMo2ActivationProps {
-  onChangeMo2: (e: React.ChangeEvent<HTMLInputElement>) => void
-}
-
-function SettingsMo2Activation({ onChangeMo2 }: SettingsMo2ActivationProps) {
+function SettingsMo2Activation() {
   const { t } = useTranslation()
-  const {
-    config: { mo2 },
-  } = useApp()
 
   return (
-    <FormControlLabel
-      control={
-        <Checkbox
-          checked={mo2.use}
-          id="mo2"
-          name="mo2"
-          onChange={onChangeMo2}
-        />
-      }
-      label={
-        <span className="dark:text-white">{t('page.settings.mo2.enable')}</span>
-      }
+    <FormField
+      name="mo2"
+      render={({ field }) => (
+        <FormItem className="flex items-center">
+          <div>
+            <FormLabel className="text-base">{t('page.settings.mo2.enable')}</FormLabel>
+          </div>
+          <FormControl>
+            <Switch checked={field.value} onCheckedChange={field.onChange} />
+          </FormControl>
+        </FormItem>
+      )}
     />
   )
 }
