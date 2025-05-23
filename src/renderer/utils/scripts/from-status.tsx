@@ -5,6 +5,7 @@
  */
 
 import { ScriptStatus } from '@/enums/script-status.enum.ts'
+import { cn } from '@/lib/utils.ts'
 import type { ScriptRenderer } from '@/types/index.ts'
 import { CircleCheckIcon, CircleXIcon, HourglassIcon } from 'lucide-react'
 
@@ -21,15 +22,15 @@ const classNameFromStatus = (script: ScriptRenderer): string => {
   }
 }
 
-export const IconFromStatus = ({ script }: { script: ScriptRenderer }) => {
+export const IconFromStatus = ({ script, className }: { script: ScriptRenderer; className?: string }) => {
   switch (script.status) {
     case ScriptStatus.idle:
       return null
     case ScriptStatus.running:
-      return <HourglassIcon className={classNameFromStatus(script)} />
+      return <HourglassIcon className={cn(classNameFromStatus(script), className)} />
     case ScriptStatus.success:
-      return <CircleCheckIcon className={classNameFromStatus(script)} />
+      return <CircleCheckIcon className={cn(classNameFromStatus(script), className)} />
     default:
-      return <CircleXIcon className={classNameFromStatus(script)} />
+      return <CircleXIcon className={cn(classNameFromStatus(script), className)} />
   }
 }

@@ -4,13 +4,13 @@
  * All rights reserved.
  */
 
-import { useTranslation } from 'react-i18next'
+import { Button } from '@/components/ui/button.tsx'
+import { useSettings } from '@/pages/settings/use-settings.tsx'
 import type { ScriptRenderer } from '@/types'
 import { IconFromStatus } from '@/utils/scripts/from-status.tsx'
 import { isRunningScript } from '@/utils/scripts/status.ts'
-import { Button } from '@/components/ui/button.tsx'
 import { PlayIcon, TrashIcon } from 'lucide-react'
-import { useSettings } from '@/pages/settings/use-settings.tsx'
+import { useTranslation } from 'react-i18next'
 
 interface ScriptLineProps {
   script: ScriptRenderer
@@ -31,25 +31,26 @@ function ScriptLine({ script, onClickRemoveScript, onClickPlayCompilation }: Scr
   }
 
   return (
-    <li className="flex w-full items-center gap-2 rounded-lg p-2 text-sm hover:bg-secondary/75 border">
+    <li className="flex items-center gap-2 px-2 py-1 first:rounded-t-md last:rounded-b-md hover:bg-accent/75">
       <Button
         size="icon-sm"
-        className="rounded-full"
+        className="size-6 rounded-full"
         disabled={configError !== false || isRunningScript(script)}
         onClick={onClickPlay}
       >
-        <PlayIcon />
+        <PlayIcon className="size-3.5" />
       </Button>
-      <span className="flex-1 font-mono">{script.name}</span>
-      <IconFromStatus script={script} />
+      <span className="flex-1 font-mono text-sm">{script.name}</span>
+      <IconFromStatus script={script} className="size-4" />
       <Button
         size="icon-sm"
         disabled={isRunningScript(script)}
         onClick={onClickRemove}
         variant="destructive"
         aria-label={t('common.remove')}
+        className="size-6"
       >
-        <TrashIcon />
+        <TrashIcon className="size-3.5" />
       </Button>
     </li>
   )

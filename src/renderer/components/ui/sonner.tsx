@@ -7,7 +7,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
   return (
     <Sonner
       theme={theme as ToasterProps['theme']}
-      className="toaster group [--width:28rem]!"
+      className="toaster group pointer-events-auto [--width:28rem]!"
       richColors
       closeButton
       toastOptions={{

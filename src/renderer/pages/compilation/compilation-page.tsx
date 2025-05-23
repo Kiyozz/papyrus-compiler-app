@@ -6,6 +6,7 @@
 
 import { DialogRecentFiles } from '@/components/dialog/dialog-recent-files.tsx'
 import { Button } from '@/components/ui/button.tsx'
+import { ScrollArea } from '@/components/ui/scroll-area.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { useApp } from '@/hooks/use-app.tsx'
 import { useCompilation } from '@/hooks/use-compilation.tsx'
@@ -173,54 +174,56 @@ export function CompilationPage() {
         </div>
       </LayoutHeader>
 
-      <section className="flex grow flex-col p-6">
-        {scripts.length > 0 && (
-          <div className="mb-4 flex gap-2">
-            <Button
-              aria-disabled={Boolean(configError) || isRunning}
-              disabled={Boolean(configError) || isRunning}
-              onClick={onClickStart}
-            >
-              <PlayIcon />
-              <span>{t('page.compilation.actions.start')}</span>
-            </Button>
+      <ScrollArea className="h-(--page-height)">
+        <section className="flex h-full flex-col p-6">
+          {scripts.length > 0 && (
+            <div className="mb-4 flex gap-2">
+              <Button
+                aria-disabled={Boolean(configError) || isRunning}
+                disabled={Boolean(configError) || isRunning}
+                onClick={onClickStart}
+              >
+                <PlayIcon />
+                <span>{t('page.compilation.actions.start')}</span>
+              </Button>
 
-            <Button variant="ghost" aria-disabled={isRunning} disabled={isRunning} onClick={onClickEmpty}>
-              <XIcon />
-              <span>{t('page.compilation.actions.clearList')}</span>
-            </Button>
-          </div>
-        )}
+              <Button variant="ghost" aria-disabled={isRunning} disabled={isRunning} onClick={onClickEmpty}>
+                <XIcon />
+                <span>{t('page.compilation.actions.clearList')}</span>
+              </Button>
+            </div>
+          )}
 
-        {scripts.length > 0 ? (
-          <ul className="flex flex-col gap-1">
-            {scripts.map((script) => {
-              return (
-                <ScriptLine
-                  key={script.id}
-                  onClickPlayCompilation={onClickPlayCompilation(script)}
-                  onClickRemoveScript={onClickRemoveScriptFromScript(script)}
-                  script={script}
-                />
-              )
-            })}
-          </ul>
-        ) : (
-          <div className="m-auto flex grow flex-col items-center justify-center gap-3 text-center tracking-tight">
-            <h5 className="text-xl">
-              <span>{t('page.compilation.dragAndDropText')}</span>
-            </h5>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <InfoIcon className="size-5" />
-                </TooltipTrigger>
-                <TooltipContent>{t<string>('page.compilation.dragAndDropAdmin')}</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-        )}
-      </section>
+          {scripts.length > 0 ? (
+            <ul className="divide-y divide-accent rounded-md border">
+              {scripts.map((script) => {
+                return (
+                  <ScriptLine
+                    key={script.id}
+                    onClickPlayCompilation={onClickPlayCompilation(script)}
+                    onClickRemoveScript={onClickRemoveScriptFromScript(script)}
+                    script={script}
+                  />
+                )
+              })}
+            </ul>
+          ) : (
+            <div className="m-auto flex grow flex-col items-center justify-center gap-3 text-center tracking-tight">
+              <h5 className="text-xl">
+                <span>{t('page.compilation.dragAndDropText')}</span>
+              </h5>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <InfoIcon className="size-5" />
+                  </TooltipTrigger>
+                  <TooltipContent>{t<string>('page.compilation.dragAndDropAdmin')}</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          )}
+        </section>
+      </ScrollArea>
     </>
   )
 }

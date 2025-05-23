@@ -25,6 +25,8 @@ import { isProduction } from './utils/is-production'
 
 // @ts-expect-error - ignore, load all fonts
 import 'unfonts.css'
+import { Toaster } from '@/components/ui/sonner.tsx'
+import { createPortal } from 'react-dom'
 
 async function start() {
   const root = document.getElementById('app')
@@ -63,6 +65,7 @@ async function start() {
             </TelemetryProvider>
           </AppProvider>
         </VersionProvider>
+        {createPortal(<Toaster />, document.body)}
       </StrictMode>,
     )
   } catch (e) {

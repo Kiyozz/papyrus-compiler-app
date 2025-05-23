@@ -4,34 +4,23 @@
  * All rights reserved.
  */
 
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
-import SearchIcon from '@mui/icons-material/Search'
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  TextField,
-} from '@mui/material'
 import is from '@sindresorhus/is'
-import cx from 'classnames'
+import { SearchIcon, Trash2Icon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import type { ChangeEvent, FormEvent, KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { Button } from '@/components/ui/button.tsx'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog.tsx'
+import { Input } from '@/components/ui/input.tsx'
+import { ScrollArea } from '@/components/ui/scroll-area.tsx'
+import { useDrop, useSetDrop } from '@/hooks/use-drop.tsx'
+import { useTelemetry } from '@/hooks/use-telemetry.tsx'
+import { Group } from '@/types/index.ts'
+import { pscFilesToScript } from '@/utils/scripts/psc-files-to-script.ts'
+import { uniqScripts } from '@/utils/scripts/uniq-scripts.ts'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import type { Script } from '../../../common/types/script'
-import { useDrop, useSetDrop } from '../../hooks/use-drop'
-import { useTelemetry } from '../../hooks/use-telemetry'
-import { Group } from '../../types'
-import { pscFilesToScript } from '../../utils/scripts/psc-files-to-script'
-import { uniqScripts } from '../../utils/scripts/uniq-scripts'
 
 interface DialogGroupProps {
   onGroupAdd: (group: Group) => void
@@ -50,8 +39,8 @@ function DialogGroup({ onGroupAdd, onGroupEdit, open: isOpen, onClose, group }: 
   const { drop, isFileDialogActive } = useDrop()
   const isValid = is.nonEmptyStringAndNotWhitespace(name)
 
-  const onSubmitGroup = (e?: FormEvent) => {
-    e?.preventDefault()
+  const onSubmitGroup = (evt?: FormEvent) => {
+    evt?.preventDefault()
 
     if (!isValid) {
       return
@@ -64,10 +53,6 @@ function DialogGroup({ onGroupAdd, onGroupEdit, open: isOpen, onClose, group }: 
     }
 
     onGroupAdd(new Group(name.trim(), scripts))
-  }
-
-  const onDialogClose = () => {
-    onClose()
   }
 
   const onDialogKeyDown = (evt: KeyboardEvent) => {
@@ -120,74 +105,71 @@ function DialogGroup({ onGroupAdd, onGroupEdit, open: isOpen, onClose, group }: 
   useSetDrop(onDrop)
 
   return (
-    <Dialog
-      aria-describedby="group-content"
-      className="overflow-overlay"
-      fullScreen
-      onClose={onDialogClose}
-      onKeyDown={onDialogKeyDown}
-      open={isOpen}
-    >
-      <form className="flex min-h-full flex-col" onSubmit={onSubmitGroup}>
-        <DialogTitle>
-          <TextField
-            autoFocus
-            fullWidth
-            id="group-name"
-            name="group-name"
-            onChange={onChangeName}
-            placeholder={t('page.groups.dialog.name')}
-            size="small"
-            value={name}
-          />
-        </DialogTitle>
-        <DialogContent
-          className={cx('px-0', scripts.length === 0 && 'flex items-center justify-center')}
-          dividers
-          id="group-content"
-        >
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="flex flex-col px-0" aria-describedby={undefined}>
+        <form className="flex h-full flex-col gap-4" onSubmit={onSubmitGroup} onKeyDown={onDialogKeyDown}>
+          <DialogHeader className="drag px-6" aria-describedby={undefined}>
+            <DialogTitle>Group</DialogTitle>
+          </DialogHeader>
+
+          <div className="px-6">
+            <Input
+              id="group-name"
+              name="group-name"
+              onChange={onChangeName}
+              placeholder={t('page.groups.dialog.name')}
+              value={name}
+              className="no-drag"
+            />
+          </div>
+
           {scripts.length > 0 ? (
-            <List className="overflow-x-hidden" disablePadding>
-              {scripts.map((script) => (
-                <ListItem
-                  disablePadding
-                  key={script.name}
-                  secondaryAction={
-                    <IconButton
-                      aria-label={t('common.remove')}
-                      onClick={onClickRemoveScriptFromGroup(script)}
-                      size="small"
+            <ScrollArea className="w-full grow">
+              <div className="px-6">
+                <ul className="divide-y divide-accent rounded-md border">
+                  {scripts.map((script) => (
+                    <li
+                      key={script.name}
+                      className="flex items-center gap-2 px-2 py-1 first:rounded-t-md last:rounded-b-md hover:bg-accent/75"
                     >
-                      <DeleteOutlinedIcon color="error" fontSize="inherit" />
-                    </IconButton>
-                  }
-                >
-                  <ListItemButton className="cursor-default" disableRipple role="listitem">
-                    <ListItemText primary={script.name} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </List>
+                      <span className="grow text-sm">{script.name}</span>
+                      <Button
+                        variant="destructive"
+                        size="icon-sm"
+                        aria-label={t('common.remove')}
+                        onClick={onClickRemoveScriptFromGroup(script)}
+                        className="size-6"
+                      >
+                        <Trash2Icon className="size-3.5" />
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </ScrollArea>
           ) : (
-            <DialogContentText className="py-12">{t('page.groups.dialog.dropScripts')}</DialogContentText>
+            <div className="flex grow items-center justify-center">{t('page.groups.dialog.dropScripts')}</div>
           )}
-        </DialogContent>
-        <DialogActions>
-          <Button
-            aria-disabled={isFileDialogActive}
-            className="mr-auto"
-            disabled={isFileDialogActive}
-            onClick={drop}
-            startIcon={<SearchIcon />}
-          >
-            {t('page.compilation.actions.searchScripts')}
-          </Button>
-          <Button onClick={onClose}>{t('common.cancel')}</Button>
-          <Button aria-disabled={!isValid} disabled={!isValid} type="submit">
-            {isEdit ? t('page.groups.actions.edit') : t('page.groups.actions.create')}
-          </Button>
-        </DialogActions>
-      </form>
+
+          <DialogFooter className="px-6">
+            <Button
+              aria-disabled={isFileDialogActive}
+              className="mr-auto"
+              disabled={isFileDialogActive}
+              onClick={drop}
+              variant="outline"
+            >
+              <SearchIcon />
+            </Button>
+            <Button variant="outline" onClick={onClose}>
+              {t('common.cancel')}
+            </Button>
+            <Button aria-disabled={!isValid} disabled={!isValid} type="submit">
+              {isEdit ? t('page.groups.actions.edit') : t('page.groups.actions.create')}
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
     </Dialog>
   )
 }

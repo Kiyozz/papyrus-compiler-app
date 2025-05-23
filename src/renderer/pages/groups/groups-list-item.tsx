@@ -4,9 +4,9 @@
  * All rights reserved.
  */
 
+import type { Group } from '@/types/index.ts'
 import type { MouseEvent, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { Group } from '@/types/index.ts'
 import GroupsListItemMenu from './groups-list-item-menu'
 
 interface GroupsListItemProps {
@@ -25,14 +25,22 @@ function GroupsListItem({ group, onDelete, onEdit, moreDetails }: GroupsListItem
     if (group.isEmpty) {
       secondaryText = t('page.groups.noScripts')
     } else {
-      secondaryText = group.scripts.map((s) => s.name).join(', ')
+      secondaryText = (
+        <ul>
+          {group.scripts.map((s) => (
+            <li key={`${s.name}-${s.path}`}>
+              <span className="text-sm">{s.name}</span>
+            </li>
+          ))}
+        </ul>
+      )
     }
   }
 
   return (
-    <li className="flex items-center rounded-md border p-4">
+    <li className="flex items-center gap-2 px-2 py-1 first:rounded-t-md last:rounded-b-md">
       <p className="flex grow flex-col">
-        <span className="text-lg">{group.name}</span>
+        <span className="text-sm">{group.name}</span>
         {secondaryText && <span className="text-muted-foreground text-sm">{secondaryText}</span>}
       </p>
       <GroupsListItemMenu onDelete={onDelete(group)} onEdit={onEdit(group)} />

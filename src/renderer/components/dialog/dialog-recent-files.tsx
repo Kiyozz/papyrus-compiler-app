@@ -16,7 +16,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog.tsx'
 import { Label } from '@/components/ui/label.tsx'
+import { ScrollArea } from '@/components/ui/scroll-area.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
+import { useCompilation } from '@/hooks/use-compilation.tsx'
 import { useIpc } from '@/hooks/use-ipc.ts'
 import { usePlatform } from '@/hooks/use-platform.ts'
 import { useRecentFiles } from '@/hooks/use-recent-files.tsx'
@@ -24,15 +26,13 @@ import { useTelemetry } from '@/hooks/use-telemetry.tsx'
 import { dirname } from '@/utils/dirname.ts'
 import { scriptsToRenderer } from '@/utils/scripts/scripts-to-renderer.ts'
 import { uniqScripts } from '@/utils/scripts/uniq-scripts.ts'
-import cx from 'classnames'
 import { Trash2Icon } from 'lucide-react'
-import React, { memo, type PropsWithChildren, useId, useMemo, useState } from 'react'
+import React, { type PropsWithChildren, useId, useMemo, useState } from 'react'
 import type { KeyboardEvent, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDidUpdate } from 'rooks'
-import { TelemetryEvent } from '../../../common/telemetry-event'
-import type { Script } from '../../../common/types/script'
-import { useCompilation } from '../../hooks/use-compilation'
+import { TelemetryEvent } from '../../../common/telemetry-event.ts'
+import type { Script } from '../../../common/types/script.ts'
 
 export function DialogRecentFiles({ children }: PropsWithChildren) {
   const [open, setOpen] = useState(false)
@@ -197,12 +197,8 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent
-        aria-describedby={undefined}
-        onKeyDown={onDialogKeyDown}
-        className="flex h-full max-w-screen flex-col rounded-none sm:max-w-screen"
-      >
-        <DialogHeader className="drag">
+      <DialogContent aria-describedby={undefined} onKeyDown={onDialogKeyDown} className="flex flex-col px-0">
+        <DialogHeader className="drag px-6">
           <DialogTitle className="grow">{t('page.compilation.actions.recentFiles')}</DialogTitle>
           <div className="no-drag flex items-center">
             <Label htmlFor="more-details" className="pr-2">
@@ -212,26 +208,28 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
           </div>
         </DialogHeader>
         {recentFiles.length === 0 ? (
-          <p>{t('page.compilation.recentFilesDialog.noRecentFiles')}</p>
+          <p className="px-6">{t('page.compilation.recentFilesDialog.noRecentFiles')}</p>
         ) : (
-          <div className="grow">
-            <ul className="divide-y divide-accent rounded-md border">
-              {recentFiles.map((script) => {
-                return (
-                  <Item
-                    disabled={isAlreadyLoaded(script)}
-                    key={script.path}
-                    onClickDelete={onClickDeleteFile(script)}
-                    onClickFile={onClickItem(script)}
-                    script={script}
-                    selected={selectedRecentFiles.has(script.path)}
-                  />
-                )
-              })}
-            </ul>
-          </div>
+          <ScrollArea className="w-full grow">
+            <div className="grow px-6">
+              <ul className="divide-y divide-accent rounded-lg border">
+                {recentFiles.map((script) => {
+                  return (
+                    <Item
+                      disabled={isAlreadyLoaded(script)}
+                      key={script.path}
+                      onClickDelete={onClickDeleteFile(script)}
+                      onClickFile={onClickItem(script)}
+                      script={script}
+                      selected={selectedRecentFiles.has(script.path)}
+                    />
+                  )
+                })}
+              </ul>
+            </div>
+          </ScrollArea>
         )}
-        <DialogFooter>
+        <DialogFooter className="px-6">
           <Button onClick={onClickClose} tabIndex={4}>
             {t('common.cancel')}
           </Button>

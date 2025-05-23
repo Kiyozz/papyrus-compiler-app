@@ -4,18 +4,18 @@
  * All rights reserved.
  */
 
-import { useTranslation } from 'react-i18next'
-import { TelemetryEvent } from '../../../common/telemetry-event.ts'
-import { useTelemetry } from '@/hooks/use-telemetry.tsx'
-import type { MouseEvent } from 'react'
+import { Button } from '@/components/ui/button.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx'
+import { useTelemetry } from '@/hooks/use-telemetry.tsx'
 import { EllipsisIcon, PenIcon, TrashIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button.tsx'
+import type { MouseEvent } from 'react'
+import { useTranslation } from 'react-i18next'
+import { TelemetryEvent } from '../../../common/telemetry-event.ts'
 
 interface GroupsListItemMenuProps {
   onEdit: (evt: MouseEvent<HTMLElement>) => void
@@ -36,11 +36,11 @@ function GroupsListItemMenu({ onDelete, onEdit }: GroupsListItemMenuProps) {
   }
 
   return (
-    <div className="relative">
+    <div className="relative self-start">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="icon-sm" variant="ghost">
-            <EllipsisIcon className="size-4" />
+          <Button size="icon-sm" variant="ghost" className="size-6">
+            <EllipsisIcon className="size-3.5" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

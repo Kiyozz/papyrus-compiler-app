@@ -1,3 +1,7 @@
+import { bridge } from '@/bridge.ts'
+import { DialogCompilationLogs } from '@/components/dialog/dialog-compilation-logs.tsx'
+import { DialogDocumentation } from '@/components/dialog/dialog-documentation.tsx'
+import { AppLogoIcon } from '@/components/icons/app-logo-icon.tsx'
 import {
   Sidebar,
   SidebarContent,
@@ -8,10 +12,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar.tsx'
-import type { ComponentProps, MouseEvent } from 'react'
-import { AppLogoIcon } from '@/components/icons/app-logo-icon.tsx'
-import { bridge } from '@/bridge.ts'
 import { BookIcon, BoxesIcon, ChevronsUpDownIcon, ComputerIcon, FileClockIcon, SettingsIcon } from 'lucide-react'
+import type { ComponentProps, MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
 
 const mainItems = [
@@ -36,10 +38,12 @@ const miscItems = [
   {
     icon: FileClockIcon,
     text: 'Logs',
+    dialog: DialogCompilationLogs,
   },
   {
     icon: BookIcon,
     text: 'Documentation',
+    dialog: DialogDocumentation,
   },
 ] as const
 
@@ -55,7 +59,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               size="lg"
-              className="transition-[padding,width,height] duration-200 ease-linear group-data-[collapsible=icon]:h-auto! group-data-[collapsible=icon]:w-full! group-data-[collapsible=icon]:rounded-none group-data-[collapsible=icon]:p-2!"
+              className="transition-[padding,width] duration-200 ease-linear group-data-[collapsible=icon]:h-auto! group-data-[collapsible=icon]:w-full! group-data-[collapsible=icon]:rounded-none group-data-[collapsible=icon]:p-2!"
               onClick={handleClickMenu}
             >
               <div className="flex aspect-square rounded-lg">
@@ -87,12 +91,14 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu>
             {miscItems.map((item) => (
-              <SidebarMenuItem key={item.text}>
-                <SidebarMenuButton tooltip={item.text}>
-                  <item.icon />
-                  <span>{item.text}</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+              <item.dialog key={item.text}>
+                <SidebarMenuItem key={item.text}>
+                  <SidebarMenuButton tooltip={item.text}>
+                    <item.icon />
+                    <span>{item.text}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </item.dialog>
             ))}
           </SidebarMenu>
         </SidebarGroup>

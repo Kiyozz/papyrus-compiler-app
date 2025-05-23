@@ -5,12 +5,8 @@
 @custom-variant sidebar-closed (:is(body:has(.sidebar[data-collapsible="icon"])) &);
 
 @utility page {
-  height: calc(100svh - 4rem);
+  height: calc(100svh - var(--sidebar-height));
   transition: height 0.15s linear;
-
-  @variant sidebar-closed {
-    height: calc(100svh - 3rem);
-  }
 }
 
 /*
@@ -181,6 +177,11 @@
 }
 
 @layer base {
+  :root {
+    --sidebar-height: 4rem;
+    --page-height: calc(100dvh - var(--sidebar-height));
+  }
+
   .drag {
     /*noinspection CssUnknownProperty*/
     -webkit-app-region: drag;

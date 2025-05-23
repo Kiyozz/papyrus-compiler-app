@@ -4,14 +4,23 @@
  * All rights reserved.
  */
 
+import { bridge } from '@/bridge.ts'
+import { Button } from '@/components/ui/button.tsx'
+import { Form } from '@/components/ui/form.tsx'
+import { ScrollArea } from '@/components/ui/scroll-area.tsx'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
+import { useDocumentation } from '@/hooks/use-documentation.ts'
+import { LayoutHeader, LayoutHeaderTitle } from '@/pages/layout.tsx'
 import is from '@sindresorhus/is'
 import debounce from 'debounce-fn'
+import { BookIcon, RotateCcwIcon } from 'lucide-react'
 import { useCallback, useEffect, useMemo } from 'react'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { GameType } from '../../../common/game'
 import { TelemetryEvent } from '../../../common/telemetry-event'
+import { Theme } from '../../../common/theme.ts'
 import { useApp } from '../../hooks/use-app'
-import { useDocumentation } from '@/hooks/use-documentation.ts'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import SettingsCompilation from './settings-compilation'
 import SettingsGameSection from './settings-game-section.tsx'
@@ -19,14 +28,6 @@ import SettingsMo2 from './settings-mo2/settings-mo2'
 import SettingsTelemetrySection from './settings-telemetry-section.tsx'
 import SettingsThemeSection from './settings-theme-section.tsx'
 import { useSettings } from './use-settings'
-import { LayoutHeader, LayoutHeaderTitle } from '@/pages/layout.tsx'
-import { Button } from '@/components/ui/button.tsx'
-import { BookIcon, RotateCcwIcon } from 'lucide-react'
-import { useForm } from 'react-hook-form'
-import { Form } from '@/components/ui/form.tsx'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
-import { Theme } from '../../../common/theme.ts'
-import { bridge } from '@/bridge.ts'
 
 const maxConcurrentCompilationScripts = 100
 
@@ -227,15 +228,17 @@ export function SettingsPage() {
       </LayoutHeader>
 
       <Form {...form}>
-        <form className="page flex flex-col gap-4 overflow-y-scroll p-4">
-          <SettingsGameSection />
-          <SettingsCompilation />
-          <SettingsMo2 />
-          <div className="grid grid-cols-2 gap-4">
-            <SettingsThemeSection />
-            <SettingsTelemetrySection />
-          </div>
-        </form>
+        <ScrollArea className="h-full p-4">
+          <form className="page flex flex-col gap-4">
+            <SettingsGameSection />
+            <SettingsCompilation />
+            <SettingsMo2 />
+            <div className="grid grid-cols-2 gap-4 pb-10">
+              <SettingsThemeSection />
+              <SettingsTelemetrySection />
+            </div>
+          </form>
+        </ScrollArea>
       </Form>
     </>
   )

@@ -4,9 +4,10 @@
  * All rights reserved.
  */
 
-import DialogGroup from '@/components/dialog/dialog-group.tsx'
+import DialogGroupForm from '@/components/dialog/dialog-group.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Label } from '@/components/ui/label.tsx'
+import { ScrollArea } from '@/components/ui/scroll-area.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
 import { LocalStorage } from '@/enums/local-storage.enum.ts'
 import { useApp } from '@/hooks/use-app'
@@ -15,8 +16,7 @@ import { useTelemetry } from '@/hooks/use-telemetry'
 import { LayoutHeader, LayoutHeaderTitle } from '@/pages/layout.tsx'
 import { type Group } from '@/types'
 import { PlusIcon } from 'lucide-react'
-import { useState } from 'react'
-import type { MouseEvent } from 'react'
+import { type MouseEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useLocalStorage from 'react-use-localstorage'
 import { TelemetryEvent } from '../../../common/telemetry-event'
@@ -86,43 +86,45 @@ export function GroupsPage() {
         </Button>
       </LayoutHeader>
 
-      <section className="flex grow flex-col gap-6 p-6">
-        <DialogGroup
-          group={editingGroup}
-          onClose={onClosePopup}
-          onGroupAdd={onGroupAdd}
-          onGroupEdit={onGroupEdit}
-          open={isDialogOpen}
-        />
+      <ScrollArea className="h-(--page-height)">
+        <section className="flex h-full flex-col gap-6 p-6">
+          <DialogGroupForm
+            group={editingGroup}
+            onClose={onClosePopup}
+            onGroupAdd={onGroupAdd}
+            onGroupEdit={onGroupEdit}
+            open={isDialogOpen}
+          />
 
-        {groups.length > 0 && (
-          <div className="flex w-full items-center justify-end">
-            <Label htmlFor="more-details" className="pr-2">
-              {t('common.moreDetails')}
-            </Label>
-            <Switch id="more-details" checked={isMoreDetails === 'true'} onCheckedChange={onChangeMoreDetails} />
-          </div>
-        )}
+          {groups.length > 0 && (
+            <div className="flex w-full items-center justify-end">
+              <Label htmlFor="more-details" className="pr-2">
+                {t('common.moreDetails')}
+              </Label>
+              <Switch id="more-details" checked={isMoreDetails === 'true'} onCheckedChange={onChangeMoreDetails} />
+            </div>
+          )}
 
-        {groups.length > 0 ? (
-          <ul className="flex flex-col gap-2">
-            {groups.map((group) => (
-              <GroupsListItem
-                group={group}
-                key={group.name}
-                moreDetails={isMoreDetails === 'true'}
-                onDelete={onClickRemoveGroup}
-                onEdit={onClickEditGroup}
-              />
-            ))}
-          </ul>
-        ) : (
-          <div className="h-full w-full justify-center gap-4 text-lg">
-            <h5 className="text-xl">{t('page.groups.createGroupText')}</h5>
-            <p>{t('page.groups.whatIsAGroup')}</p>
-          </div>
-        )}
-      </section>
+          {groups.length > 0 ? (
+            <ul className="divide-y divide-accent rounded-md border">
+              {groups.map((group) => (
+                <GroupsListItem
+                  group={group}
+                  key={group.name}
+                  moreDetails={isMoreDetails === 'true'}
+                  onDelete={onClickRemoveGroup}
+                  onEdit={onClickEditGroup}
+                />
+              ))}
+            </ul>
+          ) : (
+            <div className="h-full w-full justify-center gap-4 text-lg">
+              <h5 className="text-xl">{t('page.groups.createGroupText')}</h5>
+              <p>{t('page.groups.whatIsAGroup')}</p>
+            </div>
+          )}
+        </section>
+      </ScrollArea>
     </>
   )
 }
