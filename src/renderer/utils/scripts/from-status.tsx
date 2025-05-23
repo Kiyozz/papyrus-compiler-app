@@ -4,11 +4,9 @@
  * All rights reserved.
  */
 
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import ErrorIcon from '@mui/icons-material/Error'
-import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty'
-import { ScriptStatus } from '../../enums/script-status.enum'
-import type { ScriptRenderer } from '../../types'
+import { ScriptStatus } from '@/enums/script-status.enum.ts'
+import type { ScriptRenderer } from '@/types/index.ts'
+import { CircleCheckIcon, CircleXIcon, HourglassIcon } from 'lucide-react'
 
 const classNameFromStatus = (script: ScriptRenderer): string => {
   switch (script.status) {
@@ -19,19 +17,19 @@ const classNameFromStatus = (script: ScriptRenderer): string => {
     case ScriptStatus.success:
       return 'text-green-500 dark:text-green-400'
     default:
-      return 'text-red-300'
+      return 'text-destructive'
   }
 }
 
-export const iconFromStatus = (script: ScriptRenderer) => {
+export const IconFromStatus = ({ script }: { script: ScriptRenderer }) => {
   switch (script.status) {
     case ScriptStatus.idle:
       return null
     case ScriptStatus.running:
-      return <HourglassEmptyIcon className={classNameFromStatus(script)} />
+      return <HourglassIcon className={classNameFromStatus(script)} />
     case ScriptStatus.success:
-      return <CheckCircleIcon className={classNameFromStatus(script)} />
+      return <CircleCheckIcon className={classNameFromStatus(script)} />
     default:
-      return <ErrorIcon className={classNameFromStatus(script)} />
+      return <CircleXIcon className={classNameFromStatus(script)} />
   }
 }

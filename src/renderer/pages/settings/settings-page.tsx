@@ -206,7 +206,7 @@ export function SettingsPage() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button onClick={() => openDocumentation('settings-app-bar')}>
+                <Button onClick={() => openDocumentation('settings-app-bar')} size="icon">
                   <BookIcon />
                 </Button>
               </TooltipTrigger>
@@ -216,7 +216,7 @@ export function SettingsPage() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button onClick={onClickPageRefresh}>
+                <Button onClick={onClickPageRefresh} size="icon">
                   <RotateCcwIcon />
                 </Button>
               </TooltipTrigger>

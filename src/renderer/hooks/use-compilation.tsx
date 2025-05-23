@@ -4,14 +4,7 @@
  * All rights reserved.
  */
 
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import is from '@sindresorhus/is'
 import { bridge } from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
@@ -39,11 +32,9 @@ interface CompilationContext {
 
 const Context = createContext({} as CompilationContext)
 
-const whenCompileScriptFinish = (
-  script: string,
-): Promise<CompilationResult> => {
+const whenCompileScriptFinish = (script: string): Promise<CompilationResult> => {
   return new Promise<CompilationResult>((resolve, reject) => {
-    bridge.compilation.onceFinish(script, result => {
+    bridge.compilation.onceFinish(script, (result) => {
       if (result.success) {
         resolve(result)
       } else {
@@ -54,29 +45,19 @@ const whenCompileScriptFinish = (
 }
 
 function CompilationProvider({ children }: React.PropsWithChildren) {
-  const [compilationScripts, setCompilationScripts] = useState<
-    ScriptRenderer[]
-  >([])
-  const [isRunning, setRunning] = useState(false)
-  const [compilationLogs, setCompilationLogs] = useState<
-    [ScriptRenderer, string][]
-  >([])
+  const [compilationScripts, setCompilationScripts] = useState<ScriptRenderer[]>([])
+  const [compilationLogs, setCompilationLogs] = useState<[ScriptRenderer, string][]>([])
   const { config } = useApp()
   const concurrentScripts = useMemo(
-    () =>
-      config.compilation.concurrentScripts === 0
-        ? 1
-        : config.compilation.concurrentScripts,
+    () => (config.compilation.concurrentScripts === 0 ? 1 : config.compilation.concurrentScripts),
     [config],
   )
 
-  useEffect(() => {
-    setRunning(compilationScripts.some(isRunningScript))
-  }, [compilationScripts])
+  const isRunning = useMemo(() => compilationScripts.some(isRunningScript), [compilationScripts])
 
   const clearCompilationLogs = useCallback((script?: ScriptRenderer) => {
     if (script) {
-      setCompilationLogs(logs => {
+      setCompilationLogs((logs) => {
         return logs.filter(([s]) => {
           return !scriptEquals(script)(s)
         })
@@ -89,7 +70,7 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
   const start = useCallback(
     async ({ scripts }: StartOptions) => {
       console.log('Starting compilation for', scripts)
-      setCompilationLogs(logs => {
+      setCompilationLogs((logs) => {
         return logs.filter(([s]) => {
           return !scriptInList(scripts)(s)
         })
@@ -100,7 +81,7 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
       for (const partialScripts of scriptsOfScripts) {
         setCompilationScripts((cs: ScriptRenderer[]) => {
           return cs.map((s: ScriptRenderer) => {
-            const found = partialScripts.find(ps => ps.id === s.id)
+            const found = partialScripts.find((ps) => ps.id === s.id)
 
             if (!found) {
               return s
@@ -112,7 +93,7 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
           })
         })
 
-        partialScripts.forEach(script => {
+        partialScripts.forEach((script) => {
           bridge.compilation.start(script.name)
         })
 
@@ -120,12 +101,10 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
         await Promise.all(
           partialScripts.map(async (s: ScriptRenderer) => {
             try {
-              const result: CompilationResult = await whenCompileScriptFinish(
-                s.name,
-              )
+              const result: CompilationResult = await whenCompileScriptFinish(s.name)
 
               setCompilationScripts((cs: ScriptRenderer[]) => {
-                const found = cs.findIndex(incs => incs.id === s.id)
+                const found = cs.findIndex((incs) => incs.id === s.id)
 
                 if (found === -1) {
                   return cs
@@ -137,21 +116,19 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
                   throw new TypeError('foundCs is undefined')
                 }
 
-                foundCs.status = result.success
-                  ? ScriptStatus.success
-                  : ScriptStatus.failed
+                foundCs.status = result.success ? ScriptStatus.success : ScriptStatus.failed
 
                 return [...cs]
               })
 
-              setCompilationLogs(cl => {
+              setCompilationLogs((cl) => {
                 return [[s, result.output], ...cl]
               })
             } catch (e) {
               const errorMessage = fromError(e).message
 
               setCompilationScripts((cs: ScriptRenderer[]) => {
-                const found = cs.findIndex(incs => incs.id === s.id)
+                const found = cs.findIndex((incs) => incs.id === s.id)
 
                 if (found === -1) {
                   return cs
@@ -168,7 +145,7 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
                 return [...cs]
               })
 
-              setCompilationLogs(cl => {
+              setCompilationLogs((cl) => {
                 return [[s, errorMessage], ...cl]
               })
             }

@@ -5,6 +5,7 @@
  */
 
 import debounce from 'debounce-fn'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { fromError } from '../common/from-error'
 import App from './app'
@@ -21,7 +22,9 @@ import VersionProvider from './hooks/use-version'
 import SettingsProvider from './pages/settings/use-settings'
 import { loadTranslations } from './translations'
 import { isProduction } from './utils/is-production'
-import { StrictMode } from 'react'
+
+// @ts-expect-error - ignore, load all fonts
+import 'unfonts.css'
 
 async function start() {
   const root = document.getElementById('app')

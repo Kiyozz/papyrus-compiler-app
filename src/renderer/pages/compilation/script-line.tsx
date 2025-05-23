@@ -4,13 +4,13 @@
  * All rights reserved.
  */
 
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
-import PlayCircleIcon from '@mui/icons-material/PlayCircle'
-import { IconButton, ListItem, ListItemIcon, ListItemText, Paper } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import type { ScriptRenderer } from '../../types'
-import { iconFromStatus } from '../../utils/scripts/from-status'
-import { isRunningScript } from '../../utils/scripts/status'
+import type { ScriptRenderer } from '@/types'
+import { IconFromStatus } from '@/utils/scripts/from-status.tsx'
+import { isRunningScript } from '@/utils/scripts/status.ts'
+import { Button } from '@/components/ui/button.tsx'
+import { PlayIcon, TrashIcon } from 'lucide-react'
+import { useSettings } from '@/pages/settings/use-settings.tsx'
 
 interface ScriptLineProps {
   script: ScriptRenderer
@@ -20,6 +20,7 @@ interface ScriptLineProps {
 
 function ScriptLine({ script, onClickRemoveScript, onClickPlayCompilation }: ScriptLineProps) {
   const { t } = useTranslation()
+  const { configError } = useSettings()
 
   const onClickRemove = () => {
     onClickRemoveScript(script)
@@ -29,38 +30,28 @@ function ScriptLine({ script, onClickRemoveScript, onClickPlayCompilation }: Scr
     onClickPlayCompilation(script)
   }
 
-  function StatusIcon() {
-    const icon = iconFromStatus(script)
-
-    if (!icon) return null
-
-    return <ListItemIcon>{icon}</ListItemIcon>
-  }
-
   return (
-    <ListItem
-      component={Paper}
-      secondaryAction={
-        <IconButton
-          aria-disabled={isRunningScript(script)}
-          aria-label={t('common.remove')}
-          color="error"
-          disabled={isRunningScript(script)}
-          onClick={onClickRemove}
-        >
-          <DeleteOutlinedIcon />
-        </IconButton>
-      }
-      variant="outlined"
-    >
-      <ListItemIcon>
-        <IconButton disabled={isRunningScript(script)} edge="end" onClick={onClickPlay} size="small">
-          <PlayCircleIcon className="text-primary-400" />
-        </IconButton>
-      </ListItemIcon>
-      <ListItemText aria-label={script.name} primary={script.name} />
-      <StatusIcon />
-    </ListItem>
+    <li className="flex w-full items-center gap-2 rounded-lg p-2 text-sm hover:bg-secondary/75 border">
+      <Button
+        size="icon-sm"
+        className="rounded-full"
+        disabled={configError !== false || isRunningScript(script)}
+        onClick={onClickPlay}
+      >
+        <PlayIcon />
+      </Button>
+      <span className="flex-1 font-mono">{script.name}</span>
+      <IconFromStatus script={script} />
+      <Button
+        size="icon-sm"
+        disabled={isRunningScript(script)}
+        onClick={onClickRemove}
+        variant="destructive"
+        aria-label={t('common.remove')}
+      >
+        <TrashIcon />
+      </Button>
+    </li>
   )
 }
 

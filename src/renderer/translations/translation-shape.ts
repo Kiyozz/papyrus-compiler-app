@@ -45,6 +45,7 @@ export interface TranslationShape {
     }
   }
   config: {
+    errorTitle: string
     checkError_game: string
     checkError_compiler: string
     checkError_scripts: string

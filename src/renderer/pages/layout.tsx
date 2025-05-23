@@ -1,13 +1,15 @@
 import { AppSidebar } from '@/components/app-sidebar.tsx'
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar.tsx'
 import { Separator } from '@/components/ui/separator.tsx'
-import { Outlet } from 'react-router-dom'
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar.tsx'
+import { Toaster } from '@/components/ui/sonner.tsx'
 import type { PropsWithChildren } from 'react'
+import { Outlet } from 'react-router-dom'
 
 export function Layout() {
   return (
     <SidebarProvider>
       <AppSidebar />
+      <Toaster />
       <SidebarInset>
         <Outlet />
       </SidebarInset>
@@ -17,7 +19,7 @@ export function Layout() {
 
 export function LayoutHeader({ children }: PropsWithChildren) {
   return (
-    <header className="drag flex h-16 shrink-0 items-center justify-between px-4 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+    <header className="drag flex h-16 shrink-0 items-center justify-between px-4 transition-[width,height] ease-linear">
       {children}
     </header>
   )

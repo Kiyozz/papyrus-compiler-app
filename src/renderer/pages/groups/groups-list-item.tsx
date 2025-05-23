@@ -4,10 +4,9 @@
  * All rights reserved.
  */
 
-import { ListItem, ListItemText, Paper } from '@mui/material'
 import type { MouseEvent, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { Group } from '../../types'
+import type { Group } from '@/types/index.ts'
 import GroupsListItemMenu from './groups-list-item-menu'
 
 interface GroupsListItemProps {
@@ -31,16 +30,13 @@ function GroupsListItem({ group, onDelete, onEdit, moreDetails }: GroupsListItem
   }
 
   return (
-    <ListItem
-      className="py-4"
-      component={Paper}
-      secondaryAction={
-        <GroupsListItemMenu id={`${group.name}-menu`} onDelete={onDelete(group)} onEdit={onEdit(group)} />
-      }
-      variant="outlined"
-    >
-      <ListItemText primary={group.name} secondary={secondaryText} />
-    </ListItem>
+    <li className="flex items-center rounded-md border p-4">
+      <p className="flex grow flex-col">
+        <span className="text-lg">{group.name}</span>
+        {secondaryText && <span className="text-muted-foreground text-sm">{secondaryText}</span>}
+      </p>
+      <GroupsListItemMenu onDelete={onDelete(group)} onEdit={onEdit(group)} />
+    </li>
   )
 }
 

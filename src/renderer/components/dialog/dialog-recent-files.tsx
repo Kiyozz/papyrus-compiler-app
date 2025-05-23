@@ -4,49 +4,38 @@
  * All rights reserved.
  */
 
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
+import { bridge } from '@/bridge.ts'
+import { Button } from '@/components/ui/button.tsx'
+import { Checkbox } from '@/components/ui/checkbox.tsx'
 import {
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
   Dialog,
-  DialogTitle,
   DialogContent,
-  DialogActions,
-  Button,
-  DialogContentText,
-  Toolbar,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  ListItemIcon,
-  IconButton,
-} from '@mui/material'
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog.tsx'
+import { Label } from '@/components/ui/label.tsx'
+import { Switch } from '@/components/ui/switch.tsx'
+import { useIpc } from '@/hooks/use-ipc.ts'
+import { usePlatform } from '@/hooks/use-platform.ts'
+import { useRecentFiles } from '@/hooks/use-recent-files.tsx'
+import { useTelemetry } from '@/hooks/use-telemetry.tsx'
+import { dirname } from '@/utils/dirname.ts'
+import { scriptsToRenderer } from '@/utils/scripts/scripts-to-renderer.ts'
+import { uniqScripts } from '@/utils/scripts/uniq-scripts.ts'
 import cx from 'classnames'
-import React, { memo, useMemo, useState } from 'react'
+import { Trash2Icon } from 'lucide-react'
+import React, { memo, type PropsWithChildren, useId, useMemo, useState } from 'react'
+import type { KeyboardEvent, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDidUpdate } from 'rooks'
 import { TelemetryEvent } from '../../../common/telemetry-event'
-import { bridge } from '../../bridge'
-import { useCompilation } from '../../hooks/use-compilation'
-import { useIpc } from '../../hooks/use-ipc'
-import { usePlatform } from '../../hooks/use-platform'
-import { useRecentFiles } from '../../hooks/use-recent-files'
-import { useTelemetry } from '../../hooks/use-telemetry'
-import { dirname } from '../../utils/dirname'
-import { scriptsToRenderer } from '../../utils/scripts/scripts-to-renderer'
-import { uniqScripts } from '../../utils/scripts/uniq-scripts'
 import type { Script } from '../../../common/types/script'
-import type { KeyboardEvent, MouseEvent } from 'react'
+import { useCompilation } from '../../hooks/use-compilation'
 
-interface DialogRecentFilesProps {
-  isOpen: boolean
-  onClose: () => void
-  onSelectFile: (files: Script[]) => void
-}
-
-function DialogRecentFiles({ isOpen, onClose }: DialogRecentFilesProps) {
+export function DialogRecentFiles({ children }: PropsWithChildren) {
+  const [open, setOpen] = useState(false)
   const { t } = useTranslation()
   const { send } = useTelemetry()
   const { setScripts, scripts: loadedScripts } = useCompilation()
@@ -57,35 +46,26 @@ function DialogRecentFiles({ isOpen, onClose }: DialogRecentFilesProps) {
     recentFiles,
     moreDetails: [isMoreDetails, setMoreDetails],
   } = useRecentFiles()
-  const [selectedRecentFiles, setSelectedRecentFiles] = useState(
-    new Map<string, Script>(),
-  )
+  const [selectedRecentFiles, setSelectedRecentFiles] = useState(new Map<string, Script>())
   const isValid = selectedRecentFiles.size > 0
 
   useDidUpdate(() => {
-    if (isOpen) {
+    if (open) {
       bridge.recentFiles.dialog.open()
     } else {
       bridge.recentFiles.dialog.close()
     }
-  }, [isOpen])
+  }, [open])
 
   const notLoadedRecentFiles = useMemo(() => {
-    return recentFiles.filter(rf => {
-      return !loadedScripts.find(ls => ls.path === rf.path)
+    return recentFiles.filter((rf) => {
+      return !loadedScripts.find((ls) => ls.path === rf.path)
     })
   }, [recentFiles, loadedScripts])
 
   useIpc(bridge.recentFiles.select.onAll, () => {
     send(TelemetryEvent.recentFilesSelectAll, {})
-    setSelectedRecentFiles(
-      new Map(
-        notLoadedRecentFiles.map(notLoadedFile => [
-          notLoadedFile.path,
-          notLoadedFile,
-        ]),
-      ),
-    )
+    setSelectedRecentFiles(new Map(notLoadedRecentFiles.map((notLoadedFile) => [notLoadedFile.path, notLoadedFile])))
   })
 
   useIpc(bridge.recentFiles.select.onNone, () => {
@@ -96,13 +76,13 @@ function DialogRecentFiles({ isOpen, onClose }: DialogRecentFilesProps) {
   useIpc(bridge.recentFiles.select.onInvertSelection, () => {
     send(TelemetryEvent.recentFilesInvertSelection, {})
 
-    setSelectedRecentFiles(selectedFiles => {
+    setSelectedRecentFiles((selectedFiles) => {
       return new Map(
         notLoadedRecentFiles
-          .filter(s => {
+          .filter((s) => {
             return !selectedFiles.has(s.path)
           })
-          .map(s => [s.path, s]),
+          .map((s) => [s.path, s]),
       )
     })
   })
@@ -116,7 +96,7 @@ function DialogRecentFiles({ isOpen, onClose }: DialogRecentFilesProps) {
 
   const onClickClose = () => {
     setSelectedRecentFiles(new Map())
-    onClose()
+    setOpen(false)
   }
 
   const onClickLoad = () => {
@@ -125,17 +105,9 @@ function DialogRecentFiles({ isOpen, onClose }: DialogRecentFilesProps) {
     }
 
     send(TelemetryEvent.recentFilesLoaded, {})
-    setScripts(scripts =>
-      uniqScripts(
-        scriptsToRenderer(scripts, Array.from(selectedRecentFiles.values())),
-      ),
-    )
+    setScripts((scripts) => uniqScripts(scriptsToRenderer(scripts, Array.from(selectedRecentFiles.values()))))
     setSelectedRecentFiles(new Map())
-    onClose()
-  }
-
-  const onDialogClose = () => {
-    onClickClose()
+    setOpen(false)
   }
 
   const onDialogKeyDown = (evt: KeyboardEvent) => {
@@ -147,17 +119,15 @@ function DialogRecentFiles({ isOpen, onClose }: DialogRecentFilesProps) {
   }
 
   const onClickItem = (script: Script) => {
-    return (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.currentTarget.blur()
-
-      if (selectedRecentFiles.has(script.path)) {
-        setSelectedRecentFiles(list => {
+    return (checked: boolean) => {
+      if (!checked) {
+        setSelectedRecentFiles((list) => {
           list.delete(script.path)
 
           return new Map(list)
         })
       } else {
-        setSelectedRecentFiles(list => {
+        setSelectedRecentFiles((list) => {
           list.set(script.path, script)
 
           return new Map(list)
@@ -173,7 +143,7 @@ function DialogRecentFiles({ isOpen, onClose }: DialogRecentFilesProps) {
       await removeRecentFile(script)
 
       send(TelemetryEvent.recentFileRemove, {})
-      setSelectedRecentFiles(srf => {
+      setSelectedRecentFiles((srf) => {
         srf.delete(script.path)
 
         return new Map(srf)
@@ -182,7 +152,7 @@ function DialogRecentFiles({ isOpen, onClose }: DialogRecentFilesProps) {
   }
 
   const isAlreadyLoaded = (script: Script) => {
-    return Boolean(loadedScripts.find(s => s.path === script.path))
+    return Boolean(loadedScripts.find((s) => s.path === script.path))
   }
 
   function Item({
@@ -192,118 +162,84 @@ function DialogRecentFiles({ isOpen, onClose }: DialogRecentFilesProps) {
     selected,
     script,
   }: {
-    onClickFile: (evt: MouseEvent<HTMLButtonElement>) => void
+    onClickFile: (checked: boolean) => void
     onClickDelete: (evt: MouseEvent<HTMLButtonElement>) => void
     selected: boolean
     disabled?: boolean
     script: Script
   }) {
+    const id = useId()
     const scriptInfo = {
       path: `${dirname(script.path)}${platform === 'windows' ? '\\' : '/'}`,
       filename: script.name,
     }
 
     return (
-      <ListItem
-        disablePadding
-        secondaryAction={
-          <IconButton color="error" onClick={onClickDelete} tabIndex={2}>
-            <DeleteOutlinedIcon />
-          </IconButton>
-        }
-      >
-        <ListItemButton
-          classes={{ root: 'py-0' }}
-          component="button"
-          disableRipple
-          disabled={disabled}
-          onClick={onClickFile}
-          role="checkbox"
-          tabIndex={1}
+      <li className="flex items-center gap-2 first:rounded-t-md last:rounded-b-md hover:bg-accent/75">
+        <Label
+          htmlFor={id}
+          className="group grow px-2 py-1 aria-disabled:bg-muted aria-disabled:text-muted-foreground"
+          aria-disabled={disabled}
         >
-          <ListItemIcon>
-            <Checkbox
-              checked={selected}
-              disableRipple
-              edge="start"
-              inputProps={{
-                'aria-labelledby': script.name,
-              }}
-              tabIndex={-1}
-            />
-          </ListItemIcon>
-          <ListItemText
-            id={script.name}
-            primary={scriptInfo.filename}
-            secondary={isMoreDetails ? scriptInfo.path : undefined}
-            secondaryTypographyProps={{ variant: 'caption' }}
-          />
-        </ListItemButton>
-      </ListItem>
+          <Checkbox id={id} checked={selected} disabled={disabled} onCheckedChange={onClickFile} />
+          <span>{scriptInfo.filename}</span>
+          {isMoreDetails && <span className="text-muted-foreground text-sm">{scriptInfo.path}</span>}
+          <div className="flex grow justify-end">
+            <Button variant="destructive" size="icon-sm" className="size-6" onClick={onClickDelete} tabIndex={1}>
+              <Trash2Icon className="size-3.5" />
+            </Button>
+          </div>
+        </Label>
+      </li>
     )
   }
 
   return (
-    <Dialog
-      aria-describedby="recent-files-content"
-      aria-labelledby="recent-files-title"
-      fullScreen
-      onClose={onDialogClose}
-      onKeyDown={onDialogKeyDown}
-      open={isOpen}
-    >
-      <Toolbar className="p-0">
-        <DialogTitle className="grow" id="recent-files-title">
-          {t('page.compilation.actions.recentFiles')}
-        </DialogTitle>
-        <FormGroup id="recent-files-content">
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isMoreDetails}
-                onChange={() => setMoreDetails(v => !v)}
-              />
-            }
-            label={t<string>('common.moreDetails')}
-          />
-        </FormGroup>
-      </Toolbar>
-      <DialogContent className={cx(recentFiles.length !== 0 && 'p-0')} dividers>
+    <Dialog onOpenChange={setOpen} open={open}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent
+        aria-describedby={undefined}
+        onKeyDown={onDialogKeyDown}
+        className="flex h-full max-w-screen flex-col rounded-none sm:max-w-screen"
+      >
+        <DialogHeader className="drag">
+          <DialogTitle className="grow">{t('page.compilation.actions.recentFiles')}</DialogTitle>
+          <div className="no-drag flex items-center">
+            <Label htmlFor="more-details" className="pr-2">
+              {t<string>('common.moreDetails')}
+            </Label>
+            <Switch id="more-details" checked={isMoreDetails} onCheckedChange={setMoreDetails} />
+          </div>
+        </DialogHeader>
         {recentFiles.length === 0 ? (
-          <DialogContentText>
-            {t('page.compilation.recentFilesDialog.noRecentFiles')}
-          </DialogContentText>
+          <p>{t('page.compilation.recentFilesDialog.noRecentFiles')}</p>
         ) : (
-          <List className="overflow-x-hidden">
-            {recentFiles.map(script => {
-              return (
-                <Item
-                  disabled={isAlreadyLoaded(script)}
-                  key={script.path}
-                  onClickDelete={onClickDeleteFile(script)}
-                  onClickFile={onClickItem(script)}
-                  script={script}
-                  selected={selectedRecentFiles.has(script.path)}
-                />
-              )
-            })}
-          </List>
+          <div className="grow">
+            <ul className="divide-y divide-accent rounded-md border">
+              {recentFiles.map((script) => {
+                return (
+                  <Item
+                    disabled={isAlreadyLoaded(script)}
+                    key={script.path}
+                    onClickDelete={onClickDeleteFile(script)}
+                    onClickFile={onClickItem(script)}
+                    script={script}
+                    selected={selectedRecentFiles.has(script.path)}
+                  />
+                )
+              })}
+            </ul>
+          </div>
         )}
+        <DialogFooter>
+          <Button onClick={onClickClose} tabIndex={4}>
+            {t('common.cancel')}
+          </Button>
+          <Button disabled={selectedRecentFiles.size === 0} onClick={onClickLoad} tabIndex={3}>
+            {t('page.compilation.recentFilesDialog.load')}
+          </Button>
+        </DialogFooter>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClickClose} tabIndex={4}>
-          {t('common.cancel')}
-        </Button>
-        <Button
-          disabled={selectedRecentFiles.size === 0}
-          onClick={onClickLoad}
-          tabIndex={3}
-        >
-          {t('page.compilation.recentFilesDialog.load')}
-        </Button>
-      </DialogActions>
     </Dialog>
   )
 }
-
-export default memo(DialogRecentFiles)

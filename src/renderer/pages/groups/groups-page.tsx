@@ -4,24 +4,23 @@
  * All rights reserved.
  */
 
-import { Checkbox, FormControlLabel, FormGroup, List, Toolbar, Typography } from '@mui/material'
-import cx from 'classnames'
-import { useState } from 'react'
-import type { ChangeEvent, MouseEvent } from 'react'
-import { useTranslation } from 'react-i18next'
-import useLocalStorage from 'react-use-localstorage'
-import { TelemetryEvent } from '../../../common/telemetry-event'
 import DialogGroup from '@/components/dialog/dialog-group.tsx'
-import Page from '@/components/page.tsx'
+import { Button } from '@/components/ui/button.tsx'
+import { Label } from '@/components/ui/label.tsx'
+import { Switch } from '@/components/ui/switch.tsx'
 import { LocalStorage } from '@/enums/local-storage.enum.ts'
 import { useApp } from '@/hooks/use-app'
 import { useGroups } from '@/hooks/use-groups.ts'
 import { useTelemetry } from '@/hooks/use-telemetry'
-import { type Group } from '@/types'
-import GroupsListItem from './groups-list-item'
 import { LayoutHeader, LayoutHeaderTitle } from '@/pages/layout.tsx'
-import { Button } from '@/components/ui/button.tsx'
+import { type Group } from '@/types'
 import { PlusIcon } from 'lucide-react'
+import { useState } from 'react'
+import type { MouseEvent } from 'react'
+import { useTranslation } from 'react-i18next'
+import useLocalStorage from 'react-use-localstorage'
+import { TelemetryEvent } from '../../../common/telemetry-event'
+import GroupsListItem from './groups-list-item'
 
 export function GroupsPage() {
   const { send } = useTelemetry()
@@ -71,24 +70,23 @@ export function GroupsPage() {
     setDialogOpen(false)
   }
 
-  const onChangeMoreDetails = (evt: ChangeEvent<HTMLInputElement>) => {
+  const onChangeMoreDetails = (checked: boolean) => {
     send(TelemetryEvent.groupMoreDetails, {
-      moreDetails: evt.currentTarget.checked,
+      moreDetails: checked,
     })
-    setMoreDetails(evt.currentTarget.checked ? 'true' : 'false')
+    setMoreDetails(checked ? 'true' : 'false')
   }
 
   return (
     <>
       <LayoutHeader>
         <LayoutHeaderTitle>{t('page.groups.title')}</LayoutHeaderTitle>
-        <Button onClick={onClickAddButton}>
+        <Button onClick={onClickAddButton} size="icon">
           <PlusIcon />
-          <span>{t('page.groups.actions.create')}</span>
         </Button>
       </LayoutHeader>
 
-      <Page className={cx(groups.length > 0 && 'pt-0')}>
+      <section className="flex grow flex-col gap-6 p-6">
         <DialogGroup
           group={editingGroup}
           onClose={onClosePopup}
@@ -98,18 +96,16 @@ export function GroupsPage() {
         />
 
         {groups.length > 0 && (
-          <Toolbar className="p-0">
-            <FormGroup className="ml-auto">
-              <FormControlLabel
-                control={<Checkbox checked={isMoreDetails === 'true'} onChange={onChangeMoreDetails} />}
-                label={t<string>('common.moreDetails')}
-              />
-            </FormGroup>
-          </Toolbar>
+          <div className="flex w-full items-center justify-end">
+            <Label htmlFor="more-details" className="pr-2">
+              {t('common.moreDetails')}
+            </Label>
+            <Switch id="more-details" checked={isMoreDetails === 'true'} onCheckedChange={onChangeMoreDetails} />
+          </div>
         )}
 
         {groups.length > 0 ? (
-          <List className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2">
             {groups.map((group) => (
               <GroupsListItem
                 group={group}
@@ -119,16 +115,14 @@ export function GroupsPage() {
                 onEdit={onClickEditGroup}
               />
             ))}
-          </List>
+          </ul>
         ) : (
           <div className="h-full w-full justify-center gap-4 text-lg">
-            <Typography gutterBottom variant="h6">
-              {t('page.groups.createGroupText')}
-            </Typography>
-            <Typography variant="body2">{t('page.groups.whatIsAGroup')}</Typography>
+            <h5 className="text-xl">{t('page.groups.createGroupText')}</h5>
+            <p>{t('page.groups.whatIsAGroup')}</p>
           </div>
         )}
-      </Page>
+      </section>
     </>
   )
 }

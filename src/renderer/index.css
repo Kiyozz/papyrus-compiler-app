@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "./assets/fonts/fonts.css";
 
 @custom-variant dark (&:is(.dark *));
 @custom-variant sidebar-closed (:is(body:has(.sidebar[data-collapsible="icon"])) &);
@@ -125,12 +124,12 @@
 
   --ease-sharp: cubic-bezier(0.4, 0, 0.6, 1);
 
-  --font-family-sans: "Roboto", "-apple-system", "sans-serif";
-  --font-family-nova: "Proxima Nova", "sans-serif";
-  --font-family-mono: "IBM Plex Mono", "ui-monospace", "monospace";
-  --font-family-body: "Roboto", "-apple-system", "sans-serif";
-  --font-family-segoe: "Segoe UI", "Roboto";
-  --font-family-helvetica: "Helvetica Neue";
+  --font-sans: "Geist", "sans-serif";
+  --font-geist: "Geist", "sans-serif";
+  --font-mono: "Geist Mono", "ui-monospace", "monospace";
+  --font-body: "Geist", "sans-serif";
+  --font-segoe: "Segoe UI", "Roboto";
+  --font-helvetica: "Helvetica Neue";
 }
 
 @theme inline {
@@ -187,7 +186,23 @@
     -webkit-app-region: drag;
   }
 
-  .drag button {
+  /*noinspection CssMissingComma*/
+  .drag
+    :is(
+      button,
+      a,
+      [role="button"],
+      [role="link"],
+      [role="menuitem"],
+      [role="checkbox"],
+      [role="radio"],
+      [role="switch"]
+    ) {
+    /*noinspection CssUnknownProperty*/
+    -webkit-app-region: no-drag;
+  }
+
+  .no-drag {
     /*noinspection CssUnknownProperty*/
     -webkit-app-region: no-drag;
   }
