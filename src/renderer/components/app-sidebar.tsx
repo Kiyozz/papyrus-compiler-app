@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/sidebar.tsx'
 import { BookIcon, BoxesIcon, ChevronsUpDownIcon, ComputerIcon, FileClockIcon, SettingsIcon } from 'lucide-react'
 import type { ComponentProps, MouseEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router'
 
 const mainItems = [
   {
@@ -77,10 +77,13 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
             {mainItems.map((item) => (
               <SidebarMenuItem key={item.text}>
                 <SidebarMenuButton tooltip={item.text} asChild>
-                  <Link to={item.href}>
+                  <NavLink
+                    to={item.href}
+                    className="aria-[current=page]:bg-accent aria-[current=page]:text-accent-foreground"
+                  >
                     <item.icon />
                     <span>{item.text}</span>
-                  </Link>
+                  </NavLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}

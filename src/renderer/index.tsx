@@ -6,7 +6,10 @@
 
 import debounce from 'debounce-fn'
 import { StrictMode } from 'react'
+import { createPortal } from 'react-dom'
 import { createRoot } from 'react-dom/client'
+
+import { Toaster } from '@/components/ui/sonner.tsx'
 import { fromError } from '../common/from-error'
 import App from './app'
 import { bridge } from './bridge'
@@ -22,11 +25,8 @@ import VersionProvider from './hooks/use-version'
 import SettingsProvider from './pages/settings/use-settings'
 import { loadTranslations } from './translations'
 import { isProduction } from './utils/is-production'
-
-// @ts-expect-error - ignore, load all fonts
 import 'unfonts.css'
-import { Toaster } from '@/components/ui/sonner.tsx'
-import { createPortal } from 'react-dom'
+import { MemoryRouter } from 'react-router'
 
 async function start() {
   const root = document.getElementById('app')
@@ -44,28 +44,30 @@ async function start() {
   try {
     rootReact.render(
       <StrictMode>
-        <VersionProvider>
-          <AppProvider>
-            <TelemetryProvider>
-              <InitializationProvider>
-                <RecentFilesProvider>
-                  <CompilationProvider>
-                    <SettingsProvider>
-                      <FocusProvider>
-                        <DrawerProvider>
-                          <DropProvider>
-                            <App />
-                          </DropProvider>
-                        </DrawerProvider>
-                      </FocusProvider>
-                    </SettingsProvider>
-                  </CompilationProvider>
-                </RecentFilesProvider>
-              </InitializationProvider>
-            </TelemetryProvider>
-          </AppProvider>
-        </VersionProvider>
-        {createPortal(<Toaster />, document.body)}
+        <MemoryRouter>
+          <VersionProvider>
+            <AppProvider>
+              <TelemetryProvider>
+                <InitializationProvider>
+                  <RecentFilesProvider>
+                    <CompilationProvider>
+                      <SettingsProvider>
+                        <FocusProvider>
+                          <DrawerProvider>
+                            <DropProvider>
+                              <App />
+                            </DropProvider>
+                          </DrawerProvider>
+                        </FocusProvider>
+                      </SettingsProvider>
+                    </CompilationProvider>
+                  </RecentFilesProvider>
+                </InitializationProvider>
+              </TelemetryProvider>
+            </AppProvider>
+          </VersionProvider>
+          {createPortal(<Toaster />, document.body)}
+        </MemoryRouter>
       </StrictMode>,
     )
   } catch (e) {

@@ -1,17 +1,21 @@
 import { AppSidebar } from '@/components/app-sidebar.tsx'
+import { Titlebar } from '@/components/titlebar.tsx'
 import { Separator } from '@/components/ui/separator.tsx'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar.tsx'
 import type { PropsWithChildren } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 
 export function Layout() {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <Outlet />
-      </SidebarInset>
-    </SidebarProvider>
+    <>
+      <Titlebar />
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+          <Outlet />
+        </SidebarInset>
+      </SidebarProvider>
+    </>
   )
 }
 

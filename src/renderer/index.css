@@ -174,12 +174,17 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  :root {
+    --titlebar-height: 32px;
+  }
 }
 
 @layer base {
   :root {
     --sidebar-height: 4rem;
-    --page-height: calc(100dvh - var(--sidebar-height));
+    --sidebar-aside-height: calc(100dvh - var(--titlebar-height));
+    --page-height: calc(100dvh - var(--sidebar-height) - var(--titlebar-height));
   }
 
   .drag {
@@ -225,4 +230,73 @@
 .overflow-overlay,
 .container-after-titlebar {
   overflow: hidden scroll !important;
+}
+
+.titlebar {
+  font-size: 12px;
+  color: #171717;
+  @apply relative z-50 flex select-none items-center;
+}
+
+.titlebar.other-platform {
+  height: var(--titlebar-height);
+}
+
+.titlebar.macos {
+  height: 22px;
+  @apply justify-center;
+}
+
+.titlebar.macos-bigsur {
+  height: 34px;
+}
+
+.titlebar.maximized:not(.macos),
+.titlebar.maximized:not(.macos) .titlebar-control {
+  height: 24px;
+}
+
+.titlebar.maximized:not(.macos) .titlebar-control-close {
+  @apply mr-0.5;
+}
+
+.dark .titlebar {
+  color: #ffffff;
+}
+
+.titlebar-control {
+  width: 46px;
+  height: var(--titlebar-height);
+  /*noinspection CssNoGenericFontName*/
+  font-family: "Segoe MDL2 Assets";
+  font-size: 10px;
+  color: inherit;
+  @apply cursor-default border-none bg-transparent;
+}
+
+.titlebar .titlebar-control:hover {
+  @apply bg-light-700 transition-colors duration-300;
+}
+
+.titlebar .titlebar-control:hover:active {
+  @apply bg-light-600;
+}
+
+.titlebar .titlebar-control-close:hover {
+  background: #c42b1c;
+  color: #ffffff;
+  transition-property: none;
+}
+
+.titlebar .titlebar-control-close:active:hover {
+  background: #ce2b1c;
+  color: #ffffff;
+}
+
+.dark .titlebar-control {
+  color: #ffffff;
+}
+
+.dark .titlebar-control:not(.titlebar-control-close):hover {
+  @apply bg-darker;
 }

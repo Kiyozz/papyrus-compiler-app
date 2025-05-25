@@ -4,30 +4,19 @@
  * All rights reserved.
  */
 
-import { Button } from '@mui/material'
-import cx from 'classnames'
-import React from 'react'
+import { cn } from '@/lib/utils.ts'
+import type { MouseEvent } from 'react'
 import { bridge } from '../bridge'
 import { useFocus } from '../hooks/use-focus'
 import { usePlatform } from '../hooks/use-platform'
 import { useTitlebarHeight } from '../hooks/use-titlebar-height'
 import { useWindowState } from '../hooks/use-window-state'
-import type { MouseEvent } from 'react'
 
-interface TitlebarProps {
-  title: string
-}
-
-function Titlebar({ title }: TitlebarProps) {
+function Titlebar() {
   const isFocus = useFocus()
   const platform = usePlatform()
   const windowState = useWindowState()
   const titlebarHeight = useTitlebarHeight()
-
-  const handleClickMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.blur()
-    void bridge.titlebar.openMenu({ x: e.pageX, y: e.pageY })
-  }
 
   const isNotMacOs = platform !== 'macos' && platform !== 'macos-bigsur'
   const isMacOs = !isNotMacOs
@@ -53,12 +42,10 @@ function Titlebar({ title }: TitlebarProps) {
     await bridge.window.restore()
   }
 
-  const img = <div className="titlebar-icon h-4 w-4" />
-
   return (
     <div
-      className={cx(
-        'titlebar drag',
+      className={cn(
+        'titlebar drag justify-end border-b bg-sidebar',
         isMacOs && 'macos',
         isMacOsBigSur && 'macos-bigsur',
         isNotMacOs && 'other-platform',
@@ -67,22 +54,8 @@ function Titlebar({ title }: TitlebarProps) {
       )}
       data-height={titlebarHeight}
     >
-      {isNotMacOs && (
-        <Button className="mr-1 ml-0 min-w-0 rounded-none" onClick={handleClickMenu}>
-          {img}
-        </Button>
-      )}
-
-      <span
-        className={cx(
-          'grow',
-          isMacOs && 'text-center font-bold font-helvetica',
-          isMacOs && !isMacOsBigSur && 'text-[12px]',
-          isMacOsBigSur && 'text-[14px]',
-          isMacOs && !isFocus && 'text-[#6b6769]',
-        )}
-      >
-        {title}
+      <span className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 z-50 font-mono font-semibold">
+        Papyrus Compiler App
       </span>
       {isNotMacOs && (
         <div className="flex">
@@ -112,4 +85,4 @@ function Titlebar({ title }: TitlebarProps) {
   )
 }
 
-export default Titlebar
+export { Titlebar }

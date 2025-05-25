@@ -5,7 +5,7 @@
  */
 
 import { Layout } from '@/pages/layout.tsx'
-import { Navigate, Route, Routes as RouterRoutes } from 'react-router-dom'
+import { Navigate, Route, Routes as RouterRoutes } from 'react-router'
 import { CompilationPage } from './pages/compilation/compilation-page.tsx'
 import { GroupsPage } from './pages/groups/groups-page.tsx'
 import { SettingsPage } from './pages/settings/settings-page.tsx'
@@ -14,13 +14,14 @@ function Routes() {
   return (
     <RouterRoutes>
       <Route element={<Layout />}>
-        <Route index element={<CompilationPage />} path="/compilation" />
-        <Route element={<GroupsPage />} path="/groups" />
-        <Route element={<SettingsPage />} path="/settings" />
+        <Route index element={<Navigate to="/compilation" replace />} />
+        <Route path="/compilation" element={<CompilationPage />} />
+        <Route path="/groups" element={<GroupsPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
       </Route>
       <Route element={<Navigate replace to="/compilation" />} path="*" />
     </RouterRoutes>
   )
 }
 
-export default Routes
+export { Routes }

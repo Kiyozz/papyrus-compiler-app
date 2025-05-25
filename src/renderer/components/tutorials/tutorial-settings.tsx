@@ -4,16 +4,16 @@
  * All rights reserved.
  */
 
+import { bridge } from '@/bridge.ts'
 import { Button, Typography } from '@mui/material'
 import cx from 'classnames'
 import { useEffect, useState } from 'react'
 import type { MouseEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { Trans, useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { MOD_DOCUMENTATION_URL } from '../../../common/env'
 import { TelemetryEvent } from '../../../common/telemetry-event'
-import { bridge } from '../../bridge'
 import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
 
@@ -121,7 +121,7 @@ function Mo2SettingsStep({ next }: { next: Next }) {
 }
 
 function Backdrop() {
-  return <div className="fixed top-0 left-0 right-0 bottom-0 z-30 bg-black-800 bg-opacity-60" />
+  return <div className="fixed top-0 right-0 bottom-0 left-0 z-30 bg-black-800 bg-opacity-60" />
 }
 
 /**

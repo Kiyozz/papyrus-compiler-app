@@ -1,4 +1,4 @@
-import type { ScriptRenderer } from '@/types'
+import type { ScriptRenderer } from '@/types/index.ts'
 import { isFailedScript, isSuccessScript } from '@/utils/scripts/status.ts'
 
 export function logsState(logs: [ScriptRenderer, string][]) {

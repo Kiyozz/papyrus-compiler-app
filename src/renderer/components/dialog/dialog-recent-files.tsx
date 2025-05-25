@@ -200,15 +200,11 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
       <DialogContent aria-describedby={undefined} onKeyDown={onDialogKeyDown} className="flex flex-col px-0">
         <DialogHeader className="drag px-6">
           <DialogTitle className="grow">{t('page.compilation.actions.recentFiles')}</DialogTitle>
-          <div className="no-drag flex items-center">
-            <Label htmlFor="more-details" className="pr-2">
-              {t<string>('common.moreDetails')}
-            </Label>
-            <Switch id="more-details" checked={isMoreDetails} onCheckedChange={setMoreDetails} />
-          </div>
         </DialogHeader>
         {recentFiles.length === 0 ? (
-          <p className="px-6">{t('page.compilation.recentFilesDialog.noRecentFiles')}</p>
+          <p className="flex grow items-center justify-center px-6">
+            {t('page.compilation.recentFilesDialog.noRecentFiles')}
+          </p>
         ) : (
           <ScrollArea className="w-full grow">
             <div className="grow px-6">
@@ -230,6 +226,12 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
           </ScrollArea>
         )}
         <DialogFooter className="px-6">
+          <div className="flex grow items-center">
+            <Label htmlFor="more-details" className="pr-2">
+              {t<string>('common.moreDetails')}
+            </Label>
+            <Switch id="more-details" checked={isMoreDetails} onCheckedChange={setMoreDetails} />
+          </div>
           <Button onClick={onClickClose} tabIndex={4}>
             {t('common.cancel')}
           </Button>
