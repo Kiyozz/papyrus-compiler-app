@@ -7,7 +7,12 @@
 import is from '@sindresorhus/is'
 import cx from 'classnames'
 import type { PropsWithChildren, ReactNode } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.tsx'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@renderer/components/ui/card.tsx'
 
 interface SettingsSectionProps {
   title: ReactNode

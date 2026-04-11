@@ -4,14 +4,14 @@
  * All rights reserved.
  */
 
-import { Button } from '@/components/ui/button.tsx'
+import { Button } from '@renderer/components/ui/button.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu.tsx'
-import { useTelemetry } from '@/hooks/use-telemetry.tsx'
+} from '@renderer/components/ui/dropdown-menu.tsx'
+import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
 import { EllipsisIcon, PenIcon, TrashIcon } from 'lucide-react'
 import type { MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'

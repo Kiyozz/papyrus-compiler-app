@@ -23,7 +23,7 @@ export function generateCompilerCmd({
   scriptName,
   flag,
 }: GenerateCmdOptions): string {
-  const cmd = `"${exe}" "${scriptName}" -i="${imports.join(
+  const cmd = `"${exe}" "${scriptName}" -optimize -i="${imports.join(
     ';',
   )}" -o="${output}" -f="${flag}"`
 

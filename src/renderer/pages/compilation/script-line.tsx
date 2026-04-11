@@ -4,11 +4,11 @@
  * All rights reserved.
  */
 
-import { Button } from '@/components/ui/button.tsx'
-import { useSettings } from '@/pages/settings/use-settings.tsx'
-import type { ScriptRenderer } from '@/types'
-import { IconFromStatus } from '@/utils/scripts/from-status.tsx'
-import { isRunningScript } from '@/utils/scripts/status.ts'
+import { Button } from '@renderer/components/ui/button.tsx'
+import { useSettings } from '@renderer/pages/settings/use-settings.tsx'
+import type { ScriptRenderer } from '@renderer/types'
+import { IconFromStatus } from '@renderer/utils/scripts/from-status.tsx'
+import { isRunningScript } from '@renderer/utils/scripts/status.ts'
 import { PlayIcon, TrashIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
@@ -18,7 +18,11 @@ interface ScriptLineProps {
   onClickPlayCompilation: (script: ScriptRenderer) => void
 }
 
-function ScriptLine({ script, onClickRemoveScript, onClickPlayCompilation }: ScriptLineProps) {
+function ScriptLine({
+  script,
+  onClickRemoveScript,
+  onClickPlayCompilation,
+}: ScriptLineProps) {
   const { t } = useTranslation()
   const { configError } = useSettings()
 

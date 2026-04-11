@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { Layout } from '@/pages/layout.tsx'
+import { Layout } from '@renderer/pages/layout.tsx'
 import { Navigate, Route, Routes as RouterRoutes } from 'react-router'
 import { CompilationPage } from './pages/compilation/compilation-page.tsx'
 import { GroupsPage } from './pages/groups/groups-page.tsx'

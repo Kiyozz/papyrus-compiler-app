@@ -4,8 +4,8 @@
  * All rights reserved.
  */
 const { Platform } = require('electron-builder')
-const fs = require('fs/promises')
-const path = require('path')
+const fs = require('node:fs/promises')
+const path = require('node:path')
 
 /**
  *

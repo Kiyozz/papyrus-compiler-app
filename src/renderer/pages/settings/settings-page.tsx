@@ -4,13 +4,17 @@
  * All rights reserved.
  */
 
-import { bridge } from '@/bridge.ts'
-import { Button } from '@/components/ui/button.tsx'
-import { Form } from '@/components/ui/form.tsx'
-import { ScrollArea } from '@/components/ui/scroll-area.tsx'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
-import { useDocumentation } from '@/hooks/use-documentation.ts'
-import { LayoutHeader, LayoutHeaderTitle } from '@/pages/layout.tsx'
+import { bridge } from '@renderer/bridge.ts'
+import { Button } from '@renderer/components/ui/button.tsx'
+import { Form } from '@renderer/components/ui/form.tsx'
+import { ScrollArea } from '@renderer/components/ui/scroll-area.tsx'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@renderer/components/ui/tooltip.tsx'
+import { useDocumentation } from '@renderer/hooks/use-documentation.ts'
+import { LayoutHeader, LayoutHeaderTitle } from '@renderer/pages/layout.tsx'
 import is from '@sindresorhus/is'
 import debounce from 'debounce-fn'
 import { BookIcon, RotateCcwIcon } from 'lucide-react'
@@ -63,8 +67,14 @@ export function SettingsPage() {
     delayError: 400,
   })
 
-  const debouncedSetConfig = useMemo(() => debounce(setConfig, { wait: 500 }), [setConfig])
-  const debouncedCheckInstallation = useMemo(() => debounce(checkConfig, { wait: 500 }), [checkConfig])
+  const debouncedSetConfig = useMemo(
+    () => debounce(setConfig, { wait: 500 }),
+    [setConfig],
+  )
+  const debouncedCheckInstallation = useMemo(
+    () => debounce(checkConfig, { wait: 500 }),
+    [checkConfig],
+  )
 
   useEffect(() => {
     resetConfigError()
@@ -74,7 +84,14 @@ export function SettingsPage() {
     }
 
     void debouncedCheckInstallation()
-  }, [compilation.compilerPath, debouncedCheckInstallation, game.path, game.type, mo2Instance, resetConfigError])
+  }, [
+    compilation.compilerPath,
+    debouncedCheckInstallation,
+    game.path,
+    game.type,
+    mo2Instance,
+    resetConfigError,
+  ])
 
   const onClickPageRefresh = useCallback(async () => {
     send(TelemetryEvent.settingsRefresh, {})
@@ -89,7 +106,11 @@ export function SettingsPage() {
           case 'game': {
             const gameType = value.game as GameType
 
-            if (![GameType.le, GameType.se, GameType.vr, GameType.fo4].includes(gameType)) {
+            if (
+              ![GameType.le, GameType.se, GameType.vr, GameType.fo4].includes(
+                gameType,
+              )
+            ) {
               return
             }
 
@@ -98,7 +119,10 @@ export function SettingsPage() {
             setConfig({
               game: { type: gameType },
               compilation: {
-                flag: gameType === GameType.fo4 ? 'Institute_Papyrus_Flags.flg' : 'TESV_Papyrus_Flags.flg',
+                flag:
+                  gameType === GameType.fo4
+                    ? 'Institute_Papyrus_Flags.flg'
+                    : 'TESV_Papyrus_Flags.flg',
               },
             })
 
@@ -123,7 +147,10 @@ export function SettingsPage() {
             break
           }
           case 'concurrentScripts': {
-            let concurrentScripts = value.concurrentScripts as number | string | undefined
+            let concurrentScripts = value.concurrentScripts as
+              | number
+              | string
+              | undefined
 
             if (concurrentScripts === '') {
               concurrentScripts = '0'
@@ -204,26 +231,25 @@ export function SettingsPage() {
       <LayoutHeader>
         <LayoutHeaderTitle>{t('page.settings.title')}</LayoutHeaderTitle>
         <div className="flex gap-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button onClick={() => openDocumentation('settings-app-bar')} size="icon">
-                  <BookIcon />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>{t('common.documentation')}</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button onClick={onClickPageRefresh} size="icon">
-                  <RotateCcwIcon />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>{t('common.refresh')}</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={() => openDocumentation('settings-app-bar')}
+                size="icon"
+              >
+                <BookIcon />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{t('common.documentation')}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={onClickPageRefresh} size="icon">
+                <RotateCcwIcon />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{t('common.refresh')}</TooltipContent>
+          </Tooltip>
         </div>
       </LayoutHeader>
 

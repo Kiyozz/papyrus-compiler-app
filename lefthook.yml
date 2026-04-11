@@ -1,0 +1,20 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: papyrus-compiler-app
+      group:
+        parallel: false
+        jobs:
+          - run: pnpm fmt "{staged_files}"
+            name: Formatting
+            glob: '**/*.{ts,tsx,json,css}'
+            stage_fixed: true
+            tags:
+              - fmt
+
+          - run: pnpm lint "{staged_files}"
+            name: Linting
+            glob: '**/*.{ts,tsx}'
+            stage_fixed: false
+            tags:
+              - lint

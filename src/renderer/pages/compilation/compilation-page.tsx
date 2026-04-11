@@ -4,22 +4,32 @@
  * All rights reserved.
  */
 
-import { DialogRecentFiles } from '@/components/dialog/dialog-recent-files.tsx'
-import { Button } from '@/components/ui/button.tsx'
-import { ScrollArea } from '@/components/ui/scroll-area.tsx'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
-import { useApp } from '@/hooks/use-app.tsx'
-import { useCompilation } from '@/hooks/use-compilation.tsx'
-import { useDrop, useSetDrop } from '@/hooks/use-drop.tsx'
-import { useRecentFiles } from '@/hooks/use-recent-files.tsx'
-import { useTelemetry } from '@/hooks/use-telemetry.tsx'
-import { LayoutHeader, LayoutHeaderTitle } from '@/pages/layout.tsx'
-import { type ScriptRenderer, isAllGroupsEmpty } from '@/types/index.ts'
-import { scriptEquals } from '@/utils/scripts/equals.ts'
-import { pscFilesToScript } from '@/utils/scripts/psc-files-to-script.ts'
-import { scriptsToRenderer } from '@/utils/scripts/scripts-to-renderer.ts'
-import { uniqScripts } from '@/utils/scripts/uniq-scripts.ts'
-import { HistoryIcon, InfoIcon, PlayIcon, SearchIcon, XIcon } from 'lucide-react'
+import { DialogRecentFiles } from '@renderer/components/dialog/dialog-recent-files.tsx'
+import { Button } from '@renderer/components/ui/button.tsx'
+import { ScrollArea } from '@renderer/components/ui/scroll-area.tsx'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@renderer/components/ui/tooltip.tsx'
+import { useApp } from '@renderer/hooks/use-app.tsx'
+import { useCompilation } from '@renderer/hooks/use-compilation.tsx'
+import { useDrop, useSetDrop } from '@renderer/hooks/use-drop.tsx'
+import { useRecentFiles } from '@renderer/hooks/use-recent-files.tsx'
+import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
+import { LayoutHeader, LayoutHeaderTitle } from '@renderer/pages/layout.tsx'
+import { type ScriptRenderer, isAllGroupsEmpty } from '@renderer/types/index.ts'
+import { scriptEquals } from '@renderer/utils/scripts/equals.ts'
+import { pscFilesToScript } from '@renderer/utils/scripts/psc-files-to-script.ts'
+import { scriptsToRenderer } from '@renderer/utils/scripts/scripts-to-renderer.ts'
+import { uniqScripts } from '@renderer/utils/scripts/uniq-scripts.ts'
+import {
+  HistoryIcon,
+  InfoIcon,
+  PlayIcon,
+  SearchIcon,
+  XIcon,
+} from 'lucide-react'
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -35,9 +45,18 @@ function SearchButton({
   onClick,
   disabled,
   'aria-disabled': ariaDisabled,
-}: { onClick: () => void; disabled?: boolean; 'aria-disabled'?: boolean }) {
+}: {
+  onClick: () => void
+  disabled?: boolean
+  'aria-disabled'?: boolean
+}) {
   return (
-    <Button aria-disabled={ariaDisabled} disabled={disabled} onClick={onClick} size="icon">
+    <Button
+      aria-disabled={ariaDisabled}
+      disabled={disabled}
+      onClick={onClick}
+      size="icon"
+    >
       <SearchIcon />
     </Button>
   )
@@ -46,7 +65,14 @@ function SearchButton({
 export function CompilationPage() {
   const { t } = useTranslation()
   const { groups } = useApp()
-  const { scripts, start, setScripts, concurrentScripts, isRunning, clearCompilationLogs } = useCompilation()
+  const {
+    scripts,
+    start,
+    setScripts,
+    concurrentScripts,
+    isRunning,
+    clearCompilationLogs,
+  } = useCompilation()
   const { setRecentFiles } = useRecentFiles()
   const { send } = useTelemetry()
   const { drop, isFileDialogActive } = useDrop()
@@ -121,7 +147,9 @@ export function CompilationPage() {
       return
     }
 
-    setScripts((scriptList) => uniqScripts(scriptsToRenderer(scriptList, group.scripts)))
+    setScripts((scriptList) =>
+      uniqScripts(scriptsToRenderer(scriptList, group.scripts)),
+    )
   }
 
   const onClickEmpty = () => {
@@ -169,8 +197,14 @@ export function CompilationPage() {
               <HistoryIcon />
             </Button>
           </DialogRecentFiles>
-          <SearchButton aria-disabled={isFileDialogActive} disabled={isFileDialogActive} onClick={drop} />
-          {!isAllGroupsEmpty(groups) && <GroupsMenu groups={groups} onChangeGroup={onChangeGroup} />}
+          <SearchButton
+            aria-disabled={isFileDialogActive}
+            disabled={isFileDialogActive}
+            onClick={drop}
+          />
+          {!isAllGroupsEmpty(groups) && (
+            <GroupsMenu groups={groups} onChangeGroup={onChangeGroup} />
+          )}
         </div>
       </LayoutHeader>
 
@@ -187,7 +221,12 @@ export function CompilationPage() {
                 <span>{t('page.compilation.actions.start')}</span>
               </Button>
 
-              <Button variant="ghost" aria-disabled={isRunning} disabled={isRunning} onClick={onClickEmpty}>
+              <Button
+                variant="ghost"
+                aria-disabled={isRunning}
+                disabled={isRunning}
+                onClick={onClickEmpty}
+              >
                 <XIcon />
                 <span>{t('page.compilation.actions.clearList')}</span>
               </Button>
@@ -212,14 +251,14 @@ export function CompilationPage() {
               <h5 className="text-xl">
                 <span>{t('page.compilation.dragAndDropText')}</span>
               </h5>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <InfoIcon className="size-5" />
-                  </TooltipTrigger>
-                  <TooltipContent>{t<string>('page.compilation.dragAndDropAdmin')}</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <InfoIcon className="size-5" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  {t<string>('page.compilation.dragAndDropAdmin')}
+                </TooltipContent>
+              </Tooltip>
             </div>
           )}
         </section>

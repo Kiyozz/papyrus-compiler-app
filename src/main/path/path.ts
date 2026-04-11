@@ -4,7 +4,9 @@
  * All rights reserved.
  */
 
-import { promises as fs, existsSync } from 'fs'
+import { promises as fs, existsSync } from 'node:fs'
+import * as path from 'node:path'
+import * as url from 'node:url'
 import { is } from 'electron-util'
 import fg from 'fast-glob'
 import { moveFile } from 'move-file'
@@ -13,11 +15,19 @@ import { FileEnsureException } from '../exceptions/files/file-ensure.exception'
 import { Logger } from '../logger'
 import { toSlash } from '../slash'
 import { pluralize } from '../utils/pluralize.util'
-import type { Stats } from 'fs'
+import type { Stats } from 'node:fs'
 
 const logger = new Logger('Path')
 
 export { join } from 'path'
+
+export function dirname(meta: ImportMeta): string {
+  return path.dirname(url.fileURLToPath(meta.url))
+}
+
+export function filename(meta: ImportMeta): string {
+  return url.fileURLToPath(meta.url)
+}
 
 export function normalize(value: string): string {
   if (is.linux || is.macos || value.length === 0) {
@@ -35,7 +45,7 @@ export const move = (from: string, to: string): Promise<void> => {
 export const readFile = fs.readFile
 
 export const writeFile = (
-  ...args: Parameters<typeof fs['writeFile']>
+  ...args: Parameters<(typeof fs)['writeFile']>
 ): Promise<void> => {
   logger.debug('write file', args[0])
 
@@ -76,11 +86,11 @@ export async function ensureFile(item: string): Promise<void> {
 export async function ensureDirs(items: string[]): Promise<void> {
   logger.debug(
     `checking presence of folder${pluralize(items)}`,
-    ...items.map(i => `"${i}"`),
+    ...items.map((i) => `"${i}"`),
   )
 
   await Promise.all(
-    items.map(async item => {
+    items.map(async (item) => {
       try {
         await ensureDir(item)
       } catch (e) {
@@ -93,11 +103,11 @@ export async function ensureDirs(items: string[]): Promise<void> {
 export async function ensureFiles(items: string[]): Promise<void> {
   logger.debug(
     `checking presence of file${pluralize(items)}`,
-    ...items.map(i => `"${i}"`),
+    ...items.map((i) => `"${i}"`),
   )
 
   await Promise.all(
-    items.map(async item => {
+    items.map(async (item) => {
       try {
         await ensureFile(item)
       } catch (e) {
@@ -119,7 +129,7 @@ export async function getPathsInFolder(
   )
 
   const response = await fg(
-    fileNames.map(file => toSlash(file)),
+    fileNames.map((file) => toSlash(file)),
     {
       caseSensitiveMatch: false,
       ...options,

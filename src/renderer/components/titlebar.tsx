@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { cn } from '@/lib/utils.ts'
+import { cn } from '@renderer/lib/utils.ts'
 import type { MouseEvent } from 'react'
 import { bridge } from '../bridge'
 import { useFocus } from '../hooks/use-focus'
@@ -59,15 +59,30 @@ function Titlebar() {
       </span>
       {isNotMacOs && (
         <div className="flex">
-          <button className="titlebar-control" onClick={handleMinimizeWindow} tabIndex={-1} type="button">
+          <button
+            className="titlebar-control"
+            onClick={handleMinimizeWindow}
+            tabIndex={-1}
+            type="button"
+          >
             &#xE921;
           </button>
           {windowState === 'maximized' ? (
-            <button className="titlebar-control" onClick={handleRestoreWindow} tabIndex={-1} type="button">
+            <button
+              className="titlebar-control"
+              onClick={handleRestoreWindow}
+              tabIndex={-1}
+              type="button"
+            >
               &#xE923;
             </button>
           ) : (
-            <button className="titlebar-control" onClick={handleMaximizeWindow} tabIndex={-1} type="button">
+            <button
+              className="titlebar-control"
+              onClick={handleMaximizeWindow}
+              tabIndex={-1}
+              type="button"
+            >
               &#xE922;
             </button>
           )}

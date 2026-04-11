@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { bridge } from '@/bridge.ts'
+import { bridge } from '@renderer/bridge.ts'
 import { Button, Typography } from '@mui/material'
 import cx from 'classnames'
 import { useEffect, useState } from 'react'
@@ -41,7 +41,9 @@ function StepTooltip({
   arrowPosition?: 'left' | 'bottom-left'
 }) {
   const { t } = useTranslation()
-  const [stepAnchor, setAnchor] = useState(() => document.querySelector(selector))
+  const [stepAnchor, setAnchor] = useState(() =>
+    document.querySelector(selector),
+  )
 
   useEffect(() => {
     setAnchor(document.querySelector(selector))
@@ -121,7 +123,9 @@ function Mo2SettingsStep({ next }: { next: Next }) {
 }
 
 function Backdrop() {
-  return <div className="fixed top-0 right-0 bottom-0 left-0 z-30 bg-black-800 bg-opacity-60" />
+  return (
+    <div className="fixed top-0 right-0 bottom-0 left-0 z-30 bg-black-800 bg-opacity-60" />
+  )
 }
 
 /**
@@ -218,7 +222,9 @@ function TutorialSettings() {
       <Backdrop />
       {(step === Step.ask || step === Step.waiting) && (
         <div className="fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400 dark:text-white">
-          <Typography variant="h3">{t('tutorials.settings.ask.title')}</Typography>
+          <Typography variant="h3">
+            {t('tutorials.settings.ask.title')}
+          </Typography>
           <Typography className="m-6 text-center text-xl" component="div">
             {t('tutorials.settings.ask.text')}
           </Typography>
@@ -227,14 +233,23 @@ function TutorialSettings() {
               components={{
                 1: (
                   // eslint-disable-next-line jsx-a11y/anchor-has-content
-                  <a className="text-gray-700 dark:text-white" href="/" onClick={onClickOpenDocumentation} />
+                  <a
+                    className="text-gray-700 dark:text-white"
+                    href="/"
+                    onClick={onClickOpenDocumentation}
+                  />
                 ),
               }}
               i18nKey="tutorials.settings.documentation"
             />
           </Typography>
           <div className="flex gap-4">
-            <Button color="primary" disabled={step === Step.waiting} onClick={onClickNeedHelp} variant="contained">
+            <Button
+              color="primary"
+              disabled={step === Step.waiting}
+              onClick={onClickNeedHelp}
+              variant="contained"
+            >
               {t('tutorials.settings.ask.needHelp')}
             </Button>
             <Button disabled={step === Step.waiting} onClick={onClickDeny}>
@@ -260,9 +275,13 @@ function TutorialSettings() {
 
       {step === Step.game && <GameSettingsStep next={onNextStepGame} />}
 
-      {step === Step.compiler && <CompilerSettingsStep next={onNextStepCompiler} />}
+      {step === Step.compiler && (
+        <CompilerSettingsStep next={onNextStepCompiler} />
+      )}
 
-      {step === Step.concurrent && <ConcurrentSettingsStep next={onNextStepConcurrent} />}
+      {step === Step.concurrent && (
+        <ConcurrentSettingsStep next={onNextStepConcurrent} />
+      )}
 
       {step === Step.mo2 && <Mo2SettingsStep next={onNextStepMo2} />}
     </>

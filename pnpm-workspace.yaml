@@ -1,8 +1,6 @@
 packages:
   - packages/electron-ipc
 onlyBuiltDependencies:
-  - '@biomejs/biome'
-  - core-js-pure
   - electron
   - electron-winstaller
-  - esbuild
+  - lefthook

@@ -5,16 +5,40 @@
  */
 
 import { useTranslation } from 'react-i18next'
-import { GameType, toCompilerSourceFile, toExecutable } from '../../../common/game'
-import DialogTextField from '@/components/dialog/dialog-text-field.tsx'
-import { useApp } from '@/hooks/use-app.tsx'
+import {
+  GameType,
+  toCompilerSourceFile,
+  toExecutable,
+} from '../../../common/game'
+import DialogTextField from '@renderer/components/dialog/dialog-text-field.tsx'
+import { useApp } from '@renderer/hooks/use-app.tsx'
 import SettingsSection from './settings-section.tsx'
 import { useSettings } from './use-settings.tsx'
 import { InfoIcon, TriangleAlertIcon } from 'lucide-react'
-import { TooltipContent, TooltipProvider, Tooltip, TooltipTrigger } from '@/components/ui/tooltip.tsx'
-import { FormItem, FormControl, FormField, FormLabel, FormMessage } from '@/components/ui/form.tsx'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.tsx'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert.tsx'
+import {
+  TooltipContent,
+  Tooltip,
+  TooltipTrigger,
+} from '@renderer/components/ui/tooltip.tsx'
+import {
+  FormItem,
+  FormControl,
+  FormField,
+  FormLabel,
+  FormMessage,
+} from '@renderer/components/ui/form.tsx'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@renderer/components/ui/select.tsx'
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@renderer/components/ui/alert.tsx'
 
 function SettingsGameSection() {
   const { t } = useTranslation()
@@ -36,7 +60,10 @@ function SettingsGameSection() {
             <FormItem className="flex flex-col gap-3">
               <FormLabel>Select your game</FormLabel>
               <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select your game" />
                   </SelectTrigger>
@@ -58,16 +85,14 @@ function SettingsGameSection() {
           label={
             <>
               <span>{t('page.settings.gameFolderInfo')}</span>
-              <TooltipProvider>
-                <Tooltip delayDuration={150}>
-                  <TooltipTrigger className="flex items-center">
-                    <InfoIcon className="size-4" />
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-sm text-balance">
-                    {t<string>('page.settings.gameFolderTooltip', { exe })}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Tooltip delayDuration={150}>
+                <TooltipTrigger className="flex items-center">
+                  <InfoIcon className="size-4" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-sm text-balance">
+                  {t<string>('page.settings.gameFolderTooltip', { exe })}
+                </TooltipContent>
+              </Tooltip>
             </>
           }
           type="folder"
@@ -80,39 +105,42 @@ function SettingsGameSection() {
           label={
             <>
               <span>{t('page.settings.compilerPath')}</span>
-              <TooltipProvider>
-                <Tooltip delayDuration={150}>
-                  <TooltipTrigger className="flex items-center">
-                    <InfoIcon className="size-4" />
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-sm text-balance">
-                    {t('page.settings.compilerPathTooltip')}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Tooltip delayDuration={150}>
+                <TooltipTrigger className="flex items-center">
+                  <InfoIcon className="size-4" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-sm text-balance">
+                  {t('page.settings.compilerPathTooltip')}
+                </TooltipContent>
+              </Tooltip>
             </>
           }
           type="file"
         />
       </div>
 
-      {configError !== false && configError !== 'mo2-instance' && configError !== 'mo2-instance-mods' && (
-        <Alert variant="destructive">
-          <TriangleAlertIcon className="size-4" />
-          <AlertTitle>{t('page.settings.errors.installationInvalid')}</AlertTitle>
-          <AlertDescription>
-            {configError === 'game' && t('page.settings.errors.game', { exe })}
-            {configError === 'compiler' &&
-              t('page.settings.errors.compiler', {
-                compilerExe: compilation.compilerPath,
-              })}
-            {configError === 'scripts' &&
-              t('page.settings.errors.scripts', {
-                file: toCompilerSourceFile(game.type),
-              })}
-          </AlertDescription>
-        </Alert>
-      )}
+      {configError !== false &&
+        configError !== 'mo2-instance' &&
+        configError !== 'mo2-instance-mods' && (
+          <Alert variant="destructive">
+            <TriangleAlertIcon className="size-4" />
+            <AlertTitle>
+              {t('page.settings.errors.installationInvalid')}
+            </AlertTitle>
+            <AlertDescription>
+              {configError === 'game' &&
+                t('page.settings.errors.game', { exe })}
+              {configError === 'compiler' &&
+                t('page.settings.errors.compiler', {
+                  compilerExe: compilation.compilerPath,
+                })}
+              {configError === 'scripts' &&
+                t('page.settings.errors.scripts', {
+                  file: toCompilerSourceFile(game.type),
+                })}
+            </AlertDescription>
+          </Alert>
+        )}
     </SettingsSection>
   )
 }

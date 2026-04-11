@@ -7,10 +7,16 @@
 import React, { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { DialogType } from '../../../common/types/dialog'
-import { bridge } from '@/bridge.ts'
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form.tsx'
-import { Input } from '@/components/ui/input.tsx'
-import { Button } from '@/components/ui/button.tsx'
+import { bridge } from '@renderer/bridge.ts'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@renderer/components/ui/form.tsx'
+import { Input } from '@renderer/components/ui/input.tsx'
+import { Button } from '@renderer/components/ui/button.tsx'
 import { FolderIcon, FolderOpenIcon } from 'lucide-react'
 
 interface DialogTextFieldProps {
@@ -39,7 +45,11 @@ function DialogTextField({ name, label, type }: DialogTextFieldProps) {
             <FormLabel>{label}</FormLabel>
             <div className="relative">
               <FormControl>
-                <Input className="pl-10 text-xs" placeholder={t('common.selectFolder')} {...field} />
+                <Input
+                  className="pl-10 text-xs"
+                  placeholder={t('common.selectFolder')}
+                  {...field}
+                />
               </FormControl>
               <Button
                 variant="ghost"
@@ -51,9 +61,11 @@ function DialogTextField({ name, label, type }: DialogTextFieldProps) {
                   evt.currentTarget.blur()
 
                   try {
-                    const result = await bridge.dialog.select(type).then((response) => {
-                      return response ?? undefined
-                    })
+                    const result = await bridge.dialog
+                      .select(type)
+                      .then((response) => {
+                        return response ?? undefined
+                      })
 
                     if (typeof result !== 'undefined') {
                       field.onChange(result)
@@ -65,7 +77,11 @@ function DialogTextField({ name, label, type }: DialogTextFieldProps) {
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
               >
-                {isHover ? <FolderOpenIcon className="size-4" /> : <FolderIcon className="size-4" />}
+                {isHover ? (
+                  <FolderOpenIcon className="size-4" />
+                ) : (
+                  <FolderIcon className="size-4" />
+                )}
               </Button>
             </div>
             <FormMessage />

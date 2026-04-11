@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog.tsx'
+} from '@renderer/components/ui/dialog.tsx'
 import type { PropsWithChildren } from 'react'
 
 export function DialogDocumentation({ children }: PropsWithChildren) {

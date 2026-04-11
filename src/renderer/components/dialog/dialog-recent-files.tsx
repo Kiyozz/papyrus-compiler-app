@@ -4,9 +4,9 @@
  * All rights reserved.
  */
 
-import { bridge } from '@/bridge.ts'
-import { Button } from '@/components/ui/button.tsx'
-import { Checkbox } from '@/components/ui/checkbox.tsx'
+import { bridge } from '@renderer/bridge.ts'
+import { Button } from '@renderer/components/ui/button.tsx'
+import { Checkbox } from '@renderer/components/ui/checkbox.tsx'
 import {
   Dialog,
   DialogContent,
@@ -14,18 +14,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog.tsx'
-import { Label } from '@/components/ui/label.tsx'
-import { ScrollArea } from '@/components/ui/scroll-area.tsx'
-import { Switch } from '@/components/ui/switch.tsx'
-import { useCompilation } from '@/hooks/use-compilation.tsx'
-import { useIpc } from '@/hooks/use-ipc.ts'
-import { usePlatform } from '@/hooks/use-platform.ts'
-import { useRecentFiles } from '@/hooks/use-recent-files.tsx'
-import { useTelemetry } from '@/hooks/use-telemetry.tsx'
-import { dirname } from '@/utils/dirname.ts'
-import { scriptsToRenderer } from '@/utils/scripts/scripts-to-renderer.ts'
-import { uniqScripts } from '@/utils/scripts/uniq-scripts.ts'
+} from '@renderer/components/ui/dialog.tsx'
+import { Label } from '@renderer/components/ui/label.tsx'
+import { ScrollArea } from '@renderer/components/ui/scroll-area.tsx'
+import { Switch } from '@renderer/components/ui/switch.tsx'
+import { useCompilation } from '@renderer/hooks/use-compilation.tsx'
+import { useIpc } from '@renderer/hooks/use-ipc.ts'
+import { usePlatform } from '@renderer/hooks/use-platform.ts'
+import { useRecentFiles } from '@renderer/hooks/use-recent-files.tsx'
+import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
+import { dirname } from '@renderer/utils/dirname.ts'
+import { scriptsToRenderer } from '@renderer/utils/scripts/scripts-to-renderer.ts'
+import { uniqScripts } from '@renderer/utils/scripts/uniq-scripts.ts'
 import { Trash2Icon } from 'lucide-react'
 import React, { type PropsWithChildren, useId, useMemo, useState } from 'react'
 import type { KeyboardEvent, MouseEvent } from 'react'
@@ -46,7 +46,9 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
     recentFiles,
     moreDetails: [isMoreDetails, setMoreDetails],
   } = useRecentFiles()
-  const [selectedRecentFiles, setSelectedRecentFiles] = useState(new Map<string, Script>())
+  const [selectedRecentFiles, setSelectedRecentFiles] = useState(
+    new Map<string, Script>(),
+  )
   const isValid = selectedRecentFiles.size > 0
 
   useDidUpdate(() => {
@@ -65,7 +67,14 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
 
   useIpc(bridge.recentFiles.select.onAll, () => {
     send(TelemetryEvent.recentFilesSelectAll, {})
-    setSelectedRecentFiles(new Map(notLoadedRecentFiles.map((notLoadedFile) => [notLoadedFile.path, notLoadedFile])))
+    setSelectedRecentFiles(
+      new Map(
+        notLoadedRecentFiles.map((notLoadedFile) => [
+          notLoadedFile.path,
+          notLoadedFile,
+        ]),
+      ),
+    )
   })
 
   useIpc(bridge.recentFiles.select.onNone, () => {
@@ -105,7 +114,11 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
     }
 
     send(TelemetryEvent.recentFilesLoaded, {})
-    setScripts((scripts) => uniqScripts(scriptsToRenderer(scripts, Array.from(selectedRecentFiles.values()))))
+    setScripts((scripts) =>
+      uniqScripts(
+        scriptsToRenderer(scripts, Array.from(selectedRecentFiles.values())),
+      ),
+    )
     setSelectedRecentFiles(new Map())
     setOpen(false)
   }
@@ -181,11 +194,26 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
           className="group grow px-2 py-1 aria-disabled:bg-muted aria-disabled:text-muted-foreground"
           aria-disabled={disabled}
         >
-          <Checkbox id={id} checked={selected} disabled={disabled} onCheckedChange={onClickFile} />
+          <Checkbox
+            id={id}
+            checked={selected}
+            disabled={disabled}
+            onCheckedChange={onClickFile}
+          />
           <span>{scriptInfo.filename}</span>
-          {isMoreDetails && <span className="text-muted-foreground text-sm">{scriptInfo.path}</span>}
+          {isMoreDetails && (
+            <span className="text-muted-foreground text-sm">
+              {scriptInfo.path}
+            </span>
+          )}
           <div className="flex grow justify-end">
-            <Button variant="destructive" size="icon-sm" className="size-6" onClick={onClickDelete} tabIndex={1}>
+            <Button
+              variant="destructive"
+              size="icon-sm"
+              className="size-6"
+              onClick={onClickDelete}
+              tabIndex={1}
+            >
               <Trash2Icon className="size-3.5" />
             </Button>
           </div>
@@ -197,9 +225,15 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent aria-describedby={undefined} onKeyDown={onDialogKeyDown} className="flex flex-col px-0">
+      <DialogContent
+        aria-describedby={undefined}
+        onKeyDown={onDialogKeyDown}
+        className="flex flex-col px-0"
+      >
         <DialogHeader className="drag px-6">
-          <DialogTitle className="grow">{t('page.compilation.actions.recentFiles')}</DialogTitle>
+          <DialogTitle className="grow">
+            {t('page.compilation.actions.recentFiles')}
+          </DialogTitle>
         </DialogHeader>
         {recentFiles.length === 0 ? (
           <p className="flex grow items-center justify-center px-6">
@@ -230,12 +264,20 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
             <Label htmlFor="more-details" className="pr-2">
               {t<string>('common.moreDetails')}
             </Label>
-            <Switch id="more-details" checked={isMoreDetails} onCheckedChange={setMoreDetails} />
+            <Switch
+              id="more-details"
+              checked={isMoreDetails}
+              onCheckedChange={setMoreDetails}
+            />
           </div>
           <Button onClick={onClickClose} tabIndex={4}>
             {t('common.cancel')}
           </Button>
-          <Button disabled={selectedRecentFiles.size === 0} onClick={onClickLoad} tabIndex={3}>
+          <Button
+            disabled={selectedRecentFiles.size === 0}
+            onClick={onClickLoad}
+            tabIndex={3}
+          >
             {t('page.compilation.recentFilesDialog.load')}
           </Button>
         </DialogFooter>

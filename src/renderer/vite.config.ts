@@ -10,6 +10,7 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import Unfonts from 'unplugin-fonts/vite'
+import { lingui } from '@lingui/vite-plugin'
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
@@ -17,7 +18,11 @@ const dirname = path.dirname(url.fileURLToPath(import.meta.url))
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: ['macros'],
+      },
+    }),
     tailwindcss(),
     Unfonts({
       custom: {
@@ -34,17 +39,16 @@ export default defineConfig({
         preload: true,
       },
     }),
+    lingui(),
   ],
-  build: {
-    target: 'chrome136', // electron version target
-    sourcemap: true,
-    chunkSizeWarningLimit: 3000,
-    emptyOutDir: true,
-  },
   resolve: {
     alias: {
-      '@': path.resolve(dirname, './'),
+      '@renderer': path.resolve(dirname),
     },
+  },
+  build: {
+    target: 'chrome146', // electron version target
+    sourcemap: true,
   },
   define: {
     // path-shorten dep use process in his source code. But it is not available in renderer

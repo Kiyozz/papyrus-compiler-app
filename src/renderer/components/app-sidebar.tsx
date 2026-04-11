@@ -1,7 +1,7 @@
-import { bridge } from '@/bridge.ts'
-import { DialogCompilationLogs } from '@/components/dialog/dialog-compilation-logs.tsx'
-import { DialogDocumentation } from '@/components/dialog/dialog-documentation.tsx'
-import { AppLogoIcon } from '@/components/icons/app-logo-icon.tsx'
+import { bridge } from '@renderer/bridge.ts'
+import { DialogCompilationLogs } from '@renderer/components/dialog/dialog-compilation-logs.tsx'
+import { DialogDocumentation } from '@renderer/components/dialog/dialog-documentation.tsx'
+import { AppLogoIcon } from '@renderer/components/icons/app-logo-icon.tsx'
 import {
   Sidebar,
   SidebarContent,
@@ -11,8 +11,15 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar.tsx'
-import { BookIcon, BoxesIcon, ChevronsUpDownIcon, ComputerIcon, FileClockIcon, SettingsIcon } from 'lucide-react'
+} from '@renderer/components/ui/sidebar.tsx'
+import {
+  BookIcon,
+  BoxesIcon,
+  ChevronsUpDownIcon,
+  ComputerIcon,
+  FileClockIcon,
+  SettingsIcon,
+} from 'lucide-react'
 import type { ComponentProps, MouseEvent } from 'react'
 import { NavLink } from 'react-router'
 

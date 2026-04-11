@@ -6,16 +6,16 @@
 
 import { useTranslation } from 'react-i18next'
 import { TelemetryEvent } from '../../../common/telemetry-event'
-import { useTelemetry } from '@/hooks/use-telemetry.tsx'
-import type { Group } from '@/types/index.ts'
-import { Button } from '@/components/ui/button.tsx'
+import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
+import type { Group } from '@renderer/types/index.ts'
+import { Button } from '@renderer/components/ui/button.tsx'
 import { PlusIcon } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu.tsx'
+} from '@renderer/components/ui/dropdown-menu.tsx'
 import { toast } from 'sonner'
 
 interface GroupsMenuProps {
@@ -27,7 +27,9 @@ function GroupsMenu({ groups, onChangeGroup }: GroupsMenuProps) {
   const { t } = useTranslation()
   const { send } = useTelemetry()
 
-  const notEmptyGroups = groups.filter((group: Group): boolean => !group.isEmpty)
+  const notEmptyGroups = groups.filter(
+    (group: Group): boolean => !group.isEmpty,
+  )
 
   return (
     <div>
@@ -48,7 +50,9 @@ function GroupsMenu({ groups, onChangeGroup }: GroupsMenuProps) {
                     send(TelemetryEvent.compilationGroupLoaded, {
                       groups: groups.length,
                     })
-                    toast.info(`${group.scripts.length} scripts loaded from ${group.name}`)
+                    toast.info(
+                      `${group.scripts.length} scripts loaded from ${group.name}`,
+                    )
                     onChangeGroup(group.name)
                   }
 

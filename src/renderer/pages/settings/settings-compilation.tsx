@@ -6,8 +6,14 @@
 
 import { useTranslation } from 'react-i18next'
 import SettingsSection from './settings-section.tsx'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form.tsx'
-import { Input } from '@/components/ui/input.tsx'
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@renderer/components/ui/form.tsx'
+import { Input } from '@renderer/components/ui/input.tsx'
 
 function SettingsCompilation() {
   const { t } = useTranslation()
@@ -23,11 +29,15 @@ function SettingsCompilation() {
         render={({ field }) => {
           return (
             <FormItem>
-              <FormLabel>{t('page.settings.compilation.concurrentScripts.label')}</FormLabel>
+              <FormLabel>
+                {t('page.settings.compilation.concurrentScripts.label')}
+              </FormLabel>
               <FormControl>
                 <Input id="compilation-concurrentScripts-input" {...field} />
               </FormControl>
-              <FormDescription>{t('page.settings.compilation.concurrentScripts.info')}</FormDescription>
+              <FormDescription>
+                {t('page.settings.compilation.concurrentScripts.info')}
+              </FormDescription>
             </FormItem>
           )
         }}

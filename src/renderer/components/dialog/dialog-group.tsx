@@ -10,15 +10,21 @@ import { useCallback, useEffect, useState } from 'react'
 import type { ChangeEvent, FormEvent, KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Button } from '@/components/ui/button.tsx'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog.tsx'
-import { Input } from '@/components/ui/input.tsx'
-import { ScrollArea } from '@/components/ui/scroll-area.tsx'
-import { useDrop, useSetDrop } from '@/hooks/use-drop.tsx'
-import { useTelemetry } from '@/hooks/use-telemetry.tsx'
-import { Group } from '@/types/index.ts'
-import { pscFilesToScript } from '@/utils/scripts/psc-files-to-script.ts'
-import { uniqScripts } from '@/utils/scripts/uniq-scripts.ts'
+import { Button } from '@renderer/components/ui/button.tsx'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@renderer/components/ui/dialog.tsx'
+import { Input } from '@renderer/components/ui/input.tsx'
+import { ScrollArea } from '@renderer/components/ui/scroll-area.tsx'
+import { useDrop, useSetDrop } from '@renderer/hooks/use-drop.tsx'
+import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
+import { Group } from '@renderer/types/index.ts'
+import { pscFilesToScript } from '@renderer/utils/scripts/psc-files-to-script.ts'
+import { uniqScripts } from '@renderer/utils/scripts/uniq-scripts.ts'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import type { Script } from '../../../common/types/script'
 
@@ -30,7 +36,13 @@ interface DialogGroupProps {
   open: boolean
 }
 
-function DialogGroup({ onGroupAdd, onGroupEdit, open: isOpen, onClose, group }: DialogGroupProps) {
+function DialogGroup({
+  onGroupAdd,
+  onGroupEdit,
+  open: isOpen,
+  onClose,
+  group,
+}: DialogGroupProps) {
   const { t } = useTranslation()
   const [name, setName] = useState('')
   const [scripts, setScripts] = useState<Script[]>([])
@@ -80,7 +92,9 @@ function DialogGroup({ onGroupAdd, onGroupEdit, open: isOpen, onClose, group }: 
 
   const onClickRemoveScriptFromGroup = (script: Script) => {
     return () => {
-      setScripts((s) => s.filter((scriptFromList) => scriptFromList.name !== script.name))
+      setScripts((s) =>
+        s.filter((scriptFromList) => scriptFromList.name !== script.name),
+      )
     }
   }
 
@@ -106,8 +120,15 @@ function DialogGroup({ onGroupAdd, onGroupEdit, open: isOpen, onClose, group }: 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="flex flex-col px-0" aria-describedby={undefined}>
-        <form className="flex h-full flex-col gap-4" onSubmit={onSubmitGroup} onKeyDown={onDialogKeyDown}>
+      <DialogContent
+        className="flex flex-col px-0"
+        aria-describedby={undefined}
+      >
+        <form
+          className="flex h-full flex-col gap-4"
+          onSubmit={onSubmitGroup}
+          onKeyDown={onDialogKeyDown}
+        >
           <DialogHeader className="drag px-6" aria-describedby={undefined}>
             <DialogTitle>Group</DialogTitle>
           </DialogHeader>
@@ -148,7 +169,9 @@ function DialogGroup({ onGroupAdd, onGroupEdit, open: isOpen, onClose, group }: 
               </div>
             </ScrollArea>
           ) : (
-            <div className="flex grow items-center justify-center">{t('page.groups.dialog.dropScripts')}</div>
+            <div className="flex grow items-center justify-center">
+              {t('page.groups.dialog.dropScripts')}
+            </div>
           )}
 
           <DialogFooter className="px-6">
@@ -165,7 +188,9 @@ function DialogGroup({ onGroupAdd, onGroupEdit, open: isOpen, onClose, group }: 
               {t('common.cancel')}
             </Button>
             <Button aria-disabled={!isValid} disabled={!isValid} type="submit">
-              {isEdit ? t('page.groups.actions.edit') : t('page.groups.actions.create')}
+              {isEdit
+                ? t('page.groups.actions.edit')
+                : t('page.groups.actions.create')}
             </Button>
           </DialogFooter>
         </form>

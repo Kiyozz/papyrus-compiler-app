@@ -9,7 +9,7 @@ import { StrictMode } from 'react'
 import { createPortal } from 'react-dom'
 import { createRoot } from 'react-dom/client'
 
-import { Toaster } from '@/components/ui/sonner.tsx'
+import { Toaster } from '@renderer/components/ui/sonner.tsx'
 import { fromError } from '../common/from-error'
 import App from './app'
 import { bridge } from './bridge'
@@ -27,6 +27,7 @@ import { loadTranslations } from './translations'
 import { isProduction } from './utils/is-production'
 import 'unfonts.css'
 import { MemoryRouter } from 'react-router'
+import { TooltipProvider } from '@renderer/components/ui/tooltip.tsx'
 
 async function start() {
   const root = document.getElementById('app')
@@ -44,30 +45,32 @@ async function start() {
   try {
     rootReact.render(
       <StrictMode>
-        <MemoryRouter>
-          <VersionProvider>
-            <AppProvider>
-              <TelemetryProvider>
-                <InitializationProvider>
-                  <RecentFilesProvider>
-                    <CompilationProvider>
-                      <SettingsProvider>
-                        <FocusProvider>
-                          <DrawerProvider>
-                            <DropProvider>
-                              <App />
-                            </DropProvider>
-                          </DrawerProvider>
-                        </FocusProvider>
-                      </SettingsProvider>
-                    </CompilationProvider>
-                  </RecentFilesProvider>
-                </InitializationProvider>
-              </TelemetryProvider>
-            </AppProvider>
-          </VersionProvider>
-          {createPortal(<Toaster />, document.body)}
-        </MemoryRouter>
+        <TooltipProvider>
+          <MemoryRouter>
+            <VersionProvider>
+              <AppProvider>
+                <TelemetryProvider>
+                  <InitializationProvider>
+                    <RecentFilesProvider>
+                      <CompilationProvider>
+                        <SettingsProvider>
+                          <FocusProvider>
+                            <DrawerProvider>
+                              <DropProvider>
+                                <App />
+                              </DropProvider>
+                            </DrawerProvider>
+                          </FocusProvider>
+                        </SettingsProvider>
+                      </CompilationProvider>
+                    </RecentFilesProvider>
+                  </InitializationProvider>
+                </TelemetryProvider>
+              </AppProvider>
+            </VersionProvider>
+            {createPortal(<Toaster />, document.body)}
+          </MemoryRouter>
+        </TooltipProvider>
       </StrictMode>,
     )
   } catch (e) {

@@ -4,17 +4,17 @@
  * All rights reserved.
  */
 
-import DialogGroupForm from '@/components/dialog/dialog-group.tsx'
-import { Button } from '@/components/ui/button.tsx'
-import { Label } from '@/components/ui/label.tsx'
-import { ScrollArea } from '@/components/ui/scroll-area.tsx'
-import { Switch } from '@/components/ui/switch.tsx'
-import { LocalStorage } from '@/enums/local-storage.enum.ts'
-import { useApp } from '@/hooks/use-app'
-import { useGroups } from '@/hooks/use-groups.ts'
-import { useTelemetry } from '@/hooks/use-telemetry'
-import { LayoutHeader, LayoutHeaderTitle } from '@/pages/layout.tsx'
-import { type Group } from '@/types'
+import DialogGroupForm from '@renderer/components/dialog/dialog-group.tsx'
+import { Button } from '@renderer/components/ui/button.tsx'
+import { Label } from '@renderer/components/ui/label.tsx'
+import { ScrollArea } from '@renderer/components/ui/scroll-area.tsx'
+import { Switch } from '@renderer/components/ui/switch.tsx'
+import { LocalStorage } from '@renderer/enums/local-storage.enum.ts'
+import { useApp } from '@renderer/hooks/use-app'
+import { useGroups } from '@renderer/hooks/use-groups.ts'
+import { useTelemetry } from '@renderer/hooks/use-telemetry'
+import { LayoutHeader, LayoutHeaderTitle } from '@renderer/pages/layout.tsx'
+import { type Group } from '@renderer/types'
 import { PlusIcon } from 'lucide-react'
 import { type MouseEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -27,7 +27,10 @@ export function GroupsPage() {
   const { t } = useTranslation()
   const { groups } = useApp()
   const { add, edit, remove } = useGroups()
-  const [isMoreDetails, setMoreDetails] = useLocalStorage(LocalStorage.groupMoreDetails, 'false')
+  const [isMoreDetails, setMoreDetails] = useLocalStorage(
+    LocalStorage.groupMoreDetails,
+    'false',
+  )
 
   const [isDialogOpen, setDialogOpen] = useState(false)
   const [editingGroup, setEditingGroup] = useState<Group | undefined>()
@@ -101,7 +104,11 @@ export function GroupsPage() {
               <Label htmlFor="more-details" className="pr-2">
                 {t('common.moreDetails')}
               </Label>
-              <Switch id="more-details" checked={isMoreDetails === 'true'} onCheckedChange={onChangeMoreDetails} />
+              <Switch
+                id="more-details"
+                checked={isMoreDetails === 'true'}
+                onCheckedChange={onChangeMoreDetails}
+              />
             </div>
           )}
 

@@ -4,17 +4,17 @@
  * All rights reserved.
  */
 
-import * as fs from 'fs'
+import * as fs from 'node:fs'
 import { app } from 'electron'
 import Store from 'electron-store'
 import { isDev } from 'electron-util/main'
-import { osLocaleSync } from 'os-locale'
+import osLocale from 'os-locale'
 import { GameType } from '../../../common/game'
 import { Theme } from '../../../common/theme'
 import { cliArgs } from '../../cli-args'
 import { Env } from '../../env'
 // noinspection ES6PreferShortImport
-import { join } from '../../path/path'
+import { dirname, join } from '../../path/path'
 import { checkStore } from './check'
 import { migrate410 } from './migrations/4.1.0.migration'
 import { migrate420 } from './migrations/4.2.0.migration'
@@ -25,7 +25,7 @@ import { migrate560 } from './migrations/5.6.0.migration'
 import type { Config } from '../../../common/types/config'
 
 const jsonPath = isDev
-  ? join(__dirname, '../..', 'package.json')
+  ? join(dirname(import.meta), '../../../..', 'package.json')
   : join(app.getAppPath(), 'package.json')
 const json = JSON.parse(fs.readFileSync(jsonPath).toString()) as {
   version: string
@@ -56,7 +56,7 @@ const defaultConfig: Config = {
     active: true,
   },
   theme: Theme.system,
-  locale: osLocaleSync(),
+  locale: osLocale(),
   __internal__: {
     migrations: {
       version: json.version,

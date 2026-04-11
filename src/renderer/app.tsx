@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-import { Routes } from '@/routes.tsx'
+import { Routes } from '@renderer/routes.tsx'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TelemetryEvent } from '../common/telemetry-event'
@@ -49,7 +49,9 @@ function App() {
         {done && (
           <>
             {tutorials.settings && <TutorialSettings />}
-            {tutorials.telemetry && !tutorials.settings && <TutorialTelemetry />}
+            {tutorials.telemetry && !tutorials.settings && (
+              <TutorialTelemetry />
+            )}
             <Routes />
           </>
         )}
