@@ -6,7 +6,7 @@
 
 import { useTranslation } from 'react-i18next'
 import { Theme } from '../../../common/theme'
-import SettingsSection from './settings-section'
+import { SettingsSection, SettingsSectionContent } from './settings-section'
 import {
   FormControl,
   FormField,
@@ -27,7 +27,7 @@ function SettingsThemeSection() {
 
   return (
     <SettingsSection id="settings-theme" title={t('page.settings.theme.title')}>
-      <div className="relative">
+      <SettingsSectionContent>
         <FormField
           name="theme"
           render={({ field }) => (
@@ -58,7 +58,7 @@ function SettingsThemeSection() {
             </FormItem>
           )}
         />
-      </div>
+      </SettingsSectionContent>
     </SettingsSection>
   )
 }

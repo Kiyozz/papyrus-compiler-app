@@ -1,12 +1,12 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "radix-nova",
+  "style": "radix-maia",
   "rsc": false,
   "tsx": true,
   "tailwind": {
     "config": "",
     "css": "src/renderer/index.css",
-    "baseColor": "neutral",
+    "baseColor": "taupe",
     "cssVariables": true
   },
   "iconLibrary": "lucide",
@@ -18,6 +18,6 @@
     "lib": "@renderer/lib",
     "hooks": "@renderer/hooks"
   },
-  "menuColor": "default",
+  "menuColor": "default-translucent",
   "menuAccent": "subtle"
 }

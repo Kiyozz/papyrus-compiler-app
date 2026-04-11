@@ -22,6 +22,7 @@ export enum Executable {
   le = 'TESV.exe',
   vr = 'SkyrimVR.exe',
   fo4 = 'Fallout4.exe',
+  sf = 'Startfield.exe',
 }
 
 export enum GameType {
@@ -29,6 +30,7 @@ export enum GameType {
   se = 'Skyrim SE',
   vr = 'Skyrim VR',
   fo4 = 'Fallout 4',
+  sf = 'Starfield',
 }
 
 export const toSource = (game: GameType): GameSource => {
@@ -38,6 +40,7 @@ export const toSource = (game: GameType): GameSource => {
       return GameSource.scriptsFirst
     case GameType.se:
     case GameType.vr:
+    case GameType.sf:
       return GameSource.sourceFirst
     default:
       throw new Error('RuntimeError: unsupported GameType')
@@ -51,6 +54,7 @@ export const toOtherSource = (game: GameType): GameSource => {
       return GameSource.sourceFirst
     case GameType.se:
     case GameType.vr:
+    case GameType.sf:
       return GameSource.scriptsFirst
     default:
       throw new Error('RuntimeError: unsupported GameType')
@@ -67,6 +71,8 @@ export const toExecutable = (game: GameType): Executable => {
       return Executable.vr
     case GameType.fo4:
       return Executable.fo4
+    case GameType.sf:
+      return Executable.sf
     default:
       return Executable.se
   }
@@ -75,6 +81,7 @@ export const toExecutable = (game: GameType): Executable => {
 export const toCompilerSourceFile = (game: GameType): CompilerSourceFile => {
   switch (game) {
     case GameType.fo4:
+    case GameType.sf:
       return 'Base/Actor.psc'
     default:
       return 'Actor.psc'
@@ -90,6 +97,7 @@ export const validateGame = {
       case GameType.le:
       case GameType.vr:
       case GameType.fo4:
+      case GameType.sf:
         return true
     }
 

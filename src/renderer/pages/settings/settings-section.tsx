@@ -6,7 +6,7 @@
 
 import is from '@sindresorhus/is'
 import cx from 'classnames'
-import type { PropsWithChildren, ReactNode } from 'react'
+import type { ComponentProps, PropsWithChildren, ReactNode } from 'react'
 import {
   Card,
   CardContent,
@@ -33,15 +33,19 @@ function SettingsSection({
   return (
     <Card
       aria-label={is.string(title) ? title : ariaLabel}
-      className={cx('relative p-4 transition-none', className)}
+      className={cx(className)}
       id={id}
     >
       <CardHeader>
         <CardTitle id={titleId}>{title}</CardTitle>
       </CardHeader>
-      <CardContent>{children}</CardContent>
+      {children}
     </Card>
   )
 }
 
-export default SettingsSection
+function SettingsSectionContent(props: ComponentProps<typeof CardContent>) {
+  return <CardContent {...props} />
+}
+
+export { SettingsSection, SettingsSectionContent, type SettingsSectionProps }

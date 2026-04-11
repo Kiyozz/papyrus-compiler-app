@@ -13,7 +13,11 @@ import { LocalStorage } from '@renderer/enums/local-storage.enum.ts'
 import { useApp } from '@renderer/hooks/use-app'
 import { useGroups } from '@renderer/hooks/use-groups.ts'
 import { useTelemetry } from '@renderer/hooks/use-telemetry'
-import { LayoutHeader, LayoutHeaderTitle } from '@renderer/pages/layout.tsx'
+import {
+  LayoutHeader,
+  LayoutHeaderActions,
+  LayoutHeaderTitle,
+} from '@renderer/pages/layout.tsx'
 import { type Group } from '@renderer/types'
 import { PlusIcon } from 'lucide-react'
 import { type MouseEvent, useState } from 'react'
@@ -21,6 +25,10 @@ import { useTranslation } from 'react-i18next'
 import useLocalStorage from 'react-use-localstorage'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import GroupsListItem from './groups-list-item'
+import {
+  BreadcrumbItem,
+  BreadcrumbPage,
+} from '@renderer/components/ui/breadcrumb.tsx'
 
 export function GroupsPage() {
   const { send } = useTelemetry()
@@ -83,10 +91,16 @@ export function GroupsPage() {
   return (
     <>
       <LayoutHeader>
-        <LayoutHeaderTitle>{t('page.groups.title')}</LayoutHeaderTitle>
-        <Button onClick={onClickAddButton} size="icon">
-          <PlusIcon />
-        </Button>
+        <LayoutHeaderTitle>
+          <BreadcrumbItem>
+            <BreadcrumbPage>{t('page.groups.title')}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </LayoutHeaderTitle>
+        <LayoutHeaderActions>
+          <Button onClick={onClickAddButton} size="icon">
+            <PlusIcon />
+          </Button>
+        </LayoutHeaderActions>
       </LayoutHeader>
 
       <ScrollArea className="h-(--page-height)">

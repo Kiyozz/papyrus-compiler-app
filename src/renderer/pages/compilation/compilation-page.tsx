@@ -6,7 +6,6 @@
 
 import { DialogRecentFiles } from '@renderer/components/dialog/dialog-recent-files.tsx'
 import { Button } from '@renderer/components/ui/button.tsx'
-import { ScrollArea } from '@renderer/components/ui/scroll-area.tsx'
 import {
   Tooltip,
   TooltipContent,
@@ -17,7 +16,11 @@ import { useCompilation } from '@renderer/hooks/use-compilation.tsx'
 import { useDrop, useSetDrop } from '@renderer/hooks/use-drop.tsx'
 import { useRecentFiles } from '@renderer/hooks/use-recent-files.tsx'
 import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
-import { LayoutHeader, LayoutHeaderTitle } from '@renderer/pages/layout.tsx'
+import {
+  LayoutHeader,
+  LayoutHeaderActions,
+  LayoutHeaderTitle,
+} from '@renderer/pages/layout.tsx'
 import { type ScriptRenderer, isAllGroupsEmpty } from '@renderer/types/index.ts'
 import { scriptEquals } from '@renderer/utils/scripts/equals.ts'
 import { pscFilesToScript } from '@renderer/utils/scripts/psc-files-to-script.ts'
@@ -30,7 +33,7 @@ import {
   SearchIcon,
   XIcon,
 } from 'lucide-react'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { useDidMount } from 'rooks'
@@ -40,6 +43,12 @@ import type { Script } from '../../../common/types/script.ts'
 import { useSettings } from '../settings/use-settings.tsx'
 import GroupsMenu from './groups-menu.tsx'
 import ScriptLine from './script-line.tsx'
+import {
+  BreadcrumbItem,
+  BreadcrumbPage,
+} from '@renderer/components/ui/breadcrumb.tsx'
+import { useVirtualizer } from '@tanstack/react-virtual'
+import { ScrollArea } from '@renderer/components/ui/scroll-area.tsx'
 
 function SearchButton({
   onClick,
@@ -77,6 +86,14 @@ export function CompilationPage() {
   const { send } = useTelemetry()
   const { drop, isFileDialogActive } = useDrop()
   const { checkConfig, configError } = useSettings()
+  const scrollRef = useRef(null)
+  const rowVirtualizer = useVirtualizer({
+    count: scripts.length,
+    getScrollElement: () => scrollRef.current,
+    estimateSize: () => 32,
+    getItemKey: (index) => scripts.at(index)?.id || index,
+    overscan: 33,
+  })
 
   useDidMount(() => {
     void checkConfig(true)
@@ -190,8 +207,14 @@ export function CompilationPage() {
   return (
     <>
       <LayoutHeader>
-        <LayoutHeaderTitle>{t('page.compilation.title')}</LayoutHeaderTitle>
-        <div className="flex gap-2">
+        <LayoutHeaderTitle>
+          <BreadcrumbItem>
+            <BreadcrumbPage className="line-clamp-1">
+              {t('page.compilation.title')}
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </LayoutHeaderTitle>
+        <LayoutHeaderActions>
           <DialogRecentFiles>
             <Button size="icon">
               <HistoryIcon />
@@ -205,64 +228,85 @@ export function CompilationPage() {
           {!isAllGroupsEmpty(groups) && (
             <GroupsMenu groups={groups} onChangeGroup={onChangeGroup} />
           )}
-        </div>
+        </LayoutHeaderActions>
       </LayoutHeader>
 
-      <ScrollArea className="h-(--page-height)">
-        <section className="flex h-full flex-col p-6">
-          {scripts.length > 0 && (
-            <div className="mb-4 flex gap-2">
-              <Button
-                aria-disabled={Boolean(configError) || isRunning}
-                disabled={Boolean(configError) || isRunning}
-                onClick={onClickStart}
-              >
-                <PlayIcon />
-                <span>{t('page.compilation.actions.start')}</span>
-              </Button>
+      {scripts.length === 0 && (
+        <div className="page flex flex-col min-h-page-with-titlebar">
+          <div className="m-auto flex grow flex-col items-center justify-center gap-3 text-center tracking-tight px-4">
+            <h5 className="text-xl">
+              <span>{t('page.compilation.dragAndDropText')}</span>
+            </h5>
+            <Tooltip>
+              <TooltipTrigger>
+                <InfoIcon className="size-5" />
+              </TooltipTrigger>
+              <TooltipContent>
+                {t<string>('page.compilation.dragAndDropAdmin')}
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        </div>
+      )}
 
-              <Button
-                variant="ghost"
-                aria-disabled={isRunning}
-                disabled={isRunning}
-                onClick={onClickEmpty}
-              >
-                <XIcon />
-                <span>{t('page.compilation.actions.clearList')}</span>
-              </Button>
-            </div>
-          )}
+      {scripts.length > 0 && (
+        <>
+          <div className="mb-4 flex gap-2 px-6">
+            <Button
+              aria-disabled={Boolean(configError) || isRunning}
+              disabled={Boolean(configError) || isRunning}
+              onClick={onClickStart}
+            >
+              <PlayIcon />
+              <span>{t('page.compilation.actions.start')}</span>
+            </Button>
 
-          {scripts.length > 0 ? (
-            <ul className="divide-y divide-accent rounded-md border">
-              {scripts.map((script) => {
+            <Button
+              variant="ghost"
+              aria-disabled={isRunning}
+              disabled={isRunning}
+              onClick={onClickEmpty}
+            >
+              <XIcon />
+              <span>{t('page.compilation.actions.clearList')}</span>
+            </Button>
+          </div>
+          <ScrollArea className="page pb-4 grow h-px px-6" ref={scrollRef}>
+            <div
+              className="divide-y divide-accent rounded-md border w-full relative"
+              style={{
+                height: `${rowVirtualizer.getTotalSize()}px`,
+              }}
+            >
+              {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+                const script = scripts[virtualRow.index]
+
                 return (
-                  <ScriptLine
-                    key={script.id}
-                    onClickPlayCompilation={onClickPlayCompilation(script)}
-                    onClickRemoveScript={onClickRemoveScriptFromScript(script)}
-                    script={script}
-                  />
+                  <div
+                    key={virtualRow.key}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: `${virtualRow.size}px`,
+                      transform: `translateY(${virtualRow.start}px)`,
+                    }}
+                  >
+                    <ScriptLine
+                      onClickPlayCompilation={onClickPlayCompilation(script)}
+                      onClickRemoveScript={onClickRemoveScriptFromScript(
+                        script,
+                      )}
+                      script={script}
+                    />
+                  </div>
                 )
               })}
-            </ul>
-          ) : (
-            <div className="m-auto flex grow flex-col items-center justify-center gap-3 text-center tracking-tight">
-              <h5 className="text-xl">
-                <span>{t('page.compilation.dragAndDropText')}</span>
-              </h5>
-              <Tooltip>
-                <TooltipTrigger>
-                  <InfoIcon className="size-5" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  {t<string>('page.compilation.dragAndDropAdmin')}
-                </TooltipContent>
-              </Tooltip>
             </div>
-          )}
-        </section>
-      </ScrollArea>
+          </ScrollArea>
+        </>
+      )}
     </>
   )
 }

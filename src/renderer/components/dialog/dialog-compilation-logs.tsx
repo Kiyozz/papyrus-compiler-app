@@ -54,7 +54,7 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
         {children}
       </DialogTrigger>
       <DialogContent
-        className="flex h-full max-w-screen flex-col px-0 sm:max-w-screen"
+        className="flex h-full max-w-screen flex-col px-0 sm:max-w-screen rounded-none"
         aria-describedby={undefined}
       >
         <DialogHeader aria-describedby={undefined} className="drag px-6">

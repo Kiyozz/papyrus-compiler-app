@@ -14,7 +14,11 @@ import {
   TooltipTrigger,
 } from '@renderer/components/ui/tooltip.tsx'
 import { useDocumentation } from '@renderer/hooks/use-documentation.ts'
-import { LayoutHeader, LayoutHeaderTitle } from '@renderer/pages/layout.tsx'
+import {
+  LayoutHeader,
+  LayoutHeaderActions,
+  LayoutHeaderTitle,
+} from '@renderer/pages/layout.tsx'
 import is from '@sindresorhus/is'
 import debounce from 'debounce-fn'
 import { BookIcon, RotateCcwIcon } from 'lucide-react'
@@ -32,6 +36,10 @@ import SettingsMo2 from './settings-mo2/settings-mo2'
 import SettingsTelemetrySection from './settings-telemetry-section.tsx'
 import SettingsThemeSection from './settings-theme-section.tsx'
 import { useSettings } from './use-settings'
+import {
+  BreadcrumbItem,
+  BreadcrumbPage,
+} from '@renderer/components/ui/breadcrumb.tsx'
 
 const maxConcurrentCompilationScripts = 100
 
@@ -107,9 +115,13 @@ export function SettingsPage() {
             const gameType = value.game as GameType
 
             if (
-              ![GameType.le, GameType.se, GameType.vr, GameType.fo4].includes(
-                gameType,
-              )
+              ![
+                GameType.le,
+                GameType.se,
+                GameType.vr,
+                GameType.fo4,
+                GameType.sf,
+              ].includes(gameType)
             ) {
               return
             }
@@ -229,8 +241,12 @@ export function SettingsPage() {
   return (
     <>
       <LayoutHeader>
-        <LayoutHeaderTitle>{t('page.settings.title')}</LayoutHeaderTitle>
-        <div className="flex gap-2">
+        <LayoutHeaderTitle>
+          <BreadcrumbItem>
+            <BreadcrumbPage>{t('page.settings.title')}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </LayoutHeaderTitle>
+        <LayoutHeaderActions>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -250,21 +266,23 @@ export function SettingsPage() {
             </TooltipTrigger>
             <TooltipContent>{t('common.refresh')}</TooltipContent>
           </Tooltip>
-        </div>
+        </LayoutHeaderActions>
       </LayoutHeader>
 
       <Form {...form}>
-        <ScrollArea className="h-full p-4">
-          <form className="page flex flex-col gap-4">
-            <SettingsGameSection />
-            <SettingsCompilation />
-            <SettingsMo2 />
-            <div className="grid grid-cols-2 gap-4 pb-10">
-              <SettingsThemeSection />
-              <SettingsTelemetrySection />
+        <form>
+          <ScrollArea className="page w-full">
+            <div className="flex flex-col gap-4 p-4">
+              <SettingsGameSection />
+              <SettingsCompilation />
+              <SettingsMo2 />
+              <div className="grid grid-cols-2 gap-4 pb-10">
+                <SettingsThemeSection />
+                <SettingsTelemetrySection />
+              </div>
             </div>
-          </form>
-        </ScrollArea>
+          </ScrollArea>
+        </form>
       </Form>
     </>
   )

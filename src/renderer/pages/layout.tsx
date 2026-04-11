@@ -8,6 +8,10 @@ import {
 } from '@renderer/components/ui/sidebar.tsx'
 import type { PropsWithChildren } from 'react'
 import { Outlet } from 'react-router'
+import {
+  Breadcrumb,
+  BreadcrumbList,
+} from '@renderer/components/ui/breadcrumb.tsx'
 
 export function Layout() {
   return (
@@ -25,7 +29,7 @@ export function Layout() {
 
 export function LayoutHeader({ children }: PropsWithChildren) {
   return (
-    <header className="drag flex h-(--sidebar-height) shrink-0 items-center justify-between px-4 transition-[width] ease-linear">
+    <header className="drag flex justify-between h-(--sidebar-height) shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
       {children}
     </header>
   )
@@ -33,12 +37,22 @@ export function LayoutHeader({ children }: PropsWithChildren) {
 
 export function LayoutHeaderTitle({ children }: PropsWithChildren) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-1 items-center gap-2 px-4">
       <SidebarTrigger className="-ml-1" />
       <Separator
         orientation="vertical"
-        className="mr-2 data-[orientation=vertical]:h-4"
+        className="mr-2 data-vertical:h-4 data-vertical:self-center"
       />
+      <Breadcrumb>
+        <BreadcrumbList>{children}</BreadcrumbList>
+      </Breadcrumb>
+    </div>
+  )
+}
+
+export function LayoutHeaderActions({ children }: PropsWithChildren) {
+  return (
+    <div className="ml-auto px-3 flex items-center gap-2 text-sm">
       {children}
     </div>
   )
