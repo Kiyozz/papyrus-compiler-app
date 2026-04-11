@@ -108,8 +108,8 @@ importers:
         specifier: ~11.0.2
         version: 11.0.2
       electron-tsdown:
-        specifier: ^11.0.1
-        version: 11.0.1(tsdown@0.21.7(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(typescript@6.0.2))(vite@8.0.8(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(yaml@2.8.3))
+        specifier: ^11.0.2
+        version: 11.0.2(tsdown@0.21.7(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(typescript@6.0.2))(vite@8.0.8(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(yaml@2.8.3))
       electron-util:
         specifier: ~1.0.0
         version: 1.0.0
@@ -3856,8 +3856,8 @@ packages:
   electron-to-chromium@1.5.335:
     resolution: {integrity: sha512-q9n5T4BR4Xwa2cwbrwcsDJtHD/enpQ5S1xF1IAtdqf5AAgqDFmR/aakqH3ChFdqd/QXJhS3rnnXFtexU7rax6Q==}
 
-  electron-tsdown@11.0.1:
-    resolution: {integrity: sha512-0U+IqSIpa0dvT6q/Er1go8aRYxqTZmreHFoCqmwZ0tPj5A1ihV+I64m2/zVJHfoeY6DBZngFvnTyy/a3qYfRoA==}
+  electron-tsdown@11.0.2:
+    resolution: {integrity: sha512-7wX5XMuSRpDoqb5+CQN3UJ/xm7k7k95WzFN/dDIknWzqFazotKpq311+iKSYkeh1IFa0Kq0FBAvV6RdcTf8yog==}
     engines: {node: '>=22', pnpm: '10'}
     hasBin: true
     peerDependencies:
@@ -9612,7 +9612,7 @@ snapshots:
     dependencies:
       '@types/http-cache-semantics': 4.2.0
       '@types/keyv': 3.1.4
-      '@types/node': 22.19.17
+      '@types/node': 24.12.2
       '@types/responselike': 1.0.3
 
   '@types/debug@4.1.13':
@@ -9651,7 +9651,7 @@ snapshots:
 
   '@types/keyv@3.1.4':
     dependencies:
-      '@types/node': 22.19.17
+      '@types/node': 24.12.2
 
   '@types/lodash-es@4.17.12':
     dependencies:
@@ -9707,7 +9707,7 @@ snapshots:
 
   '@types/responselike@1.0.3':
     dependencies:
-      '@types/node': 22.19.17
+      '@types/node': 24.12.2
 
   '@types/statuses@2.0.6': {}
 
@@ -10741,7 +10741,7 @@ snapshots:
 
   electron-to-chromium@1.5.335: {}
 
-  electron-tsdown@11.0.1(tsdown@0.21.7(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(typescript@6.0.2))(vite@8.0.8(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(yaml@2.8.3)):
+  electron-tsdown@11.0.2(tsdown@0.21.7(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(typescript@6.0.2))(vite@8.0.8(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(yaml@2.8.3)):
     dependencies:
       '@adonisjs/fold': 11.0.0
       cac: 7.0.0

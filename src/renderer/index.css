@@ -1,5 +1,6 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
 
 @custom-variant dark (&:is(.dark *));
 @custom-variant sidebar-closed (:is(body:has(.sidebar[data-collapsible="icon"])) &);
@@ -9,22 +10,53 @@
   transition: height 0.15s linear;
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
+  --font-sans: 'Geist', 'sans-serif';
+  --font-geist: 'Geist', 'sans-serif';
+  --font-mono: 'Geist Mono', 'ui-monospace', 'monospace';
+  --font-body: 'Geist', 'sans-serif';
+  --font-segoe: 'Segoe UI', 'Roboto';
+  --font-helvetica: 'Helvetica Neue';
 }
 
 @layer base {
@@ -100,91 +132,26 @@
   }
 }
 
-@theme {
-  --color-darker: #16161a;
-  --color-light-300: #faf7f7;
-  --color-light-400: #f6f0f1;
-  --color-light-600: #eae5e6;
-  --color-light-700: #dddada;
-  --color-light-800: #cac4c4;
-
-  --color-black-400: #403e41;
-  --color-black-600: #2e292d;
-  --color-black-800: #000;
-  --color-primary-400: #3388ff;
-  --color-primary-500: #418aea;
-  --color-primary-600: #3279d7;
-  --color-secondary-400: #3fc68e;
-  --color-secondary-500: #35bc84;
-  --color-secondary-600: #27a571;
-
-  --ease-sharp: cubic-bezier(0.4, 0, 0.6, 1);
-
-  --font-sans: "Geist", "sans-serif";
-  --font-geist: "Geist", "sans-serif";
-  --font-mono: "Geist Mono", "ui-monospace", "monospace";
-  --font-body: "Geist", "sans-serif";
-  --font-segoe: "Segoe UI", "Roboto";
-  --font-helvetica: "Helvetica Neue";
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--color-border);
+    @apply outline-ring/50;
   }
+
   body {
-    @apply bg-background text-foreground;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    overflow: hidden;
+    @apply antialiased;
   }
 
   :root {
     --titlebar-height: 32px;
-  }
-}
-
-@layer base {
-  :root {
     --sidebar-height: 4rem;
     --sidebar-aside-height: calc(100dvh - var(--titlebar-height));
-    --page-height: calc(100dvh - var(--sidebar-height) - var(--titlebar-height));
+    --page-height: calc(
+      100dvh - var(--sidebar-height) - var(--titlebar-height)
+    );
   }
 
   .drag {
@@ -197,12 +164,12 @@
     :is(
       button,
       a,
-      [role="button"],
-      [role="link"],
-      [role="menuitem"],
-      [role="checkbox"],
-      [role="radio"],
-      [role="switch"]
+      [role='button'],
+      [role='link'],
+      [role='menuitem'],
+      [role='checkbox'],
+      [role='radio'],
+      [role='switch']
     ) {
     /*noinspection CssUnknownProperty*/
     -webkit-app-region: no-drag;
@@ -221,9 +188,7 @@
     user-select: none;
   }
 
-  body {
-    overflow: hidden;
-    @apply antialiased;
+  .page {
   }
 }
 
@@ -235,7 +200,12 @@
 .titlebar {
   font-size: 12px;
   color: #171717;
-  @apply relative z-50 flex select-none items-center;
+  position: relative;
+  z-index: 50;
+  display: flex;
+  -webkit-user-select: none;
+  user-select: none;
+  align-items: center;
 }
 
 .titlebar.other-platform {
@@ -244,7 +214,7 @@
 
 .titlebar.macos {
   height: 22px;
-  @apply justify-center;
+  justify-content: center;
 }
 
 .titlebar.macos-bigsur {
@@ -268,18 +238,21 @@
   width: 46px;
   height: var(--titlebar-height);
   /*noinspection CssNoGenericFontName*/
-  font-family: "Segoe MDL2 Assets";
+  font-family: 'Segoe MDL2 Assets';
   font-size: 10px;
   color: inherit;
-  @apply cursor-default border-none bg-transparent;
+  cursor: default;
+  border-style: none;
+  background: var(--color-background);
 }
 
 .titlebar .titlebar-control:hover {
-  @apply bg-light-700 transition-colors duration-300;
+  background: var(--color-red-700);
+  @apply transition-colors duration-300;
 }
 
 .titlebar .titlebar-control:hover:active {
-  @apply bg-light-600;
+  background: var(--color-red-600);
 }
 
 .titlebar .titlebar-control-close:hover {
@@ -298,5 +271,5 @@
 }
 
 .dark .titlebar-control:not(.titlebar-control-close):hover {
-  @apply bg-darker;
+  background: var(--color-green-900);
 }
