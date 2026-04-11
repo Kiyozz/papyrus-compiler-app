@@ -25,6 +25,9 @@ import { loadTranslations } from './translations'
 import { isProduction } from './utils/is-production'
 import 'unfonts.css'
 import { TooltipProvider } from '@renderer/components/ui/tooltip.tsx'
+import { dynamicActivateLocale } from '@renderer/i18n.ts'
+import { I18nProvider } from '@lingui/react'
+import { i18n } from '@lingui/core'
 
 async function start() {
   const root = document.getElementById('app')
@@ -37,35 +40,39 @@ async function start() {
 
   loadTranslations()
 
+  await dynamicActivateLocale('fr')
+
   const production = await isProduction()
 
   try {
     rootReact.render(
       <StrictMode>
-        <TooltipProvider>
-          <VersionProvider>
-            <AppProvider>
-              <TelemetryProvider>
-                <InitializationProvider>
-                  <RecentFilesProvider>
-                    <CompilationProvider>
-                      <SettingsProvider>
-                        <FocusProvider>
-                          <DrawerProvider>
-                            <DropProvider>
-                              <App />
-                            </DropProvider>
-                          </DrawerProvider>
-                        </FocusProvider>
-                      </SettingsProvider>
-                    </CompilationProvider>
-                  </RecentFilesProvider>
-                </InitializationProvider>
-              </TelemetryProvider>
-            </AppProvider>
-          </VersionProvider>
-          {createPortal(<Toaster />, document.body)}
-        </TooltipProvider>
+        <I18nProvider i18n={i18n}>
+          <TooltipProvider>
+            <VersionProvider>
+              <AppProvider>
+                <TelemetryProvider>
+                  <InitializationProvider>
+                    <RecentFilesProvider>
+                      <CompilationProvider>
+                        <SettingsProvider>
+                          <FocusProvider>
+                            <DrawerProvider>
+                              <DropProvider>
+                                <App />
+                              </DropProvider>
+                            </DrawerProvider>
+                          </FocusProvider>
+                        </SettingsProvider>
+                      </CompilationProvider>
+                    </RecentFilesProvider>
+                  </InitializationProvider>
+                </TelemetryProvider>
+              </AppProvider>
+            </VersionProvider>
+            {createPortal(<Toaster />, document.body)}
+          </TooltipProvider>
+        </I18nProvider>
       </StrictMode>,
     )
   } catch (e) {

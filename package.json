@@ -18,11 +18,12 @@
     "lint:fix": "oxlint --fix",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
+    "lingui:extract": "lingui extract",
     "changeset:version": "changeset version"
   },
   "dependencies": {
-    "@tanstack/react-router": "^1.168.15",
-    "@tanstack/router-plugin": "^1.167.14"
+    "@tanstack/react-router": "^1.168.17",
+    "@tanstack/router-plugin": "^1.167.16"
   },
   "devDependencies": {
     "@changesets/cli": "^2.30.0",
@@ -30,10 +31,13 @@
     "@emotion/styled": "^11.14.1",
     "@lingui/cli": "^5.9.5",
     "@lingui/conf": "^5.9.5",
+    "@lingui/core": "^5.9.5",
+    "@lingui/react": "^5.9.5",
     "@lingui/vite-plugin": "^5.9.5",
     "@mui/icons-material": "^5.18.0",
     "@mui/material": "^5.18.0",
     "@pca/electron-ipc": "workspace:*",
+    "@rolldown/plugin-babel": "^0.2.2",
     "@sindresorhus/is": "~7.0.2",
     "@tailwindcss/vite": "^4.2.2",
     "@tanstack/react-router-devtools": "^1.166.13",
@@ -43,6 +47,7 @@
     "@types/react-dom": "~19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-react-compiler": "^1.0.0",
     "class-variance-authority": "^0.7.1",
     "classnames": "~2.5.1",
     "compare-versions": "~6.1.1",

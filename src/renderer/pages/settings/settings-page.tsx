@@ -38,6 +38,7 @@ import {
   BreadcrumbItem,
   BreadcrumbPage,
 } from '@renderer/components/ui/breadcrumb.tsx'
+import { Trans } from '@lingui/react/macro'
 
 const maxConcurrentCompilationScripts = 100
 
@@ -254,7 +255,9 @@ export function SettingsPage() {
                 <BookIcon />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>{t('common.documentation')}</TooltipContent>
+            <TooltipContent>
+              <Trans>Documentation</Trans>
+            </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -262,7 +265,9 @@ export function SettingsPage() {
                 <RotateCcwIcon />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>{t('common.refresh')}</TooltipContent>
+            <TooltipContent>
+              <Trans>Rafraîchir</Trans>
+            </TooltipContent>
           </Tooltip>
         </LayoutHeaderActions>
       </LayoutHeader>

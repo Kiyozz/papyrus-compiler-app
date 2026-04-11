@@ -3,7 +3,6 @@
  */
 
 import React, { useState, type ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
 import type { DialogType } from '../../../common/types/dialog'
 import { bridge } from '@renderer/bridge.ts'
 import {
@@ -16,6 +15,7 @@ import {
 import { Input } from '@renderer/components/ui/input.tsx'
 import { Button } from '@renderer/components/ui/button.tsx'
 import { FolderIcon, FolderOpenIcon } from 'lucide-react'
+import { useLingui } from '@lingui/react/macro'
 
 interface DialogTextFieldProps {
   name: string
@@ -24,7 +24,7 @@ interface DialogTextFieldProps {
 }
 
 function DialogTextField({ name, label, type }: DialogTextFieldProps) {
-  const { t } = useTranslation()
+  const { t } = useLingui()
   const [isHover, setHover] = useState(false)
 
   const onMouseEnter = () => {
@@ -45,7 +45,7 @@ function DialogTextField({ name, label, type }: DialogTextFieldProps) {
               <FormControl>
                 <Input
                   className="pl-10 text-xs"
-                  placeholder={t('common.selectFolder')}
+                  placeholder={t`Sélectionner un dossier`}
                   {...field}
                 />
               </FormControl>

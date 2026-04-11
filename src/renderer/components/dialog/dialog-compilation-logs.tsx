@@ -27,6 +27,7 @@ import type { PropsWithChildren } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { TelemetryEvent } from '../../../common/telemetry-event.ts'
+import { Trans } from '@lingui/react/macro'
 
 export function DialogCompilationLogs({ children }: PropsWithChildren) {
   const { t } = useTranslation()
@@ -156,11 +157,15 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
         <DialogFooter className="px-6 sm:justify-start">
           <Button disabled={hasNoLogs} onClick={onClickClearLogs}>
             <FileXIcon />
-            <span>{t('common.clear')}</span>
+            <span>
+              <Trans>Vider</Trans>
+            </span>
           </Button>
           <div className="flex w-full flex-col-reverse sm:flex-row sm:justify-end">
             <DialogClose asChild>
-              <Button>{t('common.cancel')}</Button>
+              <Button>
+                <Trans>Annuler</Trans>
+              </Button>
             </DialogClose>
           </div>
         </DialogFooter>

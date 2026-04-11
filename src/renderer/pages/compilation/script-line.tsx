@@ -8,23 +8,20 @@ import type { ScriptRenderer } from '@renderer/types'
 import { IconFromStatus } from '@renderer/utils/scripts/from-status.tsx'
 import { isRunningScript } from '@renderer/utils/scripts/status.ts'
 import { PlayIcon, TrashIcon } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
-import type { CSSProperties } from 'react'
+import { useLingui } from '@lingui/react/macro'
 
 interface ScriptLineProps {
   script: ScriptRenderer
   onClickRemoveScript: (script: ScriptRenderer) => void
   onClickPlayCompilation: (script: ScriptRenderer) => void
-  style?: CSSProperties
 }
 
 function ScriptLine({
   script,
   onClickRemoveScript,
   onClickPlayCompilation,
-  style,
 }: ScriptLineProps) {
-  const { t } = useTranslation()
+  const { t } = useLingui()
   const { configError } = useSettings()
 
   const onClickRemove = () => {
@@ -36,10 +33,7 @@ function ScriptLine({
   }
 
   return (
-    <div
-      className="flex items-center gap-2 px-2 py-1 first:rounded-t-md last:rounded-b-md hover:bg-accent/75"
-      style={style}
-    >
+    <div className="flex items-center gap-2 px-2 py-1 first:rounded-t-md last:rounded-b-md hover:bg-accent/75">
       <Button
         size="icon-sm"
         className="size-6 rounded-full"
@@ -55,7 +49,7 @@ function ScriptLine({
         disabled={isRunningScript(script)}
         onClick={onClickRemove}
         variant="destructive"
-        aria-label={t('common.remove')}
+        aria-label={t`Retirer`}
         className="size-6"
       >
         <TrashIcon className="size-3.5" />

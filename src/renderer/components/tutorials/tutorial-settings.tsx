@@ -8,12 +8,13 @@ import cx from 'classnames'
 import { useEffect, useState } from 'react'
 import type { MouseEvent } from 'react'
 import { createPortal } from 'react-dom'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from '@tanstack/react-router'
 import { MOD_DOCUMENTATION_URL } from '../../../common/env'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
+import { Trans } from '@lingui/react/macro'
 
 enum Step {
   waiting,
@@ -227,19 +228,17 @@ function TutorialSettings() {
             {t('tutorials.settings.ask.text')}
           </Typography>
           <Typography className="mb-4 text-center" component="div" variant="h6">
-            <Trans
-              components={{
-                1: (
-                  // eslint-disable-next-line jsx-a11y/anchor-has-content
-                  <a
-                    className="text-gray-700 dark:text-white"
-                    href="/"
-                    onClick={onClickOpenDocumentation}
-                  />
-                ),
-              }}
-              i18nKey="tutorials.settings.documentation"
-            />
+            <Trans>
+              La documentation de PCA est{' '}
+              <a
+                className="text-gray-700 dark:text-white"
+                href="/"
+                onClick={onClickOpenDocumentation}
+              >
+                disponible ici
+              </a>
+              .
+            </Trans>
           </Typography>
           <div className="flex gap-4">
             <Button
@@ -248,10 +247,10 @@ function TutorialSettings() {
               onClick={onClickNeedHelp}
               variant="contained"
             >
-              {t('tutorials.settings.ask.needHelp')}
+              <Trans>J'ai besoin d'aide</Trans>
             </Button>
             <Button disabled={step === Step.waiting} onClick={onClickDeny}>
-              {t('tutorials.close')}
+              <Trans>Fermer</Trans>
             </Button>
           </div>
         </div>
@@ -266,7 +265,7 @@ function TutorialSettings() {
             onClick={onClickSkip}
             variant="contained"
           >
-            {t('common.skip')}
+            <Trans>Passer</Trans>
           </Button>,
           document.body,
         )}

@@ -4,7 +4,8 @@
 
 import * as path from 'node:path'
 import * as url from 'node:url'
-import react from '@vitejs/plugin-react'
+import react, { reactCompilerPreset } from '@vitejs/plugin-react'
+import babel from '@rolldown/plugin-babel'
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import Unfonts from 'unplugin-fonts/vite'
@@ -23,11 +24,12 @@ export default defineConfig({
       routesDirectory: './routes',
       generatedRouteTree: './routeTree.gen.ts',
     }),
-    react({
-      babel: {
-        plugins: ['macros'],
-      },
+    react(),
+    babel({
+      presets: [reactCompilerPreset()],
+      plugins: ['babel-plugin-macros'],
     }),
+    lingui(),
     tailwindcss(),
     Unfonts({
       custom: {
@@ -44,7 +46,6 @@ export default defineConfig({
         preload: true,
       },
     }),
-    lingui(),
   ],
   resolve: {
     alias: {

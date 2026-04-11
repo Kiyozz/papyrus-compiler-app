@@ -33,6 +33,7 @@ import {
 } from 'lucide-react'
 import { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
 import { useDidMount } from 'rooks'
 import { toast } from 'sonner'
@@ -233,7 +234,12 @@ export function CompilationPage() {
         <div className="page flex flex-col min-h-page-with-titlebar">
           <div className="m-auto flex grow flex-col items-center justify-center gap-3 text-center tracking-tight px-4">
             <h5 className="text-xl">
-              <span>{t('page.compilation.dragAndDropText')}</span>
+              <span>
+                <Trans>
+                  Commencez par glisser-déposer des fichiers psc pour les
+                  charger
+                </Trans>
+              </span>
             </h5>
             <Tooltip>
               <TooltipTrigger>

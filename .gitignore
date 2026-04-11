@@ -4,3 +4,5 @@
 
 /*.log
 /var/**/*.pex
+
+/.claude/settings.local.json

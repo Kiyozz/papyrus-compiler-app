@@ -27,6 +27,7 @@ import { Env } from '../../env'
 import { useApp } from '../../hooks/use-app'
 import { useInitialization } from '../../hooks/use-initialization'
 import Anchor from '../anchor'
+import { Trans } from '@lingui/react/macro'
 
 function Img({ src, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
   const newSrc = src?.startsWith('docs')
@@ -209,9 +210,11 @@ function DialogChangelog() {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={onCloseChangelogsDialog}>{t('common.close')}</Button>
+          <Button onClick={onCloseChangelogsDialog}>
+            <Trans>Fermer</Trans>
+          </Button>
           <Button onClick={onClickDownloadRelease} startIcon={<DownloadIcon />}>
-            {t('common.download')}
+            <Trans>Télécharger</Trans>
           </Button>
         </DialogActions>
       </Dialog>

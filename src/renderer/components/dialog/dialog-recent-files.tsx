@@ -31,6 +31,7 @@ import { useTranslation } from 'react-i18next'
 import { useDidUpdate } from 'rooks'
 import { TelemetryEvent } from '../../../common/telemetry-event.ts'
 import type { Script } from '../../../common/types/script.ts'
+import { Trans } from '@lingui/react/macro'
 
 export function DialogRecentFiles({ children }: PropsWithChildren) {
   const [open, setOpen] = useState(false)
@@ -269,7 +270,7 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
             />
           </div>
           <Button onClick={onClickClose} tabIndex={4}>
-            {t('common.cancel')}
+            <Trans>Annuler</Trans>
           </Button>
           <Button
             disabled={selectedRecentFiles.size === 0}

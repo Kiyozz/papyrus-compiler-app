@@ -6,7 +6,6 @@ import is from '@sindresorhus/is'
 import { SearchIcon, Trash2Icon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import type { ChangeEvent, FormEvent, KeyboardEvent } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { Button } from '@renderer/components/ui/button.tsx'
 import {
@@ -25,6 +24,7 @@ import { pscFilesToScript } from '@renderer/utils/scripts/psc-files-to-script.ts
 import { uniqScripts } from '@renderer/utils/scripts/uniq-scripts.ts'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import type { Script } from '../../../common/types/script'
+import { Trans, useLingui } from '@lingui/react/macro'
 
 interface DialogGroupProps {
   onGroupAdd: (group: Group) => void
@@ -41,7 +41,7 @@ function DialogGroup({
   onClose,
   group,
 }: DialogGroupProps) {
-  const { t } = useTranslation()
+  const { t } = useLingui()
   const [name, setName] = useState('')
   const [scripts, setScripts] = useState<Script[]>([])
   const [isEdit, setEdit] = useState(false)
@@ -136,7 +136,7 @@ function DialogGroup({
               id="group-name"
               name="group-name"
               onChange={onChangeName}
-              placeholder={t('page.groups.dialog.name')}
+              placeholder={t`Nom`}
               value={name}
               className="no-drag"
             />
@@ -155,7 +155,7 @@ function DialogGroup({
                       <Button
                         variant="destructive"
                         size="icon-sm"
-                        aria-label={t('common.remove')}
+                        aria-label={t`Retirer`}
                         onClick={onClickRemoveScriptFromGroup(script)}
                         className="size-6"
                       >
@@ -168,7 +168,7 @@ function DialogGroup({
             </ScrollArea>
           ) : (
             <div className="flex grow items-center justify-center">
-              {t('page.groups.dialog.dropScripts')}
+              <Trans>Glisser-déposer vos scripts ici</Trans>
             </div>
           )}
 
@@ -184,12 +184,10 @@ function DialogGroup({
               <SearchIcon />
             </Button>
             <Button variant="outline" onClick={onClose}>
-              {t('common.cancel')}
+              <Trans>Annuler</Trans>
             </Button>
             <Button aria-disabled={!isValid} disabled={!isValid} type="submit">
-              {isEdit
-                ? t('page.groups.actions.edit')
-                : t('page.groups.actions.create')}
+              {isEdit ? <Trans>Modifer</Trans> : <Trans>Créer</Trans>}
             </Button>
           </DialogFooter>
         </form>

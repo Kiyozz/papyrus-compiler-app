@@ -6,288 +6,296 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
-msgid "Rafraîchir"
-msgstr "Refresh"
+#~ msgid "{{exe}} n'est pas un compilateur valide. Le fichier n'existe pas."
+#~ msgstr "{{exe}} is a invalid compiler. This file does not exists."
 
-msgid "Sélectionner un dossier"
-msgstr "Select a folder"
+#~ msgid "<0>À partir de la version 5.5.0, PCA collectera des données de télémétrie dans le but d'analyser les fonctionnalités utilisées et d'améliorer les fonctionnalités pertinentes.</0><1>Toutes les données transmises sont anonymes.</1><2>Des exemples de données collectées comprennent les données de groupe et de compilation, les erreurs, et les horodatages de divers événements d'application.</2><3>Les données de télémétrie sont désactivables dans les paramètres.</3>"
+#~ msgstr "<0>Starting with version 5.5.0, PCA will collect telemetry data for the purpose of analyzing used functionality and improving relevant features.</0><1>All transmitted data are anonymous.</1><2>Examples of collected data include group and compilation data, errors, and timestamps of various app events.</2><3>Data telemetry can be disabled in the settings.</3>"
 
-msgid "Annuler"
-msgstr "Cancel"
+#~ msgid "Activer"
+#~ msgstr "Enable"
 
-msgid "Documentation"
-msgstr "Documentation"
+#~ msgid "Activer l'intégration MO2 uniquement si PCA n'est pas lancé à partir de MO2. Plus d'informations sur la documentation de PCA."
+#~ msgstr "Enable MO2 integration only if PCA is not started from MO2. More details on PCA's documentation."
 
-msgid "Copier"
-msgstr "Copier"
+#~ msgid "Annuler"
+#~ msgstr "Cancel"
 
-msgid "Déposer"
-msgstr "Drop files"
+#~ msgid "Aucun fichiers récents"
+#~ msgstr "No recent files"
 
-msgid "Oui"
-msgstr "Yes"
+#~ msgid "Aucun logs"
+#~ msgstr "No logs"
 
-msgid "Non"
-msgstr "No"
+#~ msgid "Aucun scripts"
+#~ msgstr "No scripts"
 
-msgid "Retirer"
-msgstr "Remove"
+#~ msgid "C'est la première fois que vous lancez PCA."
+#~ msgstr "This is the first time you start PCA."
 
-msgid "Passer"
-msgstr "Skip"
+#~ msgid "Cela vous permettra de vous renseigner sur l'utilisation de PCA."
+#~ msgstr "This will learn you how to use PCA."
 
-msgid "Fermer"
-msgstr "Close"
+#~ msgid "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
+#~ msgstr "This feature is not available when running PCA in administrator."
 
-msgid "Télécharger"
-msgstr "Download"
+#~ msgid "Chargement"
+#~ msgstr "Loading"
 
-msgid "Plus de détails"
-msgstr "More details"
+#~ msgid "Charger"
+#~ msgstr "Load"
 
-msgid "Vider"
-msgstr "Clear"
+#~ msgid "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
+#~ msgstr "Path to PapyrusCompiler.exe. This file comes from the CreationKit installation. More details on PCA's documentation."
 
-msgid "Logs"
-msgstr "Logs"
+#~ msgid "Clair"
+#~ msgstr "Light"
 
-msgid "Logs de compilation"
-msgstr "Compilation logs"
+#~ msgid "Commande éxécutée : {{cmd}}"
+#~ msgstr "Executed command: {{cmd}}"
 
-msgid "Aucun logs"
-msgstr "No logs"
-
-msgid "Copier avec succès"
-msgstr "Successfully copied"
-
-msgid "Problème avec le script {{script}} : {{message}}"
-msgstr "Script {{script}} failed to compile: {{message}}"
-
-msgid "Commande éxécutée : {{cmd}}"
-msgstr "Executed command: {{cmd}}"
-
-msgid "Le dossier {{folder}} n'est pas un dossier de jeu valide. Il ne contient pas {{exe}}."
-msgstr "{{folder}} is an invalid game folder. The folder does not contains {{exe}}."
-
-msgid "{{exe}} n'est pas un compilateur valide. Le fichier n'existe pas."
-msgstr "{{exe}} is a invalid compiler. This file does not exists."
-
-msgid "Votre configuration n'est pas valide. Impossible de valider l'installation de Creation Kit. PCA vérifie la présence du fichier Actor.psc pour valider votre installation de Creation Kit. Impossible de trouver le fichier Actor.psc dans les dossiers Source\\Scripts ou Scripts\\Source. Si vous utilisez l'intégration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
-msgstr "Your configuration is incorrect. Cannot validate Creation Kit installation. The app checks the presence of Actor.psc to validate your Creation Kit installation. Cannot find the file Actor.psc in Source\\Scripts or Scripts\\Source. If you're using the app MO2 integration, the folders overwrite and mods are also checked."
-
-msgid "Configuration invalide"
-msgstr "Invalid configuration"
-
-msgid "Vérifiez le chemin du jeu."
-msgstr "Check your game path."
-
-msgid "Vérifiez le chemin du compilateur."
-msgstr "Check your compiler path."
-
-msgid "Vérifiez l'installation de Creation Kit."
-msgstr "Check your Creation Kit installation."
-
-msgid "Vérifiez l'instance MO2."
-msgstr "Check your mo2 instance."
-
-msgid "L'intégration mo2 est activée, mais votre instance n'est pas valide."
-msgstr "MO2 integration is enabled, but your MO2 instance is invalid."
-
-msgid "Chargement"
-msgstr "Loading"
-
-msgid "Compilation"
-msgstr "Compilation"
-
-msgid "Groupes"
-msgstr "Groups"
-
-msgid "Paramètres"
-msgstr "Settings"
-
-msgid "Ouvrir le site web de la documentation de PCA ?"
-msgstr "Open the PCA documentation website?"
-
-msgid "Cela vous permettra de vous renseigner sur l'utilisation de PCA."
-msgstr "This will learn you how to use PCA."
-
-msgid "Ne plus afficher"
-msgstr "Don't show me that anymore"
-
-msgid "Rechercher"
-msgstr "Search scripts"
-
-msgid "Groupe"
-msgstr "Group"
-
-msgid "Lancer"
-msgstr "Start"
-
-msgid "Vider la liste"
-msgstr "Clear list"
-
-msgid "Fichiers récents"
-msgstr "Recent files"
-
+#: src/renderer/pages/compilation/compilation-page.tsx:238
 msgid "Commencez par glisser-déposer des fichiers psc pour les charger"
 msgstr "Start by dropping psc files to load them"
 
-msgid "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
-msgstr "This feature is not available when running PCA in administrator."
+#~ msgid "Compilateur Papyrus"
+#~ msgstr "Papyrus Compiler"
 
-msgid "Supprimer de la liste"
-msgstr "Remove from list"
+#~ msgid "Compilation"
+#~ msgstr "Compilation"
 
-msgid "Aucun fichiers récents"
-msgstr "No recent files"
+#~ msgid "Configuration invalide"
+#~ msgstr "Invalid configuration"
 
-msgid "Charger"
-msgstr "Load"
+#~ msgid "Configurer PCA"
+#~ msgstr "Setup PCA"
 
-msgid "Créer"
-msgstr "Create"
+#~ msgid "Copier"
+#~ msgstr "Copier"
 
-msgid "Modifier"
-msgstr "Edit"
+#~ msgid "Copier avec succès"
+#~ msgstr "Successfully copied"
 
-msgid "Supprimer"
-msgstr "Remove"
+#~ msgid "Créer"
+#~ msgstr "Create"
 
-msgid "Groupe {{name}}"
-msgstr "Group {{name}}"
+#~ msgid "Déposer"
+#~ msgstr "Drop files"
 
-msgid "Vous pouvez créer un groupe avec le bouton $t(page.groups.actions.create)."
-msgstr "You can create a group with the top-right button."
+#~ msgid "Documentation"
+#~ msgstr "Documentation"
 
-msgid "Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation."
-msgstr "A group is a set of scripts that can be easily loaded on the compilation view."
+#~ msgid "Données d'utilisation"
+#~ msgstr "Telemetry"
 
-msgid "Aucun scripts"
-msgstr "No scripts"
+#~ msgid "Dossier de l'instance"
+#~ msgstr "Instance folder"
 
-msgid "Nom"
-msgstr "Name"
+#~ msgid "Dossier du jeu"
+#~ msgstr "Game folder"
 
-msgid "Glisser-déposer vos scripts ici"
-msgstr "Drop your scripts files here"
+#~ msgid "Dossier où se trouve {{exe}}"
+#~ msgstr "Folder where {{exe}} is located."
 
-msgid "Jeu"
-msgstr "Game"
+#~ msgid "Fermer"
+#~ msgstr "Close"
 
-msgid "Dossier du jeu"
-msgstr "Game folder"
+#~ msgid "Fichiers récents"
+#~ msgstr "Recent files"
 
-msgid "Dossier où se trouve {{exe}}"
-msgstr "Folder where {{exe}} is located."
+#~ msgid "Glisser-déposer vos scripts ici"
+#~ msgstr "Drop your scripts files here"
 
-msgid "Compilateur Papyrus"
-msgstr "Papyrus Compiler"
+#~ msgid "Groupe"
+#~ msgstr "Group"
 
-msgid "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
-msgstr "Path to PapyrusCompiler.exe. This file comes from the CreationKit installation. More details on PCA's documentation."
+#~ msgid "Groupe {{name}}"
+#~ msgstr "Group {{name}}"
 
-msgid "La configuration semble invalide :"
-msgstr "Configuration seems invalid:"
+#~ msgid "Groupes"
+#~ msgstr "Groups"
 
-msgid "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {{file}} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
-msgstr "Check that your Creation Kit installation is valid. The app checks the presence of {{file}} file in Scripts\\Source or Source\\Scripts folders to validate your Creation Kit installation. If you're using the app MO2 integration, the folders overwrite and mods are also checked."
+#~ msgid "Ici, vous pouvez enregistrer le chemin vers le compilateur Papyrus. Disponible après l'installation de Creation Kit"
+#~ msgstr "Here, you can register your papyrus compiler. Available after Creation Kit installation"
 
-msgid "Vérifiez que \"{{exe}}\" existe dans le dossier du jeu."
-msgstr "Check that \"{{exe}}\" exists in the game folder."
+#~ msgid "Ici, vous pouvez enregistrer le nombre de scripts compilés simultanéments."
+#~ msgstr "Here, you can register how many scripts that are concurrently compiled."
 
-msgid "Vérifiez que \"{{compilerExe}}\" existe."
-msgstr "Check that \"{{compilerExe}}\" exists."
+#~ msgid "Ici, vous pouvez enregistrer les informations de votre jeu"
+#~ msgstr "Here, you can register your game information"
 
-msgid "Vérifiez que le dossier de l'instance \"{{mo2Instance}}\" existe."
-msgstr "Check that instance folder \"{{mo2Instance}}\" exists."
+#~ msgid "Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez PCA à travers MO2"
+#~ msgstr "Here, you can register your MO2 configuration. Ignore this if you are running the app through MO2"
 
-msgid "Vérifiez que le dossier \"mods\" existe."
-msgstr "Check that folder \"mods\" exists."
+#~ msgid "J'ai besoin d'aide"
+#~ msgstr "I need help"
 
-msgid "Activer"
-msgstr "Enable"
+#~ msgid "J'ai compris"
+#~ msgstr "I get it"
 
-msgid "Activer l'intégration MO2 uniquement si PCA n'est pas lancé à partir de MO2. Plus d'informations sur la documentation de PCA."
-msgstr "Enable MO2 integration only if PCA is not started from MO2. More details on PCA's documentation."
+#~ msgid "Jeu"
+#~ msgstr "Game"
 
-msgid "Dossier de l'instance"
-msgstr "Instance folder"
+#~ msgid "L'intégration mo2 est activée, mais votre instance n'est pas valide."
+#~ msgstr "MO2 integration is enabled, but your MO2 instance is invalid."
 
-msgid "Limite {{limit}}"
-msgstr "Limit {{limit}}"
+#~ msgid "La configuration semble invalide :"
+#~ msgstr "Configuration seems invalid:"
 
-msgid "Le dossier \"{{folder}}\" ne contient pas les dossiers {{requiredFolders}}."
-msgstr "The folder \"{{folder}}\" does not contains {{requiredFolders}} folders."
+#: src/renderer/components/tutorials/tutorial-settings.tsx:231
+msgid "La documentation de PCA est <0>disponible ici</0>."
+msgstr "You can read the documentation <0>here</0>."
 
-msgid "Nombre de scripts compilés simultanéments"
-msgstr "Number of concurrently compiled scripts"
+#~ msgid "Lancer"
+#~ msgstr "Start"
 
-msgid "Réduisez si vous rencontrez des blocages quand vous lancez la compilation"
-msgstr "Reduce if you experience latency when starting the compilation"
+#~ msgid "Le dossier \"{{folder}}\" ne contient pas les dossiers {{requiredFolders}}."
+#~ msgstr "The folder \"{{folder}}\" does not contains {{requiredFolders}} folders."
 
-msgid "Données d'utilisation"
-msgstr "Telemetry"
+#~ msgid "Le dossier {{folder}} n'est pas un dossier de jeu valide. Il ne contient pas {{exe}}."
+#~ msgstr "{{folder}} is an invalid game folder. The folder does not contains {{exe}}."
 
-msgid "Version {{version}}"
-msgstr "Version {{version}}"
+#~ msgid "Limite {{limit}}"
+#~ msgstr "Limit {{limit}}"
 
-msgid "Thème"
-msgstr "Theme"
+#~ msgid "Logs"
+#~ msgstr "Logs"
 
-msgid "Système"
-msgstr "System"
+#~ msgid "Logs de compilation"
+#~ msgstr "Compilation logs"
 
-msgid "Clair"
-msgstr "Light"
+#~ msgid "Modifier"
+#~ msgstr "Edit"
 
-msgid "Sombre"
-msgstr "Dark"
+#~ msgid "Ne plus afficher"
+#~ msgstr "Don't show me that anymore"
 
-msgid "Nouvelle version disponible"
-msgstr "New version available"
+#~ msgid "Nom"
+#~ msgstr "Name"
 
-msgid "Notes de mise à jour"
-msgstr "Changelogs"
+#~ msgid "Nombre de scripts compilés simultanéments"
+#~ msgstr "Number of concurrently compiled scripts"
 
-msgid "Nouveautés"
-msgstr "Changelogs"
+#~ msgid "Non"
+#~ msgstr "No"
 
-msgid "Nouvelle version disponible : {{version}}"
-msgstr "New version available: {{version}}"
+#~ msgid "Notes de mise à jour"
+#~ msgstr "Changelogs"
 
-msgid "Vous disposez de la dernière version"
-msgstr "PCA is up to date"
+#~ msgid "Nouveautés"
+#~ msgstr "Changelogs"
 
-msgid "OK"
-msgstr "OK"
+#~ msgid "Nouvelle version disponible"
+#~ msgstr "New version available"
 
-msgid "La documentation de PCA est <1>disponible ici</1>."
-msgstr "You can read the documentation <1>here</1>."
+#~ msgid "Nouvelle version disponible : {{version}}"
+#~ msgstr "New version available: {{version}}"
 
-msgid "Configurer PCA"
-msgstr "Setup PCA"
+#~ msgid "OK"
+#~ msgstr "OK"
 
-msgid "C'est la première fois que vous lancez PCA."
-msgstr "This is the first time you start PCA."
+#~ msgid "Oui"
+#~ msgstr "Yes"
 
-msgid "J'ai besoin d'aide"
-msgstr "I need help"
+#~ msgid "Ouvrir le site web de la documentation de PCA ?"
+#~ msgstr "Open the PCA documentation website?"
 
-msgid "Ici, vous pouvez enregistrer les informations de votre jeu"
-msgstr "Here, you can register your game information"
+#~ msgid "Paramètres"
+#~ msgstr "Settings"
 
-msgid "Ici, vous pouvez enregistrer le chemin vers le compilateur Papyrus. Disponible après l'installation de Creation Kit"
-msgstr "Here, you can register your papyrus compiler. Available after Creation Kit installation"
+#~ msgid "Passer"
+#~ msgstr "Skip"
 
-msgid "Ici, vous pouvez enregistrer le nombre de scripts compilés simultanéments."
-msgstr "Here, you can register how many scripts that are concurrently compiled."
+#~ msgid "Plus de détails"
+#~ msgstr "More details"
 
-msgid "Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez PCA à travers MO2"
-msgstr "Here, you can register your MO2 configuration. Ignore this if you are running the app through MO2"
+#~ msgid "Problème avec le script {{script}} : {{message}}"
+#~ msgstr "Script {{script}} failed to compile: {{message}}"
 
-msgid "<0>À partir de la version 5.5.0, PCA collectera des données de télémétrie dans le but d'analyser les fonctionnalités utilisées et d'améliorer les fonctionnalités pertinentes.</0><1>Toutes les données transmises sont anonymes.</1><2>Des exemples de données collectées comprennent les données de groupe et de compilation, les erreurs, et les horodatages de divers événements d'application.</2><3>Les données de télémétrie sont désactivables dans les paramètres.</3>"
-msgstr "<0>Starting with version 5.5.0, PCA will collect telemetry data for the purpose of analyzing used functionality and improving relevant features.</0><1>All transmitted data are anonymous.</1><2>Examples of collected data include group and compilation data, errors, and timestamps of various app events.</2><3>Data telemetry can be disabled in the settings.</3>"
+#~ msgid "Rafraîchir"
+#~ msgstr "Refresh"
 
-msgid "J'ai compris"
-msgstr "I get it"
+#~ msgid "Rechercher"
+#~ msgstr "Search scripts"
+
+#~ msgid "Réduisez si vous rencontrez des blocages quand vous lancez la compilation"
+#~ msgstr "Reduce if you experience latency when starting the compilation"
+
+#~ msgid "Retirer"
+#~ msgstr "Remove"
+
+#~ msgid "Sélectionner un dossier"
+#~ msgstr "Select a folder"
+
+#~ msgid "Sombre"
+#~ msgstr "Dark"
+
+#~ msgid "Supprimer"
+#~ msgstr "Remove"
+
+#~ msgid "Supprimer de la liste"
+#~ msgstr "Remove from list"
+
+#~ msgid "Système"
+#~ msgstr "System"
+
+#~ msgid "Télécharger"
+#~ msgstr "Download"
+
+#~ msgid "Thème"
+#~ msgstr "Theme"
+
+#~ msgid "Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation."
+#~ msgstr "A group is a set of scripts that can be easily loaded on the compilation view."
+
+#~ msgid "Vérifiez l'installation de Creation Kit."
+#~ msgstr "Check your Creation Kit installation."
+
+#~ msgid "Vérifiez l'instance MO2."
+#~ msgstr "Check your mo2 instance."
+
+#~ msgid "Vérifiez le chemin du compilateur."
+#~ msgstr "Check your compiler path."
+
+#~ msgid "Vérifiez le chemin du jeu."
+#~ msgstr "Check your game path."
+
+#~ msgid "Vérifiez que \"{{compilerExe}}\" existe."
+#~ msgstr "Check that \"{{compilerExe}}\" exists."
+
+#~ msgid "Vérifiez que \"{{exe}}\" existe dans le dossier du jeu."
+#~ msgstr "Check that \"{{exe}}\" exists in the game folder."
+
+#~ msgid "Vérifiez que le dossier \"mods\" existe."
+#~ msgstr "Check that folder \"mods\" exists."
+
+#~ msgid "Vérifiez que le dossier de l'instance \"{{mo2Instance}}\" existe."
+#~ msgstr "Check that instance folder \"{{mo2Instance}}\" exists."
+
+#~ msgid "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {{file}} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
+#~ msgstr "Check that your Creation Kit installation is valid. The app checks the presence of {{file}} file in Scripts\\Source or Source\\Scripts folders to validate your Creation Kit installation. If you're using the app MO2 integration, the folders overwrite and mods are also checked."
+
+#~ msgid "Version {{version}}"
+#~ msgstr "Version {{version}}"
+
+#~ msgid "Vider"
+#~ msgstr "Clear"
+
+#~ msgid "Vider la liste"
+#~ msgstr "Clear list"
+
+#~ msgid "Votre configuration n'est pas valide. Impossible de valider l'installation de Creation Kit. PCA vérifie la présence du fichier Actor.psc pour valider votre installation de Creation Kit. Impossible de trouver le fichier Actor.psc dans les dossiers Source\\Scripts ou Scripts\\Source. Si vous utilisez l'intégration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
+#~ msgstr "Your configuration is incorrect. Cannot validate Creation Kit installation. The app checks the presence of Actor.psc to validate your Creation Kit installation. Cannot find the file Actor.psc in Source\\Scripts or Scripts\\Source. If you're using the app MO2 integration, the folders overwrite and mods are also checked."
+
+#~ msgid "Vous disposez de la dernière version"
+#~ msgstr "PCA is up to date"
+
+#~ msgid "Vous pouvez créer un groupe avec le bouton $t(page.groups.actions.create)."
+#~ msgstr "You can create a group with the top-right button."
