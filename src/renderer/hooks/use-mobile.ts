@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 import * as React from 'react'
 
 const MOBILE_BREAKPOINT = 768

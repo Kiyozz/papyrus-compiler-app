@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 /* eslint-disable */
 
 // @ts-nocheck

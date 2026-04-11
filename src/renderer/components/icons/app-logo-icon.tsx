@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 import { type SVGProps } from 'react'
 
 export function AppLogoIcon(props: SVGProps<SVGSVGElement>) {

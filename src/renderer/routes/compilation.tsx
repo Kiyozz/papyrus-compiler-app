@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 import { createFileRoute } from '@tanstack/react-router'
 import { CompilationPage } from '../pages/compilation/compilation-page'
 

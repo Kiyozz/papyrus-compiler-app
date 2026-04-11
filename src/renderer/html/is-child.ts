@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2022 Kiyozz~WK~WushuLate.
- *
- * All rights reserved.
+ * 2022-2026 Kiyozz.
  */
 
 const getDeepChildren = (

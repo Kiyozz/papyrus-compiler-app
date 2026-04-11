@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 import { createFileRoute } from '@tanstack/react-router'
 import { SettingsPage } from '../pages/settings/settings-page'
 

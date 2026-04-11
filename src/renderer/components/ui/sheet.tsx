@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 'use client'
 
 import * as React from 'react'

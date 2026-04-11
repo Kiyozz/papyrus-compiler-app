@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 import { AppSidebar } from '@renderer/components/app-sidebar.tsx'
 import { Titlebar } from '@renderer/components/titlebar.tsx'
 import { Separator } from '@renderer/components/ui/separator.tsx'

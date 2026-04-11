@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 import { Button } from '@renderer/components/ui/button.tsx'
 import { Card, CardContent, CardHeader } from '@renderer/components/ui/card.tsx'
 import {
@@ -54,7 +58,7 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
         {children}
       </DialogTrigger>
       <DialogContent
-        className="flex h-full max-w-screen flex-col px-0 sm:max-w-screen rounded-none"
+        className="flex dialog-fullscreen-height max-w-screen flex-col px-0 sm:max-w-screen rounded-none"
         aria-describedby={undefined}
       >
         <DialogHeader aria-describedby={undefined} className="drag px-6">

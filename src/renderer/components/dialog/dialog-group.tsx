@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2022 Kiyozz~WK~WushuLate.
- *
- * All rights reserved.
+ * 2022-2026 Kiyozz.
  */
 
 import is from '@sindresorhus/is'
@@ -129,7 +127,7 @@ function DialogGroup({
           onSubmit={onSubmitGroup}
           onKeyDown={onDialogKeyDown}
         >
-          <DialogHeader className="drag px-6" aria-describedby={undefined}>
+          <DialogHeader className="px-6">
             <DialogTitle>Group</DialogTitle>
           </DialogHeader>
 
@@ -145,7 +143,7 @@ function DialogGroup({
           </div>
 
           {scripts.length > 0 ? (
-            <ScrollArea className="w-full grow">
+            <ScrollArea className="w-full max-h-96 min-h-32">
               <div className="px-6">
                 <ul className="divide-y divide-accent rounded-md border">
                   {scripts.map((script) => (
@@ -181,6 +179,7 @@ function DialogGroup({
               disabled={isFileDialogActive}
               onClick={drop}
               variant="outline"
+              size="icon"
             >
               <SearchIcon />
             </Button>

@@ -1,10 +1,8 @@
-// noinspection JSMethodCanBeStatic
-
 /*
- * Copyright (c) 2022 Kiyozz~WK~WushuLate.
- *
- * All rights reserved.
+ * 2026 Kiyozz.
  */
+
+// noinspection JSMethodCanBeStatic
 
 import is from '@sindresorhus/is'
 import {
@@ -92,7 +90,7 @@ export class ConfigCheckHandler implements EventHandler {
     try {
       // check this path
       getModsPath(mo2Instance)
-    } catch (err) {
+    } catch {
       return 'mo2-instance-mods'
     }
 

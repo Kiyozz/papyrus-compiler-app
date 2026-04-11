@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 import { cn } from '@renderer/lib/utils'
 
 function Skeleton({ className, ...props }: React.ComponentProps<'div'>) {

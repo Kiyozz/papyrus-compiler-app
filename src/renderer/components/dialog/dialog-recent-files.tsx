@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2022 Kiyozz~WK~WushuLate.
- *
- * All rights reserved.
+ * 2022-2026 Kiyozz.
  */
 
 import { bridge } from '@renderer/bridge.ts'
@@ -230,7 +228,7 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
         onKeyDown={onDialogKeyDown}
         className="flex flex-col px-0"
       >
-        <DialogHeader className="drag px-6">
+        <DialogHeader className="px-6">
           <DialogTitle className="grow">
             {t('page.compilation.actions.recentFiles')}
           </DialogTitle>

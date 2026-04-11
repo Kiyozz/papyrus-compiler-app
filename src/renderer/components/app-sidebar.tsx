@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 import { bridge } from '@renderer/bridge.ts'
 import { DialogCompilationLogs } from '@renderer/components/dialog/dialog-compilation-logs.tsx'
 import { DialogDocumentation } from '@renderer/components/dialog/dialog-documentation.tsx'
@@ -66,7 +70,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               size="lg"
-              className="transition-[padding,width] duration-200 ease-linear group-data-[collapsible=icon]:h-auto! group-data-[collapsible=icon]:w-full! group-data-[collapsible=icon]:rounded-none group-data-[collapsible=icon]:p-2!"
+              className="transition-[padding,width] duration-200 ease-linear group-data-[collapsible=icon]:h-auto! group-data-[collapsible=icon]:w-full! group-data-[collapsible=icon]:rounded-sm group-data-[collapsible=icon]:p-2!"
               onClick={handleClickMenu}
             >
               <div className="flex aspect-square rounded-lg">

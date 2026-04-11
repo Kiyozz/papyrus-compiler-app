@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 import * as React from 'react'
 import { ScrollArea as ScrollAreaPrimitive } from 'radix-ui'
 

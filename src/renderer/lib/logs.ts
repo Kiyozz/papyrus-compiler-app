@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 import type { ScriptRenderer } from '@renderer/types/index.ts'
 import {
   isFailedScript,

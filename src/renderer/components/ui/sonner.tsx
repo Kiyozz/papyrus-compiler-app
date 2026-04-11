@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 'use client'
 
 import { useTheme } from 'next-themes'

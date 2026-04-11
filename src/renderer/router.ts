@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 import { createMemoryHistory, createRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen.ts'
 

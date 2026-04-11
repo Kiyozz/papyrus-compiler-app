@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
@@ -8,6 +12,14 @@
 @utility page {
   height: calc(100svh - var(--sidebar-height));
   transition: height 0.15s linear;
+}
+
+@utility dialog-fullscreen-top {
+  top: calc(50% + var(--titlebar-height) / 2);
+}
+
+@utility dialog-fullscreen-height {
+  height: calc(100% - var(--titlebar-height));
 }
 
 :root {
@@ -205,24 +217,21 @@
   -webkit-user-select: none;
   user-select: none;
   align-items: center;
-}
-
-.titlebar.other-platform {
   height: var(--titlebar-height);
 }
 
 .titlebar.macos {
-  height: 22px;
+  --titlebar-height: 22px;
   justify-content: center;
 }
 
 .titlebar.macos-bigsur {
-  height: 34px;
+  --titlebar-height: 34px;
 }
 
 .titlebar.maximized:not(.macos),
 .titlebar.maximized:not(.macos) .titlebar-control {
-  height: 24px;
+  --titlebar-height: 24px;
 }
 
 .titlebar.maximized:not(.macos) .titlebar-control-close {
@@ -230,7 +239,7 @@
 }
 
 .dark .titlebar {
-  color: #ffffff;
+  color: oklch(1 0 0);
 }
 
 .titlebar-control {
@@ -241,34 +250,37 @@
   font-size: 10px;
   color: inherit;
   cursor: default;
-  @apply border-b;
   background: var(--color-sidebar);
+  @apply border-b transition-colors duration-200;
 }
 
 .titlebar .titlebar-control:hover {
-  background: var(--color-red-700);
-  @apply transition-colors duration-300;
+  background: color-mix(in oklab, var(--color-sidebar), black 5%);
 }
 
 .titlebar .titlebar-control:hover:active {
-  background: var(--color-red-600);
+  background: color-mix(in oklab, var(--color-sidebar), black 10%);
 }
 
 .titlebar .titlebar-control-close:hover {
-  background: #c42b1c;
-  color: #ffffff;
+  background: oklch(0.497 0.196 25.07);
+  color: oklch(1 0 0);
   transition-property: none;
 }
 
-.titlebar .titlebar-control-close:active:hover {
-  background: #ce2b1c;
-  color: #ffffff;
+.titlebar .titlebar-control-close:hover:active {
+  background: color-mix(in oklab, oklch(0.497 0.196 25.07), black 15%);
+  color: oklch(1 0 0);
 }
 
 .dark .titlebar-control {
-  color: #ffffff;
+  color: oklch(1 0 0);
 }
 
 .dark .titlebar-control:not(.titlebar-control-close):hover {
-  background: var(--color-green-900);
+  background: color-mix(in oklab, var(--color-sidebar), white 15%);
+}
+
+.dark .titlebar-control:not(.titlebar-control-close):hover:active {
+  background: color-mix(in oklab, var(--color-sidebar), white 25%);
 }

@@ -1,3 +1,7 @@
+/*
+ * 2026 Kiyozz.
+ */
+
 import * as React from 'react'
 import { Menubar as MenubarPrimitive } from 'radix-ui'
 
