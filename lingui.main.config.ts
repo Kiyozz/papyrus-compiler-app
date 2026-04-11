@@ -5,9 +5,10 @@ export default defineConfig({
   sourceLocale: 'fr',
   catalogs: [
     {
-      path: '<rootDir>/src/renderer/locales/{locale}/messages',
-      include: ['src/renderer'],
+      path: '<rootDir>/src/main/locales/{locale}/messages',
+      include: ['src/main'],
     },
   ],
   format: 'po',
+  compileNamespace: 'ts',
 })

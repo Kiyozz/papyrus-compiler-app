@@ -17,6 +17,7 @@ import { Logger } from './logger'
 import { exists } from './path/path'
 import { settingsStore, defaultConfig } from './store/settings/store'
 import type { MenuItemConstructorOptions, BrowserWindow } from 'electron'
+import { t } from '@lingui/core/macro'
 
 interface RegisterMenusCallbacks {
   openLogFile: (file: string) => Promise<void>
@@ -29,22 +30,20 @@ export async function registerMenu({
   win,
   openLogFile,
 }: RegisterMenusCallbacks): Promise<Menu> {
-  const t = await (await import('./translations/index')).instance
-
   const menu = appMenu([
     {
-      label: t('appMenu.app.preferences.title'),
+      label: t`Préférences...`,
       role: 'appMenu',
       submenu: [
         {
-          label: t('appMenu.app.preferences.actions.configuration'),
+          label: t`Configuration...`,
           click() {
             settingsStore.openInEditor()
           },
           accelerator: 'CommandOrControl+,',
         },
         {
-          label: t('appMenu.app.preferences.actions.reset'),
+          label: t`Réinitialiser`,
           click() {
             settingsStore.store = {
               ...defaultConfig,
@@ -61,7 +60,7 @@ export async function registerMenu({
       ],
     },
     {
-      label: t('appMenu.app.checkForUpdates'),
+      label: t`Rechercher les mises à jour...`,
       click() {
         win.webContents.send(IpcEvent.checkForUpdates)
       },
@@ -71,20 +70,20 @@ export async function registerMenu({
   menu.label = 'PCA'
 
   const fileMenu: MenuItemConstructorOptions = {
-    label: t('appMenu.file.title'),
+    label: t`Fichier`,
     role: 'fileMenu',
     submenu: [
       {
-        label: t('appMenu.file.actions.logs'),
+        label: t`Rapports...`,
         click() {
           void openLogFile(logger.file.path)
         },
       },
       {
-        label: t('appMenu.file.actions.previousLogs.title'),
+        label: t`Session précédente...`,
         submenu: [
           {
-            label: t('appMenu.file.actions.previousLogs.actions.logs'),
+            label: t`Rapports...`,
             click() {
               void openLogFile(logger.previousSessionFilePath)
             },
@@ -96,15 +95,15 @@ export async function registerMenu({
   }
 
   const helpMenu: MenuItemConstructorOptions = {
-    label: t('appMenu.help.title'),
+    label: t`Aide`,
     role: 'help',
     submenu: [
       openUrlMenuItem({
-        label: t('appMenu.help.actions.report'),
+        label: t`Signaler un bug...`,
         url: GITHUB_ISSUES_NEW_LINK,
       }),
       openUrlMenuItem({
-        label: t('appMenu.help.actions.github'),
+        label: t`Github...`,
         url: GITHUB_LINK,
       }),
     ],
@@ -114,16 +113,24 @@ export async function registerMenu({
     for (const item of menu.submenu) {
       const label = match(item.role as string)
         .with('about', 'hide', 'quit', (role) => {
-          const key = role === 'hide' ? 'hideSelf' : role
+          if (role === 'about') {
+            return t`À propos de PCA`
+          }
+
+          if (role === 'hide') {
+            return t`Masquer PCA`
+          }
 
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
-          return t<string>(`appMenu.app.${key}`, { app: 'PCA' })
+          return t`Quitter PCA`
         })
         .with('hideothers', 'unhide', (role) => {
-          const key = role === 'hideothers' ? 'hideOthers' : 'showAll'
+          if (role === 'hideothers') {
+            return t`Masquer les autres`
+          }
 
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
-          return t<string>(`appMenu.app.${key}`)
+          return t`Montrer PCA`
         })
         .otherwise(() => undefined)
 
@@ -162,15 +169,28 @@ export async function registerMenu({
 
   if (!is.nullOrUndefined(editMenu)) {
     editMenu.role = 'editMenu'
-    editMenu.label = t('appMenu.edit.title')
+    editMenu.label = t`Édition`
 
     if (is.array(editMenu.submenu)) {
       for (const item of editMenu.submenu) {
         const label = match<string, string | undefined>(item.role as string)
           .with('undo', 'redo', 'cut', 'copy', 'paste', 'selectall', (role) => {
-            const usedRole = role === 'selectall' ? 'selectAll' : role
-
-            return t(`appMenu.edit.actions.${usedRole}`)
+            switch (role) {
+              case 'undo':
+                return t`Annuler`
+              case 'redo':
+                return t`Rétablir`
+              case 'cut':
+                return t`Couper`
+              case 'copy':
+                return t`Copier`
+              case 'paste':
+                return t`Coller`
+              case 'selectall':
+                return t`Sélectionner tout`
+              default:
+                return undefined
+            }
           })
           .otherwise(() => undefined)
 
@@ -183,7 +203,7 @@ export async function registerMenu({
 
   if (!is.nullOrUndefined(viewMenu)) {
     viewMenu.role = 'viewMenu'
-    viewMenu.label = t('appMenu.view.title')
+    viewMenu.label = t`Présentation`
 
     if (is.array(viewMenu.submenu)) {
       const reloadAction = viewMenu.submenu[0]
@@ -191,29 +211,29 @@ export async function registerMenu({
       const devToolsAction = viewMenu.submenu[2]
 
       if (!is.nullOrUndefined(reloadAction)) {
-        reloadAction.label = t('appMenu.view.actions.reload')
+        reloadAction.label = t`Recharger`
       }
 
       if (!is.nullOrUndefined(fullScreenAction)) {
-        fullScreenAction.label = t('appMenu.view.actions.fullScreen')
+        fullScreenAction.label = t`Activer le mode plein écran`
       }
 
       viewMenu.submenu.splice(2, 0, { type: 'separator' })
 
       if (!is.nullOrUndefined(devToolsAction)) {
-        devToolsAction.label = t('appMenu.view.actions.devTools')
+        devToolsAction.label = t`Outils de développement`
       }
     }
   }
 
   if (!is.nullOrUndefined(windowMenu)) {
-    windowMenu.label = t('appMenu.window.title')
+    windowMenu.label = t`Fenêtre`
 
     if (is.array(windowMenu.submenu)) {
       windowMenu.submenu.forEach((item, index) => {
         switch (item.role) {
           case 'minimize':
-            item.label = t('appMenu.window.actions.minimize')
+            item.label = t`Réduire`
             break
           default:
             if (item.label === 'Close') {
@@ -223,7 +243,7 @@ export async function registerMenu({
                 { type: 'separator' },
               )
 
-              item.label = t('appMenu.window.actions.close')
+              item.label = t`Fermer`
             }
         }
       })

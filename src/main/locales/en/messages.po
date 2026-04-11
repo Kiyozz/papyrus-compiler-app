@@ -1,0 +1,147 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-04-11 22:59+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/main/menu.register.ts:117
+msgid "À propos de PCA"
+msgstr "About PCA"
+
+#: src/main/menu.register.ts:218
+msgid "Activer le mode plein écran"
+msgstr "Toggle Full Screen"
+
+#: src/main/menu.register.ts:98
+msgid "Aide"
+msgstr "Help"
+
+#: src/main/menu.register.ts:180
+msgid "Annuler"
+msgstr "Cancel"
+
+#: src/main/menu.register.ts:188
+msgid "Coller"
+msgstr "Paste"
+
+#: src/main/menu.register.ts:39
+msgid "Configuration..."
+msgstr "Configuration..."
+
+#: src/main/menu.register.ts:186
+msgid "Copier"
+msgstr "Copy"
+
+#: src/main/menu.register.ts:184
+msgid "Couper"
+msgstr "Cut"
+
+#: src/main/menu.register.ts:172
+msgid "Édition"
+msgstr "Edit"
+
+#: src/main/menu.register.ts:230
+msgid "Fenêtre"
+msgstr "Window"
+
+#: src/main/menu.register.ts:246
+msgid "Fermer"
+msgstr "Close"
+
+#: src/main/menu.register.ts:73
+msgid "Fichier"
+msgstr "File"
+
+#: src/main/menu.register.ts:106
+msgid "Github..."
+msgstr "Github..."
+
+#: src/main/context-menu.register.ts:28
+msgid "Inverser la sélection"
+msgstr "Invert selection"
+
+#: src/main/menu.register.ts:129
+msgid "Masquer les autres"
+msgstr "Hide Others"
+
+#: src/main/menu.register.ts:121
+msgid "Masquer PCA"
+msgstr "Hide PCA"
+
+#: src/main/menu.register.ts:133
+msgid "Montrer PCA"
+msgstr "Show PCA"
+
+#: src/main/menu.register.ts:224
+msgid "Outils de développement"
+msgstr "Toggle Developer Tools"
+
+#: src/main/menu.register.ts:35
+msgid "Préférences..."
+msgstr "Preferences..."
+
+#: src/main/menu.register.ts:206
+msgid "Présentation"
+msgstr "View"
+
+#: src/main/menu.register.ts:125
+msgid "Quitter PCA"
+msgstr "Quit PCA"
+
+#: src/main/menu.register.ts:77
+#: src/main/menu.register.ts:86
+msgid "Rapports..."
+msgstr "Logs..."
+
+#: src/main/menu.register.ts:214
+msgid "Recharger"
+msgstr "Reload"
+
+#: src/main/menu.register.ts:63
+msgid "Rechercher les mises à jour..."
+msgstr "Check for Updates..."
+
+#: src/main/menu.register.ts:236
+msgid "Réduire"
+msgstr "Minimize"
+
+#: src/main/menu.register.ts:46
+msgid "Réinitialiser"
+msgstr "Reset"
+
+#: src/main/menu.register.ts:182
+msgid "Rétablir"
+msgstr "Undo"
+
+#: src/main/menu.register.ts:190
+msgid "Sélectionner tout"
+msgstr "Select All"
+
+#: src/main/menu.register.ts:83
+msgid "Session précédente..."
+msgstr "Previous Session..."
+
+#: src/main/menu.register.ts:102
+msgid "Signaler un bug..."
+msgstr "Report bug..."
+
+#: src/main/context-menu.register.ts:22
+msgid "Tout désélectionner"
+msgstr "Select none"
+
+#: src/main/context-menu.register.ts:16
+msgid "Tout sélectionner"
+msgstr "Select all"
+
+#: src/main/context-menu.register.ts:34
+msgid "Vider"
+msgstr "Clear"

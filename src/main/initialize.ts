@@ -43,8 +43,6 @@ import type { EventSync } from './interfaces/event-sync'
 import type { EventHandler } from './interfaces/event-handler'
 import type { Event } from './interfaces/event'
 
-import './translations/index'
-
 const logger = new Logger('Initialize')
 
 /**

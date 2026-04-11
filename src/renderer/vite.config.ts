@@ -27,7 +27,7 @@ export default defineConfig({
     react(),
     babel({
       presets: [reactCompilerPreset()],
-      plugins: ['babel-plugin-macros'],
+      plugins: ['@lingui/babel-plugin-lingui-macro'],
     }),
     lingui(),
     tailwindcss(),

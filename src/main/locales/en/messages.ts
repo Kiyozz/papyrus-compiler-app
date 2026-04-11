@@ -1,0 +1,4 @@
+/*eslint-disable*/ import type { Messages } from '@lingui/core'
+export const messages = JSON.parse(
+  '{"/NQGod":["Previous Session..."],"1Np7jp":["Configuration..."],"8m3N6j":["Hide Others"],"CogEBI":["Select All"],"FXTTP8":["View"],"Fbunb8":["File"],"HYmlcp":["Logs..."],"JU2nFn":["Reload"],"OJ7Hca":["Toggle Full Screen"],"PVvx0Q":["Help"],"PoYeZR":["Close"],"Ync7CI":["Toggle Developer Tools"],"aVir6X":["Clear"],"b3bhYZ":["Preferences..."],"cCwf9t":["Check for Updates..."],"fleM+J":["Show PCA"],"h4xXHR":["Minimize"],"iLJbsA":["Window"],"iS7m9d":["Reset"],"iXd3qY":["Github..."],"lhtqYD":["About PCA"],"m0XZNN":["Report bug..."],"nPGWOL":["Invert selection"],"pToRU+":["Paste"],"qiYQ9O":["Edit"],"qxwSIH":["Undo"],"ri83xS":["Quit PCA"],"sxEEno":["Hide PCA"],"tALayW":["Cancel"],"tOmmRx":["Select all"],"uQOG/9":["Select none"],"uTYb2e":["Copy"],"ujL1yv":["Cut"]}',
+) as Messages

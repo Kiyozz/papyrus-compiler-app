@@ -14,6 +14,9 @@ import { Logger } from './logger'
 import { dirname, join } from './path/path'
 import { createWindowStore } from './store/window/store'
 import { unhandled } from './unhandled'
+import { dynamicActivateLocale } from './i18n.ts'
+
+await dynamicActivateLocale('fr')
 
 const logger = new Logger('Main')
 let win: BrowserWindow | null = null

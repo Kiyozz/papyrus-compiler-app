@@ -6,33 +6,32 @@ import contextMenu from 'electron-context-menu'
 import { ipcMain } from './ipc'
 import { IpcEvent } from './ipc-event'
 import type { MenuItemConstructorOptions } from 'electron'
+import { t } from '@lingui/core/macro'
 
 export async function registerContextMenu(
   win: Electron.BrowserWindow,
 ): Promise<void> {
-  const t = await (await import('./translations/index')).instance
-
   const recentFilesMenus: MenuItemConstructorOptions[] = [
     {
-      label: t('contextMenu.select.all'),
+      label: t`Tout sélectionner`,
       click() {
         win.webContents.send(IpcEvent.recentFilesSelectAll)
       },
     },
     {
-      label: t('contextMenu.select.none'),
+      label: t`Tout désélectionner`,
       click() {
         win.webContents.send(IpcEvent.recentFilesSelectNone)
       },
     },
     {
-      label: t('contextMenu.select.invert'),
+      label: t`Inverser la sélection`,
       click() {
         win.webContents.send(IpcEvent.recentFilesInvertSelection)
       },
     },
     {
-      label: t('contextMenu.select.clear'),
+      label: t`Vider`,
       click() {
         win.webContents.send(IpcEvent.recentFilesOnClear)
       },

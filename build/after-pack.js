@@ -3,16 +3,19 @@
  *
  * All rights reserved.
  */
-const { Platform } = require('electron-builder')
-const fs = require('node:fs/promises')
-const path = require('node:path')
+import { Platform } from 'electron-builder'
+import fs from 'node:fs/promises'
+import path from 'node:path'
+import url from 'node:url'
+
+const dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 /**
  *
  * @param {import('electron-builder').AfterPackContext} context
  * @return {Promise<void>}
  */
-exports.default = async function afterPack(context) {
+export default async function afterPack(context) {
   const appOutDir = context.appOutDir
   const platform = context.packager.platform
   const productName = context.packager.appInfo.productName
@@ -60,7 +63,7 @@ exports.default = async function afterPack(context) {
   }
 
   let debugFile = (
-    await fs.readFile(path.resolve(__dirname, usedConfig.debug.from))
+    await fs.readFile(path.resolve(dirname, usedConfig.debug.from))
   ).toString()
   debugFile = debugFile.replace(usedConfig.name.from, usedConfig.name.to)
 

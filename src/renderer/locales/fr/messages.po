@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/renderer/components/tutorials/tutorial-telemetry.tsx:31
+#: src/renderer/components/tutorials/tutorial-telemetry.tsx:32
 msgid "À partir de la version 5.5.0, PCA collectera des données de télémétrie dans le but d'analyser les fonctionnalités utilisées et d'améliorer les fonctionnalités pertinentes."
 msgstr "À partir de la version 5.5.0, PCA collectera des données de télémétrie dans le but d'analyser les fonctionnalités utilisées et d'améliorer les fonctionnalités pertinentes."
 
@@ -44,7 +44,7 @@ msgstr "Aucun scripts"
 msgid "C'est la première fois que vous lancez PCA."
 msgstr "C'est la première fois que vous lancez PCA."
 
-#: src/renderer/pages/compilation/compilation-page.tsx:256
+#: src/renderer/pages/compilation/compilation-page.tsx:258
 msgid "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
 msgstr "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
 
@@ -56,24 +56,24 @@ msgstr "Chargement"
 msgid "Charger"
 msgstr "Charger"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:111
+#: src/renderer/pages/settings/settings-game-section.tsx:117
 msgid "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
 msgstr "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
 
-#: src/renderer/pages/settings/settings-theme-section.tsx:45
+#: src/renderer/pages/settings/settings-theme-section.tsx:47
 msgid "Clair"
 msgstr "Clair"
 
-#: src/renderer/pages/compilation/compilation-page.tsx:245
+#: src/renderer/pages/compilation/compilation-page.tsx:247
 msgid "Commencez par glisser-déposer des fichiers psc pour les charger"
 msgstr "Commencez par glisser-déposer des fichiers psc pour les charger"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:105
+#: src/renderer/pages/settings/settings-game-section.tsx:110
 msgid "Compilateur Papyrus"
 msgstr "Compilateur Papyrus"
 
 #: src/renderer/components/app-sidebar.tsx:34
-#: src/renderer/pages/compilation/compilation-page.tsx:219
+#: src/renderer/pages/compilation/compilation-page.tsx:221
 #: src/renderer/pages/settings/settings-compilation.tsx:20
 msgid "Compilation"
 msgstr "Compilation"
@@ -94,12 +94,12 @@ msgstr "Copier avec succès"
 msgid "Créer"
 msgstr "Créer"
 
-#: src/renderer/components/tutorials/tutorial-telemetry.tsx:33
+#: src/renderer/components/tutorials/tutorial-telemetry.tsx:42
 msgid "Des exemples de données collectées comprennent les données de groupe et de compilation, les erreurs, et les horodatages de divers événements d'application."
 msgstr "Des exemples de données collectées comprennent les données de groupe et de compilation, les erreurs, et les horodatages de divers événements d'application."
 
 #: src/renderer/components/app-sidebar.tsx:57
-#: src/renderer/pages/settings/settings-page.tsx:257
+#: src/renderer/pages/settings/settings-page.tsx:259
 msgid "Documentation"
 msgstr "Documentation"
 
@@ -111,11 +111,11 @@ msgstr "Données d'utilisation"
 msgid "Dossier de l'instance"
 msgstr "Dossier de l'instance"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:85
+#: src/renderer/pages/settings/settings-game-section.tsx:88
 msgid "Dossier du jeu"
 msgstr "Dossier du jeu"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:91
+#: src/renderer/pages/settings/settings-game-section.tsx:95
 msgid "Dossier où se trouve {exe}"
 msgstr "Dossier où se trouve {exe}"
 
@@ -132,12 +132,12 @@ msgstr "Fichiers récents"
 msgid "Glisser-déposer vos scripts ici"
 msgstr "Glisser-déposer vos scripts ici"
 
-#: src/renderer/pages/compilation/groups-menu.tsx:39
+#: src/renderer/pages/compilation/groups-menu.tsx:40
 msgid "Groupe"
 msgstr "Groupe"
 
 #: src/renderer/components/app-sidebar.tsx:39
-#: src/renderer/pages/groups/groups-page.tsx:93
+#: src/renderer/pages/groups/groups-page.tsx:94
 msgid "Groupes"
 msgstr "Groupes"
 
@@ -161,7 +161,7 @@ msgstr "Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option,
 msgid "J'ai besoin d'aide"
 msgstr "J'ai besoin d'aide"
 
-#: src/renderer/components/tutorials/tutorial-telemetry.tsx:43
+#: src/renderer/components/tutorials/tutorial-telemetry.tsx:61
 msgid "J'ai compris"
 msgstr "J'ai compris"
 
@@ -173,7 +173,7 @@ msgstr "Jeu"
 msgid "L'intégration mo2 est activée, mais votre instance n'est pas valide."
 msgstr "L'intégration mo2 est activée, mais votre instance n'est pas valide."
 
-#: src/renderer/pages/settings/settings-game-section.tsx:126
+#: src/renderer/pages/settings/settings-game-section.tsx:136
 #: src/renderer/pages/settings/settings-mo2/settings-mo2-instance.tsx:40
 msgid "La configuration semble invalide :"
 msgstr "La configuration semble invalide :"
@@ -182,11 +182,11 @@ msgstr "La configuration semble invalide :"
 msgid "La documentation de PCA est <0>disponible ici</0>."
 msgstr "La documentation de PCA est <0>disponible ici</0>."
 
-#: src/renderer/pages/compilation/compilation-page.tsx:272
+#: src/renderer/pages/compilation/compilation-page.tsx:278
 msgid "Lancer"
 msgstr "Lancer"
 
-#: src/renderer/components/tutorials/tutorial-telemetry.tsx:34
+#: src/renderer/components/tutorials/tutorial-telemetry.tsx:49
 msgid "Les données de télémétrie sont désactivables dans les paramètres."
 msgstr "Les données de télémétrie sont désactivables dans les paramètres."
 
@@ -199,7 +199,7 @@ msgid "Logs de compilation"
 msgstr "Logs de compilation"
 
 #: src/renderer/components/dialog/dialog-group.tsx:190
-#: src/renderer/pages/groups/groups-list-item-menu.tsx:46
+#: src/renderer/pages/groups/groups-list-item-menu.tsx:47
 msgid "Modifier"
 msgstr "Modifier"
 
@@ -228,7 +228,7 @@ msgid "OK"
 msgstr "OK"
 
 #: src/renderer/components/app-sidebar.tsx:44
-#: src/renderer/pages/settings/settings-page.tsx:243
+#: src/renderer/pages/settings/settings-page.tsx:244
 msgid "Paramètres"
 msgstr "Paramètres"
 
@@ -237,12 +237,12 @@ msgid "Passer"
 msgstr "Passer"
 
 #: src/renderer/components/dialog/dialog-recent-files.tsx:262
-#: src/renderer/pages/compilation/compilation-page.tsx:198
-#: src/renderer/pages/groups/groups-page.tsx:116
+#: src/renderer/pages/compilation/compilation-page.tsx:199
+#: src/renderer/pages/groups/groups-page.tsx:118
 msgid "Plus de détails"
 msgstr "Plus de détails"
 
-#: src/renderer/pages/settings/settings-page.tsx:267
+#: src/renderer/pages/settings/settings-page.tsx:269
 msgid "Rafraîchir"
 msgstr "Rafraîchir"
 
@@ -259,23 +259,23 @@ msgstr "Retirer"
 msgid "Sélectionner un dossier"
 msgstr "Sélectionner un dossier"
 
-#: src/renderer/pages/settings/settings-theme-section.tsx:31
+#: src/renderer/pages/settings/settings-theme-section.tsx:32
 msgid "Sélectionner un thème"
 msgstr "Sélectionner un thème"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:56
+#: src/renderer/pages/settings/settings-game-section.tsx:57
 msgid "Sélectionner votre jeu"
 msgstr "Sélectionner votre jeu"
 
-#: src/renderer/pages/settings/settings-theme-section.tsx:48
+#: src/renderer/pages/settings/settings-theme-section.tsx:50
 msgid "Sombre"
 msgstr "Sombre"
 
-#: src/renderer/pages/groups/groups-list-item-menu.tsx:50
+#: src/renderer/pages/groups/groups-list-item-menu.tsx:53
 msgid "Supprimer"
 msgstr "Supprimer"
 
-#: src/renderer/pages/settings/settings-theme-section.tsx:42
+#: src/renderer/pages/settings/settings-theme-section.tsx:44
 msgid "Système"
 msgstr "Système"
 
@@ -287,11 +287,11 @@ msgstr "Télécharger"
 msgid "Thème"
 msgstr "Thème"
 
-#: src/renderer/components/tutorials/tutorial-telemetry.tsx:32
+#: src/renderer/components/tutorials/tutorial-telemetry.tsx:39
 msgid "Toutes les données transmises sont anonymes."
 msgstr "Toutes les données transmises sont anonymes."
 
-#: src/renderer/pages/groups/groups-page.tsx:141
+#: src/renderer/pages/groups/groups-page.tsx:146
 msgid "Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation."
 msgstr "Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation."
 
@@ -313,15 +313,15 @@ msgid "Vérifiez le chemin du jeu."
 msgstr "Vérifiez le chemin du jeu."
 
 #. placeholder {0}: compilation.compilerPath
-#: src/renderer/pages/settings/settings-game-section.tsx:132
+#: src/renderer/pages/settings/settings-game-section.tsx:145
 msgid "Vérifiez que \"{0}\" existe."
 msgstr "Vérifiez que \"{0}\" existe."
 
-#: src/renderer/pages/settings/settings-game-section.tsx:130
+#: src/renderer/pages/settings/settings-game-section.tsx:140
 msgid "Vérifiez que \"{exe}\" existe dans le dossier du jeu."
 msgstr "Vérifiez que \"{exe}\" existe dans le dossier du jeu."
 
-#: src/renderer/pages/settings/settings-mo2/settings-mo2-instance.tsx:45
+#: src/renderer/pages/settings/settings-mo2/settings-mo2-instance.tsx:48
 msgid "Vérifiez que le dossier \"mods\" existe."
 msgstr "Vérifiez que le dossier \"mods\" existe."
 
@@ -330,7 +330,7 @@ msgid "Vérifiez que le dossier de l'instance \"{mo2Instance}\" existe."
 msgstr "Vérifiez que le dossier de l'instance \"{mo2Instance}\" existe."
 
 #. placeholder {0}: toCompilerSourceFile(game.type)
-#: src/renderer/pages/settings/settings-game-section.tsx:134
+#: src/renderer/pages/settings/settings-game-section.tsx:150
 msgid "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {0} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
 msgstr "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {0} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
 
@@ -338,7 +338,7 @@ msgstr "Vérifiez que votre installation de Creation Kit est valide. PCA vérifi
 msgid "Vider"
 msgstr "Vider"
 
-#: src/renderer/pages/compilation/compilation-page.tsx:282
+#: src/renderer/pages/compilation/compilation-page.tsx:290
 msgid "Vider la liste"
 msgstr "Vider la liste"
 
@@ -346,6 +346,6 @@ msgstr "Vider la liste"
 msgid "Vous disposez de la dernière version"
 msgstr "Vous disposez de la dernière version"
 
-#: src/renderer/pages/groups/groups-page.tsx:140
+#: src/renderer/pages/groups/groups-page.tsx:143
 msgid "Vous pouvez créer un groupe avec le bouton Créer."
 msgstr "Vous pouvez créer un groupe avec le bouton Créer."
