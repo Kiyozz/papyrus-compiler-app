@@ -2,7 +2,7 @@
  * 2022-2026 Kiyozz.
  */
 
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import { Theme } from '../../../common/theme'
 import { SettingsSection, SettingsSectionContent } from './settings-section'
 import {
@@ -21,16 +21,16 @@ import {
 } from '@renderer/components/ui/select.tsx'
 
 function SettingsThemeSection() {
-  const { t } = useTranslation()
-
   return (
-    <SettingsSection id="settings-theme" title={t('page.settings.theme.title')}>
+    <SettingsSection id="settings-theme" title={<Trans>Thème</Trans>}>
       <SettingsSectionContent>
         <FormField
           name="theme"
           render={({ field }) => (
             <FormItem className="flex flex-col gap-3">
-              <FormLabel>Select a theme</FormLabel>
+              <FormLabel>
+                <Trans>Sélectionner un thème</Trans>
+              </FormLabel>
               <FormControl>
                 <Select
                   onValueChange={field.onChange}
@@ -41,13 +41,13 @@ function SettingsThemeSection() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={Theme.system}>
-                      {t('page.settings.theme.options.system')}
+                      <Trans>Système</Trans>
                     </SelectItem>
                     <SelectItem value={Theme.light}>
-                      {t('page.settings.theme.options.light')}
+                      <Trans>Clair</Trans>
                     </SelectItem>
                     <SelectItem value={Theme.dark}>
-                      {t('page.settings.theme.options.dark')}
+                      <Trans>Sombre</Trans>
                     </SelectItem>
                   </SelectContent>
                 </Select>

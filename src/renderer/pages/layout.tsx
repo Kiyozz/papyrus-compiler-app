@@ -16,12 +16,18 @@ import {
   Breadcrumb,
   BreadcrumbList,
 } from '@renderer/components/ui/breadcrumb.tsx'
+import useLocalStorage from 'react-use-localstorage'
 
 export function Layout() {
+  const [sidebarOpen, setSidebarOpen] = useLocalStorage('sidebar-open', 'true')
+
   return (
     <>
       <Titlebar />
-      <SidebarProvider>
+      <SidebarProvider
+        open={sidebarOpen === 'true'}
+        onOpenChange={(open) => setSidebarOpen(open.toString())}
+      >
         <AppSidebar />
         <SidebarInset>
           <Outlet />

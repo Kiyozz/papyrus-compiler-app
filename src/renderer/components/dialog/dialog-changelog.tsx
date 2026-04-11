@@ -19,7 +19,7 @@ import {
 import type { SnackbarProps } from '@mui/material'
 import { type ComponentProps, type ReactNode, useState } from 'react'
 import type { ImgHTMLAttributes, MouseEvent } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import ReactMarkdown from 'react-markdown'
 import { GITHUB_LINK } from '../../../common/constants'
 import { bridge } from '../../bridge'
@@ -27,7 +27,6 @@ import { Env } from '../../env'
 import { useApp } from '../../hooks/use-app'
 import { useInitialization } from '../../hooks/use-initialization'
 import Anchor from '../anchor'
-import { Trans } from '@lingui/react/macro'
 
 function Img({ src, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
   const newSrc = src?.startsWith('docs')
@@ -103,7 +102,6 @@ function HtmlListItem({ children }: ComponentProps<'li'>) {
 }
 
 function DialogChangelog() {
-  const { t } = useTranslation()
   const {
     showChangelogs: [isShowChangelogs, setShowChangelogs],
     changelogs: [changelogs],
@@ -153,7 +151,9 @@ function DialogChangelog() {
         onClose={onCloseShowLatestVersionAlert}
         open={isShowLatestVersionAlert}
       >
-        <Alert severity="info">{t('changelog.alreadyLastVersion')}</Alert>
+        <Alert severity="info">
+          <Trans>Vous disposez de la dernière version</Trans>
+        </Alert>
       </Snackbar>
 
       <Snackbar
@@ -168,13 +168,13 @@ function DialogChangelog() {
         <Alert
           action={
             <Button onClick={onClickShowChangelogs} size="small">
-              {t('changelog.available.notes')}
+              <Trans>Nouveautés</Trans>
             </Button>
           }
           severity="info"
         >
           <Typography>
-            {t('changelog.available.message', { version: latestVersion })}
+            <Trans>Nouvelle version disponible : {latestVersion}</Trans>
           </Typography>
         </Alert>
       </Snackbar>
@@ -187,7 +187,7 @@ function DialogChangelog() {
         open={isShowChangelogsDialoag}
       >
         <DialogTitle id="dialog-notes-title">
-          {t('changelog.changelogs')}
+          <Trans>Notes de mise à jour</Trans>
         </DialogTitle>
         <DialogContent dividers id="dialog-notes-content">
           {changelogs && (

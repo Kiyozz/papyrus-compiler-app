@@ -8,13 +8,12 @@ import cx from 'classnames'
 import { useEffect, useState } from 'react'
 import type { MouseEvent } from 'react'
 import { createPortal } from 'react-dom'
-import { useTranslation } from 'react-i18next'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useNavigate } from '@tanstack/react-router'
 import { MOD_DOCUMENTATION_URL } from '../../../common/env'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
-import { Trans } from '@lingui/react/macro'
 
 enum Step {
   waiting,
@@ -39,7 +38,6 @@ function StepTooltip({
   selector: string
   arrowPosition?: 'left' | 'bottom-left'
 }) {
-  const { t } = useTranslation()
   const [stepAnchor, setAnchor] = useState(() =>
     document.querySelector(selector),
   )
@@ -63,7 +61,7 @@ function StepTooltip({
     >
       <Typography>{text}</Typography>
       <Button color="primary" onClick={onClickOk} variant="contained">
-        {t('tutorials.ok')}
+        <Trans>OK</Trans>
       </Button>
     </div>,
     stepAnchor,
@@ -71,52 +69,52 @@ function StepTooltip({
 }
 
 function GameSettingsStep({ next }: { next: Next }) {
-  const { t } = useTranslation()
+  const { t } = useLingui()
 
   return (
     <StepTooltip
       arrowPosition="bottom-left"
       next={next}
       selector="#settings-game"
-      text={t('tutorials.settings.game.text')}
+      text={t`Ici, vous pouvez enregistrer les informations de votre jeu`}
     />
   )
 }
 
 function CompilerSettingsStep({ next }: { next: Next }) {
-  const { t } = useTranslation()
+  const { t } = useLingui()
 
   return (
     <StepTooltip
       arrowPosition="left"
       next={next}
       selector="#settings-compiler"
-      text={t('tutorials.settings.compiler.text')}
+      text={t`Ici, vous pouvez enregistrer le chemin vers le compilateur Papyrus. Disponible après l'installation de Creation Kit`}
     />
   )
 }
 
 function ConcurrentSettingsStep({ next }: { next: Next }) {
-  const { t } = useTranslation()
+  const { t } = useLingui()
 
   return (
     <StepTooltip
       next={next}
       selector="#compilation-concurrentScripts"
-      text={t('tutorials.settings.compilation.concurrent.text')}
+      text={t`Ici, vous pouvez enregistrer le nombre de scripts compilés simultanéments.`}
     />
   )
 }
 
 function Mo2SettingsStep({ next }: { next: Next }) {
-  const { t } = useTranslation()
+  const { t } = useLingui()
 
   return (
     <StepTooltip
       arrowPosition="bottom-left"
       next={next}
       selector="#settings-mo2"
-      text={t('tutorials.settings.mo2.text')}
+      text={t`Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez PCA à travers MO2`}
     />
   )
 }
@@ -137,7 +135,6 @@ function Backdrop() {
  * 5. Show concurrent scripts
  */
 function TutorialSettings() {
-  const { t } = useTranslation()
   const { config, setConfig } = useApp()
   const navigate = useNavigate()
   const [step, setStep] = useState(Step.waiting)
@@ -222,10 +219,10 @@ function TutorialSettings() {
       {(step === Step.ask || step === Step.waiting) && (
         <div className="fixed top-0 left-0 z-30 flex h-full w-full flex-col items-center justify-center bg-light-400 dark:bg-black-400 dark:text-white">
           <Typography variant="h3">
-            {t('tutorials.settings.ask.title')}
+            <Trans>Configurer PCA</Trans>
           </Typography>
           <Typography className="m-6 text-center text-xl" component="div">
-            {t('tutorials.settings.ask.text')}
+            <Trans>C'est la première fois que vous lancez PCA.</Trans>
           </Typography>
           <Typography className="mb-4 text-center" component="div" variant="h6">
             <Trans>

@@ -24,13 +24,12 @@ import {
 } from '@renderer/utils/scripts/status.ts'
 import { CheckCheckIcon, CircleXIcon, CopyIcon, FileXIcon } from 'lucide-react'
 import type { PropsWithChildren } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { toast } from 'sonner'
 import { TelemetryEvent } from '../../../common/telemetry-event.ts'
-import { Trans } from '@lingui/react/macro'
 
 export function DialogCompilationLogs({ children }: PropsWithChildren) {
-  const { t } = useTranslation()
+  const { t } = useLingui()
   const { logs, clearCompilationLogs } = useCompilation()
   const { hasNoLogs, hasErrorsInLogs, isAllScriptsSuccessInLogs } =
     logsState(logs)
@@ -63,12 +62,14 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
         aria-describedby={undefined}
       >
         <DialogHeader aria-describedby={undefined} className="drag px-6">
-          <DialogTitle>{t('common.logs.title')}</DialogTitle>
+          <DialogTitle>
+            <Trans>Logs de compilation</Trans>
+          </DialogTitle>
         </DialogHeader>
         <ScrollArea className="[&_[data-radix-scroll-area-viewport]>div]:block! w-full grow [&_[data-radix-scroll-area-viewport]>div]:min-h-auto!">
           {hasNoLogs ? (
             <p className="flex h-full items-center justify-center">
-              {t('common.logs.noLogs')}
+              <Trans>Aucun logs</Trans>
             </p>
           ) : (
             <div className="px-6">
@@ -80,7 +81,7 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
                   const onClickCopy = () => {
                     send(TelemetryEvent.compilationLogsCopy, {})
                     copyToClipboard(`${script.name}-${script.path}\n\n${log}\n`)
-                    toast.info(t('common.logs.successCopy'), {
+                    toast.info(t`Copier avec succès`, {
                       duration: Infinity,
                     })
                   }

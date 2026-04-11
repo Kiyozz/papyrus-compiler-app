@@ -32,8 +32,7 @@ import {
   XIcon,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Trans } from '@lingui/react/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
 import { useDidMount } from 'rooks'
 import { toast } from 'sonner'
@@ -71,7 +70,7 @@ function SearchButton({
 }
 
 export function CompilationPage() {
-  const { t } = useTranslation()
+  const { t } = useLingui()
   const { groups } = useApp()
   const {
     scripts,
@@ -178,7 +177,15 @@ export function CompilationPage() {
     let toastId = undefined as string | number | undefined
 
     if (configError !== false) {
-      toastId = toast.error(t('config.errorTitle'), {
+      const checkErrorDescriptions: Record<string, string> = {
+        game: t`Vérifiez le chemin du jeu.`,
+        compiler: t`Vérifiez le chemin du compilateur.`,
+        scripts: t`Vérifiez l'installation de Creation Kit.`,
+        'mo2-instance': t`Vérifiez l'instance MO2.`,
+        'mo2-instance-mods': t`Vérifiez l'instance MO2.`,
+        'mo2-use-no-instance': t`L'intégration mo2 est activée, mais votre instance n'est pas valide.`,
+      }
+      toastId = toast.error(t`Configuration invalide`, {
         action: (
           <Button
             variant="link"
@@ -188,10 +195,12 @@ export function CompilationPage() {
             }}
             asChild
           >
-            <Link to="/settings">{t('common.moreDetails')}</Link>
+            <Link to="/settings">
+              <Trans>Plus de détails</Trans>
+            </Link>
           </Button>
         ),
-        description: t('config.checkError', { context: configError }),
+        description: checkErrorDescriptions[configError as string],
         duration: Infinity,
       })
     }
@@ -209,7 +218,7 @@ export function CompilationPage() {
         <LayoutHeaderTitle>
           <BreadcrumbItem>
             <BreadcrumbPage className="line-clamp-1">
-              {t('page.compilation.title')}
+              <Trans>Compilation</Trans>
             </BreadcrumbPage>
           </BreadcrumbItem>
         </LayoutHeaderTitle>
@@ -246,7 +255,10 @@ export function CompilationPage() {
                 <InfoIcon className="size-5" />
               </TooltipTrigger>
               <TooltipContent>
-                {t<string>('page.compilation.dragAndDropAdmin')}
+                <Trans>
+                  Cette fonctionnalité n'est pas disponible si PCA est lancé en
+                  mode administrateur.
+                </Trans>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -262,7 +274,9 @@ export function CompilationPage() {
               onClick={onClickStart}
             >
               <PlayIcon />
-              <span>{t('page.compilation.actions.start')}</span>
+              <span>
+                <Trans>Lancer</Trans>
+              </span>
             </Button>
 
             <Button
@@ -272,7 +286,9 @@ export function CompilationPage() {
               onClick={onClickEmpty}
             >
               <XIcon />
-              <span>{t('page.compilation.actions.clearList')}</span>
+              <span>
+                <Trans>Vider la liste</Trans>
+              </span>
             </Button>
           </div>
           <ScrollArea className="page pb-4 grow h-px px-6" ref={scrollRef}>

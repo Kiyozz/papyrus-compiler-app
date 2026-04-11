@@ -9,7 +9,6 @@ import { createRoot } from 'react-dom/client'
 
 import { Toaster } from '@renderer/components/ui/sonner.tsx'
 import { fromError } from '../common/from-error'
-import App from './app'
 import { bridge } from './bridge'
 import AppProvider from './hooks/use-app'
 import CompilationProvider from './hooks/use-compilation'
@@ -21,13 +20,14 @@ import RecentFilesProvider from './hooks/use-recent-files'
 import TelemetryProvider from './hooks/use-telemetry'
 import VersionProvider from './hooks/use-version'
 import SettingsProvider from './pages/settings/use-settings'
-import { loadTranslations } from './translations'
 import { isProduction } from './utils/is-production'
-import 'unfonts.css'
 import { TooltipProvider } from '@renderer/components/ui/tooltip.tsx'
 import { dynamicActivateLocale } from '@renderer/i18n.ts'
 import { I18nProvider } from '@lingui/react'
 import { i18n } from '@lingui/core'
+import 'unfonts.css'
+
+await dynamicActivateLocale('fr')
 
 async function start() {
   const root = document.getElementById('app')
@@ -38,11 +38,8 @@ async function start() {
 
   const rootReact = createRoot(root)
 
-  loadTranslations()
-
-  await dynamicActivateLocale('fr')
-
   const production = await isProduction()
+  const App = await import('./app.tsx').then((m) => m.App)
 
   try {
     rootReact.render(

@@ -27,15 +27,13 @@ import { uniqScripts } from '@renderer/utils/scripts/uniq-scripts.ts'
 import { Trash2Icon } from 'lucide-react'
 import React, { type PropsWithChildren, useId, useMemo, useState } from 'react'
 import type { KeyboardEvent, MouseEvent } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import { useDidUpdate } from 'rooks'
 import { TelemetryEvent } from '../../../common/telemetry-event.ts'
 import type { Script } from '../../../common/types/script.ts'
-import { Trans } from '@lingui/react/macro'
 
 export function DialogRecentFiles({ children }: PropsWithChildren) {
   const [open, setOpen] = useState(false)
-  const { t } = useTranslation()
   const { send } = useTelemetry()
   const { setScripts, scripts: loadedScripts } = useCompilation()
   const platform = usePlatform()
@@ -231,12 +229,12 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
       >
         <DialogHeader className="px-6">
           <DialogTitle className="grow">
-            {t('page.compilation.actions.recentFiles')}
+            <Trans>Fichiers récents</Trans>
           </DialogTitle>
         </DialogHeader>
         {recentFiles.length === 0 ? (
           <p className="flex grow items-center justify-center px-6">
-            {t('page.compilation.recentFilesDialog.noRecentFiles')}
+            <Trans>Aucun fichiers récents</Trans>
           </p>
         ) : (
           <ScrollArea className="w-full grow">
@@ -261,7 +259,7 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
         <DialogFooter className="px-6">
           <div className="flex grow items-center">
             <Label htmlFor="more-details" className="pr-2">
-              {t<string>('common.moreDetails')}
+              <Trans>Plus de détails</Trans>
             </Label>
             <Switch
               id="more-details"
@@ -277,7 +275,7 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
             onClick={onClickLoad}
             tabIndex={3}
           >
-            {t('page.compilation.recentFilesDialog.load')}
+            <Trans>Charger</Trans>
           </Button>
         </DialogFooter>
       </DialogContent>

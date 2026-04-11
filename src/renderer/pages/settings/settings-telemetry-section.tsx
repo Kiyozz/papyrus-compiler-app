@@ -2,7 +2,7 @@
  * 2022-2026 Kiyozz.
  */
 
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import { SettingsSection, SettingsSectionContent } from './settings-section'
 import {
   FormControl,
@@ -13,12 +13,10 @@ import {
 import { Switch } from '@renderer/components/ui/switch.tsx'
 
 function SettingsTelemetrySection() {
-  const { t } = useTranslation()
-
   return (
     <SettingsSection
       id="settings-telemetry"
-      title={t('page.settings.telemetry.title')}
+      title={<Trans>Données d'utilisation</Trans>}
     >
       <SettingsSectionContent>
         <FormField
@@ -27,7 +25,7 @@ function SettingsTelemetrySection() {
             <FormItem className="flex items-center">
               <div>
                 <FormLabel className="text-base">
-                  {t('page.settings.telemetry.enable')}
+                  <Trans>Activer</Trans>
                 </FormLabel>
               </div>
               <FormControl>

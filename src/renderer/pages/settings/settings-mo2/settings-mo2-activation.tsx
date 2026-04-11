@@ -8,12 +8,10 @@ import {
   FormItem,
   FormLabel,
 } from '@renderer/components/ui/form.tsx'
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import { Switch } from '@renderer/components/ui/switch.tsx'
 
 function SettingsMo2Activation() {
-  const { t } = useTranslation()
-
   return (
     <FormField
       name="mo2"
@@ -21,7 +19,7 @@ function SettingsMo2Activation() {
         <FormItem className="flex items-center">
           <div>
             <FormLabel className="text-base">
-              {t('page.settings.mo2.enable')}
+              <Trans>Activer</Trans>
             </FormLabel>
           </div>
           <FormControl>

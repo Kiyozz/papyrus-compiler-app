@@ -26,21 +26,22 @@ import {
 } from 'lucide-react'
 import type { ComponentProps, MouseEvent } from 'react'
 import { Link } from '@tanstack/react-router'
+import { t } from '@lingui/core/macro'
 
 const mainItems = [
   {
     icon: ComputerIcon,
-    text: 'Compilation',
+    text: t`Compilation`,
     href: '/compilation',
   },
   {
     icon: BoxesIcon,
-    text: 'Groups',
+    text: t`Groupes`,
     href: '/groups',
   },
   {
     icon: SettingsIcon,
-    text: 'Settings',
+    text: t`Paramètres`,
     href: '/settings',
   },
 ] as const
@@ -48,12 +49,12 @@ const mainItems = [
 const miscItems = [
   {
     icon: FileClockIcon,
-    text: 'Logs',
+    text: t`Logs`,
     dialog: DialogCompilationLogs,
   },
   {
     icon: BookIcon,
-    text: 'Documentation',
+    text: t`Documentation`,
     dialog: DialogDocumentation,
   },
 ] as const

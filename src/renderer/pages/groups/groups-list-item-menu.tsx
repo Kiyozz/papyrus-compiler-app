@@ -12,7 +12,7 @@ import {
 import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
 import { EllipsisIcon, PenIcon, TrashIcon } from 'lucide-react'
 import type { MouseEvent } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import { TelemetryEvent } from '../../../common/telemetry-event.ts'
 
 interface GroupsListItemMenuProps {
@@ -21,7 +21,6 @@ interface GroupsListItemMenuProps {
 }
 
 function GroupsListItemMenu({ onDelete, onEdit }: GroupsListItemMenuProps) {
-  const { t } = useTranslation()
   const { send } = useTelemetry()
 
   const onClickEdit = (evt: MouseEvent<HTMLElement>) => {
@@ -44,11 +43,15 @@ function GroupsListItemMenu({ onDelete, onEdit }: GroupsListItemMenuProps) {
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={onClickEdit}>
             <PenIcon />
-            <span>{t('page.groups.actions.edit')}</span>
+            <span>
+              <Trans>Modifier</Trans>
+            </span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={onClickDelete}>
             <TrashIcon className="text-destructive" />
-            <span>{t('page.groups.actions.remove')}</span>
+            <span>
+              <Trans>Supprimer</Trans>
+            </span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

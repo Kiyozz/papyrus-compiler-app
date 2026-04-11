@@ -187,7 +187,7 @@ function DialogGroup({
               <Trans>Annuler</Trans>
             </Button>
             <Button aria-disabled={!isValid} disabled={!isValid} type="submit">
-              {isEdit ? <Trans>Modifer</Trans> : <Trans>Créer</Trans>}
+              {isEdit ? <Trans>Modifier</Trans> : <Trans>Créer</Trans>}
             </Button>
           </DialogFooter>
         </form>

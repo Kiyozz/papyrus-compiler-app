@@ -2,7 +2,7 @@
  * 2022-2026 Kiyozz.
  */
 
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import { SettingsSection, SettingsSectionContent } from './settings-section.tsx'
 import {
   FormControl,
@@ -14,12 +14,10 @@ import {
 import { Input } from '@renderer/components/ui/input.tsx'
 
 function SettingsCompilation() {
-  const { t } = useTranslation()
-
   return (
     <SettingsSection
       id="compilation-concurrentScripts"
-      title={t('page.settings.compilation.title')}
+      title={<Trans>Compilation</Trans>}
     >
       <SettingsSectionContent>
         <FormField
@@ -28,13 +26,16 @@ function SettingsCompilation() {
             return (
               <FormItem>
                 <FormLabel>
-                  {t('page.settings.compilation.concurrentScripts.label')}
+                  <Trans>Nombre de scripts compilés simultanéments</Trans>
                 </FormLabel>
                 <FormControl>
                   <Input id="compilation-concurrentScripts-input" {...field} />
                 </FormControl>
                 <FormDescription>
-                  {t('page.settings.compilation.concurrentScripts.info')}
+                  <Trans>
+                    Réduisez si vous rencontrez des blocages quand vous lancez
+                    la compilation
+                  </Trans>
                 </FormDescription>
               </FormItem>
             )

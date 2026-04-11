@@ -2,7 +2,7 @@
  * 2022-2026 Kiyozz.
  */
 
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import DialogTextField from '@renderer/components/dialog/dialog-text-field.tsx'
 import { useSettings } from '../use-settings'
 import { useFormContext } from 'react-hook-form'
@@ -14,11 +14,10 @@ import {
 import { TriangleAlertIcon } from 'lucide-react'
 
 function SettingsMo2Instance() {
-  const { t } = useTranslation()
   const { configError } = useSettings()
   const formContext = useFormContext()
   const mo2 = formContext.watch('mo2') as boolean
-  const mo2Instance = formContext.watch('mo2Instance') as boolean
+  const mo2Instance = formContext.watch('mo2Instance') as string
 
   if (!mo2) {
     return null
@@ -29,7 +28,7 @@ function SettingsMo2Instance() {
       <div className="flex flex-col gap-2">
         <DialogTextField
           name="mo2Instance"
-          label={t('page.settings.mo2.instance')}
+          label={<Trans>Dossier de l'instance</Trans>}
           type="folder"
         />
 
@@ -38,14 +37,16 @@ function SettingsMo2Instance() {
           <Alert variant="destructive">
             <TriangleAlertIcon className="size-4" />
             <AlertTitle>
-              {t('page.settings.errors.installationInvalid')}
+              <Trans>La configuration semble invalide :</Trans>
             </AlertTitle>
             <AlertDescription>
-              {configError === 'mo2-instance'
-                ? t('page.settings.errors.mo2Instance', {
-                    mo2Instance,
-                  })
-                : t('page.settings.errors.mo2InstanceMods')}
+              {configError === 'mo2-instance' ? (
+                <Trans>
+                  Vérifiez que le dossier de l'instance "{mo2Instance}" existe.
+                </Trans>
+              ) : (
+                <Trans>Vérifiez que le dossier "mods" existe.</Trans>
+              )}
             </AlertDescription>
           </Alert>
         )}

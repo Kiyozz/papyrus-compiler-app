@@ -19,7 +19,7 @@ import {
 import { type Group } from '@renderer/types'
 import { PlusIcon } from 'lucide-react'
 import { type MouseEvent, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import useLocalStorage from 'react-use-localstorage'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import GroupsListItem from './groups-list-item'
@@ -30,7 +30,6 @@ import {
 
 export function GroupsPage() {
   const { send } = useTelemetry()
-  const { t } = useTranslation()
   const { groups } = useApp()
   const { add, edit, remove } = useGroups()
   const [isMoreDetails, setMoreDetails] = useLocalStorage(
@@ -91,7 +90,9 @@ export function GroupsPage() {
       <LayoutHeader>
         <LayoutHeaderTitle>
           <BreadcrumbItem>
-            <BreadcrumbPage>{t('page.groups.title')}</BreadcrumbPage>
+            <BreadcrumbPage>
+              <Trans>Groupes</Trans>
+            </BreadcrumbPage>
           </BreadcrumbItem>
         </LayoutHeaderTitle>
         <LayoutHeaderActions>
@@ -114,7 +115,7 @@ export function GroupsPage() {
           {groups.length > 0 && (
             <div className="flex w-full items-center justify-end">
               <Label htmlFor="more-details" className="pr-2">
-                {t('common.moreDetails')}
+                <Trans>Plus de détails</Trans>
               </Label>
               <Switch
                 id="more-details"
@@ -138,8 +139,15 @@ export function GroupsPage() {
             </ul>
           ) : (
             <div className="h-full w-full justify-center gap-4 text-lg">
-              <h5 className="text-xl">{t('page.groups.createGroupText')}</h5>
-              <p>{t('page.groups.whatIsAGroup')}</p>
+              <h5 className="text-xl">
+                <Trans>Vous pouvez créer un groupe avec le bouton Créer.</Trans>
+              </h5>
+              <p>
+                <Trans>
+                  Un groupe est un ensemble de scripts qui peut être ajoutés
+                  rapidement à la compilation.
+                </Trans>
+              </p>
             </div>
           )}
         </section>

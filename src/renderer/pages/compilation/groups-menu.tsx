@@ -2,7 +2,7 @@
  * 2022-2026 Kiyozz.
  */
 
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
 import type { Group } from '@renderer/types/index.ts'
@@ -22,7 +22,6 @@ interface GroupsMenuProps {
 }
 
 function GroupsMenu({ groups, onChangeGroup }: GroupsMenuProps) {
-  const { t } = useTranslation()
   const { send } = useTelemetry()
 
   const notEmptyGroups = groups.filter(
@@ -37,7 +36,9 @@ function GroupsMenu({ groups, onChangeGroup }: GroupsMenuProps) {
             <DropdownMenuTrigger asChild>
               <Button>
                 <PlusIcon />
-                <span>{t('page.compilation.actions.group')}</span>
+                <span>
+                  <Trans>Groupe</Trans>
+                </span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

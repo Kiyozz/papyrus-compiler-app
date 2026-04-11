@@ -13,289 +13,339 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#~ msgid "{{exe}} n'est pas un compilateur valide. Le fichier n'existe pas."
-#~ msgstr "{{exe}} is a invalid compiler. This file does not exists."
+#: src/renderer/components/tutorials/tutorial-telemetry.tsx:31
+msgid "À partir de la version 5.5.0, PCA collectera des données de télémétrie dans le but d'analyser les fonctionnalités utilisées et d'améliorer les fonctionnalités pertinentes."
+msgstr "Starting from version 5.5.0, PCA will collect telemetry data in order to analyze the features used and improve relevant features."
 
-#~ msgid "<0>À partir de la version 5.5.0, PCA collectera des données de télémétrie dans le but d'analyser les fonctionnalités utilisées et d'améliorer les fonctionnalités pertinentes.</0><1>Toutes les données transmises sont anonymes.</1><2>Des exemples de données collectées comprennent les données de groupe et de compilation, les erreurs, et les horodatages de divers événements d'application.</2><3>Les données de télémétrie sont désactivables dans les paramètres.</3>"
-#~ msgstr "<0>Starting with version 5.5.0, PCA will collect telemetry data for the purpose of analyzing used functionality and improving relevant features.</0><1>All transmitted data are anonymous.</1><2>Examples of collected data include group and compilation data, errors, and timestamps of various app events.</2><3>Data telemetry can be disabled in the settings.</3>"
+#: src/renderer/pages/settings/settings-mo2/settings-mo2-activation.tsx:22
+#: src/renderer/pages/settings/settings-telemetry-section.tsx:28
+msgid "Activer"
+msgstr "Enable"
 
-#~ msgid "Activer"
-#~ msgstr "Enable"
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:168
+#: src/renderer/components/dialog/dialog-group.tsx:187
+#: src/renderer/components/dialog/dialog-recent-files.tsx:271
+msgid "Annuler"
+msgstr "Cancel"
 
-#~ msgid "Activer l'intégration MO2 uniquement si PCA n'est pas lancé à partir de MO2. Plus d'informations sur la documentation de PCA."
-#~ msgstr "Enable MO2 integration only if PCA is not started from MO2. More details on PCA's documentation."
+#: src/renderer/components/dialog/dialog-recent-files.tsx:237
+msgid "Aucun fichiers récents"
+msgstr "No recent files"
 
-#~ msgid "Annuler"
-#~ msgstr "Cancel"
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:72
+msgid "Aucun logs"
+msgstr "No logs"
 
-#~ msgid "Aucun fichiers récents"
-#~ msgstr "No recent files"
+#: src/renderer/pages/groups/groups-list-item.tsx:27
+msgid "Aucun scripts"
+msgstr "No scripts"
 
-#~ msgid "Aucun logs"
-#~ msgstr "No logs"
+#: src/renderer/components/tutorials/tutorial-settings.tsx:225
+msgid "C'est la première fois que vous lancez PCA."
+msgstr "This is the first time you start PCA."
 
-#~ msgid "Aucun scripts"
-#~ msgstr "No scripts"
+#: src/renderer/pages/compilation/compilation-page.tsx:256
+msgid "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
+msgstr "This feature is not available when running PCA in administrator."
 
-#~ msgid "C'est la première fois que vous lancez PCA."
-#~ msgstr "This is the first time you start PCA."
+#: src/renderer/app.tsx:50
+msgid "Chargement"
+msgstr "Loading"
 
-#~ msgid "Cela vous permettra de vous renseigner sur l'utilisation de PCA."
-#~ msgstr "This will learn you how to use PCA."
+#: src/renderer/components/dialog/dialog-recent-files.tsx:278
+msgid "Charger"
+msgstr "Load"
 
-#~ msgid "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
-#~ msgstr "This feature is not available when running PCA in administrator."
+#: src/renderer/pages/settings/settings-game-section.tsx:111
+msgid "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
+msgstr "Path to PapyrusCompiler.exe. This file comes from the CreationKit installation. More details on PCA's documentation."
 
-#~ msgid "Chargement"
-#~ msgstr "Loading"
+#: src/renderer/pages/settings/settings-theme-section.tsx:45
+msgid "Clair"
+msgstr "Light"
 
-#~ msgid "Charger"
-#~ msgstr "Load"
-
-#~ msgid "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
-#~ msgstr "Path to PapyrusCompiler.exe. This file comes from the CreationKit installation. More details on PCA's documentation."
-
-#~ msgid "Clair"
-#~ msgstr "Light"
-
-#~ msgid "Commande éxécutée : {{cmd}}"
-#~ msgstr "Executed command: {{cmd}}"
-
-#: src/renderer/pages/compilation/compilation-page.tsx:238
+#: src/renderer/pages/compilation/compilation-page.tsx:245
 msgid "Commencez par glisser-déposer des fichiers psc pour les charger"
 msgstr "Start by dropping psc files to load them"
 
-#~ msgid "Compilateur Papyrus"
-#~ msgstr "Papyrus Compiler"
+#: src/renderer/pages/settings/settings-game-section.tsx:105
+msgid "Compilateur Papyrus"
+msgstr "Papyrus Compiler"
 
-#~ msgid "Compilation"
-#~ msgstr "Compilation"
+#: src/renderer/components/app-sidebar.tsx:34
+#: src/renderer/pages/compilation/compilation-page.tsx:219
+#: src/renderer/pages/settings/settings-compilation.tsx:20
+msgid "Compilation"
+msgstr "Compilation"
 
-#~ msgid "Configuration invalide"
-#~ msgstr "Invalid configuration"
+#: src/renderer/pages/compilation/compilation-page.tsx:188
+msgid "Configuration invalide"
+msgstr "Invalid configuration"
 
-#~ msgid "Configurer PCA"
-#~ msgstr "Setup PCA"
+#: src/renderer/components/tutorials/tutorial-settings.tsx:222
+msgid "Configurer PCA"
+msgstr "Setup PCA"
 
-#~ msgid "Copier"
-#~ msgstr "Copier"
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:84
+msgid "Copier avec succès"
+msgstr "Successfully copied"
 
-#~ msgid "Copier avec succès"
-#~ msgstr "Successfully copied"
+#: src/renderer/components/dialog/dialog-group.tsx:190
+msgid "Créer"
+msgstr "Create"
 
-#~ msgid "Créer"
-#~ msgstr "Create"
+#: src/renderer/components/tutorials/tutorial-telemetry.tsx:33
+msgid "Des exemples de données collectées comprennent les données de groupe et de compilation, les erreurs, et les horodatages de divers événements d'application."
+msgstr "Examples of collected data include group and compilation data, errors, and timestamps of various app events."
 
-#~ msgid "Déposer"
-#~ msgstr "Drop files"
+#: src/renderer/components/app-sidebar.tsx:57
+#: src/renderer/pages/settings/settings-page.tsx:257
+msgid "Documentation"
+msgstr "Documentation"
 
-#~ msgid "Documentation"
-#~ msgstr "Documentation"
+#: src/renderer/pages/settings/settings-telemetry-section.tsx:19
+msgid "Données d'utilisation"
+msgstr "Telemetry"
 
-#~ msgid "Données d'utilisation"
-#~ msgstr "Telemetry"
+#: src/renderer/pages/settings/settings-mo2/settings-mo2-instance.tsx:31
+msgid "Dossier de l'instance"
+msgstr "Instance folder"
 
-#~ msgid "Dossier de l'instance"
-#~ msgstr "Instance folder"
+#: src/renderer/pages/settings/settings-game-section.tsx:85
+msgid "Dossier du jeu"
+msgstr "Game folder"
 
-#~ msgid "Dossier du jeu"
-#~ msgstr "Game folder"
+#: src/renderer/pages/settings/settings-game-section.tsx:91
+msgid "Dossier où se trouve {exe}"
+msgstr "Folder where {exe} is located"
 
-#~ msgid "Dossier où se trouve {{exe}}"
-#~ msgstr "Folder where {{exe}} is located."
+#: src/renderer/components/dialog/dialog-changelog.tsx:214
+#: src/renderer/components/tutorials/tutorial-settings.tsx:250
+msgid "Fermer"
+msgstr "Close"
 
-#~ msgid "Fermer"
-#~ msgstr "Close"
+#: src/renderer/components/dialog/dialog-recent-files.tsx:232
+msgid "Fichiers récents"
+msgstr "Recent files"
 
-#~ msgid "Fichiers récents"
-#~ msgstr "Recent files"
+#: src/renderer/components/dialog/dialog-group.tsx:171
+msgid "Glisser-déposer vos scripts ici"
+msgstr "Drop your scripts files here"
 
-#~ msgid "Glisser-déposer vos scripts ici"
-#~ msgstr "Drop your scripts files here"
+#: src/renderer/pages/compilation/groups-menu.tsx:39
+msgid "Groupe"
+msgstr "Group"
 
-#~ msgid "Groupe"
-#~ msgstr "Group"
+#: src/renderer/components/app-sidebar.tsx:39
+#: src/renderer/pages/groups/groups-page.tsx:93
+msgid "Groupes"
+msgstr "Groups"
 
-#~ msgid "Groupe {{name}}"
-#~ msgstr "Group {{name}}"
+#: src/renderer/components/tutorials/tutorial-settings.tsx:92
+msgid "Ici, vous pouvez enregistrer le chemin vers le compilateur Papyrus. Disponible après l'installation de Creation Kit"
+msgstr "Here, you can register your papyrus compiler. Available after Creation Kit installation"
 
-#~ msgid "Groupes"
-#~ msgstr "Groups"
+#: src/renderer/components/tutorials/tutorial-settings.tsx:104
+msgid "Ici, vous pouvez enregistrer le nombre de scripts compilés simultanéments."
+msgstr "Here, you can register how many scripts that are concurrently compiled."
 
-#~ msgid "Ici, vous pouvez enregistrer le chemin vers le compilateur Papyrus. Disponible après l'installation de Creation Kit"
-#~ msgstr "Here, you can register your papyrus compiler. Available after Creation Kit installation"
+#: src/renderer/components/tutorials/tutorial-settings.tsx:79
+msgid "Ici, vous pouvez enregistrer les informations de votre jeu"
+msgstr "Here, you can register your game information"
 
-#~ msgid "Ici, vous pouvez enregistrer le nombre de scripts compilés simultanéments."
-#~ msgstr "Here, you can register how many scripts that are concurrently compiled."
+#: src/renderer/components/tutorials/tutorial-settings.tsx:117
+msgid "Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez PCA à travers MO2"
+msgstr "Here, you can register your MO2 configuration. Ignore this if you are running the app through MO2"
 
-#~ msgid "Ici, vous pouvez enregistrer les informations de votre jeu"
-#~ msgstr "Here, you can register your game information"
+#: src/renderer/components/tutorials/tutorial-settings.tsx:247
+msgid "J'ai besoin d'aide"
+msgstr "I need help"
 
-#~ msgid "Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez PCA à travers MO2"
-#~ msgstr "Here, you can register your MO2 configuration. Ignore this if you are running the app through MO2"
+#: src/renderer/components/tutorials/tutorial-telemetry.tsx:43
+msgid "J'ai compris"
+msgstr "I get it"
 
-#~ msgid "J'ai besoin d'aide"
-#~ msgstr "I need help"
+#: src/renderer/pages/settings/settings-game-section.tsx:49
+msgid "Jeu"
+msgstr "Game"
 
-#~ msgid "J'ai compris"
-#~ msgstr "I get it"
+#: src/renderer/pages/compilation/compilation-page.tsx:186
+msgid "L'intégration mo2 est activée, mais votre instance n'est pas valide."
+msgstr "MO2 integration is enabled, but your MO2 instance is invalid."
 
-#~ msgid "Jeu"
-#~ msgstr "Game"
+#: src/renderer/pages/settings/settings-game-section.tsx:126
+#: src/renderer/pages/settings/settings-mo2/settings-mo2-instance.tsx:40
+msgid "La configuration semble invalide :"
+msgstr "Configuration seems invalid:"
 
-#~ msgid "L'intégration mo2 est activée, mais votre instance n'est pas valide."
-#~ msgstr "MO2 integration is enabled, but your MO2 instance is invalid."
-
-#~ msgid "La configuration semble invalide :"
-#~ msgstr "Configuration seems invalid:"
-
-#: src/renderer/components/tutorials/tutorial-settings.tsx:231
+#: src/renderer/components/tutorials/tutorial-settings.tsx:228
 msgid "La documentation de PCA est <0>disponible ici</0>."
 msgstr "You can read the documentation <0>here</0>."
 
-#~ msgid "Lancer"
-#~ msgstr "Start"
+#: src/renderer/pages/compilation/compilation-page.tsx:272
+msgid "Lancer"
+msgstr "Start"
 
-#~ msgid "Le dossier \"{{folder}}\" ne contient pas les dossiers {{requiredFolders}}."
-#~ msgstr "The folder \"{{folder}}\" does not contains {{requiredFolders}} folders."
+#: src/renderer/components/tutorials/tutorial-telemetry.tsx:34
+msgid "Les données de télémétrie sont désactivables dans les paramètres."
+msgstr "Telemetry can be disabled in the settings."
 
-#~ msgid "Le dossier {{folder}} n'est pas un dossier de jeu valide. Il ne contient pas {{exe}}."
-#~ msgstr "{{folder}} is an invalid game folder. The folder does not contains {{exe}}."
+#: src/renderer/components/app-sidebar.tsx:52
+msgid "Logs"
+msgstr "Logs"
 
-#~ msgid "Limite {{limit}}"
-#~ msgstr "Limit {{limit}}"
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:66
+msgid "Logs de compilation"
+msgstr "Compilation logs"
 
-#~ msgid "Logs"
-#~ msgstr "Logs"
+#: src/renderer/components/dialog/dialog-group.tsx:190
+#: src/renderer/pages/groups/groups-list-item-menu.tsx:46
+msgid "Modifier"
+msgstr "Edit"
 
-#~ msgid "Logs de compilation"
-#~ msgstr "Compilation logs"
+#: src/renderer/components/dialog/dialog-group.tsx:139
+msgid "Nom"
+msgstr "Name"
 
-#~ msgid "Modifier"
-#~ msgstr "Edit"
+#: src/renderer/pages/settings/settings-compilation.tsx:29
+msgid "Nombre de scripts compilés simultanéments"
+msgstr "Number of concurrently compiled scripts"
 
-#~ msgid "Ne plus afficher"
-#~ msgstr "Don't show me that anymore"
+#: src/renderer/components/dialog/dialog-changelog.tsx:190
+msgid "Notes de mise à jour"
+msgstr "Changelogs"
 
-#~ msgid "Nom"
-#~ msgstr "Name"
+#: src/renderer/components/dialog/dialog-changelog.tsx:171
+msgid "Nouveautés"
+msgstr "Changelogs"
 
-#~ msgid "Nombre de scripts compilés simultanéments"
-#~ msgstr "Number of concurrently compiled scripts"
+#: src/renderer/components/dialog/dialog-changelog.tsx:177
+msgid "Nouvelle version disponible : {latestVersion}"
+msgstr "New version available: {latestVersion}"
 
-#~ msgid "Non"
-#~ msgstr "No"
+#: src/renderer/components/tutorials/tutorial-settings.tsx:64
+msgid "OK"
+msgstr "OK"
 
-#~ msgid "Notes de mise à jour"
-#~ msgstr "Changelogs"
+#: src/renderer/components/app-sidebar.tsx:44
+#: src/renderer/pages/settings/settings-page.tsx:243
+msgid "Paramètres"
+msgstr "Settings"
 
-#~ msgid "Nouveautés"
-#~ msgstr "Changelogs"
+#: src/renderer/components/tutorials/tutorial-settings.tsx:265
+msgid "Passer"
+msgstr "Skip"
 
-#~ msgid "Nouvelle version disponible"
-#~ msgstr "New version available"
+#: src/renderer/components/dialog/dialog-recent-files.tsx:262
+#: src/renderer/pages/compilation/compilation-page.tsx:198
+#: src/renderer/pages/groups/groups-page.tsx:116
+msgid "Plus de détails"
+msgstr "More details"
 
-#~ msgid "Nouvelle version disponible : {{version}}"
-#~ msgstr "New version available: {{version}}"
+#: src/renderer/pages/settings/settings-page.tsx:267
+msgid "Rafraîchir"
+msgstr "Refresh"
 
-#~ msgid "OK"
-#~ msgstr "OK"
+#: src/renderer/pages/settings/settings-compilation.tsx:35
+msgid "Réduisez si vous rencontrez des blocages quand vous lancez la compilation"
+msgstr "Reduce if you experience latency when starting the compilation"
 
-#~ msgid "Oui"
-#~ msgstr "Yes"
+#: src/renderer/components/dialog/dialog-group.tsx:158
+#: src/renderer/pages/compilation/script-line.tsx:52
+msgid "Retirer"
+msgstr "Remove"
 
-#~ msgid "Ouvrir le site web de la documentation de PCA ?"
-#~ msgstr "Open the PCA documentation website?"
+#: src/renderer/components/dialog/dialog-text-field.tsx:48
+msgid "Sélectionner un dossier"
+msgstr "Select a folder"
 
-#~ msgid "Paramètres"
-#~ msgstr "Settings"
+#: src/renderer/pages/settings/settings-theme-section.tsx:31
+msgid "Sélectionner un thème"
+msgstr "Select a theme"
 
-#~ msgid "Passer"
-#~ msgstr "Skip"
+#: src/renderer/pages/settings/settings-game-section.tsx:56
+msgid "Sélectionner votre jeu"
+msgstr "Select your game"
 
-#~ msgid "Plus de détails"
-#~ msgstr "More details"
+#: src/renderer/pages/settings/settings-theme-section.tsx:48
+msgid "Sombre"
+msgstr "Dark"
 
-#~ msgid "Problème avec le script {{script}} : {{message}}"
-#~ msgstr "Script {{script}} failed to compile: {{message}}"
+#: src/renderer/pages/groups/groups-list-item-menu.tsx:50
+msgid "Supprimer"
+msgstr "Remove"
 
-#~ msgid "Rafraîchir"
-#~ msgstr "Refresh"
+#: src/renderer/pages/settings/settings-theme-section.tsx:42
+msgid "Système"
+msgstr "System"
 
-#~ msgid "Rechercher"
-#~ msgstr "Search scripts"
+#: src/renderer/components/dialog/dialog-changelog.tsx:217
+msgid "Télécharger"
+msgstr "Download"
 
-#~ msgid "Réduisez si vous rencontrez des blocages quand vous lancez la compilation"
-#~ msgstr "Reduce if you experience latency when starting the compilation"
+#: src/renderer/pages/settings/settings-theme-section.tsx:25
+msgid "Thème"
+msgstr "Theme"
 
-#~ msgid "Retirer"
-#~ msgstr "Remove"
+#: src/renderer/components/tutorials/tutorial-telemetry.tsx:32
+msgid "Toutes les données transmises sont anonymes."
+msgstr "All transmitted data is anonymous."
 
-#~ msgid "Sélectionner un dossier"
-#~ msgstr "Select a folder"
+#: src/renderer/pages/groups/groups-page.tsx:141
+msgid "Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation."
+msgstr "A group is a set of scripts that can be easily loaded on the compilation view."
 
-#~ msgid "Sombre"
-#~ msgstr "Dark"
+#: src/renderer/pages/compilation/compilation-page.tsx:183
+msgid "Vérifiez l'installation de Creation Kit."
+msgstr "Check your Creation Kit installation."
 
-#~ msgid "Supprimer"
-#~ msgstr "Remove"
+#: src/renderer/pages/compilation/compilation-page.tsx:184
+#: src/renderer/pages/compilation/compilation-page.tsx:185
+msgid "Vérifiez l'instance MO2."
+msgstr "Check your mo2 instance."
 
-#~ msgid "Supprimer de la liste"
-#~ msgstr "Remove from list"
+#: src/renderer/pages/compilation/compilation-page.tsx:182
+msgid "Vérifiez le chemin du compilateur."
+msgstr "Check your compiler path."
 
-#~ msgid "Système"
-#~ msgstr "System"
+#: src/renderer/pages/compilation/compilation-page.tsx:181
+msgid "Vérifiez le chemin du jeu."
+msgstr "Check your game path."
 
-#~ msgid "Télécharger"
-#~ msgstr "Download"
+#. placeholder {0}: compilation.compilerPath
+#: src/renderer/pages/settings/settings-game-section.tsx:132
+msgid "Vérifiez que \"{0}\" existe."
+msgstr "Check that \"{0}\" exists."
 
-#~ msgid "Thème"
-#~ msgstr "Theme"
+#: src/renderer/pages/settings/settings-game-section.tsx:130
+msgid "Vérifiez que \"{exe}\" existe dans le dossier du jeu."
+msgstr "Check that \"{exe}\" exists in the game folder."
 
-#~ msgid "Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation."
-#~ msgstr "A group is a set of scripts that can be easily loaded on the compilation view."
+#: src/renderer/pages/settings/settings-mo2/settings-mo2-instance.tsx:45
+msgid "Vérifiez que le dossier \"mods\" existe."
+msgstr "Check that folder \"mods\" exists."
 
-#~ msgid "Vérifiez l'installation de Creation Kit."
-#~ msgstr "Check your Creation Kit installation."
+#: src/renderer/pages/settings/settings-mo2/settings-mo2-instance.tsx:44
+msgid "Vérifiez que le dossier de l'instance \"{mo2Instance}\" existe."
+msgstr "Check that instance folder \"{mo2Instance}\" exists."
 
-#~ msgid "Vérifiez l'instance MO2."
-#~ msgstr "Check your mo2 instance."
+#. placeholder {0}: toCompilerSourceFile(game.type)
+#: src/renderer/pages/settings/settings-game-section.tsx:134
+msgid "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {0} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
+msgstr "Check that your Creation Kit installation is valid. PCA checks the presence of {0} in Scripts\\Source or Source\\Scripts to validate your Creation Kit installation. If you use PCA MO2 integration, the overwrite and mods folders are also checked."
 
-#~ msgid "Vérifiez le chemin du compilateur."
-#~ msgstr "Check your compiler path."
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:162
+msgid "Vider"
+msgstr "Clear"
 
-#~ msgid "Vérifiez le chemin du jeu."
-#~ msgstr "Check your game path."
+#: src/renderer/pages/compilation/compilation-page.tsx:282
+msgid "Vider la liste"
+msgstr "Clear list"
 
-#~ msgid "Vérifiez que \"{{compilerExe}}\" existe."
-#~ msgstr "Check that \"{{compilerExe}}\" exists."
+#: src/renderer/components/dialog/dialog-changelog.tsx:155
+msgid "Vous disposez de la dernière version"
+msgstr "PCA is up to date"
 
-#~ msgid "Vérifiez que \"{{exe}}\" existe dans le dossier du jeu."
-#~ msgstr "Check that \"{{exe}}\" exists in the game folder."
-
-#~ msgid "Vérifiez que le dossier \"mods\" existe."
-#~ msgstr "Check that folder \"mods\" exists."
-
-#~ msgid "Vérifiez que le dossier de l'instance \"{{mo2Instance}}\" existe."
-#~ msgstr "Check that instance folder \"{{mo2Instance}}\" exists."
-
-#~ msgid "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {{file}} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
-#~ msgstr "Check that your Creation Kit installation is valid. The app checks the presence of {{file}} file in Scripts\\Source or Source\\Scripts folders to validate your Creation Kit installation. If you're using the app MO2 integration, the folders overwrite and mods are also checked."
-
-#~ msgid "Version {{version}}"
-#~ msgstr "Version {{version}}"
-
-#~ msgid "Vider"
-#~ msgstr "Clear"
-
-#~ msgid "Vider la liste"
-#~ msgstr "Clear list"
-
-#~ msgid "Votre configuration n'est pas valide. Impossible de valider l'installation de Creation Kit. PCA vérifie la présence du fichier Actor.psc pour valider votre installation de Creation Kit. Impossible de trouver le fichier Actor.psc dans les dossiers Source\\Scripts ou Scripts\\Source. Si vous utilisez l'intégration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
-#~ msgstr "Your configuration is incorrect. Cannot validate Creation Kit installation. The app checks the presence of Actor.psc to validate your Creation Kit installation. Cannot find the file Actor.psc in Source\\Scripts or Scripts\\Source. If you're using the app MO2 integration, the folders overwrite and mods are also checked."
-
-#~ msgid "Vous disposez de la dernière version"
-#~ msgstr "PCA is up to date"
-
-#~ msgid "Vous pouvez créer un groupe avec le bouton $t(page.groups.actions.create)."
-#~ msgstr "You can create a group with the top-right button."
+#: src/renderer/pages/groups/groups-page.tsx:140
+msgid "Vous pouvez créer un groupe avec le bouton Créer."
+msgstr "You can create a group with the Create button."

@@ -4,7 +4,7 @@
 
 import type { Group } from '@renderer/types/index.ts'
 import type { MouseEvent, ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import GroupsListItemMenu from './groups-list-item-menu'
 
 interface GroupsListItemProps {
@@ -20,13 +20,11 @@ function GroupsListItem({
   onEdit,
   moreDetails,
 }: GroupsListItemProps) {
-  const { t } = useTranslation()
-
   let secondaryText: ReactNode | undefined
 
   if (moreDetails) {
     if (group.isEmpty) {
-      secondaryText = t('page.groups.noScripts')
+      secondaryText = <Trans>Aucun scripts</Trans>
     } else {
       secondaryText = (
         <ul>
@@ -42,12 +40,12 @@ function GroupsListItem({
 
   return (
     <li className="flex items-center gap-2 px-2 py-1 first:rounded-t-md last:rounded-b-md">
-      <p className="flex grow flex-col">
+      <div className="flex grow flex-col">
         <span className="text-sm">{group.name}</span>
         {secondaryText && (
           <span className="text-muted-foreground text-sm">{secondaryText}</span>
         )}
-      </p>
+      </div>
       <GroupsListItemMenu onDelete={onDelete(group)} onEdit={onEdit(group)} />
     </li>
   )

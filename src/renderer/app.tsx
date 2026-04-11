@@ -4,7 +4,7 @@
 
 import { RouterProvider } from '@tanstack/react-router'
 import { lazy, Suspense, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import { TelemetryEvent } from '../common/telemetry-event'
 import { version as releaseVersion } from '../common/version'
 import DialogChangelog from './components/dialog/dialog-changelog'
@@ -26,7 +26,6 @@ const TanStackRouterDevtools = import.meta.env.PROD
     )
 
 function App() {
-  const { t } = useTranslation()
   const { done } = useInitialization()
   const { send } = useTelemetry()
   const [version] = useVersion()
@@ -47,7 +46,9 @@ function App() {
     <>
       {!done && (
         <div className="fixed top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-light-400 dark:bg-darker">
-          <div className="text-center text-4xl">{t('loading')}</div>
+          <div className="text-center text-4xl">
+            <Trans>Chargement</Trans>
+          </div>
         </div>
       )}
 
@@ -70,4 +71,4 @@ function App() {
   )
 }
 
-export default App
+export { App }

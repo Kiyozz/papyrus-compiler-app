@@ -22,7 +22,6 @@ import debounce from 'debounce-fn'
 import { BookIcon, RotateCcwIcon } from 'lucide-react'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
 import { GameType } from '../../../common/game'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { Theme } from '../../../common/theme.ts'
@@ -43,7 +42,6 @@ import { Trans } from '@lingui/react/macro'
 const maxConcurrentCompilationScripts = 100
 
 export function SettingsPage() {
-  const { t } = useTranslation()
   const {
     config: {
       game,
@@ -242,7 +240,9 @@ export function SettingsPage() {
       <LayoutHeader>
         <LayoutHeaderTitle>
           <BreadcrumbItem>
-            <BreadcrumbPage>{t('page.settings.title')}</BreadcrumbPage>
+            <BreadcrumbPage>
+              <Trans>Paramètres</Trans>
+            </BreadcrumbPage>
           </BreadcrumbItem>
         </LayoutHeaderTitle>
         <LayoutHeaderActions>

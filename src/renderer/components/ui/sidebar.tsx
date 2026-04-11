@@ -162,6 +162,7 @@ function Sidebar({
   side?: 'left' | 'right'
   variant?: 'sidebar' | 'floating' | 'inset'
   collapsible?: 'offcanvas' | 'icon' | 'none'
+  open?: boolean
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
 

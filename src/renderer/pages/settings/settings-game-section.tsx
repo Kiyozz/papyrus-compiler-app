@@ -2,7 +2,7 @@
  * 2022-2026 Kiyozz.
  */
 
-import { useTranslation } from 'react-i18next'
+import { Trans } from '@lingui/react/macro'
 import {
   GameType,
   toCompilerSourceFile,
@@ -39,7 +39,6 @@ import {
 } from '@renderer/components/ui/alert.tsx'
 
 function SettingsGameSection() {
-  const { t } = useTranslation()
   const {
     config: { game, compilation },
   } = useApp()
@@ -47,14 +46,16 @@ function SettingsGameSection() {
   const exe = toExecutable(game.type)
 
   return (
-    <SettingsSection title={t('page.settings.game')}>
+    <SettingsSection title={<Trans>Jeu</Trans>}>
       <SettingsSectionContent className="flex flex-col gap-2">
         <div className="flex flex-col gap-2" id="settings-game">
           <FormField
             name="game"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-3">
-                <FormLabel>Select your game</FormLabel>
+                <FormLabel>
+                  <Trans>Sélectionner votre jeu</Trans>
+                </FormLabel>
                 <FormControl>
                   <Select
                     onValueChange={field.onChange}
@@ -83,13 +84,15 @@ function SettingsGameSection() {
             name="gamePath"
             label={
               <>
-                <span>{t('page.settings.gameFolderInfo')}</span>
+                <span>
+                  <Trans>Dossier du jeu</Trans>
+                </span>
                 <Tooltip delayDuration={150}>
                   <TooltipTrigger className="flex items-center">
                     <InfoIcon className="size-4" />
                   </TooltipTrigger>
                   <TooltipContent className="max-w-sm text-balance">
-                    {t<string>('page.settings.gameFolderTooltip', { exe })}
+                    <Trans>Dossier où se trouve {exe}</Trans>
                   </TooltipContent>
                 </Tooltip>
               </>
@@ -103,13 +106,19 @@ function SettingsGameSection() {
             name="compilerPath"
             label={
               <>
-                <span>{t('page.settings.compilerPath')}</span>
+                <span>
+                  <Trans>Compilateur Papyrus</Trans>
+                </span>
                 <Tooltip delayDuration={150}>
                   <TooltipTrigger className="flex items-center">
                     <InfoIcon className="size-4" />
                   </TooltipTrigger>
                   <TooltipContent className="max-w-sm text-balance">
-                    {t('page.settings.compilerPathTooltip')}
+                    <Trans>
+                      Chemin vers le fichier PapyrusCompiler.exe. Le fichier est
+                      disponible après l'installation de CreationKit. Plus
+                      d'informations sur la documentation de PCA.
+                    </Trans>
                   </TooltipContent>
                 </Tooltip>
               </>
@@ -124,19 +133,29 @@ function SettingsGameSection() {
             <Alert variant="destructive">
               <TriangleAlertIcon className="size-4" />
               <AlertTitle>
-                {t('page.settings.errors.installationInvalid')}
+                <Trans>La configuration semble invalide :</Trans>
               </AlertTitle>
               <AlertDescription>
-                {configError === 'game' &&
-                  t('page.settings.errors.game', { exe })}
-                {configError === 'compiler' &&
-                  t('page.settings.errors.compiler', {
-                    compilerExe: compilation.compilerPath,
-                  })}
-                {configError === 'scripts' &&
-                  t('page.settings.errors.scripts', {
-                    file: toCompilerSourceFile(game.type),
-                  })}
+                {configError === 'game' && (
+                  <Trans>
+                    Vérifiez que "{exe}" existe dans le dossier du jeu.
+                  </Trans>
+                )}
+                {configError === 'compiler' && (
+                  <Trans>
+                    Vérifiez que "{compilation.compilerPath}" existe.
+                  </Trans>
+                )}
+                {configError === 'scripts' && (
+                  <Trans>
+                    Vérifiez que votre installation de Creation Kit est valide.
+                    PCA vérifie la présence du fichier{' '}
+                    {toCompilerSourceFile(game.type)} dans les dossiers
+                    Scripts\Source ou Source\Scripts pour valider l'installation
+                    de votre Creation Kit. Si vous utilisez l'integration MO2 de
+                    PCA, les dossiers overwrite et mods sont également vérifiés.
+                  </Trans>
+                )}
               </AlertDescription>
             </Alert>
           )}
