@@ -21,7 +21,7 @@ import {
   SettingsIcon,
 } from 'lucide-react'
 import type { ComponentProps, MouseEvent } from 'react'
-import { NavLink } from 'react-router'
+import { Link } from '@tanstack/react-router'
 
 const mainItems = [
   {
@@ -84,13 +84,13 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
             {mainItems.map((item) => (
               <SidebarMenuItem key={item.text}>
                 <SidebarMenuButton tooltip={item.text} asChild>
-                  <NavLink
+                  <Link
                     to={item.href}
-                    className="aria-[current=page]:bg-accent aria-[current=page]:text-accent-foreground"
+                    className="data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
                   >
                     <item.icon />
                     <span>{item.text}</span>
-                  </NavLink>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}

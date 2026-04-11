@@ -5,7 +5,13 @@
  */
 
 import is from '@sindresorhus/is'
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import type { Dispatch, SetStateAction } from 'react'
 import useLocalStorage from 'react-use-localstorage'
 import { Subject } from 'rxjs'
@@ -32,7 +38,10 @@ const onRecentFilesChanges = recentFiles$.asObservable()
 function RecentFilesProvider({ children }: React.PropsWithChildren) {
   const { send } = useTelemetry()
   const [recentFiles, setRecentFilesMemory] = useState<Script[]>([])
-  const [isMoreDetails, setMoreDetails] = useLocalStorage(LocalStorage.recentFilesMoreDetails, 'false')
+  const [isMoreDetails, setMoreDetails] = useLocalStorage(
+    LocalStorage.recentFilesMoreDetails,
+    'false',
+  )
 
   useEffect(() => {
     const sub = onRecentFilesChanges.subscribe((scripts) => {

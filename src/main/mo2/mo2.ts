@@ -28,7 +28,7 @@ async function getModsSourcesPath(gameType: GameType, instance: string) {
   const otherSourcesPath = toOtherSource(gameType)
   const modsPath = path.join(instance, settingsStore.get('mo2.mods'))
   const foldersToCheck = [sourcesPath, otherSourcesPath].map(
-    p => `${modsPath}/**/${p}`,
+    (p) => `${modsPath}/**/${p}`,
   )
 
   let files: string[] = await path.getPathsInFolder(foldersToCheck, {
@@ -54,14 +54,14 @@ async function getModsSourcesPath(gameType: GameType, instance: string) {
 
       return new RegExp(sourcesPath).test(file) ? file : before
     })
-    .filter(f => Boolean(f)) as readonly string[]
+    .filter((f) => Boolean(f)) as readonly string[]
 
   logger.debug('[MO2] DoubleSourceFolders', doubleSourceFolders)
 
   files = files
-    .filter(file => {
+    .filter((file) => {
       const sliced = file.slice(0, -15)
-      const isInDouble = doubleSourceFolders.some(inFile => {
+      const isInDouble = doubleSourceFolders.some((inFile) => {
         const slicedIn = inFile.slice(0, -15)
 
         return sliced === slicedIn
@@ -73,7 +73,7 @@ async function getModsSourcesPath(gameType: GameType, instance: string) {
 
       return doubleSourceFolders.includes(file)
     })
-    .map(file =>
+    .map((file) =>
       path.normalize(is.linux || is.macos ? toSlash(file) : toAntiSlash(file)),
     )
 
@@ -104,7 +104,7 @@ export async function getImportsPath({
       path.join(overwritePath, otherSourcePath),
     )
     const imports = [
-      ...sources.map(folder => folder.replace(modsPath, '.')),
+      ...sources.map((folder) => folder.replace(modsPath, '.')),
       mo2OverwriteOtherSourcesPath,
       mo2OverwriteSourcesPath,
     ]

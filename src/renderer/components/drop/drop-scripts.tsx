@@ -32,7 +32,7 @@ function DropScripts({
   children,
 }: DropScriptsProps) {
   const { getRootProps, isDragActive, getInputProps, open } = useDropzone({
-    onDrop: files => onDrop?.(files),
+    onDrop: (files) => onDrop?.(files),
     accept: {
       'text/psc': ['.psc'],
     },

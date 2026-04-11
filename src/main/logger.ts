@@ -5,7 +5,13 @@
  */
 
 import log from 'electron-log'
-import type { ErrorHandler, ErrorHandlerOptions, LogFile, LogFunctions, MainTransports } from 'electron-log'
+import type {
+  ErrorHandler,
+  ErrorHandlerOptions,
+  LogFile,
+  LogFunctions,
+  MainTransports,
+} from 'electron-log'
 import { isDev } from 'electron-util/main'
 import { cliArgs } from './cli-args'
 

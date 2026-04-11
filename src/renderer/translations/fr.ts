@@ -32,8 +32,10 @@ export const fr: TranslationShape = {
       scriptFailed: 'Problème avec le script {{script}} : {{message}}',
       scriptFailedCmd: 'Commande éxécutée : {{cmd}}',
       // Check if those trads are useful
-      invalidConfigurationGame: "Le dossier {{folder}} n'est pas un dossier de jeu valide. Il ne contient pas {{exe}}.",
-      invalidConfigurationCompiler: "{{exe}} n'est pas un compilateur valide. Le fichier n'existe pas.",
+      invalidConfigurationGame:
+        "Le dossier {{folder}} n'est pas un dossier de jeu valide. Il ne contient pas {{exe}}.",
+      invalidConfigurationCompiler:
+        "{{exe}} n'est pas un compilateur valide. Le fichier n'existe pas.",
       invalidConfigurationScripts:
         "Votre configuration n'est pas valide. Impossible de valider l'installation de Creation Kit. " +
         'PCA vérifie la présence du fichier Actor.psc pour valider votre installation de Creation Kit. ' +
@@ -49,7 +51,8 @@ export const fr: TranslationShape = {
     checkError_scripts: "Vérifiez l'installation de Creation Kit.",
     'checkError_mo2-instance': "Vérifiez l'instance MO2.",
     'checkError_mo2-instance-mods': "Vérifiez l'instance MO2.",
-    'checkError_mo2-use-no-instance': "L'intégration mo2 est activée, mais votre instance n'est pas valide.",
+    'checkError_mo2-use-no-instance':
+      "L'intégration mo2 est activée, mais votre instance n'est pas valide.",
   },
   loading: 'Chargement',
   nav: {
@@ -59,7 +62,8 @@ export const fr: TranslationShape = {
     help: {
       text: 'Documentation',
       title: 'Ouvrir le site web de la documentation de PCA ?',
-      description: "Cela vous permettra de vous renseigner sur l'utilisation de PCA.",
+      description:
+        "Cela vous permettra de vous renseigner sur l'utilisation de PCA.",
       doNotShowAgain: 'Ne plus afficher',
     },
   },
@@ -73,8 +77,10 @@ export const fr: TranslationShape = {
         clearList: 'Vider la liste',
         recentFiles: 'Fichiers récents',
       },
-      dragAndDropText: 'Commencez par glisser-déposer des fichiers psc pour les charger',
-      dragAndDropAdmin: "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur.",
+      dragAndDropText:
+        'Commencez par glisser-déposer des fichiers psc pour les charger',
+      dragAndDropAdmin:
+        "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur.",
       scriptItem: {
         removeFromList: 'Supprimer de la liste',
       },
@@ -91,8 +97,10 @@ export const fr: TranslationShape = {
         remove: 'Supprimer',
       },
       group: 'Groupe {{name}}',
-      createGroupText: 'Vous pouvez créer un groupe avec le bouton $t(page.groups.actions.create).',
-      whatIsAGroup: 'Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation.',
+      createGroupText:
+        'Vous pouvez créer un groupe avec le bouton $t(page.groups.actions.create).',
+      whatIsAGroup:
+        'Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation.',
       noScripts: 'Aucun scripts',
       dialog: {
         searchScripts: 'Rechercher',
@@ -114,7 +122,8 @@ export const fr: TranslationShape = {
           "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {{file}} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés.",
         game: 'Vérifiez que "{{exe}}" existe dans le dossier du jeu.',
         compiler: 'Vérifiez que "{{compilerExe}}" existe.',
-        mo2Instance: 'Vérifiez que le dossier de l\'instance "{{mo2Instance}}" existe.',
+        mo2Instance:
+          'Vérifiez que le dossier de l\'instance "{{mo2Instance}}" existe.',
         mo2InstanceMods: 'Vérifiez que le dossier "mods" existe.',
       },
       mo2: {
@@ -123,7 +132,8 @@ export const fr: TranslationShape = {
           "Activer l'intégration MO2 uniquement si PCA n'est pas lancé à partir de MO2. Plus d'informations sur la documentation de PCA.",
         instance: "Dossier de l'instance",
         limit: 'Limite {{limit}}',
-        errorInstance: 'Le dossier "{{folder}}" ne contient pas les dossiers {{requiredFolders}}.',
+        errorInstance:
+          'Le dossier "{{folder}}" ne contient pas les dossiers {{requiredFolders}}.',
       },
       compilation: {
         title: 'Compilation',

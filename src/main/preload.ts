@@ -28,10 +28,14 @@ const api: Bridge = {
         .catch((e) => {
           const err = fromError(e)
 
-          console.error("can't send telemetry event to main process", err.message)
+          console.error(
+            "can't send telemetry event to main process",
+            err.message,
+          )
         })
     },
-    setActive: (active) => ipcRenderer.invoke(IpcEvent.telemetrySetActive, active),
+    setActive: (active) =>
+      ipcRenderer.invoke(IpcEvent.telemetrySetActive, active),
   },
   getVersion: () => ipcRenderer.invoke<string>(IpcEvent.getVersion),
   changelog: {
@@ -60,13 +64,17 @@ const api: Bridge = {
         },
       }
     },
-    check: (checkMo2) => ipcRenderer.invoke<BadError>(IpcEvent.configCheck, { checkMo2 }),
+    check: (checkMo2) =>
+      ipcRenderer.invoke<BadError>(IpcEvent.configCheck, { checkMo2 }),
   },
   isProduction: () => ipcRenderer.invoke<boolean>(IpcEvent.isProduction),
   compilation: {
     start: (script) => ipcRenderer.send(IpcEvent.compileScriptStart, script),
     onceFinish: (script, listener) => {
-      return ipcRenderer.once<CompilationResult>(`${IpcEvent.compileScriptFinish}-${script}`, listener)
+      return ipcRenderer.once<CompilationResult>(
+        `${IpcEvent.compileScriptFinish}-${script}`,
+        listener,
+      )
     },
   },
   dialog: {

@@ -4,8 +4,8 @@
  * All rights reserved.
  */
 
-import { Routes } from '@renderer/routes.tsx'
-import { useEffect } from 'react'
+import { RouterProvider } from '@tanstack/react-router'
+import { lazy, Suspense, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TelemetryEvent } from '../common/telemetry-event'
 import { version as releaseVersion } from '../common/version'
@@ -17,6 +17,15 @@ import { useInitialization } from './hooks/use-initialization'
 import { useSyncHtmlTheme } from './hooks/use-sync-html-theme'
 import { useTelemetry } from './hooks/use-telemetry'
 import { useVersion } from './hooks/use-version'
+import { router } from './router'
+
+const TanStackRouterDevtools = import.meta.env.PROD
+  ? () => null
+  : lazy(() =>
+      import('@tanstack/router-devtools').then((m) => ({
+        default: m.TanStackRouterDevtools,
+      })),
+    )
 
 function App() {
   const { t } = useTranslation()
@@ -52,7 +61,10 @@ function App() {
             {tutorials.telemetry && !tutorials.settings && (
               <TutorialTelemetry />
             )}
-            <Routes />
+            <RouterProvider router={router} />
+            <Suspense>
+              <TanStackRouterDevtools router={router} position="bottom-right" />
+            </Suspense>
           </>
         )}
       </div>

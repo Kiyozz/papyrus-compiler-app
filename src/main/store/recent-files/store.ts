@@ -44,7 +44,7 @@ class RecentFileStore extends Store<RecentFiles> {
 
     this.set(
       'files',
-      currentScripts.filter(s => s.path !== script.path),
+      currentScripts.filter((s) => s.path !== script.path),
     )
   }
 }

@@ -115,13 +115,13 @@ export async function registerMenu({
   if (is.array(menu.submenu)) {
     for (const item of menu.submenu) {
       const label = match(item.role as string)
-        .with('about', 'hide', 'quit', role => {
+        .with('about', 'hide', 'quit', (role) => {
           const key = role === 'hide' ? 'hideSelf' : role
 
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
           return t<string>(`appMenu.app.${key}`, { app: 'PCA' })
         })
-        .with('hideothers', 'unhide', role => {
+        .with('hideothers', 'unhide', (role) => {
           const key = role === 'hideothers' ? 'hideOthers' : 'showAll'
 
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
@@ -137,7 +137,7 @@ export async function registerMenu({
 
   if (isUtil.windows || isUtil.linux) {
     if (is.array(menu.submenu)) {
-      menu.submenu = menu.submenu.filter(item => {
+      menu.submenu = menu.submenu.filter((item) => {
         return !['services', 'hide', 'unhide', 'hideothers'].includes(
           item.role as string,
         )
@@ -153,13 +153,13 @@ export async function registerMenu({
   defaultMenus.unshift(fileMenu)
 
   const editMenu = defaultMenus.find(
-    defaultMenu => defaultMenu.label === 'Edit',
+    (defaultMenu) => defaultMenu.label === 'Edit',
   )
   const viewMenu = defaultMenus.find(
-    defaultMenu => defaultMenu.label === 'View',
+    (defaultMenu) => defaultMenu.label === 'View',
   )
   const windowMenu = defaultMenus.find(
-    defaultMenu => defaultMenu.label === 'Window',
+    (defaultMenu) => defaultMenu.label === 'Window',
   )
 
   if (!is.nullOrUndefined(editMenu)) {
@@ -169,7 +169,7 @@ export async function registerMenu({
     if (is.array(editMenu.submenu)) {
       for (const item of editMenu.submenu) {
         const label = match<string, string | undefined>(item.role as string)
-          .with('undo', 'redo', 'cut', 'copy', 'paste', 'selectall', role => {
+          .with('undo', 'redo', 'cut', 'copy', 'paste', 'selectall', (role) => {
             const usedRole = role === 'selectall' ? 'selectAll' : role
 
             return t(`appMenu.edit.actions.${usedRole}`)

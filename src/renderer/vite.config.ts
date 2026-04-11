@@ -11,6 +11,7 @@ import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import Unfonts from 'unplugin-fonts/vite'
 import { lingui } from '@lingui/vite-plugin'
+import { tanstackRouter } from '@tanstack/router-plugin/vite'
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
@@ -18,6 +19,12 @@ const dirname = path.dirname(url.fileURLToPath(import.meta.url))
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
   plugins: [
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true,
+      routesDirectory: './routes',
+      generatedRouteTree: './routeTree.gen.ts',
+    }),
     react({
       babel: {
         plugins: ['macros'],

@@ -13,5 +13,7 @@ export function pluralize(
   iterable: unknown[],
   options: PluralizeOptions = {},
 ): string {
-  return iterable.length > 1 ? options.multiple ?? 's' : options.single ?? ''
+  return iterable.length > 1
+    ? (options.multiple ?? 's')
+    : (options.single ?? '')
 }

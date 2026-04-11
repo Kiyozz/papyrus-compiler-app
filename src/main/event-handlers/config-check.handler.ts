@@ -118,7 +118,7 @@ export class ConfigCheckHandler implements EventHandler {
       path.join(modsPath, '**', otherSourcesFolder, file),
       path.join(mo2.instance, 'overwrite', sourcesFolder, file),
       path.join(mo2.instance, 'overwrite', otherSourcesFolder, file),
-    ].map(folder => path.normalize(toSlash(folder)))
+    ].map((folder) => path.normalize(toSlash(folder)))
 
     const files = await path.getPathsInFolder([...pathToChecks], {
       absolute: true,

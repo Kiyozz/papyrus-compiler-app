@@ -31,9 +31,18 @@ import { useInitialization } from '../../hooks/use-initialization'
 import Anchor from '../anchor'
 
 function Img({ src, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
-  const newSrc = src?.startsWith('docs') ? `${GITHUB_LINK}/blob/master/${src}?raw=true` : src
+  const newSrc = src?.startsWith('docs')
+    ? `${GITHUB_LINK}/blob/master/${src}?raw=true`
+    : src
 
-  return <img alt={alt} className="mt-2 max-w-full rounded-sm" src={newSrc} {...props} />
+  return (
+    <img
+      alt={alt}
+      className="mt-2 max-w-full rounded-sm"
+      src={newSrc}
+      {...props}
+    />
+  )
 }
 
 function HeadingOne({ children }: ComponentProps<'h1'>) {
@@ -99,7 +108,10 @@ function DialogChangelog() {
   const {
     showChangelogs: [isShowChangelogs, setShowChangelogs],
     changelogs: [changelogs],
-    showLatestVersionAlert: [isShowLatestVersionAlert, setShowLastestVersionAlert],
+    showLatestVersionAlert: [
+      isShowLatestVersionAlert,
+      setShowLastestVersionAlert,
+    ],
   } = useApp()
   const { latestVersion } = useInitialization()
 
@@ -120,7 +132,10 @@ function DialogChangelog() {
     setShowChangelogs(false)
   }
 
-  const onCloseShowLatestVersionAlert: SnackbarProps['onClose'] = (_evt, reason) => {
+  const onCloseShowLatestVersionAlert: SnackbarProps['onClose'] = (
+    _evt,
+    reason,
+  ) => {
     if (reason !== 'timeout') return
 
     setShowLastestVersionAlert(false)
@@ -134,14 +149,22 @@ function DialogChangelog() {
 
   return (
     <>
-      <Snackbar autoHideDuration={3_000} onClose={onCloseShowLatestVersionAlert} open={isShowLatestVersionAlert}>
+      <Snackbar
+        autoHideDuration={3_000}
+        onClose={onCloseShowLatestVersionAlert}
+        open={isShowLatestVersionAlert}
+      >
         <Alert severity="info">{t('changelog.alreadyLastVersion')}</Alert>
       </Snackbar>
 
       <Snackbar
         autoHideDuration={8_000}
         onClose={onCloseNewVersionAlert}
-        open={isShowChangelogs && !isShowLatestVersionAlert && !isShowChangelogsDialoag}
+        open={
+          isShowChangelogs &&
+          !isShowLatestVersionAlert &&
+          !isShowChangelogsDialoag
+        }
       >
         <Alert
           action={
@@ -151,7 +174,9 @@ function DialogChangelog() {
           }
           severity="info"
         >
-          <Typography>{t('changelog.available.message', { version: latestVersion })}</Typography>
+          <Typography>
+            {t('changelog.available.message', { version: latestVersion })}
+          </Typography>
         </Alert>
       </Snackbar>
 
@@ -162,7 +187,9 @@ function DialogChangelog() {
         onClose={onCloseChangelogsDialog}
         open={isShowChangelogsDialoag}
       >
-        <DialogTitle id="dialog-notes-title">{t('changelog.changelogs')}</DialogTitle>
+        <DialogTitle id="dialog-notes-title">
+          {t('changelog.changelogs')}
+        </DialogTitle>
         <DialogContent dividers id="dialog-notes-content">
           {changelogs && (
             <ReactMarkdown

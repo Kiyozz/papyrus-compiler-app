@@ -21,7 +21,10 @@ import type { Dispatch, SetStateAction } from 'react'
 interface AppContext {
   showChangelogs: readonly [boolean, Dispatch<SetStateAction<boolean>>]
   showLatestVersionAlert: readonly [boolean, Dispatch<SetStateAction<boolean>>]
-  changelogs: readonly [string | undefined, Dispatch<SetStateAction<string | undefined>>]
+  changelogs: readonly [
+    string | undefined,
+    Dispatch<SetStateAction<string | undefined>>,
+  ]
   setConfig: (config: PartialDeep<Config>, override?: boolean) => void
   config: Config
   groups: Group[]
@@ -107,7 +110,10 @@ function AppProvider({ children }: React.PropsWithChildren) {
       value={{
         showChangelogs: [isShowChangelogs, setShowChangelogs] as const,
         changelogs: [changelogs, setChangelogs] as const,
-        showLatestVersionAlert: [isShowLatestVersionAlert, setShowLatestVersionAlert] as const,
+        showLatestVersionAlert: [
+          isShowLatestVersionAlert,
+          setShowLatestVersionAlert,
+        ] as const,
         setConfig: updateConfig,
         config,
         groups,

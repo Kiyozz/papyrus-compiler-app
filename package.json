@@ -1,8 +1,15 @@
 {
   "name": "pca",
   "version": "5.8.0",
-  "description": "Papyrus compiler app (PCA) by WushuLate",
   "private": true,
+  "description": "Papyrus compiler app (PCA) by WushuLate",
+  "license": "MIT",
+  "author": "WK <kevinturmel@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Kiyozz/papyrus-compiler-app.git"
+  },
+  "type": "module",
   "scripts": {
     "dev": "electron-tsdown dev",
     "build": "electron-tsdown build",
@@ -13,16 +20,10 @@
     "fmt:check": "oxfmt --check",
     "changeset:version": "changeset version"
   },
-  "engines": {
-    "node": "24"
+  "dependencies": {
+    "@tanstack/react-router": "^1.168.15",
+    "@tanstack/router-plugin": "^1.167.14"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:Kiyozz/papyrus-compiler-app.git"
-  },
-  "author": "WK <kevinturmel@gmail.com>",
-  "license": "MIT",
-  "type": "module",
   "devDependencies": {
     "@changesets/cli": "^2.30.0",
     "@emotion/react": "^11.14.0",
@@ -36,6 +37,7 @@
     "@sindresorhus/is": "~7.0.2",
     "@tailwindcss/vite": "^4.2.2",
     "@tanstack/react-virtual": "^3.13.23",
+    "@tanstack/router-devtools": "^1.166.13",
     "@types/minimist": "^1.2.5",
     "@types/react": "~19.2.14",
     "@types/react-dom": "~19.2.3",
@@ -56,7 +58,6 @@
     "electron-tsdown": "^11.0.2",
     "electron-util": "~1.0.0",
     "fast-glob": "~3.3.3",
-    "history": "^5.3.0",
     "i18next": "~21.8.16",
     "i18next-browser-languagedetector": "~6.1.8",
     "lefthook": "^2.1.5",
@@ -76,8 +77,6 @@
     "react-hook-form": "^7.72.1",
     "react-i18next": "~15.5.3",
     "react-markdown": "~10.1.0",
-    "react-router": "^7.14.0",
-    "react-router-dom": "^7.14.0",
     "react-use-localstorage": "^3.5.3",
     "rimraf": "~6.1.3",
     "rooks": "^9.8.0",
@@ -96,6 +95,10 @@
     "vite": "^8.0.8",
     "zod": "^4.3.6"
   },
+  "engines": {
+    "node": "24"
+  },
+  "packageManager": "pnpm@10.11.0",
   "build": {
     "appId": "io.kiyozz.pca",
     "productName": "PCA",
@@ -129,6 +132,5 @@
       "buildResources": "resources"
     },
     "publish": null
-  },
-  "packageManager": "pnpm@10.11.0"
+  }
 }

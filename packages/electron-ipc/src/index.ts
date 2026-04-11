@@ -6,7 +6,14 @@
 
 import { ipcMain } from 'electron'
 import type { IpcMainEvent } from 'electron'
-import type { Disposable, Event, EventHandler, EventSync, IpcManagerOptions, Logger } from '../index.d.ts'
+import type {
+  Disposable,
+  Event,
+  EventHandler,
+  EventSync,
+  IpcManagerOptions,
+  Logger,
+} from '../index.d.ts'
 
 export class IpcManager<
   EventMap extends string,
@@ -41,7 +48,11 @@ export class IpcManager<
             this.logger.info(`handler "${name}" succeeded`)
           }
 
-          if (this.options.useLogging && this.options.usePayloadLogging && payload) {
+          if (
+            this.options.useLogging &&
+            this.options.usePayloadLogging &&
+            payload
+          ) {
             this.logger.debug(`handler "${name}" payload`, payload)
           }
 
@@ -68,7 +79,10 @@ export class IpcManager<
   }
 
   registerEvents(events: Map<EventMap, AsyncEvent>): Disposable {
-    const evtFuncList: [EventMap, (evt: IpcMainEvent, args: unknown) => unknown][] = []
+    const evtFuncList: [
+      EventMap,
+      (evt: IpcMainEvent, args: unknown) => unknown,
+    ][] = []
 
     events.forEach((event, name) => {
       if (this.options.useLogging) {
@@ -100,7 +114,10 @@ export class IpcManager<
   }
 
   registerSyncs(events: Map<EventMap, SyncEvent>): Disposable {
-    const evtFuncList: [EventMap, (evt: IpcMainEvent, args: unknown) => unknown][] = []
+    const evtFuncList: [
+      EventMap,
+      (evt: IpcMainEvent, args: unknown) => unknown,
+    ][] = []
 
     events.forEach((event, name) => {
       if (this.options.useLogging) {
@@ -114,7 +131,11 @@ export class IpcManager<
 
         const payload = event.onSync(ipcEvent, args)
 
-        if (this.options.useLogging && this.options.usePayloadLogging && payload) {
+        if (
+          this.options.useLogging &&
+          this.options.usePayloadLogging &&
+          payload
+        ) {
           this.logger.debug(`sync event "${name}" payload`, payload)
         }
 

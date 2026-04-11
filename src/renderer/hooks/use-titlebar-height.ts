@@ -16,7 +16,10 @@ export const useTitlebarHeight = () => {
   useEffect(() => {
     const height = isMacOsBigSur ? 34 : isMacOs ? 22 : 32
 
-    document.documentElement.style.setProperty('--titlebar-height', `${height}px`)
+    document.documentElement.style.setProperty(
+      '--titlebar-height',
+      `${height}px`,
+    )
   }, [isMacOs, isMacOsBigSur])
 
   if (isMacOsBigSur) return 34

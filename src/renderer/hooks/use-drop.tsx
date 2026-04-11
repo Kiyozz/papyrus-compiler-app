@@ -24,7 +24,7 @@ function DropProvider({ children }: React.PropsWithChildren) {
 
   return (
     <DropScripts
-      onDrop={files => {
+      onDrop={(files) => {
         onDrop?.(files)
         setFileDialogActive(false)
       }}

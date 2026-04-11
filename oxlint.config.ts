@@ -1,6 +1,7 @@
 import { defineConfig } from 'oxlint'
 
 export default defineConfig({
+  ignorePatterns: ['src/renderer/routeTree.gen.ts'],
   plugins: ['typescript', 'import'],
   env: { node: true },
   rules: {

@@ -7,7 +7,7 @@ import {
   SidebarTrigger,
 } from '@renderer/components/ui/sidebar.tsx'
 import type { PropsWithChildren } from 'react'
-import { Outlet } from 'react-router'
+import { Outlet } from '@tanstack/react-router'
 import {
   Breadcrumb,
   BreadcrumbList,

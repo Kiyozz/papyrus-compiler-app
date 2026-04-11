@@ -14,7 +14,7 @@ export const isProduction = (): Promise<boolean> => {
     return Promise.resolve(isProductionSaved)
   }
 
-  return bridge.isProduction().then(isProd => {
+  return bridge.isProduction().then((isProd) => {
     if (!isProductionRegistered) {
       isProductionRegistered = true
       isProductionSaved = isProd

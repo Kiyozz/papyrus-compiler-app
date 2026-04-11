@@ -39,21 +39,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           createGithubReleases: false
-          commit: "chore(release): update version for release"
-          title: "chore(release): update version for release"
-          version: "pnpm changeset:version"
+          commit: 'chore(release): update version for release'
+          title: 'chore(release): update version for release'
+          version: 'pnpm changeset:version'
 
-#      - uses: actions/create-release@v1
-#        id: create_release
-#        if: success()
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ github.ref }}
-#          release_name: PCA ${{ github.ref }}
-#          draft: true
-#          body: ${{ steps.extract_changelog.outputs.content }}
-#          prerelease: false
+      #      - uses: actions/create-release@v1
+      #        id: create_release
+      #        if: success()
+      #        env:
+      #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #        with:
+      #          tag_name: ${{ github.ref }}
+      #          release_name: PCA ${{ github.ref }}
+      #          draft: true
+      #          body: ${{ steps.extract_changelog.outputs.content }}
+      #          prerelease: false
 
       - uses: actions/upload-release-asset@v1
         if: success()

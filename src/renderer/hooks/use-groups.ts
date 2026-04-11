@@ -29,7 +29,8 @@ export const useGroups = (): UseGroupsReturns => {
     if (
       !is.undefined(
         groups.find(
-          g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase(),
+          (g) =>
+            g.name.trim().toLowerCase() === group.name.trim().toLowerCase(),
         ),
       )
     ) {
@@ -42,7 +43,7 @@ export const useGroups = (): UseGroupsReturns => {
         ...groups,
         {
           name: group.name,
-          scripts: group.scripts.map(s => ({ name: s.name, path: s.path })),
+          scripts: group.scripts.map((s) => ({ name: s.name, path: s.path })),
         },
       ],
     })
@@ -53,7 +54,8 @@ export const useGroups = (): UseGroupsReturns => {
       group.name.trim().toLowerCase() !== lastGroupName.trim().toLowerCase() &&
       !is.undefined(
         groups.find(
-          g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase(),
+          (g) =>
+            g.name.trim().toLowerCase() === group.name.trim().toLowerCase(),
         ),
       )
     ) {
@@ -62,17 +64,17 @@ export const useGroups = (): UseGroupsReturns => {
 
     send(TelemetryEvent.groupEdited, { scripts: group.scripts.length })
     setConfig({
-      groups: groups.map(g => {
+      groups: groups.map((g) => {
         if (g.name === lastGroupName) {
           return {
-            scripts: group.scripts.map(s => ({ name: s.name, path: s.path })),
+            scripts: group.scripts.map((s) => ({ name: s.name, path: s.path })),
             name: group.name,
           }
         }
 
         return {
           ...g,
-          scripts: g.scripts.map(s => ({ name: s.name, path: s.path })),
+          scripts: g.scripts.map((s) => ({ name: s.name, path: s.path })),
         }
       }),
     })
@@ -82,7 +84,8 @@ export const useGroups = (): UseGroupsReturns => {
     if (
       is.undefined(
         groups.find(
-          g => g.name.trim().toLowerCase() === group.name.trim().toLowerCase(),
+          (g) =>
+            g.name.trim().toLowerCase() === group.name.trim().toLowerCase(),
         ),
       )
     ) {
@@ -92,8 +95,8 @@ export const useGroups = (): UseGroupsReturns => {
     setConfig(
       {
         groups: groups
-          .map(g => ({ name: g.name, scripts: g.scripts }))
-          .filter(g => g.name !== group.name),
+          .map((g) => ({ name: g.name, scripts: g.scripts }))
+          .filter((g) => g.name !== group.name),
       },
       true,
     )

@@ -14,11 +14,14 @@ export interface GroupRenderer {
 }
 
 export const isAllGroupsEmpty = (groups: Group[]): boolean => {
-  return groups.every(g => g.isEmpty)
+  return groups.every((g) => g.isEmpty)
 }
 
 export class Group {
-  constructor(public name: string, public scripts: Script[]) {}
+  constructor(
+    public name: string,
+    public scripts: Script[],
+  ) {}
 
   get isEmpty(): boolean {
     return is.emptyArray(this.scripts)

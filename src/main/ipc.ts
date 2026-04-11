@@ -5,10 +5,17 @@
  */
 
 import electron from 'electron'
-import type { IpcMainEvent, IpcMainInvokeEvent, IpcRendererEvent } from 'electron'
+import type {
+  IpcMainEvent,
+  IpcMainInvokeEvent,
+  IpcRendererEvent,
+} from 'electron'
 const { ipcMain: baseIpcMain, ipcRenderer: baseIpcRenderer } = electron
 
-type MainInvokeListener<Args> = (event: IpcMainInvokeEvent, args: Args) => Promise<unknown>
+type MainInvokeListener<Args> = (
+  event: IpcMainInvokeEvent,
+  args: Args,
+) => Promise<unknown>
 type MainListener<Args> = (event: IpcMainEvent, args: Args) => void
 
 class IpcException extends Error {
@@ -24,7 +31,10 @@ class IpcException extends Error {
 }
 
 class IpcRenderer {
-  async invoke<Result = unknown>(channel: string, args?: unknown): Promise<Result> {
+  async invoke<Result = unknown>(
+    channel: string,
+    args?: unknown,
+  ): Promise<Result> {
     try {
       return (await baseIpcRenderer.invoke(channel, args)) as Promise<Result>
     } catch (e) {
@@ -46,23 +56,35 @@ class IpcRenderer {
     return baseIpcRenderer.sendSync(channel, ...args)
   }
 
-  once<Result = unknown>(channel: string, listener: (args: Result) => void): void {
+  once<Result = unknown>(
+    channel: string,
+    listener: (args: Result) => void,
+  ): void {
     baseIpcRenderer.once(channel, (_, args: Result) => {
       listener(args)
     })
   }
 
-  on<Result = unknown>(channel: string, listener: (e: Electron.IpcRendererEvent, args: Result) => void) {
+  on<Result = unknown>(
+    channel: string,
+    listener: (e: Electron.IpcRendererEvent, args: Result) => void,
+  ) {
     baseIpcRenderer.on(channel, listener)
   }
 
-  removeListener<Result = unknown>(channel: string, listener: (e: IpcRendererEvent, args: Result) => void) {
+  removeListener<Result = unknown>(
+    channel: string,
+    listener: (e: IpcRendererEvent, args: Result) => void,
+  ) {
     baseIpcRenderer.removeListener(channel, listener)
   }
 }
 
 class IpcMain {
-  handle<Result = unknown>(channel: string, listener: MainInvokeListener<Result>) {
+  handle<Result = unknown>(
+    channel: string,
+    listener: MainInvokeListener<Result>,
+  ) {
     return baseIpcMain.handle(channel, listener)
   }
 

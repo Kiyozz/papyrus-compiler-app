@@ -29,8 +29,10 @@ export const en: TranslationShape = {
       successCopy: 'Successfully copied',
       scriptFailed: 'Script {{script}} failed to compile: {{message}}',
       scriptFailedCmd: 'Executed command: {{cmd}}',
-      invalidConfigurationGame: '{{folder}} is an invalid game folder. The folder does not contains {{exe}}.',
-      invalidConfigurationCompiler: '{{exe}} is a invalid compiler. This file does not exists.',
+      invalidConfigurationGame:
+        '{{folder}} is an invalid game folder. The folder does not contains {{exe}}.',
+      invalidConfigurationCompiler:
+        '{{exe}} is a invalid compiler. This file does not exists.',
       invalidConfigurationScripts:
         'Your configuration is incorrect. Cannot validate Creation Kit installation. ' +
         'The app checks the presence of Actor.psc to validate your Creation Kit installation. ' +
@@ -45,7 +47,8 @@ export const en: TranslationShape = {
     checkError_scripts: 'Check your Creation Kit installation.',
     'checkError_mo2-instance': 'Check your mo2 instance.',
     'checkError_mo2-instance-mods': 'Check your mo2 instance.',
-    'checkError_mo2-use-no-instance': 'MO2 integration is enabled, but your MO2 instance is invalid.',
+    'checkError_mo2-use-no-instance':
+      'MO2 integration is enabled, but your MO2 instance is invalid.',
   },
   loading: 'Loading',
   nav: {
@@ -70,7 +73,8 @@ export const en: TranslationShape = {
         recentFiles: 'Recent files',
       },
       dragAndDropText: 'Start by dropping psc files to load them',
-      dragAndDropAdmin: 'This feature is not available when running PCA in administrator.',
+      dragAndDropAdmin:
+        'This feature is not available when running PCA in administrator.',
       scriptItem: {
         removeFromList: 'Remove from list',
       },
@@ -88,7 +92,8 @@ export const en: TranslationShape = {
       },
       group: 'Group {{name}}',
       createGroupText: 'You can create a group with the top-right button.',
-      whatIsAGroup: 'A group is a set of scripts that can be easily loaded on the compilation view.',
+      whatIsAGroup:
+        'A group is a set of scripts that can be easily loaded on the compilation view.',
       noScripts: 'No scripts',
       dialog: {
         searchScripts: 'Search scripts',
@@ -115,10 +120,12 @@ export const en: TranslationShape = {
       },
       mo2: {
         enable: 'Enable',
-        enableText: "Enable MO2 integration only if PCA is not started from MO2. More details on PCA's documentation.",
+        enableText:
+          "Enable MO2 integration only if PCA is not started from MO2. More details on PCA's documentation.",
         instance: 'Instance folder',
         limit: 'Limit {{limit}}',
-        errorInstance: 'The folder "{{folder}}" does not contains {{requiredFolders}} folders.',
+        errorInstance:
+          'The folder "{{folder}}" does not contains {{requiredFolders}} folders.',
       },
       compilation: {
         title: 'Compilation',

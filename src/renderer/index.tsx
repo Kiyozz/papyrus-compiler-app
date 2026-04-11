@@ -26,7 +26,6 @@ import SettingsProvider from './pages/settings/use-settings'
 import { loadTranslations } from './translations'
 import { isProduction } from './utils/is-production'
 import 'unfonts.css'
-import { MemoryRouter } from 'react-router'
 import { TooltipProvider } from '@renderer/components/ui/tooltip.tsx'
 
 async function start() {
@@ -46,30 +45,28 @@ async function start() {
     rootReact.render(
       <StrictMode>
         <TooltipProvider>
-          <MemoryRouter>
-            <VersionProvider>
-              <AppProvider>
-                <TelemetryProvider>
-                  <InitializationProvider>
-                    <RecentFilesProvider>
-                      <CompilationProvider>
-                        <SettingsProvider>
-                          <FocusProvider>
-                            <DrawerProvider>
-                              <DropProvider>
-                                <App />
-                              </DropProvider>
-                            </DrawerProvider>
-                          </FocusProvider>
-                        </SettingsProvider>
-                      </CompilationProvider>
-                    </RecentFilesProvider>
-                  </InitializationProvider>
-                </TelemetryProvider>
-              </AppProvider>
-            </VersionProvider>
-            {createPortal(<Toaster />, document.body)}
-          </MemoryRouter>
+          <VersionProvider>
+            <AppProvider>
+              <TelemetryProvider>
+                <InitializationProvider>
+                  <RecentFilesProvider>
+                    <CompilationProvider>
+                      <SettingsProvider>
+                        <FocusProvider>
+                          <DrawerProvider>
+                            <DropProvider>
+                              <App />
+                            </DropProvider>
+                          </DrawerProvider>
+                        </FocusProvider>
+                      </SettingsProvider>
+                    </CompilationProvider>
+                  </RecentFilesProvider>
+                </InitializationProvider>
+              </TelemetryProvider>
+            </AppProvider>
+          </VersionProvider>
+          {createPortal(<Toaster />, document.body)}
         </TooltipProvider>
       </StrictMode>,
     )

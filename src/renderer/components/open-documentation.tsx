@@ -63,7 +63,11 @@ function OpenDocumentation() {
 
   return (
     <>
-      <DrawerButton icon={<HelpIcon />} onClick={onClickGoToDocumentation} text={t('nav.help.text')} />
+      <DrawerButton
+        icon={<HelpIcon />}
+        onClick={onClickGoToDocumentation}
+        text={t('nav.help.text')}
+      />
 
       <Dialog
         aria-describedby="open-doc-content"
@@ -92,7 +96,9 @@ function OpenDocumentation() {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClickCancel}>{t('common.no')}</Button>
-          <Button onClick={onClickConfirmGoToDocumentation}>{t('common.yes')}</Button>
+          <Button onClick={onClickConfirmGoToDocumentation}>
+            {t('common.yes')}
+          </Button>
         </DialogActions>
       </Dialog>
     </>

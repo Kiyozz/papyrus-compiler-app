@@ -15,7 +15,7 @@ export const scriptsToRenderer = (
 ): ScriptRenderer[] => {
   return [
     ...scriptsRenderer,
-    ...scripts.map(s => {
+    ...scripts.map((s) => {
       const script: ScriptRenderer = {
         ...s,
         id: uuid(),

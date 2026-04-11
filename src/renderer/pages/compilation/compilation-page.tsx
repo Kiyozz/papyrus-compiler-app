@@ -35,7 +35,7 @@ import {
 } from 'lucide-react'
 import { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router'
+import { Link } from '@tanstack/react-router'
 import { useDidMount } from 'rooks'
 import { toast } from 'sonner'
 import { TelemetryEvent } from '../../../common/telemetry-event.ts'

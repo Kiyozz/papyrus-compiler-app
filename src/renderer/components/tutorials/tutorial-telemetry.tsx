@@ -38,7 +38,13 @@ function TutorialTelemetry() {
           <div className="mt-6 text-sm" />
         </Trans>
       </div>
-      <Button className="mt-8" color="primary" disabled={isWaiting} onClick={onClickOk} variant="contained">
+      <Button
+        className="mt-8"
+        color="primary"
+        disabled={isWaiting}
+        onClick={onClickOk}
+        variant="contained"
+      >
         {t('tutorials.telemetry.close')}
       </Button>
     </div>

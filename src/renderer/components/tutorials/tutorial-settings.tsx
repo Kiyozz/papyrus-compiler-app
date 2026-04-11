@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import type { MouseEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { Trans, useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
+import { useNavigate } from '@tanstack/react-router'
 import { MOD_DOCUMENTATION_URL } from '../../../common/env'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { useApp } from '../../hooks/use-app'
@@ -165,7 +165,7 @@ function TutorialSettings() {
   }
 
   const onClickNeedHelp = () => {
-    navigate('/settings')
+    void navigate({ to: '/settings' })
     setStep(Step.game)
   }
 

@@ -19,7 +19,7 @@ export const uniqArray = <T>(
   }
 
   const keyValues = arrayInput.map((value): [keyof T, T] => {
-    const key = keys.map(k => value[k]).join('|') as keyof T
+    const key = keys.map((k) => value[k]).join('|') as keyof T
     return [key, value]
   })
 
