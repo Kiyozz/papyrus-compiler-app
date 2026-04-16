@@ -218,25 +218,6 @@ function _checkNotSupportedKeys(
   })
 }
 
-function _checkTutorials(settingsStore: SettingsStore, defaultConfig: Config) {
-  const tutorials = settingsStore.get('tutorials')
-
-  if (is.nullOrUndefined(tutorials)) {
-    settingsStore.set('tutorials', defaultConfig.tutorials)
-  } else {
-    if (!is.boolean(tutorials.settings)) {
-      settingsStore.set('tutorials.settings', defaultConfig.tutorials.settings)
-    }
-
-    if (!is.boolean(tutorials.telemetry)) {
-      settingsStore.set(
-        'tutorials.telemetry',
-        defaultConfig.tutorials.telemetry,
-      )
-    }
-  }
-}
-
 function _checkConcurrentScripts(
   settingsStore: SettingsStore,
   defaultConfig: Config,
@@ -270,7 +251,6 @@ export function checkStore(
   _checkCompilerPath(settingsStore, args)
   _checkOutput(settingsStore, defaultConfig, args)
   _checkGroups(settingsStore, defaultConfig)
-  _checkTutorials(settingsStore, defaultConfig)
   _checkConcurrentScripts(settingsStore, defaultConfig)
   _checkNotSupportedKeys(settingsStore, defaultConfig)
   _checkTelemetry(settingsStore, defaultConfig)

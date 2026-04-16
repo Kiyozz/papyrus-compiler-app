@@ -40,10 +40,6 @@ const defaultConfig: Config = {
     flag: 'TESV_Papyrus_Flags.flg',
     output: join('Data/Scripts'),
   },
-  tutorials: {
-    settings: true,
-    telemetry: true,
-  },
   mo2: {
     use: false,
     output: join('overwrite/Scripts'),

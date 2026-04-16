@@ -47,11 +47,6 @@ export async function registerMenu({
           click() {
             settingsStore.store = {
               ...defaultConfig,
-              tutorials: {
-                ...defaultConfig.tutorials,
-                settings: false,
-                telemetry: false,
-              },
             }
 
             win.webContents.send(IpcEvent.configReset)

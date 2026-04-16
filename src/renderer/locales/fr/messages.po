@@ -13,10 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/renderer/components/tutorials/tutorial-telemetry.tsx:32
-msgid "À partir de la version 5.5.0, PCA collectera des données de télémétrie dans le but d'analyser les fonctionnalités utilisées et d'améliorer les fonctionnalités pertinentes."
-msgstr "À partir de la version 5.5.0, PCA collectera des données de télémétrie dans le but d'analyser les fonctionnalités utilisées et d'améliorer les fonctionnalités pertinentes."
-
 #: src/renderer/pages/settings/settings-mo2/settings-mo2-activation.tsx:22
 #: src/renderer/pages/settings/settings-telemetry-section.tsx:28
 msgid "Activer"
@@ -40,15 +36,11 @@ msgstr "Aucun logs"
 msgid "Aucun scripts"
 msgstr "Aucun scripts"
 
-#: src/renderer/components/tutorials/tutorial-settings.tsx:225
-msgid "C'est la première fois que vous lancez PCA."
-msgstr "C'est la première fois que vous lancez PCA."
-
 #: src/renderer/pages/compilation/compilation-page.tsx:258
 msgid "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
 msgstr "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
 
-#: src/renderer/app.tsx:50
+#: src/renderer/app.tsx:43
 msgid "Chargement"
 msgstr "Chargement"
 
@@ -83,10 +75,6 @@ msgstr "Compilation"
 msgid "Configuration invalide"
 msgstr "Configuration invalide"
 
-#: src/renderer/components/tutorials/tutorial-settings.tsx:222
-msgid "Configurer PCA"
-msgstr "Configurer PCA"
-
 #: src/renderer/components/dialog/dialog-compilation-logs.tsx:84
 msgid "Copier avec succès"
 msgstr "Copier avec succès"
@@ -94,10 +82,6 @@ msgstr "Copier avec succès"
 #: src/renderer/components/dialog/dialog-group.tsx:190
 msgid "Créer"
 msgstr "Créer"
-
-#: src/renderer/components/tutorials/tutorial-telemetry.tsx:42
-msgid "Des exemples de données collectées comprennent les données de groupe et de compilation, les erreurs, et les horodatages de divers événements d'application."
-msgstr "Des exemples de données collectées comprennent les données de groupe et de compilation, les erreurs, et les horodatages de divers événements d'application."
 
 #: src/renderer/components/app-sidebar.tsx:57
 #: src/renderer/pages/settings/settings-page.tsx:243
@@ -122,7 +106,6 @@ msgid "Dossier où se trouve {exe}"
 msgstr "Dossier où se trouve {exe}"
 
 #: src/renderer/components/dialog/dialog-changelog.tsx:214
-#: src/renderer/components/tutorials/tutorial-settings.tsx:250
 msgid "Fermer"
 msgstr "Fermer"
 
@@ -143,30 +126,6 @@ msgstr "Groupe"
 msgid "Groupes"
 msgstr "Groupes"
 
-#: src/renderer/components/tutorials/tutorial-settings.tsx:92
-msgid "Ici, vous pouvez enregistrer le chemin vers le compilateur Papyrus. Disponible après l'installation de Creation Kit"
-msgstr "Ici, vous pouvez enregistrer le chemin vers le compilateur Papyrus. Disponible après l'installation de Creation Kit"
-
-#: src/renderer/components/tutorials/tutorial-settings.tsx:104
-msgid "Ici, vous pouvez enregistrer le nombre de scripts compilés simultanéments."
-msgstr "Ici, vous pouvez enregistrer le nombre de scripts compilés simultanéments."
-
-#: src/renderer/components/tutorials/tutorial-settings.tsx:79
-msgid "Ici, vous pouvez enregistrer les informations de votre jeu"
-msgstr "Ici, vous pouvez enregistrer les informations de votre jeu"
-
-#: src/renderer/components/tutorials/tutorial-settings.tsx:117
-msgid "Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez PCA à travers MO2"
-msgstr "Ici, vous pouvez enregistrer vos informations MO2. Ignorez cette option, si vous utilisez PCA à travers MO2"
-
-#: src/renderer/components/tutorials/tutorial-settings.tsx:247
-msgid "J'ai besoin d'aide"
-msgstr "J'ai besoin d'aide"
-
-#: src/renderer/components/tutorials/tutorial-telemetry.tsx:61
-msgid "J'ai compris"
-msgstr "J'ai compris"
-
 #: src/renderer/pages/settings/settings-game-section.tsx:49
 msgid "Jeu"
 msgstr "Jeu"
@@ -180,10 +139,6 @@ msgstr "L'intégration mo2 est activée, mais votre instance n'est pas valide."
 msgid "La configuration semble invalide :"
 msgstr "La configuration semble invalide :"
 
-#: src/renderer/components/tutorials/tutorial-settings.tsx:228
-msgid "La documentation de PCA est <0>disponible ici</0>."
-msgstr "La documentation de PCA est <0>disponible ici</0>."
-
 #: src/renderer/pages/compilation/compilation-page.tsx:278
 msgid "Lancer"
 msgstr "Lancer"
@@ -192,10 +147,6 @@ msgstr "Lancer"
 #: src/renderer/pages/settings/settings-preferences-section.tsx:70
 msgid "Langue"
 msgstr "Langue"
-
-#: src/renderer/components/tutorials/tutorial-telemetry.tsx:49
-msgid "Les données de télémétrie sont désactivables dans les paramètres."
-msgstr "Les données de télémétrie sont désactivables dans les paramètres."
 
 #: src/renderer/components/app-sidebar.tsx:52
 msgid "Logs"
@@ -230,18 +181,10 @@ msgstr "Nouveautés"
 msgid "Nouvelle version disponible : {latestVersion}"
 msgstr "Nouvelle version disponible : {latestVersion}"
 
-#: src/renderer/components/tutorials/tutorial-settings.tsx:64
-msgid "OK"
-msgstr "OK"
-
 #: src/renderer/components/app-sidebar.tsx:44
 #: src/renderer/pages/settings/settings-page.tsx:228
 msgid "Paramètres"
 msgstr "Paramètres"
-
-#: src/renderer/components/tutorials/tutorial-settings.tsx:265
-msgid "Passer"
-msgstr "Passer"
 
 #: src/renderer/components/dialog/dialog-recent-files.tsx:262
 #: src/renderer/pages/compilation/compilation-page.tsx:199
@@ -304,10 +247,6 @@ msgstr "Télécharger"
 #: src/renderer/pages/settings/settings-theme-section.tsx:25
 msgid "Thème"
 msgstr "Thème"
-
-#: src/renderer/components/tutorials/tutorial-telemetry.tsx:39
-msgid "Toutes les données transmises sont anonymes."
-msgstr "Toutes les données transmises sont anonymes."
 
 #: src/renderer/pages/groups/groups-page.tsx:146
 msgid "Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation."

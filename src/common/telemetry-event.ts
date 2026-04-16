@@ -34,9 +34,6 @@ export enum TelemetryEvent {
   settingsTheme = 'Settings.Theme',
   settingsRefresh = 'Settings.Refresh',
   telemetryEnabled = 'Telemetry.Enabled',
-  tutorialsSettingsEnd = 'Tutorials.SettingsEnd',
-  tutorialsSettingsDeny = 'Tutorials.SettingsDeny',
-  tutorialsSettingsSkip = 'Tutorials.SettingsSkip',
   documentationOpenFromNav = 'Documentation.OpenFromNav',
 }
 
@@ -76,9 +73,6 @@ export interface TelemetryEventProperties {
   [TelemetryEvent.settingsRefresh]: Record<string, never>
   [TelemetryEvent.settingsTheme]: { theme: string }
   [TelemetryEvent.telemetryEnabled]: Record<string, never>
-  [TelemetryEvent.tutorialsSettingsEnd]: Record<string, never>
-  [TelemetryEvent.tutorialsSettingsDeny]: Record<string, never>
-  [TelemetryEvent.tutorialsSettingsSkip]: { step: number }
   [TelemetryEvent.documentationOpenFromNav]: {
     reason: 'enter' | 'click' | 'settings-app-bar'
   }

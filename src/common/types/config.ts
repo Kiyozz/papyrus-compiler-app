@@ -24,11 +24,6 @@ interface Compilation {
   output: OutputPath
 }
 
-interface Tutorials {
-  settings: boolean
-  telemetry: boolean
-}
-
 interface ConfigMo2 {
   use: boolean
   instance?: string
@@ -43,7 +38,6 @@ interface Telemetry {
 export interface Config {
   game: Game
   compilation: Compilation
-  tutorials: Tutorials
   mo2: ConfigMo2
   groups: Group[]
   telemetry: Telemetry

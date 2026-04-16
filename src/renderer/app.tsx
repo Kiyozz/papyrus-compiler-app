@@ -8,9 +8,6 @@ import { Trans } from '@lingui/react/macro'
 import { TelemetryEvent } from '../common/telemetry-event'
 import { version as releaseVersion } from '../common/version'
 import DialogChangelog from './components/dialog/dialog-changelog'
-import TutorialSettings from './components/tutorials/tutorial-settings'
-import TutorialTelemetry from './components/tutorials/tutorial-telemetry'
-import { useApp } from './hooks/use-app'
 import { useInitialization } from './hooks/use-initialization'
 import { useSyncHtmlTheme } from './hooks/use-sync-html-theme'
 import { useTelemetry } from './hooks/use-telemetry'
@@ -29,10 +26,6 @@ function App() {
   const { done } = useInitialization()
   const { send } = useTelemetry()
   const [version] = useVersion()
-  const {
-    config: { tutorials },
-  } = useApp()
-
   useSyncHtmlTheme()
 
   useEffect(() => {
@@ -56,10 +49,6 @@ function App() {
         <DialogChangelog />
         {done && (
           <>
-            {tutorials.settings && <TutorialSettings />}
-            {tutorials.telemetry && !tutorials.settings && (
-              <TutorialTelemetry />
-            )}
             <RouterProvider router={router} />
             <Suspense>
               <TanStackRouterDevtools router={router} position="bottom-right" />

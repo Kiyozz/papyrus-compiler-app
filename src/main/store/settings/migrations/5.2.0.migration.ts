@@ -7,12 +7,6 @@ import type { Config } from '../../../../common/types/config'
 import type { SettingsStore } from '../store'
 
 export function migrate520(store: SettingsStore): void {
-  const tutorials = store.get('tutorials')
-
-  if (is.undefined(tutorials)) {
-    store.set('tutorials', { settings: false })
-  }
-
   const oldGameType = store.get('gameType')
   const oldGamePath = store.get('gamePath')
   const oldCompilerPath = store.get('compilerPath')
