@@ -3,12 +3,10 @@
  */
 
 import { i18n } from '@lingui/core'
-import { messages as en } from './locales/en/messages.js'
-import { messages as fr } from './locales/fr/messages.js'
-
-i18n.load('fr', fr)
 
 export async function dynamicActivateLocale(locale: 'fr' | 'en') {
-  i18n.load(locale, locale === 'fr' ? fr : en)
+  const { messages } = await import(`./locales/${locale}/messages.js`)
+
+  i18n.load(locale, messages)
   i18n.activate(locale)
 }

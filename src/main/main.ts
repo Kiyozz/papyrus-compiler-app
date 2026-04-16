@@ -25,6 +25,7 @@ unhandled(() => {
   logger.debug('win has been closed because of an error')
   win?.close()
   win = null
+  process.exit(1)
 })
 
 async function createWindow() {
