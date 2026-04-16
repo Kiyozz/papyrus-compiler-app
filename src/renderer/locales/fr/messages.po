@@ -60,6 +60,7 @@ msgstr "Charger"
 msgid "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
 msgstr "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
 
+#: src/renderer/pages/settings/settings-preferences-section.tsx:53
 #: src/renderer/pages/settings/settings-theme-section.tsx:47
 msgid "Clair"
 msgstr "Clair"
@@ -99,10 +100,11 @@ msgid "Des exemples de données collectées comprennent les données de groupe e
 msgstr "Des exemples de données collectées comprennent les données de groupe et de compilation, les erreurs, et les horodatages de divers événements d'application."
 
 #: src/renderer/components/app-sidebar.tsx:57
-#: src/renderer/pages/settings/settings-page.tsx:259
+#: src/renderer/pages/settings/settings-page.tsx:243
 msgid "Documentation"
 msgstr "Documentation"
 
+#: src/renderer/pages/settings/settings-preferences-section.tsx:97
 #: src/renderer/pages/settings/settings-telemetry-section.tsx:19
 msgid "Données d'utilisation"
 msgstr "Données d'utilisation"
@@ -186,6 +188,11 @@ msgstr "La documentation de PCA est <0>disponible ici</0>."
 msgid "Lancer"
 msgstr "Lancer"
 
+#: src/renderer/pages/settings/settings-locale-section.tsx:24
+#: src/renderer/pages/settings/settings-preferences-section.tsx:70
+msgid "Langue"
+msgstr "Langue"
+
 #: src/renderer/components/tutorials/tutorial-telemetry.tsx:49
 msgid "Les données de télémétrie sont désactivables dans les paramètres."
 msgstr "Les données de télémétrie sont désactivables dans les paramètres."
@@ -228,7 +235,7 @@ msgid "OK"
 msgstr "OK"
 
 #: src/renderer/components/app-sidebar.tsx:44
-#: src/renderer/pages/settings/settings-page.tsx:244
+#: src/renderer/pages/settings/settings-page.tsx:228
 msgid "Paramètres"
 msgstr "Paramètres"
 
@@ -242,7 +249,11 @@ msgstr "Passer"
 msgid "Plus de détails"
 msgstr "Plus de détails"
 
-#: src/renderer/pages/settings/settings-page.tsx:269
+#: src/renderer/pages/settings/settings-preferences-section.tsx:29
+msgid "Préférences"
+msgstr "Préférences"
+
+#: src/renderer/pages/settings/settings-page.tsx:253
 msgid "Rafraîchir"
 msgstr "Rafraîchir"
 
@@ -263,10 +274,15 @@ msgstr "Sélectionner un dossier"
 msgid "Sélectionner un thème"
 msgstr "Sélectionner un thème"
 
+#: src/renderer/pages/settings/settings-locale-section.tsx:31
+msgid "Sélectionner une langue"
+msgstr "Sélectionner une langue"
+
 #: src/renderer/pages/settings/settings-game-section.tsx:57
 msgid "Sélectionner votre jeu"
 msgstr "Sélectionner votre jeu"
 
+#: src/renderer/pages/settings/settings-preferences-section.tsx:56
 #: src/renderer/pages/settings/settings-theme-section.tsx:50
 msgid "Sombre"
 msgstr "Sombre"
@@ -275,6 +291,7 @@ msgstr "Sombre"
 msgid "Supprimer"
 msgstr "Supprimer"
 
+#: src/renderer/pages/settings/settings-preferences-section.tsx:50
 #: src/renderer/pages/settings/settings-theme-section.tsx:44
 msgid "Système"
 msgstr "Système"
@@ -283,6 +300,7 @@ msgstr "Système"
 msgid "Télécharger"
 msgstr "Télécharger"
 
+#: src/renderer/pages/settings/settings-preferences-section.tsx:38
 #: src/renderer/pages/settings/settings-theme-section.tsx:25
 msgid "Thème"
 msgstr "Thème"

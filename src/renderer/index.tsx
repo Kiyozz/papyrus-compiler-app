@@ -27,7 +27,9 @@ import { I18nProvider } from '@lingui/react'
 import { i18n } from '@lingui/core'
 import 'unfonts.css'
 
-await dynamicActivateLocale('fr')
+const _initialConfig = await bridge.config.get()
+const _initialLocale = _initialConfig.locale?.startsWith('fr') ? 'fr' : 'en'
+await dynamicActivateLocale(_initialLocale)
 
 async function start() {
   const root = document.getElementById('app')

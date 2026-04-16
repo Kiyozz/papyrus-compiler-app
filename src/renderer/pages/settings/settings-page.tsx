@@ -29,10 +29,9 @@ import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import SettingsCompilation from './settings-compilation'
 import SettingsGameSection from './settings-game-section.tsx'
-import SettingsMo2 from './settings-mo2/settings-mo2'
-import SettingsTelemetrySection from './settings-telemetry-section.tsx'
-import SettingsThemeSection from './settings-theme-section.tsx'
+import SettingsPreferencesSection from './settings-preferences-section.tsx'
 import { useSettings } from './use-settings'
+import { dynamicActivateLocale } from '@renderer/i18n.ts'
 import {
   BreadcrumbItem,
   BreadcrumbPage,
@@ -46,9 +45,9 @@ export function SettingsPage() {
     config: {
       game,
       compilation,
-      mo2: { use: mo2, instance: mo2Instance },
       telemetry: { active: telemetry },
       theme,
+      locale,
     },
     setConfig,
     refreshConfig,
@@ -63,10 +62,9 @@ export function SettingsPage() {
       gamePath: game.path,
       compilerPath: compilation.compilerPath,
       concurrentScripts: compilation.concurrentScripts,
-      mo2,
-      mo2Instance,
       telemetry,
       theme,
+      locale: ['en', 'fr'].includes(locale) ? locale : 'fr',
     },
     mode: 'onChange',
     delayError: 400,
@@ -94,7 +92,6 @@ export function SettingsPage() {
     debouncedCheckInstallation,
     game.path,
     game.type,
-    mo2Instance,
     resetConfigError,
   ])
 
@@ -181,29 +178,6 @@ export function SettingsPage() {
 
             break
           }
-          case 'mo2': {
-            const checked = value.mo2 === true
-
-            if (checked) {
-              setConfig({ mo2: { use: checked } })
-            } else {
-              setConfig({ mo2: { use: false, instance: undefined } })
-            }
-
-            send(TelemetryEvent.modOrganizerActive, { active: checked })
-
-            break
-          }
-          case 'mo2Instance': {
-            const mo2Instance = value.mo2Instance
-
-            resetConfigError()
-            debouncedSetConfig({
-              mo2: { instance: mo2Instance?.trim() },
-            })
-
-            break
-          }
           case 'theme': {
             const newTheme = value.theme!
 
@@ -213,6 +187,16 @@ export function SettingsPage() {
 
             send(TelemetryEvent.settingsTheme, { theme: newTheme })
             setConfig({ theme: newTheme })
+
+            break
+          }
+          case 'locale': {
+            const newLocale = value.locale as string
+
+            if (!['en', 'fr'].includes(newLocale)) return
+
+            void dynamicActivateLocale(newLocale)
+            setConfig({ locale: newLocale })
 
             break
           }
@@ -277,11 +261,9 @@ export function SettingsPage() {
           <ScrollArea className="page w-full">
             <div className="flex flex-col gap-4 p-4">
               <SettingsGameSection />
-              <SettingsCompilation />
-              <SettingsMo2 />
               <div className="grid grid-cols-2 gap-4 pb-10">
-                <SettingsThemeSection />
-                <SettingsTelemetrySection />
+                <SettingsCompilation />
+                <SettingsPreferencesSection />
               </div>
             </div>
           </ScrollArea>

@@ -34,10 +34,11 @@ import { ipcMain } from './ipc'
 import { IpcEvent } from './ipc-event'
 import { registerIpcEvents } from './ipc-events.register'
 import { Logger } from './logger'
-import { registerMenu } from './menu.register'
 import { ensureFiles, move, writeFile } from './path/path'
 import { settingsStore } from './store/settings/store'
 import { Telemetry } from './telemetry/telemetry'
+import { registerMenu } from './menu.register.ts'
+import { dynamicActivateLocale } from './i18n.ts'
 import type { WindowStore } from './store/window/store'
 import type { EventSync } from './interfaces/event-sync'
 import type { EventHandler } from './interfaces/event-handler'
@@ -89,14 +90,21 @@ export async function initialize(
     telemetry.setOnline(args.online)
   })
 
-  const menu = await registerMenu({
+  const openFileHandler = new OpenFileHandler()
+  const openLogFile = async (file: string) => openFileHandler.listen(file)
+
+  const openMenuHandler = new OpenMenuHandler({
     win,
-    openLogFile: async (file: string) => {
-      await openFileHandler.listen(file)
-    },
+    menu: await registerMenu({ win, openLogFile }),
   })
 
-  const openFileHandler = new OpenFileHandler()
+  settingsStore.onDidChange('locale', async (locale) => {
+    if (locale && ['fr', 'en'].includes(locale)) {
+      await dynamicActivateLocale(locale as 'en' | 'fr')
+      openMenuHandler.menu = await registerMenu({ win, openLogFile })
+    }
+  })
+
   const handlers = new Map<string, EventHandler>([
     [IpcEvent.openDialog, new DialogHandler()],
     [IpcEvent.configCheck, new ConfigCheckHandler()],
@@ -113,7 +121,7 @@ export async function initialize(
     [IpcEvent.recentFilesSet, new RecentFilesSetHandler()],
     [IpcEvent.recentFilesClear, new RecentFilesClearHandler()],
     [IpcEvent.recentFileRemove, new RecentFilesRemoveHandler()],
-    [IpcEvent.openMenu, new OpenMenuHandler({ win, menu })],
+    [IpcEvent.openMenu, openMenuHandler],
     [IpcEvent.windowClose, new WindowCloseHandler(win)],
     [IpcEvent.windowMaximize, new WindowMaximizeHandler(win)],
     [IpcEvent.windowMinimize, new WindowMinimizeHandler(win)],

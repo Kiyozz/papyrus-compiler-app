@@ -15,8 +15,10 @@ import { dirname, join } from './path/path'
 import { createWindowStore } from './store/window/store'
 import { unhandled } from './unhandled'
 import { dynamicActivateLocale } from './i18n.ts'
+import { settingsStore } from './store/settings/store'
 
-await dynamicActivateLocale('fr')
+const _startLocale = settingsStore.get('locale')
+await dynamicActivateLocale(_startLocale?.startsWith('fr') ? 'fr' : 'en')
 
 const logger = new Logger('Main')
 let win: BrowserWindow | null = null

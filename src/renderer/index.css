@@ -251,10 +251,11 @@
   color: inherit;
   cursor: default;
   background: var(--color-sidebar);
-  @apply border-b transition-colors duration-200;
+  @apply border-b duration-100;
 }
 
 .titlebar .titlebar-control:hover {
+  @apply transition-colors;
   background: color-mix(in oklab, var(--color-sidebar), black 5%);
 }
 

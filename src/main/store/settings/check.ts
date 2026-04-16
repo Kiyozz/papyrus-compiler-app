@@ -20,7 +20,7 @@ const logger = new Logger('check')
 function _checkLocale(settingsStore: SettingsStore, defaultConfig: Config) {
   const locale = settingsStore.get('locale')
 
-  if (locale !== defaultConfig.locale) {
+  if (!locale.startsWith('fr') && !locale.startsWith('en')) {
     settingsStore.set('locale', defaultConfig.locale)
   }
 }

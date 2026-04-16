@@ -7,10 +7,14 @@ import type { EventHandler } from '../interfaces/event-handler'
 
 export class OpenMenuHandler implements EventHandler {
   private readonly _win: BrowserWindow
-  private readonly _menu: Menu
+  private _menu: Menu
 
   constructor({ win, menu }: { win: BrowserWindow; menu: Menu }) {
     this._win = win
+    this._menu = menu
+  }
+
+  set menu(menu: Menu) {
     this._menu = menu
   }
 
