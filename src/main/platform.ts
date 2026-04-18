@@ -1,16 +1,13 @@
 /*
- * 2022-2026 Kiyozz.
+ * 2026 Kiyozz.
  */
 
-import { release } from 'os'
 import { is } from 'electron-util'
-import type { Platform } from '../../common/types/platform'
-import type { EventSync } from '../interfaces/event-sync'
+import { release } from 'os'
 
-export class PlatformSync implements EventSync {
-  onSync(): Platform {
+export class Platform {
+  current() {
     if (is.windows) return 'windows'
-
     if (is.linux) return 'linux'
 
     const isBigsur = parseInt(release().split('.')[0] ?? '0') >= 11

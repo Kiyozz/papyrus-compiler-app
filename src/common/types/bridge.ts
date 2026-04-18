@@ -53,11 +53,10 @@ export interface Bridge {
   isProduction: () => Promise<boolean>
 
   compilation: {
-    start: (script: string) => void
-    onceFinish: (
+    start: (
       script: string,
-      listener: (result: CompilationResult) => void,
-    ) => void
+      onFinish: (result: CompilationResult) => void,
+    ) => Promise<void>
   }
 
   dialog: {
@@ -92,14 +91,14 @@ export interface Bridge {
   }
 
   os: {
-    platform: () => Platform
+    platform: () => Promise<Platform>
   }
 
   window: {
     close: () => Promise<void>
-    minimize: () => Promise<WindowState>
-    maximize: () => Promise<WindowState>
-    restore: () => Promise<WindowState>
+    minimize: () => Promise<void>
+    maximize: () => Promise<void>
+    restore: () => Promise<void>
     onStateChange: (cb: (state: WindowState) => void) => Disposable
   }
 }

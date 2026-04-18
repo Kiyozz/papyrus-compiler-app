@@ -45,10 +45,10 @@ function validateCurrentScreen(store: WindowStore, checkers: Checker[]) {
   }
 }
 
-export type WindowStore = Store<StoreValues>
+export class WindowStore extends Store<StoreValues> {}
 
 export const createWindowStore = (): WindowStore => {
-  const store = new Store<StoreValues>({
+  const store = new WindowStore({
     defaults: {
       x: null,
       y: null,

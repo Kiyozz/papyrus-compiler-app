@@ -1,21 +1,21 @@
 /*
  * 2022-2026 Kiyozz.
  */
-
 import { format } from 'url'
-import isType from '@sindresorhus/is'
 import { BrowserWindow, app } from 'electron'
-import type { BrowserWindowConstructorOptions } from 'electron'
 import { is } from 'electron-util'
 import { debugInfo, isDev } from 'electron-util/main'
 import { version } from '../common/version'
-import { initialize } from './initialize'
 import { Logger } from './logger'
 import { dirname, join } from './path/path'
-import { createWindowStore } from './store/window/store'
 import { unhandled } from './unhandled'
 import { dynamicActivateLocale } from './i18n.ts'
-import { settingsStore } from './store/settings/store'
+import { SettingsStore } from './store/settings/store'
+import { MainBrowserWindow } from '#main/main-browser-window.ts'
+import { container } from '#main/container.ts'
+import { Initializer } from '#main/initialize.ts'
+
+const settingsStore = await container.make(SettingsStore)
 
 const _startLocale = settingsStore.get('locale')
 await dynamicActivateLocale(_startLocale?.startsWith('fr') ? 'fr' : 'en')
@@ -34,31 +34,7 @@ async function createWindow() {
   logger.info(debugInfo())
   logger.info('public release: ', version)
 
-  const windowStore = createWindowStore()
-  const { x, y } = windowStore.store
-
-  const windowOptions: BrowserWindowConstructorOptions = {
-    width: 800,
-    height: isDev ? 1020 : 820,
-    minHeight: 600,
-    minWidth: 700,
-    webPreferences: {
-      nodeIntegration: true,
-      preload: join(dirname(import.meta), 'preload.js'),
-    },
-    x: isType.null(x) ? undefined : x,
-    y: isType.null(y) ? undefined : y,
-    show: false,
-  }
-
-  if (is.macos) {
-    windowOptions.titleBarStyle = 'hiddenInset'
-  } else {
-    windowOptions.autoHideMenuBar = true
-    windowOptions.frame = false
-  }
-
-  win = new BrowserWindow(windowOptions)
+  win = await container.make(MainBrowserWindow)
 
   if (isDev) {
     // noinspection ES6MissingAwait
@@ -74,7 +50,9 @@ async function createWindow() {
     )
   }
 
-  await initialize(win, windowStore)
+  const initializer = await container.make(Initializer)
+
+  await initializer.initialize()
 
   win.on('closed', () => {
     win = null

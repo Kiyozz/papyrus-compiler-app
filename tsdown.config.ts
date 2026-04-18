@@ -20,7 +20,22 @@ export default defineConfig({
   plugins: [
     lingui(),
     babel({
-      plugins: ['@lingui/babel-plugin-lingui-macro'],
+      plugins: [
+        '@lingui/babel-plugin-lingui-macro',
+        ['@babel/plugin-syntax-decorators', { version: '2023-11' }],
+      ],
     }),
   ],
+  define: {
+    'process.env.ELECTRON_TELEMETRY_FEATURE': JSON.stringify(
+      process.env.ELECTRON_TELEMETRY_FEATURE ?? '',
+    ),
+    'process.env.ELECTRON_TELEMETRY_API_KEY': JSON.stringify(
+      process.env.ELECTRON_TELEMETRY_API_KEY ?? '',
+    ),
+    'process.env.ELECTRON_WEBPACK_APP_MOD_URL': JSON.stringify(
+      process.env.ELECTRON_WEBPACK_APP_MOD_URL ??
+        'https://www.nexusmods.com/skyrimspecialedition/mods/23852',
+    ),
+  },
 })

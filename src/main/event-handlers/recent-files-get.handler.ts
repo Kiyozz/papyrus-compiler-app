@@ -3,16 +3,22 @@
  */
 
 import { Logger } from '../logger'
-import { recentFilesStore } from '../store/recent-files/store'
-import type { Script } from '../../common/types/script'
-import type { EventHandler } from '../interfaces/event-handler'
+import { RecentFilesStore } from '../store/recent-files/store'
+import type { Script } from '#common/types/script.ts'
+import { inject } from '#main/inject.ts'
 
-export class RecentFilesGetHandler implements EventHandler {
-  private _logger = new Logger('RecentFilesGetHandler')
+@inject()
+export class RecentFilesGetHandler {
+  readonly #logger = new Logger('RecentFilesGetHandler')
+  readonly #recentFilesStore: RecentFilesStore
 
-  listen(): Script[] {
-    this._logger.debug('get recent files')
+  constructor(recentFilesStore: RecentFilesStore) {
+    this.#recentFilesStore = recentFilesStore
+  }
 
-    return recentFilesStore.files
+  async listen(): Promise<Script[]> {
+    this.#logger.debug('get recent files')
+
+    return this.#recentFilesStore.files
   }
 }

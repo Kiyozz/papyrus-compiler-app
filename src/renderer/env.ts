@@ -16,10 +16,7 @@ interface Envs {
 
 export const Env: Envs = {
   telemetryFeature:
-    // @ts-expect-error
     (import.meta.env.ELECTRON_TELEMETRY_FEATURE ?? 'false') === 'true',
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  modUrl:
-    // @ts-expect-error
-    import.meta.env.ELECTRON_WEBPACK_APP_MOD_URL ?? MOD_URL_DEFAULT,
+  modUrl: import.meta.env.ELECTRON_WEBPACK_APP_MOD_URL ?? MOD_URL_DEFAULT,
 }

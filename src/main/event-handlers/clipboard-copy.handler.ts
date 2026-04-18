@@ -4,16 +4,17 @@
 
 import { clipboard } from 'electron'
 import { Logger } from '../logger'
-import type { EventHandler } from '../interfaces/event-handler'
+import { inject } from '#main/inject.ts'
 
 interface ClipboardCopyArgs {
   text: string
 }
 
-export class ClipboardCopyHandler implements EventHandler {
+@inject()
+export class ClipboardCopyHandler {
   private logger = new Logger('ClipboardCopyHandler')
 
-  listen({ text }: ClipboardCopyArgs): void {
+  async listen({ text }: ClipboardCopyArgs): Promise<void> {
     this.logger.debug('Copy logs to clipboard', text)
 
     clipboard.writeText(text, 'selection')

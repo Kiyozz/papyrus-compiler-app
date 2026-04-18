@@ -3,17 +3,22 @@
  */
 
 import is from '@sindresorhus/is'
-import type { EventHandler } from '../interfaces/event-handler'
-import type { Telemetry } from '../telemetry/telemetry'
+import { Telemetry } from '../telemetry/telemetry'
+import { inject } from '#main/inject.ts'
 
-export class TelemetryActiveHandler implements EventHandler {
-  constructor(private telemetry: Telemetry) {}
+@inject()
+export class TelemetryActiveHandler {
+  readonly #telemetry: Telemetry
+
+  constructor(telemetry: Telemetry) {
+    this.#telemetry = telemetry
+  }
 
   listen(args: boolean) {
     if (is.undefined(args)) {
       return
     }
 
-    this.telemetry.setActive(args)
+    this.#telemetry.active = args
   }
 }

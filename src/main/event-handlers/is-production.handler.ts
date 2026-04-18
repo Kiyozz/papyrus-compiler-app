@@ -3,9 +3,8 @@
  */
 
 import { isDev } from 'electron-util/main'
-import type { EventHandler } from '../interfaces/event-handler'
 
-export class IsProductionHandler implements EventHandler {
+export class IsProductionHandler {
   listen(): boolean {
     return !isDev
   }

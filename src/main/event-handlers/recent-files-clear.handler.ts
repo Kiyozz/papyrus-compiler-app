@@ -3,15 +3,21 @@
  */
 
 import { Logger } from '../logger'
-import { recentFilesStore } from '../store/recent-files/store'
-import type { EventHandler } from '../interfaces/event-handler'
+import { RecentFilesStore } from '../store/recent-files/store'
+import { inject } from '#main/inject.ts'
 
-export class RecentFilesClearHandler implements EventHandler {
-  private _logger = new Logger('RecentFilesClearHandler')
+@inject()
+export class RecentFilesClearHandler {
+  readonly #logger = new Logger('RecentFilesClearHandler')
+  readonly #recentFilesStore: RecentFilesStore
 
-  listen() {
-    this._logger.debug('clear recent files')
+  constructor(recentFilesStore: RecentFilesStore) {
+    this.#recentFilesStore = recentFilesStore
+  }
 
-    recentFilesStore.clearFiles()
+  async listen() {
+    this.#logger.debug('clear recent files')
+
+    this.#recentFilesStore.clearFiles()
   }
 }

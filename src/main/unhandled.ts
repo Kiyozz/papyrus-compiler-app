@@ -13,6 +13,7 @@ export function unhandled(onError: () => void): void {
   logger.catchErrors({
     showDialog: false,
     onError({ error }) {
+      console.log(error)
       const err = fromError(error)
 
       dialog.showErrorBox(

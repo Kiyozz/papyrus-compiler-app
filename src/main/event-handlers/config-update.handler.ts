@@ -5,21 +5,27 @@
 import is from '@sindresorhus/is'
 import deepmerge from 'deepmerge'
 import { Logger } from '../logger'
-import { settingsStore } from '../store/settings/store'
 import type { PartialDeep } from 'type-fest'
-import type { Config } from '../../common/types/config'
-import type { EventHandler } from '../interfaces/event-handler'
+import type { Config } from '#common/types/config.ts'
+import { inject } from '#main/inject.ts'
+import { SettingsStore } from '#main/store/settings/store.ts'
 
 interface ConfigUpdateHandlerParams {
   config: PartialDeep<Config>
   override?: boolean
 }
 
-export class ConfigUpdateHandler implements EventHandler {
-  private logger = new Logger('ConfigUpdateHandler')
+@inject()
+export class ConfigUpdateHandler {
+  #logger = new Logger('ConfigUpdateHandler')
+  #settingsStore: SettingsStore
 
-  listen(args?: ConfigUpdateHandlerParams): Config {
-    this.logger.debug('updating the configuration')
+  constructor(settingsStore: SettingsStore) {
+    this.#settingsStore = settingsStore
+  }
+
+  async listen(args?: ConfigUpdateHandlerParams): Promise<Config> {
+    this.#logger.debug('updating the configuration')
 
     if (is.undefined(args)) {
       throw new TypeError('cannot update the configuration without arguments')
@@ -27,34 +33,34 @@ export class ConfigUpdateHandler implements EventHandler {
 
     ;(Object.entries(args.config) as [keyof Config, unknown][]).forEach(
       ([key, value]) => {
-        if (!settingsStore.has(key)) {
+        if (!this.#settingsStore.has(key)) {
           return
         }
 
-        this.logger.debug('updating key', key, 'with value', value)
+        this.#logger.debug('updating key', key, 'with value', value)
 
         if (args.override) {
-          this.logger.debug('total overwrite of the previous value')
+          this.#logger.debug('total overwrite of the previous value')
 
-          settingsStore.set(key, value)
+          this.#settingsStore.set(key, value)
         } else {
-          const keyValue = settingsStore.get(key)
+          const keyValue = this.#settingsStore.get(key)
 
           if (is.array(keyValue)) {
-            settingsStore.set(key, value)
+            this.#settingsStore.set(key, value)
           } else if (
             is.object(keyValue) &&
             is.object(value) &&
             !is.array(value)
           ) {
-            settingsStore.set(key, deepmerge(keyValue, value))
+            this.#settingsStore.set(key, deepmerge(keyValue, value))
           } else {
-            settingsStore.set(key, value)
+            this.#settingsStore.set(key, value)
           }
         }
       },
     )
 
-    return settingsStore.store
+    return this.#settingsStore.store
   }
 }

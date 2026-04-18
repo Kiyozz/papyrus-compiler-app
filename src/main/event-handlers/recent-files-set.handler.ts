@@ -4,16 +4,22 @@
 
 import is from '@sindresorhus/is'
 import { Logger } from '../logger'
-import { recentFilesStore } from '../store/recent-files/store'
+import { RecentFilesStore } from '../store/recent-files/store'
 import { ApplicationException } from '../exceptions/application.exception'
-import type { Script } from '../../common/types/script'
-import type { EventHandler } from '../interfaces/event-handler'
+import type { Script } from '#common/types/script.ts'
+import { inject } from '#main/inject.ts'
 
-export class RecentFilesSetHandler implements EventHandler {
-  private _logger = new Logger('RecentFilesSetHandler')
+@inject()
+export class RecentFilesSetHandler {
+  readonly #logger = new Logger('RecentFilesSetHandler')
+  readonly #recentFilesStore: RecentFilesStore
 
-  listen(scripts: Script[]): Script[] {
-    this._logger.debug('set recent files')
+  constructor(recentFilesStore: RecentFilesStore) {
+    this.#recentFilesStore = recentFilesStore
+  }
+
+  async listen(scripts: Script[]): Promise<Script[]> {
+    this.#logger.debug('set recent files')
 
     if (is.undefined(scripts)) {
       throw new ApplicationException(
@@ -21,8 +27,8 @@ export class RecentFilesSetHandler implements EventHandler {
       )
     }
 
-    recentFilesStore.files = scripts
+    this.#recentFilesStore.files = scripts
 
-    return recentFilesStore.files
+    return this.#recentFilesStore.files
   }
 }

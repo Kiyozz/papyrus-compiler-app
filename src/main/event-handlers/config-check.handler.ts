@@ -10,33 +10,40 @@ import {
   toExecutable,
   toOtherSource,
   toSource,
-} from '../../common/game'
-import { IpcEvent } from '../ipc-event'
+} from '#common/game.ts'
 import { Logger } from '../logger'
-import { getModsPath } from '../mo2/mo2'
 import * as path from '../path/path'
 import { toSlash } from '../slash'
-import { settingsStore } from '../store/settings/store'
-import type { EventHandler } from '../interfaces/event-handler'
 import type {
   CompilerPath,
   CompilerSourceFile,
   GamePath,
   GameType,
-} from '../../common/game'
-import type { BadError } from '../../common/types/bad-error'
-
-const _logger = new Logger(IpcEvent.configCheck)
+} from '#common/game.ts'
+import type { BadError } from '#common/types/bad-error.ts'
+import { inject } from '#main/inject.ts'
+import { SettingsStore } from '#main/store/settings/store.ts'
+import { Mo2Service } from '#main/mo2/mo2.ts'
 
 interface Args {
   checkMo2: boolean
 }
 
-export class ConfigCheckHandler implements EventHandler {
-  async listen({ checkMo2 }: Args = { checkMo2: false }): Promise<BadError> {
-    const gameType: GameType = settingsStore.get('game.type')
+@inject()
+export class ConfigCheckHandler {
+  #logger = new Logger('ConfigCheckHandler')
+  #settingsStore: SettingsStore
+  #mo2: Mo2Service
 
-    _logger.debug('the game type is', gameType)
+  constructor(settingsStore: SettingsStore, mo2: Mo2Service) {
+    this.#settingsStore = settingsStore
+    this.#mo2 = mo2
+  }
+
+  async listen({ checkMo2 }: Args = { checkMo2: false }): Promise<BadError> {
+    const gameType: GameType = this.#settingsStore.get('game.type')
+
+    this.#logger.debug('the game type is', gameType)
 
     const hasGameExe = await this.checkGameExe()
 
@@ -51,7 +58,7 @@ export class ConfigCheckHandler implements EventHandler {
     }
 
     const file = toCompilerSourceFile(gameType)
-    const isUsingMo2: boolean = settingsStore.get('mo2.use')
+    const isUsingMo2: boolean = this.#settingsStore.get('mo2.use')
 
     if (isUsingMo2) {
       const hasMo2Instance = this.checkMo2Instance(checkMo2)
@@ -65,9 +72,9 @@ export class ConfigCheckHandler implements EventHandler {
   }
 
   private checkGameExe(): Promise<BadError> {
-    _logger.debug('checking game exe')
+    this.#logger.debug('checking game exe')
 
-    const { path: gamePath, type: gameType } = settingsStore.get('game')
+    const { path: gamePath, type: gameType } = this.#settingsStore.get('game')
     const executable = toExecutable(gameType)
 
     return Promise.resolve(
@@ -76,8 +83,9 @@ export class ConfigCheckHandler implements EventHandler {
   }
 
   private checkMo2Instance(checkMo2: boolean): BadError {
-    _logger.debug('checking mo2 instance')
-    const { use: mo2Use, instance: mo2Instance } = settingsStore.get('mo2')
+    this.#logger.debug('checking mo2 instance')
+    const { use: mo2Use, instance: mo2Instance } =
+      this.#settingsStore.get('mo2')
 
     if (checkMo2 && mo2Use && is.undefined(mo2Instance)) {
       return 'mo2-use-no-instance'
@@ -89,7 +97,7 @@ export class ConfigCheckHandler implements EventHandler {
 
     try {
       // check this path
-      getModsPath(mo2Instance)
+      this.#mo2.getModsPath(mo2Instance)
     } catch {
       return 'mo2-instance-mods'
     }
@@ -98,14 +106,14 @@ export class ConfigCheckHandler implements EventHandler {
   }
 
   private async checkInMo2(file: CompilerSourceFile): Promise<BadError> {
-    const gameType: GameType = settingsStore.get('game.type')
-    const mo2 = settingsStore.get('mo2')
+    const gameType: GameType = this.#settingsStore.get('game.type')
+    const mo2 = this.#settingsStore.get('mo2')
 
     if (is.undefined(mo2.instance)) {
       return this.checkInGameDataFolder(file)
     }
 
-    _logger.info('checking in mo2 folder')
+    this.#logger.info('checking in mo2 folder')
 
     const sourcesFolder = toSource(gameType)
     const otherSourcesFolder = toOtherSource(gameType)
@@ -127,9 +135,9 @@ export class ConfigCheckHandler implements EventHandler {
   }
 
   private checkInGameDataFolder(file: string): Promise<BadError> {
-    const gamePath: GamePath = settingsStore.get('game.path')
-    const gameType: GameType = settingsStore.get('game.type')
-    _logger.debug('checking in game Data folder')
+    const gamePath: GamePath = this.#settingsStore.get('game.path')
+    const gameType: GameType = this.#settingsStore.get('game.type')
+    this.#logger.debug('checking in game Data folder')
 
     const gameScriptsFolder = path.join(
       gamePath,
@@ -161,9 +169,9 @@ export class ConfigCheckHandler implements EventHandler {
   }
 
   private checkCompiler(): Promise<BadError> {
-    _logger.debug('checking compiler path')
+    this.#logger.debug('checking compiler path')
 
-    const compilerPath: CompilerPath = settingsStore.get(
+    const compilerPath: CompilerPath = this.#settingsStore.get(
       'compilation.compilerPath',
     )
 

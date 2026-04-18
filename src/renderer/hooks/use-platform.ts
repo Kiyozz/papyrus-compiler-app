@@ -5,7 +5,7 @@
 import { bridge } from '../bridge'
 import type { Platform } from '../../common/types/platform'
 
-const platform = bridge.os.platform()
+const platform: Platform = await bridge.os.platform()
 
 export const usePlatform = (): Platform => {
   return platform

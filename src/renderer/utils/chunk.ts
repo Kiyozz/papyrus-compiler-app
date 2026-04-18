@@ -9,7 +9,7 @@ export const chunk = (
   size: number,
 ): ScriptRenderer[][] => {
   return scripts.reduce(
-    (acc: ScriptRenderer[][], current: ScriptRenderer, i: number) => {
+    (acc: ScriptRenderer[][], _current: ScriptRenderer, i: number) => {
       if (!(i % size)) {
         acc.push(scripts.slice(i, i + size))
       }

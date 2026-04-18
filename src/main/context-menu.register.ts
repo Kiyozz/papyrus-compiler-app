@@ -3,37 +3,46 @@
  */
 
 import contextMenu from 'electron-context-menu'
-import { ipcMain } from './ipc'
-import { IpcEvent } from './ipc-event'
 import type { MenuItemConstructorOptions } from 'electron'
 import { t } from '@lingui/core/macro'
 
+interface ContextMenuCallbacks {
+  onSelectAll: () => void
+  onSelectNone: () => void
+  onInvertSelection: () => void
+  onClear: () => void
+}
+
 export async function registerContextMenu(
   win: Electron.BrowserWindow,
-): Promise<void> {
+  callbacks: ContextMenuCallbacks,
+): Promise<{
+  openRecentFilesMenu: () => void
+  closeRecentFilesMenu: () => void
+}> {
   const recentFilesMenus: MenuItemConstructorOptions[] = [
     {
       label: t`Tout sélectionner`,
       click() {
-        win.webContents.send(IpcEvent.recentFilesSelectAll)
+        callbacks.onSelectAll()
       },
     },
     {
       label: t`Tout désélectionner`,
       click() {
-        win.webContents.send(IpcEvent.recentFilesSelectNone)
+        callbacks.onSelectNone()
       },
     },
     {
       label: t`Inverser la sélection`,
       click() {
-        win.webContents.send(IpcEvent.recentFilesInvertSelection)
+        callbacks.onInvertSelection()
       },
     },
     {
       label: t`Vider`,
       click() {
-        win.webContents.send(IpcEvent.recentFilesOnClear)
+        callbacks.onClear()
       },
     },
   ]
@@ -41,7 +50,7 @@ export async function registerContextMenu(
   let recentFilesContextMenu: (() => void) | undefined
   let defaultContextMenu: (() => void) | undefined
 
-  const createDefaultMenu = () => {
+  const closeRecentFilesMenu = () => {
     defaultContextMenu?.()
     recentFilesContextMenu?.()
 
@@ -51,7 +60,7 @@ export async function registerContextMenu(
     })
   }
 
-  const createRecentFilesMenu = () => {
+  const openRecentFilesMenu = () => {
     defaultContextMenu?.()
     recentFilesContextMenu?.()
 
@@ -62,11 +71,7 @@ export async function registerContextMenu(
     })
   }
 
-  ipcMain.on(IpcEvent.recentFilesDialogClose, () => {
-    createDefaultMenu()
-  })
+  closeRecentFilesMenu()
 
-  ipcMain.on(IpcEvent.recentFilesDialogOpen, () => {
-    createRecentFilesMenu()
-  })
+  return { openRecentFilesMenu, closeRecentFilesMenu }
 }

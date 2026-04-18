@@ -3,15 +3,15 @@
  */
 
 import Store from 'electron-store'
-import { uniqArray } from '../../../common/uniq-array'
-import type { RecentFiles } from '../../../common/types/recent-files'
-import type { Script } from '../../../common/types/script'
+import { uniqArray } from '#common/uniq-array.ts'
+import type { RecentFiles } from '#common/types/recent-files.ts'
+import type { Script } from '#common/types/script.ts'
 
 const defaultRecentFiles: RecentFiles = {
   files: [] as Script[],
 }
 
-class RecentFileStore extends Store<RecentFiles> {
+export class RecentFilesStore extends Store<RecentFiles> {
   constructor() {
     super({
       name: 'recent_files',
@@ -47,6 +47,4 @@ class RecentFileStore extends Store<RecentFiles> {
   }
 }
 
-const recentFilesStore = new RecentFileStore()
-
-export { recentFilesStore, defaultRecentFiles }
+export { defaultRecentFiles }

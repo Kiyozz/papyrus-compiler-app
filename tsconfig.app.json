@@ -21,8 +21,10 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@renderer/*": ["src/renderer/*"]
-    }
+      "@renderer/*": ["./src/renderer/*"]
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
-  "include": ["src"]
+  "include": ["./src"]
 }

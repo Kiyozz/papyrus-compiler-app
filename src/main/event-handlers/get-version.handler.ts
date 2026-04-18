@@ -4,11 +4,10 @@
 
 import { app } from 'electron'
 import { isDev } from 'electron-util/main'
-import type { EventHandler } from '../interfaces/event-handler'
 import { Logger } from '../logger'
 import { join, readFile } from '../path/path'
 
-export class GetVersionHandler implements EventHandler {
+export class GetVersionHandler {
   private logger = new Logger('GetVersionHandler')
 
   async listen(): Promise<string> {

@@ -4,13 +4,12 @@
 
 import { dialog } from 'electron'
 import type { DialogType } from '../../common/types/dialog'
-import type { EventHandler } from '../interfaces/event-handler'
 
 interface DialogHandlerArgs {
   type: DialogType
 }
 
-export class DialogHandler implements EventHandler {
+export class DialogHandler {
   async listen(args: DialogHandlerArgs | undefined): Promise<string | null> {
     const type = args?.type
 

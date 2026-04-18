@@ -7,20 +7,28 @@ import { app } from 'electron'
 import Store from 'electron-store'
 import { isDev } from 'electron-util/main'
 import osLocale from 'os-locale'
-import { GameType } from '../../../common/game'
-import { Theme } from '../../../common/theme'
-import { cliArgs } from '../../cli-args'
-import { Env } from '../../env'
-// noinspection ES6PreferShortImport
+import {
+  type Flag,
+  type GamePath,
+  GameType,
+  validateGame,
+} from '#common/game.ts'
+import { Theme } from '#common/theme.ts'
+import { type CliArgs, cliArgs } from '../../cli-args'
+import { EnvO } from '../../env'
 import { dirname, join } from '../../path/path'
-import { checkStore } from './check'
 import { migrate410 } from './migrations/4.1.0.migration'
 import { migrate420 } from './migrations/4.2.0.migration'
 import { migrate510 } from './migrations/5.1.0.migration'
 import { migrate520 } from './migrations/5.2.0.migration'
 import { migrate550 } from './migrations/5.5.0.migration'
 import { migrate560 } from './migrations/5.6.0.migration'
-import type { Config } from '../../../common/types/config'
+import type { Config } from '#common/types/config.ts'
+import { inject } from '#main/inject.ts'
+import is from '@sindresorhus/is'
+import { Logger } from '#main/logger.ts'
+import { DEFAULT_COMPILER_PATH } from '#main/constants.ts'
+import { validateGroup } from '#main/validators/group.validator.ts'
 
 const jsonPath = isDev
   ? join(dirname(import.meta), '../../../..', 'package.json')
@@ -29,10 +37,10 @@ const json = JSON.parse(fs.readFileSync(jsonPath).toString()) as {
   version: string
 }
 
-const defaultConfig: Config = {
+const defaultSettingsStoreConfig: Config = {
   game: {
     path: '',
-    type: Env.modUrl.includes('specialedition') ? GameType.se : GameType.le,
+    type: EnvO.modUrl.includes('specialedition') ? GameType.se : GameType.le,
   },
   compilation: {
     concurrentScripts: 15,
@@ -58,21 +66,259 @@ const defaultConfig: Config = {
   },
 }
 
-const settingsStore = new Store<Config>({
-  defaults: defaultConfig,
-  projectVersion: json.version,
-  migrations: {
-    '4.1.0': migrate410,
-    '4.2.0': migrate420,
-    '5.1.0': migrate510,
-    '5.2.0': migrate520,
-    '5.5.0': migrate550,
-    '5.6.0': migrate560,
-  },
-} as never)
+@inject()
+class SettingsStore extends Store<Config> {
+  #logger = new Logger('SettingsStore')
 
-checkStore(settingsStore, defaultConfig, cliArgs)
+  resetSettings() {
+    this.store = { ...defaultSettingsStoreConfig }
+  }
 
-export type SettingsStore = Store<Config>
+  #checkMo2() {
+    const mo2 = this.get('mo2')
+    const resetMo2Config = () => {
+      this.reset('mo2')
+    }
 
-export { settingsStore, defaultConfig }
+    if (is.nullOrUndefined(mo2) || !is.object(mo2)) {
+      resetMo2Config()
+    }
+
+    if (
+      (Object.keys(mo2) as (keyof Config['mo2'])[]).some((key) =>
+        is.nullOrUndefined(mo2[key]),
+      )
+    ) {
+      resetMo2Config()
+    }
+
+    if (!is.boolean(mo2.use)) {
+      resetMo2Config()
+    }
+
+    if (!is.string(mo2.output) || is.emptyString(mo2.output.trim())) {
+      resetMo2Config()
+    }
+
+    if (!is.string(mo2.mods) || is.emptyString(mo2.mods.trim())) {
+      resetMo2Config()
+    }
+
+    if (
+      is.null(mo2.instance) ||
+      (is.string(mo2.instance) && is.emptyString(mo2.instance.trim()))
+    ) {
+      resetMo2Config()
+    }
+  }
+
+  #checkGameType(args?: CliArgs) {
+    const gameType: GameType = this.get('game.type')
+    const resetGameType = (type?: GameType) =>
+      this.set('game.type', type ?? defaultSettingsStoreConfig.game.type)
+
+    const type = args?.['game-type']
+
+    if (validateGame.gameType(type)) {
+      resetGameType(type)
+
+      return
+    }
+
+    if (!is.string(gameType)) {
+      resetGameType()
+    }
+
+    switch (gameType) {
+      case GameType.fo4:
+      case GameType.le:
+      case GameType.se:
+      case GameType.vr:
+        break
+      default:
+        resetGameType()
+    }
+  }
+
+  #checkGamePath(args?: CliArgs) {
+    const gamePath: string = this.get('game.path')
+    const resetGamePath = (path?: GamePath) =>
+      this.set('game.path', path ?? defaultSettingsStoreConfig.game.path)
+
+    const gamePathArgs = args?.['game-path']
+
+    if (validateGame.gamePath(gamePathArgs)) {
+      resetGamePath(gamePathArgs)
+
+      return
+    }
+
+    if (!is.string(gamePath)) {
+      resetGamePath()
+    }
+  }
+
+  #checkFlag() {
+    const flag = this.get<string, Flag | string>('compilation.flag')
+
+    if (
+      flag !== 'TESV_Papyrus_Flags.flg' &&
+      flag !== 'Institute_Papyrus_Flags.flg'
+    ) {
+      this.#logger.warn(flag, 'is not supported')
+
+      this.set(
+        'compilation.flag',
+        this.get('game.type') === GameType.fo4
+          ? 'Institute_Papyrus_Flags.flg'
+          : defaultSettingsStoreConfig.compilation.flag,
+      )
+    }
+  }
+
+  #checkCompilerPath(args?: CliArgs) {
+    const compilerPath = this.get('compilation.compilerPath')
+    const gamePath: string = this.get('game.path')
+    const compilerPathArgs = args?.['compiler-path']
+
+    if (validateGame.compilerPath(compilerPathArgs)) {
+      this.set('compilation.compilerPath', compilerPathArgs)
+
+      return
+    }
+
+    if (
+      is.nullOrUndefined(compilerPath) ||
+      (is.string(compilerPath) &&
+        is.emptyString(compilerPath.trim()) &&
+        is.nonEmptyString(gamePath))
+    ) {
+      this.set(
+        'compilation.compilerPath',
+        join(gamePath, DEFAULT_COMPILER_PATH),
+      )
+    }
+  }
+
+  #checkOutput(args?: CliArgs) {
+    const output = this.get('compilation.output')
+    const outputArgs = args?.['output-path']
+
+    if (validateGame.outputPath(outputArgs)) {
+      this.set('compilation.output', outputArgs)
+
+      return
+    }
+
+    if (!is.string(output) || is.emptyString(output.trim())) {
+      this.set(
+        'compilation.output',
+        defaultSettingsStoreConfig.compilation.output,
+      )
+    }
+  }
+
+  #checkGroups() {
+    const groups = this.get('groups')
+
+    if (!is.array(groups) || !groups.every(validateGroup)) {
+      this.reset('groups')
+    }
+  }
+
+  #checkConcurrentScripts() {
+    const compilation = this.get('compilation')
+
+    if (is.nullOrUndefined(compilation)) {
+      this.reset('compilation')
+    } else if (is.numericString(compilation.concurrentScripts)) {
+      this.set(
+        'compilation.concurrentScripts',
+        parseInt(compilation.concurrentScripts, 10),
+      )
+    } else if (!is.number(compilation.concurrentScripts)) {
+      this.set(
+        'compilation.concurrentScripts',
+        defaultSettingsStoreConfig.compilation.concurrentScripts,
+      )
+    }
+  }
+
+  #checkNotSupportedKeys() {
+    const supportedKeys = [
+      ...Object.keys(defaultSettingsStoreConfig),
+      '__internal__',
+    ]
+
+    Object.keys(this.store).forEach((key) => {
+      if (!supportedKeys.includes(key)) {
+        this.delete(key as keyof Config)
+      }
+    })
+  }
+
+  #checkTelemetry() {
+    const telemetry = this.get('telemetry')
+
+    if (
+      is.nullOrUndefined(telemetry) ||
+      !is.object(telemetry) ||
+      is.emptyObject(telemetry) ||
+      !is.boolean(telemetry.active)
+    ) {
+      this.reset('telemetry')
+    }
+  }
+
+  #checkTheme() {
+    const theme = this.get('theme')
+
+    if (![Theme.system, Theme.light, Theme.dark].includes(theme)) {
+      this.reset('theme')
+    }
+  }
+
+  #checkLocale() {
+    const locale = this.get('locale')
+
+    if (!locale.startsWith('fr') && !locale.startsWith('en')) {
+      this.reset('locale')
+    }
+  }
+
+  check(args?: CliArgs) {
+    this.#checkMo2()
+    this.#checkGameType(args)
+    this.#checkGamePath(args)
+    this.#checkFlag()
+    this.#checkCompilerPath(args)
+    this.#checkOutput(args)
+    this.#checkGroups()
+    this.#checkConcurrentScripts()
+    this.#checkNotSupportedKeys()
+    this.#checkTelemetry()
+    this.#checkTheme()
+    this.#checkLocale()
+  }
+}
+
+function createSettingsStore() {
+  const store = new SettingsStore({
+    defaults: defaultSettingsStoreConfig,
+    projectVersion: json.version,
+    migrations: {
+      '4.1.0': migrate410,
+      '4.2.0': migrate420,
+      '5.1.0': migrate510,
+      '5.2.0': migrate520,
+      '5.5.0': migrate550,
+      '5.6.0': migrate560,
+    },
+  } as never)
+
+  store.check(cliArgs)
+
+  return store
+}
+
+export { SettingsStore, defaultSettingsStoreConfig, createSettingsStore }

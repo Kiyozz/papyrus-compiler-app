@@ -1,0 +1,78 @@
+/*
+ * 2026 Kiyozz.
+ */
+import { Container } from '@adonisjs/fold'
+import {
+  createSettingsStore,
+  SettingsStore,
+} from '#main/store/settings/store.ts'
+import { MainBrowserWindow } from '#main/main-browser-window.ts'
+import { createWindowStore, WindowStore } from '#main/store/window/store.ts'
+import { type BrowserWindowConstructorOptions, ipcMain } from 'electron'
+import { isDev } from 'electron-util/main'
+import { dirname, join } from '#main/path/path.ts'
+import isType from '@sindresorhus/is'
+import { is } from 'electron-util'
+import { EventEmitter } from '#main/event-emitter.ts'
+import { ElectronIpcMainIO } from 'kkrpc/electron-ipc'
+import { RpcChannel } from '#main/rpc-channel.ts'
+import { RecentFilesStore } from '#main/store/recent-files/store.ts'
+import { MainApi } from '#main/main-api.ts'
+import Emittery from 'emittery'
+
+const emitter = new Emittery()
+
+const container = new Container({ emitter })
+
+container.singleton(RecentFilesStore, () => new RecentFilesStore())
+container.singleton(SettingsStore, () => createSettingsStore())
+container.singleton(WindowStore, () => createWindowStore())
+container.singleton(MainBrowserWindow, () => {
+  const windowStore = createWindowStore()
+  const { x, y } = windowStore.store
+
+  const windowOptions: BrowserWindowConstructorOptions = {
+    width: 800,
+    height: isDev ? 1020 : 820,
+    minHeight: 600,
+    minWidth: 700,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: true,
+      preload: join(dirname(import.meta), 'preload.js'),
+    },
+    x: isType.null(x) ? undefined : x,
+    y: isType.null(y) ? undefined : y,
+    show: false,
+  }
+
+  if (is.macos) {
+    windowOptions.titleBarStyle = 'hiddenInset'
+  } else {
+    windowOptions.autoHideMenuBar = true
+    windowOptions.frame = false
+  }
+
+  return new MainBrowserWindow(windowOptions)
+})
+container.singleton(EventEmitter, () => new EventEmitter())
+container.singleton(RpcChannel, async (resolver) => {
+  console.log('1')
+  const win = await resolver.make(MainBrowserWindow)
+  console.log('2')
+  const mainApi = await resolver.make(MainApi)
+  console.log('3')
+
+  const io = new ElectronIpcMainIO(ipcMain, win.webContents)
+  console.log('4')
+
+  return new RpcChannel(io, {
+    expose: mainApi.mainApi,
+  })
+})
+
+emitter.on('container_binding:resolved', ({ name, data }) => {
+  console.log(name, data)
+})
+
+export { container }

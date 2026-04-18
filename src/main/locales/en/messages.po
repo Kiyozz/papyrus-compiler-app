@@ -13,135 +13,135 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/main/menu.register.ts:117
+#: src/main/menu.register.ts:115
 msgid "À propos de PCA"
 msgstr "About PCA"
 
-#: src/main/menu.register.ts:218
+#: src/main/menu.register.ts:216
 msgid "Activer le mode plein écran"
 msgstr "Toggle Full Screen"
 
-#: src/main/menu.register.ts:98
+#: src/main/menu.register.ts:96
 msgid "Aide"
 msgstr "Help"
 
-#: src/main/menu.register.ts:180
+#: src/main/menu.register.ts:178
 msgid "Annuler"
 msgstr "Cancel"
 
-#: src/main/menu.register.ts:188
+#: src/main/menu.register.ts:186
 msgid "Coller"
 msgstr "Paste"
 
-#: src/main/menu.register.ts:39
+#: src/main/menu.register.ts:42
 msgid "Configuration..."
 msgstr "Configuration..."
 
-#: src/main/menu.register.ts:186
+#: src/main/menu.register.ts:184
 msgid "Copier"
 msgstr "Copy"
 
-#: src/main/menu.register.ts:184
+#: src/main/menu.register.ts:182
 msgid "Couper"
 msgstr "Cut"
 
-#: src/main/menu.register.ts:172
+#: src/main/menu.register.ts:170
 msgid "Édition"
 msgstr "Edit"
 
-#: src/main/menu.register.ts:230
+#: src/main/menu.register.ts:228
 msgid "Fenêtre"
 msgstr "Window"
 
-#: src/main/menu.register.ts:246
+#: src/main/menu.register.ts:244
 msgid "Fermer"
 msgstr "Close"
 
-#: src/main/menu.register.ts:73
+#: src/main/menu.register.ts:71
 msgid "Fichier"
 msgstr "File"
 
-#: src/main/menu.register.ts:106
+#: src/main/menu.register.ts:104
 msgid "Github..."
 msgstr "Github..."
 
-#: src/main/context-menu.register.ts:28
+#: src/main/context-menu.register.ts:37
 msgid "Inverser la sélection"
 msgstr "Invert selection"
 
-#: src/main/menu.register.ts:129
+#: src/main/menu.register.ts:127
 msgid "Masquer les autres"
 msgstr "Hide Others"
 
-#: src/main/menu.register.ts:121
+#: src/main/menu.register.ts:119
 msgid "Masquer PCA"
 msgstr "Hide PCA"
 
-#: src/main/menu.register.ts:133
+#: src/main/menu.register.ts:131
 msgid "Montrer PCA"
 msgstr "Show PCA"
 
-#: src/main/menu.register.ts:224
+#: src/main/menu.register.ts:222
 msgid "Outils de développement"
 msgstr "Toggle Developer Tools"
 
-#: src/main/menu.register.ts:35
+#: src/main/menu.register.ts:38
 msgid "Préférences..."
 msgstr "Preferences..."
 
-#: src/main/menu.register.ts:206
+#: src/main/menu.register.ts:204
 msgid "Présentation"
 msgstr "View"
 
-#: src/main/menu.register.ts:125
+#: src/main/menu.register.ts:123
 msgid "Quitter PCA"
 msgstr "Quit PCA"
 
-#: src/main/menu.register.ts:77
-#: src/main/menu.register.ts:86
+#: src/main/menu.register.ts:75
+#: src/main/menu.register.ts:84
 msgid "Rapports..."
 msgstr "Logs..."
 
-#: src/main/menu.register.ts:214
+#: src/main/menu.register.ts:212
 msgid "Recharger"
 msgstr "Reload"
 
-#: src/main/menu.register.ts:63
+#: src/main/menu.register.ts:61
 msgid "Rechercher les mises à jour..."
 msgstr "Check for Updates..."
 
-#: src/main/menu.register.ts:236
+#: src/main/menu.register.ts:234
 msgid "Réduire"
 msgstr "Minimize"
 
-#: src/main/menu.register.ts:46
+#: src/main/menu.register.ts:49
 msgid "Réinitialiser"
 msgstr "Reset"
 
-#: src/main/menu.register.ts:182
+#: src/main/menu.register.ts:180
 msgid "Rétablir"
 msgstr "Undo"
 
-#: src/main/menu.register.ts:190
+#: src/main/menu.register.ts:188
 msgid "Sélectionner tout"
 msgstr "Select All"
 
-#: src/main/menu.register.ts:83
+#: src/main/menu.register.ts:81
 msgid "Session précédente..."
 msgstr "Previous Session..."
 
-#: src/main/menu.register.ts:102
+#: src/main/menu.register.ts:100
 msgid "Signaler un bug..."
 msgstr "Report bug..."
 
-#: src/main/context-menu.register.ts:22
+#: src/main/context-menu.register.ts:31
 msgid "Tout désélectionner"
 msgstr "Select none"
 
-#: src/main/context-menu.register.ts:16
+#: src/main/context-menu.register.ts:25
 msgid "Tout sélectionner"
 msgstr "Select all"
 
-#: src/main/context-menu.register.ts:34
+#: src/main/context-menu.register.ts:43
 msgid "Vider"
 msgstr "Clear"

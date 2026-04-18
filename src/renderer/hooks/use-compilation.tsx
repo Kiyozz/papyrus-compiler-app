@@ -15,10 +15,8 @@ import { ScriptStatus } from '../enums/script-status.enum'
 import { chunk } from '../utils/chunk'
 import { scriptEquals, scriptInList } from '../utils/scripts/equals'
 import { isRunningScript } from '../utils/scripts/status'
-import { fromError } from '../../common/from-error'
 import { useApp } from './use-app'
 import type { ScriptRenderer } from '../types'
-import type { CompilationResult } from '../../common/types/compilation-result'
 
 interface StartOptions {
   scripts: ScriptRenderer[]
@@ -35,20 +33,6 @@ interface CompilationContext {
 }
 
 const Context = createContext({} as CompilationContext)
-
-const whenCompileScriptFinish = (
-  script: string,
-): Promise<CompilationResult> => {
-  return new Promise<CompilationResult>((resolve, reject) => {
-    bridge.compilation.onceFinish(script, (result) => {
-      if (result.success) {
-        resolve(result)
-      } else {
-        reject(new Error(result.output))
-      }
-    })
-  })
-}
 
 function CompilationProvider({ children }: React.PropsWithChildren) {
   const [compilationScripts, setCompilationScripts] = useState<
@@ -109,18 +93,10 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
           })
         })
 
-        partialScripts.forEach((script) => {
-          bridge.compilation.start(script.name)
-        })
-
         // eslint-disable-next-line no-await-in-loop
         await Promise.all(
           partialScripts.map(async (s: ScriptRenderer) => {
-            try {
-              const result: CompilationResult = await whenCompileScriptFinish(
-                s.name,
-              )
-
+            await bridge.compilation.start(s.name, (result) => {
               setCompilationScripts((cs: ScriptRenderer[]) => {
                 const found = cs.findIndex((incs) => incs.id === s.id)
 
@@ -144,31 +120,7 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
               setCompilationLogs((cl) => {
                 return [[s, result.output], ...cl]
               })
-            } catch (e) {
-              const errorMessage = fromError(e).message
-
-              setCompilationScripts((cs: ScriptRenderer[]) => {
-                const found = cs.findIndex((incs) => incs.id === s.id)
-
-                if (found === -1) {
-                  return cs
-                }
-
-                const foundCs = cs[found]
-
-                if (is.undefined(foundCs)) {
-                  throw new TypeError('foundCs is undefined')
-                }
-
-                foundCs.status = ScriptStatus.failed
-
-                return [...cs]
-              })
-
-              setCompilationLogs((cl) => {
-                return [[s, errorMessage], ...cl]
-              })
-            }
+            })
           }),
         )
       }

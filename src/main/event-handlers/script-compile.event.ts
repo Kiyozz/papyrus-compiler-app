@@ -3,19 +3,24 @@
  */
 
 import is from '@sindresorhus/is'
-import { compile } from '../compilation/compile'
-import { IpcEvent } from '../ipc-event'
 import { Logger } from '../logger'
-import { checkStore } from '../store/settings/check'
-import { settingsStore, defaultConfig } from '../store/settings/store'
+import { SettingsStore } from '../store/settings/store'
 import { ApplicationException } from '../exceptions/application.exception'
-import { fromError } from '../../common/from-error'
-import type { Event } from '../interfaces/event'
-import type { CompilationResult } from '../../common/types/compilation-result'
-import type { IpcMainEvent } from 'electron'
+import { fromError } from '#common/from-error.ts'
+import type { CompilationResult } from '#common/types/compilation-result.ts'
+import { inject } from '#main/inject.ts'
+import { Compiler } from '#main/compilation/compiler.ts'
 
-export class ScriptCompileEvent implements Event {
-  private logger = new Logger('ScriptCompileEvent')
+@inject()
+export class ScriptCompileEvent {
+  readonly #settingsStore: SettingsStore
+  readonly #compiler: Compiler
+  readonly #logger = new Logger('ScriptCompileEvent')
+
+  constructor(settingsStore: SettingsStore, compiler: Compiler) {
+    this.#settingsStore = settingsStore
+    this.#compiler = compiler
+  }
 
   private static _cleanSuccessLog(script: string, log: string): string {
     return log
@@ -42,39 +47,33 @@ export class ScriptCompileEvent implements Event {
     return log.replace(`Script ${script} failed to compile: `, '').trim()
   }
 
-  async on(ipcEvent: IpcMainEvent, script: string): Promise<void> {
+  async run(script: string): Promise<CompilationResult> {
     if (is.undefined(script)) {
-      throw new ApplicationException('script-compile-on: script is undefined')
+      throw new ApplicationException('script-compile: script is undefined')
     }
 
-    this.logger.info('start compilation of scripts', script)
-    this.logger.debug('checking the current store values')
+    this.#logger.info('start compilation of scripts', script)
+    this.#logger.debug('checking the current store values')
 
-    checkStore(settingsStore, defaultConfig)
+    this.#settingsStore.check()
 
-    const endEvent = `${IpcEvent.compileScriptFinish}-${script}`
-
-    this.logger.debug('current store values checked')
+    this.#logger.debug('current store values checked')
 
     try {
       const result = ScriptCompileEvent._cleanSuccessLog(
         script,
-        await compile(script),
+        await this.#compiler.compile(script),
       )
 
-      ipcEvent.reply(endEvent, {
-        success: true,
-        output: result,
-        script,
-      } as CompilationResult)
+      return { success: true, output: result, script }
     } catch (e) {
       const errorMessage: string = fromError(e).message
 
-      ipcEvent.reply(endEvent, {
+      return {
         success: false,
         output: ScriptCompileEvent._cleanErrorLog(script, errorMessage),
         script,
-      } as CompilationResult)
+      }
     }
   }
 }

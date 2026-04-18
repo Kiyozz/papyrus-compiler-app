@@ -3,16 +3,22 @@
  */
 
 import { Logger } from '../logger'
-import { settingsStore } from '../store/settings/store'
-import type { Config } from '../../common/types/config'
-import type { EventHandler } from '../interfaces/event-handler'
+import { SettingsStore } from '../store/settings/store'
+import type { Config } from '#common/types/config.ts'
+import { inject } from '#main/inject.ts'
 
-export class ConfigGetHandler implements EventHandler {
-  private logger = new Logger('ConfigGetHandler')
+@inject()
+export class ConfigGetHandler {
+  #logger = new Logger('ConfigGetHandler')
+  #settingsStore: SettingsStore
 
-  listen(): Config {
-    this.logger.debug('getting configuration')
+  constructor(settingsStore: SettingsStore) {
+    this.#settingsStore = settingsStore
+  }
 
-    return settingsStore.store
+  async listen(): Promise<Config> {
+    this.#logger.debug('getting configuration')
+
+    return this.#settingsStore.store
   }
 }

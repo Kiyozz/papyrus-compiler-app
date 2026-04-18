@@ -6,17 +6,22 @@ import is from '@sindresorhus/is'
 import type {
   TelemetryEvent,
   TelemetryEventProperties,
-} from '../../common/telemetry-event'
-import type { EventHandler } from '../interfaces/event-handler'
-import type { Telemetry } from '../telemetry/telemetry'
+} from '#common/telemetry-event.ts'
+import { Telemetry } from '#main/telemetry/telemetry.ts'
+import { inject } from '#main/inject.ts'
 
 interface Payload<E extends TelemetryEvent> {
   name: E
   properties: TelemetryEventProperties[E]
 }
 
-export class TelemetryHandler implements EventHandler {
-  constructor(private telemetry: Telemetry) {}
+@inject()
+export class TelemetryHandler {
+  #telemetry: Telemetry
+
+  constructor(telemetry: Telemetry) {
+    this.#telemetry = telemetry
+  }
 
   async listen(args?: Payload<TelemetryEvent>): Promise<void> {
     if (is.undefined(args)) {
@@ -25,6 +30,6 @@ export class TelemetryHandler implements EventHandler {
 
     const { name, properties } = args
 
-    return this.telemetry.event({ name, properties })
+    return this.#telemetry.event({ name, properties })
   }
 }

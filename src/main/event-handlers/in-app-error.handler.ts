@@ -6,22 +6,26 @@ import is from '@sindresorhus/is'
 import { dialog } from 'electron'
 import { debugInfo } from 'electron-util/main'
 import { Logger } from '../logger'
-import type { EventHandler } from '../interfaces/event-handler'
-import type { Telemetry } from '../telemetry/telemetry'
+import { Telemetry } from '../telemetry/telemetry'
+import { inject } from '#main/inject.ts'
 
-export class InAppErrorHandler implements EventHandler {
-  private logger = new Logger('InAppErrorHandler')
+@inject()
+export class InAppErrorHandler {
+  readonly #logger = new Logger('InAppErrorHandler')
+  readonly #telemetry: Telemetry
 
-  constructor(private telemetry: Telemetry) {}
+  constructor(telemetry: Telemetry) {
+    this.#telemetry = telemetry
+  }
 
   async listen(args?: Error): Promise<void> {
-    this.logger.error('an error occurred', args)
+    this.#logger.error('an error occurred', args)
 
     if (is.undefined(args)) {
       return
     }
 
-    await this.telemetry.exception({
+    await this.#telemetry.exception({
       properties: {
         error: args.message,
         stack: !args.stack
