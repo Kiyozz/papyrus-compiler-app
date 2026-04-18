@@ -18,6 +18,8 @@ import { ElectronIpcMainIO } from 'kkrpc/electron-ipc'
 import { RpcChannel } from '#main/rpc-channel.ts'
 import { RecentFilesStore } from '#main/store/recent-files/store.ts'
 import Emittery from 'emittery'
+import { PapyrusCompilerService } from '#main/compilation/compile.ts'
+import { Compiler } from '#main/compilation/compiler.ts'
 
 const emitter = new Emittery()
 
@@ -53,6 +55,9 @@ container.singleton(MainBrowserWindow, () => {
   }
 
   return new MainBrowserWindow(windowOptions)
+})
+container.swap(Compiler, (resolver) => {
+  return resolver.make(PapyrusCompilerService)
 })
 container.singleton(EventEmitter, () => new EventEmitter())
 container.singleton(RpcChannel, async (resolver) => {

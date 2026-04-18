@@ -3,7 +3,6 @@
  */
 
 import { Button } from '@renderer/components/ui/button.tsx'
-import { Card, CardContent, CardHeader } from '@renderer/components/ui/card.tsx'
 import {
   Dialog,
   DialogClose,
@@ -22,19 +21,27 @@ import {
   isFailedScript,
   isSuccessScript,
 } from '@renderer/utils/scripts/status.ts'
-import { CheckCheckIcon, CircleXIcon, CopyIcon, FileXIcon } from 'lucide-react'
-import type { PropsWithChildren } from 'react'
+import { ClipboardIcon, FileXIcon, Trash2Icon } from 'lucide-react'
+import { type PropsWithChildren, useState } from 'react'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { toast } from 'sonner'
-import { TelemetryEvent } from '../../../common/telemetry-event.ts'
+import { TelemetryEvent } from '#common/telemetry-event.ts'
+import { Switch } from '@renderer/components/ui/switch.tsx'
+import { Label } from '@renderer/components/ui/label.tsx'
+import { Badge } from '../ui/badge.tsx'
 
 export function DialogCompilationLogs({ children }: PropsWithChildren) {
   const { t } = useLingui()
-  const { logs, clearCompilationLogs } = useCompilation()
+  const { logs: rawLogs, clearCompilationLogs } = useCompilation()
   const { hasNoLogs, hasErrorsInLogs, isAllScriptsSuccessInLogs } =
-    logsState(logs)
+    logsState(rawLogs)
   const { send } = useTelemetry()
   const { copyToClipboard } = useApp()
+  const [showErrorOnly, setShowErrorOnly] = useState(false)
+
+  const logs = showErrorOnly
+    ? rawLogs.filter(([script]) => isFailedScript(script))
+    : rawLogs
 
   const onClickClearLogs = () => {
     clearCompilationLogs()
@@ -53,34 +60,53 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
       <DialogTrigger
         asChild
         data-state={compilationState}
-        className="data-[state=error]:text-destructive data-[state=success]:text-green-500 data-[state=error]:[&_button]:hover:bg-destructive data-[state=success]:[&_button]:hover:bg-green-700 data-[state=error]:[&_button]:hover:text-destructive-foreground"
+        className="data-[state=error]:text-destructive data-[state=success]:text-green-500 data-[state=error]:[&_button]:hover:bg-destructive data-[state=success]:[&_button]:hover:bg-green-500 data-[state=error]:[&_button]:hover:text-destructive-foreground"
       >
         {children}
       </DialogTrigger>
       <DialogContent
-        className="flex dialog-fullscreen-height max-w-screen flex-col px-0 sm:max-w-screen rounded-none"
+        className="grid-rows-[1.25rem_1fr_2.25rem]"
         aria-describedby={undefined}
+        fullscreen
       >
-        <DialogHeader aria-describedby={undefined} className="drag px-6">
-          <DialogTitle>
+        <DialogHeader
+          aria-describedby={undefined}
+          className="pl-6 pr-15 no-drag flex-row"
+        >
+          <DialogTitle className="grow">
             <Trans>Logs de compilation</Trans>
           </DialogTitle>
+          <div className="flex items-center">
+            <Label htmlFor="show-errors-only" className="pr-2">
+              <Trans>Erreurs uniquement</Trans>
+            </Label>
+            <Switch
+              id="show-errors-only"
+              onCheckedChange={setShowErrorOnly}
+              checked={showErrorOnly}
+            />
+          </div>
         </DialogHeader>
-        <ScrollArea className="[&_[data-radix-scroll-area-viewport]>div]:block! w-full grow [&_[data-radix-scroll-area-viewport]>div]:min-h-auto!">
-          {hasNoLogs ? (
-            <p className="flex h-full items-center justify-center">
-              <Trans>Aucun logs</Trans>
-            </p>
-          ) : (
+        {hasNoLogs && (
+          <p className="flex h-full grow items-center justify-center">
+            <Trans>Aucun logs</Trans>
+          </p>
+        )}
+        {!hasNoLogs && (
+          <ScrollArea className="min-h-auto h-full overflow-hidden">
             <div className="px-6">
-              <ul className="flex flex-col gap-4">
+              <ul className="gap-2 flex flex-col">
+                {logs.length === 0 && (
+                  <li className="text-center">
+                    <Trans>Aucune erreur !</Trans>
+                  </li>
+                )}
                 {logs.map(([script, log]) => {
-                  const isSuccess = isSuccessScript(script)
-                  const isFailed = isFailedScript(script)
-
                   const onClickCopy = () => {
                     send(TelemetryEvent.compilationLogsCopy, {})
-                    copyToClipboard(`${script.name}-${script.path}\n\n${log}\n`)
+                    copyToClipboard(
+                      `${script.name}-${script.path}\n\n${log.trim()}\n`,
+                    )
                     toast.info(t`Copier avec succès`, {
                       duration: Infinity,
                     })
@@ -90,71 +116,70 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
                     clearCompilationLogs(script)
                   }
 
+                  const isSuccessful = isSuccessScript(script)
+                  const isError = isFailedScript(script)
+
                   return (
-                    <Card
+                    <li
                       key={script.id}
-                      className="group flex flex-col border-6 border-accent border-t-2 border-b-[7px] bg-accent dark:border-border"
-                      data-state={
-                        isSuccess ? 'success' : isFailed ? 'error' : 'running'
-                      }
-                      asChild
+                      aria-describedby={`${script.id}-logs`}
+                      aria-labelledby={`${script.id}-title`}
+                      className="bg-background"
                     >
-                      <li>
-                        <CardHeader className="sticky top-0 z-10 w-full flex-row items-center bg-accent p-1 text-accent-foreground">
-                          <div className="flex items-center gap-2">
-                            <CheckCheckIcon className="hidden size-4 text-green-500 group-data-[state=success]:flex" />
-                            <CircleXIcon className="hidden size-4 text-destructive group-data-[state=error]:flex" />
-                            <span className="truncate font-mono text-sm">
-                              {script.name}
-                            </span>
+                      <div className="border-x border-t rounded-t-4xl bg-white pl-4 pr-2 py-2 dark:bg-gray-800">
+                        <div
+                          id={`${script.id}-title`}
+                          aria-label={script.name}
+                          className="flex items-center justify-between rounded-t-4xl"
+                        >
+                          <div className="flex items-center gap-2 overflow-x-hidden">
+                            <span>{script.name}</span>
+                            {isSuccessful && (
+                              <Badge variant="success">
+                                <Trans>Succès</Trans>
+                              </Badge>
+                            )}
+                            {isError && (
+                              <Badge variant="destructive">
+                                <Trans>Échec</Trans>
+                              </Badge>
+                            )}
                           </div>
-                          <div className="flex grow items-center justify-end gap-2">
-                            <Button
-                              size="icon-sm"
-                              className="size-6"
-                              variant="ghost"
-                              onClick={onClickCopy}
-                            >
-                              <CopyIcon className="size-3.5" />
+                          <div className="flex gap-2">
+                            <Button onClick={onClickCopy} size="icon">
+                              <ClipboardIcon />
                             </Button>
                             <Button
-                              size="icon-sm"
-                              className="size-6"
-                              variant="ghost"
+                              variant="secondary"
+                              color="error"
                               onClick={onClickDelete}
                             >
-                              <FileXIcon className="size-3.5" />
+                              <Trash2Icon />
                             </Button>
                           </div>
-                        </CardHeader>
-                        <CardContent
-                          className="mx-px select-text rounded-b-sm bg-card p-2 leading-4"
-                          role="log"
-                        >
-                          <code>
-                            {log.split('\n').map((log, i) => {
-                              /* eslint-disable react/no-array-index-key */
-                              return (
-                                <span
-                                  className="select-text break-words text-justify font-mono text-xs"
-                                  key={i}
-                                >
-                                  {log}
-                                  <br />
-                                </span>
-                              )
-                              /* eslint-enable react/no-array-index-key */
-                            })}
-                          </code>
-                        </CardContent>
-                      </li>
-                    </Card>
+                        </div>
+                      </div>
+                      <code
+                        className="block w-full bg-gray-800 p-4 text-white dark:bg-black border-x border-b rounded-b-4xl"
+                        id={`${script.id}-logs`}
+                        role="log"
+                      >
+                        {log.split('\n').map((outputLine, i) => (
+                          <span
+                            className="block select-text wrap-break-word text-justify font-mono text-xs"
+                            key={i}
+                          >
+                            {outputLine}
+                          </span>
+                        ))}
+                      </code>
+                    </li>
                   )
                 })}
               </ul>
             </div>
-          )}
-        </ScrollArea>
+          </ScrollArea>
+        )}
         <DialogFooter className="px-6 sm:justify-start">
           <Button disabled={hasNoLogs} onClick={onClickClearLogs}>
             <FileXIcon />

@@ -24,7 +24,7 @@ import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
 import { dirname } from '@renderer/utils/dirname.ts'
 import { scriptsToRenderer } from '@renderer/utils/scripts/scripts-to-renderer.ts'
 import { uniqScripts } from '@renderer/utils/scripts/uniq-scripts.ts'
-import { Trash2Icon } from 'lucide-react'
+import { TrashIcon } from 'lucide-react'
 import React, { type PropsWithChildren, useId, useMemo, useState } from 'react'
 import type { KeyboardEvent, MouseEvent } from 'react'
 import { Trans } from '@lingui/react/macro'
@@ -40,13 +40,21 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
   const {
     clearRecentFiles,
     removeRecentFile,
-    recentFiles,
+    recentFiles: rawRecentFiles,
     moreDetails: [isMoreDetails, setMoreDetails],
   } = useRecentFiles()
   const [selectedRecentFiles, setSelectedRecentFiles] = useState(
     new Map<string, Script>(),
   )
   const isValid = selectedRecentFiles.size > 0
+
+  const isAlreadyLoaded = (script: Script) => {
+    return Boolean(loadedScripts.find((s) => s.path === script.path))
+  }
+
+  const recentFiles = rawRecentFiles.filter(
+    (script) => !isAlreadyLoaded(script),
+  )
 
   useDidUpdate(() => {
     if (open) {
@@ -161,10 +169,6 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
     }
   }
 
-  const isAlreadyLoaded = (script: Script) => {
-    return Boolean(loadedScripts.find((s) => s.path === script.path))
-  }
-
   function Item({
     onClickFile,
     onClickDelete,
@@ -185,10 +189,10 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
     }
 
     return (
-      <li className="flex items-center gap-2 first:rounded-t-md last:rounded-b-md hover:bg-accent/75">
+      <li className="flex items-center gap-2 first:rounded-t-xl last:rounded-b-xl hover:bg-accent/75">
         <Label
           htmlFor={id}
-          className="group grow px-2 py-1 aria-disabled:bg-muted aria-disabled:text-muted-foreground"
+          className="group grow pl-2 pr-1 py-1 aria-disabled:bg-muted aria-disabled:text-muted-foreground"
           aria-disabled={disabled}
         >
           <Checkbox
@@ -211,7 +215,7 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
               onClick={onClickDelete}
               tabIndex={1}
             >
-              <Trash2Icon className="size-3.5" />
+              <TrashIcon className="size-3.5" />
             </Button>
           </div>
         </Label>
@@ -233,13 +237,22 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
           </DialogTitle>
         </DialogHeader>
         {recentFiles.length === 0 ? (
-          <p className="flex grow items-center justify-center px-6">
-            <Trans>Aucun fichiers récents</Trans>
+          <p
+            className="flex grow items-center justify-center px-6 data-[partially-empty=true]:text-zinc-700"
+            data-partially-empty={recentFiles.length !== rawRecentFiles.length}
+          >
+            {recentFiles.length === rawRecentFiles.length ? (
+              <Trans>Aucun fichiers récents.</Trans>
+            ) : (
+              <Trans>
+                Aucun fichiers récents (les scripts déjà chargés sont filtrés).
+              </Trans>
+            )}
           </p>
         ) : (
           <ScrollArea className="w-full grow">
             <div className="grow px-6">
-              <ul className="divide-y divide-accent rounded-lg border">
+              <ul className="divide-y divide-accent rounded-xl border">
                 {recentFiles.map((script) => {
                   return (
                     <Item

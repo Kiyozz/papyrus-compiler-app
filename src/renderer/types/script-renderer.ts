@@ -2,7 +2,7 @@
  * 2022-2026 Kiyozz.
  */
 
-import type { Script } from '../../common/types/script'
+import type { Script } from '#common/types/script.ts'
 import type { ScriptStatus } from '../enums/script-status.enum'
 
 export type ScriptRenderer = Script & {

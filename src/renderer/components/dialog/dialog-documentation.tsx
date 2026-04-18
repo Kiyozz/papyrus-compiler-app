@@ -18,10 +18,7 @@ export function DialogDocumentation({ children }: PropsWithChildren) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent
-        className="flex dialog-fullscreen-height grow max-w-screen flex-col px-0 sm:max-w-screen rounded-none"
-        aria-describedby={undefined}
-      >
+      <DialogContent className="px-0" aria-describedby={undefined}>
         <DialogHeader className="px-6">
           <DialogTitle>Documentation</DialogTitle>
         </DialogHeader>

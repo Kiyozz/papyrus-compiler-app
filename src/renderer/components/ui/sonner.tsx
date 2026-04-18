@@ -42,7 +42,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       toastOptions={{
         classNames: {
-          toast: 'cn-toast',
+          toast: 'cn-toast group-[.toaster]:pointer-events-auto',
         },
       }}
       {...props}

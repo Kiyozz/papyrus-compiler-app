@@ -43,29 +43,31 @@ import { RPCChannel } from "jsr:@kunkun/kkrpc"
 **Server (expose API):**
 
 ```typescript
-import { NodeIo, RPCChannel } from "kkrpc"
+import { NodeIo, RPCChannel } from 'kkrpc'
 
 const api = {
-	greet: (name: string) => `Hello, ${name}!`,
-	add: (a: number, b: number) => a + b,
-	counter: 42
+  greet: (name: string) => `Hello, ${name}!`,
+  add: (a: number, b: number) => a + b,
+  counter: 42,
 }
 
-const rpc = new RPCChannel(new NodeIo(process.stdin, process.stdout), { expose: api })
+const rpc = new RPCChannel(new NodeIo(process.stdin, process.stdout), {
+  expose: api,
+})
 ```
 
 **Client (consume API):**
 
 ```typescript
-import { spawn } from "child_process"
-import { NodeIo, RPCChannel } from "kkrpc"
+import { spawn } from 'child_process'
+import { NodeIo, RPCChannel } from 'kkrpc'
 
-const worker = spawn("bun", ["server.ts"])
+const worker = spawn('bun', ['server.ts'])
 const rpc = new RPCChannel(new NodeIo(worker.stdout, worker.stdin))
 
 const api = rpc.getAPI<typeof api>()
 
-console.log(await api.greet("World")) // "Hello, World!"
+console.log(await api.greet('World')) // "Hello, World!"
 console.log(await api.add(5, 3)) // 8
 console.log(await api.counter) // 42
 ```
@@ -79,18 +81,21 @@ console.log(await api.counter) // 42
 The main class that manages bidirectional communication:
 
 ```typescript
-class RPCChannel<LocalAPI extends Record<string, any>, RemoteAPI extends Record<string, any>> {
-	constructor(
-		io: IoInterface,
-		options?: {
-			expose?: LocalAPI
-			serialization?: { version: "json" | "superjson" }
-			validators?: RPCValidators<LocalAPI>
-		}
-	)
+class RPCChannel<
+  LocalAPI extends Record<string, any>,
+  RemoteAPI extends Record<string, any>,
+> {
+  constructor(
+    io: IoInterface,
+    options?: {
+      expose?: LocalAPI
+      serialization?: { version: 'json' | 'superjson' }
+      validators?: RPCValidators<LocalAPI>
+    },
+  )
 
-	getAPI(): RemoteAPI // Get proxy to remote API
-	expose(api: LocalAPI): void // Expose local API
+  getAPI(): RemoteAPI // Get proxy to remote API
+  expose(api: LocalAPI): void // Expose local API
 }
 ```
 
@@ -117,8 +122,8 @@ Transport adapters for different environments:
 
 ```typescript
 const api = {
-	greet: (name: string) => `Hello, ${name}!`,
-	add: (a: number, b: number) => a + b
+  greet: (name: string) => `Hello, ${name}!`,
+  add: (a: number, b: number) => a + b,
 }
 
 type API = typeof api
@@ -131,21 +136,21 @@ const remote = rpc.getAPI()
 
 ```typescript
 interface MathAPI {
-	add(a: number, b: number): Promise<number>
-	multiply(a: number, b: number): Promise<number>
+  add(a: number, b: number): Promise<number>
+  multiply(a: number, b: number): Promise<number>
 }
 
 interface MyAPI {
-	math: MathAPI
-	greet(name: string): Promise<string>
+  math: MathAPI
+  greet(name: string): Promise<string>
 }
 
 const api: MyAPI = {
-	math: {
-		add: async (a, b) => a + b,
-		multiply: async (a, b) => a * b
-	},
-	greet: async (name) => `Hello, ${name}!`
+  math: {
+    add: async (a, b) => a + b,
+    multiply: async (a, b) => a * b,
+  },
+  greet: async (name) => `Hello, ${name}!`,
 }
 
 const rpc = new RPCChannel<MyAPI, MyAPI>(io, { expose: api })
@@ -155,16 +160,16 @@ const rpc = new RPCChannel<MyAPI, MyAPI>(io, { expose: api })
 
 ```typescript
 interface API {
-	math: {
-		basic: {
-			add(a: number, b: number): Promise<number>
-			subtract(a: number, b: number): Promise<number>
-		}
-		advanced: {
-			pow(base: number, exp: number): Promise<number>
-			sqrt(n: number): Promise<number>
-		}
-	}
+  math: {
+    basic: {
+      add(a: number, b: number): Promise<number>
+      subtract(a: number, b: number): Promise<number>
+    }
+    advanced: {
+      pow(base: number, exp: number): Promise<number>
+      sqrt(n: number): Promise<number>
+    }
+  }
 }
 
 // Usage
@@ -178,11 +183,11 @@ const result = await api.math.advanced.pow(2, 10) // 1024
 ### Stdio (Process Communication)
 
 ```typescript
-import { spawn } from "child_process"
-import { NodeIo, RPCChannel } from "kkrpc"
+import { spawn } from 'child_process'
+import { NodeIo, RPCChannel } from 'kkrpc'
 
 // Spawn child process
-const child = spawn("bun", ["worker.ts"])
+const child = spawn('bun', ['worker.ts'])
 
 // Create channel
 const io = new NodeIo(child.stdout, child.stdin)
@@ -195,16 +200,16 @@ const api = rpc.getAPI()
 ### WebSocket
 
 ```typescript
-import { RPCChannel, WebSocketClientIO, WebSocketServerIO } from "kkrpc"
+import { RPCChannel, WebSocketClientIO, WebSocketServerIO } from 'kkrpc'
 
 // Server
-wss.on("connection", (ws) => {
-	const io = new WebSocketServerIO(ws)
-	const rpc = new RPCChannel<API, API>(io, { expose: api })
+wss.on('connection', (ws) => {
+  const io = new WebSocketServerIO(ws)
+  const rpc = new RPCChannel<API, API>(io, { expose: api })
 })
 
 // Client
-const ws = new WebSocket("ws://localhost:3000")
+const ws = new WebSocket('ws://localhost:3000')
 const io = new WebSocketClientIO({ ws })
 const rpc = new RPCChannel<{}, API>(io)
 const api = rpc.getAPI()
@@ -213,10 +218,10 @@ const api = rpc.getAPI()
 ### Web Worker
 
 ```typescript
-import { WorkerParentIO, WorkerChildIO, RPCChannel } from "kkrpc/browser"
+import { WorkerParentIO, WorkerChildIO, RPCChannel } from 'kkrpc/browser'
 
 // Main thread
-const worker = new Worker("./worker.ts", { type: "module" })
+const worker = new Worker('./worker.ts', { type: 'module' })
 const io = new WorkerParentIO(worker)
 const rpc = new RPCChannel<LocalAPI, RemoteAPI>(io, { expose: localApi })
 
@@ -228,26 +233,26 @@ const rpc = new RPCChannel<RemoteAPI, LocalAPI>(io, { expose: api })
 ### HTTP
 
 ```typescript
-import { HTTPClientIO, HTTPServerIO, RPCChannel } from "kkrpc"
+import { HTTPClientIO, HTTPServerIO, RPCChannel } from 'kkrpc'
 
 // Server
 const serverIO = new HTTPServerIO()
 const serverRPC = new RPCChannel<API, API>(serverIO, { expose: api })
 
 Bun.serve({
-	async fetch(req) {
-		if (new URL(req.url).pathname === "/rpc") {
-			const response = await serverIO.handleRequest(await req.text())
-			return new Response(response, {
-				headers: { "Content-Type": "application/json" }
-			})
-		}
-		return new Response("Not found", { status: 404 })
-	}
+  async fetch(req) {
+    if (new URL(req.url).pathname === '/rpc') {
+      const response = await serverIO.handleRequest(await req.text())
+      return new Response(response, {
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
+    return new Response('Not found', { status: 404 })
+  },
 })
 
 // Client
-const clientIO = new HTTPClientIO({ url: "http://localhost:3000/rpc" })
+const clientIO = new HTTPClientIO({ url: 'http://localhost:3000/rpc' })
 const clientRPC = new RPCChannel<{}, API>(clientIO)
 ```
 
@@ -261,23 +266,26 @@ Send functions as arguments that can be invoked remotely:
 
 ```typescript
 interface API {
-	processData(data: string, onProgress: (percent: number) => void): Promise<string>
+  processData(
+    data: string,
+    onProgress: (percent: number) => void,
+  ): Promise<string>
 }
 
 // Server
 const api: API = {
-	processData: async (data, onProgress) => {
-		for (let i = 0; i <= 100; i += 10) {
-			onProgress(i)
-			await sleep(100)
-		}
-		return `Processed: ${data}`
-	}
+  processData: async (data, onProgress) => {
+    for (let i = 0; i <= 100; i += 10) {
+      onProgress(i)
+      await sleep(100)
+    }
+    return `Processed: ${data}`
+  },
 }
 
 // Client
-const result = await api.processData("my-data", (progress) => {
-	console.log(`Progress: ${progress}%`)
+const result = await api.processData('my-data', (progress) => {
+  console.log(`Progress: ${progress}%`)
 })
 ```
 
@@ -287,11 +295,11 @@ Access and mutate remote properties:
 
 ```typescript
 interface API {
-	counter: number
-	settings: {
-		theme: string
-		notifications: { enabled: boolean }
-	}
+  counter: number
+  settings: {
+    theme: string
+    notifications: { enabled: boolean }
+  }
 }
 
 // Get values
@@ -300,7 +308,7 @@ const theme = await api.settings.theme
 
 // Set values
 api.counter = 100
-api.settings.theme = "dark"
+api.settings.theme = 'dark'
 ```
 
 ### Enhanced Error Handling
@@ -309,29 +317,29 @@ Errors preserve name, message, stack, and custom properties:
 
 ```typescript
 class ValidationError extends Error {
-	constructor(
-		message: string,
-		public field: string,
-		public code: number
-	) {
-		super(message)
-		this.name = "ValidationError"
-	}
+  constructor(
+    message: string,
+    public field: string,
+    public code: number,
+  ) {
+    super(message)
+    this.name = 'ValidationError'
+  }
 }
 
 // Thrown on server
 type API = {
-	validateUser(data: unknown): Promise<void>
+  validateUser(data: unknown): Promise<void>
 }
 
 // Caught on client
 try {
-	await api.validateUser({})
+  await api.validateUser({})
 } catch (error) {
-	console.log(error.name) // "ValidationError"
-	console.log(error.message) // "Name is required"
-	console.log(error.field) // "name"
-	console.log(error.code) // 400
+  console.log(error.name) // "ValidationError"
+  console.log(error.message) // "Name is required"
+  console.log(error.field) // "name"
+  console.log(error.code) // 400
 }
 ```
 
@@ -340,22 +348,22 @@ try {
 Use Standard Schema (Zod, Valibot, ArkType) for runtime validation:
 
 ```typescript
-import { RPCChannel, type RPCValidators } from "kkrpc"
-import { z } from "zod"
+import { RPCChannel, type RPCValidators } from 'kkrpc'
+import { z } from 'zod'
 
 type MathAPI = {
-	add(a: number, b: number): Promise<number>
+  add(a: number, b: number): Promise<number>
 }
 
 const api: MathAPI = {
-	add: async (a, b) => a + b
+  add: async (a, b) => a + b,
 }
 
 const validators: RPCValidators<MathAPI> = {
-	add: {
-		input: z.tuple([z.number(), z.number()]),
-		output: z.number()
-	}
+  add: {
+    input: z.tuple([z.number(), z.number()]),
+    output: z.number(),
+  },
 }
 
 const rpc = new RPCChannel(io, { expose: api, validators })
@@ -366,13 +374,13 @@ const rpc = new RPCChannel(io, { expose: api, validators })
 Zero-copy transfer of large binary data:
 
 ```typescript
-import { RPCChannel, transfer, WorkerParentIO } from "kkrpc/browser"
+import { RPCChannel, transfer, WorkerParentIO } from 'kkrpc/browser'
 
 interface API {
-	processBuffer(buffer: ArrayBuffer): Promise<number>
+  processBuffer(buffer: ArrayBuffer): Promise<number>
 }
 
-const worker = new Worker("worker.js")
+const worker = new Worker('worker.js')
 const io = new WorkerParentIO(worker)
 const rpc = new RPCChannel<{}, API>(io)
 const api = rpc.getAPI()
@@ -393,8 +401,8 @@ const result = await api.processBuffer(transfer(buffer, [buffer]))
 
 ```typescript
 const rpc = new RPCChannel(io, {
-	expose: api,
-	serialization: { version: "json" }
+  expose: api,
+  serialization: { version: 'json' },
 })
 ```
 
@@ -406,8 +414,8 @@ const rpc = new RPCChannel(io, {
 
 ```typescript
 const rpc = new RPCChannel(io, {
-	expose: api,
-	serialization: { version: "superjson" }
+  expose: api,
+  serialization: { version: 'superjson' },
 })
 ```
 
@@ -426,22 +434,22 @@ Both sides expose APIs:
 ```typescript
 // Side A
 interface API_A {
-	compute(data: number[]): Promise<number>
+  compute(data: number[]): Promise<number>
 }
 
 interface API_B {
-	notify(message: string): Promise<void>
+  notify(message: string): Promise<void>
 }
 
 const apiA: API_A = {
-	compute: async (data) => data.reduce((a, b) => a + b, 0)
+  compute: async (data) => data.reduce((a, b) => a + b, 0),
 }
 
 const rpc = new RPCChannel<API_A, API_B>(io, { expose: apiA })
 const apiB = rpc.getAPI()
 
 // Call B from A
-await apiB.notify("Computation complete")
+await apiB.notify('Computation complete')
 ```
 
 ### Dynamic API Exposure
@@ -478,13 +486,13 @@ io.destroy()
 
 ```typescript
 // Browser (excludes stdio)
-import { RPCChannel, WorkerParentIO } from "kkrpc/browser"
+import { RPCChannel, WorkerParentIO } from 'kkrpc/browser'
 
 // Deno
-import { RPCChannel, DenoIo } from "kkrpc/deno"
+import { RPCChannel, DenoIo } from 'kkrpc/deno'
 
 // Chrome Extension
-import { RPCChannel, ChromePortIO } from "kkrpc/chrome-extension"
+import { RPCChannel, ChromePortIO } from 'kkrpc/chrome-extension'
 ```
 
 ---
@@ -506,32 +514,32 @@ import { RPCChannel, ChromePortIO } from "kkrpc/chrome-extension"
 ```typescript
 // interop/node/server.ts provides a test server
 const api = {
-	math: { add: (a: number, b: number) => a + b },
-	echo: <T>(v: T) => v,
-	counter: 42
+  math: { add: (a: number, b: number) => a + b },
+  echo: <T>(v: T) => v,
+  counter: 42,
 }
 ```
 
 ### Unit Test Pattern
 
 ```typescript
-import { expect, test } from "bun:test"
-import { NodeIo, RPCChannel } from "kkrpc"
+import { expect, test } from 'bun:test'
+import { NodeIo, RPCChannel } from 'kkrpc'
 
-test("basic RPC call", async () => {
-	const api = { add: (a: number, b: number) => a + b }
+test('basic RPC call', async () => {
+  const api = { add: (a: number, b: number) => a + b }
 
-	// Create connected pair
-	const { port1, port2 } = new MessageChannel()
+  // Create connected pair
+  const { port1, port2 } = new MessageChannel()
 
-	const serverIO = new NodeIo(port1)
-	const clientIO = new NodeIo(port2)
+  const serverIO = new NodeIo(port1)
+  const clientIO = new NodeIo(port2)
 
-	new RPCChannel<typeof api, {}>(serverIO, { expose: api })
-	const client = new RPCChannel<{}, typeof api>(clientIO)
+  new RPCChannel<typeof api, {}>(serverIO, { expose: api })
+  const client = new RPCChannel<{}, typeof api>(clientIO)
 
-	const result = await client.getAPI().add(2, 3)
-	expect(result).toBe(5)
+  const result = await client.getAPI().add(2, 3)
+  expect(result).toBe(5)
 })
 ```
 
@@ -556,4 +564,4 @@ test("basic RPC call", async () => {
 - Serialization: `packages/kkrpc/src/serialization.ts`
 - Adapters: `packages/kkrpc/src/adapters/`
 - Interop guide: `skills/interop/SKILL.md`
-- 
+-

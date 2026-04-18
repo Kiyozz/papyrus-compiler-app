@@ -57,17 +57,21 @@ function DialogContent({
   className,
   children,
   showCloseButton = true,
+  fullscreen = false,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean
+  fullscreen?: boolean
 }) {
   return (
     <DialogPortal>
-      <DialogOverlay />
+      {!fullscreen && <DialogOverlay />}
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
           'fixed dialog-fullscreen-top left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-4xl bg-popover p-6 text-sm text-popover-foreground ring-1 ring-foreground/5 duration-100 outline-none sm:max-w-md data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
+          fullscreen &&
+            'h-page-with-titlebar px-0 ring-1 ring-background sm:max-w-screen rounded-none',
           className,
         )}
         {...props}
