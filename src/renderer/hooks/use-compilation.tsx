@@ -9,7 +9,6 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import is from '@sindresorhus/is'
 import { bridge } from '../bridge'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { chunk } from '../utils/chunk'
@@ -79,43 +78,30 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
       const scriptsOfScripts = chunk(scripts, concurrentScripts)
 
       for (const partialScripts of scriptsOfScripts) {
-        setCompilationScripts((cs: ScriptRenderer[]) => {
-          return cs.map((s: ScriptRenderer) => {
-            const found = partialScripts.find((ps) => ps.id === s.id)
-
-            if (!found) {
-              return s
-            }
-
-            s.status = ScriptStatus.running
-
-            return s
-          })
-        })
+        setCompilationScripts((cs: ScriptRenderer[]) =>
+          cs.map((s: ScriptRenderer) =>
+            partialScripts.some((ps) => ps.id === s.id)
+              ? { ...s, status: ScriptStatus.running }
+              : s,
+          ),
+        )
 
         // eslint-disable-next-line no-await-in-loop
         await Promise.all(
           partialScripts.map(async (s: ScriptRenderer) => {
             await bridge.compilation.start(s.name, (result) => {
-              setCompilationScripts((cs: ScriptRenderer[]) => {
-                const found = cs.findIndex((incs) => incs.id === s.id)
-
-                if (found === -1) {
-                  return cs
-                }
-
-                const foundCs = cs[found]
-
-                if (is.undefined(foundCs)) {
-                  throw new TypeError('foundCs is undefined')
-                }
-
-                foundCs.status = result.success
-                  ? ScriptStatus.success
-                  : ScriptStatus.failed
-
-                return [...cs]
-              })
+              setCompilationScripts((cs: ScriptRenderer[]) =>
+                cs.map((c) =>
+                  c.id === s.id
+                    ? {
+                        ...c,
+                        status: result.success
+                          ? ScriptStatus.success
+                          : ScriptStatus.failed,
+                      }
+                    : c,
+                ),
+              )
 
               setCompilationLogs((cl) => {
                 return [[s, result.output], ...cl]
