@@ -37,7 +37,7 @@
   "devDependencies": {
     "@adonisjs/fold": "^11.0.0",
     "@babel/plugin-syntax-decorators": "^7.28.6",
-    "@changesets/cli": "^2.30.0",
+    "@changesets/cli": "^2.31.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@fontsource/figtree": "^5.2.10",
