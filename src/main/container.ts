@@ -17,7 +17,6 @@ import { EventEmitter } from '#main/event-emitter.ts'
 import { ElectronIpcMainIO } from 'kkrpc/electron-ipc'
 import { RpcChannel } from '#main/rpc-channel.ts'
 import { RecentFilesStore } from '#main/store/recent-files/store.ts'
-import { MainApi } from '#main/main-api.ts'
 import Emittery from 'emittery'
 
 const emitter = new Emittery()
@@ -57,22 +56,9 @@ container.singleton(MainBrowserWindow, () => {
 })
 container.singleton(EventEmitter, () => new EventEmitter())
 container.singleton(RpcChannel, async (resolver) => {
-  console.log('1')
   const win = await resolver.make(MainBrowserWindow)
-  console.log('2')
-  const mainApi = await resolver.make(MainApi)
-  console.log('3')
-
   const io = new ElectronIpcMainIO(ipcMain, win.webContents)
-  console.log('4')
-
-  return new RpcChannel(io, {
-    expose: mainApi.mainApi,
-  })
-})
-
-emitter.on('container_binding:resolved', ({ name, data }) => {
-  console.log(name, data)
+  return new RpcChannel(io, {})
 })
 
 export { container }

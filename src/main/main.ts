@@ -14,6 +14,8 @@ import { SettingsStore } from './store/settings/store'
 import { MainBrowserWindow } from '#main/main-browser-window.ts'
 import { container } from '#main/container.ts'
 import { Initializer } from '#main/initialize.ts'
+import { RpcChannel } from '#main/rpc-channel.ts'
+import { MainApi } from '#main/main-api.ts'
 
 const settingsStore = await container.make(SettingsStore)
 
@@ -35,6 +37,10 @@ async function createWindow() {
   logger.info('public release: ', version)
 
   win = await container.make(MainBrowserWindow)
+
+  const rpc = await container.make(RpcChannel)
+  const mainApi = await container.make(MainApi)
+  rpc.expose(mainApi.mainApi)
 
   if (isDev) {
     // noinspection ES6MissingAwait
