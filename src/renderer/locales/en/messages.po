@@ -13,22 +13,35 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: pscScripts.length
+#: src/renderer/pages/compilation/compilation-page.tsx:111
+msgid "{0} scripts loaded."
+msgstr "{0} scripts loaded."
+
 #: src/renderer/pages/settings/settings-mo2/settings-mo2-activation.tsx:22
 #: src/renderer/pages/settings/settings-telemetry-section.tsx:28
 msgid "Activer"
 msgstr "Enable"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:168
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:193
 #: src/renderer/components/dialog/dialog-group.tsx:187
-#: src/renderer/components/dialog/dialog-recent-files.tsx:271
+#: src/renderer/components/dialog/dialog-recent-files.tsx:284
 msgid "Annuler"
 msgstr "Cancel"
 
 #: src/renderer/components/dialog/dialog-recent-files.tsx:237
-msgid "Aucun fichiers récents"
-msgstr "No recent files"
+#~ msgid "Aucun fichiers récents"
+#~ msgstr "No recent files"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:72
+#: src/renderer/components/dialog/dialog-recent-files.tsx:247
+msgid "Aucun fichiers récents (les scripts déjà chargés sont filtrés)."
+msgstr "No recent files (already loaded scripts are filtered)."
+
+#: src/renderer/components/dialog/dialog-recent-files.tsx:245
+msgid "Aucun fichiers récents."
+msgstr "No recent files."
+
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:92
 msgid "Aucun logs"
 msgstr "No logs"
 
@@ -36,11 +49,15 @@ msgstr "No logs"
 msgid "Aucun scripts"
 msgstr "No scripts"
 
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:101
+msgid "Aucune erreur !"
+msgstr "No errors!"
+
 #: src/renderer/pages/settings/settings-preferences-section.tsx:111
 msgid "Avertissement"
 msgstr "Warning"
 
-#: src/renderer/pages/compilation/compilation-page.tsx:258
+#: src/renderer/pages/compilation/compilation-page.tsx:260
 msgid "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
 msgstr "This feature is not available when running PCA in administrator."
 
@@ -48,7 +65,7 @@ msgstr "This feature is not available when running PCA in administrator."
 msgid "Chargement"
 msgstr "Loading"
 
-#: src/renderer/components/dialog/dialog-recent-files.tsx:278
+#: src/renderer/components/dialog/dialog-recent-files.tsx:291
 msgid "Charger"
 msgstr "Load"
 
@@ -61,7 +78,7 @@ msgstr "Path to PapyrusCompiler.exe. This file comes from the CreationKit instal
 msgid "Clair"
 msgstr "Light"
 
-#: src/renderer/pages/compilation/compilation-page.tsx:247
+#: src/renderer/pages/compilation/compilation-page.tsx:249
 msgid "Commencez par glisser-déposer des fichiers psc pour les charger"
 msgstr "Start by dropping psc files to load them"
 
@@ -70,16 +87,16 @@ msgid "Compilateur Papyrus"
 msgstr "Papyrus Compiler"
 
 #: src/renderer/components/app-sidebar.tsx:34
-#: src/renderer/pages/compilation/compilation-page.tsx:221
+#: src/renderer/pages/compilation/compilation-page.tsx:223
 #: src/renderer/pages/settings/settings-compilation.tsx:20
 msgid "Compilation"
 msgstr "Compilation"
 
-#: src/renderer/pages/compilation/compilation-page.tsx:188
+#: src/renderer/pages/compilation/compilation-page.tsx:190
 msgid "Configuration invalide"
 msgstr "Invalid configuration"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:84
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:110
 msgid "Copier avec succès"
 msgstr "Successfully copied"
 
@@ -92,7 +109,7 @@ msgid "Debug"
 msgstr "Debug"
 
 #: src/renderer/components/app-sidebar.tsx:57
-#: src/renderer/pages/settings/settings-page.tsx:259
+#: src/renderer/pages/settings/settings-page.tsx:257
 msgid "Documentation"
 msgstr "Documentation"
 
@@ -113,15 +130,23 @@ msgstr "Game folder"
 msgid "Dossier où se trouve {exe}"
 msgstr "Folder where {exe} is located"
 
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:144
+msgid "Échec"
+msgstr "Failed"
+
 #: src/renderer/pages/settings/settings-preferences-section.tsx:108
 msgid "Erreur"
 msgstr "Error"
+
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:81
+msgid "Erreurs uniquement"
+msgstr "Errors only"
 
 #: src/renderer/components/dialog/dialog-changelog.tsx:214
 msgid "Fermer"
 msgstr "Close"
 
-#: src/renderer/components/dialog/dialog-recent-files.tsx:232
+#: src/renderer/components/dialog/dialog-recent-files.tsx:236
 msgid "Fichiers récents"
 msgstr "Recent files"
 
@@ -146,7 +171,7 @@ msgstr "Info"
 msgid "Jeu"
 msgstr "Game"
 
-#: src/renderer/pages/compilation/compilation-page.tsx:186
+#: src/renderer/pages/compilation/compilation-page.tsx:188
 msgid "L'intégration mo2 est activée, mais votre instance n'est pas valide."
 msgstr "MO2 integration is enabled, but your MO2 instance is invalid."
 
@@ -155,7 +180,7 @@ msgstr "MO2 integration is enabled, but your MO2 instance is invalid."
 msgid "La configuration semble invalide :"
 msgstr "Configuration seems invalid:"
 
-#: src/renderer/pages/compilation/compilation-page.tsx:278
+#: src/renderer/pages/compilation/compilation-page.tsx:280
 msgid "Lancer"
 msgstr "Start"
 
@@ -168,7 +193,7 @@ msgstr "Language"
 msgid "Logs"
 msgstr "Logs"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:66
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:77
 msgid "Logs de compilation"
 msgstr "Compilation logs"
 
@@ -202,12 +227,12 @@ msgid "Nouvelle version disponible : {latestVersion}"
 msgstr "New version available: {latestVersion}"
 
 #: src/renderer/components/app-sidebar.tsx:44
-#: src/renderer/pages/settings/settings-page.tsx:244
+#: src/renderer/pages/settings/settings-page.tsx:242
 msgid "Paramètres"
 msgstr "Settings"
 
-#: src/renderer/components/dialog/dialog-recent-files.tsx:262
-#: src/renderer/pages/compilation/compilation-page.tsx:199
+#: src/renderer/components/dialog/dialog-recent-files.tsx:275
+#: src/renderer/pages/compilation/compilation-page.tsx:201
 #: src/renderer/pages/groups/groups-page.tsx:118
 msgid "Plus de détails"
 msgstr "More details"
@@ -216,7 +241,7 @@ msgstr "More details"
 msgid "Préférences"
 msgstr "Preferences"
 
-#: src/renderer/pages/settings/settings-page.tsx:269
+#: src/renderer/pages/settings/settings-page.tsx:267
 msgid "Rafraîchir"
 msgstr "Refresh"
 
@@ -250,6 +275,10 @@ msgstr "Select your game"
 msgid "Sombre"
 msgstr "Dark"
 
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:139
+msgid "Succès"
+msgstr "Success"
+
 #: src/renderer/pages/groups/groups-list-item-menu.tsx:53
 msgid "Supprimer"
 msgstr "Remove"
@@ -272,20 +301,20 @@ msgstr "Theme"
 msgid "Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation."
 msgstr "A group is a set of scripts that can be easily loaded on the compilation view."
 
-#: src/renderer/pages/compilation/compilation-page.tsx:183
+#: src/renderer/pages/compilation/compilation-page.tsx:185
 msgid "Vérifiez l'installation de Creation Kit."
 msgstr "Check your Creation Kit installation."
 
-#: src/renderer/pages/compilation/compilation-page.tsx:184
-#: src/renderer/pages/compilation/compilation-page.tsx:185
+#: src/renderer/pages/compilation/compilation-page.tsx:186
+#: src/renderer/pages/compilation/compilation-page.tsx:187
 msgid "Vérifiez l'instance MO2."
 msgstr "Check your mo2 instance."
 
-#: src/renderer/pages/compilation/compilation-page.tsx:182
+#: src/renderer/pages/compilation/compilation-page.tsx:184
 msgid "Vérifiez le chemin du compilateur."
 msgstr "Check your compiler path."
 
-#: src/renderer/pages/compilation/compilation-page.tsx:181
+#: src/renderer/pages/compilation/compilation-page.tsx:183
 msgid "Vérifiez le chemin du jeu."
 msgstr "Check your game path."
 
@@ -311,11 +340,11 @@ msgstr "Check that instance folder \"{mo2Instance}\" exists."
 msgid "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {0} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
 msgstr "Check that your Creation Kit installation is valid. PCA checks the presence of {0} in Scripts\\Source or Source\\Scripts to validate your Creation Kit installation. If you use PCA MO2 integration, the overwrite and mods folders are also checked."
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:162
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:187
 msgid "Vider"
 msgstr "Clear"
 
-#: src/renderer/pages/compilation/compilation-page.tsx:290
+#: src/renderer/pages/compilation/compilation-page.tsx:292
 msgid "Vider la liste"
 msgstr "Clear list"
 
