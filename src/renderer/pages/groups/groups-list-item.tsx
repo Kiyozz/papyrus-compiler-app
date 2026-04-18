@@ -39,14 +39,14 @@ function GroupsListItem({
   }
 
   return (
-    <li className="flex items-center gap-2 px-2 py-1 first:rounded-t-md last:rounded-b-md">
+    <li className="flex items-center gap-2 p-1 first:rounded-t-xl last:rounded-b-xl">
+      <GroupsListItemMenu onDelete={onDelete(group)} onEdit={onEdit(group)} />
       <div className="flex grow flex-col">
         <span className="text-sm">{group.name}</span>
         {secondaryText && (
           <span className="text-muted-foreground text-sm">{secondaryText}</span>
         )}
       </div>
-      <GroupsListItemMenu onDelete={onDelete(group)} onEdit={onEdit(group)} />
     </li>
   )
 }

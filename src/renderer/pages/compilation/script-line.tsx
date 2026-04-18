@@ -33,7 +33,7 @@ function ScriptLine({
   }
 
   return (
-    <div className="flex items-center gap-2 px-2 py-1 first:rounded-t-md last:rounded-b-md hover:bg-accent/75">
+    <div className="flex items-center gap-2 p-1 group-first:rounded-t-xl group-last:rounded-b-xl hover:bg-accent/75">
       <Button
         size="icon-sm"
         className="size-6 rounded-full"

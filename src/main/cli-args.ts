@@ -15,7 +15,6 @@ interface CliArgs {
   'game-type'?: GameType
   'compiler-path'?: CompilerPath
   'output-path'?: OutputPath
-  debug?: boolean
 }
 
 export const cliArgs = minimist<CliArgs>(process.argv)

@@ -143,13 +143,13 @@ function DialogGroup({
           </div>
 
           {scripts.length > 0 ? (
-            <ScrollArea className="w-full max-h-96 min-h-32">
+            <ScrollArea className="w-full h-96">
               <div className="px-6">
-                <ul className="divide-y divide-accent rounded-md border">
+                <ul className="divide-y divide-accent rounded-xl border">
                   {scripts.map((script) => (
                     <li
                       key={script.name}
-                      className="flex items-center gap-2 px-2 py-1 first:rounded-t-md last:rounded-b-md hover:bg-accent/75"
+                      className="flex items-center gap-2 p-1 first:rounded-t-xl last:rounded-b-xl hover:bg-accent/75"
                     >
                       <span className="grow text-sm">{script.name}</span>
                       <Button

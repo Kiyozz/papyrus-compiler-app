@@ -10,6 +10,7 @@ import type {
   GamePath,
   OutputPath,
 } from '../game'
+import type { LogLevel } from '../log-level'
 import type { Theme } from '../theme'
 
 interface Game {
@@ -43,5 +44,6 @@ export interface Config {
   telemetry: Telemetry
   theme: Theme
   locale: string
+  logLevel: LogLevel
   __internal__: unknown
 }

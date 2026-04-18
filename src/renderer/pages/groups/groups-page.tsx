@@ -126,7 +126,7 @@ export function GroupsPage() {
           )}
 
           {groups.length > 0 ? (
-            <ul className="divide-y divide-accent rounded-md border">
+            <ul className="divide-y divide-accent rounded-xl border">
               {groups.map((group) => (
                 <GroupsListItem
                   group={group}

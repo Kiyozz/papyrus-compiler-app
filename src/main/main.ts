@@ -6,7 +6,7 @@ import { BrowserWindow, app } from 'electron'
 import { is } from 'electron-util'
 import { debugInfo, isDev } from 'electron-util/main'
 import { version } from '../common/version'
-import { Logger } from './logger'
+import { Logger, applyLogLevel } from './logger'
 import { dirname, join } from './path/path'
 import { unhandled } from './unhandled'
 import { dynamicActivateLocale } from './i18n.ts'
@@ -18,6 +18,8 @@ import { RpcChannel } from '#main/rpc-channel.ts'
 import { MainApi } from '#main/main-api.ts'
 
 const settingsStore = await container.make(SettingsStore)
+
+applyLogLevel(settingsStore.get('logLevel'))
 
 const _startLocale = settingsStore.get('locale')
 await dynamicActivateLocale(_startLocale?.startsWith('fr') ? 'fr' : 'en')

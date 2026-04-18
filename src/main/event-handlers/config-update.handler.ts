@@ -4,8 +4,9 @@
 
 import is from '@sindresorhus/is'
 import deepmerge from 'deepmerge'
-import { Logger } from '../logger'
+import { Logger, applyLogLevel } from '../logger'
 import type { PartialDeep } from 'type-fest'
+import type { LogLevel } from '#common/log-level.ts'
 import type { Config } from '#common/types/config.ts'
 import { inject } from '#main/inject.ts'
 import { SettingsStore } from '#main/store/settings/store.ts'
@@ -60,6 +61,10 @@ export class ConfigUpdateHandler {
         }
       },
     )
+
+    if (!is.undefined(args.config.logLevel)) {
+      applyLogLevel(args.config.logLevel as LogLevel)
+    }
 
     return this.#settingsStore.store
   }

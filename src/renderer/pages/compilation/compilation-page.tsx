@@ -19,7 +19,7 @@ import {
   LayoutHeaderActions,
   LayoutHeaderTitle,
 } from '@renderer/pages/layout.tsx'
-import { type ScriptRenderer, isAllGroupsEmpty } from '@renderer/types/index.ts'
+import { isAllGroupsEmpty, type ScriptRenderer } from '@renderer/types/index.ts'
 import { scriptEquals } from '@renderer/utils/scripts/equals.ts'
 import { pscFilesToScript } from '@renderer/utils/scripts/psc-files-to-script.ts'
 import { scriptsToRenderer } from '@renderer/utils/scripts/scripts-to-renderer.ts'
@@ -99,15 +99,17 @@ export function CompilationPage() {
 
   const onDrop = useCallback(
     (pscFiles: File[]) => {
+      const pscScripts = pscFilesToScript(pscFiles)
+      send(TelemetryEvent.compilationDropScripts, {
+        scripts: pscScripts.length,
+      })
       setScripts((scriptsList) => {
-        const pscScripts = pscFilesToScript(pscFiles)
-
-        send(TelemetryEvent.compilationDropScripts, {
-          scripts: pscScripts.length,
-        })
-
         return uniqScripts([...scriptsList, ...pscScripts])
       })
+
+      if (pscScripts.length > 5) {
+        toast.info(<Trans>{pscScripts.length} scripts loaded.</Trans>)
+      }
     },
     [send, setScripts],
   )
@@ -293,7 +295,7 @@ export function CompilationPage() {
           </div>
           <ScrollArea className="page pb-4 grow h-px px-6" ref={scrollRef}>
             <div
-              className="divide-y divide-accent rounded-md border w-full relative"
+              className="divide-y divide-accent rounded-xl border w-full relative"
               style={{
                 height: `${rowVirtualizer.getTotalSize()}px`,
               }}
@@ -312,6 +314,7 @@ export function CompilationPage() {
                       height: `${virtualRow.size}px`,
                       transform: `translateY(${virtualRow.start}px)`,
                     }}
+                    className="group"
                   >
                     <ScriptLine
                       onClickPlayCompilation={onClickPlayCompilation(script)}

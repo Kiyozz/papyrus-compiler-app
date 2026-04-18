@@ -11,12 +11,11 @@ import type {
   MainTransports,
 } from 'electron-log'
 import { isDev } from 'electron-util/main'
-import { cliArgs } from './cli-args'
+import type { LogLevel } from '#common/log-level.ts'
 
-const isDebug = cliArgs.debug ?? false
-
-if (!isDev && !isDebug) {
-  log.transports.console.level = false
+export function applyLogLevel(level: LogLevel): void {
+  log.transports.file.level = level
+  log.transports.console.level = isDev ? level : false
 }
 
 export class Logger {
@@ -43,9 +42,7 @@ export class Logger {
   }
 
   debug(...params: unknown[]): void {
-    if (this.isDebugEnabled()) {
-      this.logger.debug(...params)
-    }
+    this.logger.debug(...params)
   }
 
   info(...params: unknown[]): void {
@@ -59,9 +56,5 @@ export class Logger {
   // noinspection JSUnusedGlobalSymbols
   warn(...params: unknown[]): void {
     this.logger.warn(...params)
-  }
-
-  isDebugEnabled(): boolean {
-    return isDev || isDebug
   }
 }

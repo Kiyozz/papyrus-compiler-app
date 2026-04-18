@@ -6,6 +6,8 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
+@import '@fontsource/figtree/latin.css';
+
 @custom-variant dark (&:is(.dark *));
 @custom-variant sidebar-closed (:is(body:has(.sidebar[data-collapsible="icon"])) &);
 
@@ -94,6 +96,7 @@
 @theme inline {
   --font-mono: 'Geist Mono', 'ui-monospace', 'monospace';
   --font-body: 'Geist', 'sans-serif';
+  --font-sans: 'Figtree', var(--font-body);
   --font-segoe: 'Segoe UI', 'Geist', 'sans-serif';
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);

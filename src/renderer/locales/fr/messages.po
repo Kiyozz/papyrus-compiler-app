@@ -36,6 +36,10 @@ msgstr "Aucun logs"
 msgid "Aucun scripts"
 msgstr "Aucun scripts"
 
+#: src/renderer/pages/settings/settings-preferences-section.tsx:111
+msgid "Avertissement"
+msgstr "Avertissement"
+
 #: src/renderer/pages/compilation/compilation-page.tsx:258
 msgid "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
 msgstr "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
@@ -52,7 +56,7 @@ msgstr "Charger"
 msgid "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
 msgstr "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:53
+#: src/renderer/pages/settings/settings-preferences-section.tsx:54
 #: src/renderer/pages/settings/settings-theme-section.tsx:47
 msgid "Clair"
 msgstr "Clair"
@@ -83,12 +87,16 @@ msgstr "Copier avec succès"
 msgid "Créer"
 msgstr "Créer"
 
+#: src/renderer/pages/settings/settings-preferences-section.tsx:117
+msgid "Debug"
+msgstr "Debug"
+
 #: src/renderer/components/app-sidebar.tsx:57
-#: src/renderer/pages/settings/settings-page.tsx:243
+#: src/renderer/pages/settings/settings-page.tsx:259
 msgid "Documentation"
 msgstr "Documentation"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:97
+#: src/renderer/pages/settings/settings-preferences-section.tsx:133
 #: src/renderer/pages/settings/settings-telemetry-section.tsx:19
 msgid "Données d'utilisation"
 msgstr "Données d'utilisation"
@@ -104,6 +112,10 @@ msgstr "Dossier du jeu"
 #: src/renderer/pages/settings/settings-game-section.tsx:95
 msgid "Dossier où se trouve {exe}"
 msgstr "Dossier où se trouve {exe}"
+
+#: src/renderer/pages/settings/settings-preferences-section.tsx:108
+msgid "Erreur"
+msgstr "Erreur"
 
 #: src/renderer/components/dialog/dialog-changelog.tsx:214
 msgid "Fermer"
@@ -126,6 +138,10 @@ msgstr "Groupe"
 msgid "Groupes"
 msgstr "Groupes"
 
+#: src/renderer/pages/settings/settings-preferences-section.tsx:114
+msgid "Info"
+msgstr "Info"
+
 #: src/renderer/pages/settings/settings-game-section.tsx:49
 msgid "Jeu"
 msgstr "Jeu"
@@ -144,7 +160,7 @@ msgid "Lancer"
 msgstr "Lancer"
 
 #: src/renderer/pages/settings/settings-locale-section.tsx:24
-#: src/renderer/pages/settings/settings-preferences-section.tsx:70
+#: src/renderer/pages/settings/settings-preferences-section.tsx:71
 msgid "Langue"
 msgstr "Langue"
 
@@ -160,6 +176,10 @@ msgstr "Logs de compilation"
 #: src/renderer/pages/groups/groups-list-item-menu.tsx:47
 msgid "Modifier"
 msgstr "Modifier"
+
+#: src/renderer/pages/settings/settings-preferences-section.tsx:96
+msgid "Niveau de log"
+msgstr "Niveau de log"
 
 #: src/renderer/components/dialog/dialog-group.tsx:139
 msgid "Nom"
@@ -182,7 +202,7 @@ msgid "Nouvelle version disponible : {latestVersion}"
 msgstr "Nouvelle version disponible : {latestVersion}"
 
 #: src/renderer/components/app-sidebar.tsx:44
-#: src/renderer/pages/settings/settings-page.tsx:228
+#: src/renderer/pages/settings/settings-page.tsx:244
 msgid "Paramètres"
 msgstr "Paramètres"
 
@@ -192,11 +212,11 @@ msgstr "Paramètres"
 msgid "Plus de détails"
 msgstr "Plus de détails"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:29
+#: src/renderer/pages/settings/settings-preferences-section.tsx:30
 msgid "Préférences"
 msgstr "Préférences"
 
-#: src/renderer/pages/settings/settings-page.tsx:253
+#: src/renderer/pages/settings/settings-page.tsx:269
 msgid "Rafraîchir"
 msgstr "Rafraîchir"
 
@@ -225,7 +245,7 @@ msgstr "Sélectionner une langue"
 msgid "Sélectionner votre jeu"
 msgstr "Sélectionner votre jeu"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:56
+#: src/renderer/pages/settings/settings-preferences-section.tsx:57
 #: src/renderer/pages/settings/settings-theme-section.tsx:50
 msgid "Sombre"
 msgstr "Sombre"
@@ -234,7 +254,7 @@ msgstr "Sombre"
 msgid "Supprimer"
 msgstr "Supprimer"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:50
+#: src/renderer/pages/settings/settings-preferences-section.tsx:51
 #: src/renderer/pages/settings/settings-theme-section.tsx:44
 msgid "Système"
 msgstr "Système"
@@ -243,7 +263,7 @@ msgstr "Système"
 msgid "Télécharger"
 msgstr "Télécharger"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:38
+#: src/renderer/pages/settings/settings-preferences-section.tsx:39
 #: src/renderer/pages/settings/settings-theme-section.tsx:25
 msgid "Thème"
 msgstr "Thème"

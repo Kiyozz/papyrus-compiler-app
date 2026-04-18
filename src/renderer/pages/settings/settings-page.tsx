@@ -23,6 +23,7 @@ import { BookIcon, RotateCcwIcon } from 'lucide-react'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { GameType } from '../../../common/game'
+import { LogLevel } from '../../../common/log-level.ts'
 import { TelemetryEvent } from '../../../common/telemetry-event'
 import { Theme } from '../../../common/theme.ts'
 import { useApp } from '../../hooks/use-app'
@@ -48,6 +49,7 @@ export function SettingsPage() {
       telemetry: { active: telemetry },
       theme,
       locale,
+      logLevel,
     },
     setConfig,
     refreshConfig,
@@ -65,6 +67,7 @@ export function SettingsPage() {
       telemetry,
       theme,
       locale: ['en', 'fr'].includes(locale) ? locale : 'fr',
+      logLevel,
     },
     mode: 'onChange',
     delayError: 400,
@@ -200,6 +203,17 @@ export function SettingsPage() {
 
             break
           }
+          case 'logLevel': {
+            const newLogLevel = value.logLevel as LogLevel
+
+            if (!(Object.values(LogLevel) as string[]).includes(newLogLevel)) {
+              return
+            }
+
+            setConfig({ logLevel: newLogLevel })
+
+            break
+          }
           case 'telemetry': {
             const checked = value.telemetry === true
 
@@ -261,7 +275,7 @@ export function SettingsPage() {
           <ScrollArea className="page w-full">
             <div className="flex flex-col gap-4 p-4">
               <SettingsGameSection />
-              <div className="grid grid-cols-2 gap-4 pb-10">
+              <div className="grid grid-cols-2 gap-4 pb-4">
                 <SettingsCompilation />
                 <SettingsPreferencesSection />
               </div>

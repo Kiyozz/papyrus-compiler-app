@@ -33,9 +33,13 @@ const Toaster = ({ ...props }: ToasterProps) => {
           '--normal-bg': 'var(--popover)',
           '--normal-text': 'var(--popover-foreground)',
           '--normal-border': 'var(--border)',
-          '--border-radius': 'var(--radius)',
+          '--border-radius': 'var(--radius-4xl)',
         } as React.CSSProperties
       }
+      offset={{
+        right: '1rem',
+        bottom: '1rem',
+      }}
       toastOptions={{
         classNames: {
           toast: 'cn-toast',

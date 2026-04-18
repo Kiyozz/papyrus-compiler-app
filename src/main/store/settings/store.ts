@@ -13,6 +13,7 @@ import {
   GameType,
   validateGame,
 } from '#common/game.ts'
+import { LogLevel } from '#common/log-level.ts'
 import { Theme } from '#common/theme.ts'
 import { type CliArgs, cliArgs } from '../../cli-args'
 import { EnvO } from '../../env'
@@ -23,6 +24,7 @@ import { migrate510 } from './migrations/5.1.0.migration'
 import { migrate520 } from './migrations/5.2.0.migration'
 import { migrate550 } from './migrations/5.5.0.migration'
 import { migrate560 } from './migrations/5.6.0.migration'
+import { migrate590 } from './migrations/5.9.0.migration'
 import type { Config } from '#common/types/config.ts'
 import { inject } from '#main/inject.ts'
 import is from '@sindresorhus/is'
@@ -59,6 +61,7 @@ const defaultSettingsStoreConfig: Config = {
   },
   theme: Theme.system,
   locale: osLocale(),
+  logLevel: LogLevel.info,
   __internal__: {
     migrations: {
       version: json.version,
@@ -286,6 +289,14 @@ class SettingsStore extends Store<Config> {
     }
   }
 
+  #checkLogLevel() {
+    const logLevel = this.get('logLevel')
+
+    if (!(Object.values(LogLevel) as string[]).includes(logLevel)) {
+      this.reset('logLevel')
+    }
+  }
+
   check(args?: CliArgs) {
     this.#checkMo2()
     this.#checkGameType(args)
@@ -299,6 +310,7 @@ class SettingsStore extends Store<Config> {
     this.#checkTelemetry()
     this.#checkTheme()
     this.#checkLocale()
+    this.#checkLogLevel()
   }
 }
 
@@ -313,6 +325,7 @@ function createSettingsStore() {
       '5.2.0': migrate520,
       '5.5.0': migrate550,
       '5.6.0': migrate560,
+      '5.9.0': migrate590,
     },
   } as never)
 
