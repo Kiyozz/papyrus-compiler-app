@@ -3,11 +3,7 @@
  */
 
 import { Trans } from '@lingui/react/macro'
-import {
-  GameType,
-  toCompilerSourceFile,
-  toExecutable,
-} from '../../../common/game'
+import { GameType, toCompilerSourceFile, toExecutable } from '#common/game.ts'
 import DialogTextField from '@renderer/components/dialog/dialog-text-field.tsx'
 import { useApp } from '@renderer/hooks/use-app.tsx'
 import { SettingsSection, SettingsSectionContent } from './settings-section.tsx'
@@ -127,38 +123,34 @@ function SettingsGameSection() {
           />
         </div>
 
-        {configError !== false &&
-          configError !== 'mo2-instance' &&
-          configError !== 'mo2-instance-mods' && (
-            <Alert variant="destructive">
-              <TriangleAlertIcon className="size-4" />
-              <AlertTitle>
-                <Trans>La configuration semble invalide :</Trans>
-              </AlertTitle>
-              <AlertDescription>
-                {configError === 'game' && (
-                  <Trans>
-                    Vérifiez que "{exe}" existe dans le dossier du jeu.
-                  </Trans>
-                )}
-                {configError === 'compiler' && (
-                  <Trans>
-                    Vérifiez que "{compilation.compilerPath}" existe.
-                  </Trans>
-                )}
-                {configError === 'scripts' && (
-                  <Trans>
-                    Vérifiez que votre installation de Creation Kit est valide.
-                    PCA vérifie la présence du fichier{' '}
-                    {toCompilerSourceFile(game.type)} dans les dossiers
-                    Scripts\Source ou Source\Scripts pour valider l'installation
-                    de votre Creation Kit. Si vous utilisez l'integration MO2 de
-                    PCA, les dossiers overwrite et mods sont également vérifiés.
-                  </Trans>
-                )}
-              </AlertDescription>
-            </Alert>
-          )}
+        {configError !== false && (
+          <Alert variant="destructive">
+            <TriangleAlertIcon className="size-4" />
+            <AlertTitle>
+              <Trans>La configuration semble invalide :</Trans>
+            </AlertTitle>
+            <AlertDescription>
+              {configError === 'game' && (
+                <Trans>
+                  Vérifiez que "{exe}" existe dans le dossier du jeu.
+                </Trans>
+              )}
+              {configError === 'compiler' && (
+                <Trans>Vérifiez que "{compilation.compilerPath}" existe.</Trans>
+              )}
+              {configError === 'scripts' && (
+                <Trans>
+                  Vérifiez que votre installation de Creation Kit est valide.
+                  PCA vérifie la présence du fichier{' '}
+                  {toCompilerSourceFile(game.type)} dans les dossiers
+                  Scripts\Source ou Source\Scripts pour valider l'installation
+                  de votre Creation Kit. Si vous utilisez l'integration MO2 de
+                  PCA, les dossiers overwrite et mods sont également vérifiés.
+                </Trans>
+              )}
+            </AlertDescription>
+          </Alert>
+        )}
       </SettingsSectionContent>
     </SettingsSection>
   )

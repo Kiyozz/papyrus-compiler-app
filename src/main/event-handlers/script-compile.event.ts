@@ -10,6 +10,7 @@ import { fromError } from '#common/from-error.ts'
 import type { CompilationResult } from '#common/types/compilation-result.ts'
 import { inject } from '#main/inject.ts'
 import { Compiler } from '#main/compilation/compiler.ts'
+import { basename } from '../path/path'
 
 @inject()
 export class ScriptCompileEvent {
@@ -47,32 +48,34 @@ export class ScriptCompileEvent {
     return log.replace(`Script ${script} failed to compile: `, '').trim()
   }
 
-  async run(script: string): Promise<CompilationResult> {
-    if (is.undefined(script)) {
+  async run(scriptPath: string): Promise<CompilationResult> {
+    if (is.undefined(scriptPath)) {
       throw new ApplicationException('script-compile: script is undefined')
     }
 
-    this.#logger.info('start compilation of scripts', script)
+    this.#logger.info('start compilation of scripts', scriptPath)
     this.#logger.debug('checking the current store values')
 
     this.#settingsStore.check()
 
     this.#logger.debug('current store values checked')
 
+    const scriptName = basename(scriptPath)
+
     try {
       const result = ScriptCompileEvent._cleanSuccessLog(
-        script,
-        await this.#compiler.compile(script),
+        scriptName,
+        await this.#compiler.compile(scriptPath),
       )
 
-      return { success: true, output: result, script }
+      return { success: true, output: result, script: scriptName }
     } catch (e) {
       const errorMessage: string = fromError(e).message
 
       return {
         success: false,
-        output: ScriptCompileEvent._cleanErrorLog(script, errorMessage),
-        script,
+        output: ScriptCompileEvent._cleanErrorLog(scriptName, errorMessage),
+        script: scriptName,
       }
     }
   }

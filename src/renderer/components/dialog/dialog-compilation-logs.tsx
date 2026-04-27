@@ -38,6 +38,7 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
   const { send } = useTelemetry()
   const { copyToClipboard } = useApp()
   const [showErrorOnly, setShowErrorOnly] = useState(false)
+  const [showFullPath, setShowFullPath] = useState(false)
 
   const logs = showErrorOnly
     ? rawLogs.filter(([script]) => isFailedScript(script))
@@ -84,6 +85,16 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
               id="show-errors-only"
               onCheckedChange={setShowErrorOnly}
               checked={showErrorOnly}
+            />
+          </div>
+          <div className="flex items-center">
+            <Label htmlFor="show-full-path" className="pr-2">
+              <Trans>Chemin complet</Trans>
+            </Label>
+            <Switch
+              id="show-full-path"
+              onCheckedChange={setShowFullPath}
+              checked={showFullPath}
             />
           </div>
         </DialogHeader>
@@ -133,7 +144,11 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
                           className="flex items-center justify-between rounded-t-4xl"
                         >
                           <div className="flex items-center gap-2 overflow-x-hidden">
-                            <span>{script.name}</span>
+                            {showFullPath ? (
+                              <span className="text-xs">{script.path}</span>
+                            ) : (
+                              <span>{script.name}</span>
+                            )}
                             {isSuccessful && (
                               <Badge variant="success">
                                 <Trans>Succès</Trans>
@@ -166,7 +181,7 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
                       >
                         {log.split('\n').map((outputLine, i) => (
                           <span
-                            className="block select-text wrap-break-word text-justify font-mono text-xs"
+                            className="block select-text wrap-break-word text-balance font-mono text-xs leading-6"
                             key={i}
                           >
                             {outputLine}

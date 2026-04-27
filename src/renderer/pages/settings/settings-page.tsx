@@ -22,14 +22,15 @@ import debounce from 'debounce-fn'
 import { BookIcon, RotateCcwIcon } from 'lucide-react'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import { GameType } from '../../../common/game'
-import { LogLevel } from '../../../common/log-level.ts'
-import { TelemetryEvent } from '../../../common/telemetry-event'
-import { Theme } from '../../../common/theme.ts'
+import { GameType } from '#common/game.ts'
+import { LogLevel } from '#common/log-level.ts'
+import { TelemetryEvent } from '#common/telemetry-event.ts'
+import { Theme } from '#common/theme.ts'
 import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
 import SettingsCompilation from './settings-compilation'
 import SettingsGameSection from './settings-game-section.tsx'
+import SettingsMo2 from './settings-mo2/settings-mo2'
 import SettingsPreferencesSection from './settings-preferences-section.tsx'
 import { useSettings } from './use-settings'
 import { dynamicActivateLocale } from '@renderer/i18n.ts'
@@ -46,6 +47,7 @@ export function SettingsPage() {
     config: {
       game,
       compilation,
+      mo2,
       telemetry: { active: telemetry },
       theme,
       locale,
@@ -64,6 +66,8 @@ export function SettingsPage() {
       gamePath: game.path,
       compilerPath: compilation.compilerPath,
       concurrentScripts: compilation.concurrentScripts,
+      output: compilation.output,
+      mo2: mo2.use,
       telemetry,
       theme,
       locale: ['en', 'fr'].includes(locale) ? locale : 'fr',
@@ -214,6 +218,20 @@ export function SettingsPage() {
 
             break
           }
+          case 'output': {
+            const output = value.output ?? ''
+
+            debouncedSetConfig({
+              compilation: { output: output.trim() },
+            })
+
+            break
+          }
+          case 'mo2': {
+            setConfig({ mo2: { use: value.mo2 === true } })
+
+            break
+          }
           case 'telemetry': {
             const checked = value.telemetry === true
 
@@ -279,6 +297,7 @@ export function SettingsPage() {
                 <SettingsCompilation />
                 <SettingsPreferencesSection />
               </div>
+              <SettingsMo2 />
             </div>
           </ScrollArea>
         </form>

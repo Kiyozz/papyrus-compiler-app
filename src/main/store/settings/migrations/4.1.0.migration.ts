@@ -5,7 +5,6 @@
 import type { SettingsStore } from '../store'
 
 export function migrate410(store: SettingsStore): void {
-  if (store.get('mo2.mods') !== 'mods') {
-    store.set('mo2.mods', 'mods')
-  }
+  // legacy: mo2.mods removed in 5.9.0 — no-op kept for migration ordering
+  void store
 }

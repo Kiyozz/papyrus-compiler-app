@@ -89,7 +89,7 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
         // eslint-disable-next-line no-await-in-loop
         await Promise.all(
           partialScripts.map(async (s: ScriptRenderer) => {
-            await bridge.compilation.start(s.name, (result) => {
+            await bridge.compilation.start(s.path, (result) => {
               setCompilationScripts((cs: ScriptRenderer[]) =>
                 cs.map((c) =>
                   c.id === s.id

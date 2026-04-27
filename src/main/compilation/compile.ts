@@ -2,7 +2,6 @@
  * 2022-2026 Kiyozz.
  */
 
-import is from '@sindresorhus/is'
 import {
   GameType,
   toExecutable,
@@ -19,7 +18,6 @@ import { generateCompilerCmd } from '../utils/generate-compiler-cmd.util'
 import type { ExecException } from '../exceptions/exec.exception'
 import { Compiler } from '#main/compilation/compiler.ts'
 import { inject } from '#main/inject.ts'
-import { Mo2Service } from '#main/mo2/mo2.ts'
 
 interface Runner {
   exe: string
@@ -32,15 +30,16 @@ interface Runner {
 class PapyrusCompilerService implements Compiler {
   #logger = new Logger('PapyrusCompilerService')
   #settingsStore: SettingsStore
-  #mo2: Mo2Service
 
-  constructor(settingsStore: SettingsStore, mo2: Mo2Service) {
+  constructor(settingsStore: SettingsStore) {
     this.#settingsStore = settingsStore
-    this.#mo2 = mo2
   }
 
-  async compile(scriptName: string): Promise<string> {
-    this.#logger.info('compiling', scriptName)
+  async compile(scriptPath: string): Promise<string> {
+    this.#logger.info('compiling', scriptPath)
+
+    const scriptName = path.basename(scriptPath)
+    const scriptDir = path.parentDir(scriptPath)
 
     const { path: gamePath, type: gameType } = this.#settingsStore.get('game')
     const {
@@ -51,12 +50,15 @@ class PapyrusCompilerService implements Compiler {
     const dataFolder = path.join(gamePath, 'Data')
     const gameSource = toSource(gameType)
     const gameSourceAbsolute = path.join(dataFolder, gameSource)
-    const mo2Config = this.#settingsStore.get('mo2')
+    const resolvedOutput =
+      outputPath.trim() === ''
+        ? path.join(gamePath, 'Data/Scripts')
+        : outputPath
     const runner: Runner = {
       exe: compilerPath,
-      imports: [gameSourceAbsolute],
+      imports: [gameSourceAbsolute, scriptDir],
       cwd: gamePath,
-      output: path.join(gamePath, outputPath),
+      output: resolvedOutput,
     }
 
     this.#logger.debug('runner', runner)
@@ -82,7 +84,7 @@ class PapyrusCompilerService implements Compiler {
 
     this.#logger.debug(`ensure ${gameSource} exist`)
 
-    await path.ensureDirs([gameSourceAbsolute])
+    await path.ensureDirs([gameSourceAbsolute, runner.output])
 
     const otherSource = toOtherSource(gameType)
     const otherSourceAbsolute = path.join(dataFolder, otherSource)
@@ -92,13 +94,14 @@ class PapyrusCompilerService implements Compiler {
     if (path.exists(otherSourceAbsolute)) {
       this.#logger.debug(`import of the ${otherSource} folder`)
 
-      runner.imports = [otherSourceAbsolute, ...runner.imports]
+      runner.imports = [scriptDir, otherSourceAbsolute, gameSourceAbsolute]
     }
 
     if (gameType === GameType.fo4) {
       this.#logger.debug('import of fo4 sources')
 
       runner.imports = [
+        scriptDir,
         ...(await path.getPathsInFolder(
           [`${gamePath}/Data/Scripts/Source/**`],
           {
@@ -106,29 +109,8 @@ class PapyrusCompilerService implements Compiler {
             deep: 4,
           },
         )),
-        ...runner.imports,
+        ...runner.imports.filter((i) => i !== scriptDir),
       ]
-    }
-
-    if (mo2Config.use) {
-      this.#logger.debug('using MO2 support')
-
-      if (!is.undefined(mo2Config.instance)) {
-        const imports = await this.#mo2.getImportsPath({
-          gameType,
-          mo2: {
-            instance: mo2Config.instance,
-          },
-        })
-
-        runner.cwd = this.#mo2.getModsPath(mo2Config.instance)
-        runner.output = await this.#mo2.getOutputPath(mo2Config.instance)
-        runner.imports = [...runner.imports, ...imports]
-
-        this.#logger.debug('(MO2) final config', runner)
-      } else {
-        throw new ConfigurationException('missing mo2 instance configuration')
-      }
     }
 
     const cmd = generateCompilerCmd({

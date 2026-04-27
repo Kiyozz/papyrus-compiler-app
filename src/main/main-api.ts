@@ -92,7 +92,7 @@ export class MainApi {
             override,
           })
         },
-        check: (checkMo2) => configCheckHandler.listen({ checkMo2 }),
+        check: () => configCheckHandler.listen(),
       },
       isProduction: () => Promise.resolve(new IsProductionHandler().listen()),
       compilation: {

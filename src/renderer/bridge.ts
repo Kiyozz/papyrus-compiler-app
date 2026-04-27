@@ -2,6 +2,7 @@
  * 2022-2026 Kiyozz.
  */
 
+import type { webUtils as electronWebUtils } from 'electron'
 import { ElectronIpcRendererIO, RPCChannel } from 'kkrpc/electron-ipc'
 import { fromError } from '../common/from-error'
 import type { Bridge } from '../common/types/bridge'
@@ -93,7 +94,7 @@ export const bridge: Bridge = {
         },
       }
     },
-    check: (checkMo2) => mainApi.config.check(checkMo2),
+    check: () => mainApi.config.check(),
   },
   isProduction: () => mainApi.isProduction(),
   compilation: {
@@ -170,3 +171,7 @@ export const bridge: Bridge = {
     },
   },
 }
+
+export const webUtils = (
+  window.electron as unknown as { webUtils: typeof electronWebUtils }
+).webUtils

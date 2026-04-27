@@ -1,4 +1,4 @@
-Scriptname LongNameScriptActor extends Quest
+Scriptname VeryLongNameScriptActorImpossible extends Quest
 
 Function test()
 

@@ -3,5 +3,5 @@
  */
 
 export abstract class Compiler {
-  abstract compile(scriptName: string): Promise<string>
+  abstract compile(scriptPath: string): Promise<string>
 }

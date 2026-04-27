@@ -18,10 +18,8 @@ import { ScrollArea } from '@renderer/components/ui/scroll-area.tsx'
 import { Switch } from '@renderer/components/ui/switch.tsx'
 import { useCompilation } from '@renderer/hooks/use-compilation.tsx'
 import { useIpc } from '@renderer/hooks/use-ipc.ts'
-import { usePlatform } from '@renderer/hooks/use-platform.ts'
 import { useRecentFiles } from '@renderer/hooks/use-recent-files.tsx'
 import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
-import { dirname } from '@renderer/utils/dirname.ts'
 import { scriptsToRenderer } from '@renderer/utils/scripts/scripts-to-renderer.ts'
 import { uniqScripts } from '@renderer/utils/scripts/uniq-scripts.ts'
 import { TrashIcon } from 'lucide-react'
@@ -36,7 +34,6 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
   const [open, setOpen] = useState(false)
   const { send } = useTelemetry()
   const { setScripts, scripts: loadedScripts } = useCompilation()
-  const platform = usePlatform()
   const {
     clearRecentFiles,
     removeRecentFile,
@@ -184,7 +181,7 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
   }) {
     const id = useId()
     const scriptInfo = {
-      path: `${dirname(script.path)}${platform === 'windows' ? '\\' : '/'}`,
+      path: script.path,
       filename: script.name,
     }
 
@@ -192,7 +189,7 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
       <li className="flex items-center gap-2 first:rounded-t-xl last:rounded-b-xl hover:bg-accent/75">
         <Label
           htmlFor={id}
-          className="group grow pl-2 pr-1 py-1 aria-disabled:bg-muted aria-disabled:text-muted-foreground"
+          className="group grow pl-2 pr-1 py-1 min-w-0 grid grid-cols-[auto_1fr_auto] gap-3 aria-disabled:bg-muted aria-disabled:text-muted-foreground"
           aria-disabled={disabled}
         >
           <Checkbox
@@ -201,23 +198,29 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
             disabled={disabled}
             onCheckedChange={onClickFile}
           />
-          <span>{scriptInfo.filename}</span>
-          {isMoreDetails && (
-            <span className="text-muted-foreground text-sm">
-              {scriptInfo.path}
+          <div className="flex flex-col min-w-0">
+            <span className="truncate leading-tight">
+              {scriptInfo.filename}
             </span>
-          )}
-          <div className="flex grow justify-end">
-            <Button
-              variant="destructive"
-              size="icon-sm"
-              className="size-6"
-              onClick={onClickDelete}
-              tabIndex={1}
-            >
-              <TrashIcon className="size-3.5" />
-            </Button>
+            {isMoreDetails && (
+              <span
+                className="text-muted-foreground text-xs leading-tight truncate"
+                title={script.path}
+                dir="rtl"
+              >
+                {scriptInfo.path}
+              </span>
+            )}
           </div>
+          <Button
+            variant="destructive"
+            size="icon-sm"
+            className="size-6"
+            onClick={onClickDelete}
+            tabIndex={1}
+          >
+            <TrashIcon className="size-3.5" />
+          </Button>
         </Label>
       </li>
     )
@@ -238,19 +241,17 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
         </DialogHeader>
         {recentFiles.length === 0 ? (
           <p
-            className="flex grow items-center justify-center px-6 data-[partially-empty=true]:text-zinc-700"
+            className="flex grow items-center justify-center px-6"
             data-partially-empty={recentFiles.length !== rawRecentFiles.length}
           >
             {recentFiles.length === rawRecentFiles.length ? (
               <Trans>Aucun fichiers récents.</Trans>
             ) : (
-              <Trans>
-                Aucun fichiers récents (les scripts déjà chargés sont filtrés).
-              </Trans>
+              <Trans>Tous les fichiers récents sont déjà chargés.</Trans>
             )}
           </p>
         ) : (
-          <ScrollArea className="w-full grow">
+          <ScrollArea className="w-full grow h-96">
             <div className="grow px-6">
               <ul className="divide-y divide-accent rounded-xl border">
                 {recentFiles.map((script) => {

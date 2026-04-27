@@ -5,7 +5,7 @@
 import is from '@sindresorhus/is'
 import { SearchIcon, Trash2Icon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
-import type { ChangeEvent, FormEvent, KeyboardEvent } from 'react'
+import type { ChangeEvent, KeyboardEvent, SubmitEvent } from 'react'
 
 import { Button } from '@renderer/components/ui/button.tsx'
 import {
@@ -22,8 +22,8 @@ import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
 import { Group } from '@renderer/types/index.ts'
 import { pscFilesToScript } from '@renderer/utils/scripts/psc-files-to-script.ts'
 import { uniqScripts } from '@renderer/utils/scripts/uniq-scripts.ts'
-import { TelemetryEvent } from '../../../common/telemetry-event'
-import type { Script } from '../../../common/types/script'
+import { TelemetryEvent } from '#common/telemetry-event.ts'
+import type { Script } from '#common/types/script.ts'
 import { Trans, useLingui } from '@lingui/react/macro'
 
 interface DialogGroupProps {
@@ -49,7 +49,7 @@ function DialogGroup({
   const { drop, isFileDialogActive } = useDrop()
   const isValid = is.nonEmptyStringAndNotWhitespace(name)
 
-  const onSubmitGroup = (evt?: FormEvent) => {
+  const onSubmitGroup = (evt?: SubmitEvent) => {
     evt?.preventDefault()
 
     if (!isValid) {
@@ -149,7 +149,7 @@ function DialogGroup({
                   {scripts.map((script) => (
                     <li
                       key={script.name}
-                      className="flex items-center gap-2 p-1 first:rounded-t-xl last:rounded-b-xl hover:bg-accent/75"
+                      className="flex items-center gap-2 px-2 py-1 first:rounded-t-xl last:rounded-b-xl hover:bg-accent/75"
                     >
                       <span className="grow text-sm">{script.name}</span>
                       <Button

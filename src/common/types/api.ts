@@ -35,7 +35,7 @@ export interface MainAPI {
       override?: boolean,
     ): Promise<Config>
     get(): Promise<Config>
-    check(checkMo2: boolean): Promise<BadError>
+    check(): Promise<BadError>
   }
   isProduction(): Promise<boolean>
   compilation: {

@@ -36,8 +36,8 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
 import { useDidMount } from 'rooks'
 import { toast } from 'sonner'
-import { TelemetryEvent } from '../../../common/telemetry-event.ts'
-import type { Script } from '../../../common/types/script.ts'
+import { TelemetryEvent } from '#common/telemetry-event.ts'
+import type { Script } from '#common/types/script.ts'
 import { useSettings } from '../settings/use-settings.tsx'
 import GroupsMenu from './groups-menu.tsx'
 import ScriptLine from './script-line.tsx'
@@ -94,7 +94,7 @@ export function CompilationPage() {
   })
 
   useDidMount(() => {
-    void checkConfig(true)
+    void checkConfig()
   })
 
   const onDrop = useCallback(
@@ -183,9 +183,6 @@ export function CompilationPage() {
         game: t`Vérifiez le chemin du jeu.`,
         compiler: t`Vérifiez le chemin du compilateur.`,
         scripts: t`Vérifiez l'installation de Creation Kit.`,
-        'mo2-instance': t`Vérifiez l'instance MO2.`,
-        'mo2-instance-mods': t`Vérifiez l'instance MO2.`,
-        'mo2-use-no-instance': t`L'intégration mo2 est activée, mais votre instance n'est pas valide.`,
       }
       toastId = toast.error(t`Configuration invalide`, {
         action: (

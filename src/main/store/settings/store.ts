@@ -48,12 +48,10 @@ const defaultSettingsStoreConfig: Config = {
     concurrentScripts: 15,
     compilerPath: '',
     flag: 'TESV_Papyrus_Flags.flg',
-    output: join('Data/Scripts'),
+    output: '',
   },
   mo2: {
     use: false,
-    output: join('overwrite/Scripts'),
-    mods: 'mods',
   },
   groups: [],
   telemetry: {
@@ -79,39 +77,9 @@ class SettingsStore extends Store<Config> {
 
   #checkMo2() {
     const mo2 = this.get('mo2')
-    const resetMo2Config = () => {
+
+    if (is.nullOrUndefined(mo2) || !is.object(mo2) || !is.boolean(mo2.use)) {
       this.reset('mo2')
-    }
-
-    if (is.nullOrUndefined(mo2) || !is.object(mo2)) {
-      resetMo2Config()
-    }
-
-    if (
-      (Object.keys(mo2) as (keyof Config['mo2'])[]).some((key) =>
-        is.nullOrUndefined(mo2[key]),
-      )
-    ) {
-      resetMo2Config()
-    }
-
-    if (!is.boolean(mo2.use)) {
-      resetMo2Config()
-    }
-
-    if (!is.string(mo2.output) || is.emptyString(mo2.output.trim())) {
-      resetMo2Config()
-    }
-
-    if (!is.string(mo2.mods) || is.emptyString(mo2.mods.trim())) {
-      resetMo2Config()
-    }
-
-    if (
-      is.null(mo2.instance) ||
-      (is.string(mo2.instance) && is.emptyString(mo2.instance.trim()))
-    ) {
-      resetMo2Config()
     }
   }
 
@@ -213,7 +181,7 @@ class SettingsStore extends Store<Config> {
       return
     }
 
-    if (!is.string(output) || is.emptyString(output.trim())) {
+    if (!is.string(output)) {
       this.set(
         'compilation.output',
         defaultSettingsStoreConfig.compilation.output,

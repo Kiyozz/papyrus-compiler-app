@@ -12,6 +12,7 @@ import {
   FormLabel,
 } from '@renderer/components/ui/form.tsx'
 import { Input } from '@renderer/components/ui/input.tsx'
+import DialogTextField from '@renderer/components/dialog/dialog-text-field.tsx'
 
 function SettingsCompilation() {
   return (
@@ -19,7 +20,7 @@ function SettingsCompilation() {
       id="compilation-concurrentScripts"
       title={<Trans>Compilation</Trans>}
     >
-      <SettingsSectionContent>
+      <SettingsSectionContent className="flex flex-col gap-4">
         <FormField
           name="concurrentScripts"
           render={({ field }) => {
@@ -40,6 +41,18 @@ function SettingsCompilation() {
               </FormItem>
             )
           }}
+        />
+
+        <DialogTextField
+          name="output"
+          label={<Trans>Dossier de sortie</Trans>}
+          description={
+            <Trans>
+              Laissez vide pour utiliser le dossier par défaut du jeu
+              (Data/Scripts).
+            </Trans>
+          }
+          type="folder"
         />
       </SettingsSectionContent>
     </SettingsSection>

@@ -3,10 +3,11 @@
  */
 
 import React, { useState, type ReactNode } from 'react'
-import type { DialogType } from '../../../common/types/dialog'
+import type { DialogType } from '#common/types/dialog.ts'
 import { bridge } from '@renderer/bridge.ts'
 import {
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -20,10 +21,16 @@ import { useLingui } from '@lingui/react/macro'
 interface DialogTextFieldProps {
   name: string
   label?: ReactNode
+  description?: ReactNode
   type: DialogType
 }
 
-function DialogTextField({ name, label, type }: DialogTextFieldProps) {
+function DialogTextField({
+  name,
+  label,
+  description,
+  type,
+}: DialogTextFieldProps) {
   const { t } = useLingui()
   const [isHover, setHover] = useState(false)
 
@@ -82,6 +89,7 @@ function DialogTextField({ name, label, type }: DialogTextFieldProps) {
                 )}
               </Button>
             </div>
+            {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
         )

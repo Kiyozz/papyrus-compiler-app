@@ -4,24 +4,8 @@
 
 export const dirname = (path: string) => {
   if (path.length === 0) return '.'
-  let code = path.charCodeAt(0)
-  const hasRoot = code === 47
-  let end = -1
-  let matchedSlash = true
-  for (let i = path.length - 1; i >= 1; --i) {
-    code = path.charCodeAt(i)
-    if (code === 47 /*/*/) {
-      if (!matchedSlash) {
-        end = i
-        break
-      }
-    } else {
-      // We saw the first non-path separator
-      matchedSlash = false
-    }
-  }
-
-  if (end === -1) return hasRoot ? '/' : '.'
-  if (hasRoot && end === 1) return '//'
-  return path.slice(0, end)
+  const lastSep = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'))
+  if (lastSep === -1) return '.'
+  if (lastSep === 0) return path[0] as string
+  return path.slice(0, lastSep)
 }

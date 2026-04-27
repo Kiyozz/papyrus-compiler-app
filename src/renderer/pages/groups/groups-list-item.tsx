@@ -30,7 +30,7 @@ function GroupsListItem({
         <ul>
           {group.scripts.map((s) => (
             <li key={`${s.name}-${s.path}`}>
-              <span className="text-sm">{s.name}</span>
+              <span className="text-sm">{s.path}</span>
             </li>
           ))}
         </ul>

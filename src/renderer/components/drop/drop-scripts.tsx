@@ -3,9 +3,8 @@
  */
 
 import cx from 'classnames'
-import React from 'react'
-import { useDropzone } from 'react-dropzone'
-import type { AriaRole } from 'react'
+import React, { useCallback, useRef } from 'react'
+import { useDropzone } from '#/hooks/use-dropzone.ts'
 
 interface RenderChildren {
   isDragActive: boolean
@@ -29,25 +28,36 @@ function DropScripts({
   className,
   children,
 }: DropScriptsProps) {
-  const { getRootProps, isDragActive, getInputProps, open } = useDropzone({
-    onDrop: (files) => onDrop?.(files),
-    accept: {
-      'text/psc': ['.psc'],
+  const { isDragging } = useDropzone({
+    onDrop: (files) => {
+      onDrop?.(files)
     },
-    preventDropOnDocument: true,
-    noClick: true,
-    noKeyboard: true,
-    useFsAccessApi: false,
-    onFileDialogOpen,
-    onFileDialogCancel,
   })
 
-  const { role, ...rootProps } = getRootProps<{ role: AriaRole }>()
+  const inputRef = useRef<HTMLInputElement>(null)
+  const open = useCallback(() => {
+    if (inputRef.current) {
+      onFileDialogOpen()
+      inputRef.current.value = ''
+      inputRef.current?.click()
+    }
+  }, [])
 
   return (
-    <div className={cx('relative z-30', className)} {...rootProps}>
-      <input {...getInputProps()} />
-      {children({ isDragActive, open })}
+    <div className={cx('relative z-30', className)}>
+      <input
+        ref={inputRef}
+        type="file"
+        accept=".psc"
+        multiple
+        tabIndex={-1}
+        className="sr-only"
+        onChange={(evt) => {
+          onDrop?.(Array.from(evt.target.files ?? []))
+          onFileDialogCancel()
+        }}
+      />
+      {children({ isDragActive: isDragging, open })}
     </div>
   )
 }

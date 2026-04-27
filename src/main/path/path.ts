@@ -17,7 +17,7 @@ import type { Stats } from 'node:fs'
 
 const logger = new Logger('Path')
 
-export { join } from 'path'
+export { join, basename, isAbsolute, dirname as parentDir } from 'path'
 
 export function dirname(meta: ImportMeta): string {
   return path.dirname(url.fileURLToPath(meta.url))

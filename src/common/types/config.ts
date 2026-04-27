@@ -27,9 +27,6 @@ interface Compilation {
 
 interface ConfigMo2 {
   use: boolean
-  instance?: string
-  output: OutputPath
-  mods: string
 }
 
 interface Telemetry {
