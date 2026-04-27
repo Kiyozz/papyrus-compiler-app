@@ -29,11 +29,6 @@
     "lingui:compile:main": "lingui compile --config ./lingui.main.config.ts",
     "changeset:version": "changeset version"
   },
-  "dependencies": {
-    "@tanstack/react-router": "^1.168.22",
-    "@tanstack/router-plugin": "^1.167.22",
-    "kkrpc": "^0.6.7"
-  },
   "devDependencies": {
     "@adonisjs/fold": "^11.0.0",
     "@babel/plugin-syntax-decorators": "^7.28.6",
@@ -52,8 +47,10 @@
     "@rolldown/plugin-babel": "^0.2.3",
     "@sindresorhus/is": "~7.0.2",
     "@tailwindcss/vite": "^4.2.2",
+    "@tanstack/react-router": "^1.168.22",
     "@tanstack/react-router-devtools": "^1.166.13",
     "@tanstack/react-virtual": "^3.13.24",
+    "@tanstack/router-plugin": "^1.167.22",
     "@types/minimist": "^1.2.5",
     "@types/react": "~19.2.14",
     "@types/react-dom": "~19.2.3",
@@ -76,6 +73,7 @@
     "electron-util": "~1.0.0",
     "emittery": "^2.0.0",
     "fast-glob": "~3.3.3",
+    "kkrpc": "^0.6.7",
     "lefthook": "^2.1.6",
     "lucide-react": "^1.8.0",
     "minimist": "^1.2.8",

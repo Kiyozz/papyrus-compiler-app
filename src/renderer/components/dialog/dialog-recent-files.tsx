@@ -29,8 +29,8 @@ import React, { type PropsWithChildren, useId, useMemo, useState } from 'react'
 import type { KeyboardEvent, MouseEvent } from 'react'
 import { Trans } from '@lingui/react/macro'
 import { useDidUpdate } from 'rooks'
-import { TelemetryEvent } from '../../../common/telemetry-event.ts'
-import type { Script } from '../../../common/types/script.ts'
+import { TelemetryEvent } from '#common/telemetry-event.ts'
+import type { Script } from '#common/types/script.ts'
 
 export function DialogRecentFiles({ children }: PropsWithChildren) {
   const [open, setOpen] = useState(false)

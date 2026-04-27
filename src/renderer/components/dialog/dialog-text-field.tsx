@@ -51,7 +51,7 @@ function DialogTextField({ name, label, type }: DialogTextFieldProps) {
               </FormControl>
               <Button
                 variant="ghost"
-                className="-translate-y-1/2 absolute top-1/2 left-0 rounded-r-none"
+                className="-translate-y-1/2 absolute top-1/2 left-0 rounded-r-none active:top-0 transition-none"
                 size="icon"
                 onClick={async (evt: React.MouseEvent<HTMLElement>) => {
                   setHover(false)

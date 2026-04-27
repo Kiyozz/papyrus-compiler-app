@@ -124,7 +124,7 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
                       key={script.id}
                       aria-describedby={`${script.id}-logs`}
                       aria-labelledby={`${script.id}-title`}
-                      className="bg-background"
+                      className="bg-popover"
                     >
                       <div className="border-x border-t rounded-t-4xl bg-white pl-4 pr-2 py-2 dark:bg-gray-800">
                         <div

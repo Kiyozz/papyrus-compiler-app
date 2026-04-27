@@ -29,10 +29,6 @@ msgstr "Enable"
 msgid "Annuler"
 msgstr "Cancel"
 
-#: src/renderer/components/dialog/dialog-recent-files.tsx:237
-#~ msgid "Aucun fichiers récents"
-#~ msgstr "No recent files"
-
 #: src/renderer/components/dialog/dialog-recent-files.tsx:247
 msgid "Aucun fichiers récents (les scripts déjà chargés sont filtrés)."
 msgstr "No recent files (already loaded scripts are filtered)."
