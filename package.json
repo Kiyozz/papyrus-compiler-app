@@ -27,7 +27,9 @@
     "lingui:extract": "lingui extract",
     "lingui:extract:main": "lingui extract --config ./lingui.main.config.ts",
     "lingui:compile:main": "lingui compile --config ./lingui.main.config.ts",
-    "changeset:version": "changeset version"
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:status": "changeset status --since=origin/main"
   },
   "devDependencies": {
     "@adonisjs/fold": "^11.0.0",

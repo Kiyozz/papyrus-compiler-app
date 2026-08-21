@@ -1,0 +1,128 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prepare:
+    name: Prepare release
+    runs-on: ubuntu-latest
+
+    outputs:
+      released: ${{ steps.tag.outputs.released }}
+      version: ${{ steps.tag.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+
+      # Read the state before changesets/action runs: it checks out its own
+      # release branch and consumes .changeset/*.md in the working tree.
+      - name: Read changesets state
+        id: state
+        run: |
+          echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+          if [ -n "$(find .changeset -name '*.md' ! -name 'README.md' -print -quit)" ]; then
+            echo "pending=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "pending=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Changesets are pending: open (or refresh) the version pull request.
+      - name: Create release pull request
+        if: steps.state.outputs.pending == 'true'
+        uses: changesets/action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          version: pnpm changeset:version
+          commit: 'chore(release): version packages'
+          title: 'chore(release): version packages'
+          createGithubReleases: false
+
+      # No changeset left: main sits on a versioned commit, tag it once.
+      - name: Tag release
+        id: tag
+        if: steps.state.outputs.pending == 'false'
+        run: |
+          version="${{ steps.state.outputs.version }}"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+          if git ls-remote --exit-code --tags origin "refs/tags/v$version" >/dev/null 2>&1; then
+            echo "v$version is already tagged, nothing to release."
+            echo "released=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git tag -a "v$version" -m "v$version"
+          git push origin "v$version"
+          echo "released=true" >> "$GITHUB_OUTPUT"
+
+  package:
+    name: Package release
+    needs: prepare
+    if: needs.prepare.outputs.released == 'true'
+    runs-on: windows-latest
+
+    env:
+      ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrimspecialedition/mods/23852
+      ELECTRON_TELEMETRY_API_KEY: ''
+      ELECTRON_TELEMETRY_API: ''
+      ELECTRON_TELEMETRY_FEATURE: false
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: v${{ needs.prepare.outputs.version }}
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Package
+        run: pnpm package
+
+      - name: Extract release notes
+        shell: bash
+        run: node scripts/extract-changelog.mjs '${{ needs.prepare.outputs.version }}' > release-notes.md
+
+      - name: Create draft GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create 'v${{ needs.prepare.outputs.version }}' \
+            --title 'PCA v${{ needs.prepare.outputs.version }}' \
+            --notes-file release-notes.md \
+            --draft \
+            'dist/PCA.7z'
