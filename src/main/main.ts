@@ -5,7 +5,7 @@ import { format } from 'url'
 import { BrowserWindow, app } from 'electron'
 import { is } from 'electron-util'
 import { debugInfo, isDev } from 'electron-util/main'
-import { version } from '../common/version'
+import { publicVersion } from '../common/version'
 import { Logger, applyLogLevel } from './logger'
 import { dirname, join } from './path/path'
 import { unhandled } from './unhandled'
@@ -36,7 +36,7 @@ unhandled(() => {
 
 async function createWindow() {
   logger.info(debugInfo())
-  logger.info('public release: ', version)
+  logger.info('public release: ', publicVersion)
 
   win = await container.make(MainBrowserWindow)
 
