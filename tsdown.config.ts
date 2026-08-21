@@ -1,6 +1,12 @@
+import { readFileSync } from 'node:fs'
 import { defineConfig } from 'tsdown'
 import babel from '@rolldown/plugin-babel'
 import { lingui } from '@lingui/vite-plugin'
+import { MOD_URL_DEFAULT } from './src/common/env.ts'
+
+const pkg = JSON.parse(
+  readFileSync(new URL('./package.json', import.meta.url), 'utf8'),
+) as { publicVersion: string }
 
 export default defineConfig({
   entry: [
@@ -27,15 +33,18 @@ export default defineConfig({
     }),
   ],
   define: {
-    'process.env.ELECTRON_TELEMETRY_FEATURE': JSON.stringify(
-      process.env.ELECTRON_TELEMETRY_FEATURE ?? '',
+    __PUBLIC_VERSION__: JSON.stringify(pkg.publicVersion),
+    'process.env.PCA_TELEMETRY_ENABLED': JSON.stringify(
+      process.env.PCA_TELEMETRY_ENABLED ?? 'false',
     ),
-    'process.env.ELECTRON_TELEMETRY_API_KEY': JSON.stringify(
-      process.env.ELECTRON_TELEMETRY_API_KEY ?? '',
+    'process.env.PCA_TELEMETRY_API_URL': JSON.stringify(
+      process.env.PCA_TELEMETRY_API_URL ?? '',
     ),
-    'process.env.ELECTRON_WEBPACK_APP_MOD_URL': JSON.stringify(
-      process.env.ELECTRON_WEBPACK_APP_MOD_URL ??
-        'https://www.nexusmods.com/skyrimspecialedition/mods/23852',
+    'process.env.PCA_TELEMETRY_API_KEY': JSON.stringify(
+      process.env.PCA_TELEMETRY_API_KEY ?? '',
+    ),
+    'process.env.PCA_MOD_URL': JSON.stringify(
+      process.env.PCA_MOD_URL ?? MOD_URL_DEFAULT,
     ),
   },
 })

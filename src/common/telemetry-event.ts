@@ -39,7 +39,7 @@ export enum TelemetryEvent {
 
 export interface TelemetryEventProperties {
   [TelemetryEvent.appFirstLoaded]: Record<string, never>
-  [TelemetryEvent.appLoaded]: Record<'version' | 'releaseVersion', string>
+  [TelemetryEvent.appLoaded]: Record<'version' | 'publicVersion', string>
   [TelemetryEvent.compilationDropScripts]: { scripts: number }
   [TelemetryEvent.compilationGroupLoaded]: { groups: number }
   [TelemetryEvent.compilationListEmpty]: { scripts: number }

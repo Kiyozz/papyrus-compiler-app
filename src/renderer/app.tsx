@@ -6,7 +6,7 @@ import { RouterProvider } from '@tanstack/react-router'
 import { lazy, Suspense, useEffect } from 'react'
 import { Trans } from '@lingui/react/macro'
 import { TelemetryEvent } from '../common/telemetry-event'
-import { version as releaseVersion } from '../common/version'
+import { publicVersion } from '../common/version'
 import DialogChangelog from './components/dialog/dialog-changelog'
 import { useInitialization } from './hooks/use-initialization'
 import { useSyncHtmlTheme } from './hooks/use-sync-html-theme'
@@ -30,7 +30,7 @@ function App() {
 
   useEffect(() => {
     if (done) {
-      send(TelemetryEvent.appLoaded, { version, releaseVersion })
+      send(TelemetryEvent.appLoaded, { version, publicVersion })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [done, version])
