@@ -1,5 +1,5 @@
 ---
-"pca": minor
+'pca': minor
 ---
 
 Compile scripts from any folder (script's parent dir auto-imported).

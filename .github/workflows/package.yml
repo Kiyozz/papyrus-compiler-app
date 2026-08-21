@@ -7,6 +7,14 @@ jobs:
   generate:
     runs-on: windows-latest
 
+    # Job level: tsdown and vite inline these during `pnpm build`; `pnpm package`
+    # only zips the assets `pnpm build` produced.
+    env:
+      PCA_MOD_URL: https://www.nexusmods.com/skyrimspecialedition/mods/23852?tab=files
+      PCA_TELEMETRY_ENABLED: 'true'
+      PCA_TELEMETRY_API_URL: ${{ secrets.PCA_TELEMETRY_API_URL }}
+      PCA_TELEMETRY_API_KEY: ${{ secrets.PCA_TELEMETRY_API_KEY }}
+
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
@@ -15,15 +23,12 @@ jobs:
           node-version: 24
           cache: 'pnpm'
 
+      - run: pnpm install --frozen-lockfile
+
       - name: Build
         run: pnpm build
 
       - name: Package
-        env:
-          ELECTRON_WEBPACK_APP_MOD_URL: https://www.nexusmods.com/skyrimspecialedition/mods/23852
-          ELECTRON_TELEMETRY_API_KEY: ''
-          ELECTRON_TELEMETRY_API: ''
-          ELECTRON_TELEMETRY_FEATURE: false
         run: pnpm package
 
       - name: Upload
