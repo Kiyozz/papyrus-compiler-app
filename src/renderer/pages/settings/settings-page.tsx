@@ -28,6 +28,7 @@ import { TelemetryEvent } from '#common/telemetry-event.ts'
 import { Theme } from '#common/theme.ts'
 import { useApp } from '../../hooks/use-app'
 import { useTelemetry } from '../../hooks/use-telemetry'
+import SettingsAboutSection from './settings-about-section.tsx'
 import SettingsCompilation from './settings-compilation'
 import SettingsGameSection from './settings-game-section.tsx'
 import SettingsMo2 from './settings-mo2/settings-mo2'
@@ -289,15 +290,19 @@ export function SettingsPage() {
       </LayoutHeader>
 
       <Form {...form}>
-        <form>
-          <ScrollArea className="page w-full">
+        {/* h-px + grow keeps the form from growing past the window: without it
+            the content overflows a body that has `overflow: hidden`, the
+            ScrollArea never scrolls and the last section gets cut off. */}
+        <form className="flex h-px grow flex-col">
+          <ScrollArea className="page h-px w-full grow">
             <div className="flex flex-col gap-4 p-4">
               <SettingsGameSection />
-              <div className="grid grid-cols-2 gap-4 pb-4">
+              <div className="grid grid-cols-2 gap-4">
                 <SettingsCompilation />
                 <SettingsPreferencesSection />
               </div>
               <SettingsMo2 />
+              <SettingsAboutSection />
             </div>
           </ScrollArea>
         </form>
