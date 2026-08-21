@@ -28,7 +28,7 @@ function TelemetryProvider({ children }: React.PropsWithChildren) {
     event: TelemetryEvent,
     properties: TelemetryEventProperties[TelemetryEvent],
   ) => {
-    if (config.telemetry.active && Env.telemetryFeature) {
+    if (config.telemetry.active && Env.telemetryEnabled) {
       void bridge.telemetry.send(event, properties)
     }
   }
