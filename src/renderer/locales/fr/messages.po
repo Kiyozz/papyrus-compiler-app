@@ -18,6 +18,10 @@ msgstr ""
 msgid "{0} scripts loaded."
 msgstr "{0} scripts loaded."
 
+#: src/renderer/pages/settings/settings-about-section.tsx:14
+msgid "À propos"
+msgstr "À propos"
+
 #: src/renderer/pages/settings/settings-mo2/settings-mo2-activation.tsx:22
 #: src/renderer/pages/settings/settings-telemetry-section.tsx:28
 msgid "Activer"
@@ -65,7 +69,7 @@ msgstr "Charger"
 msgid "Chemin complet"
 msgstr "Chemin complet"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:117
+#: src/renderer/pages/settings/settings-game-section.tsx:113
 msgid "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
 msgstr "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
 
@@ -78,7 +82,7 @@ msgstr "Clair"
 msgid "Commencez par glisser-déposer des fichiers psc pour les charger"
 msgstr "Commencez par glisser-déposer des fichiers psc pour les charger"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:110
+#: src/renderer/pages/settings/settings-game-section.tsx:106
 msgid "Compilateur Papyrus"
 msgstr "Compilateur Papyrus"
 
@@ -109,7 +113,7 @@ msgid "Depuis la version 5.9.0, l'intégration MO2 a été supprimée. Configure
 msgstr "Depuis la version 5.9.0, l'intégration MO2 a été supprimée. Configurez PCA pour être lancé via MO2 à la place."
 
 #: src/renderer/components/app-sidebar.tsx:57
-#: src/renderer/pages/settings/settings-page.tsx:275
+#: src/renderer/pages/settings/settings-page.tsx:276
 msgid "Documentation"
 msgstr "Documentation"
 
@@ -122,11 +126,11 @@ msgstr "Données d'utilisation"
 msgid "Dossier de sortie"
 msgstr "Dossier de sortie"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:88
+#: src/renderer/pages/settings/settings-game-section.tsx:84
 msgid "Dossier du jeu"
 msgstr "Dossier du jeu"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:95
+#: src/renderer/pages/settings/settings-game-section.tsx:91
 msgid "Dossier où se trouve {exe}"
 msgstr "Dossier où se trouve {exe}"
 
@@ -171,11 +175,11 @@ msgstr "Info"
 msgid "Intégration MO2 supprimée"
 msgstr "Intégration MO2 supprimée"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:49
+#: src/renderer/pages/settings/settings-game-section.tsx:45
 msgid "Jeu"
 msgstr "Jeu"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:134
+#: src/renderer/pages/settings/settings-game-section.tsx:130
 msgid "La configuration semble invalide :"
 msgstr "La configuration semble invalide :"
 
@@ -230,7 +234,7 @@ msgid "Nouvelle version disponible : {latestVersion}"
 msgstr "Nouvelle version disponible : {latestVersion}"
 
 #: src/renderer/components/app-sidebar.tsx:44
-#: src/renderer/pages/settings/settings-page.tsx:260
+#: src/renderer/pages/settings/settings-page.tsx:261
 msgid "Paramètres"
 msgstr "Paramètres"
 
@@ -244,7 +248,7 @@ msgstr "Plus de détails"
 msgid "Préférences"
 msgstr "Préférences"
 
-#: src/renderer/pages/settings/settings-page.tsx:285
+#: src/renderer/pages/settings/settings-page.tsx:286
 msgid "Rafraîchir"
 msgstr "Rafraîchir"
 
@@ -269,7 +273,7 @@ msgstr "Sélectionner un thème"
 msgid "Sélectionner une langue"
 msgstr "Sélectionner une langue"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:57
+#: src/renderer/pages/settings/settings-game-section.tsx:53
 msgid "Sélectionner votre jeu"
 msgstr "Sélectionner votre jeu"
 
@@ -321,18 +325,22 @@ msgid "Vérifiez le chemin du jeu."
 msgstr "Vérifiez le chemin du jeu."
 
 #. placeholder {0}: compilation.compilerPath
-#: src/renderer/pages/settings/settings-game-section.tsx:143
+#: src/renderer/pages/settings/settings-game-section.tsx:139
 msgid "Vérifiez que \"{0}\" existe."
 msgstr "Vérifiez que \"{0}\" existe."
 
-#: src/renderer/pages/settings/settings-game-section.tsx:138
+#: src/renderer/pages/settings/settings-game-section.tsx:134
 msgid "Vérifiez que \"{exe}\" existe dans le dossier du jeu."
 msgstr "Vérifiez que \"{exe}\" existe dans le dossier du jeu."
 
 #. placeholder {0}: toCompilerSourceFile(game.type)
-#: src/renderer/pages/settings/settings-game-section.tsx:146
+#: src/renderer/pages/settings/settings-game-section.tsx:142
 msgid "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {0} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
 msgstr "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {0} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
+
+#: src/renderer/pages/settings/settings-about-section.tsx:17
+msgid "Version"
+msgstr "Version"
 
 #: src/renderer/components/dialog/dialog-compilation-logs.tsx:202
 msgid "Vider"
