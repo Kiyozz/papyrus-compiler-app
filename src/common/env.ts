@@ -3,7 +3,7 @@
  */
 
 export const MOD_URL_DEFAULT =
-  'https://www.nexusmods.com/skyrim/mods/96339?tab=files'
+  'https://www.nexusmods.com/skyrimspecialedition/mods/23852?tab=files'
 
 export const MOD_DOCUMENTATION_URL_DEV = 'http://localhost:3001'
 

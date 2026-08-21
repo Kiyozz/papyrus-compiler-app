@@ -37,6 +37,7 @@ export class Telemetry {
     this.#logger = new Logger('Telemetry')
 
     if (
+      !env.telemetryEnabled ||
       !is.string(this.#api) ||
       !is.string(this.#appKey) ||
       is.emptyString(this.#api) ||
