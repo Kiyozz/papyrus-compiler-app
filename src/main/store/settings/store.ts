@@ -97,18 +97,8 @@ class SettingsStore extends Store<Config> {
       return
     }
 
-    if (!is.string(gameType)) {
+    if (!validateGame.gameType(gameType)) {
       resetGameType()
-    }
-
-    switch (gameType) {
-      case GameType.fo4:
-      case GameType.le:
-      case GameType.se:
-      case GameType.vr:
-        break
-      default:
-        resetGameType()
     }
   }
 
