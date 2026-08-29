@@ -7,7 +7,7 @@ pre-commit:
         jobs:
           - run: pnpm fmt "{staged_files}"
             name: Formatting
-            glob: '**/*.{ts,tsx,json,css}'
+            glob: '**/*.{ts,tsx,json,css,md}'
             stage_fixed: true
             tags:
               - fmt
