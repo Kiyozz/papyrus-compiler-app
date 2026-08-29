@@ -6,6 +6,7 @@ import is from '@sindresorhus/is'
 import { Logger } from '../logger'
 import { SettingsStore } from '../store/settings/store'
 import { ApplicationException } from '../exceptions/application.exception'
+import { CompilationException } from '../exceptions/compilation.exception'
 import { fromError } from '#common/from-error.ts'
 import type { CompilationResult } from '#common/types/compilation-result.ts'
 import { inject } from '#main/inject.ts'
@@ -63,18 +64,22 @@ export class ScriptCompileEvent {
     const scriptName = basename(scriptPath)
 
     try {
-      const result = ScriptCompileEvent._cleanSuccessLog(
-        scriptName,
-        await this.#compiler.compile(scriptPath),
-      )
+      const { output, name } = await this.#compiler.compile(scriptPath)
 
-      return { success: true, output: result, script: scriptName }
+      return {
+        success: true,
+        output: ScriptCompileEvent._cleanSuccessLog(name, output),
+        script: scriptName,
+      }
     } catch (e) {
       const errorMessage: string = fromError(e).message
+      // the compiler logs the namespaced name, not the file name
+      const compiledName =
+        e instanceof CompilationException ? e.script : scriptName
 
       return {
         success: false,
-        output: ScriptCompileEvent._cleanErrorLog(scriptName, errorMessage),
+        output: ScriptCompileEvent._cleanErrorLog(compiledName, errorMessage),
         script: scriptName,
       }
     }

@@ -17,7 +17,14 @@ import { SettingsStore } from '../store/settings/store'
 import { generateCompilerCmd } from '../utils/generate-compiler-cmd.util'
 import type { ExecException } from '../exceptions/exec.exception'
 import { Compiler } from '#main/compilation/compiler.ts'
+import type { CompileResult } from '#main/compilation/compiler.ts'
 import { inject } from '#main/inject.ts'
+import { toSlash } from '../slash'
+import { resolveScript } from '../utils/script-namespace.util'
+
+const uniqImports = (imports: string[]): string[] => [
+  ...new Map(imports.map((i) => [toSlash(i).toLowerCase(), i])).values(),
+]
 
 interface Runner {
   exe: string
@@ -35,11 +42,8 @@ class PapyrusCompilerService implements Compiler {
     this.#settingsStore = settingsStore
   }
 
-  async compile(scriptPath: string): Promise<string> {
+  async compile(scriptPath: string): Promise<CompileResult> {
     this.#logger.info('compiling', scriptPath)
-
-    const scriptName = path.basename(scriptPath)
-    const scriptDir = path.parentDir(scriptPath)
 
     const { path: gamePath, type: gameType } = this.#settingsStore.get('game')
     const {
@@ -47,6 +51,10 @@ class PapyrusCompilerService implements Compiler {
       compilerPath,
       flag,
     } = this.#settingsStore.get('compilation')
+    const { name: scriptName, importDir } = await resolveScript(
+      scriptPath,
+      gameType,
+    )
     const dataFolder = path.join(gamePath, 'Data')
     const gameSource = toSource(gameType)
     const gameSourceAbsolute = path.join(dataFolder, gameSource)
@@ -56,7 +64,7 @@ class PapyrusCompilerService implements Compiler {
         : outputPath
     const runner: Runner = {
       exe: compilerPath,
-      imports: [gameSourceAbsolute, scriptDir],
+      imports: [gameSourceAbsolute, importDir],
       cwd: gamePath,
       output: resolvedOutput,
     }
@@ -94,14 +102,14 @@ class PapyrusCompilerService implements Compiler {
     if (path.exists(otherSourceAbsolute)) {
       this.#logger.debug(`import of the ${otherSource} folder`)
 
-      runner.imports = [scriptDir, otherSourceAbsolute, gameSourceAbsolute]
+      runner.imports = [importDir, otherSourceAbsolute, gameSourceAbsolute]
     }
 
     if (gameType === GameType.fo4) {
       this.#logger.debug('import of fo4 sources')
 
       runner.imports = [
-        scriptDir,
+        importDir,
         ...(await path.getPathsInFolder(
           [`${gamePath}/Data/Scripts/Source/**`],
           {
@@ -109,9 +117,11 @@ class PapyrusCompilerService implements Compiler {
             deep: 4,
           },
         )),
-        ...runner.imports.filter((i) => i !== scriptDir),
+        ...runner.imports.filter((i) => i !== importDir),
       ]
     }
+
+    runner.imports = uniqImports(runner.imports)
 
     const cmd = generateCompilerCmd({
       exe: runner.exe,
@@ -128,7 +138,7 @@ class PapyrusCompilerService implements Compiler {
 
       this.#checkCommandResult(scriptName, result)
 
-      return result.stdout.trim()
+      return { output: result.stdout.trim(), name: scriptName }
     } catch (err) {
       if (err instanceof CompilationException) {
         throw err
