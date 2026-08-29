@@ -17,6 +17,6 @@ export class ClipboardCopyHandler {
   async listen({ text }: ClipboardCopyArgs): Promise<void> {
     this.logger.debug('Copy logs to clipboard', text)
 
-    clipboard.writeText(text, 'selection')
+    await clipboard.writeText(text)
   }
 }

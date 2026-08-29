@@ -8,6 +8,12 @@ const pkg = JSON.parse(
   readFileSync(new URL('./package.json', import.meta.url), 'utf8'),
 ) as { publicVersion: string }
 
+// Lingui defaults `descriptorFields` to `auto`, which reads NODE_ENV while
+// transforming - inside rolldown's workers, where the value electron-tsdown
+// sets is not reliably visible. Resolve it here instead, once, so builds are
+// reproducible.
+const isProduction = process.env.NODE_ENV === 'production'
+
 export default defineConfig({
   entry: [
     'src/main/main.ts',
@@ -16,18 +22,16 @@ export default defineConfig({
   ],
   platform: 'node',
   format: 'esm',
-  target: 'node24.14', // electron version target
+  target: 'node24.18', // electron version target
   logLevel: 'error',
   outDir: 'dist/main',
   unbundle: true,
-  deps: {
-    skipNodeModulesBundle: true,
-  },
+  // electron-tsdown already forces `deps.neverBundle` and `dts: false`.
   plugins: [
     babel({
       presets: [
         linguiTransformerBabelPreset(
-          {},
+          { descriptorFields: isProduction ? 'id-only' : 'all' },
           { configPath: './lingui.main.config.ts' },
         ),
       ],
