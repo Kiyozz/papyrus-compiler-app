@@ -14,7 +14,7 @@ export function migrate590(store: SettingsStore): void {
     store.set('logLevel', LogLevel.info)
   }
 
-  const mo2 = store.get('mo2') as Record<string, unknown> | undefined
+  const mo2 = store.get('mo2') as unknown as Record<string, unknown> | undefined
   if (mo2 && is.object(mo2)) {
     store.set('mo2', { use: is.boolean(mo2.use) ? mo2.use : false })
   }
