@@ -22,7 +22,7 @@ import debounce from 'debounce-fn'
 import { BookIcon, RotateCcwIcon } from 'lucide-react'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import { GameType } from '#common/game.ts'
+import { GameType, toFlag } from '#common/game.ts'
 import { LogLevel } from '#common/log-level.ts'
 import { TelemetryEvent } from '#common/telemetry-event.ts'
 import { Theme } from '#common/theme.ts'
@@ -133,10 +133,7 @@ export function SettingsPage() {
             setConfig({
               game: { type: gameType },
               compilation: {
-                flag:
-                  gameType === GameType.fo4
-                    ? 'Institute_Papyrus_Flags.flg'
-                    : 'TESV_Papyrus_Flags.flg',
+                flag: toFlag(gameType),
               },
             })
 
