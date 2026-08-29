@@ -9,5 +9,4 @@ export default defineConfig({
       include: ['src/renderer'],
     },
   ],
-  format: 'po',
 })

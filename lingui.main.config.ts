@@ -9,6 +9,5 @@ export default defineConfig({
       include: ['src/main'],
     },
   ],
-  format: 'po',
   compileNamespace: 'ts',
 })

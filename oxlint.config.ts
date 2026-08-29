@@ -1,7 +1,10 @@
 import { defineConfig } from 'oxlint'
 
 export default defineConfig({
-  ignorePatterns: ['src/renderer/routeTree.gen.ts'],
+  ignorePatterns: [
+    'src/renderer/routeTree.gen.ts',
+    'src/main/locales/*/messages.ts',
+  ],
   plugins: ['typescript', 'import'],
   env: { node: true },
   rules: {
