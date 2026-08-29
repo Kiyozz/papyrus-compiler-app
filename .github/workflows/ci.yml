@@ -7,6 +7,7 @@ on:
       - '**.js'
       - '**.mjs'
       - '**.tsx'
+      - '**.json'
       - '**.yml'
       - '**.yaml'
 
@@ -24,6 +25,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - run: pnpm typecheck
       - run: pnpm lint
       - run: pnpm fmt:check
       - run: pnpm build
