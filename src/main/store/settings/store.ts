@@ -11,6 +11,7 @@ import {
   type Flag,
   type GamePath,
   GameType,
+  toFlag,
   validateGame,
 } from '#common/game.ts'
 import { LogLevel } from '#common/log-level.ts'
@@ -96,18 +97,8 @@ class SettingsStore extends Store<Config> {
       return
     }
 
-    if (!is.string(gameType)) {
+    if (!validateGame.gameType(gameType)) {
       resetGameType()
-    }
-
-    switch (gameType) {
-      case GameType.fo4:
-      case GameType.le:
-      case GameType.se:
-      case GameType.vr:
-        break
-      default:
-        resetGameType()
     }
   }
 
@@ -132,18 +123,10 @@ class SettingsStore extends Store<Config> {
   #checkFlag() {
     const flag = this.get<string, Flag | string>('compilation.flag')
 
-    if (
-      flag !== 'TESV_Papyrus_Flags.flg' &&
-      flag !== 'Institute_Papyrus_Flags.flg'
-    ) {
+    if (!validateGame.flag(flag)) {
       this.#logger.warn(flag, 'is not supported')
 
-      this.set(
-        'compilation.flag',
-        this.get('game.type') === GameType.fo4
-          ? 'Institute_Papyrus_Flags.flg'
-          : defaultSettingsStoreConfig.compilation.flag,
-      )
+      this.set('compilation.flag', toFlag(this.get('game.type')))
     }
   }
 

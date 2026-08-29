@@ -137,9 +137,6 @@ importers:
       emittery:
         specifier: ^2.0.0
         version: 2.0.0
-      fast-glob:
-        specifier: ~3.3.3
-        version: 3.3.3
       kkrpc:
         specifier: ^2.1.0
         version: 2.1.0(hono@4.13.5)(typescript@7.0.2)

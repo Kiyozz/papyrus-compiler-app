@@ -6,12 +6,10 @@ import { promises as fs, existsSync } from 'node:fs'
 import * as path from 'node:path'
 import * as url from 'node:url'
 import { is } from 'electron-util'
-import fg from 'fast-glob'
 import { moveFile } from 'move-file'
 import { FileAccessException } from '../exceptions/files/file-access.exception'
 import { FileEnsureException } from '../exceptions/files/file-ensure.exception'
 import { Logger } from '../logger'
-import { toSlash } from '../slash'
 import { pluralize } from '../utils/pluralize.util'
 import type { Stats } from 'node:fs'
 
@@ -113,28 +111,4 @@ export async function ensureFiles(items: string[]): Promise<void> {
       }
     }),
   )
-}
-
-export async function getPathsInFolder(
-  fileNames: string[],
-  options: fg.Options = {},
-): Promise<string[]> {
-  logger.debug(
-    'retrieving paths from the folders',
-    fileNames,
-    'with options',
-    options,
-  )
-
-  const response = await fg(
-    fileNames.map((file) => toSlash(file)),
-    {
-      caseSensitiveMatch: false,
-      ...options,
-    },
-  )
-
-  logger.debug('response of fast-glob', response)
-
-  return response
 }
