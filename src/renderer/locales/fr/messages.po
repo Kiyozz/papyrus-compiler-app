@@ -113,7 +113,7 @@ msgid "Depuis la version 5.9.0, l'intégration MO2 a été supprimée. Configure
 msgstr "Depuis la version 5.9.0, l'intégration MO2 a été supprimée. Configurez PCA pour être lancé via MO2 à la place."
 
 #: src/renderer/components/app-sidebar.tsx:57
-#: src/renderer/pages/settings/settings-page.tsx:276
+#: src/renderer/pages/settings/settings-page.tsx:273
 msgid "Documentation"
 msgstr "Documentation"
 
@@ -234,7 +234,7 @@ msgid "Nouvelle version disponible : {latestVersion}"
 msgstr "Nouvelle version disponible : {latestVersion}"
 
 #: src/renderer/components/app-sidebar.tsx:44
-#: src/renderer/pages/settings/settings-page.tsx:261
+#: src/renderer/pages/settings/settings-page.tsx:258
 msgid "Paramètres"
 msgstr "Paramètres"
 
@@ -248,7 +248,7 @@ msgstr "Plus de détails"
 msgid "Préférences"
 msgstr "Préférences"
 
-#: src/renderer/pages/settings/settings-page.tsx:286
+#: src/renderer/pages/settings/settings-page.tsx:283
 msgid "Rafraîchir"
 msgstr "Rafraîchir"
 
