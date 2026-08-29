@@ -14,7 +14,7 @@ import { dirname, join } from '#main/path/path.ts'
 import isType from '@sindresorhus/is'
 import { is } from 'electron-util'
 import { EventEmitter } from '#main/event-emitter.ts'
-import { ElectronIpcMainIO } from 'kkrpc/electron-ipc'
+import { electronIpcTransport } from 'kkrpc/electron'
 import { RpcChannel } from '#main/rpc-channel.ts'
 import { RecentFilesStore } from '#main/store/recent-files/store.ts'
 import Emittery from 'emittery'
@@ -62,8 +62,22 @@ container.swap(Compiler, (resolver) => {
 container.singleton(EventEmitter, () => new EventEmitter())
 container.singleton(RpcChannel, async (resolver) => {
   const win = await resolver.make(MainBrowserWindow)
-  const io = new ElectronIpcMainIO(ipcMain, win.webContents)
-  return new RpcChannel(io, {})
+  const transport = electronIpcTransport({
+    endpoint: {
+      send: (channel, message) => {
+        if (!win.webContents.isDestroyed()) {
+          win.webContents.send(channel, message)
+        }
+      },
+      on: (channel, listener) => {
+        ipcMain.on(channel, listener)
+      },
+      off: (channel, listener) => {
+        ipcMain.off(channel, listener)
+      },
+    },
+  })
+  return new RpcChannel(transport)
 })
 
 export { container }

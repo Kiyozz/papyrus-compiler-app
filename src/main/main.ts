@@ -42,7 +42,7 @@ async function createWindow() {
 
   const rpc = await container.make(RpcChannel)
   const mainApi = await container.make(MainApi)
-  rpc.expose(mainApi.mainApi)
+  rpc.setApi(mainApi.mainApi)
 
   if (isDev) {
     // noinspection ES6MissingAwait
