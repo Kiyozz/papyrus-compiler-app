@@ -99,26 +99,22 @@ class PapyrusCompilerService implements Compiler {
 
     this.#logger.debug('other game source', otherSourceAbsolute)
 
-    if (path.exists(otherSourceAbsolute)) {
-      this.#logger.debug(`import of the ${otherSource} folder`)
-
-      runner.imports = [importDir, otherSourceAbsolute, gameSourceAbsolute]
-    }
-
     if (gameType === GameType.fo4) {
-      this.#logger.debug('import of fo4 sources')
+      // fo4 kept the le layout (Scripts/Source) and turned its subfolders into
+      // namespaces, so only Source, Source/Base and Source/User are roots: the
+      // compiler walks down to the namespace folders on its own.
+      this.#logger.debug('import of fo4 source roots')
 
       runner.imports = [
         importDir,
-        ...(await path.getPathsInFolder(
-          [`${gamePath}/Data/Scripts/Source/**`],
-          {
-            onlyDirectories: true,
-            deep: 4,
-          },
-        )),
-        ...runner.imports.filter((i) => i !== importDir),
-      ]
+        gameSourceAbsolute,
+        path.join(gameSourceAbsolute, 'Base'),
+        path.join(gameSourceAbsolute, 'User'),
+      ].filter((i) => path.exists(i))
+    } else if (path.exists(otherSourceAbsolute)) {
+      this.#logger.debug(`import of the ${otherSource} folder`)
+
+      runner.imports = [importDir, otherSourceAbsolute, gameSourceAbsolute]
     }
 
     runner.imports = uniqImports(runner.imports)
