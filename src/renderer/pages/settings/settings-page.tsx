@@ -263,7 +263,7 @@ export function SettingsPage() {
           </BreadcrumbItem>
         </LayoutHeaderTitle>
         <LayoutHeaderActions>
-          <Tooltip>
+          <Tooltip disableHoverableContent>
             <TooltipTrigger asChild>
               <Button
                 onClick={() => openDocumentation('settings-app-bar')}
@@ -276,7 +276,7 @@ export function SettingsPage() {
               <Trans>Documentation</Trans>
             </TooltipContent>
           </Tooltip>
-          <Tooltip>
+          <Tooltip disableHoverableContent>
             <TooltipTrigger asChild>
               <Button onClick={onClickPageRefresh} size="icon">
                 <RotateCcwIcon />
