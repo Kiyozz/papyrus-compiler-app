@@ -3,7 +3,7 @@
  */
 
 import cx from 'classnames'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { useDropzone } from '#/hooks/use-dropzone.ts'
 
 interface RenderChildren {
@@ -35,6 +35,20 @@ function DropScripts({
   })
 
   const inputRef = useRef<HTMLInputElement>(null)
+
+  // closing the picker without picking anything fires cancel, never change
+  useEffect(() => {
+    const input = inputRef.current
+
+    if (input === null) return
+
+    const onCancel = () => onFileDialogCancel()
+
+    input.addEventListener('cancel', onCancel)
+
+    return () => input.removeEventListener('cancel', onCancel)
+  }, [onFileDialogCancel])
+
   const open = useCallback(() => {
     if (inputRef.current) {
       onFileDialogOpen()
