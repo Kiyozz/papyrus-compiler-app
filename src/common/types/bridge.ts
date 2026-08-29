@@ -11,6 +11,7 @@ import type { BadError } from './bad-error'
 import type { CompilationResult } from './compilation-result'
 import type { Config } from './config'
 import type { DialogType } from './dialog'
+import type { LogLevel } from '../log-level'
 import type { Disposable } from './disposable'
 import type { Platform } from './platform'
 import type { Script } from './script'
@@ -38,6 +39,10 @@ export interface Bridge {
 
   clipboard: {
     copy: (text: string) => Promise<void>
+  }
+
+  log: {
+    write: (level: LogLevel, scope: string, message: string) => Promise<void>
   }
 
   config: {

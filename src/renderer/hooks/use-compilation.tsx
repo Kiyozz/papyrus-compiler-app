@@ -10,12 +10,15 @@ import React, {
   useState,
 } from 'react'
 import { bridge } from '../bridge'
+import { Logger } from '../lib/logger'
 import { ScriptStatus } from '../enums/script-status.enum'
 import { chunk } from '../utils/chunk'
 import { scriptEquals, scriptInList } from '../utils/scripts/equals'
 import { isRunningScript } from '../utils/scripts/status'
 import { useApp } from './use-app'
 import type { ScriptRenderer } from '../types'
+
+const logger = new Logger('Compilation')
 
 interface StartOptions {
   scripts: ScriptRenderer[]
@@ -68,7 +71,7 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
 
   const start = useCallback(
     async ({ scripts }: StartOptions) => {
-      console.log('Starting compilation for', scripts)
+      logger.debug('starting compilation for', scripts.length, 'scripts')
       setCompilationLogs((logs) => {
         return logs.filter(([s]) => {
           return !scriptInList(scripts)(s)

@@ -3,6 +3,7 @@
  */
 
 import type { PartialDeep } from 'type-fest'
+import type { LogLevel } from '../log-level'
 import type {
   TelemetryEvent,
   TelemetryEventProperties,
@@ -28,6 +29,9 @@ export interface MainAPI {
   online(online: boolean): Promise<void>
   clipboard: {
     copy(text: string): Promise<void>
+  }
+  log: {
+    write(level: LogLevel, scope: string, message: string): Promise<void>
   }
   config: {
     update(

@@ -261,7 +261,7 @@ msgstr "Reduce if you experience latency when starting the compilation"
 msgid "Retirer"
 msgstr "Remove"
 
-#: src/renderer/components/dialog/dialog-text-field.tsx:55
+#: src/renderer/components/dialog/dialog-text-field.tsx:58
 msgid "Sélectionner un dossier"
 msgstr "Select a folder"
 

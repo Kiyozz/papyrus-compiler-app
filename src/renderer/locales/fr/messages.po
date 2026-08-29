@@ -261,7 +261,7 @@ msgstr "Réduisez si vous rencontrez des blocages quand vous lancez la compilati
 msgid "Retirer"
 msgstr "Retirer"
 
-#: src/renderer/components/dialog/dialog-text-field.tsx:55
+#: src/renderer/components/dialog/dialog-text-field.tsx:58
 msgid "Sélectionner un dossier"
 msgstr "Sélectionner un dossier"
 
