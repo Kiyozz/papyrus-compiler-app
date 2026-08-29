@@ -10,7 +10,7 @@ import babel from '@rolldown/plugin-babel'
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import Unfonts from 'unplugin-fonts/vite'
-import { lingui } from '@lingui/vite-plugin'
+import { lingui, linguiTransformerBabelPreset } from '@lingui/vite-plugin'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import { MOD_URL_DEFAULT } from '../common/env'
 
@@ -32,8 +32,7 @@ export default defineConfig({
     }),
     react(),
     babel({
-      presets: [reactCompilerPreset()],
-      plugins: ['@lingui/babel-plugin-lingui-macro'],
+      presets: [reactCompilerPreset(), linguiTransformerBabelPreset()],
     }),
     lingui(),
     tailwindcss(),

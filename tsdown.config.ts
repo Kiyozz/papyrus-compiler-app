@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { defineConfig } from 'tsdown'
 import babel from '@rolldown/plugin-babel'
-import { lingui } from '@lingui/vite-plugin'
+import { linguiTransformerBabelPreset } from '@lingui/vite-plugin'
 import { MOD_URL_DEFAULT } from './src/common/env.ts'
 
 const pkg = JSON.parse(
@@ -24,12 +24,14 @@ export default defineConfig({
     skipNodeModulesBundle: true,
   },
   plugins: [
-    lingui(),
     babel({
-      plugins: [
-        '@lingui/babel-plugin-lingui-macro',
-        ['@babel/plugin-syntax-decorators', { version: '2023-11' }],
+      presets: [
+        linguiTransformerBabelPreset(
+          {},
+          { configPath: './lingui.main.config.ts' },
+        ),
       ],
+      plugins: [['@babel/plugin-syntax-decorators', { version: '2023-11' }]],
     }),
   ],
   define: {
