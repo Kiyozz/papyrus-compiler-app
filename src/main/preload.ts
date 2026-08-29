@@ -3,11 +3,11 @@
  */
 
 import { contextBridge, ipcRenderer, webUtils } from 'electron'
-import { createSecureIpcBridge } from 'kkrpc/electron-ipc'
+import { createSecureIpcBridge } from 'kkrpc/electron'
 
 const securedIpcRenderer = createSecureIpcBridge({
   ipcRenderer,
-  channelPrefix: 'kkrpc-',
+  channelPrefix: 'kkrpc:',
 })
 
 contextBridge.exposeInMainWorld('electron', {

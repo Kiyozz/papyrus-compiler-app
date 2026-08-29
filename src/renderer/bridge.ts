@@ -2,8 +2,8 @@
  * 2022-2026 Kiyozz.
  */
 
-import type { webUtils as electronWebUtils } from 'electron'
-import { ElectronIpcRendererIO, RPCChannel } from 'kkrpc/electron-ipc'
+import { RPCChannel } from 'kkrpc'
+import { electronIpcTransport } from 'kkrpc/electron'
 import { fromError } from '../common/from-error'
 import type { Bridge } from '../common/types/bridge'
 import type { Disposable } from '../common/types/disposable'
@@ -51,8 +51,12 @@ const rendererApi: RendererAPI = {
   },
 }
 
-const io = new ElectronIpcRendererIO()
-const rpc = new RPCChannel<RendererAPI, MainAPI>(io, { expose: rendererApi })
+const transport = electronIpcTransport({
+  endpoint: window.electron.ipcRenderer,
+})
+const rpc = new RPCChannel<RendererAPI, MainAPI>(transport, {
+  expose: rendererApi,
+})
 const mainApi = rpc.getAPI()
 
 export const bridge: Bridge = {
@@ -172,6 +176,4 @@ export const bridge: Bridge = {
   },
 }
 
-export const webUtils = (
-  window.electron as unknown as { webUtils: typeof electronWebUtils }
-).webUtils
+export const webUtils = window.electron.webUtils
