@@ -32,6 +32,7 @@ export class MainApi {
   mainApi: MainAPI
 
   readonly #logger = new Logger('MainApi')
+  readonly #rendererLoggers = new Map<string, Logger>()
   readonly #mainMenu: MainMenu
   readonly #win: MainBrowserWindow
   readonly #contextMenu: ContextMenu
@@ -83,6 +84,11 @@ export class MainApi {
       },
       clipboard: {
         copy: (text) => clipboardCopyHandler.listen({ text }),
+      },
+      log: {
+        write: async (level, scope, message) => {
+          this.#rendererLogger(scope)[level](message)
+        },
       },
       config: {
         get: () => configGetHandler.listen(),
@@ -157,5 +163,20 @@ export class MainApi {
         },
       },
     }
+  }
+
+  // the renderer has no direct access to electron-log, it goes through here
+  #rendererLogger(scope: string): Logger {
+    const existing = this.#rendererLoggers.get(scope)
+
+    if (existing !== undefined) {
+      return existing
+    }
+
+    const logger = new Logger(`Renderer:${scope}`)
+
+    this.#rendererLoggers.set(scope, logger)
+
+    return logger
   }
 }

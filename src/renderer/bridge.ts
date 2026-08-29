@@ -86,6 +86,9 @@ export const bridge: Bridge = {
   clipboard: {
     copy: (text) => mainApi.clipboard.copy(text),
   },
+  log: {
+    write: (level, scope, message) => mainApi.log.write(level, scope, message),
+  },
   config: {
     update: (partialConfig, override) =>
       mainApi.config.update(partialConfig, override),

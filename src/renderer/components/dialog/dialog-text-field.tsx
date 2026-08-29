@@ -5,6 +5,7 @@
 import React, { useState, type ReactNode } from 'react'
 import type { DialogType } from '#common/types/dialog.ts'
 import { bridge } from '@renderer/bridge.ts'
+import { Logger } from '@renderer/lib/logger.ts'
 import {
   FormControl,
   FormDescription,
@@ -17,6 +18,8 @@ import { Input } from '@renderer/components/ui/input.tsx'
 import { Button } from '@renderer/components/ui/button.tsx'
 import { FolderIcon, FolderOpenIcon } from 'lucide-react'
 import { useLingui } from '@lingui/react/macro'
+
+const logger = new Logger('DialogTextField')
 
 interface DialogTextFieldProps {
   name: string
@@ -76,7 +79,7 @@ function DialogTextField({
                       field.onChange(result)
                     }
                   } catch (err) {
-                    console.log(err)
+                    logger.error(err)
                   }
                 }}
                 onMouseEnter={onMouseEnter}
