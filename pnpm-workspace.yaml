@@ -1,5 +1,4 @@
 onlyBuiltDependencies:
-  - electron
   - electron-winstaller
   - lefthook
   - msw
