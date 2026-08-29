@@ -20,6 +20,8 @@ import { RecentFilesStore } from '#main/store/recent-files/store.ts'
 import Emittery from 'emittery'
 import { PapyrusCompilerService } from '#main/compilation/compile.ts'
 import { Compiler } from '#main/compilation/compiler.ts'
+import { Telemetry } from '#main/telemetry/telemetry.ts'
+import { Env } from '#main/env.ts'
 
 const emitter = new Emittery()
 
@@ -60,6 +62,13 @@ container.swap(Compiler, (resolver) => {
   return resolver.make(PapyrusCompilerService)
 })
 container.singleton(EventEmitter, () => new EventEmitter())
+// one instance only: the queue and the active/online state are shared
+container.singleton(Telemetry, async (resolver) => {
+  const settingsStore = await resolver.make(SettingsStore)
+  const env = await resolver.make(Env)
+
+  return new Telemetry(settingsStore, env)
+})
 container.singleton(RpcChannel, async (resolver) => {
   const win = await resolver.make(MainBrowserWindow)
   const transport = electronIpcTransport({

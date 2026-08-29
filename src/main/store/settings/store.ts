@@ -40,6 +40,9 @@ const json = JSON.parse(fs.readFileSync(jsonPath).toString()) as {
   version: string
 }
 
+// electron-store default file name, the settings store does not override it
+const SETTINGS_STORE_NAME = 'config'
+
 const defaultSettingsStoreConfig: Config = {
   game: {
     path: '',
@@ -71,6 +74,16 @@ const defaultSettingsStoreConfig: Config = {
 @inject()
 class SettingsStore extends Store<Config> {
   #logger = new Logger('SettingsStore')
+  #firstLaunch = false
+
+  // true when no settings file existed when the app started
+  get firstLaunch(): boolean {
+    return this.#firstLaunch
+  }
+
+  set firstLaunch(firstLaunch: boolean) {
+    this.#firstLaunch = firstLaunch
+  }
 
   resetSettings() {
     this.store = { ...defaultSettingsStoreConfig }
@@ -266,6 +279,14 @@ class SettingsStore extends Store<Config> {
 }
 
 function createSettingsStore() {
+  // the settings file is written on the very first run: no file means the app
+  // has never been launched on this machine
+  const settingsPath = join(
+    app.getPath('userData'),
+    `${SETTINGS_STORE_NAME}.json`,
+  )
+  const firstLaunch = !fs.existsSync(settingsPath)
+
   const store = new SettingsStore({
     defaults: defaultSettingsStoreConfig,
     projectVersion: json.version,
@@ -279,6 +300,10 @@ function createSettingsStore() {
       '5.9.0': migrate590,
     },
   } as never)
+
+  // store.path is only known once the file has been written: comparing it here
+  // guards against a wrong first launch if electron-store renames the file
+  store.firstLaunch = firstLaunch && store.path === settingsPath
 
   store.check(cliArgs)
 
