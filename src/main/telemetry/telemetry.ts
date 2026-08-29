@@ -3,8 +3,7 @@
  */
 
 import is from '@sindresorhus/is'
-import fetch, { Headers } from 'electron-fetch'
-import type { Response } from 'electron-fetch'
+import { net } from 'electron'
 import Queue from 'queue'
 import { TelemetryEvent } from '#common/telemetry-event.ts'
 import type { TelemetryEventProperties } from '#common/telemetry-event.ts'
@@ -99,7 +98,7 @@ export class Telemetry {
       this.#telemetryQueue.push(async () => {
         try {
           this.#logger.debug('send telemetry data', payloadWithoutAppKey)
-          const response = await fetch(`${this.#api}${endpoint}`, {
+          const response = await net.fetch(`${this.#api}${endpoint}`, {
             method,
             body: JSON.stringify(payload),
             headers: Telemetry._getHeaders(),
