@@ -75,6 +75,12 @@ export const toExecutable = (game: GameType): Executable => {
     case GameType.sf:
       return Executable.sf
     default:
+      // falling back without a word made a corrupted game type look like the
+      // user had picked Skyrim SE, pointing every error at the wrong game
+      console.error(
+        `RuntimeError: unsupported GameType "${game}", falling back to ${Executable.se}`,
+      )
+
       return Executable.se
   }
 }
