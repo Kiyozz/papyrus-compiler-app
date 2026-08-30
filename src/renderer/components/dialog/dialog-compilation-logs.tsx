@@ -17,10 +17,6 @@ import { useApp } from '@renderer/hooks/use-app.tsx'
 import { useCompilation } from '@renderer/hooks/use-compilation.tsx'
 import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
 import { logsState } from '@renderer/lib/logs.ts'
-import {
-  isFailedScript,
-  isSuccessScript,
-} from '@renderer/utils/scripts/status.ts'
 import { ClipboardIcon, FileXIcon, Trash2Icon } from 'lucide-react'
 import { type PropsWithChildren, useState } from 'react'
 import { Trans, useLingui } from '@lingui/react/macro'
@@ -40,9 +36,7 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
   const [showErrorOnly, setShowErrorOnly] = useState(false)
   const [showFullPath, setShowFullPath] = useState(false)
 
-  const logs = showErrorOnly
-    ? rawLogs.filter(([script]) => isFailedScript(script))
-    : rawLogs
+  const logs = showErrorOnly ? rawLogs.filter((log) => !log.success) : rawLogs
 
   const onClickClearLogs = () => {
     clearCompilationLogs()
@@ -112,11 +106,11 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
                     <Trans>Aucune erreur !</Trans>
                   </li>
                 )}
-                {logs.map(([script, log]) => {
+                {logs.map(({ script, output, success }) => {
                   const onClickCopy = () => {
                     send(TelemetryEvent.compilationLogsCopy, {})
                     copyToClipboard(
-                      `${script.name}-${script.path}\n\n${log.trim()}\n`,
+                      `${script.name}-${script.path}\n\n${output.trim()}\n`,
                     )
                     toast.info(t`Copier avec succès`, {
                       duration: Infinity,
@@ -126,9 +120,6 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
                   const onClickDelete = () => {
                     clearCompilationLogs(script)
                   }
-
-                  const isSuccessful = isSuccessScript(script)
-                  const isError = isFailedScript(script)
 
                   return (
                     <li
@@ -149,12 +140,12 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
                             ) : (
                               <span>{script.name}</span>
                             )}
-                            {isSuccessful && (
+                            {success && (
                               <Badge variant="success">
                                 <Trans>Succès</Trans>
                               </Badge>
                             )}
-                            {isError && (
+                            {!success && (
                               <Badge variant="destructive">
                                 <Trans>Échec</Trans>
                               </Badge>
@@ -179,7 +170,7 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
                         id={`${script.id}-logs`}
                         role="log"
                       >
-                        {log.split('\n').map((outputLine, i) => (
+                        {output.split('\n').map((outputLine, i) => (
                           <span
                             className="block select-text wrap-break-word text-balance font-mono text-xs leading-6"
                             key={i}

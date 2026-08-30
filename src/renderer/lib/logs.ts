@@ -2,18 +2,13 @@
  * 2026 Kiyozz.
  */
 
-import type { ScriptRenderer } from '@renderer/types/index.ts'
-import {
-  isFailedScript,
-  isSuccessScript,
-} from '@renderer/utils/scripts/status.ts'
+import type { CompilationLog } from '@renderer/types/index.ts'
 
-export function logsState(logs: [ScriptRenderer, string][]) {
+export function logsState(logs: CompilationLog[]) {
   const hasNoLogs = logs.length === 0
   const hasLogs = logs.length > 0
-  const hasErrorsInLogs = logs.some(([log]) => isFailedScript(log))
-  const isAllScriptsSuccessInLogs =
-    hasLogs && logs.every(([log]) => isSuccessScript(log))
+  const hasErrorsInLogs = logs.some((log) => !log.success)
+  const isAllScriptsSuccessInLogs = hasLogs && logs.every((log) => log.success)
 
   return {
     hasNoLogs,
