@@ -13,7 +13,7 @@ Assign the pull request to the authenticated GitHub user of the current session 
 ```md
 ## Issues
 
-[{issue_number}]
+Closes #{issue_number}
 
 ## Description
 

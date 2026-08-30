@@ -30,7 +30,7 @@ import type { Config } from '#common/types/config.ts'
 import { inject } from '#main/inject.ts'
 import is from '@sindresorhus/is'
 import { Logger } from '#main/logger.ts'
-import { DEFAULT_COMPILER_PATH } from '#main/constants.ts'
+import { toDefaultCompilerPath } from '#main/constants.ts'
 import { validateGroup } from '#main/validators/group.validator.ts'
 
 const jsonPath = isDev
@@ -60,6 +60,9 @@ const defaultSettingsStoreConfig: Config = {
   groups: [],
   telemetry: {
     active: true,
+  },
+  setup: {
+    done: false,
   },
   theme: Theme.system,
   locale: osLocale(),
@@ -146,6 +149,7 @@ class SettingsStore extends Store<Config> {
   #checkCompilerPath(args?: CliArgs) {
     const compilerPath = this.get('compilation.compilerPath')
     const gamePath: string = this.get('game.path')
+    const gameType: GameType = this.get('game.type')
     const compilerPathArgs = args?.['compiler-path']
 
     if (validateGame.compilerPath(compilerPathArgs)) {
@@ -162,7 +166,7 @@ class SettingsStore extends Store<Config> {
     ) {
       this.set(
         'compilation.compilerPath',
-        join(gamePath, DEFAULT_COMPILER_PATH),
+        join(gamePath, toDefaultCompilerPath(gameType)),
       )
     }
   }
@@ -224,6 +228,22 @@ class SettingsStore extends Store<Config> {
     })
   }
 
+  /**
+   * A configuration that already points at a game was set up before the wizard
+   * existed: only a truly empty one is worth walking a user through.
+   */
+  #checkSetup() {
+    const setup = this.get('setup')
+
+    if (
+      is.nullOrUndefined(setup) ||
+      !is.object(setup) ||
+      !is.boolean(setup.done)
+    ) {
+      this.set('setup', { done: is.nonEmptyString(this.get('game.path')) })
+    }
+  }
+
   #checkTelemetry() {
     const telemetry = this.get('telemetry')
 
@@ -265,6 +285,7 @@ class SettingsStore extends Store<Config> {
     this.#checkMo2()
     this.#checkGameType(args)
     this.#checkGamePath(args)
+    this.#checkSetup()
     this.#checkFlag()
     this.#checkCompilerPath(args)
     this.#checkOutput(args)

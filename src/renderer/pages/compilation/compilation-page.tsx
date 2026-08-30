@@ -33,12 +33,14 @@ import {
 } from 'lucide-react'
 import { useCallback, useEffect, useRef } from 'react'
 import { Trans, useLingui } from '@lingui/react/macro'
-import { Link } from '@tanstack/react-router'
+import { useNavigate } from '@tanstack/react-router'
 import { useDidMount } from 'rooks'
 import { toast } from 'sonner'
 import { TelemetryEvent } from '#common/telemetry-event.ts'
 import type { Script } from '#common/types/script.ts'
+import type { DiagnosticId } from '#common/types/diagnostic.ts'
 import { useSettings } from '../settings/use-settings.tsx'
+import { useSetup } from '@renderer/hooks/use-setup.tsx'
 import GroupsMenu from './groups-menu.tsx'
 import ScriptLine from './script-line.tsx'
 import {
@@ -83,7 +85,9 @@ export function CompilationPage() {
   const { setRecentFiles } = useRecentFiles()
   const { send } = useTelemetry()
   const { drop, isFileDialogActive } = useDrop()
-  const { checkConfig, configError } = useSettings()
+  const { diagnose, diagnostic, hasBlockingError } = useSettings()
+  const navigate = useNavigate()
+  const { isOpen: isSetupOpen } = useSetup()
   const scrollRef = useRef(null)
   const rowVirtualizer = useVirtualizer({
     count: scripts.length,
@@ -94,7 +98,7 @@ export function CompilationPage() {
   })
 
   useDidMount(() => {
-    void checkConfig()
+    void diagnose()
   })
 
   const onDrop = useCallback(
@@ -177,29 +181,36 @@ export function CompilationPage() {
 
   useEffect(() => {
     let toastId = undefined as string | number | undefined
+    const error = diagnostic.items.find((item) => item.severity === 'error')
 
-    if (configError !== false) {
-      const checkErrorDescriptions: Record<string, string> = {
-        game: t`Vérifiez le chemin du jeu.`,
+    // the setup wizard already shows the very same diagnostic, in place
+    if (error !== undefined && !isSetupOpen) {
+      const descriptions: Record<DiagnosticId, string> = {
+        'game-exe': t`Vérifiez le chemin du jeu.`,
+        'ck-missing': t`Le Creation Kit n'est pas installé.`,
+        'sources-archived': t`Des archives de scripts sources restent à extraire.`,
         compiler: t`Vérifiez le chemin du compilateur.`,
-        scripts: t`Vérifiez l'installation de Creation Kit.`,
+        'sources-missing': t`Vérifiez l'installation de Creation Kit.`,
+        // warnings never reach this map, the toast only shows errors
+        'compiler-foreign': '',
+        'extender-sources': '',
       }
       toastId = toast.error(t`Configuration invalide`, {
+        // the toaster lives in its own portal, outside the router: a Link
+        // rendered in there has no router to read from
         action: (
           <Button
             variant="link"
             size="sm"
             onClick={() => {
               toast.dismiss(toastId)
+              void navigate({ to: '/settings' })
             }}
-            asChild
           >
-            <Link to="/settings">
-              <Trans>Plus de détails</Trans>
-            </Link>
+            <Trans>Plus de détails</Trans>
           </Button>
         ),
-        description: checkErrorDescriptions[configError as string],
+        description: descriptions[error.id],
         duration: Infinity,
       })
     }
@@ -209,7 +220,7 @@ export function CompilationPage() {
         toast.dismiss(toastId)
       }
     }
-  }, [])
+  }, [diagnostic, isSetupOpen, navigate, t])
 
   return (
     <>
@@ -268,8 +279,8 @@ export function CompilationPage() {
         <>
           <div className="mb-4 flex gap-2 px-6">
             <Button
-              aria-disabled={Boolean(configError) || isRunning}
-              disabled={Boolean(configError) || isRunning}
+              aria-disabled={hasBlockingError || isRunning}
+              disabled={hasBlockingError || isRunning}
               onClick={onClickStart}
             >
               <PlayIcon />

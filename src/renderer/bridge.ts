@@ -101,7 +101,11 @@ export const bridge: Bridge = {
         },
       }
     },
-    check: () => mainApi.config.check(),
+    diagnose: () => mainApi.config.diagnose(),
+    firstLaunch: () => mainApi.config.firstLaunch(),
+  },
+  ck: {
+    extract: (archives) => mainApi.ck.extract(archives),
   },
   isProduction: () => mainApi.isProduction(),
   compilation: {

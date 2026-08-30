@@ -5,9 +5,12 @@
 import is from '@sindresorhus/is'
 import deepmerge from 'deepmerge'
 import { Logger, applyLogLevel } from '../logger'
+import { toDefaultCompilerPath } from '../constants'
+import * as path from '../path/path'
 import type { PartialDeep } from 'type-fest'
 import type { LogLevel } from '#common/log-level.ts'
 import type { Config } from '#common/types/config.ts'
+import type { GamePath, GameType } from '#common/game.ts'
 import { inject } from '#main/inject.ts'
 import { SettingsStore } from '#main/store/settings/store.ts'
 
@@ -66,6 +69,43 @@ export class ConfigUpdateHandler {
       applyLogLevel(args.config.logLevel as LogLevel)
     }
 
+    if (!is.undefined(args.config.game)) {
+      this.#recoverCompilerPath()
+    }
+
     return this.#settingsStore.store
+  }
+
+  /**
+   * The kit installs its compiler inside the game folder, at a place only the
+   * game type decides. Picking a game or a folder is therefore enough to find
+   * it, as long as the stored path leads nowhere: a compiler that works is the
+   * user's own choice and is never touched, whichever folder it lives in. A
+   * Skyrim VR setup legitimately runs the Skyrim Special Edition one.
+   */
+  #recoverCompilerPath() {
+    const compilerPath: string = this.#settingsStore.get(
+      'compilation.compilerPath',
+    )
+
+    if (is.nonEmptyString(compilerPath) && path.exists(compilerPath)) {
+      return
+    }
+
+    const gamePath: GamePath = this.#settingsStore.get('game.path')
+    const gameType: GameType = this.#settingsStore.get('game.type')
+
+    if (!is.nonEmptyString(gamePath)) {
+      return
+    }
+
+    const candidate = path.join(gamePath, toDefaultCompilerPath(gameType))
+
+    if (!path.exists(candidate)) {
+      return
+    }
+
+    this.#logger.info('the Papyrus compiler was found at', candidate)
+    this.#settingsStore.set('compilation.compilerPath', candidate)
   }
 }

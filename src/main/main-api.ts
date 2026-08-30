@@ -11,7 +11,8 @@ import { InAppErrorHandler } from '#event-handlers/in-app-error.handler.ts'
 import { ClipboardCopyHandler } from '#event-handlers/clipboard-copy.handler.ts'
 import { ConfigGetHandler } from '#event-handlers/config-get.handler.ts'
 import { ConfigUpdateHandler } from '#event-handlers/config-update.handler.ts'
-import { ConfigCheckHandler } from '#event-handlers/config-check.handler.ts'
+import { ConfigDiagnoseHandler } from '#event-handlers/config-diagnose.handler.ts'
+import { CkExtractHandler } from '#event-handlers/ck-extract.handler.ts'
 import { IsProductionHandler } from '#event-handlers/is-production.handler.ts'
 import { ScriptCompileEvent } from '#event-handlers/script-compile.event.ts'
 import { DialogHandler } from '#event-handlers/dialog.handler.ts'
@@ -27,6 +28,7 @@ import { Platform } from '#main/platform.ts'
 import { Telemetry } from '#main/telemetry/telemetry.ts'
 import { MainMenu } from '#main/main-menu.ts'
 import { ContextMenu } from '#main/context-menu.ts'
+import { SettingsStore } from '#main/store/settings/store.ts'
 
 @inject()
 export class MainApi {
@@ -44,12 +46,14 @@ export class MainApi {
     telemetry: Telemetry,
     mainMenu: MainMenu,
     contextMenu: ContextMenu,
+    settingsStore: SettingsStore,
     telemetryHandler: TelemetryHandler,
     telemetryActiveHandler: TelemetryActiveHandler,
     clipboardCopyHandler: ClipboardCopyHandler,
     configGetHandler: ConfigGetHandler,
     configUpdateHandler: ConfigUpdateHandler,
-    configCheckHandler: ConfigCheckHandler,
+    configDiagnoseHandler: ConfigDiagnoseHandler,
+    ckExtractHandler: CkExtractHandler,
     scriptCompileEvent: ScriptCompileEvent,
     recentFilesGetHandler: RecentFilesGetHandler,
     recentFilesSetHandler: RecentFilesSetHandler,
@@ -99,7 +103,11 @@ export class MainApi {
             override,
           })
         },
-        check: () => configCheckHandler.listen(),
+        diagnose: () => configDiagnoseHandler.listen(),
+        firstLaunch: () => Promise.resolve(settingsStore.firstLaunch),
+      },
+      ck: {
+        extract: (archives) => ckExtractHandler.listen(archives),
       },
       isProduction: () => Promise.resolve(new IsProductionHandler().listen()),
       compilation: {

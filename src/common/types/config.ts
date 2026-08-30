@@ -33,12 +33,18 @@ interface Telemetry {
   active: boolean
 }
 
+interface Setup {
+  /** the setup wizard was walked through to its end at least once */
+  done: boolean
+}
+
 export interface Config {
   game: Game
   compilation: Compilation
   mo2: ConfigMo2
   groups: Group[]
   telemetry: Telemetry
+  setup: Setup
   theme: Theme
   locale: string
   logLevel: LogLevel

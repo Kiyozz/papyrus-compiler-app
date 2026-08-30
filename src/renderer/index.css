@@ -212,6 +212,9 @@
 }
 
 .titlebar {
+  /* a modal dialog turns off pointer events on the body: the window controls
+     have to stay reachable, there is no other way to quit the app */
+  pointer-events: auto;
   font-size: 12px;
   color: #171717;
   position: relative;

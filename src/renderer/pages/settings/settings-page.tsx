@@ -57,7 +57,7 @@ export function SettingsPage() {
     setConfig,
     refreshConfig,
   } = useApp()
-  const { checkConfig, resetConfigError } = useSettings()
+  const { diagnose, resetDiagnostic } = useSettings()
   const { send } = useTelemetry()
   const { open: openDocumentation } = useDocumentation()
 
@@ -82,32 +82,32 @@ export function SettingsPage() {
     () => debounce(setConfig, { wait: 500 }),
     [setConfig],
   )
-  const debouncedCheckInstallation = useMemo(
-    () => debounce(checkConfig, { wait: 500 }),
-    [checkConfig],
+  const debouncedDiagnose = useMemo(
+    () => debounce(diagnose, { wait: 500 }),
+    [diagnose],
   )
 
   useEffect(() => {
-    resetConfigError()
+    resetDiagnostic()
 
     if (!game.path || !compilation.compilerPath) {
       return
     }
 
-    void debouncedCheckInstallation()
+    void debouncedDiagnose()
   }, [
     compilation.compilerPath,
-    debouncedCheckInstallation,
+    debouncedDiagnose,
     game.path,
     game.type,
-    resetConfigError,
+    resetDiagnostic,
   ])
 
   const onClickPageRefresh = useCallback(async () => {
     send(TelemetryEvent.settingsRefresh, {})
     await refreshConfig()
-    await checkConfig()
-  }, [refreshConfig, checkConfig, send])
+    await diagnose()
+  }, [refreshConfig, diagnose, send])
 
   useEffect(() => {
     const { unsubscribe } = form.watch((value, info) => {
@@ -128,7 +128,7 @@ export function SettingsPage() {
               return
             }
 
-            resetConfigError()
+            resetDiagnostic()
             send(TelemetryEvent.settingsGame, { game: gameType })
             setConfig({
               game: { type: gameType },
@@ -247,7 +247,7 @@ export function SettingsPage() {
     return () => {
       unsubscribe()
     }
-  }, [send, setConfig, debouncedSetConfig, resetConfigError])
+  }, [send, setConfig, debouncedSetConfig, resetDiagnostic])
 
   return (
     <>

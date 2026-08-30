@@ -58,6 +58,7 @@ function DialogContent({
   children,
   showCloseButton = true,
   fullscreen = false,
+  onInteractOutside,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean
@@ -69,11 +70,27 @@ function DialogContent({
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          'fixed dialog-fullscreen-top left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-4xl bg-popover p-6 text-sm text-popover-foreground ring-1 ring-foreground/5 duration-100 outline-none sm:max-w-md data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
+          'fixed dialog-fullscreen-top left-1/2 z-50 grid max-h-[calc(100svh-var(--titlebar-height)-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-4xl bg-popover p-6 text-sm text-popover-foreground ring-1 ring-foreground/5 duration-100 outline-none sm:max-w-md data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
           fullscreen &&
-            'h-page-with-titlebar px-0 ring-1 ring-background sm:max-w-screen rounded-none',
+            'h-page-with-titlebar max-h-none px-0 ring-1 ring-background sm:max-w-screen rounded-none',
           className,
         )}
+        onInteractOutside={(event) => {
+          // sonner portals its toaster into document.body: dismissing a toast
+          // is seen as an interaction outside the content and closes the dialog
+          const target = event.detail.originalEvent.target
+
+          if (
+            target instanceof Element &&
+            target.closest('[data-sonner-toaster]')
+          ) {
+            event.preventDefault()
+
+            return
+          }
+
+          onInteractOutside?.(event)
+        }}
         {...props}
       >
         {children}
@@ -94,11 +111,14 @@ function DialogContent({
   )
 }
 
+// the header and the footer never shrink: a dialog that reaches its max
+// height has to give the whole overflow to its scrolling body, otherwise every
+// child is squeezed and they end up drawing over each other
 function DialogHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn('flex flex-col gap-2', className)}
+      className={cn('flex shrink-0 flex-col gap-2', className)}
       {...props}
     />
   )
@@ -116,7 +136,7 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        'flex flex-col-reverse gap-2 sm:flex-row sm:justify-end',
+        'flex shrink-0 flex-col-reverse gap-2 sm:flex-row sm:justify-end',
         className,
       )}
       {...props}
