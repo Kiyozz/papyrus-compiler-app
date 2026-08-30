@@ -1,4 +1,3 @@
-onlyBuiltDependencies:
-  - electron-winstaller
-  - lefthook
-  - msw
+allowBuilds:
+  electron-winstaller: true
+  lefthook: true
