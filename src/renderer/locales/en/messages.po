@@ -77,7 +77,7 @@ msgstr "No scripts"
 msgid "Aucune erreur !"
 msgstr "No errors!"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:111
+#: src/renderer/pages/settings/settings-preferences-section.tsx:39
 msgid "Avertissement"
 msgstr "Warning"
 
@@ -105,7 +105,7 @@ msgstr "Load"
 msgid "Chemin complet"
 msgstr "Full path"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:111
+#: src/renderer/pages/settings/settings-game-section.tsx:108
 msgid "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
 msgstr "Path to PapyrusCompiler.exe. This file comes from the CreationKit installation. More details on PCA's documentation."
 
@@ -118,8 +118,7 @@ msgstr "Select PapyrusCompiler.exe"
 msgid "Choisissez le dossier qui contient {0}."
 msgstr "Choose the folder that contains {0}."
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:54
-#: src/renderer/pages/settings/settings-theme-section.tsx:47
+#: src/renderer/pages/settings/settings-preferences-section.tsx:28
 msgid "Clair"
 msgstr "Light"
 
@@ -127,7 +126,7 @@ msgstr "Light"
 msgid "Commencez par glisser-déposer des fichiers psc pour les charger"
 msgstr "Start by dropping psc files to load them"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:103
+#: src/renderer/pages/settings/settings-game-section.tsx:100
 msgid "Compilateur Papyrus"
 msgstr "Papyrus Compiler"
 
@@ -165,7 +164,7 @@ msgstr "Creation Kit not installed"
 msgid "Créer"
 msgstr "Create"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:117
+#: src/renderer/pages/settings/settings-preferences-section.tsx:41
 msgid "Debug"
 msgstr "Debug"
 
@@ -190,11 +189,12 @@ msgid "Des scripts sources sont dans Scripts\\Source au lieu de Source\\Scripts.
 msgstr "Source scripts are sitting in Scripts\\Source instead of Source\\Scripts."
 
 #: src/renderer/components/app-sidebar.tsx:57
+#: src/renderer/components/dialog/dialog-documentation.tsx:30
 #: src/renderer/pages/settings/settings-page.tsx:283
 msgid "Documentation"
 msgstr "Documentation"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:133
+#: src/renderer/pages/settings/settings-preferences-section.tsx:146
 #: src/renderer/pages/settings/settings-telemetry-section.tsx:19
 msgid "Données d'utilisation"
 msgstr "Telemetry"
@@ -203,11 +203,11 @@ msgstr "Telemetry"
 msgid "Dossier de sortie"
 msgstr "Output folder"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:79
+#: src/renderer/pages/settings/settings-game-section.tsx:76
 msgid "Dossier du jeu"
 msgstr "Game folder"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:87
+#: src/renderer/pages/settings/settings-game-section.tsx:84
 msgid "Dossier où se trouve {exe}"
 msgstr "Folder where {exe} is located"
 
@@ -215,7 +215,7 @@ msgstr "Folder where {exe} is located"
 msgid "Échec"
 msgstr "Failed"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:108
+#: src/renderer/pages/settings/settings-preferences-section.tsx:38
 msgid "Erreur"
 msgstr "Error"
 
@@ -234,6 +234,7 @@ msgid "Extraction…"
 msgstr "Extracting…"
 
 #: src/renderer/components/dialog/dialog-changelog.tsx:156
+#: src/renderer/components/dialog/dialog-documentation.tsx:44
 msgid "Fermer"
 msgstr "Close"
 
@@ -266,7 +267,7 @@ msgstr "Something still has to be done before you can compile:"
 msgid "Impossible d'ouvrir le dossier"
 msgstr "Cannot open the folder"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:114
+#: src/renderer/pages/settings/settings-preferences-section.tsx:40
 msgid "Info"
 msgstr "Info"
 
@@ -300,6 +301,10 @@ msgstr "The compilation may fail"
 #~ msgid "La configuration semble invalide :"
 #~ msgstr "Configuration seems invalid:"
 
+#: src/renderer/components/dialog/dialog-documentation.tsx:33
+msgid "La documentation de PCA est en ligne : installation, configuration des jeux, Mod Organizer 2 et erreurs de compilation courantes."
+msgstr "PCA's documentation is online: install, game setup, Mod Organizer 2 and common compilation errors."
+
 #: src/renderer/pages/settings/settings-compilation.tsx:51
 msgid "Laissez vide pour utiliser le dossier par défaut du jeu (Data/Scripts)."
 msgstr "Leave empty to use the default game folder (Data/Scripts)."
@@ -308,8 +313,7 @@ msgstr "Leave empty to use the default game folder (Data/Scripts)."
 msgid "Lancer"
 msgstr "Start"
 
-#: src/renderer/pages/settings/settings-locale-section.tsx:24
-#: src/renderer/pages/settings/settings-preferences-section.tsx:71
+#: src/renderer/pages/settings/settings-preferences-section.tsx:86
 msgid "Langue"
 msgstr "Language"
 
@@ -364,7 +368,7 @@ msgstr "Compilation logs"
 msgid "Modifier"
 msgstr "Edit"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:96
+#: src/renderer/pages/settings/settings-preferences-section.tsx:115
 msgid "Niveau de log"
 msgstr "Log level"
 
@@ -392,6 +396,10 @@ msgstr "New version available: {latestVersion}"
 #: src/renderer/components/dialog/dialog-setup.tsx:174
 msgid "Où est installé {0} ?"
 msgstr "Where is {0} installed?"
+
+#: src/renderer/components/dialog/dialog-documentation.tsx:51
+msgid "Ouvrir la documentation"
+msgstr "Open the documentation"
 
 #: src/renderer/components/ck-diagnostic.tsx:269
 #: src/renderer/components/ck-diagnostic.tsx:447
@@ -466,7 +474,7 @@ msgstr "PCA does import it, and before Data\\Source\\Scripts: an old copy of the
 msgid "Plus de détails"
 msgstr "More details"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:30
+#: src/renderer/pages/settings/settings-preferences-section.tsx:48
 msgid "Préférences"
 msgstr "Preferences"
 
@@ -513,12 +521,12 @@ msgid "Sélectionner un dossier"
 msgstr "Select a folder"
 
 #: src/renderer/pages/settings/settings-theme-section.tsx:32
-msgid "Sélectionner un thème"
-msgstr "Select a theme"
+#~ msgid "Sélectionner un thème"
+#~ msgstr "Select a theme"
 
 #: src/renderer/pages/settings/settings-locale-section.tsx:31
-msgid "Sélectionner une langue"
-msgstr "Select a language"
+#~ msgid "Sélectionner une langue"
+#~ msgstr "Select a language"
 
 #: src/renderer/pages/settings/settings-game-section.tsx:48
 msgid "Sélectionner votre jeu"
@@ -533,8 +541,7 @@ msgstr "If you already have a PapyrusCompiler.exe elsewhere, you can point at it
 #~ msgid "Skyrim Special Edition range ses scripts sources dans Data\\Source\\Scripts, et le Creation Kit ne lit que ce dossier. Data\\Scripts\\Source est celui de Skyrim LE : tout ce qui y reste lui est invisible."
 #~ msgstr "Skyrim Special Edition keeps its source scripts in Data\\Source\\Scripts, and the Creation Kit reads that folder only. Data\\Scripts\\Source is the Skyrim LE one: whatever stays in there is invisible to it."
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:57
-#: src/renderer/pages/settings/settings-theme-section.tsx:50
+#: src/renderer/pages/settings/settings-preferences-section.tsx:29
 msgid "Sombre"
 msgstr "Dark"
 
@@ -550,8 +557,7 @@ msgstr "Next"
 msgid "Supprimer"
 msgstr "Remove"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:51
-#: src/renderer/pages/settings/settings-theme-section.tsx:44
+#: src/renderer/pages/settings/settings-preferences-section.tsx:27
 msgid "Système"
 msgstr "System"
 
@@ -568,8 +574,7 @@ msgstr "Download {0}"
 msgid "Terminer"
 msgstr "Finish"
 
-#: src/renderer/pages/settings/settings-preferences-section.tsx:39
-#: src/renderer/pages/settings/settings-theme-section.tsx:25
+#: src/renderer/pages/settings/settings-preferences-section.tsx:57
 msgid "Thème"
 msgstr "Theme"
 

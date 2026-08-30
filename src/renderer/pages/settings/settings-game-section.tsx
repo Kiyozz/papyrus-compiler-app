@@ -48,10 +48,7 @@ function SettingsGameSection() {
                   <Trans>Sélectionner votre jeu</Trans>
                 </FormLabel>
                 <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select your game" />
                     </SelectTrigger>
