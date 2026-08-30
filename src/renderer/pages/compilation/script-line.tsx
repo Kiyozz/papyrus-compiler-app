@@ -13,6 +13,7 @@ import { useOpenCompiledFolder } from '@renderer/hooks/use-open-compiled-folder.
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from '@renderer/components/ui/tooltip.tsx'
 
@@ -57,23 +58,29 @@ function ScriptLine({
       </Button>
       <span className="flex-1 font-mono text-sm">{script.name}</span>
       <IconFromStatus script={script} className="size-4" />
-      <Tooltip delayDuration={500} disableHoverableContent>
-        <TooltipTrigger asChild>
-          <Button
-            size="icon-sm"
-            variant="secondary"
-            disabled={isRunningScript(script) || script.pexPath === undefined}
-            onClick={onClickOpenFolder}
-            aria-label={t`Ouvrir le dossier du script compilé`}
-            className="size-6"
+      <TooltipProvider delay={500}>
+        <Tooltip disableHoverablePopup>
+          <TooltipTrigger
+            render={
+              <Button
+                size="icon-sm"
+                variant="secondary"
+                disabled={
+                  isRunningScript(script) || script.pexPath === undefined
+                }
+                onClick={onClickOpenFolder}
+                aria-label={t`Ouvrir le dossier du script compilé`}
+                className="size-6"
+              />
+            }
           >
             <FolderOpenIcon className="size-3.5" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <Trans>Ouvrir le dossier du script compilé</Trans>
-        </TooltipContent>
-      </Tooltip>
+          </TooltipTrigger>
+          <TooltipContent>
+            <Trans>Ouvrir le dossier du script compilé</Trans>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <Button
         size="icon-sm"
         disabled={isRunningScript(script)}

@@ -23,7 +23,7 @@ import {
   FolderOpenIcon,
   Trash2Icon,
 } from 'lucide-react'
-import { type PropsWithChildren, useState } from 'react'
+import { type ReactElement, useState } from 'react'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { toast } from 'sonner'
 import { TelemetryEvent } from '#common/telemetry-event.ts'
@@ -32,12 +32,17 @@ import { Label } from '@renderer/components/ui/label.tsx'
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from '@renderer/components/ui/tooltip.tsx'
 import { Badge } from '../ui/badge.tsx'
 import { useOpenCompiledFolder } from '@renderer/hooks/use-open-compiled-folder.ts'
 
-export function DialogCompilationLogs({ children }: PropsWithChildren) {
+export function DialogCompilationLogs({
+  children,
+}: {
+  children: ReactElement
+}) {
   const { t } = useLingui()
   const { logs: rawLogs, clearCompilationLogs } = useCompilation()
   const { hasNoLogs, hasErrorsInLogs, isAllScriptsSuccessInLogs } =
@@ -65,12 +70,10 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
   return (
     <Dialog>
       <DialogTrigger
-        asChild
+        render={children}
         data-state={compilationState}
         className="data-[state=error]:text-destructive data-[state=success]:text-green-500 data-[state=error]:[&_button]:hover:bg-destructive data-[state=success]:[&_button]:hover:bg-green-500 data-[state=error]:[&_button]:hover:text-destructive-foreground"
-      >
-        {children}
-      </DialogTrigger>
+      />
       <DialogContent
         className="grid-rows-[1.25rem_1fr_2.25rem]"
         aria-describedby={undefined}
@@ -170,34 +173,31 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
                             )}
                           </div>
                           <div className="flex gap-2">
-                            <Tooltip
-                              delayDuration={500}
-                              disableHoverableContent
-                            >
-                              <TooltipTrigger asChild>
-                                <Button
-                                  onClick={onClickOpenFolder}
-                                  size="icon"
-                                  disabled={pexPath === undefined}
-                                  aria-label={t`Ouvrir le dossier du script compilé`}
+                            <TooltipProvider delay={500}>
+                              <Tooltip disableHoverablePopup>
+                                <TooltipTrigger
+                                  render={
+                                    <Button
+                                      onClick={onClickOpenFolder}
+                                      size="icon"
+                                      disabled={pexPath === undefined}
+                                      aria-label={t`Ouvrir le dossier du script compilé`}
+                                    />
+                                  }
                                 >
                                   <FolderOpenIcon />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <Trans>
-                                  Ouvrir le dossier du script compilé
-                                </Trans>
-                              </TooltipContent>
-                            </Tooltip>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <Trans>
+                                    Ouvrir le dossier du script compilé
+                                  </Trans>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
                             <Button onClick={onClickCopy} size="icon">
                               <ClipboardIcon />
                             </Button>
-                            <Button
-                              variant="secondary"
-                              color="error"
-                              onClick={onClickDelete}
-                            >
+                            <Button variant="secondary" onClick={onClickDelete}>
                               <Trash2Icon />
                             </Button>
                           </div>
@@ -232,10 +232,8 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
             </span>
           </Button>
           <div className="flex w-full flex-col-reverse sm:flex-row sm:justify-end">
-            <DialogClose asChild>
-              <Button>
-                <Trans>Annuler</Trans>
-              </Button>
+            <DialogClose render={<Button />}>
+              <Trans>Annuler</Trans>
             </DialogClose>
           </div>
         </DialogFooter>

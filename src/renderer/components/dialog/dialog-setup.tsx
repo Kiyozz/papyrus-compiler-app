@@ -111,12 +111,6 @@ function DialogSetup() {
       <DialogContent
         showCloseButton={!isBlocking}
         className="flex flex-col sm:max-w-lg"
-        onEscapeKeyDown={(e) => {
-          if (isBlocking) e.preventDefault()
-        }}
-        onInteractOutside={(e) => {
-          if (isBlocking) e.preventDefault()
-        }}
       >
         <DialogHeader>
           <DialogTitle>

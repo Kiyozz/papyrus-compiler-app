@@ -23,14 +23,14 @@ import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
 import { scriptsToRenderer } from '@renderer/utils/scripts/scripts-to-renderer.ts'
 import { uniqScripts } from '@renderer/utils/scripts/uniq-scripts.ts'
 import { TrashIcon } from 'lucide-react'
-import React, { type PropsWithChildren, useId, useMemo, useState } from 'react'
-import type { KeyboardEvent, MouseEvent } from 'react'
+import React, { useId, useMemo, useState } from 'react'
+import type { KeyboardEvent, MouseEvent, ReactElement } from 'react'
 import { Trans } from '@lingui/react/macro'
 import { useDidUpdate } from 'rooks'
 import { TelemetryEvent } from '#common/telemetry-event.ts'
 import type { Script } from '#common/types/script.ts'
 
-export function DialogRecentFiles({ children }: PropsWithChildren) {
+export function DialogRecentFiles({ children }: { children: ReactElement }) {
   const [open, setOpen] = useState(false)
   const { send } = useTelemetry()
   const { setScripts, scripts: loadedScripts } = useCompilation()
@@ -228,7 +228,7 @@ export function DialogRecentFiles({ children }: PropsWithChildren) {
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogTrigger render={children} />
       <DialogContent
         aria-describedby={undefined}
         onKeyDown={onDialogKeyDown}

@@ -2,33 +2,32 @@
  * 2026 Kiyozz.
  */
 
+import { useRender } from '@base-ui/react/use-render'
 import * as React from 'react'
-import { Slot } from 'radix-ui'
 
 import { cn } from '@renderer/lib/utils'
 
 function Card({
   className,
   size = 'default',
-  asChild = false,
+  render,
   ...props
-}: React.ComponentProps<'div'> & {
+}: useRender.ComponentProps<'div'> & {
   size?: 'default' | 'sm'
-  asChild?: boolean
 }) {
-  const Comp = asChild ? Slot.Root : 'div'
-
-  return (
-    <Comp
-      data-slot="card"
-      data-size={size}
-      className={cn(
+  return useRender({
+    render,
+    defaultTagName: 'div',
+    props: {
+      'data-slot': 'card',
+      'data-size': size,
+      className: cn(
         'group/card flex flex-col gap-6 overflow-hidden rounded-2xl bg-card py-6 text-sm text-card-foreground ring-1 ring-foreground/10 has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl',
         className,
-      )}
-      {...props}
-    />
-  )
+      ),
+      ...props,
+    },
+  })
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {

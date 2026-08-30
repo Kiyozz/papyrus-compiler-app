@@ -12,6 +12,7 @@ import { InfoIcon } from 'lucide-react'
 import {
   TooltipContent,
   Tooltip,
+  TooltipProvider,
   TooltipTrigger,
 } from '@renderer/components/ui/tooltip.tsx'
 import {
@@ -77,14 +78,16 @@ function SettingsGameSection() {
                 <span>
                   <Trans>Dossier du jeu</Trans>
                 </span>
-                <Tooltip delayDuration={150}>
-                  <TooltipTrigger className="flex items-center">
-                    <InfoIcon className="size-4" />
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-sm text-balance">
-                    <Trans>Dossier où se trouve {exe}</Trans>
-                  </TooltipContent>
-                </Tooltip>
+                <TooltipProvider delay={150}>
+                  <Tooltip>
+                    <TooltipTrigger className="flex items-center">
+                      <InfoIcon className="size-4" />
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-sm text-balance">
+                      <Trans>Dossier où se trouve {exe}</Trans>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </>
             }
             type="folder"
@@ -99,18 +102,20 @@ function SettingsGameSection() {
                 <span>
                   <Trans>Compilateur Papyrus</Trans>
                 </span>
-                <Tooltip delayDuration={150}>
-                  <TooltipTrigger className="flex items-center">
-                    <InfoIcon className="size-4" />
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-sm text-balance">
-                    <Trans>
-                      Chemin vers le fichier PapyrusCompiler.exe. Le fichier est
-                      disponible après l'installation de CreationKit. Plus
-                      d'informations sur la documentation de PCA.
-                    </Trans>
-                  </TooltipContent>
-                </Tooltip>
+                <TooltipProvider delay={150}>
+                  <Tooltip>
+                    <TooltipTrigger className="flex items-center">
+                      <InfoIcon className="size-4" />
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-sm text-balance">
+                      <Trans>
+                        Chemin vers le fichier PapyrusCompiler.exe. Le fichier
+                        est disponible après l'installation de CreationKit. Plus
+                        d'informations sur la documentation de PCA.
+                      </Trans>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </>
             }
             type="file"

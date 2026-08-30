@@ -33,13 +33,11 @@ function GroupsMenu({ groups, onChangeGroup }: GroupsMenuProps) {
       {notEmptyGroups.length > 0 && (
         <>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button>
-                <PlusIcon />
-                <span>
-                  <Trans>Groupe</Trans>
-                </span>
-              </Button>
+            <DropdownMenuTrigger render={<Button />}>
+              <PlusIcon />
+              <span>
+                <Trans>Groupe</Trans>
+              </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               {groups

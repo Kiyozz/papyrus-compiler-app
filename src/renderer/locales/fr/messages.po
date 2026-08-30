@@ -43,8 +43,8 @@ msgstr "À propos"
 msgid "Activer"
 msgstr "Activer"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:237
-#: src/renderer/components/dialog/dialog-group.tsx:187
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:236
+#: src/renderer/components/dialog/dialog-group.tsx:191
 #: src/renderer/components/dialog/dialog-recent-files.tsx:285
 msgid "Annuler"
 msgstr "Annuler"
@@ -57,7 +57,7 @@ msgstr "Anonymiser les scripts compilés"
 msgid "Archives extraites"
 msgstr "Archives extraites"
 
-#: src/renderer/components/dialog/dialog-setup.tsx:231
+#: src/renderer/components/dialog/dialog-setup.tsx:225
 msgid "Aucun"
 msgstr "Aucun"
 
@@ -65,7 +65,7 @@ msgstr "Aucun"
 msgid "Aucun fichiers récents."
 msgstr "Aucun fichiers récents."
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:109
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:112
 msgid "Aucun logs"
 msgstr "Aucun logs"
 
@@ -73,7 +73,7 @@ msgstr "Aucun logs"
 msgid "Aucun scripts"
 msgstr "Aucun scripts"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:118
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:121
 msgid "Aucune erreur !"
 msgstr "Aucune erreur !"
 
@@ -101,11 +101,11 @@ msgstr "Chargement"
 msgid "Charger"
 msgstr "Charger"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:98
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:101
 msgid "Chemin complet"
 msgstr "Chemin complet"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:107
+#: src/renderer/pages/settings/settings-game-section.tsx:111
 msgid "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
 msgstr "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
 
@@ -114,7 +114,7 @@ msgid "Choisir PapyrusCompiler.exe"
 msgstr "Choisir PapyrusCompiler.exe"
 
 #. placeholder {0}: toExecutable(game.type)
-#: src/renderer/components/dialog/dialog-setup.tsx:197
+#: src/renderer/components/dialog/dialog-setup.tsx:191
 msgid "Choisissez le dossier qui contient {0}."
 msgstr "Choisissez le dossier qui contient {0}."
 
@@ -127,7 +127,7 @@ msgstr "Clair"
 msgid "Commencez par glisser-déposer des fichiers psc pour les charger"
 msgstr "Commencez par glisser-déposer des fichiers psc pour les charger"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:100
+#: src/renderer/pages/settings/settings-game-section.tsx:103
 msgid "Compilateur Papyrus"
 msgstr "Compilateur Papyrus"
 
@@ -135,7 +135,7 @@ msgstr "Compilateur Papyrus"
 msgid "Compilateur Papyrus introuvable"
 msgstr "Compilateur Papyrus introuvable"
 
-#: src/renderer/components/dialog/dialog-setup.tsx:227
+#: src/renderer/components/dialog/dialog-setup.tsx:221
 msgid "Compilateur utilisé"
 msgstr "Compilateur utilisé"
 
@@ -145,7 +145,7 @@ msgstr "Compilateur utilisé"
 msgid "Compilation"
 msgstr "Compilation"
 
-#: src/renderer/components/dialog/dialog-setup.tsx:123
+#: src/renderer/components/dialog/dialog-setup.tsx:117
 msgid "Configuration de PCA"
 msgstr "Configuration de PCA"
 
@@ -153,7 +153,7 @@ msgstr "Configuration de PCA"
 msgid "Configuration invalide"
 msgstr "Configuration invalide"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:127
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:130
 msgid "Copier avec succès"
 msgstr "Copier avec succès"
 
@@ -161,7 +161,7 @@ msgstr "Copier avec succès"
 msgid "Creation Kit non installé"
 msgstr "Creation Kit non installé"
 
-#: src/renderer/components/dialog/dialog-group.tsx:190
+#: src/renderer/components/dialog/dialog-group.tsx:194
 msgid "Créer"
 msgstr "Créer"
 
@@ -190,7 +190,7 @@ msgid "Des scripts sources sont dans Scripts\\Source au lieu de Source\\Scripts.
 msgstr "Des scripts sources sont dans Scripts\\Source au lieu de Source\\Scripts."
 
 #: src/renderer/components/app-sidebar.tsx:57
-#: src/renderer/pages/settings/settings-page.tsx:281
+#: src/renderer/pages/settings/settings-page.tsx:283
 msgid "Documentation"
 msgstr "Documentation"
 
@@ -203,15 +203,15 @@ msgstr "Données d'utilisation"
 msgid "Dossier de sortie"
 msgstr "Dossier de sortie"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:78
+#: src/renderer/pages/settings/settings-game-section.tsx:79
 msgid "Dossier du jeu"
 msgstr "Dossier du jeu"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:85
+#: src/renderer/pages/settings/settings-game-section.tsx:87
 msgid "Dossier où se trouve {exe}"
 msgstr "Dossier où se trouve {exe}"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:168
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:171
 msgid "Échec"
 msgstr "Échec"
 
@@ -219,13 +219,13 @@ msgstr "Échec"
 msgid "Erreur"
 msgstr "Erreur"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:88
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:91
 msgid "Erreurs uniquement"
 msgstr "Erreurs uniquement"
 
 #. placeholder {0}: step + 1
 #. placeholder {1}: lastStep + 1
-#: src/renderer/components/dialog/dialog-setup.tsx:126
+#: src/renderer/components/dialog/dialog-setup.tsx:120
 msgid "Étape {0} sur {1}"
 msgstr "Étape {0} sur {1}"
 
@@ -241,11 +241,11 @@ msgstr "Fermer"
 msgid "Fichiers récents"
 msgstr "Fichiers récents"
 
-#: src/renderer/components/dialog/dialog-group.tsx:171
+#: src/renderer/components/dialog/dialog-group.tsx:175
 msgid "Glisser-déposer vos scripts ici"
 msgstr "Glisser-déposer vos scripts ici"
 
-#: src/renderer/pages/compilation/groups-menu.tsx:40
+#: src/renderer/pages/compilation/groups-menu.tsx:39
 msgid "Groupe"
 msgstr "Groupe"
 
@@ -258,7 +258,7 @@ msgstr "Groupes"
 msgid "Il n'existe pas de Creation Kit pour Skyrim VR : installez celui de Skyrim Special Edition, et choisissez le dossier de Skyrim VR au moment de l'installation dans Steam."
 msgstr "Il n'existe pas de Creation Kit pour Skyrim VR : installez celui de Skyrim Special Edition, et choisissez le dossier de Skyrim VR au moment de l'installation dans Steam."
 
-#: src/renderer/components/dialog/dialog-setup.tsx:214
+#: src/renderer/components/dialog/dialog-setup.tsx:208
 msgid "Il reste quelque chose à faire avant de pouvoir compiler :"
 msgstr "Il reste quelque chose à faire avant de pouvoir compiler :"
 
@@ -278,7 +278,7 @@ msgstr "Installer via Steam"
 msgid "Intégration MO2 supprimée"
 msgstr "Intégration MO2 supprimée"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:39
+#: src/renderer/pages/settings/settings-game-section.tsx:40
 msgid "Jeu"
 msgstr "Jeu"
 
@@ -322,7 +322,7 @@ msgstr "Langue"
 msgid "Le compilateur vient de {0}"
 msgstr "Le compilateur vient de {0}"
 
-#: src/renderer/components/dialog/dialog-setup.tsx:220
+#: src/renderer/components/dialog/dialog-setup.tsx:214
 msgid "Le Creation Kit est correctement installé, tout est prêt."
 msgstr "Le Creation Kit est correctement installé, tout est prêt."
 
@@ -355,11 +355,11 @@ msgstr "Le script extender est installé sans ses scripts sources."
 msgid "Logs"
 msgstr "Logs"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:84
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:87
 msgid "Logs de compilation"
 msgstr "Logs de compilation"
 
-#: src/renderer/components/dialog/dialog-group.tsx:190
+#: src/renderer/components/dialog/dialog-group.tsx:194
 #: src/renderer/pages/groups/groups-list-item-menu.tsx:47
 msgid "Modifier"
 msgstr "Modifier"
@@ -368,7 +368,7 @@ msgstr "Modifier"
 msgid "Niveau de log"
 msgstr "Niveau de log"
 
-#: src/renderer/components/dialog/dialog-group.tsx:139
+#: src/renderer/components/dialog/dialog-group.tsx:143
 msgid "Nom"
 msgstr "Nom"
 
@@ -389,7 +389,7 @@ msgid "Nouvelle version disponible : {latestVersion}"
 msgstr "Nouvelle version disponible : {latestVersion}"
 
 #. placeholder {0}: game.type
-#: src/renderer/components/dialog/dialog-setup.tsx:180
+#: src/renderer/components/dialog/dialog-setup.tsx:174
 msgid "Où est installé {0} ?"
 msgstr "Où est installé {0} ?"
 
@@ -398,10 +398,10 @@ msgstr "Où est installé {0} ?"
 msgid "Ouvrir le dossier"
 msgstr "Ouvrir le dossier"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:182
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:188
-#: src/renderer/pages/compilation/script-line.tsx:67
-#: src/renderer/pages/compilation/script-line.tsx:74
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:184
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:191
+#: src/renderer/pages/compilation/script-line.tsx:72
+#: src/renderer/pages/compilation/script-line.tsx:80
 msgid "Ouvrir le dossier du script compilé"
 msgstr "Ouvrir le dossier du script compilé"
 
@@ -410,7 +410,7 @@ msgstr "Ouvrir le dossier du script compilé"
 msgid "Paramètres"
 msgstr "Paramètres"
 
-#: src/renderer/components/dialog/dialog-setup.tsx:193
+#: src/renderer/components/dialog/dialog-setup.tsx:187
 msgid "Parcourir"
 msgstr "Parcourir"
 
@@ -425,7 +425,7 @@ msgstr "PCA cherche le fichier {0} dans les dossiers Scripts\\Source ou Source\\
 #~ msgid "PCA compile avec \"{0}\", alors que l'installation de {1} fournit le sien. Si vous venez de changer de jeu, c'est probablement un reste du précédent."
 #~ msgstr "PCA compile avec \"{0}\", alors que l'installation de {1} fournit le sien. Si vous venez de changer de jeu, c'est probablement un reste du précédent."
 
-#: src/renderer/components/dialog/dialog-setup.tsx:169
+#: src/renderer/components/dialog/dialog-setup.tsx:163
 msgid "PCA compile les scripts Papyrus de ce jeu. Vous pourrez en changer à tout moment dans les paramètres."
 msgstr "PCA compile les scripts Papyrus de ce jeu. Vous pourrez en changer à tout moment dans les paramètres."
 
@@ -470,11 +470,11 @@ msgstr "Plus de détails"
 msgid "Préférences"
 msgstr "Préférences"
 
-#: src/renderer/components/dialog/dialog-setup.tsx:143
+#: src/renderer/components/dialog/dialog-setup.tsx:137
 msgid "Quel jeu voulez-vous modder ?"
 msgstr "Quel jeu voulez-vous modder ?"
 
-#: src/renderer/pages/settings/settings-page.tsx:291
+#: src/renderer/pages/settings/settings-page.tsx:293
 msgid "Rafraîchir"
 msgstr "Rafraîchir"
 
@@ -490,12 +490,12 @@ msgstr "Relancer l'assistant de configuration"
 msgid "Remplace le chemin du script, votre nom d'utilisateur et le nom de votre ordinateur dans l'en-tête du fichier .pex par des caractères aléatoires."
 msgstr "Remplace le chemin du script, votre nom d'utilisateur et le nom de votre ordinateur dans l'en-tête du fichier .pex par des caractères aléatoires."
 
-#: src/renderer/components/dialog/dialog-group.tsx:158
-#: src/renderer/pages/compilation/script-line.tsx:82
+#: src/renderer/components/dialog/dialog-group.tsx:162
+#: src/renderer/pages/compilation/script-line.tsx:89
 msgid "Retirer"
 msgstr "Retirer"
 
-#: src/renderer/components/dialog/dialog-setup.tsx:271
+#: src/renderer/components/dialog/dialog-setup.tsx:265
 msgid "Retour"
 msgstr "Retour"
 
@@ -507,7 +507,7 @@ msgstr "Scripts sources introuvables"
 msgid "Scripts sources non extraits"
 msgstr "Scripts sources non extraits"
 
-#: src/renderer/components/dialog/dialog-setup.tsx:186
+#: src/renderer/components/dialog/dialog-setup.tsx:180
 #: src/renderer/components/dialog/dialog-text-field.tsx:58
 msgid "Sélectionner un dossier"
 msgstr "Sélectionner un dossier"
@@ -520,7 +520,7 @@ msgstr "Sélectionner un thème"
 msgid "Sélectionner une langue"
 msgstr "Sélectionner une langue"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:47
+#: src/renderer/pages/settings/settings-game-section.tsx:48
 msgid "Sélectionner votre jeu"
 msgstr "Sélectionner votre jeu"
 
@@ -538,11 +538,11 @@ msgstr "Si vous avez déjà un PapyrusCompiler.exe ailleurs, vous pouvez le dés
 msgid "Sombre"
 msgstr "Sombre"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:163
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:166
 msgid "Succès"
 msgstr "Succès"
 
-#: src/renderer/components/dialog/dialog-setup.tsx:280
+#: src/renderer/components/dialog/dialog-setup.tsx:274
 msgid "Suivant"
 msgstr "Suivant"
 
@@ -564,7 +564,7 @@ msgstr "Télécharger"
 msgid "Télécharger {0}"
 msgstr "Télécharger {0}"
 
-#: src/renderer/components/dialog/dialog-setup.tsx:277
+#: src/renderer/components/dialog/dialog-setup.tsx:271
 msgid "Terminer"
 msgstr "Terminer"
 
@@ -577,7 +577,7 @@ msgstr "Thème"
 msgid "Tous les fichiers récents sont déjà chargés."
 msgstr "Tous les fichiers récents sont déjà chargés."
 
-#: src/renderer/components/dialog/dialog-setup.tsx:254
+#: src/renderer/components/dialog/dialog-setup.tsx:248
 msgid "Tout est prêt. Glissez vos fichiers .psc dans la page Compilation, ou utilisez le bouton d'ajout."
 msgstr "Tout est prêt. Glissez vos fichiers .psc dans la page Compilation, ou utilisez le bouton d'ajout."
 
@@ -594,7 +594,7 @@ msgstr "Un groupe est un ensemble de scripts qui peut être ajoutés rapidement 
 msgid "Utiliser celui de {0}"
 msgstr "Utiliser celui de {0}"
 
-#: src/renderer/components/dialog/dialog-setup.tsx:245
+#: src/renderer/components/dialog/dialog-setup.tsx:239
 msgid "Vérifier à nouveau"
 msgstr "Vérifier à nouveau"
 

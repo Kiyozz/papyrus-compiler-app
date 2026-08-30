@@ -2,47 +2,58 @@
  * 2026 Kiyozz.
  */
 
-/*
- * 2026 Kiyozz.
- */
-
 import * as React from 'react'
-import { Dialog as DialogPrimitive } from 'radix-ui'
+import { Dialog as DialogPrimitive } from '@base-ui/react/dialog'
 
 import { cn } from '@renderer/lib/utils'
 import { Button } from '@renderer/components/ui/button'
 import { XIcon } from 'lucide-react'
 
-function Dialog({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Root>) {
-  return <DialogPrimitive.Root data-slot="dialog" {...props} />
+function Dialog({ onOpenChange, ...props }: DialogPrimitive.Root.Props) {
+  return (
+    <DialogPrimitive.Root
+      data-slot="dialog"
+      onOpenChange={(open, eventDetails) => {
+        // sonner portals its toaster into document.body: dismissing a toast
+        // is seen as an interaction outside the popup and closes the dialog
+        if (eventDetails.reason === 'outside-press') {
+          const target = eventDetails.event.target
+
+          if (
+            target instanceof Element &&
+            target.closest('[data-sonner-toaster]')
+          ) {
+            eventDetails.cancel()
+
+            return
+          }
+        }
+
+        onOpenChange?.(open, eventDetails)
+      }}
+      {...props}
+    />
+  )
 }
 
-function DialogTrigger({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
+function DialogTrigger({ ...props }: DialogPrimitive.Trigger.Props) {
   return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />
 }
 
-function DialogPortal({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Portal>) {
+function DialogPortal({ ...props }: DialogPrimitive.Portal.Props) {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
 }
 
-function DialogClose({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Close>) {
+function DialogClose({ ...props }: DialogPrimitive.Close.Props) {
   return <DialogPrimitive.Close data-slot="dialog-close" {...props} />
 }
 
 function DialogOverlay({
   className,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Overlay>) {
+}: DialogPrimitive.Backdrop.Props) {
   return (
-    <DialogPrimitive.Overlay
+    <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"
       className={cn(
         'fixed inset-0 top-(--titlebar-height) isolate z-50 bg-black/60 duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0',
@@ -58,16 +69,15 @@ function DialogContent({
   children,
   showCloseButton = true,
   fullscreen = false,
-  onInteractOutside,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content> & {
+}: DialogPrimitive.Popup.Props & {
   showCloseButton?: boolean
   fullscreen?: boolean
 }) {
   return (
     <DialogPortal>
       {!fullscreen && <DialogOverlay />}
-      <DialogPrimitive.Content
+      <DialogPrimitive.Popup
         data-slot="dialog-content"
         className={cn(
           'fixed dialog-fullscreen-top left-1/2 z-50 grid max-h-[calc(100svh-var(--titlebar-height)-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-4xl bg-popover p-6 text-sm text-popover-foreground ring-1 ring-foreground/5 duration-100 outline-none sm:max-w-md data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
@@ -75,38 +85,25 @@ function DialogContent({
             'h-page-with-titlebar max-h-none px-0 ring-1 ring-background sm:max-w-screen rounded-none',
           className,
         )}
-        onInteractOutside={(event) => {
-          // sonner portals its toaster into document.body: dismissing a toast
-          // is seen as an interaction outside the content and closes the dialog
-          const target = event.detail.originalEvent.target
-
-          if (
-            target instanceof Element &&
-            target.closest('[data-sonner-toaster]')
-          ) {
-            event.preventDefault()
-
-            return
-          }
-
-          onInteractOutside?.(event)
-        }}
         {...props}
       >
         {children}
         {showCloseButton && (
-          <DialogPrimitive.Close data-slot="dialog-close" asChild>
-            <Button
-              variant="ghost"
-              className="absolute top-4 right-4"
-              size="icon-sm"
-            >
-              <XIcon />
-              <span className="sr-only">Close</span>
-            </Button>
+          <DialogPrimitive.Close
+            data-slot="dialog-close"
+            render={
+              <Button
+                variant="ghost"
+                className="absolute top-4 right-4"
+                size="icon-sm"
+              />
+            }
+          >
+            <XIcon />
+            <span className="sr-only">Close</span>
           </DialogPrimitive.Close>
         )}
-      </DialogPrimitive.Content>
+      </DialogPrimitive.Popup>
     </DialogPortal>
   )
 }
@@ -143,18 +140,15 @@ function DialogFooter({
     >
       {children}
       {showCloseButton && (
-        <DialogPrimitive.Close asChild>
-          <Button variant="outline">Close</Button>
+        <DialogPrimitive.Close render={<Button variant="outline" />}>
+          Close
         </DialogPrimitive.Close>
       )}
     </div>
   )
 }
 
-function DialogTitle({
-  className,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Title>) {
+function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
@@ -167,7 +161,7 @@ function DialogTitle({
 function DialogDescription({
   className,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Description>) {
+}: DialogPrimitive.Description.Props) {
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"
