@@ -5,3 +5,4 @@
 export * from './group'
 export * from './script-renderer'
 export * from './github-release'
+export * from './compilation-log'

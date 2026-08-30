@@ -16,7 +16,7 @@ import { chunk } from '../utils/chunk'
 import { scriptEquals, scriptInList } from '../utils/scripts/equals'
 import { isRunningScript } from '../utils/scripts/status'
 import { useApp } from './use-app'
-import type { ScriptRenderer } from '../types'
+import type { CompilationLog, ScriptRenderer } from '../types'
 
 const logger = new Logger('Compilation')
 
@@ -29,7 +29,7 @@ interface CompilationContext {
   isRunning: boolean
   scripts: ScriptRenderer[]
   concurrentScripts: number
-  logs: [ScriptRenderer, string][]
+  logs: CompilationLog[]
   setScripts: (fn: (scripts: ScriptRenderer[]) => ScriptRenderer[]) => void
   clearCompilationLogs: (script?: ScriptRenderer) => void
 }
@@ -40,9 +40,7 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
   const [compilationScripts, setCompilationScripts] = useState<
     ScriptRenderer[]
   >([])
-  const [compilationLogs, setCompilationLogs] = useState<
-    [ScriptRenderer, string][]
-  >([])
+  const [compilationLogs, setCompilationLogs] = useState<CompilationLog[]>([])
   const { config } = useApp()
   const concurrentScripts = useMemo(
     () =>
@@ -60,8 +58,8 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
   const clearCompilationLogs = useCallback((script?: ScriptRenderer) => {
     if (script) {
       setCompilationLogs((logs) => {
-        return logs.filter(([s]) => {
-          return !scriptEquals(script)(s)
+        return logs.filter((log) => {
+          return !scriptEquals(script)(log.script)
         })
       })
     } else {
@@ -73,8 +71,8 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
     async ({ scripts }: StartOptions) => {
       logger.debug('starting compilation for', scripts.length, 'scripts')
       setCompilationLogs((logs) => {
-        return logs.filter(([s]) => {
-          return !scriptInList(scripts)(s)
+        return logs.filter((log) => {
+          return !scriptInList(scripts)(log.script)
         })
       })
 
@@ -107,7 +105,10 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
               )
 
               setCompilationLogs((cl) => {
-                return [[s, result.output], ...cl]
+                return [
+                  { script: s, output: result.output, success: result.success },
+                  ...cl,
+                ]
               })
             })
           }),
