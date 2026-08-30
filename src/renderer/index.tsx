@@ -20,6 +20,7 @@ import RecentFilesProvider from './hooks/use-recent-files'
 import TelemetryProvider from './hooks/use-telemetry'
 import VersionProvider from './hooks/use-version'
 import SettingsProvider from './pages/settings/use-settings'
+import SetupProvider from './hooks/use-setup'
 import { isProduction } from './utils/is-production'
 import { TooltipProvider } from '@renderer/components/ui/tooltip.tsx'
 import { dynamicActivateLocale } from '@renderer/i18n.ts'
@@ -55,13 +56,15 @@ async function start() {
                     <RecentFilesProvider>
                       <CompilationProvider>
                         <SettingsProvider>
-                          <FocusProvider>
-                            <DrawerProvider>
-                              <DropProvider>
-                                <App />
-                              </DropProvider>
-                            </DrawerProvider>
-                          </FocusProvider>
+                          <SetupProvider>
+                            <FocusProvider>
+                              <DrawerProvider>
+                                <DropProvider>
+                                  <App />
+                                </DropProvider>
+                              </DrawerProvider>
+                            </FocusProvider>
+                          </SetupProvider>
                         </SettingsProvider>
                       </CompilationProvider>
                     </RecentFilesProvider>

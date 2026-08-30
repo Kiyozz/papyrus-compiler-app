@@ -28,7 +28,7 @@ function ScriptLine({
   onClickPlayCompilation,
 }: ScriptLineProps) {
   const { t } = useLingui()
-  const { configError } = useSettings()
+  const { hasBlockingError } = useSettings()
   const openCompiledFolder = useOpenCompiledFolder()
 
   const onClickRemove = () => {
@@ -50,7 +50,7 @@ function ScriptLine({
       <Button
         size="icon-sm"
         className="size-6 rounded-full"
-        disabled={configError !== false || isRunningScript(script)}
+        disabled={hasBlockingError || isRunningScript(script)}
         onClick={onClickPlay}
       >
         <PlayIcon className="size-3.5" />

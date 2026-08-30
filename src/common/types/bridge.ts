@@ -7,8 +7,8 @@ import type {
   TelemetryEvent,
   TelemetryEventProperties,
 } from '../telemetry-event'
-import type { BadError } from './bad-error'
 import type { CompilationResult } from './compilation-result'
+import type { Diagnostic, ExtractResult } from './diagnostic'
 import type { Config } from './config'
 import type { DialogType } from './dialog'
 import type { LogLevel } from '../log-level'
@@ -52,7 +52,14 @@ export interface Bridge {
     ) => Promise<Config>
     get: () => Promise<Config>
     onReset: (cb: () => void) => Disposable
-    check: () => Promise<BadError>
+    diagnose: () => Promise<Diagnostic>
+    /** true when no settings file existed when the app started */
+    firstLaunch: () => Promise<boolean>
+  }
+
+  ck: {
+    /** extracts the given source archives, in the order they are given */
+    extract: (archives: string[]) => Promise<ExtractResult[]>
   }
 
   isProduction: () => Promise<boolean>

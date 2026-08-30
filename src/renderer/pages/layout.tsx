@@ -3,6 +3,7 @@
  */
 
 import { AppSidebar } from '@renderer/components/app-sidebar.tsx'
+import DialogSetup from '@renderer/components/dialog/dialog-setup.tsx'
 import { Titlebar } from '@renderer/components/titlebar.tsx'
 import { Separator } from '@renderer/components/ui/separator.tsx'
 import {
@@ -24,6 +25,7 @@ export function Layout() {
   return (
     <>
       <Titlebar />
+      <DialogSetup />
       <SidebarProvider
         open={sidebarOpen === 'true'}
         onOpenChange={(open) => setSidebarOpen(open.toString())}

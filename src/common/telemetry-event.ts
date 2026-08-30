@@ -36,6 +36,11 @@ export enum TelemetryEvent {
   settingsRefresh = 'Settings.Refresh',
   telemetryEnabled = 'Telemetry.Enabled',
   documentationOpenFromNav = 'Documentation.OpenFromNav',
+  setupWizardOpened = 'Setup.WizardOpened',
+  setupWizardCompleted = 'Setup.WizardCompleted',
+  ckSteamOpened = 'Ck.SteamOpened',
+  ckArchivesExtracted = 'Ck.ArchivesExtracted',
+  ckDiagnosticIssues = 'Ck.DiagnosticIssues',
 }
 
 export interface TelemetryEventProperties {
@@ -80,4 +85,14 @@ export interface TelemetryEventProperties {
   [TelemetryEvent.documentationOpenFromNav]: {
     reason: 'enter' | 'click' | 'settings-app-bar'
   }
+  [TelemetryEvent.setupWizardOpened]: { firstLaunch: boolean }
+  [TelemetryEvent.setupWizardCompleted]: { step: number }
+  [TelemetryEvent.ckSteamOpened]: { game: GameType }
+  [TelemetryEvent.ckArchivesExtracted]: {
+    game: GameType
+    archives: number
+    failed: number
+  }
+  /** `ids` joins the diagnostic identifiers with a comma */
+  [TelemetryEvent.ckDiagnosticIssues]: { game: GameType; ids: string }
 }

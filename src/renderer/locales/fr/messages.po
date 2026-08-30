@@ -13,12 +13,23 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: compilation.compilerPath
+#. placeholder {1}: toCompilerDir(game.type)
+#: src/renderer/components/ck-diagnostic.tsx:318
+msgid "\"{0}\" n'existe pas. Le Creation Kit installe PapyrusCompiler.exe dans le dossier \"{1}\" du jeu."
+msgstr "\"{0}\" n'existe pas. Le Creation Kit installe PapyrusCompiler.exe dans le dossier \"{1}\" du jeu."
+
+#. placeholder {0}: extender.name
+#: src/renderer/components/ck-diagnostic.tsx:417
+msgid "{0} est installé, sans ses scripts sources"
+msgstr "{0} est installé, sans ses scripts sources"
+
 #. placeholder {0}: pscScripts.length
-#: src/renderer/pages/compilation/compilation-page.tsx:111
+#: src/renderer/pages/compilation/compilation-page.tsx:115
 msgid "{0} scripts loaded."
 msgstr "{0} scripts loaded."
 
-#: src/renderer/pages/settings/settings-about-section.tsx:14
+#: src/renderer/pages/settings/settings-about-section.tsx:18
 msgid "À propos"
 msgstr "À propos"
 
@@ -27,11 +38,19 @@ msgstr "À propos"
 msgid "Activer"
 msgstr "Activer"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:235
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:237
 #: src/renderer/components/dialog/dialog-group.tsx:187
 #: src/renderer/components/dialog/dialog-recent-files.tsx:285
 msgid "Annuler"
 msgstr "Annuler"
+
+#: src/renderer/components/ck-diagnostic.tsx:206
+msgid "Archives extraites"
+msgstr "Archives extraites"
+
+#: src/renderer/components/dialog/dialog-setup.tsx:231
+msgid "Aucun"
+msgstr "Aucun"
 
 #: src/renderer/components/dialog/dialog-recent-files.tsx:248
 msgid "Aucun fichiers récents."
@@ -53,7 +72,15 @@ msgstr "Aucune erreur !"
 msgid "Avertissement"
 msgstr "Avertissement"
 
-#: src/renderer/pages/compilation/compilation-page.tsx:257
+#: src/renderer/components/ck-diagnostic.tsx:337
+#~ msgid "C'est volontaire si vous utilisez le Creation Kit d'un autre jeu compatible, ou un compilateur Papyrus tiers."
+#~ msgstr "C'est volontaire si vous utilisez le Creation Kit d'un autre jeu compatible, ou un compilateur Papyrus tiers."
+
+#: src/renderer/components/ck-diagnostic.tsx:149
+msgid "Ce Creation Kit n'a pas de page dans le magasin : dans Steam, ouvrez Bibliothèque puis Outils pour l'installer."
+msgstr "Ce Creation Kit n'a pas de page dans le magasin : dans Steam, ouvrez Bibliothèque puis Outils pour l'installer."
+
+#: src/renderer/pages/compilation/compilation-page.tsx:268
 msgid "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
 msgstr "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode administrateur."
 
@@ -69,36 +96,61 @@ msgstr "Charger"
 msgid "Chemin complet"
 msgstr "Chemin complet"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:113
+#: src/renderer/pages/settings/settings-game-section.tsx:107
 msgid "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
 msgstr "Chemin vers le fichier PapyrusCompiler.exe. Le fichier est disponible après l'installation de CreationKit. Plus d'informations sur la documentation de PCA."
+
+#: src/renderer/components/ck-diagnostic.tsx:295
+msgid "Choisir PapyrusCompiler.exe"
+msgstr "Choisir PapyrusCompiler.exe"
+
+#. placeholder {0}: toExecutable(game.type)
+#: src/renderer/components/dialog/dialog-setup.tsx:197
+msgid "Choisissez le dossier qui contient {0}."
+msgstr "Choisissez le dossier qui contient {0}."
 
 #: src/renderer/pages/settings/settings-preferences-section.tsx:54
 #: src/renderer/pages/settings/settings-theme-section.tsx:47
 msgid "Clair"
 msgstr "Clair"
 
-#: src/renderer/pages/compilation/compilation-page.tsx:246
+#: src/renderer/pages/compilation/compilation-page.tsx:257
 msgid "Commencez par glisser-déposer des fichiers psc pour les charger"
 msgstr "Commencez par glisser-déposer des fichiers psc pour les charger"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:106
+#: src/renderer/pages/settings/settings-game-section.tsx:100
 msgid "Compilateur Papyrus"
 msgstr "Compilateur Papyrus"
 
+#: src/renderer/components/ck-diagnostic.tsx:308
+msgid "Compilateur Papyrus introuvable"
+msgstr "Compilateur Papyrus introuvable"
+
+#: src/renderer/components/dialog/dialog-setup.tsx:227
+msgid "Compilateur utilisé"
+msgstr "Compilateur utilisé"
+
 #: src/renderer/components/app-sidebar.tsx:34
-#: src/renderer/pages/compilation/compilation-page.tsx:220
+#: src/renderer/pages/compilation/compilation-page.tsx:231
 #: src/renderer/pages/settings/settings-compilation.tsx:21
 msgid "Compilation"
 msgstr "Compilation"
 
-#: src/renderer/pages/compilation/compilation-page.tsx:187
+#: src/renderer/components/dialog/dialog-setup.tsx:123
+msgid "Configuration de PCA"
+msgstr "Configuration de PCA"
+
+#: src/renderer/pages/compilation/compilation-page.tsx:198
 msgid "Configuration invalide"
 msgstr "Configuration invalide"
 
 #: src/renderer/components/dialog/dialog-compilation-logs.tsx:127
 msgid "Copier avec succès"
 msgstr "Copier avec succès"
+
+#: src/renderer/components/ck-diagnostic.tsx:119
+msgid "Creation Kit non installé"
+msgstr "Creation Kit non installé"
 
 #: src/renderer/components/dialog/dialog-group.tsx:190
 msgid "Créer"
@@ -111,6 +163,10 @@ msgstr "Debug"
 #: src/renderer/pages/settings/settings-mo2/settings-mo2.tsx:35
 msgid "Depuis la version 5.9.0, l'intégration MO2 a été supprimée. Configurez PCA pour être lancé via MO2 à la place."
 msgstr "Depuis la version 5.9.0, l'intégration MO2 a été supprimée. Configurez PCA pour être lancé via MO2 à la place."
+
+#: src/renderer/pages/compilation/compilation-page.tsx:191
+msgid "Des archives de scripts sources restent à extraire."
+msgstr "Des archives de scripts sources restent à extraire."
 
 #: src/renderer/components/app-sidebar.tsx:57
 #: src/renderer/pages/settings/settings-page.tsx:273
@@ -126,11 +182,11 @@ msgstr "Données d'utilisation"
 msgid "Dossier de sortie"
 msgstr "Dossier de sortie"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:84
+#: src/renderer/pages/settings/settings-game-section.tsx:78
 msgid "Dossier du jeu"
 msgstr "Dossier du jeu"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:91
+#: src/renderer/pages/settings/settings-game-section.tsx:85
 msgid "Dossier où se trouve {exe}"
 msgstr "Dossier où se trouve {exe}"
 
@@ -145,6 +201,16 @@ msgstr "Erreur"
 #: src/renderer/components/dialog/dialog-compilation-logs.tsx:88
 msgid "Erreurs uniquement"
 msgstr "Erreurs uniquement"
+
+#. placeholder {0}: step + 1
+#. placeholder {1}: lastStep + 1
+#: src/renderer/components/dialog/dialog-setup.tsx:126
+msgid "Étape {0} sur {1}"
+msgstr "Étape {0} sur {1}"
+
+#: src/renderer/components/ck-diagnostic.tsx:255
+msgid "Extraction…"
+msgstr "Extraction…"
 
 #: src/renderer/components/dialog/dialog-changelog.tsx:214
 msgid "Fermer"
@@ -167,6 +233,14 @@ msgstr "Groupe"
 msgid "Groupes"
 msgstr "Groupes"
 
+#: src/renderer/components/ck-diagnostic.tsx:132
+msgid "Il n'existe pas de Creation Kit pour Skyrim VR : installez celui de Skyrim Special Edition, et choisissez le dossier de Skyrim VR au moment de l'installation dans Steam."
+msgstr "Il n'existe pas de Creation Kit pour Skyrim VR : installez celui de Skyrim Special Edition, et choisissez le dossier de Skyrim VR au moment de l'installation dans Steam."
+
+#: src/renderer/components/dialog/dialog-setup.tsx:214
+msgid "Il reste quelque chose à faire avant de pouvoir compiler :"
+msgstr "Il reste quelque chose à faire avant de pouvoir compiler :"
+
 #: src/renderer/hooks/use-open-compiled-folder.ts:34
 msgid "Impossible d'ouvrir le dossier"
 msgstr "Impossible d'ouvrir le dossier"
@@ -175,23 +249,37 @@ msgstr "Impossible d'ouvrir le dossier"
 msgid "Info"
 msgstr "Info"
 
+#: src/renderer/components/ck-diagnostic.tsx:162
+msgid "Installer via Steam"
+msgstr "Installer via Steam"
+
 #: src/renderer/pages/settings/settings-mo2/settings-mo2.tsx:32
 msgid "Intégration MO2 supprimée"
 msgstr "Intégration MO2 supprimée"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:45
+#: src/renderer/pages/settings/settings-game-section.tsx:39
 msgid "Jeu"
 msgstr "Jeu"
 
+#: src/renderer/components/ck-diagnostic.tsx:211
+msgid "L'extraction a échoué"
+msgstr "L'extraction a échoué"
+
+#. placeholder {0}: extender.name
+#. placeholder {1}: extender.name
+#: src/renderer/components/ck-diagnostic.tsx:421
+msgid "La compilation fonctionne, mais tout script utilisant une fonction de {0} échouera. Copiez le dossier Data\\Scripts\\Source de l'archive {1} dans le dossier du jeu."
+msgstr "La compilation fonctionne, mais tout script utilisant une fonction de {0} échouera. Copiez le dossier Data\\Scripts\\Source de l'archive {1} dans le dossier du jeu."
+
 #: src/renderer/pages/settings/settings-game-section.tsx:130
-msgid "La configuration semble invalide :"
-msgstr "La configuration semble invalide :"
+#~ msgid "La configuration semble invalide :"
+#~ msgstr "La configuration semble invalide :"
 
 #: src/renderer/pages/settings/settings-compilation.tsx:50
 msgid "Laissez vide pour utiliser le dossier par défaut du jeu (Data/Scripts)."
 msgstr "Laissez vide pour utiliser le dossier par défaut du jeu (Data/Scripts)."
 
-#: src/renderer/pages/compilation/compilation-page.tsx:277
+#: src/renderer/pages/compilation/compilation-page.tsx:288
 msgid "Lancer"
 msgstr "Lancer"
 
@@ -199,6 +287,40 @@ msgstr "Lancer"
 #: src/renderer/pages/settings/settings-preferences-section.tsx:71
 msgid "Langue"
 msgstr "Langue"
+
+#: src/renderer/components/ck-diagnostic.tsx:325
+#~ msgid "Le compilateur ne vient pas de ce jeu"
+#~ msgstr "Le compilateur ne vient pas de ce jeu"
+
+#. placeholder {0}: item.game
+#: src/renderer/components/ck-diagnostic.tsx:345
+msgid "Le compilateur vient de {0}"
+msgstr "Le compilateur vient de {0}"
+
+#: src/renderer/components/dialog/dialog-setup.tsx:220
+msgid "Le Creation Kit est correctement installé, tout est prêt."
+msgstr "Le Creation Kit est correctement installé, tout est prêt."
+
+#. placeholder {0}: toCompilerDir(game.type)
+#: src/renderer/components/ck-diagnostic.tsx:313
+msgid "Le Creation Kit installe PapyrusCompiler.exe dans le dossier \"{0}\" du jeu."
+msgstr "Le Creation Kit installe PapyrusCompiler.exe dans le dossier \"{0}\" du jeu."
+
+#: src/renderer/components/ck-diagnostic.tsx:230
+msgid "Le Creation Kit livre les scripts sources du jeu dans des archives. Tant qu'elles ne sont pas extraites, la compilation échoue."
+msgstr "Le Creation Kit livre les scripts sources du jeu dans des archives. Tant qu'elles ne sont pas extraites, la compilation échoue."
+
+#: src/renderer/pages/compilation/compilation-page.tsx:190
+msgid "Le Creation Kit n'est pas installé."
+msgstr "Le Creation Kit n'est pas installé."
+
+#: src/renderer/components/ck-diagnostic.tsx:213
+msgid "Le dossier du jeu est protégé en écriture. Extrayez les archives vous-même, ou installez le jeu hors de Program Files."
+msgstr "Le dossier du jeu est protégé en écriture. Extrayez les archives vous-même, ou installez le jeu hors de Program Files."
+
+#: src/renderer/components/ck-diagnostic.tsx:84
+msgid "Le jeu est introuvable"
+msgstr "Le jeu est introuvable"
 
 #: src/renderer/components/app-sidebar.tsx:52
 msgid "Logs"
@@ -237,10 +359,19 @@ msgstr "Nouveautés"
 msgid "Nouvelle version disponible : {latestVersion}"
 msgstr "Nouvelle version disponible : {latestVersion}"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:179
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:185
-#: src/renderer/pages/compilation/script-line.tsx:68
-#: src/renderer/pages/compilation/script-line.tsx:75
+#. placeholder {0}: game.type
+#: src/renderer/components/dialog/dialog-setup.tsx:180
+msgid "Où est installé {0} ?"
+msgstr "Où est installé {0} ?"
+
+#: src/renderer/components/ck-diagnostic.tsx:268
+msgid "Ouvrir le dossier"
+msgstr "Ouvrir le dossier"
+
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:182
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:188
+#: src/renderer/pages/compilation/script-line.tsx:67
+#: src/renderer/pages/compilation/script-line.tsx:74
 msgid "Ouvrir le dossier du script compilé"
 msgstr "Ouvrir le dossier du script compilé"
 
@@ -249,8 +380,49 @@ msgstr "Ouvrir le dossier du script compilé"
 msgid "Paramètres"
 msgstr "Paramètres"
 
+#: src/renderer/components/dialog/dialog-setup.tsx:193
+msgid "Parcourir"
+msgstr "Parcourir"
+
+#. placeholder {0}: toCompilerSourceFile(game.type)
+#: src/renderer/components/ck-diagnostic.tsx:385
+msgid "PCA cherche le fichier {0} dans les dossiers Scripts\\Source ou Source\\Scripts du dossier Data du jeu pour valider l'installation du Creation Kit."
+msgstr "PCA cherche le fichier {0} dans les dossiers Scripts\\Source ou Source\\Scripts du dossier Data du jeu pour valider l'installation du Creation Kit."
+
+#. placeholder {0}: compilation.compilerPath
+#. placeholder {1}: game.type
+#: src/renderer/components/ck-diagnostic.tsx:330
+#~ msgid "PCA compile avec \"{0}\", alors que l'installation de {1} fournit le sien. Si vous venez de changer de jeu, c'est probablement un reste du précédent."
+#~ msgstr "PCA compile avec \"{0}\", alors que l'installation de {1} fournit le sien. Si vous venez de changer de jeu, c'est probablement un reste du précédent."
+
+#: src/renderer/components/dialog/dialog-setup.tsx:169
+msgid "PCA compile les scripts Papyrus de ce jeu. Vous pourrez en changer à tout moment dans les paramètres."
+msgstr "PCA compile les scripts Papyrus de ce jeu. Vous pourrez en changer à tout moment dans les paramètres."
+
+#. placeholder {0}: game.type
+#. placeholder {1}: compilation.compilerPath
+#. placeholder {2}: item.game
+#: src/renderer/components/ck-diagnostic.tsx:349
+msgid "PCA compilerait du {0} avec \"{1}\", qui appartient à {2}. Ces compilateurs ne sont pas interchangeables. Si vous venez de changer de jeu, c'est un reste du précédent."
+msgstr "PCA compilerait du {0} avec \"{1}\", qui appartient à {2}. Ces compilateurs ne sont pas interchangeables. Si vous venez de changer de jeu, c'est un reste du précédent."
+
+#. placeholder {0}: game.type
+#. placeholder {1}: ck.name
+#: src/renderer/components/ck-diagnostic.tsx:124
+msgid "PCA n'a trouvé aucun script source de {0}. Le Creation Kit s'installe gratuitement depuis Steam, en cherchant \"{1}\", et dépose ces scripts dans le dossier du jeu."
+msgstr "PCA n'a trouvé aucun script source de {0}. Le Creation Kit s'installe gratuitement depuis Steam, en cherchant \"{1}\", et dépose ces scripts dans le dossier du jeu."
+
+#. placeholder {0}: ck.name
+#: src/renderer/components/ck-diagnostic.tsx:124
+#~ msgid "PCA n'a trouvé ni le compilateur Papyrus, ni les scripts sources du jeu. Le Creation Kit s'installe gratuitement depuis Steam, en cherchant \"{0}\"."
+#~ msgstr "PCA n'a trouvé ni le compilateur Papyrus, ni les scripts sources du jeu. Le Creation Kit s'installe gratuitement depuis Steam, en cherchant \"{0}\"."
+
+#: src/renderer/components/ck-diagnostic.tsx:243
+msgid "PCA ne sait pas ouvrir une archive .rar : extrayez-la vous-même avec 7-Zip ou WinRAR, en conservant les dossiers."
+msgstr "PCA ne sait pas ouvrir une archive .rar : extrayez-la vous-même avec 7-Zip ou WinRAR, en conservant les dossiers."
+
 #: src/renderer/components/dialog/dialog-recent-files.tsx:276
-#: src/renderer/pages/compilation/compilation-page.tsx:198
+#: src/renderer/pages/compilation/compilation-page.tsx:210
 #: src/renderer/pages/groups/groups-page.tsx:118
 msgid "Plus de détails"
 msgstr "Plus de détails"
@@ -258,6 +430,10 @@ msgstr "Plus de détails"
 #: src/renderer/pages/settings/settings-preferences-section.tsx:30
 msgid "Préférences"
 msgstr "Préférences"
+
+#: src/renderer/components/dialog/dialog-setup.tsx:143
+msgid "Quel jeu voulez-vous modder ?"
+msgstr "Quel jeu voulez-vous modder ?"
 
 #: src/renderer/pages/settings/settings-page.tsx:283
 msgid "Rafraîchir"
@@ -267,11 +443,28 @@ msgstr "Rafraîchir"
 msgid "Réduisez si vous rencontrez des blocages quand vous lancez la compilation"
 msgstr "Réduisez si vous rencontrez des blocages quand vous lancez la compilation"
 
+#: src/renderer/pages/settings/settings-about-section.tsx:31
+msgid "Relancer l'assistant de configuration"
+msgstr "Relancer l'assistant de configuration"
+
 #: src/renderer/components/dialog/dialog-group.tsx:158
-#: src/renderer/pages/compilation/script-line.tsx:84
+#: src/renderer/pages/compilation/script-line.tsx:82
 msgid "Retirer"
 msgstr "Retirer"
 
+#: src/renderer/components/dialog/dialog-setup.tsx:271
+msgid "Retour"
+msgstr "Retour"
+
+#: src/renderer/components/ck-diagnostic.tsx:381
+msgid "Scripts sources introuvables"
+msgstr "Scripts sources introuvables"
+
+#: src/renderer/components/ck-diagnostic.tsx:225
+msgid "Scripts sources non extraits"
+msgstr "Scripts sources non extraits"
+
+#: src/renderer/components/dialog/dialog-setup.tsx:186
 #: src/renderer/components/dialog/dialog-text-field.tsx:58
 msgid "Sélectionner un dossier"
 msgstr "Sélectionner un dossier"
@@ -284,9 +477,14 @@ msgstr "Sélectionner un thème"
 msgid "Sélectionner une langue"
 msgstr "Sélectionner une langue"
 
-#: src/renderer/pages/settings/settings-game-section.tsx:53
+#: src/renderer/pages/settings/settings-game-section.tsx:47
 msgid "Sélectionner votre jeu"
 msgstr "Sélectionner votre jeu"
+
+#. placeholder {0}: game.type
+#: src/renderer/components/ck-diagnostic.tsx:140
+msgid "Si vous avez déjà un PapyrusCompiler.exe ailleurs, vous pouvez le désigner : celui de Skyrim Special Edition compile aussi bien pour Skyrim VR. Les scripts sources, eux, doivent se trouver dans le dossier de {0}."
+msgstr "Si vous avez déjà un PapyrusCompiler.exe ailleurs, vous pouvez le désigner : celui de Skyrim Special Edition compile aussi bien pour Skyrim VR. Les scripts sources, eux, doivent se trouver dans le dossier de {0}."
 
 #: src/renderer/pages/settings/settings-preferences-section.tsx:57
 #: src/renderer/pages/settings/settings-theme-section.tsx:50
@@ -296,6 +494,10 @@ msgstr "Sombre"
 #: src/renderer/components/dialog/dialog-compilation-logs.tsx:163
 msgid "Succès"
 msgstr "Succès"
+
+#: src/renderer/components/dialog/dialog-setup.tsx:280
+msgid "Suivant"
+msgstr "Suivant"
 
 #: src/renderer/pages/groups/groups-list-item-menu.tsx:53
 msgid "Supprimer"
@@ -310,6 +512,15 @@ msgstr "Système"
 msgid "Télécharger"
 msgstr "Télécharger"
 
+#. placeholder {0}: extender.name
+#: src/renderer/components/ck-diagnostic.tsx:433
+msgid "Télécharger {0}"
+msgstr "Télécharger {0}"
+
+#: src/renderer/components/dialog/dialog-setup.tsx:277
+msgid "Terminer"
+msgstr "Terminer"
+
 #: src/renderer/pages/settings/settings-preferences-section.tsx:39
 #: src/renderer/pages/settings/settings-theme-section.tsx:25
 msgid "Thème"
@@ -319,47 +530,77 @@ msgstr "Thème"
 msgid "Tous les fichiers récents sont déjà chargés."
 msgstr "Tous les fichiers récents sont déjà chargés."
 
+#: src/renderer/components/dialog/dialog-setup.tsx:254
+msgid "Tout est prêt. Glissez vos fichiers .psc dans la page Compilation, ou utilisez le bouton d'ajout."
+msgstr "Tout est prêt. Glissez vos fichiers .psc dans la page Compilation, ou utilisez le bouton d'ajout."
+
+#: src/renderer/components/ck-diagnostic.tsx:257
+msgid "Tout extraire"
+msgstr "Tout extraire"
+
 #: src/renderer/pages/groups/groups-page.tsx:146
 msgid "Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation."
 msgstr "Un groupe est un ensemble de scripts qui peut être ajoutés rapidement à la compilation."
 
-#: src/renderer/pages/compilation/compilation-page.tsx:185
+#. placeholder {0}: game.type
+#: src/renderer/components/ck-diagnostic.tsx:362
+msgid "Utiliser celui de {0}"
+msgstr "Utiliser celui de {0}"
+
+#: src/renderer/components/dialog/dialog-setup.tsx:245
+msgid "Vérifier à nouveau"
+msgstr "Vérifier à nouveau"
+
+#: src/renderer/pages/compilation/compilation-page.tsx:193
 msgid "Vérifiez l'installation de Creation Kit."
 msgstr "Vérifiez l'installation de Creation Kit."
 
-#: src/renderer/pages/compilation/compilation-page.tsx:184
+#: src/renderer/pages/compilation/compilation-page.tsx:192
 msgid "Vérifiez le chemin du compilateur."
 msgstr "Vérifiez le chemin du compilateur."
 
-#: src/renderer/pages/compilation/compilation-page.tsx:183
+#: src/renderer/pages/compilation/compilation-page.tsx:189
 msgid "Vérifiez le chemin du jeu."
 msgstr "Vérifiez le chemin du jeu."
 
 #. placeholder {0}: compilation.compilerPath
 #: src/renderer/pages/settings/settings-game-section.tsx:139
-msgid "Vérifiez que \"{0}\" existe."
-msgstr "Vérifiez que \"{0}\" existe."
+#~ msgid "Vérifiez que \"{0}\" existe."
+#~ msgstr "Vérifiez que \"{0}\" existe."
+
+#. placeholder {0}: toExecutable(game.type)
+#: src/renderer/components/ck-diagnostic.tsx:87
+msgid "Vérifiez que \"{0}\" se trouve bien dans le dossier du jeu."
+msgstr "Vérifiez que \"{0}\" se trouve bien dans le dossier du jeu."
 
 #: src/renderer/pages/settings/settings-game-section.tsx:134
-msgid "Vérifiez que \"{exe}\" existe dans le dossier du jeu."
-msgstr "Vérifiez que \"{exe}\" existe dans le dossier du jeu."
+#~ msgid "Vérifiez que \"{exe}\" existe dans le dossier du jeu."
+#~ msgstr "Vérifiez que \"{exe}\" existe dans le dossier du jeu."
 
 #. placeholder {0}: toCompilerSourceFile(game.type)
 #: src/renderer/pages/settings/settings-game-section.tsx:142
-msgid "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {0} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
-msgstr "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {0} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
+#~ msgid "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {0} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
+#~ msgstr "Vérifiez que votre installation de Creation Kit est valide. PCA vérifie la présence du fichier {0} dans les dossiers Scripts\\Source ou Source\\Scripts pour valider l'installation de votre Creation Kit. Si vous utilisez l'integration MO2 de PCA, les dossiers overwrite et mods sont également vérifiés."
 
-#: src/renderer/pages/settings/settings-about-section.tsx:17
+#: src/renderer/pages/settings/settings-about-section.tsx:22
 msgid "Version"
 msgstr "Version"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:229
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:231
 msgid "Vider"
 msgstr "Vider"
 
-#: src/renderer/pages/compilation/compilation-page.tsx:289
+#: src/renderer/pages/compilation/compilation-page.tsx:300
 msgid "Vider la liste"
 msgstr "Vider la liste"
+
+#: src/renderer/components/ck-diagnostic.tsx:397
+msgid "Voir la documentation"
+msgstr "Voir la documentation"
+
+#: src/renderer/components/ck-diagnostic.tsx:170
+msgid "Voir sur le magasin Steam"
+msgstr "Voir sur le magasin Steam"
 
 #: src/renderer/components/dialog/dialog-changelog.tsx:155
 msgid "Vous disposez de la dernière version"
