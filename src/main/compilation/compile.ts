@@ -62,10 +62,16 @@ class PapyrusCompilerService implements Compiler {
       outputPath.trim() === ''
         ? path.join(gamePath, 'Data/Scripts')
         : outputPath
+    // the compiler is given a script name, never a path: it resolves that name
+    // against the cwd (always implied first) then the imports, in order, and
+    // keeps the first match. importDir must therefore stay first everywhere,
+    // otherwise a script of the same name sitting in the game sources - the
+    // rule under MO2, where Data is the merge of every mod - is compiled
+    // instead of the one the user picked.
     const runner: Runner = {
       exe: compilerPath,
-      imports: [gameSourceAbsolute, importDir],
-      cwd: gamePath,
+      imports: [importDir, gameSourceAbsolute],
+      cwd: importDir,
       output: resolvedOutput,
     }
 
