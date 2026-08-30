@@ -23,6 +23,8 @@ interface Compilation {
   compilerPath: CompilerPath
   flag: Flag
   output: OutputPath
+  /** strip the identifying information the compiler writes in the pex header */
+  anonymize: boolean
 }
 
 interface ConfigMo2 {

@@ -53,6 +53,7 @@ const defaultSettingsStoreConfig: Config = {
     compilerPath: '',
     flag: 'TESV_Papyrus_Flags.flg',
     output: '',
+    anonymize: true,
   },
   mo2: {
     use: false,
@@ -189,6 +190,17 @@ class SettingsStore extends Store<Config> {
     }
   }
 
+  #checkAnonymize() {
+    const anonymize = this.get('compilation.anonymize')
+
+    if (!is.boolean(anonymize)) {
+      this.set(
+        'compilation.anonymize',
+        defaultSettingsStoreConfig.compilation.anonymize,
+      )
+    }
+  }
+
   #checkGroups() {
     const groups = this.get('groups')
 
@@ -289,6 +301,7 @@ class SettingsStore extends Store<Config> {
     this.#checkFlag()
     this.#checkCompilerPath(args)
     this.#checkOutput(args)
+    this.#checkAnonymize()
     this.#checkGroups()
     this.#checkConcurrentScripts()
     this.#checkNotSupportedKeys()

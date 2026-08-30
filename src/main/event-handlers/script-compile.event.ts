@@ -12,6 +12,7 @@ import type { CompilationResult } from '#common/types/compilation-result.ts'
 import { inject } from '#main/inject.ts'
 import { Compiler } from '#main/compilation/compiler.ts'
 import { basename } from '../path/path'
+import { anonymizePex } from '../utils/anonymize-pex.util'
 
 @inject()
 export class ScriptCompileEvent {
@@ -49,6 +50,32 @@ export class ScriptCompileEvent {
     return log.replace(`Script ${script} failed to compile: `, '').trim()
   }
 
+  /**
+   * The pex is anonymized on demand only, and never by the compiler itself: any
+   * compiler PCA is pointed at gets the same treatment. A failure leaves a
+   * script that runs, so the compilation stays a success and the reason is
+   * raised in its log, where the user can see the header was left untouched.
+   */
+  async #anonymize(pexPath: string, output: string): Promise<string> {
+    if (this.#settingsStore.get('compilation.anonymize') !== true) {
+      return output
+    }
+
+    try {
+      await anonymizePex(pexPath)
+
+      return output
+    } catch (e) {
+      const message = fromError(e).message
+
+      this.#logger.error('anonymization failed', message)
+
+      const warning = `Anonymization failed: ${message}`
+
+      return is.emptyString(output) ? warning : `${output}\n${warning}`
+    }
+  }
+
   async run(scriptPath: string): Promise<CompilationResult> {
     if (is.undefined(scriptPath)) {
       throw new ApplicationException('script-compile: script is undefined')
@@ -68,7 +95,10 @@ export class ScriptCompileEvent {
 
       return {
         success: true,
-        output: ScriptCompileEvent._cleanSuccessLog(name, output),
+        output: await this.#anonymize(
+          pexPath,
+          ScriptCompileEvent._cleanSuccessLog(name, output),
+        ),
         script: scriptName,
         pexPath,
       }

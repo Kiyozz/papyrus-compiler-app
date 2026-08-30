@@ -49,6 +49,10 @@ msgstr "Activer"
 msgid "Annuler"
 msgstr "Annuler"
 
+#: src/renderer/pages/settings/settings-compilation.tsx:65
+msgid "Anonymiser les scripts compilés"
+msgstr "Anonymiser les scripts compilés"
+
 #: src/renderer/components/ck-diagnostic.tsx:207
 msgid "Archives extraites"
 msgstr "Archives extraites"
@@ -137,7 +141,7 @@ msgstr "Compilateur utilisé"
 
 #: src/renderer/components/app-sidebar.tsx:34
 #: src/renderer/pages/compilation/compilation-page.tsx:242
-#: src/renderer/pages/settings/settings-compilation.tsx:21
+#: src/renderer/pages/settings/settings-compilation.tsx:22
 msgid "Compilation"
 msgstr "Compilation"
 
@@ -186,7 +190,7 @@ msgid "Des scripts sources sont dans Scripts\\Source au lieu de Source\\Scripts.
 msgstr "Des scripts sources sont dans Scripts\\Source au lieu de Source\\Scripts."
 
 #: src/renderer/components/app-sidebar.tsx:57
-#: src/renderer/pages/settings/settings-page.tsx:273
+#: src/renderer/pages/settings/settings-page.tsx:281
 msgid "Documentation"
 msgstr "Documentation"
 
@@ -195,7 +199,7 @@ msgstr "Documentation"
 msgid "Données d'utilisation"
 msgstr "Données d'utilisation"
 
-#: src/renderer/pages/settings/settings-compilation.tsx:48
+#: src/renderer/pages/settings/settings-compilation.tsx:49
 msgid "Dossier de sortie"
 msgstr "Dossier de sortie"
 
@@ -296,7 +300,7 @@ msgstr "La compilation peut échouer"
 #~ msgid "La configuration semble invalide :"
 #~ msgstr "La configuration semble invalide :"
 
-#: src/renderer/pages/settings/settings-compilation.tsx:50
+#: src/renderer/pages/settings/settings-compilation.tsx:51
 msgid "Laissez vide pour utiliser le dossier par défaut du jeu (Data/Scripts)."
 msgstr "Laissez vide pour utiliser le dossier par défaut du jeu (Data/Scripts)."
 
@@ -368,7 +372,7 @@ msgstr "Niveau de log"
 msgid "Nom"
 msgstr "Nom"
 
-#: src/renderer/pages/settings/settings-compilation.tsx:30
+#: src/renderer/pages/settings/settings-compilation.tsx:31
 msgid "Nombre de scripts compilés simultanéments"
 msgstr "Nombre de scripts compilés simultanéments"
 
@@ -402,7 +406,7 @@ msgid "Ouvrir le dossier du script compilé"
 msgstr "Ouvrir le dossier du script compilé"
 
 #: src/renderer/components/app-sidebar.tsx:44
-#: src/renderer/pages/settings/settings-page.tsx:258
+#: src/renderer/pages/settings/settings-page.tsx:266
 msgid "Paramètres"
 msgstr "Paramètres"
 
@@ -470,17 +474,21 @@ msgstr "Préférences"
 msgid "Quel jeu voulez-vous modder ?"
 msgstr "Quel jeu voulez-vous modder ?"
 
-#: src/renderer/pages/settings/settings-page.tsx:283
+#: src/renderer/pages/settings/settings-page.tsx:291
 msgid "Rafraîchir"
 msgstr "Rafraîchir"
 
-#: src/renderer/pages/settings/settings-compilation.tsx:36
+#: src/renderer/pages/settings/settings-compilation.tsx:37
 msgid "Réduisez si vous rencontrez des blocages quand vous lancez la compilation"
 msgstr "Réduisez si vous rencontrez des blocages quand vous lancez la compilation"
 
 #: src/renderer/pages/settings/settings-about-section.tsx:31
 msgid "Relancer l'assistant de configuration"
 msgstr "Relancer l'assistant de configuration"
+
+#: src/renderer/pages/settings/settings-compilation.tsx:75
+msgid "Remplace le chemin du script, votre nom d'utilisateur et le nom de votre ordinateur dans l'en-tête du fichier .pex par des caractères aléatoires."
+msgstr "Remplace le chemin du script, votre nom d'utilisateur et le nom de votre ordinateur dans l'en-tête du fichier .pex par des caractères aléatoires."
 
 #: src/renderer/components/dialog/dialog-group.tsx:158
 #: src/renderer/pages/compilation/script-line.tsx:82

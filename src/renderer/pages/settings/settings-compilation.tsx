@@ -12,6 +12,7 @@ import {
   FormLabel,
 } from '@renderer/components/ui/form.tsx'
 import { Input } from '@renderer/components/ui/input.tsx'
+import { Switch } from '@renderer/components/ui/switch.tsx'
 import DialogTextField from '@renderer/components/dialog/dialog-text-field.tsx'
 
 function SettingsCompilation() {
@@ -53,6 +54,32 @@ function SettingsCompilation() {
             </Trans>
           }
           type="folder"
+        />
+
+        <FormField
+          name="anonymize"
+          render={({ field }) => (
+            <FormItem>
+              <div className="flex items-center justify-between">
+                <FormLabel>
+                  <Trans>Anonymiser les scripts compilés</Trans>
+                </FormLabel>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+              </div>
+              <FormDescription>
+                <Trans>
+                  Remplace le chemin du script, votre nom d'utilisateur et le
+                  nom de votre ordinateur dans l'en-tête du fichier .pex par des
+                  caractères aléatoires.
+                </Trans>
+              </FormDescription>
+            </FormItem>
+          )}
         />
       </SettingsSectionContent>
     </SettingsSection>
