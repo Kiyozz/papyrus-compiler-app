@@ -2,31 +2,31 @@
  * 2022-2026 Kiyozz.
  */
 
-import DownloadIcon from '@mui/icons-material/GetApp'
+import { Trans, useLingui } from '@lingui/react/macro'
+import { Button } from '@renderer/components/ui/button.tsx'
 import {
-  Alert,
-  Button,
   Dialog,
-  DialogActions,
+  DialogClose,
   DialogContent,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
-  List,
-  ListItem,
-  ListItemText,
-  Snackbar,
-  Typography,
-} from '@mui/material'
-import type { SnackbarProps } from '@mui/material'
-import { type ComponentProps, type ReactNode, useState } from 'react'
+} from '@renderer/components/ui/dialog.tsx'
+import { ScrollArea } from '@renderer/components/ui/scroll-area.tsx'
+import { DownloadIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import type { ImgHTMLAttributes, MouseEvent } from 'react'
-import { Trans } from '@lingui/react/macro'
 import ReactMarkdown from 'react-markdown'
+import { toast } from 'sonner'
 import { GITHUB_LINK } from '../../../common/constants'
 import { bridge } from '../../bridge'
 import { Env } from '../../env'
 import { useApp } from '../../hooks/use-app'
 import { useInitialization } from '../../hooks/use-initialization'
 import Anchor from '../anchor'
+
+const LATEST_VERSION_TOAST_ID = 'changelog-latest-version'
+const NEW_VERSION_TOAST_ID = 'changelog-new-version'
 
 function Img({ src, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
   const newSrc = src?.startsWith('docs')
@@ -43,65 +43,8 @@ function Img({ src, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
   )
 }
 
-function HeadingOne({ children }: ComponentProps<'h1'>) {
-  return (
-    <Typography component="h1" gutterBottom variant="h3">
-      {/* ReactI18Next error */}
-      {children as ReactNode}
-    </Typography>
-  )
-}
-
-function HeadingTwo({ children }: ComponentProps<'h2'>) {
-  return (
-    <Typography component="h2" gutterBottom variant="h4">
-      {/* ReactI18Next error */}
-      {children as ReactNode}
-    </Typography>
-  )
-}
-
-function HeadingThree({ children }: ComponentProps<'h3'>) {
-  return (
-    <Typography className="mt-2" component="h3" gutterBottom variant="h5">
-      {children as ReactNode}
-    </Typography>
-  )
-}
-
-function HeadingFive({ children }: ComponentProps<'h5'>) {
-  return (
-    <Typography component="h5" gutterBottom variant="h6">
-      {children as ReactNode}
-    </Typography>
-  )
-}
-
-function Paragraph({ children }: ComponentProps<'p'>) {
-  return <Typography>{children as ReactNode}</Typography>
-}
-
-function Code({ children }: ComponentProps<'code'>) {
-  return (
-    <Typography className="markdown-code dark:bg-gray-800" component="code">
-      {children as ReactNode}
-    </Typography>
-  )
-}
-
-function UnorderedList({ children }: ComponentProps<'ul'>) {
-  return <List disablePadding>{children as ReactNode}</List>
-}
-
-function HtmlListItem({ children }: ComponentProps<'li'>) {
-  return (
-    <ListItem disablePadding>
-      <ListItemText primary={children as ReactNode} />
-    </ListItem>
-  )
-}
-
 function DialogChangelog() {
+  const { t } = useLingui()
   const {
     showChangelogs: [isShowChangelogs, setShowChangelogs],
     changelogs: [changelogs],
@@ -114,111 +57,113 @@ function DialogChangelog() {
 
   const [isShowChangelogsDialoag, setShowChangelogsDialog] = useState(false)
 
+  useEffect(() => {
+    if (!isShowLatestVersionAlert) {
+      toast.dismiss(LATEST_VERSION_TOAST_ID)
+
+      return
+    }
+
+    toast.info(t`Vous disposez de la dernière version`, {
+      id: LATEST_VERSION_TOAST_ID,
+      duration: 3_000,
+      onAutoClose: () => setShowLastestVersionAlert(false),
+    })
+  }, [isShowLatestVersionAlert, setShowLastestVersionAlert, t])
+
+  useEffect(() => {
+    if (
+      !isShowChangelogs ||
+      isShowLatestVersionAlert ||
+      isShowChangelogsDialoag
+    ) {
+      toast.dismiss(NEW_VERSION_TOAST_ID)
+
+      return
+    }
+
+    const onClickShowChangelogs = () => {
+      toast.dismiss(NEW_VERSION_TOAST_ID)
+      setShowChangelogsDialog(true)
+    }
+
+    toast.info(t`Nouvelle version disponible : ${latestVersion}`, {
+      id: NEW_VERSION_TOAST_ID,
+      duration: 8_000,
+      onAutoClose: () => setShowChangelogs(false),
+      // a plain sonner action is a bare <button> its own stylesheet wins over
+      // any utility class on: passing an element bypasses it entirely
+      action: (
+        <Button className="ml-auto" onClick={onClickShowChangelogs} size="xs">
+          <Trans>Nouveautés</Trans>
+        </Button>
+      ),
+    })
+  }, [
+    isShowChangelogs,
+    isShowLatestVersionAlert,
+    isShowChangelogsDialoag,
+    latestVersion,
+    setShowChangelogs,
+    t,
+  ])
+
   const onClickDownloadRelease = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault()
 
     void bridge.shell.openExternal(Env.modUrl)
   }
 
-  const onClickShowChangelogs = () => {
-    setShowChangelogsDialog(true)
-  }
+  const onOpenChangeChangelogsDialog = (open: boolean) => {
+    setShowChangelogsDialog(open)
 
-  const onCloseChangelogsDialog = () => {
-    setShowChangelogsDialog(false)
-    setShowChangelogs(false)
-  }
-
-  const onCloseShowLatestVersionAlert: SnackbarProps['onClose'] = (
-    _evt,
-    reason,
-  ) => {
-    if (reason !== 'timeout') return
-
-    setShowLastestVersionAlert(false)
-  }
-
-  const onCloseNewVersionAlert: SnackbarProps['onClose'] = (_evt, reason) => {
-    if (reason !== 'timeout') return
-
-    setShowChangelogs(false)
+    if (!open) {
+      setShowChangelogs(false)
+    }
   }
 
   return (
-    <>
-      <Snackbar
-        autoHideDuration={3_000}
-        onClose={onCloseShowLatestVersionAlert}
-        open={isShowLatestVersionAlert}
+    <Dialog
+      onOpenChange={onOpenChangeChangelogsDialog}
+      open={isShowChangelogsDialoag}
+    >
+      <DialogContent
+        aria-describedby={undefined}
+        className="grid-rows-[1.25rem_1fr_2.25rem]"
+        fullscreen
       >
-        <Alert severity="info">
-          <Trans>Vous disposez de la dernière version</Trans>
-        </Alert>
-      </Snackbar>
-
-      <Snackbar
-        autoHideDuration={8_000}
-        onClose={onCloseNewVersionAlert}
-        open={
-          isShowChangelogs &&
-          !isShowLatestVersionAlert &&
-          !isShowChangelogsDialoag
-        }
-      >
-        <Alert
-          action={
-            <Button onClick={onClickShowChangelogs} size="small">
-              <Trans>Nouveautés</Trans>
-            </Button>
-          }
-          severity="info"
-        >
-          <Typography>
-            <Trans>Nouvelle version disponible : {latestVersion}</Trans>
-          </Typography>
-        </Alert>
-      </Snackbar>
-
-      <Dialog
-        aria-describedby="dialog-notes-content"
-        aria-labelledby="dialog-notes-title"
-        fullScreen
-        onClose={onCloseChangelogsDialog}
-        open={isShowChangelogsDialoag}
-      >
-        <DialogTitle id="dialog-notes-title">
-          <Trans>Notes de mise à jour</Trans>
-        </DialogTitle>
-        <DialogContent dividers id="dialog-notes-content">
-          {changelogs && (
-            <ReactMarkdown
-              components={{
-                p: Paragraph,
-                h1: HeadingOne,
-                h2: HeadingTwo,
-                h3: HeadingThree,
-                h5: HeadingFive,
-                code: Code,
-                a: Anchor,
-                img: Img,
-                ul: UnorderedList,
-                li: HtmlListItem,
-              }}
-            >
-              {changelogs}
-            </ReactMarkdown>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onCloseChangelogsDialog}>
+        <DialogHeader className="no-drag px-6">
+          <DialogTitle>
+            <Trans>Notes de mise à jour</Trans>
+          </DialogTitle>
+        </DialogHeader>
+        <ScrollArea className="h-full min-h-auto overflow-hidden">
+          <div className="prose prose-sm max-w-none px-6 dark:prose-invert">
+            {changelogs && (
+              <ReactMarkdown
+                components={{
+                  a: Anchor,
+                  img: Img,
+                }}
+              >
+                {changelogs}
+              </ReactMarkdown>
+            )}
+          </div>
+        </ScrollArea>
+        <DialogFooter className="px-6">
+          <DialogClose render={<Button variant="outline" />}>
             <Trans>Fermer</Trans>
+          </DialogClose>
+          <Button onClick={onClickDownloadRelease}>
+            <DownloadIcon />
+            <span>
+              <Trans>Télécharger</Trans>
+            </span>
           </Button>
-          <Button onClick={onClickDownloadRelease} startIcon={<DownloadIcon />}>
-            <Trans>Télécharger</Trans>
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
 
