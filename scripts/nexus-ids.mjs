@@ -1,19 +1,19 @@
 // Prints the NexusMods ids the `nexusmods` job of .github/workflows/release.yml
 // needs, for the mod pages given as arguments:
 //
-//   NEXUSMODS_API_KEY=... node scripts/nexus-ids.mjs skyrimspecialedition/23852
+//   PCA_NEXUSMODS_API_KEY=... node scripts/nexus-ids.mjs skyrimspecialedition/23852
 //
 // Neither id is readable from the mod page URL: the number in there is the
 // game-scoped id, while the v3 API wants its own `mod_id`, and `file_id` (the
 // persistent file a new version is added to) only shows up under "API Info" in
 // the Files tab. The key is a personal one, from
 // https://www.nexusmods.com/settings/api-keys.
-const apiKey = process.env.NEXUSMODS_API_KEY
+const apiKey = process.env.PCA_NEXUSMODS_API_KEY
 const pages = process.argv.slice(2)
 
 if (!apiKey || pages.length === 0) {
   console.error(
-    'usage: NEXUSMODS_API_KEY=<key> node scripts/nexus-ids.mjs <game-domain>/<id-in-url>...',
+    'usage: PCA_NEXUSMODS_API_KEY=<key> node scripts/nexus-ids.mjs <game-domain>/<id-in-url>...',
   )
   process.exit(1)
 }
