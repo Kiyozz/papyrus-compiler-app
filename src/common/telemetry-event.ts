@@ -11,6 +11,7 @@ export enum TelemetryEvent {
   compilationGroupLoaded = 'Compilation.GroupLoaded',
   compilationListEmpty = 'Compilation.ListEmpty',
   compilationLogsCopy = 'Compilation.LogsCopy',
+  compilationOpenCompiledFolder = 'Compilation.OpenCompiledFolder',
   compilationPlay = 'Compilation.Play',
   compilationSinglePlay = 'Compilation.SinglePlay',
   compilationRemoveScript = 'Compilation.RemoveScript',
@@ -44,6 +45,9 @@ export interface TelemetryEventProperties {
   [TelemetryEvent.compilationGroupLoaded]: { groups: number }
   [TelemetryEvent.compilationListEmpty]: { scripts: number }
   [TelemetryEvent.compilationLogsCopy]: Record<string, never>
+  [TelemetryEvent.compilationOpenCompiledFolder]: {
+    from: 'logs' | 'script-line'
+  }
   [TelemetryEvent.compilationPlay]: {
     scripts: number
     concurrentScripts: number

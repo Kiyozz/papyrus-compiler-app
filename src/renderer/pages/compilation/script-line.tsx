@@ -7,8 +7,14 @@ import { useSettings } from '@renderer/pages/settings/use-settings.tsx'
 import type { ScriptRenderer } from '@renderer/types'
 import { IconFromStatus } from '@renderer/utils/scripts/from-status.tsx'
 import { isRunningScript } from '@renderer/utils/scripts/status.ts'
-import { PlayIcon, TrashIcon } from 'lucide-react'
-import { useLingui } from '@lingui/react/macro'
+import { FolderOpenIcon, PlayIcon, TrashIcon } from 'lucide-react'
+import { Trans, useLingui } from '@lingui/react/macro'
+import { useOpenCompiledFolder } from '@renderer/hooks/use-open-compiled-folder.ts'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@renderer/components/ui/tooltip.tsx'
 
 interface ScriptLineProps {
   script: ScriptRenderer
@@ -23,6 +29,7 @@ function ScriptLine({
 }: ScriptLineProps) {
   const { t } = useLingui()
   const { configError } = useSettings()
+  const openCompiledFolder = useOpenCompiledFolder()
 
   const onClickRemove = () => {
     onClickRemoveScript(script)
@@ -30,6 +37,12 @@ function ScriptLine({
 
   const onClickPlay = () => {
     onClickPlayCompilation(script)
+  }
+
+  const onClickOpenFolder = () => {
+    if (script.pexPath === undefined) return
+
+    void openCompiledFolder(script.pexPath, 'script-line')
   }
 
   return (
@@ -44,6 +57,23 @@ function ScriptLine({
       </Button>
       <span className="flex-1 font-mono text-sm">{script.name}</span>
       <IconFromStatus script={script} className="size-4" />
+      <Tooltip delayDuration={500} disableHoverableContent>
+        <TooltipTrigger asChild>
+          <Button
+            size="icon-sm"
+            variant="secondary"
+            disabled={isRunningScript(script) || script.pexPath === undefined}
+            onClick={onClickOpenFolder}
+            aria-label={t`Ouvrir le dossier du script compilé`}
+            className="size-6"
+          >
+            <FolderOpenIcon className="size-3.5" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <Trans>Ouvrir le dossier du script compilé</Trans>
+        </TooltipContent>
+      </Tooltip>
       <Button
         size="icon-sm"
         disabled={isRunningScript(script)}

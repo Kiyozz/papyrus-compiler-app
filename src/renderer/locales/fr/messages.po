@@ -27,7 +27,7 @@ msgstr "À propos"
 msgid "Activer"
 msgstr "Activer"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:208
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:235
 #: src/renderer/components/dialog/dialog-group.tsx:187
 #: src/renderer/components/dialog/dialog-recent-files.tsx:285
 msgid "Annuler"
@@ -37,7 +37,7 @@ msgstr "Annuler"
 msgid "Aucun fichiers récents."
 msgstr "Aucun fichiers récents."
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:103
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:109
 msgid "Aucun logs"
 msgstr "Aucun logs"
 
@@ -45,7 +45,7 @@ msgstr "Aucun logs"
 msgid "Aucun scripts"
 msgstr "Aucun scripts"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:112
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:118
 msgid "Aucune erreur !"
 msgstr "Aucune erreur !"
 
@@ -65,7 +65,7 @@ msgstr "Chargement"
 msgid "Charger"
 msgstr "Charger"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:92
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:98
 msgid "Chemin complet"
 msgstr "Chemin complet"
 
@@ -96,7 +96,7 @@ msgstr "Compilation"
 msgid "Configuration invalide"
 msgstr "Configuration invalide"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:121
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:127
 msgid "Copier avec succès"
 msgstr "Copier avec succès"
 
@@ -134,7 +134,7 @@ msgstr "Dossier du jeu"
 msgid "Dossier où se trouve {exe}"
 msgstr "Dossier où se trouve {exe}"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:159
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:168
 msgid "Échec"
 msgstr "Échec"
 
@@ -142,7 +142,7 @@ msgstr "Échec"
 msgid "Erreur"
 msgstr "Erreur"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:82
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:88
 msgid "Erreurs uniquement"
 msgstr "Erreurs uniquement"
 
@@ -166,6 +166,10 @@ msgstr "Groupe"
 #: src/renderer/pages/groups/groups-page.tsx:94
 msgid "Groupes"
 msgstr "Groupes"
+
+#: src/renderer/hooks/use-open-compiled-folder.ts:34
+msgid "Impossible d'ouvrir le dossier"
+msgstr "Impossible d'ouvrir le dossier"
 
 #: src/renderer/pages/settings/settings-preferences-section.tsx:114
 msgid "Info"
@@ -200,7 +204,7 @@ msgstr "Langue"
 msgid "Logs"
 msgstr "Logs"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:78
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:84
 msgid "Logs de compilation"
 msgstr "Logs de compilation"
 
@@ -233,6 +237,13 @@ msgstr "Nouveautés"
 msgid "Nouvelle version disponible : {latestVersion}"
 msgstr "Nouvelle version disponible : {latestVersion}"
 
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:179
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:185
+#: src/renderer/pages/compilation/script-line.tsx:68
+#: src/renderer/pages/compilation/script-line.tsx:75
+msgid "Ouvrir le dossier du script compilé"
+msgstr "Ouvrir le dossier du script compilé"
+
 #: src/renderer/components/app-sidebar.tsx:44
 #: src/renderer/pages/settings/settings-page.tsx:258
 msgid "Paramètres"
@@ -257,7 +268,7 @@ msgid "Réduisez si vous rencontrez des blocages quand vous lancez la compilatio
 msgstr "Réduisez si vous rencontrez des blocages quand vous lancez la compilation"
 
 #: src/renderer/components/dialog/dialog-group.tsx:158
-#: src/renderer/pages/compilation/script-line.tsx:52
+#: src/renderer/pages/compilation/script-line.tsx:84
 msgid "Retirer"
 msgstr "Retirer"
 
@@ -282,7 +293,7 @@ msgstr "Sélectionner votre jeu"
 msgid "Sombre"
 msgstr "Sombre"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:154
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:163
 msgid "Succès"
 msgstr "Succès"
 
@@ -342,7 +353,7 @@ msgstr "Vérifiez que votre installation de Creation Kit est valide. PCA vérifi
 msgid "Version"
 msgstr "Version"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:202
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:229
 msgid "Vider"
 msgstr "Vider"
 

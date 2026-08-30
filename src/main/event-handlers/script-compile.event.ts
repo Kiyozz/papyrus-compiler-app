@@ -64,12 +64,13 @@ export class ScriptCompileEvent {
     const scriptName = basename(scriptPath)
 
     try {
-      const { output, name } = await this.#compiler.compile(scriptPath)
+      const { output, name, pexPath } = await this.#compiler.compile(scriptPath)
 
       return {
         success: true,
         output: ScriptCompileEvent._cleanSuccessLog(name, output),
         script: scriptName,
+        pexPath,
       }
     } catch (e) {
       const errorMessage: string = fromError(e).message

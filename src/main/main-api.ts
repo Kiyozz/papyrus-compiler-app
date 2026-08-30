@@ -22,6 +22,7 @@ import { RecentFilesRemoveHandler } from '#event-handlers/recent-files-remove.ha
 import { shell } from 'electron'
 import { MainBrowserWindow } from '#main/main-browser-window.ts'
 import { Logger } from '#main/logger.ts'
+import * as path from '#main/path/path.ts'
 import { Platform } from '#main/platform.ts'
 import { Telemetry } from '#main/telemetry/telemetry.ts'
 import { MainMenu } from '#main/main-menu.ts'
@@ -128,6 +129,33 @@ export class MainApi {
       },
       shell: {
         openExternal: (href) => shell.openExternal(href),
+        showInFolder: async (target) => {
+          if (path.exists(target)) {
+            shell.showItemInFolder(target)
+
+            return true
+          }
+
+          // the file can have been moved or removed since it was written, its
+          // folder is still what the user asked for
+          const folder = path.parentDir(target)
+
+          if (!path.exists(folder)) {
+            this.#logger.warn('the folder to show does not exist', folder)
+
+            return false
+          }
+
+          const error = await shell.openPath(folder)
+
+          if (error !== '') {
+            this.#logger.error('cannot open the folder', folder, error)
+
+            return false
+          }
+
+          return true
+        },
       },
       titlebar: {
         openMenu: async (args) => {

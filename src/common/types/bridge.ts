@@ -70,6 +70,7 @@ export interface Bridge {
 
   shell: {
     openExternal: (href: string) => Promise<void>
+    showInFolder: (target: string) => Promise<boolean>
   }
 
   recentFiles: {

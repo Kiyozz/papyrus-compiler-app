@@ -27,7 +27,7 @@ msgstr "About"
 msgid "Activer"
 msgstr "Enable"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:208
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:235
 #: src/renderer/components/dialog/dialog-group.tsx:187
 #: src/renderer/components/dialog/dialog-recent-files.tsx:285
 msgid "Annuler"
@@ -37,7 +37,7 @@ msgstr "Cancel"
 msgid "Aucun fichiers récents."
 msgstr "No recent files."
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:103
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:109
 msgid "Aucun logs"
 msgstr "No logs"
 
@@ -45,7 +45,7 @@ msgstr "No logs"
 msgid "Aucun scripts"
 msgstr "No scripts"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:112
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:118
 msgid "Aucune erreur !"
 msgstr "No errors!"
 
@@ -65,7 +65,7 @@ msgstr "Loading"
 msgid "Charger"
 msgstr "Load"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:92
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:98
 msgid "Chemin complet"
 msgstr "Full path"
 
@@ -96,7 +96,7 @@ msgstr "Compilation"
 msgid "Configuration invalide"
 msgstr "Invalid configuration"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:121
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:127
 msgid "Copier avec succès"
 msgstr "Successfully copied"
 
@@ -134,7 +134,7 @@ msgstr "Game folder"
 msgid "Dossier où se trouve {exe}"
 msgstr "Folder where {exe} is located"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:159
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:168
 msgid "Échec"
 msgstr "Failed"
 
@@ -142,7 +142,7 @@ msgstr "Failed"
 msgid "Erreur"
 msgstr "Error"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:82
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:88
 msgid "Erreurs uniquement"
 msgstr "Errors only"
 
@@ -166,6 +166,10 @@ msgstr "Group"
 #: src/renderer/pages/groups/groups-page.tsx:94
 msgid "Groupes"
 msgstr "Groups"
+
+#: src/renderer/hooks/use-open-compiled-folder.ts:34
+msgid "Impossible d'ouvrir le dossier"
+msgstr "Cannot open the folder"
 
 #: src/renderer/pages/settings/settings-preferences-section.tsx:114
 msgid "Info"
@@ -200,7 +204,7 @@ msgstr "Language"
 msgid "Logs"
 msgstr "Logs"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:78
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:84
 msgid "Logs de compilation"
 msgstr "Compilation logs"
 
@@ -233,6 +237,13 @@ msgstr "Changelogs"
 msgid "Nouvelle version disponible : {latestVersion}"
 msgstr "New version available: {latestVersion}"
 
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:179
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:185
+#: src/renderer/pages/compilation/script-line.tsx:68
+#: src/renderer/pages/compilation/script-line.tsx:75
+msgid "Ouvrir le dossier du script compilé"
+msgstr "Open the compiled script folder"
+
 #: src/renderer/components/app-sidebar.tsx:44
 #: src/renderer/pages/settings/settings-page.tsx:258
 msgid "Paramètres"
@@ -257,7 +268,7 @@ msgid "Réduisez si vous rencontrez des blocages quand vous lancez la compilatio
 msgstr "Reduce if you experience latency when starting the compilation"
 
 #: src/renderer/components/dialog/dialog-group.tsx:158
-#: src/renderer/pages/compilation/script-line.tsx:52
+#: src/renderer/pages/compilation/script-line.tsx:84
 msgid "Retirer"
 msgstr "Remove"
 
@@ -282,7 +293,7 @@ msgstr "Select your game"
 msgid "Sombre"
 msgstr "Dark"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:154
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:163
 msgid "Succès"
 msgstr "Success"
 
@@ -342,7 +353,7 @@ msgstr "Check that your Creation Kit installation is valid. PCA checks the prese
 msgid "Version"
 msgstr "Version"
 
-#: src/renderer/components/dialog/dialog-compilation-logs.tsx:202
+#: src/renderer/components/dialog/dialog-compilation-logs.tsx:229
 msgid "Vider"
 msgstr "Clear"
 
