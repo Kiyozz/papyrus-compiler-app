@@ -1,15 +1,13 @@
 name: CI
 
+# `ci` is a required status check on main: every pull request has to produce a
+# run, so no path filters here. A docs-only or locales-only PR would otherwise
+# never get the check and stay unmergeable.
 on:
   push:
-    paths:
-      - '**.ts'
-      - '**.js'
-      - '**.mjs'
-      - '**.tsx'
-      - '**.json'
-      - '**.yml'
-      - '**.yaml'
+    branches:
+      - main
+  pull_request:
 
 jobs:
   ci:
