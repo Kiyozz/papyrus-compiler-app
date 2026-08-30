@@ -35,10 +35,10 @@ function GroupsListItemMenu({ onDelete, onEdit }: GroupsListItemMenuProps) {
   return (
     <div className="relative self-start">
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button size="icon-sm" variant="ghost" className="size-6">
-            <EllipsisIcon className="size-3.5" />
-          </Button>
+        <DropdownMenuTrigger
+          render={<Button size="icon-sm" variant="ghost" className="size-6" />}
+        >
+          <EllipsisIcon className="size-3.5" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={onClickEdit}>

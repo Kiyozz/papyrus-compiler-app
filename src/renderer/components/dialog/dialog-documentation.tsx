@@ -11,13 +11,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@renderer/components/ui/dialog.tsx'
-import type { PropsWithChildren } from 'react'
+import type { ReactElement } from 'react'
 import { Button } from '@renderer/components/ui/button.tsx'
 
-export function DialogDocumentation({ children }: PropsWithChildren) {
+export function DialogDocumentation({ children }: { children: ReactElement }) {
   return (
     <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogTrigger render={children} />
       <DialogContent className="px-0" aria-describedby={undefined}>
         <DialogHeader className="px-6">
           <DialogTitle>Documentation</DialogTitle>
@@ -25,9 +25,7 @@ export function DialogDocumentation({ children }: PropsWithChildren) {
         <div className="px-6 grow">Documentation</div>
         <DialogFooter className="px-6 sm:justify-start">
           <div className="flex w-full flex-col-reverse sm:flex-row sm:justify-end">
-            <DialogClose asChild>
-              <Button>Close</Button>
-            </DialogClose>
+            <DialogClose render={<Button />}>Close</DialogClose>
           </div>
         </DialogFooter>
       </DialogContent>

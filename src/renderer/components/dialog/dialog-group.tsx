@@ -122,8 +122,12 @@ function DialogGroup({
         className="flex flex-col px-0"
         aria-describedby={undefined}
       >
+        {/* the form owns the popup's height budget so the script list is the
+            only part that scrolls: h-full resolved against nothing here, which
+            let the form grow past the popup's max height and pushed the footer
+            out of the rounded box */}
         <form
-          className="flex h-full flex-col gap-4"
+          className="flex min-h-0 flex-1 flex-col gap-4"
           onSubmit={onSubmitGroup}
           onKeyDown={onDialogKeyDown}
         >
@@ -143,7 +147,7 @@ function DialogGroup({
           </div>
 
           {scripts.length > 0 ? (
-            <ScrollArea className="w-full h-96">
+            <ScrollArea className="w-full min-h-0 flex-1">
               <div className="px-6">
                 <ul className="divide-y divide-accent rounded-xl border">
                   {scripts.map((script) => (

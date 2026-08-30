@@ -88,14 +88,17 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
           <SidebarMenu>
             {mainItems.map((item) => (
               <SidebarMenuItem key={item.text}>
-                <SidebarMenuButton tooltip={item.text} asChild>
-                  <Link
-                    to={item.href}
-                    className="data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
-                  >
-                    <item.icon />
-                    <span>{item.text}</span>
-                  </Link>
+                <SidebarMenuButton
+                  tooltip={item.text}
+                  render={
+                    <Link
+                      to={item.href}
+                      className="data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
+                    />
+                  }
+                >
+                  <item.icon />
+                  <span>{item.text}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
@@ -106,14 +109,17 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu>
             {miscItems.map((item) => (
-              <item.dialog key={item.text}>
-                <SidebarMenuItem key={item.text}>
+              <SidebarMenuItem key={item.text}>
+                {/* the dialog trigger has to land on the button, not on the
+                    <li> around it: it is what carries the click and the
+                    aria-haspopup wiring */}
+                <item.dialog>
                   <SidebarMenuButton tooltip={item.text}>
                     <item.icon />
                     <span>{item.text}</span>
                   </SidebarMenuButton>
-                </SidebarMenuItem>
-              </item.dialog>
+                </item.dialog>
+              </SidebarMenuItem>
             ))}
           </SidebarMenu>
         </SidebarGroup>

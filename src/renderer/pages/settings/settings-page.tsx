@@ -268,24 +268,26 @@ export function SettingsPage() {
           </BreadcrumbItem>
         </LayoutHeaderTitle>
         <LayoutHeaderActions>
-          <Tooltip disableHoverableContent>
-            <TooltipTrigger asChild>
-              <Button
-                onClick={() => openDocumentation('settings-app-bar')}
-                size="icon"
-              >
-                <BookIcon />
-              </Button>
+          <Tooltip disableHoverablePopup>
+            <TooltipTrigger
+              render={
+                <Button
+                  onClick={() => openDocumentation('settings-app-bar')}
+                  size="icon"
+                />
+              }
+            >
+              <BookIcon />
             </TooltipTrigger>
             <TooltipContent>
               <Trans>Documentation</Trans>
             </TooltipContent>
           </Tooltip>
-          <Tooltip disableHoverableContent>
-            <TooltipTrigger asChild>
-              <Button onClick={onClickPageRefresh} size="icon">
-                <RotateCcwIcon />
-              </Button>
+          <Tooltip disableHoverablePopup>
+            <TooltipTrigger
+              render={<Button onClick={onClickPageRefresh} size="icon" />}
+            >
+              <RotateCcwIcon />
             </TooltipTrigger>
             <TooltipContent>
               <Trans>Rafraîchir</Trans>
