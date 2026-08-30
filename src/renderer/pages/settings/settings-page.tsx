@@ -68,6 +68,7 @@ export function SettingsPage() {
       compilerPath: compilation.compilerPath,
       concurrentScripts: compilation.concurrentScripts,
       output: compilation.output,
+      anonymize: compilation.anonymize,
       mo2: mo2.use,
       telemetry,
       theme,
@@ -221,6 +222,13 @@ export function SettingsPage() {
 
             debouncedSetConfig({
               compilation: { output: output.trim() },
+            })
+
+            break
+          }
+          case 'anonymize': {
+            setConfig({
+              compilation: { anonymize: value.anonymize === true },
             })
 
             break
