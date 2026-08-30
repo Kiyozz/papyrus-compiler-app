@@ -95,6 +95,7 @@ function DiagnosticAlert({ item }: { item: DiagnosticItem }) {
       {item.id === 'sources-archived' && <SourcesArchived item={item} />}
       {item.id === 'compiler' && <CompilerMissing />}
       {item.id === 'sources-missing' && <SourcesMissing />}
+      {item.id === 'sources-legacy' && <SourcesLegacy item={item} />}
       {item.id === 'compiler-foreign' && <CompilerForeign item={item} />}
       {item.id === 'extender-sources' && <ExtenderSources />}
     </Alert>
@@ -396,6 +397,65 @@ function SourcesMissing() {
           <BookIcon />
           <Trans>Voir la documentation</Trans>
         </Button>
+      </AlertDescription>
+    </>
+  )
+}
+
+function SourcesLegacy({ item }: { item: DiagnosticItem }) {
+  const {
+    config: { game },
+  } = useApp()
+  const { open: openDocumentation } = useDocumentation()
+  const folder = item.sourcePath
+
+  return (
+    <>
+      <AlertTitle>
+        <Trans>Des scripts sources sont dans Scripts\Source</Trans>
+      </AlertTitle>
+      <AlertDescription className="flex flex-col items-start gap-3">
+        <div className="flex flex-col gap-2">
+          <span>
+            <Trans>
+              {game.type} range ses scripts sources dans Data\Source\Scripts, et
+              le Creation Kit ne lit que ce dossier. Data\Scripts\Source est
+              celui de Skyrim LE : tout ce qui y reste lui est invisible.
+            </Trans>
+          </span>
+          <span>
+            <Trans>
+              PCA, lui, l'importe avant Data\Source\Scripts : une ancienne copie
+              des scripts du jeu qui y traîne masque celle de {game.type}, et la
+              compilation échoue sans raison apparente.
+            </Trans>
+          </span>
+          <span>
+            <Trans>
+              Déplacez tout le contenu de Data\Scripts\Source vers
+              Data\Source\Scripts.
+            </Trans>
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {folder !== undefined && (
+            <Button
+              onClick={() => void bridge.shell.showInFolder(folder)}
+              size="sm"
+            >
+              <FolderOpenIcon />
+              <Trans>Ouvrir le dossier</Trans>
+            </Button>
+          )}
+          <Button
+            onClick={() => openDocumentation('click')}
+            size="sm"
+            variant="outline"
+          >
+            <BookIcon />
+            <Trans>Voir la documentation</Trans>
+          </Button>
+        </div>
       </AlertDescription>
     </>
   )

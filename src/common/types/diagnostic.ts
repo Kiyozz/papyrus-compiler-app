@@ -15,6 +15,8 @@ export type DiagnosticId =
   | 'compiler'
   /** neither archives nor psc, the kit is there but its sources are not */
   | 'sources-missing'
+  /** se and vr only: psc sit in the le source folder, which their kit ignores */
+  | 'sources-legacy'
   /** the compiler in use belongs to a game this one is not compatible with */
   | 'compiler-foreign'
   /** the script extender runs but did not bring its psc along */
@@ -40,6 +42,8 @@ export interface DiagnosticItem {
    * where the kit puts it
    */
   compilerPath?: string
+  /** on `sources-legacy`: the folder holding the misplaced psc */
+  sourcePath?: string
 }
 
 export interface Diagnostic {

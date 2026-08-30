@@ -4,7 +4,9 @@
 
 // noinspection JSMethodCanBeStatic
 
+import { readdirSync } from 'node:fs'
 import {
+  GameSource,
   GameType,
   isCompilerCompatible,
   toCompilerSourceFile,
@@ -54,6 +56,24 @@ const ownerGame = (file: string): GameType | undefined => {
   }
 
   return undefined
+}
+
+/**
+ * Whether `folder` holds .psc right inside it. Only those count: an import
+ * root is handed to the compiler as is, it never walks into its subfolders.
+ */
+const holdsScripts = (folder: string): boolean => {
+  if (!path.exists(folder)) {
+    return false
+  }
+
+  try {
+    return readdirSync(folder).some((file) =>
+      file.toLowerCase().endsWith('.psc'),
+    )
+  } catch {
+    return false
+  }
 }
 
 const toDiagnosticArchive = (archive: ResolvedArchive): DiagnosticArchive => ({
@@ -132,6 +152,16 @@ export class ConfigDiagnoseHandler {
       }
     }
 
+    const legacySources = this.#legacySources(gamePath, gameType)
+
+    if (legacySources !== undefined) {
+      items.push({
+        id: 'sources-legacy',
+        severity: 'warning',
+        sourcePath: legacySources,
+      })
+    }
+
     if (this.#missesExtenderSources(gamePath, gameType)) {
       items.push({ id: 'extender-sources', severity: 'warning' })
     }
@@ -188,6 +218,26 @@ export class ConfigDiagnoseHandler {
     this.#logger.debug('the compiler belongs to', owner)
 
     return owner
+  }
+
+  /**
+   * The le source folder, `Data/Scripts/Source`, when the game has psc left in
+   * it. The games reading `Data/Source/Scripts` - Skyrim SE and VR - read that
+   * one only, so whatever sits in the le folder is invisible to their kit. PCA
+   * imports it, and before the game folder, to stay compatible: an outdated
+   * copy of the game scripts left there therefore shadows the one the game
+   * ships.
+   */
+  #legacySources(gamePath: GamePath, gameType: GameType): string | undefined {
+    if (toSource(gameType) !== GameSource.sourceFirst) {
+      return undefined
+    }
+
+    const folder = path.join(gamePath, 'Data', toOtherSource(gameType))
+
+    this.#logger.debug('checking the Skyrim LE source folder', folder)
+
+    return holdsScripts(folder) ? folder : undefined
   }
 
   #missesExtenderSources(gamePath: GamePath, gameType: GameType): boolean {
