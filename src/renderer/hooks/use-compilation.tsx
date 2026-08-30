@@ -99,6 +99,7 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
                         status: result.success
                           ? ScriptStatus.success
                           : ScriptStatus.failed,
+                        pexPath: result.pexPath,
                       }
                     : c,
                 ),
@@ -106,7 +107,12 @@ function CompilationProvider({ children }: React.PropsWithChildren) {
 
               setCompilationLogs((cl) => {
                 return [
-                  { script: s, output: result.output, success: result.success },
+                  {
+                    script: s,
+                    output: result.output,
+                    success: result.success,
+                    pexPath: result.pexPath,
+                  },
                   ...cl,
                 ]
               })

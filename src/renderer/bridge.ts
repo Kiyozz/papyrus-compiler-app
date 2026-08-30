@@ -112,6 +112,7 @@ export const bridge: Bridge = {
   },
   shell: {
     openExternal: (href) => mainApi.shell.openExternal(href),
+    showInFolder: (target) => mainApi.shell.showInFolder(target),
   },
   recentFiles: {
     get: () => mainApi.recentFiles.get(),

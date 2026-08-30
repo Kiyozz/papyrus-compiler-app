@@ -17,14 +17,25 @@ import { useApp } from '@renderer/hooks/use-app.tsx'
 import { useCompilation } from '@renderer/hooks/use-compilation.tsx'
 import { useTelemetry } from '@renderer/hooks/use-telemetry.tsx'
 import { logsState } from '@renderer/lib/logs.ts'
-import { ClipboardIcon, FileXIcon, Trash2Icon } from 'lucide-react'
+import {
+  ClipboardIcon,
+  FileXIcon,
+  FolderOpenIcon,
+  Trash2Icon,
+} from 'lucide-react'
 import { type PropsWithChildren, useState } from 'react'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { toast } from 'sonner'
 import { TelemetryEvent } from '#common/telemetry-event.ts'
 import { Switch } from '@renderer/components/ui/switch.tsx'
 import { Label } from '@renderer/components/ui/label.tsx'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@renderer/components/ui/tooltip.tsx'
 import { Badge } from '../ui/badge.tsx'
+import { useOpenCompiledFolder } from '@renderer/hooks/use-open-compiled-folder.ts'
 
 export function DialogCompilationLogs({ children }: PropsWithChildren) {
   const { t } = useLingui()
@@ -33,6 +44,7 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
     logsState(rawLogs)
   const { send } = useTelemetry()
   const { copyToClipboard } = useApp()
+  const openCompiledFolder = useOpenCompiledFolder()
   const [showErrorOnly, setShowErrorOnly] = useState(false)
   const [showFullPath, setShowFullPath] = useState(false)
 
@@ -106,7 +118,7 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
                     <Trans>Aucune erreur !</Trans>
                   </li>
                 )}
-                {logs.map(({ script, output, success }) => {
+                {logs.map(({ script, output, success, pexPath }) => {
                   const onClickCopy = () => {
                     send(TelemetryEvent.compilationLogsCopy, {})
                     copyToClipboard(
@@ -119,6 +131,12 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
 
                   const onClickDelete = () => {
                     clearCompilationLogs(script)
+                  }
+
+                  const onClickOpenFolder = () => {
+                    if (pexPath === undefined) return
+
+                    void openCompiledFolder(pexPath, 'logs')
                   }
 
                   return (
@@ -152,6 +170,26 @@ export function DialogCompilationLogs({ children }: PropsWithChildren) {
                             )}
                           </div>
                           <div className="flex gap-2">
+                            <Tooltip
+                              delayDuration={500}
+                              disableHoverableContent
+                            >
+                              <TooltipTrigger asChild>
+                                <Button
+                                  onClick={onClickOpenFolder}
+                                  size="icon"
+                                  disabled={pexPath === undefined}
+                                  aria-label={t`Ouvrir le dossier du script compilé`}
+                                >
+                                  <FolderOpenIcon />
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <Trans>
+                                  Ouvrir le dossier du script compilé
+                                </Trans>
+                              </TooltipContent>
+                            </Tooltip>
                             <Button onClick={onClickCopy} size="icon">
                               <ClipboardIcon />
                             </Button>

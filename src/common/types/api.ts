@@ -63,6 +63,8 @@ export interface MainAPI {
   }
   shell: {
     openExternal(href: string): Promise<void>
+    /** opens the folder of `target`, `target` highlighted when it still exists */
+    showInFolder(target: string): Promise<boolean>
   }
   titlebar: {
     openMenu(args: { x: number; y: number }): Promise<void>

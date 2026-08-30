@@ -62,6 +62,12 @@ class PapyrusCompilerService implements Compiler {
       outputPath.trim() === ''
         ? path.join(gamePath, 'Data/Scripts')
         : outputPath
+    // the compiler mirrors the namespace as folders under the output:
+    // `Mod:Sub:Script` is written to `<output>/Mod/Sub/Script.pex`
+    const pexPath = `${path.join(
+      resolvedOutput,
+      ...scriptName.replace(/\.psc$/i, '').split(':'),
+    )}.pex`
     // the compiler is given a script name, never a path: it resolves that name
     // against the cwd (always implied first) then the imports, in order, and
     // keeps the first match. importDir must therefore stay first everywhere,
@@ -150,7 +156,7 @@ class PapyrusCompilerService implements Compiler {
 
       this.#checkCommandResult(scriptName, result)
 
-      return { output: result.stdout.trim(), name: scriptName }
+      return { output: result.stdout.trim(), name: scriptName, pexPath }
     } catch (err) {
       if (err instanceof CompilationException) {
         throw err
