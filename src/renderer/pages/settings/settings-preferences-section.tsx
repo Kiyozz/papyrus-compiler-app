@@ -23,6 +23,24 @@ import { Separator } from '@renderer/components/ui/separator.tsx'
 import { LogLevel } from '../../../common/log-level'
 import { Theme } from '../../../common/theme'
 
+const themeItems = [
+  { value: Theme.system, label: <Trans>Système</Trans> },
+  { value: Theme.light, label: <Trans>Clair</Trans> },
+  { value: Theme.dark, label: <Trans>Sombre</Trans> },
+]
+
+const localeItems = [
+  { value: 'fr', label: 'Français' },
+  { value: 'en', label: 'English' },
+]
+
+const logLevelItems = [
+  { value: LogLevel.error, label: <Trans>Erreur</Trans> },
+  { value: LogLevel.warn, label: <Trans>Avertissement</Trans> },
+  { value: LogLevel.info, label: <Trans>Info</Trans> },
+  { value: LogLevel.debug, label: <Trans>Debug</Trans> },
+]
+
 function SettingsPreferencesSection() {
   return (
     <SettingsSection
@@ -40,22 +58,19 @@ function SettingsPreferencesSection() {
                 </FormLabel>
                 <FormControl>
                   <Select
+                    items={themeItems}
+                    value={field.value}
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value={Theme.system}>
-                        <Trans>Système</Trans>
-                      </SelectItem>
-                      <SelectItem value={Theme.light}>
-                        <Trans>Clair</Trans>
-                      </SelectItem>
-                      <SelectItem value={Theme.dark}>
-                        <Trans>Sombre</Trans>
-                      </SelectItem>
+                      {themeItems.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -72,15 +87,19 @@ function SettingsPreferencesSection() {
                 </FormLabel>
                 <FormControl>
                   <Select
+                    items={localeItems}
+                    value={field.value}
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="fr">Français</SelectItem>
-                      <SelectItem value="en">English</SelectItem>
+                      {localeItems.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -97,25 +116,19 @@ function SettingsPreferencesSection() {
                 </FormLabel>
                 <FormControl>
                   <Select
+                    items={logLevelItems}
+                    value={field.value}
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value={LogLevel.error}>
-                        <Trans>Erreur</Trans>
-                      </SelectItem>
-                      <SelectItem value={LogLevel.warn}>
-                        <Trans>Avertissement</Trans>
-                      </SelectItem>
-                      <SelectItem value={LogLevel.info}>
-                        <Trans>Info</Trans>
-                      </SelectItem>
-                      <SelectItem value={LogLevel.debug}>
-                        <Trans>Debug</Trans>
-                      </SelectItem>
+                      {logLevelItems.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </FormControl>
