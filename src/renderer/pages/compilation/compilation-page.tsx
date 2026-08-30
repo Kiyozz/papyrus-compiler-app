@@ -181,38 +181,49 @@ export function CompilationPage() {
 
   useEffect(() => {
     let toastId = undefined as string | number | undefined
-    const error = diagnostic.items.find((item) => item.severity === 'error')
+    // an error stops the compilation, a warning only threatens it: the first
+    // error has everything to say, and a warning under it would be noise
+    const issue =
+      diagnostic.items.find((item) => item.severity === 'error') ??
+      diagnostic.items.find((item) => item.severity === 'warning')
 
     // the setup wizard already shows the very same diagnostic, in place
-    if (error !== undefined && !isSetupOpen) {
+    if (issue !== undefined && !isSetupOpen) {
       const descriptions: Record<DiagnosticId, string> = {
         'game-exe': t`Vérifiez le chemin du jeu.`,
         'ck-missing': t`Le Creation Kit n'est pas installé.`,
         'sources-archived': t`Des archives de scripts sources restent à extraire.`,
         compiler: t`Vérifiez le chemin du compilateur.`,
         'sources-missing': t`Vérifiez l'installation de Creation Kit.`,
-        // warnings never reach this map, the toast only shows errors
+        'sources-legacy': t`Des scripts sources sont dans Scripts\\Source au lieu de Source\\Scripts.`,
+        // the title already names the game the compiler belongs to
         'compiler-foreign': '',
-        'extender-sources': '',
+        'extender-sources': t`Le script extender est installé sans ses scripts sources.`,
       }
-      toastId = toast.error(t`Configuration invalide`, {
-        // the toaster lives in its own portal, outside the router: a Link
-        // rendered in there has no router to read from
-        action: (
-          <Button
-            variant="link"
-            size="sm"
-            onClick={() => {
-              toast.dismiss(toastId)
-              void navigate({ to: '/settings' })
-            }}
-          >
-            <Trans>Plus de détails</Trans>
-          </Button>
-        ),
-        description: descriptions[error.id],
-        duration: Infinity,
-      })
+      const notify = issue.severity === 'error' ? toast.error : toast.warning
+      toastId = notify(
+        issue.severity === 'error'
+          ? t`Configuration invalide`
+          : t`La compilation peut échouer`,
+        {
+          // the toaster lives in its own portal, outside the router: a Link
+          // rendered in there has no router to read from
+          action: (
+            <Button
+              variant="link"
+              size="sm"
+              onClick={() => {
+                toast.dismiss(toastId)
+                void navigate({ to: '/settings' })
+              }}
+            >
+              <Trans>Plus de détails</Trans>
+            </Button>
+          ),
+          description: descriptions[issue.id],
+          duration: Infinity,
+        },
+      )
     }
 
     return () => {
