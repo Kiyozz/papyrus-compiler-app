@@ -72,8 +72,15 @@ jobs:
     if: needs.release.outputs.published == 'true'
     runs-on: windows-latest
 
+    outputs:
+      changelog: ${{ steps.notes.outputs.changelog }}
+
     # Job level: tsdown and vite inline these during `pnpm build`; `pnpm package`
     # only zips the assets `pnpm build` produced.
+    #
+    # PCA_MOD_URL points at the SE page for every copy of the archive, the ones
+    # uploaded to the other game pages included: it is the page the in-app
+    # update notice sends users to, and the SE one is where PCA lives.
     env:
       PCA_MOD_URL: https://www.nexusmods.com/skyrimspecialedition/mods/23852?tab=files
       PCA_TELEMETRY_ENABLED: 'true'
@@ -99,15 +106,24 @@ jobs:
       - name: Package
         run: pnpm package
 
+      # Also exposed as a job output, for the NexusMods changelog below.
       - name: Extract release notes
+        id: notes
         shell: bash
-        run: >-
-          node scripts/extract-changelog.mjs '${{ needs.release.outputs.version }}'
-          > release-notes.md
+        run: |
+          version='${{ needs.release.outputs.version }}'
+          node scripts/extract-changelog.mjs "$version" > release-notes.md
+          delimiter="notes-$RANDOM$RANDOM"
+          {
+            echo "changelog<<$delimiter"
+            cat release-notes.md
+            echo "$delimiter"
+          } >> "$GITHUB_OUTPUT"
 
-      # TODO: drop --draft once the NexusMods upload step below is in place.
-      # The app polls /releases?per_page=1 unauthenticated, which hides drafts,
-      # so nothing is announced in-app until the release is published by hand.
+      # Drafted here, published by the `publish` job once NexusMods has the
+      # archive. The app polls /releases?per_page=1 unauthenticated, which hides
+      # drafts, so nothing is announced in-app before the download the notice
+      # points at exists.
       - name: Draft GitHub release
         shell: bash
         env:
@@ -119,23 +135,83 @@ jobs:
             --draft \
             'dist/PCA.7z'
 
-      # TODO: upload to NexusMods with Nexus-Mods/upload-action (v3 API, still
-      # in beta). The mod is skyrimspecialedition/mods/23852.
-      #
-      # Two ids are still missing:
-      #   - file_id: the file to add a version to, from "API Info" in the Files
-      #     tab of the mod page.
-      #   - mod_id: NOT the 23852 from the URL (that is the game-scoped id).
-      #     Resolve it once via GET /v3/games/skyrimspecialedition/mods/23852.
-      # Also needs a PCA_NEXUSMODS_API_KEY secret.
-      #
-      # - name: Upload to NexusMods
-      #   uses: Nexus-Mods/upload-action@v1.0.0-beta.10
-      #   with:
-      #     api_key: ${{ secrets.PCA_NEXUSMODS_API_KEY }}
-      #     file_id: <file id, see above>
-      #     mod_id: <mod id, see above>
-      #     filename: dist/PCA.7z
-      #     version: ${{ needs.release.outputs.public-version }}
-      #     changelog: <contents of release-notes.md>
-      #     update_mod_version: true
+      - name: Upload archive
+        uses: actions/upload-artifact@v7
+        with:
+          name: release
+          path: dist/PCA.7z
+
+  nexusmods:
+    name: NexusMods (${{ matrix.game }})
+    needs: [release, package]
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Pages are independent: a rejected upload must not cancel the others. The
+      # job still fails, so the release below stays a draft.
+      fail-fast: false
+      matrix:
+        # Ids live in repository variables rather than here, so that a page can
+        # be wired up (or a remade one fixed) without a commit. They are public
+        # either way: "API Info" in the Files tab of a mod page shows them.
+        # `scripts/nexus-ids.mjs <game-domain>/<id-in-url>` resolves a pair.
+        #
+        # They go by pair. No variable at all skips the page, which is how a
+        # page that does not exist yet is handled; a half-filled pair fails, on
+        # purpose, since the action needs `mod_id` to post the changelog.
+        include:
+          # https://www.nexusmods.com/skyrim/mods/96339
+          - game: Skyrim LE
+            mod_id: ${{ vars.PCA_NEXUS_LE_MOD_ID }}
+            file_id: ${{ vars.PCA_NEXUS_LE_FILE_ID }}
+          # https://www.nexusmods.com/skyrimspecialedition/mods/23852
+          # Also the VR page: PCA has no SkyrimVR one, VR users take this file.
+          - game: Skyrim SE
+            mod_id: ${{ vars.PCA_NEXUS_SE_MOD_ID }}
+            file_id: ${{ vars.PCA_NEXUS_SE_FILE_ID }}
+          - game: Fallout 4
+            mod_id: ${{ vars.PCA_NEXUS_FO4_MOD_ID }}
+            file_id: ${{ vars.PCA_NEXUS_FO4_FILE_ID }}
+          - game: Starfield
+            mod_id: ${{ vars.PCA_NEXUS_SF_MOD_ID }}
+            file_id: ${{ vars.PCA_NEXUS_SF_FILE_ID }}
+
+    steps:
+      - uses: actions/download-artifact@v8
+        if: matrix.file_id != ''
+        with:
+          name: release
+
+      # Adds a version to the existing file, `file_id`. The action never creates
+      # a file, so the first one of a page is uploaded by hand. With
+      # update_mod_version the page then shows the public version (2026.1
+      # style), the number the GitHub release is titled with too.
+      - name: Upload to NexusMods
+        if: matrix.file_id != ''
+        uses: Nexus-Mods/upload-action@v1.0.0-beta.10
+        with:
+          api_key: ${{ secrets.PCA_NEXUSMODS_API_KEY }}
+          mod_id: ${{ matrix.mod_id }}
+          file_id: ${{ matrix.file_id }}
+          filename: PCA.7z
+          display_name: PCA ${{ needs.release.outputs.public-version }}
+          version: ${{ needs.release.outputs.public-version }}
+          changelog: ${{ needs.package.outputs.changelog }}
+          update_mod_version: true
+
+  publish:
+    name: Publish release
+    needs: [release, nexusmods]
+    # The SE page is the one the in-app update notice sends users to: until it
+    # is configured, the release stays a draft and nothing is announced.
+    if: vars.PCA_NEXUS_SE_FILE_ID != ''
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Undraft GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          gh release edit 'v${{ needs.release.outputs.version }}'
+          --repo '${{ github.repository }}'
+          --draft=false

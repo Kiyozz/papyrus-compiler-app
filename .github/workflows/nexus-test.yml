@@ -1,0 +1,48 @@
+name: NexusMods upload test
+
+# The upload action has no dry run, so this is the smoke test for it: point it
+# at a mod page of your own left unpublished and look at what lands on it. It
+# uploads a dummy archive and touches no release, no tag and no real page.
+#
+# Ids come from `scripts/nexus-ids.mjs <game-domain>/<id-in-url>`, the page needs
+# a first file uploaded by hand, and the run needs the PCA_NEXUSMODS_API_KEY
+# secret the release workflow uses.
+on:
+  workflow_dispatch:
+    inputs:
+      mod_id:
+        description: mod_id of the test page
+        required: true
+      file_id:
+        description: file_id of the test page
+        required: true
+      version:
+        description: Version to upload as
+        required: true
+        default: '0.0.1'
+
+permissions: {}
+
+jobs:
+  upload:
+    name: Upload a dummy archive
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build the archive
+        run: |
+          echo 'PCA NexusMods upload test, nothing to see here.' > README.txt
+          7z a PCA.7z README.txt
+
+      - name: Upload to NexusMods
+        uses: Nexus-Mods/upload-action@v1.0.0-beta.10
+        with:
+          api_key: ${{ secrets.PCA_NEXUSMODS_API_KEY }}
+          mod_id: ${{ inputs.mod_id }}
+          file_id: ${{ inputs.file_id }}
+          filename: PCA.7z
+          display_name: PCA ${{ inputs.version }}
+          version: ${{ inputs.version }}
+          changelog: |
+            Test upload, ignore.
+          update_mod_version: false
