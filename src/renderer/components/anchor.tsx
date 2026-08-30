@@ -2,8 +2,8 @@
  * 2022-2026 Kiyozz.
  */
 
-import type { ComponentProps } from 'react'
 import { bridge } from '../bridge'
+import type { ComponentProps } from 'react'
 
 function Anchor({ children, href }: ComponentProps<'a'>) {
   const onClick = () => {
@@ -13,7 +13,11 @@ function Anchor({ children, href }: ComponentProps<'a'>) {
   }
 
   return (
-    <button onClick={onClick} type="button">
+    <button
+      className="cursor-pointer text-primary underline underline-offset-4"
+      onClick={onClick}
+      type="button"
+    >
       {children}
     </button>
   )

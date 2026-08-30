@@ -8,6 +8,8 @@
 
 @import '@fontsource/figtree/latin.css';
 
+@plugin '@tailwindcss/typography';
+
 @custom-variant dark (&:is(.dark *));
 @custom-variant sidebar-closed (:is(body:has(.sidebar[data-collapsible="icon"])) &);
 

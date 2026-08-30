@@ -233,7 +233,7 @@ msgstr "Étape {0} sur {1}"
 msgid "Extraction…"
 msgstr "Extraction…"
 
-#: src/renderer/components/dialog/dialog-changelog.tsx:214
+#: src/renderer/components/dialog/dialog-changelog.tsx:156
 msgid "Fermer"
 msgstr "Fermer"
 
@@ -376,15 +376,15 @@ msgstr "Nom"
 msgid "Nombre de scripts compilés simultanéments"
 msgstr "Nombre de scripts compilés simultanéments"
 
-#: src/renderer/components/dialog/dialog-changelog.tsx:190
+#: src/renderer/components/dialog/dialog-changelog.tsx:137
 msgid "Notes de mise à jour"
 msgstr "Notes de mise à jour"
 
-#: src/renderer/components/dialog/dialog-changelog.tsx:171
+#: src/renderer/components/dialog/dialog-changelog.tsx:98
 msgid "Nouveautés"
 msgstr "Nouveautés"
 
-#: src/renderer/components/dialog/dialog-changelog.tsx:177
+#: src/renderer/components/dialog/dialog-changelog.tsx:90
 msgid "Nouvelle version disponible : {latestVersion}"
 msgstr "Nouvelle version disponible : {latestVersion}"
 
@@ -555,7 +555,7 @@ msgstr "Supprimer"
 msgid "Système"
 msgstr "Système"
 
-#: src/renderer/components/dialog/dialog-changelog.tsx:217
+#: src/renderer/components/dialog/dialog-changelog.tsx:161
 msgid "Télécharger"
 msgstr "Télécharger"
 
@@ -650,7 +650,7 @@ msgstr "Voir la documentation"
 msgid "Voir sur le magasin Steam"
 msgstr "Voir sur le magasin Steam"
 
-#: src/renderer/components/dialog/dialog-changelog.tsx:155
+#: src/renderer/components/dialog/dialog-changelog.tsx:67
 msgid "Vous disposez de la dernière version"
 msgstr "Vous disposez de la dernière version"
 
