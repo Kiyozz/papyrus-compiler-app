@@ -251,7 +251,12 @@ export function DialogRecentFiles({ children }: { children: ReactElement }) {
             )}
           </p>
         ) : (
-          <ScrollArea className="w-full grow h-96">
+          <ScrollArea
+            // min-h-0 is required: on a flex item `min-height: auto` resolves
+            // to the specified height, so h-96 alone pins the minimum at 384px
+            // and the list overflows the popup instead of shrinking with it
+            className="w-full min-h-0 grow h-96"
+          >
             <div className="grow px-6">
               <ul className="divide-y divide-accent rounded-xl border">
                 {recentFiles.map((script) => {
