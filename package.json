@@ -1,6 +1,6 @@
 {
   "name": "pca",
-  "version": "5.8.0",
+  "version": "5.9.0",
   "private": true,
   "description": "Papyrus compiler app (PCA) by WushuLate",
   "license": "MIT",
@@ -145,5 +145,5 @@
     },
     "publish": null
   },
-  "publicVersion": "2025.1"
+  "publicVersion": "2026.1"
 }
