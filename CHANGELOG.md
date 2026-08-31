@@ -1,3 +1,9 @@
+## 5.9.1
+
+### Patch Changes
+
+- 186ec61: Update a dependency to fix a broken release.
+
 ## 5.9.0
 
 ### Minor Changes
