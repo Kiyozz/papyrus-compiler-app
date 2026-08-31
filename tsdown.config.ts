@@ -25,7 +25,7 @@ export default defineConfig({
   target: 'node24.18', // electron version target
   logLevel: 'error',
   outDir: 'dist/main',
-  unbundle: true,
+  unbundle: false,
   // electron-tsdown already forces `deps.neverBundle` and `dts: false`.
   plugins: [
     babel({
