@@ -224,8 +224,8 @@ importers:
         specifier: ~11.0.2
         version: 11.0.2
       electron-tsdown:
-        specifier: ^12.0.0
-        version: 12.0.0(tsdown@0.22.14(typescript@7.0.2))(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(yaml@2.9.0))
+        specifier: ^12.0.1
+        version: 12.0.1(tsdown@0.22.14(typescript@7.0.2))(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(yaml@2.9.0))
       electron-util:
         specifier: ~1.0.0
         version: 1.0.0
@@ -2479,9 +2479,9 @@ packages:
   electron-to-chromium@1.5.416:
     resolution: {integrity: sha512-K6bvB2BjnNrugtIih6ewlbBI9DXa976jIdiIlRLHhBoEI9a4JaQjjHyF+A1IQI543aQYR4LnmOrT/K5fZj0aPA==}
 
-  electron-tsdown@12.0.0:
-    resolution: {integrity: sha512-aZb5EhmYRW4mNUdbCGVQ+ZrcRzn8a5m9JRnGxh4fU2I9hOapYnCyvqapi7Y/Il2zeJWFDEHb7/OgQvxn2d0vQg==}
-    engines: {node: ^22.18.0 || >=24.11.0, pnpm: '10'}
+  electron-tsdown@12.0.1:
+    resolution: {integrity: sha512-uKYnDfiiKWlkezdpTZjnE/k5W74xmiSdXuLqgFwkHOtutZf3VPSzVBl6D0vxkkNQCmoE35oQ/ecJSO0mP4HwmQ==}
+    engines: {node: ^22.18.0 || >=24.11.0}
     hasBin: true
     peerDependencies:
       tsdown: ^0.22.0
@@ -7078,7 +7078,7 @@ snapshots:
 
   electron-to-chromium@1.5.416: {}
 
-  electron-tsdown@12.0.0(tsdown@0.22.14(typescript@7.0.2))(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(yaml@2.9.0)):
+  electron-tsdown@12.0.1(tsdown@0.22.14(typescript@7.0.2))(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(yaml@2.9.0)):
     dependencies:
       '@adonisjs/fold': 11.1.0
       cac: 7.0.0
