@@ -38,33 +38,34 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       # Pending changesets -> open/refresh the bot version PR.
-      # None left (PR merged) -> `changeset tag` creates vX.Y.Z locally.
+      # None left (PR merged) -> `changeset git-tag` creates vX.Y.Z and the
+      # action pushes it.
       #
-      # createGithubReleases stays off because the action can only create a
+      # v2 or newer: v1 detected the release by grepping `New tag:` out of the
+      # publish script's stdout, which the Changesets v3 CLI no longer prints,
+      # so `published` came back false and every job below was skipped. v2 reads
+      # the report the CLI writes to `CHANGESETS_OUTPUT` instead.
+      #
+      # create-github-releases stays off because the action can only create a
       # published release, and we want a draft until the NexusMods upload runs.
-      # It also owns the tag push, so we do that ourselves below.
+      # push-git-tags, which it otherwise implies, is what the jobs below need.
       - name: Version pull request or tag
         id: changesets
-        uses: changesets/action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: changesets/action@v2
         with:
-          version: pnpm changeset:version
-          publish: pnpm changeset:tag
-          commit: 'chore(release): version packages'
-          title: 'chore(release): version packages'
-          createGithubReleases: false
+          version-script: pnpm changeset:version
+          publish-script: pnpm changeset:tag
+          commit-message: 'chore(release): version packages'
+          pr-title: 'chore(release): version packages'
+          create-github-releases: false
+          push-git-tags: true
 
       - name: Read released version
         id: version
         if: steps.changesets.outputs.published == 'true'
         run: |
-          echo "version=${{ fromJson(steps.changesets.outputs.publishedPackages)[0].version }}" >> "$GITHUB_OUTPUT"
+          echo "version=${{ fromJson(steps.changesets.outputs['published-packages'])[0].version }}" >> "$GITHUB_OUTPUT"
           echo "public-version=$(node -p 'require("./package.json").publicVersion')" >> "$GITHUB_OUTPUT"
-
-      - name: Push tag
-        if: steps.changesets.outputs.published == 'true'
-        run: git push origin 'v${{ steps.version.outputs.version }}'
 
   package:
     name: Package
