@@ -1,3 +1,92 @@
+## 5.9.0
+
+### Minor Changes
+
+- 786c340: Migrate from react-router to @tanstack/react-router with file-based routing via Vite plugin.
+- 70c9f3c: Add language switcher in settings (EN/FR), persist locale, sync native menu on change.
+- a967b8a: Replace custom electron-ipc package with kkrpc for typed bidirectional RPC.
+- e13a847: Add log level setting (error/warn/info/debug) in settings, remove --debug CLI flag.
+- 87cf4c1: Compile scripts from any folder (script's parent dir auto-imported).
+  Customize compilation output folder.
+  Deprecate MO2 integration: shows warning when enabled, no longer scans mods.
+- 9a5fbd7: Fix telemetry configuration: the API URL was read from the feature flag variable, and the renderer never received its build-time values at all (Vite only exposes `VITE_`-prefixed variables). Environment variables are now prefixed `PCA_` instead of `ELECTRON_`.
+- 4a5f7f7: Settings: show the app version, and fix the last section being cut off when the window is too short.
+- 5aa2c4f: Upgrade Electron 41 -> 44, electron-builder 26.15, tsdown 0.22,
+  electron-tsdown 12 and kkrpc 0.6 -> 2.
+
+  kkrpc v2 replaces the `kkrpc/electron-ipc` IO adapters with transports from
+  `kkrpc/electron`, and the main/renderer channels now take their local API
+  through the channel options instead of `RPCChannel.expose()`. Its default IPC
+  channel is also renamed, so the preload bridge allows the `kkrpc:` prefix.
+
+  Electron 44 removed the two-argument `clipboard.writeText(text, 'selection')`
+  form; the Linux selection clipboard now lives under `clipboard.selection`.
+
+- 405ddd4: Support Papyrus namespaces (Fallout 4, Starfield). The namespace declared in the psc header (`Scriptname MyMod01:Script`) is now given to the compiler, the namespace root folder is imported instead of the script folder, and the pex is written to its namespace subfolder.
+
+  Fallout 4 imports are reduced to the three roots the game actually uses — `Scripts/Source`, `Scripts/Source/Base` and `Scripts/Source/User` — instead of globbing every subfolder four levels deep. Those subfolders are namespace folders, not roots: the compiler walks down to them on its own. On a stock Fallout 4 install this takes the command line from 64 imports to 4, which makes the `ENAMETOOLONG` limit much harder to hit.
+
+- 405ddd4: Fix Starfield support, which could not compile anything: the game executable was looked up as `Startfield.exe`, its sources were expected in `Data/Source/Scripts` instead of `Data/Scripts/Source`, the config check looked for `Base/Actor.psc` when Starfield has no `Base` folder, and `Starfield_Papyrus_Flags.flg` was not a selectable flag. Selecting Starfield in the settings also silently reverted to Skyrim: the store's game type check listed the four other games and reset anything else, so the choice was overwritten on the next config check while the game path and flag stayed on Starfield. It now reuses the shared `validateGame.gameType()` instead of its own outdated list.
+
+  Starfield keeps every script under `Scripts/Source` — its subfolders are namespaces — so that folder is now its only import root.
+
+- 6ec7ab4: Button to open the folder the pex was written to, in the script list and in the compilation logs. Namespaces (Fallout 4, Starfield) included.
+- 94c4b57: Setup wizard on first launch (game, folder, Creation Kit) and a detailed Creation Kit report in the settings.
+
+  PCA now tells apart a missing Creation Kit, source archives nobody extracted, a compiler that cannot be found and missing sources, each with the matching action: install from Steam, extract the .zip archives from PCA (Fallout 4 Base and DLC, Skyrim SE Scripts.zip, Starfield ContentResources.zip), open the folder or pick PapyrusCompiler.exe.
+
+  An archive is read to know whether it was already extracted and where it unfolds, so the Fallout 4 archives are found wherever the kit dropped them.
+
+  Errors when the configured compiler belongs to another, incompatible game, and a non blocking warning when SKSE or F4SE is installed without its .psc source scripts.
+
+  Fix: the default compiler path for Starfield points at `Tools\Papyrus Compiler`, and it is found again when the game or its folder changes.
+
+  Fix: a dialog no longer grows past the window, its body scrolls instead.
+
+- 72fd243: Skyrim SE and VR: a warning when source scripts are left in `Data\Scripts\Source`, the Skyrim LE folder. Their Creation Kit only reads `Data\Source\Scripts`, and PCA imports the LE folder first, so an outdated copy of the game scripts left in there shadows the one the game ships and the compilation fails for no apparent reason. The report recommends moving everything to `Data\Source\Scripts` and opens the folder.
+
+  The Compilation page now also raises the non blocking warnings, this one and the script extender without its sources, and no longer the errors only. An error still comes first when there is one.
+
+- 22f7a7d: Anonymization of the compiled scripts, on by default and switchable off in the compilation settings. The compiler writes the path of the source script, the user name and the computer name in the pex header, all three readable by anyone who opens the file: PCA now replaces them with random strings of the very same lengths once the compilation succeeded. Nothing else is touched, the compilation time and every byte of the compiled code included, and the pex keeps its size. Skyrim, Fallout 4 and Starfield alike, and whichever compiler PCA is pointed at.
+
+  An existing configuration is upgraded with the anonymization on, as a new one is. When it fails, the compilation stays a success, the script is compiled after all, and the reason is raised in its log.
+
+- 4863736: Migrate every UI component from Radix UI to Base UI. `radix-ui` is gone from the dependency tree, `components.json` now targets the `base-maia` style, and all 19 wrappers (button, dialog, sheet, select, tooltip, the menu family, sidebar, form...) use `@base-ui/react`. Composition moves from `asChild` to `render`, and popups gain Base UI's `Portal > Positioner > Popup` anatomy. No visible change is expected beyond two details: double-clicking a form label now selects its text (Radix used to block it), and sheet transitions are CSS-driven instead of keyframed.
+
+### Patch Changes
+
+- dbc9a4c: Remove tutorial components, types, store checks, migrations code, and translations.
+- 11e5054: Fix: statut des scripts en page Compilation après migration kkrpc.
+- d8d94c5: CI: automated changesets release (bot version PR, `v*` tag, GitHub release from the CHANGELOG with the packaged archive attached).
+- 3140e72: Replace the dead `RELEASE_VERSION` plumbing with a calendar-style public version (`2026.1`) bumped automatically on release.
+- 0c1d7c8: Upgrade Lingui to v6 (ESM-only, base64url message ids, formatter config).
+- 7cb25f3: Upgrade oxlint to 1.80 and oxfmt to 0.65.
+- 83d288f: Upgrade @changesets/cli to 3.0.1, TypeScript to 7.0.2, plus vite 8.2.2, zod 4.5.2, uuid 14.0.2. Add a `typecheck` script and run it in CI.
+- 83d288f: Point the documentation URL to https://pca.kiyozz.com.
+- 5aa2c4f: Pin Lingui's `descriptorFields` in the main process build.
+
+  It defaults to `auto`, which resolves through `process.env.NODE_ENV` while
+  transforming — inside rolldown's workers, where the value electron-tsdown sets
+  is not reliably visible. Two consecutive production builds could disagree on
+  whether the `message` fallback field was stripped. The value is now resolved
+  once, when the config is evaluated.
+
+- f068506: Fix the add scripts button staying disabled after closing the file picker without selecting anything. The picker fires `cancel` in that case, never `change`, so the flag tracking the open dialog was never cleared.
+- 6a3d624: Log an error when an unsupported game type reaches `toExecutable` instead of falling back to the Skyrim SE executable in silence, which used to make a corrupted game type look like the user had picked Skyrim.
+- 6a3d624: Give the renderer a way to write to the electron-log files. It had no logger at all: its few `console` calls only ever reached the devtools and were lost once the app was packaged. Renderer entries now go through the bridge and are written by the main process under a `Renderer:<scope>` scope, so they show up in the log files users send along with a bug report.
+- 83d288f: Send the `App.FirstLoaded` telemetry event again on the very first launch, with the app version and the public version.
+- 376cf81: Fix telemetry never being sent: `electron-fetch` only ships CommonJS, so its default import resolved to the module object instead of the fetch function in the ESM main process. Replaced by Electron `net.fetch` and the dependency is dropped.
+- 2a3608f: Compile the script that was picked, not a namesake found in the game sources. The compiler resolves a script name against the current working directory (always first) then the imports in order, keeping the first match: the folder of the script is now both the working directory and the first import. Fixes wrong script compiled when several import folders hold the same name, typically under MO2 where Data merges every mod.
+- 052f11d: Show the real result of a run on its compilation log entry. The Success/Failure badge was derived from the script status captured before compilation started, so it showed the previous run's outcome (and "Failure" on a first run). Each log entry now carries the compiler result it came from.
+- 6c2237b: Migrate the changelog dialog off MUI to Base UI and sonner, render the release notes with @tailwindcss/typography, and drop the @mui and @emotion dependencies.
+- 4e26bd6: Fix: Selects des settings contrôlés et affichage du libellé sélectionné (au lieu de la valeur brute) après migration Base UI.
+
+  Le dialogue Documentation affiche désormais un descriptif, l'URL et un bouton d'ouverture, au lieu d'un placeholder.
+
+- 18ab1d5: CI: upload every release to the NexusMods pages (Skyrim LE, Skyrim SE, Fallout 4, Starfield) with `Nexus-Mods/upload-action`, changelog included, then publish the GitHub release that stays a draft until the archive is there. The `mod_id`/`file_id` pair of a page comes from repository variables, an unset pair skips it, and `scripts/nexus-ids.mjs` resolves them.
+- 0e50bbe: Fix: the recent files list no longer overflows the dialog when the window is too small to display it entirely.
+- 8626efa: Fix: the settings fields now follow the configuration when it is changed from outside the form, such as the Creation Kit diagnostic picking the compiler for you.
+
 ## 5.8.0 (2022-05-06)
 
 ### Bug fixes
