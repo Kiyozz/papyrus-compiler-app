@@ -20,7 +20,7 @@ import {
 import is from '@sindresorhus/is'
 import debounce from 'debounce-fn'
 import { BookIcon, RotateCcwIcon } from 'lucide-react'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { GameType, toFlag } from '#common/game.ts'
 import { LogLevel } from '#common/log-level.ts'
@@ -42,6 +42,11 @@ import {
 import { Trans } from '@lingui/react/macro'
 
 const maxConcurrentCompilationScripts = 100
+
+const supportedLocales = ['en', 'fr']
+
+const toFormLocale = (locale: string) =>
+  supportedLocales.includes(locale) ? locale : 'fr'
 
 export function SettingsPage() {
   const {
@@ -72,12 +77,16 @@ export function SettingsPage() {
       mo2: mo2.use,
       telemetry,
       theme,
-      locale: ['en', 'fr'].includes(locale) ? locale : 'fr',
+      locale: toFormLocale(locale),
       logLevel,
     },
     mode: 'onChange',
     delayError: 400,
   })
+
+  // what this form last pushed to the configuration, per field: the mirror
+  // below must not fight a write that has not landed yet
+  const sentRef = useRef<Record<string, unknown>>({})
 
   const debouncedSetConfig = useMemo(
     () => debounce(setConfig, { wait: 500 }),
@@ -102,6 +111,64 @@ export function SettingsPage() {
     game.path,
     game.type,
     resetDiagnostic,
+  ])
+
+  // the configuration also changes outside of this form: the diagnostic picks
+  // a compiler on its own, the setup wizard sets the game folder. React Hook
+  // Form reads `defaultValues` once, so without mirroring it back the fields
+  // keep showing the previous value until the page is mounted again.
+  useEffect(() => {
+    const values: Record<string, unknown> = {
+      game: game.type,
+      gamePath: game.path,
+      compilerPath: compilation.compilerPath,
+      concurrentScripts: compilation.concurrentScripts,
+      output: compilation.output,
+      anonymize: compilation.anonymize,
+      mo2: mo2.use,
+      telemetry,
+      theme,
+      locale: toFormLocale(locale),
+      logLevel,
+    }
+
+    for (const [name, value] of Object.entries(values)) {
+      if (name in sentRef.current) {
+        // the configuration caught up with the form: stop shielding the field
+        if (sentRef.current[name] === value) {
+          delete sentRef.current[name]
+        }
+
+        continue
+      }
+
+      const current = form.getValues(name as never) as unknown
+      // the number input hands its value back as a string, the configuration
+      // keeps a number
+      const same =
+        name === 'concurrentScripts'
+          ? Number(current) === value
+          : current === value
+
+      if (same) {
+        continue
+      }
+
+      form.setValue(name as never, value as never)
+    }
+  }, [
+    game.type,
+    game.path,
+    compilation.compilerPath,
+    compilation.concurrentScripts,
+    compilation.output,
+    compilation.anonymize,
+    mo2.use,
+    telemetry,
+    theme,
+    locale,
+    logLevel,
+    form,
   ])
 
   const onClickPageRefresh = useCallback(async () => {
@@ -131,6 +198,7 @@ export function SettingsPage() {
 
             resetDiagnostic()
             send(TelemetryEvent.settingsGame, { game: gameType })
+            sentRef.current.game = gameType
             setConfig({
               game: { type: gameType },
               compilation: {
@@ -141,15 +209,17 @@ export function SettingsPage() {
             break
           }
           case 'gamePath': {
-            const gamePath = value.gamePath
+            const gamePath = value.gamePath?.trim()
 
-            debouncedSetConfig({ game: { path: gamePath?.trim() } })
+            sentRef.current.gamePath = gamePath
+            debouncedSetConfig({ game: { path: gamePath } })
 
             break
           }
           case 'compilerPath': {
             const compilerPath = value.compilerPath?.trim()
 
+            sentRef.current.compilerPath = compilerPath
             debouncedSetConfig({
               compilation: {
                 compilerPath,
@@ -179,6 +249,7 @@ export function SettingsPage() {
                 parsedValue = 1
               }
 
+              sentRef.current.concurrentScripts = parsedValue
               setConfig({ compilation: { concurrentScripts: parsedValue } })
             }
 
@@ -192,6 +263,7 @@ export function SettingsPage() {
             }
 
             send(TelemetryEvent.settingsTheme, { theme: newTheme })
+            sentRef.current.theme = newTheme
             setConfig({ theme: newTheme })
 
             break
@@ -202,6 +274,7 @@ export function SettingsPage() {
             if (!['en', 'fr'].includes(newLocale)) return
 
             void dynamicActivateLocale(newLocale)
+            sentRef.current.locale = newLocale
             setConfig({ locale: newLocale })
 
             break
@@ -213,20 +286,23 @@ export function SettingsPage() {
               return
             }
 
+            sentRef.current.logLevel = newLogLevel
             setConfig({ logLevel: newLogLevel })
 
             break
           }
           case 'output': {
-            const output = value.output ?? ''
+            const output = (value.output ?? '').trim()
 
+            sentRef.current.output = output
             debouncedSetConfig({
-              compilation: { output: output.trim() },
+              compilation: { output },
             })
 
             break
           }
           case 'anonymize': {
+            sentRef.current.anonymize = value.anonymize === true
             setConfig({
               compilation: { anonymize: value.anonymize === true },
             })
@@ -234,6 +310,7 @@ export function SettingsPage() {
             break
           }
           case 'mo2': {
+            sentRef.current.mo2 = value.mo2 === true
             setConfig({ mo2: { use: value.mo2 === true } })
 
             break
@@ -245,6 +322,7 @@ export function SettingsPage() {
               send(TelemetryEvent.telemetryEnabled, {})
             }
 
+            sentRef.current.telemetry = checked
             setConfig({ telemetry: { active: checked } })
             bridge.telemetry.setActive(checked)
           }
