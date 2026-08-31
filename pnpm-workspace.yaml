@@ -3,4 +3,4 @@ allowBuilds:
   lefthook: true
 
 minimumReleaseAgeExclude:
-  - electron-tsdown@12.0.1
+  - electron-tsdown@12.0.2

@@ -45,7 +45,7 @@ msgstr "Activer"
 
 #: src/renderer/components/dialog/dialog-compilation-logs.tsx:236
 #: src/renderer/components/dialog/dialog-group.tsx:191
-#: src/renderer/components/dialog/dialog-recent-files.tsx:285
+#: src/renderer/components/dialog/dialog-recent-files.tsx:290
 msgid "Annuler"
 msgstr "Annuler"
 
@@ -97,7 +97,7 @@ msgstr "Cette fonctionnalité n'est pas disponible si PCA est lancé en mode adm
 msgid "Chargement"
 msgstr "Chargement"
 
-#: src/renderer/components/dialog/dialog-recent-files.tsx:292
+#: src/renderer/components/dialog/dialog-recent-files.tsx:297
 msgid "Charger"
 msgstr "Charger"
 
@@ -190,7 +190,7 @@ msgstr "Des scripts sources sont dans Scripts\\Source au lieu de Source\\Scripts
 
 #: src/renderer/components/app-sidebar.tsx:57
 #: src/renderer/components/dialog/dialog-documentation.tsx:30
-#: src/renderer/pages/settings/settings-page.tsx:283
+#: src/renderer/pages/settings/settings-page.tsx:361
 msgid "Documentation"
 msgstr "Documentation"
 
@@ -414,7 +414,7 @@ msgid "Ouvrir le dossier du script compilé"
 msgstr "Ouvrir le dossier du script compilé"
 
 #: src/renderer/components/app-sidebar.tsx:44
-#: src/renderer/pages/settings/settings-page.tsx:266
+#: src/renderer/pages/settings/settings-page.tsx:344
 msgid "Paramètres"
 msgstr "Paramètres"
 
@@ -468,7 +468,7 @@ msgstr "PCA, lui, l'importe avant Data\\Source\\Scripts : une ancienne copie des
 #~ msgid "PCA, lui, l'importe avant Data\\Source\\Scripts : une ancienne copie des scripts du jeu qui y traîne masque celle de Special Edition, et la compilation échoue sans raison apparente."
 #~ msgstr "PCA, lui, l'importe avant Data\\Source\\Scripts : une ancienne copie des scripts du jeu qui y traîne masque celle de Special Edition, et la compilation échoue sans raison apparente."
 
-#: src/renderer/components/dialog/dialog-recent-files.tsx:276
+#: src/renderer/components/dialog/dialog-recent-files.tsx:281
 #: src/renderer/pages/compilation/compilation-page.tsx:220
 #: src/renderer/pages/groups/groups-page.tsx:118
 msgid "Plus de détails"
@@ -482,7 +482,7 @@ msgstr "Préférences"
 msgid "Quel jeu voulez-vous modder ?"
 msgstr "Quel jeu voulez-vous modder ?"
 
-#: src/renderer/pages/settings/settings-page.tsx:293
+#: src/renderer/pages/settings/settings-page.tsx:371
 msgid "Rafraîchir"
 msgstr "Rafraîchir"
 
