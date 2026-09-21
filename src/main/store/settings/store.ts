@@ -35,7 +35,7 @@ import { toDefaultCompilerPath } from '#main/constants.ts'
 import { validateGroup } from '#main/validators/group.validator.ts'
 
 const jsonPath = isDev
-  ? join(dirname(import.meta), '../../../..', 'package.json')
+  ? join(dirname(import.meta), '../..', 'package.json')
   : join(app.getAppPath(), 'package.json')
 const json = JSON.parse(fs.readFileSync(jsonPath).toString()) as {
   version: string
