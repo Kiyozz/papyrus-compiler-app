@@ -33,6 +33,8 @@ interface ConfigMo2 {
 
 interface Telemetry {
   active: boolean
+  /** the user answered the consent dialog: nothing is sent before that */
+  asked: boolean
 }
 
 interface Setup {

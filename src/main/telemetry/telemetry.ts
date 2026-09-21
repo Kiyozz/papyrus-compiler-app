@@ -8,6 +8,7 @@ import Queue from 'queue'
 import { TelemetryEvent } from '#common/telemetry-event.ts'
 import type { TelemetryEventProperties } from '#common/telemetry-event.ts'
 import { Logger } from '../logger.ts'
+import { sanitizeProperties } from './sanitize.ts'
 import { SettingsStore } from '#main/store/settings/store.ts'
 import { Env } from '#main/env.ts'
 import { inject } from '#main/inject.ts'
@@ -90,6 +91,11 @@ export class Telemetry {
       }
 
       return
+    }
+
+    payload = {
+      ...payload,
+      properties: sanitizeProperties(payload.properties),
     }
 
     const { appKey, ...payloadWithoutAppKey } = payload

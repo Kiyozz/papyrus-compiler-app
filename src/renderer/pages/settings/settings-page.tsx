@@ -323,7 +323,7 @@ export function SettingsPage() {
             }
 
             sentRef.current.telemetry = checked
-            setConfig({ telemetry: { active: checked } })
+            setConfig({ telemetry: { active: checked, asked: true } })
             bridge.telemetry.setActive(checked)
           }
         }

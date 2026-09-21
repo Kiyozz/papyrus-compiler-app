@@ -26,6 +26,7 @@ import { migrate520 } from './migrations/5.2.0.migration'
 import { migrate550 } from './migrations/5.5.0.migration'
 import { migrate560 } from './migrations/5.6.0.migration'
 import { migrate590 } from './migrations/5.9.0.migration'
+import { migrate592 } from './migrations/5.9.2.migration'
 import type { Config } from '#common/types/config.ts'
 import { inject } from '#main/inject.ts'
 import is from '@sindresorhus/is'
@@ -34,7 +35,7 @@ import { toDefaultCompilerPath } from '#main/constants.ts'
 import { validateGroup } from '#main/validators/group.validator.ts'
 
 const jsonPath = isDev
-  ? join(dirname(import.meta), '../../../..', 'package.json')
+  ? join(dirname(import.meta), '../..', 'package.json')
   : join(app.getAppPath(), 'package.json')
 const json = JSON.parse(fs.readFileSync(jsonPath).toString()) as {
   version: string
@@ -60,7 +61,8 @@ const defaultSettingsStoreConfig: Config = {
   },
   groups: [],
   telemetry: {
-    active: true,
+    active: false,
+    asked: false,
   },
   setup: {
     done: false,
@@ -263,7 +265,8 @@ class SettingsStore extends Store<Config> {
       is.nullOrUndefined(telemetry) ||
       !is.object(telemetry) ||
       is.emptyObject(telemetry) ||
-      !is.boolean(telemetry.active)
+      !is.boolean(telemetry.active) ||
+      !is.boolean(telemetry.asked)
     ) {
       this.reset('telemetry')
     }
@@ -332,6 +335,7 @@ function createSettingsStore() {
       '5.5.0': migrate550,
       '5.6.0': migrate560,
       '5.9.0': migrate590,
+      '5.9.2': migrate592,
     },
   } as never)
 
