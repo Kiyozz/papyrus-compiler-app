@@ -38,6 +38,14 @@ msgstr "{0} scripts loaded."
 msgid "À propos"
 msgstr "About"
 
+#: src/renderer/components/dialog/dialog-telemetry.tsx:78
+msgid "Accepter"
+msgstr "Accept"
+
+#: src/renderer/components/dialog/dialog-telemetry.tsx:44
+msgid "Acceptez-vous d'envoyer des données d'utilisation anonymes pour aider à améliorer PCA ?"
+msgstr "Do you agree to send anonymous usage data to help improve PCA?"
+
 #: src/renderer/pages/settings/settings-mo2/settings-mo2-activation.tsx:22
 #: src/renderer/pages/settings/settings-telemetry-section.tsx:28
 msgid "Activer"
@@ -64,6 +72,10 @@ msgstr "None"
 #: src/renderer/components/dialog/dialog-recent-files.tsx:248
 msgid "Aucun fichiers récents."
 msgstr "No recent files."
+
+#: src/renderer/components/dialog/dialog-telemetry.tsx:60
+msgid "Aucun identifiant, aucun contenu de script, aucun chemin de fichier ni nom d'utilisateur n'est envoyé."
+msgstr "No identifier, script content, file path or username is ever sent."
 
 #: src/renderer/components/dialog/dialog-compilation-logs.tsx:112
 msgid "Aucun logs"
@@ -198,6 +210,10 @@ msgstr "Documentation"
 #: src/renderer/pages/settings/settings-telemetry-section.tsx:19
 msgid "Données d'utilisation"
 msgstr "Telemetry"
+
+#: src/renderer/components/dialog/dialog-telemetry.tsx:41
+msgid "Données d'utilisation anonymes"
+msgstr "Anonymous usage data"
 
 #: src/renderer/pages/settings/settings-compilation.tsx:49
 msgid "Dossier de sortie"
@@ -490,6 +506,10 @@ msgstr "Refresh"
 msgid "Réduisez si vous rencontrez des blocages quand vous lancez la compilation"
 msgstr "Reduce if you experience latency when starting the compilation"
 
+#: src/renderer/components/dialog/dialog-telemetry.tsx:75
+msgid "Refuser"
+msgstr "Decline"
+
 #: src/renderer/pages/settings/settings-about-section.tsx:31
 msgid "Relancer l'assistant de configuration"
 msgstr "Run the setup wizard again"
@@ -506,6 +526,10 @@ msgstr "Remove"
 #: src/renderer/components/dialog/dialog-setup.tsx:265
 msgid "Retour"
 msgstr "Back"
+
+#: src/renderer/components/dialog/dialog-telemetry.tsx:66
+msgid "Rien n'est envoyé si vous refusez. Ce choix est modifiable à tout moment dans les paramètres."
+msgstr "Nothing is sent if you decline. You can change this choice at any time in the settings."
 
 #: src/renderer/components/ck-diagnostic.tsx:382
 msgid "Scripts sources introuvables"
@@ -531,6 +555,10 @@ msgstr "Select a folder"
 #: src/renderer/pages/settings/settings-game-section.tsx:48
 msgid "Sélectionner votre jeu"
 msgstr "Select your game"
+
+#: src/renderer/components/dialog/dialog-telemetry.tsx:53
+msgid "Si vous acceptez, PCA envoie les fonctionnalités utilisées (par exemple : nombre de scripts compilés, jeu choisi, thème, version de PCA) et les erreurs de l'application."
+msgstr "If you accept, PCA sends which features are used (for example: number of compiled scripts, selected game, theme, PCA version) and application errors."
 
 #. placeholder {0}: game.type
 #: src/renderer/components/ck-diagnostic.tsx:141
