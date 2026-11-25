@@ -116,7 +116,8 @@ export const bridge: Bridge = {
       untimedMainApi.compilation.start(script, onFinish),
   },
   dialog: {
-    select: (type) => untimedMainApi.dialog.select(type),
+    select: (type, defaultPath) =>
+      untimedMainApi.dialog.select(type, defaultPath),
   },
   shell: {
     openExternal: (href) => mainApi.shell.openExternal(href),

@@ -26,6 +26,8 @@ interface DialogTextFieldProps {
   label?: ReactNode
   description?: ReactNode
   type: DialogType
+  /** where the picker opens while the field is empty */
+  fallbackPath?: string
 }
 
 function DialogTextField({
@@ -33,6 +35,7 @@ function DialogTextField({
   label,
   description,
   type,
+  fallbackPath,
 }: DialogTextFieldProps) {
   const { t } = useLingui()
   const [isHover, setHover] = useState(false)
@@ -70,7 +73,14 @@ function DialogTextField({
 
                   try {
                     const result = await bridge.dialog
-                      .select(type)
+                      .select(
+                        type,
+                        // the picker opens on what the field holds, else
+                        // Windows picks its last folder, which can be out of
+                        // reach under MO2
+                        (field.value as string | undefined)?.trim() ||
+                          fallbackPath,
+                      )
                       .then((response) => {
                         return response ?? undefined
                       })

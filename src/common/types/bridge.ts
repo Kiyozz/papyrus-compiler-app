@@ -72,7 +72,8 @@ export interface Bridge {
   }
 
   dialog: {
-    select: (type: DialogType) => Promise<string | null>
+    /** `defaultPath`: where the picker opens, Windows reuses its last folder otherwise */
+    select: (type: DialogType, defaultPath?: string) => Promise<string | null>
   }
 
   shell: {

@@ -117,7 +117,8 @@ export class MainApi {
         },
       },
       dialog: {
-        select: (type) => new DialogHandler().listen({ type }),
+        select: (type, defaultPath) =>
+          new DialogHandler().listen({ type, defaultPath }),
       },
       recentFiles: {
         get: () => recentFilesGetHandler.listen(),

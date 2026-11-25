@@ -3,6 +3,7 @@
  */
 
 import { Trans } from '@lingui/react/macro'
+import { useFormContext } from 'react-hook-form'
 import { SettingsSection, SettingsSectionContent } from './settings-section.tsx'
 import {
   FormControl,
@@ -16,6 +17,8 @@ import { Switch } from '@renderer/components/ui/switch.tsx'
 import DialogTextField from '@renderer/components/dialog/dialog-text-field.tsx'
 
 function SettingsCompilation() {
+  const gamePath = useFormContext().watch('gamePath') as string | undefined
+
   return (
     <SettingsSection
       id="compilation-concurrentScripts"
@@ -54,6 +57,9 @@ function SettingsCompilation() {
             </Trans>
           }
           type="folder"
+          // the default, Data\Scripts, can exist only in the MO2 virtual file
+          // system: the game folder is always reachable
+          fallbackPath={gamePath}
         />
 
         <FormField
