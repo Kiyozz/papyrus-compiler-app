@@ -94,7 +94,7 @@ msgstr "No scripts"
 msgid "Aucune erreur !"
 msgstr "No errors!"
 
-#: src/renderer/components/ck-diagnostic.tsx:489
+#: src/renderer/components/ck-diagnostic.tsx:492
 msgid "Avec Mod Organizer 2, installez plutôt l'archive comme un mod et lancez PCA depuis MO2 : les fichiers des mods, Root Builder compris, ne sont visibles que par les programmes lancés depuis MO2."
 msgstr "With Mod Organizer 2, install the archive as a mod instead and launch PCA from MO2: mod files, Root Builder ones included, are only visible to programs launched from MO2."
 
@@ -314,7 +314,7 @@ msgstr "Extraction failed"
 
 #. placeholder {0}: extender.name
 #. placeholder {1}: extender.name
-#: src/renderer/components/ck-diagnostic.tsx:482
+#: src/renderer/components/ck-diagnostic.tsx:485
 msgid "La compilation fonctionne, mais tout script utilisant une fonction de {0} échouera. Copiez le dossier Data\\Scripts\\Source de l'archive {1} dans le dossier du jeu."
 msgstr "Compilation works, but any script using a {0} function will fail. Copy the Data\\Scripts\\Source folder of the {1} archive into the game folder."
 
@@ -607,7 +607,7 @@ msgid "Télécharger"
 msgstr "Download"
 
 #. placeholder {0}: extender.name
-#: src/renderer/components/ck-diagnostic.tsx:503
+#: src/renderer/components/ck-diagnostic.tsx:506
 msgid "Télécharger {0}"
 msgstr "Download {0}"
 

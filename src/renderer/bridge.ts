@@ -2,7 +2,7 @@
  * 2022-2026 Kiyozz.
  */
 
-import { RPCChannel } from 'kkrpc'
+import { RPCChannel, withCallOptions } from 'kkrpc'
 import { electronIpcTransport } from 'kkrpc/electron'
 import { fromError } from '../common/from-error'
 import type { Bridge } from '../common/types/bridge'
@@ -58,6 +58,9 @@ const rpc = new RPCChannel<RendererAPI, MainAPI>(transport, {
   expose: rendererApi,
 })
 const mainApi = rpc.getAPI()
+// kkrpc rejects a call after 30s by default: calls waiting on the user (native
+// dialog) or on long work (compiler, archive extraction, disk scan) must not time out
+const untimedMainApi = withCallOptions(mainApi, { timeout: 0 })
 
 export const bridge: Bridge = {
   telemetry: {
@@ -101,18 +104,19 @@ export const bridge: Bridge = {
         },
       }
     },
-    diagnose: () => mainApi.config.diagnose(),
+    diagnose: () => untimedMainApi.config.diagnose(),
     firstLaunch: () => mainApi.config.firstLaunch(),
   },
   ck: {
-    extract: (archives) => mainApi.ck.extract(archives),
+    extract: (archives) => untimedMainApi.ck.extract(archives),
   },
   isProduction: () => mainApi.isProduction(),
   compilation: {
-    start: (script, onFinish) => mainApi.compilation.start(script, onFinish),
+    start: (script, onFinish) =>
+      untimedMainApi.compilation.start(script, onFinish),
   },
   dialog: {
-    select: (type) => mainApi.dialog.select(type),
+    select: (type) => untimedMainApi.dialog.select(type),
   },
   shell: {
     openExternal: (href) => mainApi.shell.openExternal(href),
