@@ -198,7 +198,7 @@ export function CompilationPage() {
         'sources-legacy': t`Des scripts sources sont dans Scripts\\Source au lieu de Source\\Scripts.`,
         // the title already names the game the compiler belongs to
         'compiler-foreign': '',
-        'extender-sources': t`Le script extender est installé sans ses scripts sources.`,
+        'extender-sources': t`Les scripts sources du script extender sont introuvables.`,
       }
       const notify = issue.severity === 'error' ? toast.error : toast.warning
       toastId = notify(

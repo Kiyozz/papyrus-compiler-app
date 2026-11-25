@@ -21,8 +21,13 @@ msgstr "\"{0}\" n'existe pas. Le Creation Kit installe PapyrusCompiler.exe dans 
 
 #. placeholder {0}: extender.name
 #: src/renderer/components/ck-diagnostic.tsx:477
-msgid "{0} est installé, sans ses scripts sources"
-msgstr "{0} est installé, sans ses scripts sources"
+msgid "{0} est installé, mais ses scripts sources sont introuvables"
+msgstr "{0} est installé, mais ses scripts sources sont introuvables"
+
+#. placeholder {0}: extender.name
+#: src/renderer/components/ck-diagnostic.tsx:477
+#~ msgid "{0} est installé, sans ses scripts sources"
+#~ msgstr "{0} est installé, sans ses scripts sources"
 
 #. placeholder {0}: game.type
 #: src/renderer/components/ck-diagnostic.tsx:420
@@ -88,6 +93,10 @@ msgstr "Aucun scripts"
 #: src/renderer/components/dialog/dialog-compilation-logs.tsx:121
 msgid "Aucune erreur !"
 msgstr "Aucune erreur !"
+
+#: src/renderer/components/ck-diagnostic.tsx:489
+msgid "Avec Mod Organizer 2, installez plutôt l'archive comme un mod et lancez PCA depuis MO2 : les fichiers des mods, Root Builder compris, ne sont visibles que par les programmes lancés depuis MO2."
+msgstr "Avec Mod Organizer 2, installez plutôt l'archive comme un mod et lancez PCA depuis MO2 : les fichiers des mods, Root Builder compris, ne sont visibles que par les programmes lancés depuis MO2."
 
 #: src/renderer/pages/settings/settings-preferences-section.tsx:39
 msgid "Avertissement"
@@ -305,7 +314,7 @@ msgstr "L'extraction a échoué"
 
 #. placeholder {0}: extender.name
 #. placeholder {1}: extender.name
-#: src/renderer/components/ck-diagnostic.tsx:481
+#: src/renderer/components/ck-diagnostic.tsx:482
 msgid "La compilation fonctionne, mais tout script utilisant une fonction de {0} échouera. Copiez le dossier Data\\Scripts\\Source de l'archive {1} dans le dossier du jeu."
 msgstr "La compilation fonctionne, mais tout script utilisant une fonction de {0} échouera. Copiez le dossier Data\\Scripts\\Source de l'archive {1} dans le dossier du jeu."
 
@@ -368,8 +377,12 @@ msgid "Le jeu est introuvable"
 msgstr "Le jeu est introuvable"
 
 #: src/renderer/pages/compilation/compilation-page.tsx:201
-msgid "Le script extender est installé sans ses scripts sources."
-msgstr "Le script extender est installé sans ses scripts sources."
+#~ msgid "Le script extender est installé sans ses scripts sources."
+#~ msgstr "Le script extender est installé sans ses scripts sources."
+
+#: src/renderer/pages/compilation/compilation-page.tsx:201
+msgid "Les scripts sources du script extender sont introuvables."
+msgstr "Les scripts sources du script extender sont introuvables."
 
 #: src/renderer/components/app-sidebar.tsx:52
 msgid "Logs"
@@ -594,7 +607,7 @@ msgid "Télécharger"
 msgstr "Télécharger"
 
 #. placeholder {0}: extender.name
-#: src/renderer/components/ck-diagnostic.tsx:493
+#: src/renderer/components/ck-diagnostic.tsx:503
 msgid "Télécharger {0}"
 msgstr "Télécharger {0}"
 

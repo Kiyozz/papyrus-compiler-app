@@ -61,15 +61,40 @@ const ownerGame = (file: string): GameType | undefined => {
 /**
  * Whether `folder` holds .psc right inside it. Only those count: an import
  * root is handed to the compiler as is, it never walks into its subfolders.
+ * The folder is listed straight away, without a stat first: see `isPresent`.
  */
 const holdsScripts = (folder: string): boolean => {
-  if (!path.exists(folder)) {
-    return false
-  }
-
   try {
     return readdirSync(folder).some((file) =>
       file.toLowerCase().endsWith('.psc'),
+    )
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Whether `file` exists, also when it only lives in the Mod Organizer 2 virtual
+ * file system (usvfs), which merges every mod into Data - and, through Root
+ * Builder, into the game root - for the programs MO2 launches.
+ *
+ * `existsSync` alone is not enough there: on Windows it stats the file, and
+ * recent Windows 11 builds answer that stat with `GetFileInformationByName`,
+ * which usvfs only hooks since 0.5.7.1. Under an older MO2, a file sitting in
+ * a mod is then reported missing while the compiler, a plain child process,
+ * sees it. Listing the parent folder goes through `NtQueryDirectoryFile`,
+ * which usvfs has always hooked. Windows paths ignore case, so does the match.
+ */
+const isPresent = (file: string): boolean => {
+  if (path.exists(file)) {
+    return true
+  }
+
+  const name = path.basename(file).toLowerCase()
+
+  try {
+    return readdirSync(path.parentDir(file)).some(
+      (entry) => entry.toLowerCase() === name,
     )
   } catch {
     return false
@@ -237,7 +262,26 @@ export class ConfigDiagnoseHandler {
 
     this.#logger.debug('checking the Skyrim LE source folder', folder)
 
-    return holdsScripts(folder) ? folder : undefined
+    if (!holdsScripts(folder)) {
+      return undefined
+    }
+
+    // SKSE still ships its psc in the le folder, and the diagnostic itself
+    // tells to copy them there. Its copies of the game scripts - Actor,
+    // Form... - add the extender functions and are meant to win over the game
+    // ones, which is what this import order gives them: nothing to warn about
+    const extender = toExtender(gameType)
+
+    if (
+      extender !== undefined &&
+      isPresent(path.join(folder, `${extender.name}.psc`))
+    ) {
+      this.#logger.debug('the le source folder holds the extender scripts')
+
+      return undefined
+    }
+
+    return folder
   }
 
   #missesExtenderSources(gamePath: GamePath, gameType: GameType): boolean {
@@ -247,14 +291,16 @@ export class ConfigDiagnoseHandler {
       return false
     }
 
-    if (!path.exists(path.join(gamePath, extender.loader))) {
+    // with Root Builder the loader lives in a mod too: like the markers, it
+    // can be a file of the MO2 virtual file system
+    if (!isPresent(path.join(gamePath, extender.loader))) {
       return false
     }
 
     this.#logger.debug('the script extender is installed, checking its sources')
 
     return !extender.markers.some((marker) =>
-      path.exists(path.normalize(path.join(gamePath, marker))),
+      isPresent(path.normalize(path.join(gamePath, marker))),
     )
   }
 }
