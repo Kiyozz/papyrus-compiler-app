@@ -474,16 +474,29 @@ function ExtenderSources() {
   return (
     <>
       <AlertTitle>
-        <Trans>{extender.name} est installé, sans ses scripts sources</Trans>
+        <Trans>
+          {extender.name} est installé, mais ses scripts sources sont
+          introuvables
+        </Trans>
       </AlertTitle>
       <AlertDescription className="flex flex-col items-start gap-3">
-        <span>
-          <Trans>
-            La compilation fonctionne, mais tout script utilisant une fonction
-            de {extender.name} échouera. Copiez le dossier Data\Scripts\Source
-            de l'archive {extender.name} dans le dossier du jeu.
-          </Trans>
-        </span>
+        <div className="flex flex-col gap-2">
+          <span>
+            <Trans>
+              La compilation fonctionne, mais tout script utilisant une fonction
+              de {extender.name} échouera. Copiez le dossier Data\Scripts\Source
+              de l'archive {extender.name} dans le dossier du jeu.
+            </Trans>
+          </span>
+          <span>
+            <Trans>
+              Avec Mod Organizer 2, installez plutôt l'archive comme un mod et
+              lancez PCA depuis MO2 : les fichiers des mods, Root Builder
+              compris, ne sont visibles que par les programmes lancés depuis
+              MO2.
+            </Trans>
+          </span>
+        </div>
         <Button
           onClick={() => void bridge.shell.openExternal(extender.url)}
           size="sm"

@@ -61,12 +61,9 @@ const ownerGame = (file: string): GameType | undefined => {
 /**
  * Whether `folder` holds .psc right inside it. Only those count: an import
  * root is handed to the compiler as is, it never walks into its subfolders.
+ * The folder is listed straight away, without a stat first: see `path.exists`.
  */
 const holdsScripts = (folder: string): boolean => {
-  if (!path.exists(folder)) {
-    return false
-  }
-
   try {
     return readdirSync(folder).some((file) =>
       file.toLowerCase().endsWith('.psc'),
@@ -237,7 +234,26 @@ export class ConfigDiagnoseHandler {
 
     this.#logger.debug('checking the Skyrim LE source folder', folder)
 
-    return holdsScripts(folder) ? folder : undefined
+    if (!holdsScripts(folder)) {
+      return undefined
+    }
+
+    // SKSE still ships its psc in the le folder, and the diagnostic itself
+    // tells to copy them there. Its copies of the game scripts - Actor,
+    // Form... - add the extender functions and are meant to win over the game
+    // ones, which is what this import order gives them: nothing to warn about
+    const extender = toExtender(gameType)
+
+    if (
+      extender !== undefined &&
+      path.exists(path.join(folder, `${extender.name}.psc`))
+    ) {
+      this.#logger.debug('the le source folder holds the extender scripts')
+
+      return undefined
+    }
+
+    return folder
   }
 
   #missesExtenderSources(gamePath: GamePath, gameType: GameType): boolean {
@@ -247,6 +263,8 @@ export class ConfigDiagnoseHandler {
       return false
     }
 
+    // with Root Builder the loader lives in a mod too: like the markers, it
+    // can be a file of the MO2 virtual file system
     if (!path.exists(path.join(gamePath, extender.loader))) {
       return false
     }

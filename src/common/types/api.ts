@@ -55,7 +55,7 @@ export interface MainAPI {
     ): Promise<void>
   }
   dialog: {
-    select(type: DialogType): Promise<string | null>
+    select(type: DialogType, defaultPath?: string): Promise<string | null>
   }
   recentFiles: {
     get(): Promise<Script[]>

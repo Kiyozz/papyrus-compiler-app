@@ -117,7 +117,8 @@ export class MainApi {
         },
       },
       dialog: {
-        select: (type) => new DialogHandler().listen({ type }),
+        select: (type, defaultPath) =>
+          new DialogHandler().listen({ type, defaultPath }),
       },
       recentFiles: {
         get: () => recentFilesGetHandler.listen(),
@@ -138,8 +139,24 @@ export class MainApi {
       shell: {
         openExternal: (href) => shell.openExternal(href),
         showInFolder: async (target) => {
+          this.#logger.debug('showing in the folder', target)
+
           if (path.exists(target)) {
-            shell.showItemInFolder(target)
+            // Electron reports nothing when the shell fails to select the
+            // file: a window that never opens leaves no trace but this line
+            this.#logger.debug('highlighting the file in its folder', target)
+
+            try {
+              shell.showItemInFolder(target)
+            } catch (e) {
+              this.#logger.error(
+                'cannot show the file in its folder',
+                target,
+                e,
+              )
+
+              return false
+            }
 
             return true
           }
@@ -153,6 +170,8 @@ export class MainApi {
 
             return false
           }
+
+          this.#logger.debug('the file is gone, opening its folder', folder)
 
           const error = await shell.openPath(folder)
 

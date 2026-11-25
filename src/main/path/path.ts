@@ -2,7 +2,7 @@
  * 2022-2026 Kiyozz.
  */
 
-import { promises as fs, existsSync } from 'node:fs'
+import { promises as fs, existsSync, readdirSync } from 'node:fs'
 import * as path from 'node:path'
 import * as url from 'node:url'
 import { is } from 'electron-util'
@@ -14,6 +14,23 @@ import { pluralize } from '../utils/pluralize.util'
 import type { Stats } from 'node:fs'
 
 const logger = new Logger('Path')
+
+/** see `exists` */
+function isListed(fileOrFolder: string): boolean {
+  const parent = path.dirname(fileOrFolder)
+
+  if (parent === fileOrFolder) {
+    return false
+  }
+
+  const name = path.basename(fileOrFolder).toLowerCase()
+
+  try {
+    return readdirSync(parent).some((entry) => entry.toLowerCase() === name)
+  } catch {
+    return false
+  }
+}
 
 export { join, basename, isAbsolute, dirname as parentDir } from 'path'
 
@@ -58,18 +75,51 @@ export async function stat(filename: string): Promise<Stats> {
   }
 }
 
+/**
+ * Whether `fileOrFolder` exists, also when it only lives in the Mod Organizer 2
+ * virtual file system (usvfs), which merges every mod into Data - and, through
+ * Root Builder, into the game root - for the programs MO2 launches.
+ *
+ * `existsSync` alone is not enough there: on Windows it stats the path, and
+ * recent Windows 11 builds answer that stat with `GetFileInformationByName`,
+ * which usvfs only hooks since 0.5.7.1. Under an older MO2, a file or folder
+ * that sits in a mod is then reported missing while the compiler, a plain
+ * child process, sees it. Listing the parent folder goes through
+ * `NtQueryDirectoryFile`, which usvfs has always hooked. Windows paths ignore
+ * case, so does the match.
+ */
 export function exists(fileOrFolder: string): boolean {
-  const result = existsSync(fileOrFolder)
+  const result = existsSync(fileOrFolder) || isListed(fileOrFolder)
 
   logger.debug('does the path exist?', fileOrFolder, result)
 
   return result
 }
 
+/**
+ * Creates `item` and its missing parents. Not `mkdir` with `recursive`: on a
+ * folder that already exists it stats it, and that stat fails with ENOENT on a
+ * folder of the MO2 virtual file system - see `exists`. Data\Scripts, where
+ * the pex go, is one as soon as a mod ships scripts and the game folder has
+ * none.
+ */
 export async function ensureDir(item: string): Promise<void> {
-  if (!exists(item)) {
-    console.log(item)
-    await fs.mkdir(item, { recursive: true })
+  if (exists(item)) {
+    return
+  }
+
+  const parent = path.dirname(item)
+
+  if (parent !== item) {
+    await ensureDir(parent)
+  }
+
+  try {
+    await fs.mkdir(item)
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code !== 'EEXIST') {
+      throw e
+    }
   }
 }
 
